@@ -29,7 +29,7 @@ The new Purview DataMap library `Azure.Analytics.Purview.DataMap` includes the s
 
 Previously in `Azure.Analytics.Purview.Catalog`, the service client name is PurviewCatalogClient.
 
-```C# Snippet:CreateCatalogClient
+```C#
 var credential = new DefaultAzureCredential();
 var client = new PurviewCatalogClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
 ```
@@ -44,32 +44,19 @@ var dataMapClient = new DataMapClient(endpoint, credential);
 ### Operation name
 The operation names have slightly changed but the main functionality remains the same. Please check the below examples.
 
-#### Getting all types
+#### Getting Type By Name
 
 Using `Azure.Analytics.Purview.Catalog`
-```C# Snippet:CatalogGetAllTypes
+
+```C#
 PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
-Response response response = client.Types.GetAllTypeDefinitions();
+Response response = client.GetTypeDefinitionByName("AtlasGlossary", null);
 ```
 
 Using `Azure.Analytics.Purview.DataMap`
-```C# Snippet:DataMapGetAllTypes
+```C# Snippet:GetTypeByName
 TypeDefinition client = dataMapClient.GetTypeDefinitionClient();
-Response<AtlasTypesDef> response = client.GetTypeDefinition();
-```
-
-#### Getting entity by Guid
-
-Using `Azure.Analytics.Purview.Catalog`
-```C# Snippet:CatalogGetEntityByGuid
-PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
-Response response = client.GetByGuid("<guid>");
-```
-
-Using `Azure.Analytics.Purview.DataMap`
-```C# Snippet:DataMapGetEntityByGuid
-Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
-Response<AtlasEntityWithExtInfo> response = client.GetEntity("<guid>");
+Response response = client.GetByName("AtlasGlossary", null);
 ```
 
 ## Additional samples
