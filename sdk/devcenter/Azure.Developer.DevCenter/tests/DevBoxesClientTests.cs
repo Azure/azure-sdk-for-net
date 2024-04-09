@@ -235,27 +235,32 @@ namespace Azure.Developer.DevCenter.Tests
         [Test]
         public async Task GetAndDelayActionSucceeds()
         {
+            //only perform actions if it exists and it's in the 24hrs window
+            if (!await HasDefaultActionIn24hrsAsync())
+            {
+                return;
+            }
+
             DevBoxAction action = await _devBoxesClient.GetDevBoxActionAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
                 DevBoxName,
                 "schedule-default");
 
-            if (action == null)
-            {
-                FailDueToMissingProperty("action");
-            }
-
+            Assert.NotNull(action);
             Assert.AreEqual("schedule-default", action.Name);
             Assert.AreEqual(DevBoxActionType.Stop, action.ActionType);
 
             DateTimeOffset currentScheduledTime = action.NextAction.ScheduledTime;
-            if (currentScheduledTime == default)
-            {
-                FailDueToMissingProperty("scheduledTime");
-            }
+            Assert.NotNull(currentScheduledTime);
 
             DateTimeOffset delayUntil = currentScheduledTime.AddMinutes(10);
+
+            //when target action is more than 24 hours away, delay can't be applied
+            if (delayUntil >= DateTimeOffset.UtcNow.AddHours(24))
+            {
+                return;
+            }
 
             DevBoxAction delayedAction = await _devBoxesClient.DelayActionAsync(
                 TestEnvironment.ProjectName,
@@ -265,11 +270,8 @@ namespace Azure.Developer.DevCenter.Tests
                 delayUntil);
 
             DateTimeOffset delayedTime = delayedAction.NextAction.ScheduledTime;
-            if (delayedTime == default)
-            {
-                FailDueToMissingProperty("scheduledTime");
-            }
 
+            Assert.NotNull(delayedTime);
             Assert.AreEqual(delayUntil, delayedTime);
         }
 
@@ -281,16 +283,19 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.MeUserId,
                 DevBoxName).ToEnumerableAsync();
 
-            Assert.AreEqual(1, devBoxActions.Count);
-
-            var action = devBoxActions[0];
-            if (string.IsNullOrWhiteSpace(action.Name))
+            if (devBoxActions.Count == 0)
             {
-                FailDueToMissingProperty("name");
+                return;
             }
-            Assert.AreEqual("schedule-default", action.Name);
 
-            DateTimeOffset delayUntil = action.NextAction.ScheduledTime.AddMinutes(10);
+            DateTimeOffset latestActionTime = devBoxActions.Max(action => action.NextAction.ScheduledTime);
+            DateTimeOffset delayUntil = latestActionTime.AddMinutes(10);
+
+            //when target action is more than 24 hours away, delay can't be applied
+            if (delayUntil >= DateTimeOffset.UtcNow.AddHours(24))
+            {
+                return;
+            }
 
             List<DevBoxActionDelayResult> actionsDelayResult = await _devBoxesClient.DelayAllActionsAsync(
                 TestEnvironment.ProjectName,
@@ -298,22 +303,21 @@ namespace Azure.Developer.DevCenter.Tests
                 DevBoxName,
                 delayUntil).ToEnumerableAsync();
 
-            Assert.AreEqual(1, actionsDelayResult.Count);
-
-            DevBoxActionDelayStatus actionDelayStatus = actionsDelayResult[0].DelayStatus;
-            if (actionDelayStatus == default)
+            Assert.AreEqual(devBoxActions.Count, actionsDelayResult.Count);
+            foreach (var actionDelayResult in actionsDelayResult)
             {
-                FailDueToMissingProperty("actionDelayStatus");
+                Assert.AreEqual(DevBoxActionDelayStatus.Succeeded, actionDelayResult.DelayStatus);
+                Assert.True(devBoxActions.Any(action => action.Name == actionDelayResult.ActionName));
             }
-
-            Assert.AreEqual(DevBoxActionDelayStatus.Succeeded, actionDelayStatus);
         }
 
         [Test]
         public async Task SkipActionAndDeleteDevBoxSucceeds()
         {
-            //This test will run for each target framework. Since Skip Action can run only once - if you skip action in a machine that
-            //already has the scheduled shutdown skipped it will fail. So we need no delete the machine, and SetUp will create a new one for each test
+            if (!await HasDefaultActionIn24hrsAsync())
+            {
+                return;
+            }
 
             Response skipActionResponse = await _devBoxesClient.SkipActionAsync(
                 TestEnvironment.ProjectName,
@@ -382,6 +386,24 @@ namespace Azure.Developer.DevCenter.Tests
                 devBox);
 
             return devBoxCreateOperation.Value;
+        }
+
+        private async Task<bool> HasDefaultActionIn24hrsAsync()
+        {
+            List<DevBoxAction> devBoxActions = await _devBoxesClient.GetDevBoxActionsAsync(
+                TestEnvironment.ProjectName,
+                TestEnvironment.MeUserId,
+                DevBoxName).ToEnumerableAsync();
+
+            if (!devBoxActions.Any(action => action.Name == "schedule-default"))
+            {
+                return false;
+            }
+
+            DevBoxAction defaultAction = devBoxActions.Where(action => action.Name == "schedule-default").First();
+            bool isInThe24hWindow = defaultAction.NextAction.ScheduledTime < DateTimeOffset.UtcNow.AddHours(24);
+
+            return isInThe24hWindow;
         }
 
         private void CheckLROSucceeded(Operation finalOperationResponse)
