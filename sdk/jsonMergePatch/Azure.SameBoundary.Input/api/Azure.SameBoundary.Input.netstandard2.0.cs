@@ -43,15 +43,15 @@ namespace Azure.SameBoundary.Input
     }
     public partial class InputDictionaryModel : System.ClientModel.Primitives.IJsonModel<Azure.SameBoundary.Input.InputDictionaryModel>, System.ClientModel.Primitives.IPersistableModel<Azure.SameBoundary.Input.InputDictionaryModel>
     {
-        public InputDictionaryModel(System.Collections.Generic.IDictionary<string, string> requiredStringDictionary, System.Collections.Generic.IDictionary<string, int> requiredIntDictionary, System.Collections.Generic.IDictionary<string, Azure.SameBoundary.Input.InputDummy> requiredModelDictionary, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, Azure.SameBoundary.Input.InputDummy>> requiredDictionaryDictionary, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.SameBoundary.Input.InputDummy>> requiredArrayDictionary) { }
+        public InputDictionaryModel(System.Collections.Generic.IDictionary<string, string> requiredStringDictionary, System.Collections.Generic.IDictionary<string, int?> requiredIntDictionary, System.Collections.Generic.IDictionary<string, Azure.SameBoundary.Input.InputDummy> requiredModelDictionary, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, Azure.SameBoundary.Input.InputDummy>> requiredDictionaryDictionary, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.SameBoundary.Input.InputDummy>> requiredArrayDictionary) { }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.SameBoundary.Input.InputDummy>> OptionalArrayDictionary { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, Azure.SameBoundary.Input.InputDummy>> OptionalDictionaryDictionary { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, int> OptionalIntDictionary { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, int?> OptionalIntDictionary { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.SameBoundary.Input.InputDummy> OptionalModelDictionary { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> OptionalStringDictionary { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.SameBoundary.Input.InputDummy>> RequiredArrayDictionary { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, Azure.SameBoundary.Input.InputDummy>> RequiredDictionaryDictionary { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, int> RequiredIntDictionary { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, int?> RequiredIntDictionary { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.SameBoundary.Input.InputDummy> RequiredModelDictionary { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> RequiredStringDictionary { get { throw null; } }
         Azure.SameBoundary.Input.InputDictionaryModel System.ClientModel.Primitives.IJsonModel<Azure.SameBoundary.Input.InputDictionaryModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
