@@ -30,14 +30,15 @@ namespace Azure.Provisioning
             outputPath ??= $".\\{GetType().Name}";
             outputPath = Path.GetFullPath(outputPath);
 
-            WriteBicepFile(_rootConstruct, outputPath);
             if (_rootConstruct == null)
             {
-                return;
+                throw new InvalidOperationException("No resources were added to the Infrastructure. Add resources to the Infrastructure before calling Build.");
             }
 
+            WriteBicepFile(_rootConstruct, outputPath);
+
             var queue = new Queue<ModuleConstruct>();
-            queue.Enqueue(_rootConstruct!);
+            queue.Enqueue(_rootConstruct);
             WriteConstructsByLevel(queue, outputPath);
         }
 
@@ -194,21 +195,17 @@ namespace Azure.Provisioning
             }
         }
 
-        private string GetFilePath(ModuleConstruct? construct, string outputPath)
+        private string GetFilePath(ModuleConstruct construct, string outputPath)
         {
-            string fileName = construct == null || construct.IsRoot ? Path.Combine(outputPath, "main.bicep") : Path.Combine(outputPath, "resources", construct.Name, $"{construct.Name}.bicep");
+            string fileName = construct.IsRoot ? Path.Combine(outputPath, "main.bicep") : Path.Combine(outputPath, "resources", construct.Name, $"{construct.Name}.bicep");
             Directory.CreateDirectory(Path.GetDirectoryName(fileName)!);
             return fileName;
         }
 
-        private void WriteBicepFile(ModuleConstruct? construct, string outputPath)
+        private void WriteBicepFile(ModuleConstruct construct, string outputPath)
         {
             using var stream = new FileStream(GetFilePath(construct, outputPath), FileMode.Create);
-            // just create an empty file if there is no construct
-            if (construct == null)
-            {
-                return;
-            }
+
 #if NET6_0_OR_GREATER
             stream.Write(construct.SerializeModule());
 #else

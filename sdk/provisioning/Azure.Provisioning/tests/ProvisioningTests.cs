@@ -138,12 +138,11 @@ namespace Azure.Provisioning.Tests
             await ValidateBicepAsync(interactiveMode: true);
         }
 
-        [RecordedTest]
-        public async Task EmptyConstructDoesNotThrow()
+        [Test]
+        public void EmptyConstructThrows()
         {
             TestInfrastructure infra = new TestInfrastructure();
-            infra.Build(GetOutputPath());
-            await ValidateBicepAsync();
+            Assert.Throws<InvalidOperationException>(() => infra.Build(GetOutputPath()));
         }
 
         [RecordedTest]
