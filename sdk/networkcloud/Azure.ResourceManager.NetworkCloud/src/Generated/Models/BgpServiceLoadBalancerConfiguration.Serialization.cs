@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             FabricPeeringEnabled? fabricPeeringEnabled = default;
             IList<IPAddressPool> ipAddressPools = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bgpAdvertisements"u8))
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BgpServiceLoadBalancerConfiguration(bgpAdvertisements ?? new ChangeTrackingList<BgpAdvertisement>(), bgpPeers ?? new ChangeTrackingList<ServiceLoadBalancerBgpPeer>(), fabricPeeringEnabled, ipAddressPools ?? new ChangeTrackingList<IPAddressPool>(), serializedAdditionalRawData);
         }
 

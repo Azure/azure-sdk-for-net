@@ -73,7 +73,7 @@ namespace Azure.Core.Tests
             scope.AddIntegerAttribute("Attribute3", 3);
 
             scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", "foo=bar");
-            scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null, new Dictionary<string, string>()
+            scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null, new Dictionary<string, object>()
             {
                 {"linkAttribute", "linkAttributeValue"}
             });
@@ -380,7 +380,7 @@ namespace Azure.Core.Tests
 
         [Test]
         [NonParallelizable]
-        public void StartActivitySourceActivityIgnoresInvalidLinkParent()
+        public void StartActivitySourceActivityDoesNotIgnoreInvalidLinkParent()
         {
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
@@ -388,12 +388,18 @@ namespace Azure.Core.Tests
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
 
-            scope.AddLink("test", "ignored");
+            var linkAttributes = new Dictionary<string, object>
+            {
+                { "key", "value" }
+            };
+            scope.AddLink("test", "ignored", linkAttributes);
 
             scope.Start();
             scope.Dispose();
 
-            Assert.AreEqual(0, activityListener.Activities.Single().Links.Count());
+            var links = activityListener.Activities.Single().Links;
+            Assert.AreEqual(1, links.Count());
+            Assert.AreEqual("value", links.Single().Tags.Single(o => o.Key == "key").Value);
         }
 
         [Test]
