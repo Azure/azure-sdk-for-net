@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(AutoStorage))
             {
                 writer.WritePropertyName("autoStorage"u8);
-                writer.WriteObjectValue<BatchAccountAutoStorageBaseConfiguration>(AutoStorage, options);
+                writer.WriteObjectValue(AutoStorage, options);
             }
             if (Optional.IsDefined(PoolAllocationMode))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(KeyVaultReference))
             {
                 writer.WritePropertyName("keyVaultReference"u8);
-                writer.WriteObjectValue<BatchKeyVaultReference>(KeyVaultReference, options);
+                writer.WriteObjectValue(KeyVaultReference, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue<BatchNetworkProfile>(NetworkProfile, options);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<BatchAccountEncryptionConfiguration>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
             {

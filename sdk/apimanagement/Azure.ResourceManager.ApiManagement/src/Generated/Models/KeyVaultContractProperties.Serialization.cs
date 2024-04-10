@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(LastStatus))
             {
                 writer.WritePropertyName("lastStatus"u8);
-                writer.WriteObjectValue<KeyVaultLastAccessStatusContractProperties>(LastStatus, options);
+                writer.WriteObjectValue(LastStatus, options);
             }
             if (Optional.IsDefined(SecretIdentifier))
             {

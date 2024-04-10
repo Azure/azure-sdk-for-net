@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(OpenApi))
             {
                 writer.WritePropertyName("openApi"u8);
-                writer.WriteObjectValue<GatewayRouteConfigOpenApiProperties>(OpenApi, options);
+                writer.WriteObjectValue(OpenApi, options);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue<AppPlatformGatewayApiRoute>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

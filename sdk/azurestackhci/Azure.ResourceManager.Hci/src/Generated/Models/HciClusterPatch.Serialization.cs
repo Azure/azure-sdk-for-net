@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
-                writer.WriteObjectValue<HciClusterDesiredProperties>(DesiredProperties, options);
+                writer.WriteObjectValue(DesiredProperties, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("identity"u8);

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in ApprovalStages)
                 {
-                    writer.WriteObjectValue<RoleManagementApprovalStage>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

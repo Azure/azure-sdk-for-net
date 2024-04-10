@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             if (options.Format != "W" && Optional.IsDefined(LastRestoredVmCheckpoint))
             {
                 writer.WritePropertyName("lastRestoredVMCheckpoint"u8);
-                writer.WriteObjectValue<ScVmmCheckpoint>(LastRestoredVmCheckpoint, options);
+                writer.WriteObjectValue(LastRestoredVmCheckpoint, options);
             }
             if (Optional.IsCollectionDefined(Checkpoints))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in Checkpoints)
                 {
-                    writer.WriteObjectValue<ScVmmCheckpoint>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

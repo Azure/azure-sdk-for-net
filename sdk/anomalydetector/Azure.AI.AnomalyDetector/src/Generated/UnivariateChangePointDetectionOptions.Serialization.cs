@@ -30,7 +30,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartArray();
             foreach (var item in Series)
             {
-                writer.WriteObjectValue<TimeSeriesPoint>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("granularity"u8);
@@ -213,7 +213,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnivariateChangePointDetectionOptions>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

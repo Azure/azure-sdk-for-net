@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(PreTask))
             {
                 writer.WritePropertyName("preTask"u8);
-                writer.WriteObjectValue<SoftwareUpdateConfigurationRunTaskProperties>(PreTask, options);
+                writer.WriteObjectValue(PreTask, options);
             }
             if (Optional.IsDefined(PostTask))
             {
                 writer.WritePropertyName("postTask"u8);
-                writer.WriteObjectValue<SoftwareUpdateConfigurationRunTaskProperties>(PostTask, options);
+                writer.WriteObjectValue(PostTask, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

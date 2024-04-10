@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue<SmartGroupAggregatedProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypes)
                 {
-                    writer.WriteObjectValue<SmartGroupAggregatedProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in ResourceGroups)
                 {
-                    writer.WriteObjectValue<SmartGroupAggregatedProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in MonitorServices)
                 {
-                    writer.WriteObjectValue<SmartGroupAggregatedProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in MonitorConditions)
                 {
-                    writer.WriteObjectValue<SmartGroupAggregatedProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in AlertStates)
                 {
-                    writer.WriteObjectValue<SmartGroupAggregatedProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in AlertSeverities)
                 {
-                    writer.WriteObjectValue<SmartGroupAggregatedProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

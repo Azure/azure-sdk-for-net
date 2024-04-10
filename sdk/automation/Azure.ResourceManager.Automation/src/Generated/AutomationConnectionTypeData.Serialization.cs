@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Automation
                 foreach (var item in FieldDefinitions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<AutomationConnectionFieldDefinition>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
