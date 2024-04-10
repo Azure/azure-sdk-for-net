@@ -1,20 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ClientModel.Pipeline;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Text;
 
-namespace System.ClientModel.Diagnostics;
+namespace System.ClientModel.Internal;
 
 [EventSource(Name = EventSourceName)]
 internal sealed class ClientModelEventSource : ClientEventSource
 {
-    private const string EventSourceName = "System-ClientModel";
+    private const string EventSourceName = "System.ClientModel";
 
     private const int RequestEvent = 1;
     private const int RequestContentEvent = 2;

@@ -6,17 +6,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace System.ClientModel.Pipeline;
+namespace System.ClientModel.Internal;
 
 /// <summary>
 /// TODO.
 /// </summary>
-public class PipelineMessageSanitizer
+internal class PipelineMessageSanitizer
 {
     private const string LogAllValue = "*";
     private readonly bool _logAllHeaders;
     private readonly bool _logFullQueries;
     private readonly string _redactedPlaceholder;
+    private readonly HashSet<string> _loggedHeaderNames;
+    private readonly List<string> _loggedQueryParameters;
 
     /// <summary>
     /// TODO.
@@ -24,25 +26,15 @@ public class PipelineMessageSanitizer
     /// <param name="allowedQueryParameters"></param>
     /// <param name="allowedHeaders"></param>
     /// <param name="redactedPlaceholder"></param>
-    public PipelineMessageSanitizer(string[] allowedQueryParameters, string[] allowedHeaders, string redactedPlaceholder = "REDACTED")
+    public PipelineMessageSanitizer(List<string> allowedQueryParameters, List<string> allowedHeaders, string redactedPlaceholder = "REDACTED")
     {
         _logAllHeaders = allowedHeaders.Contains(LogAllValue);
         _logFullQueries = allowedQueryParameters.Contains(LogAllValue);
 
-        LoggedQueryParameters = allowedQueryParameters.ToList();
+        _loggedQueryParameters = allowedQueryParameters;
         _redactedPlaceholder = redactedPlaceholder;
-        LoggedHeaderNames = new HashSet<string>(allowedHeaders, StringComparer.InvariantCultureIgnoreCase);
+        _loggedHeaderNames = new HashSet<string>(allowedHeaders, StringComparer.InvariantCultureIgnoreCase);
     }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    public HashSet<string> LoggedHeaderNames { get; internal set; }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    public List<string> LoggedQueryParameters { get; internal set; }
 
     /// <summary>
     /// TODO.
@@ -52,7 +44,7 @@ public class PipelineMessageSanitizer
     /// <returns></returns>
     public string SanitizeHeader(string name, string value)
     {
-        if (_logAllHeaders || LoggedHeaderNames.Contains(name))
+        if (_logAllHeaders || _loggedHeaderNames.Contains(name))
         {
             return value;
         }
@@ -123,7 +115,7 @@ public class PipelineMessageSanitizer
             ReadOnlySpan<char> parameterName = query.AsSpan(queryIndex, endOfParameterName - queryIndex);
 
             bool isAllowed = false;
-            foreach (string name in LoggedQueryParameters)
+            foreach (string name in _loggedQueryParameters)
             {
                 if (parameterName.Equals(name.AsSpan(), StringComparison.OrdinalIgnoreCase))
                 {

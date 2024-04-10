@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Diagnostics;
 using System.ClientModel.Internal;
-using System.ClientModel.Pipeline;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
@@ -24,9 +22,37 @@ public class ClientLoggingPolicy : PipelinePolicy
 
     private readonly bool _logContent;
     private readonly int _maxLength;
-    private readonly PipelineMessageSanitizer _sanitizer;
     private readonly string? _assemblyName;
     private readonly string? _clientRequestIdHeaderName;
+    private readonly bool _isLoggingEnabled;
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="isLoggingEnabled"></param>
+    /// <param name="loggedHeaderNames"></param>
+    /// <param name="loggedQueryParameters"></param>
+    /// <param name="requestIdHeaderName"></param>
+    /// <param name="logContent"></param>
+    /// <param name="maxLength"></param>
+    /// <param name="assemblyName"></param>
+    public ClientLoggingPolicy(
+        bool isLoggingEnabled = true,
+        List<string>? loggedHeaderNames = default,
+        List<string>? loggedQueryParameters = default,
+        string? requestIdHeaderName = default,
+        bool logContent = false,
+        int maxLength = 4 * 1024,
+        string? assemblyName = default)
+    {
+        LoggedHeaderNames = loggedHeaderNames ?? new List<string>();
+        LoggedQueryParameters = loggedQueryParameters ?? new List<string>();
+        _logContent = logContent;
+        _maxLength = maxLength;
+        _assemblyName = assemblyName;
+        _clientRequestIdHeaderName = requestIdHeaderName;
+        _isLoggingEnabled = isLoggingEnabled;
+    }
 
     /// <summary>
     /// TODO.
@@ -36,25 +62,22 @@ public class ClientLoggingPolicy : PipelinePolicy
     /// <summary>
     /// TODO.
     /// </summary>
-    /// <param name="logContent"></param>
-    /// <param name="maxLength"></param>
-    /// <param name="isLoggingEnabled"></param>
-    /// <param name="sanitizer"></param>
-    /// <param name="assemblyName"></param>
-    /// <param name="requestIdHeaderName"></param>
-    public ClientLoggingPolicy(bool isLoggingEnabled = true, PipelineMessageSanitizer? sanitizer = default, string? requestIdHeaderName = default, bool logContent = false, int maxLength = 4 * 1024, string? assemblyName = default)
-    {
-        _sanitizer = sanitizer ?? new PipelineMessageSanitizer(Array.Empty<string>(), Array.Empty<string>());
-        _logContent = logContent;
-        _maxLength = maxLength;
-        _assemblyName = assemblyName;
-        _clientRequestIdHeaderName = requestIdHeaderName;
-    }
+    public List<string> LoggedHeaderNames { get; internal set; }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    public List<string> LoggedQueryParameters { get; internal set; }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    internal PipelineMessageSanitizer? Sanitizer { get; set; }
 
     /// <inheritdoc/>
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        if (!s_eventSource.IsEnabled())
+        if (!_isLoggingEnabled)
         {
             ProcessNext(message, pipeline, currentIndex);
             return;
@@ -66,12 +89,29 @@ public class ClientLoggingPolicy : PipelinePolicy
     /// <inheritdoc/>
     public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
-        if (!s_eventSource.IsEnabled())
+        if (!_isLoggingEnabled)
         {
             await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+            return;
         }
 
         await ProcessSyncOrAsync(message, pipeline, currentIndex, async: true).ConfigureAwait(false);
+    }
+
+    internal virtual void LogRequest()
+    {
+        if (!s_eventSource.IsEnabled())
+        {
+            return;
+        }
+    }
+
+    internal virtual void LogResponse()
+    {
+        if (!s_eventSource.IsEnabled())
+        {
+            return;
+        }
     }
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
@@ -79,7 +119,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         PipelineRequest request = message.Request;
         string requestId = GetRequestIdFromHeaders(request.Headers);
 
-        s_eventSource.Request(request, requestId, _assemblyName, _sanitizer);
+        s_eventSource.Request(request, requestId, _assemblyName, Sanitizer!);
 
         Encoding? requestTextEncoding = null;
 
@@ -129,11 +169,11 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         if (isError)
         {
-            s_eventSource.ErrorResponse(response, responseId, _sanitizer, elapsed);
+            s_eventSource.ErrorResponse(response, responseId, Sanitizer!, elapsed);
         }
         else
         {
-            s_eventSource.Response(response, responseId, _sanitizer, elapsed);
+            s_eventSource.Response(response, responseId, Sanitizer!, elapsed);
         }
 
         if (wrapResponseContent)

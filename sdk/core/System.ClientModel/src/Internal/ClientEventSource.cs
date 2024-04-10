@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Text;
 
-namespace System.ClientModel.Diagnostics;
+namespace System.ClientModel.Internal;
 
 internal abstract class ClientEventSource : EventSource
 {
@@ -37,10 +36,7 @@ internal abstract class ClientEventSource : EventSource
     //    };
 
     protected ClientEventSource(string eventSourceName) : base(
-        DeduplicateName(eventSourceName),
-        EventSourceSettings.Default,
-        Array.Empty<string>()
-    )
+        DeduplicateName(eventSourceName))
     {
     }
 

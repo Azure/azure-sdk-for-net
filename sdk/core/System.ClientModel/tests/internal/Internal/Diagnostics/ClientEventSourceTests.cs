@@ -3,8 +3,7 @@
 
 #if NET5_0_OR_GREATER
 
-using System;
-using System.ClientModel.Diagnostics;
+using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
