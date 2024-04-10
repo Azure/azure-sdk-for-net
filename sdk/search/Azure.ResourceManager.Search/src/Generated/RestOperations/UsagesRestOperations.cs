@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Search.Models;
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary> Gets a list of all Search quota usages in the given subscription. </summary>
-        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API, command line tools, or the portal. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary> Gets a list of all Search quota usages in the given subscription. </summary>
-        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API, command line tools, or the portal. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Search
 
         /// <summary> Gets a list of all Search quota usages in the given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API, command line tools, or the portal. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.Search
 
         /// <summary> Gets a list of all Search quota usages in the given subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API, command line tools, or the portal. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

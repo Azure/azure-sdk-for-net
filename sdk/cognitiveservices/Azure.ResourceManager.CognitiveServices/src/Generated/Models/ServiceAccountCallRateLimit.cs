@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The count value of Call Rate Limit. </summary>
+        [WirePath("count")]
         public float? Count { get; }
         /// <summary> The renewal period in seconds of Call Rate Limit. </summary>
+        [WirePath("renewalPeriod")]
         public float? RenewalPeriod { get; }
         /// <summary> Gets the rules. </summary>
+        [WirePath("rules")]
         public IReadOnlyList<ServiceAccountThrottlingRule> Rules { get; }
     }
 }

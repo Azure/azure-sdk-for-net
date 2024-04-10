@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -75,18 +74,25 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The database edition name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The list of supported service objectives for the edition. </summary>
+        [WirePath("supportedServiceLevelObjectives")]
         public IReadOnlyList<ServiceObjectiveCapability> SupportedServiceLevelObjectives { get; }
         /// <summary> Whether or not zone redundancy is supported for the edition. </summary>
+        [WirePath("zoneRedundant")]
         public bool? IsZoneRedundant { get; }
         /// <summary> The read scale capability for the edition. </summary>
+        [WirePath("readScale")]
         public ReadScaleCapability ReadScale { get; }
         /// <summary> The list of supported storage capabilities for this edition. </summary>
+        [WirePath("supportedStorageCapabilities")]
         public IReadOnlyList<StorageCapability> SupportedStorageCapabilities { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

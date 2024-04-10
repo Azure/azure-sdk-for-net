@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -76,8 +75,10 @@ namespace Azure.ResourceManager.SignalR.Models
         /// Available values: true, false.
         /// Case insensitive.
         /// </summary>
+        [WirePath("enabled")]
         public string Enabled { get; set; }
         /// <summary> Gets or sets the list of category configurations. </summary>
+        [WirePath("categories")]
         public IList<SignalRLiveTraceCategory> Categories { get; }
     }
 }

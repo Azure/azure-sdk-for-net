@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -76,8 +75,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Restore blob to the specified time. </summary>
+        [WirePath("timetoRestore")]
         public DateTimeOffset TimeToRestore { get; set; }
         /// <summary> Blob ranges to restore. </summary>
+        [WirePath("blobRanges")]
         public IList<BlobRestoreRange> BlobRanges { get; }
     }
 }

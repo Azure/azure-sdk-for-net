@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -76,8 +75,10 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Resource name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Resource type. The only legal value of this property for checking redis cache name availability is 'Microsoft.Cache/redis'. </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; }
     }
 }

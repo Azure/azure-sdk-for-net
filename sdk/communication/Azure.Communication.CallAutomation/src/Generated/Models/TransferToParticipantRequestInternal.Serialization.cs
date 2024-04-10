@@ -16,11 +16,11 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            writer.WriteObjectValue<CommunicationIdentifierModel>(TargetParticipant);
             if (Optional.IsDefined(CustomCallingContext))
             {
                 writer.WritePropertyName("customCallingContext"u8);
-                writer.WriteObjectValue(CustomCallingContext);
+                writer.WriteObjectValue<CustomCallingContextInternal>(CustomCallingContext);
             }
             if (Optional.IsDefined(OperationContext))
             {
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(Transferee))
             {
                 writer.WritePropertyName("transferee"u8);
-                writer.WriteObjectValue(Transferee);
+                writer.WriteObjectValue<CommunicationIdentifierModel>(Transferee);
             }
             if (Optional.IsDefined(OperationCallbackUri))
             {
@@ -40,9 +40,17 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(SourceCallerIdNumber))
             {
                 writer.WritePropertyName("sourceCallerIdNumber"u8);
-                writer.WriteObjectValue(SourceCallerIdNumber);
+                writer.WriteObjectValue<PhoneNumberIdentifierModel>(SourceCallerIdNumber);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TransferToParticipantRequestInternal>(this);
+            return content;
         }
     }
 }

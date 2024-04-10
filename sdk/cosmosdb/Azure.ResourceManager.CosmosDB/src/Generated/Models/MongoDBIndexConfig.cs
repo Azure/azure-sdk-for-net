@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Expire after seconds. </summary>
+        [WirePath("expireAfterSeconds")]
         public int? ExpireAfterSeconds { get; set; }
         /// <summary> Is unique or not. </summary>
+        [WirePath("unique")]
         public bool? IsUnique { get; set; }
     }
 }

@@ -49,7 +49,14 @@ namespace Azure.Storage.DataMovement.Tests
             string generatedResourceNamePrefix = default,
             RecordedTestMode? mode = null) : base(async, mode)
         {
-            Argument.CheckNotNullOrEmpty(expectedOverwriteExceptionMessage, nameof(expectedOverwriteExceptionMessage));
+            if (expectedOverwriteExceptionMessage is null)
+            {
+                throw new ArgumentNullException(expectedOverwriteExceptionMessage);
+            }
+            if (expectedOverwriteExceptionMessage.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", expectedOverwriteExceptionMessage);
+            }
             _generatedResourceNamePrefix = generatedResourceNamePrefix ?? "test-resource-";
             _expectedOverwriteExceptionMessage = expectedOverwriteExceptionMessage;
         }
@@ -116,7 +123,7 @@ namespace Azure.Storage.DataMovement.Tests
             int concurrency,
             bool createFailedCondition = false,
             DataTransferOptions options = default,
-            int size = Constants.KB)
+            int size = DataMovementTestConstants.KB)
         {
             // Arrange
             string destinationName = GetNewObjectName();
@@ -284,7 +291,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// Upload and verify the contents of the object
         ///
-        /// By default in this function an event arguement will be added to the options event handler
+        /// By default in this function an event argument will be added to the options event handler
         /// to detect when the upload has finished.
         /// </summary>
         /// <param name="size"></param>
@@ -293,7 +300,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <returns></returns>
         private async Task UploadResourceAndVerify(
             TContainerClient container,
-            long size = Constants.KB,
+            long size = DataMovementTestConstants.KB,
             int waitTimeInSec = 30,
             TransferManagerOptions transferManagerOptions = default,
             int objectCount = 1,
@@ -422,12 +429,12 @@ namespace Azure.Storage.DataMovement.Tests
         [RecordedTest]
         public async Task LocalToRemoteObjectSize_SmallChunk()
         {
-            long size = Constants.KB;
+            long size = DataMovementTestConstants.KB * 2;
             int waitTimeInSec = 25;
             DataTransferOptions options = new DataTransferOptions()
             {
-                InitialTransferSize = 100,
-                MaximumTransferChunkSize = 200,
+                InitialTransferSize = 512,
+                MaximumTransferChunkSize = 512,
             };
 
             // Arrange
@@ -447,7 +454,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
             string objectName = GetNewObjectName();
-            int size = Constants.KB;
+            int size = DataMovementTestConstants.KB;
             int waitTimeInSec = 10;
 
             // Create destination client with uploaded content.
@@ -487,7 +494,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Arrange
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
-            int size = Constants.KB;
+            int size = DataMovementTestConstants.KB;
             int waitTimeInSec = 10;
 
             // Act
@@ -513,7 +520,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string objectName = GetNewObjectName();
-            int size = Constants.KB;
+            int size = DataMovementTestConstants.KB;
 
             // Create destination client with uploaded content.
             // This will cause a skip to occur since we have SkipIfExists enabled,
@@ -570,7 +577,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
             string objectName = GetNewObjectName();
-            int size = Constants.KB;
+            int size = DataMovementTestConstants.KB;
 
             // Create destination client with uploaded content.
             // This will cause a failure to occur since we have FailIfExists enabled,
@@ -626,9 +633,9 @@ namespace Azure.Storage.DataMovement.Tests
 
         [RecordedTest]
         [TestCase(0, 10)]
-        [TestCase(1000, 10)]
-        [TestCase(Constants.KB, 20)]
-        [TestCase(4 * Constants.KB, 20)]
+        [TestCase(512, 10)]
+        [TestCase(DataMovementTestConstants.KB, 20)]
+        [TestCase(4 * DataMovementTestConstants.KB, 20)]
         public async Task LocalToRemoteObject_SmallSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -643,10 +650,10 @@ namespace Azure.Storage.DataMovement.Tests
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
         [LiveOnly]
-        [TestCase(257 * Constants.MB, 600)]
-        [TestCase(500 * Constants.MB, 200)]
-        [TestCase(700 * Constants.MB, 200)]
-        [TestCase(Constants.GB, 1500)]
+        [TestCase(257 * DataMovementTestConstants.MB, 600)]
+        [TestCase(500 * DataMovementTestConstants.MB, 200)]
+        [TestCase(700 * DataMovementTestConstants.MB, 200)]
+        [TestCase(DataMovementTestConstants.GB, 1500)]
         public async Task LocalToRemoteObject_LargeSize(long size, int waitTimeInSec)
         {
             // Arrange
@@ -659,11 +666,11 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [TestCase(1, Constants.KB, 10)]
-        [TestCase(2, Constants.KB, 10)]
-        [TestCase(1, 4 * Constants.KB, 60)]
-        [TestCase(2, 4 * Constants.KB, 60)]
-        [TestCase(4, 16 * Constants.KB, 60)]
+        [TestCase(1, DataMovementTestConstants.KB, 10)]
+        [TestCase(2, DataMovementTestConstants.KB, 10)]
+        [TestCase(1, 4 * DataMovementTestConstants.KB, 60)]
+        [TestCase(2, 4 * DataMovementTestConstants.KB, 60)]
+        [TestCase(4, 16 * DataMovementTestConstants.KB, 60)]
         public async Task LocalToRemoteObject_SmallConcurrency(int concurrency, long size, int waitTimeInSec)
         {
             // Arrange
@@ -693,11 +700,11 @@ namespace Azure.Storage.DataMovement.Tests
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
         [LiveOnly]
-        [TestCase(1, 257 * Constants.MB, 200)]
-        [TestCase(4, 257 * Constants.MB, 200)]
-        [TestCase(16, 257 * Constants.MB, 200)]
-        [TestCase(16, Constants.GB, 200)]
-        [TestCase(32, Constants.GB, 200)]
+        [TestCase(1, 257 * DataMovementTestConstants.MB, 200)]
+        [TestCase(4, 257 * DataMovementTestConstants.MB, 200)]
+        [TestCase(16, 257 * DataMovementTestConstants.MB, 200)]
+        [TestCase(16, DataMovementTestConstants.GB, 200)]
+        [TestCase(32, DataMovementTestConstants.GB, 200)]
         public async Task LocalToRemoteObject_LargeConcurrency(int concurrency, int size, int waitTimeInSec)
         {
             // Arrange
@@ -720,11 +727,11 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         [LiveOnly]
         [TestCase(2, 0, 30)]
-        [TestCase(2, Constants.KB, 30)]
-        [TestCase(6, Constants.KB, 30)]
-        [TestCase(32, Constants.KB, 30)]
-        [TestCase(2, 2 * Constants.KB, 30)]
-        [TestCase(6, 2 * Constants.KB, 30)]
+        [TestCase(2, DataMovementTestConstants.KB, 30)]
+        [TestCase(6, DataMovementTestConstants.KB, 30)]
+        [TestCase(32, DataMovementTestConstants.KB, 30)]
+        [TestCase(2, 2 * DataMovementTestConstants.KB, 30)]
+        [TestCase(6, 2 * DataMovementTestConstants.KB, 30)]
         public async Task LocalToRemoteObject_SmallMultiple(int objectCount, long size, int waitTimeInSec)
         {
             // Arrange
@@ -740,10 +747,10 @@ namespace Azure.Storage.DataMovement.Tests
         [Ignore("These tests currently take 40+ mins for little additional coverage")]
         [Test]
         [LiveOnly]
-        [TestCase(2, 257 * Constants.MB, 400)]
-        [TestCase(6, 257 * Constants.MB, 400)]
-        [TestCase(2, Constants.GB, 1000)]
-        [TestCase(3, Constants.GB, 2000)]
+        [TestCase(2, 257 * DataMovementTestConstants.MB, 400)]
+        [TestCase(6, 257 * DataMovementTestConstants.MB, 400)]
+        [TestCase(2, DataMovementTestConstants.GB, 1000)]
+        [TestCase(3, DataMovementTestConstants.GB, 2000)]
         public async Task LocalToRemoteObject_LargeMultiple(int objectCount, long size, int waitTimeInSec)
         {
             // Arrange
@@ -755,6 +762,6 @@ namespace Azure.Storage.DataMovement.Tests
                 waitTimeInSec: waitTimeInSec,
                 objectCount: objectCount);
         }
-#endregion
+        #endregion
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(Get))
             {
                 writer.WritePropertyName("get"u8);
-                writer.WriteObjectValue(Get);
+                writer.WriteObjectValue<HierarchiesRequestBatchGetDelete>(Get);
             }
             if (Optional.IsCollectionDefined(Put))
             {
@@ -26,16 +26,24 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WriteStartArray();
                 foreach (var item in Put)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TimeSeriesHierarchy>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete);
+                writer.WriteObjectValue<HierarchiesRequestBatchGetDelete>(Delete);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HierarchiesBatchRequest>(this);
+            return content;
         }
     }
 }

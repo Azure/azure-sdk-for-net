@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -30,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (BigDataPool != null)
                 {
                     writer.WritePropertyName("bigDataPool"u8);
-                    writer.WriteObjectValue(BigDataPool);
+                    writer.WriteObjectValue<BigDataPoolReference>(BigDataPool);
                 }
                 else
                 {
@@ -40,14 +39,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
-                writer.WriteObjectValue(TargetSparkConfiguration);
+                writer.WriteObjectValue<SparkConfigurationReference>(TargetSparkConfiguration);
             }
             if (Optional.IsDefined(SessionProperties))
             {
                 if (SessionProperties != null)
                 {
                     writer.WritePropertyName("sessionProperties"u8);
-                    writer.WriteObjectValue(SessionProperties);
+                    writer.WriteObjectValue<NotebookSessionProperties>(SessionProperties);
                 }
                 else
                 {
@@ -55,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata);
+            writer.WriteObjectValue<NotebookMetadata>(Metadata);
             writer.WritePropertyName("nbformat"u8);
             writer.WriteNumberValue(NotebookFormat);
             writer.WritePropertyName("nbformat_minor"u8);
@@ -64,7 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartArray();
             foreach (var item in Cells)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<NotebookCell>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Folder))
@@ -72,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (Folder != null)
                 {
                     writer.WritePropertyName("folder"u8);
-                    writer.WriteObjectValue(Folder);
+                    writer.WriteObjectValue<NotebookFolder>(Folder);
                 }
                 else
                 {
@@ -82,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -191,12 +190,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Notebook FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNotebook(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<Notebook>(this);
+            return content;
+        }
+
         internal partial class NotebookConverter : JsonConverter<Notebook>
         {
             public override void Write(Utf8JsonWriter writer, Notebook model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<Notebook>(model);
             }
+
             public override Notebook Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

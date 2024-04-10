@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,29 +22,29 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ImageGenerationContentFilterResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageGenerationContentFilterResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageGenerationContentFilterResults)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sexual))
             {
                 writer.WritePropertyName("sexual"u8);
-                writer.WriteObjectValue(Sexual);
+                writer.WriteObjectValue<ContentFilterResult>(Sexual, options);
             }
             if (Optional.IsDefined(Violence))
             {
                 writer.WritePropertyName("violence"u8);
-                writer.WriteObjectValue(Violence);
+                writer.WriteObjectValue<ContentFilterResult>(Violence, options);
             }
             if (Optional.IsDefined(Hate))
             {
                 writer.WritePropertyName("hate"u8);
-                writer.WriteObjectValue(Hate);
+                writer.WriteObjectValue<ContentFilterResult>(Hate, options);
             }
             if (Optional.IsDefined(SelfHarm))
             {
                 writer.WritePropertyName("self_harm"u8);
-                writer.WriteObjectValue(SelfHarm);
+                writer.WriteObjectValue<ContentFilterResult>(SelfHarm, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +69,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ImageGenerationContentFilterResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageGenerationContentFilterResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageGenerationContentFilterResults)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +89,7 @@ namespace Azure.AI.OpenAI
             ContentFilterResult hate = default;
             ContentFilterResult selfHarm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sexual"u8))
@@ -131,10 +130,10 @@ namespace Azure.AI.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ImageGenerationContentFilterResults(sexual, violence, hate, selfHarm, serializedAdditionalRawData);
         }
 
@@ -147,7 +146,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageGenerationContentFilterResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageGenerationContentFilterResults)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +162,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeImageGenerationContentFilterResults(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageGenerationContentFilterResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageGenerationContentFilterResults)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -181,7 +180,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ImageGenerationContentFilterResults>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

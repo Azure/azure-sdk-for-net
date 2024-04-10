@@ -618,10 +618,11 @@ namespace Azure.Storage.DataMovement.Tests
             BlobContainerClient containerClient,
             string localSourceFile,
             string blobName,
-            long size)
+            long size,
+            AppendBlobCreateOptions createOptions = default)
         {
             AppendBlobClient blobClient = containerClient.GetAppendBlobClient(blobName);
-            await blobClient.CreateIfNotExistsAsync().ConfigureAwait(false);
+            await blobClient.CreateIfNotExistsAsync(createOptions).ConfigureAwait(false);
             if (size > 0)
             {
                 long offset = 0;
@@ -652,7 +653,8 @@ namespace Azure.Storage.DataMovement.Tests
             BlobContainerClient containerClient,
             string localSourceFile,
             string blobName,
-            long size)
+            long size,
+            BlobUploadOptions options = default)
         {
             BlockBlobClient blobClient = containerClient.GetBlockBlobClient(blobName);
 
@@ -665,7 +667,7 @@ namespace Azure.Storage.DataMovement.Tests
                 await originalStream.CopyToAsync(fileStream);
                 // Upload blob to storage account
                 originalStream.Position = 0;
-                await blobClient.UploadAsync(originalStream);
+                await blobClient.UploadAsync(originalStream, options);
             }
             return blobClient;
         }
@@ -674,12 +676,13 @@ namespace Azure.Storage.DataMovement.Tests
             BlobContainerClient containerClient,
             string localSourceFile,
             string blobName,
-            long size)
+            long size,
+            PageBlobCreateOptions options = default)
         {
             Assert.IsTrue(size % (Constants.KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
 
             PageBlobClient blobClient = containerClient.GetPageBlobClient(blobName);
-            await blobClient.CreateIfNotExistsAsync(size).ConfigureAwait(false);
+            await blobClient.CreateIfNotExistsAsync(size, options).ConfigureAwait(false);
             if (size > 0)
             {
                 long offset = 0;

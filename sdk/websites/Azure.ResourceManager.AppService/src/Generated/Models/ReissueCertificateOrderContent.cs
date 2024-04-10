@@ -74,14 +74,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Certificate Key Size. </summary>
+        [WirePath("properties.keySize")]
         public int? KeySize { get; set; }
         /// <summary> Delay in hours to revoke existing certificate after the new certificate is issued. </summary>
+        [WirePath("properties.delayExistingRevokeInHours")]
         public int? DelayExistingRevokeInHours { get; set; }
         /// <summary> Csr to be used for re-key operation. </summary>
+        [WirePath("properties.csr")]
         public string Csr { get; set; }
         /// <summary> Should we change the ASC type (from managed private key to external private key and vice versa). </summary>
+        [WirePath("properties.isPrivateKeyExternal")]
         public bool? IsPrivateKeyExternal { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledQueryRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledQueryRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
-                writer.WriteObjectValue(Criteria);
+                writer.WriteObjectValue<ScheduledQueryRuleCriteria>(Criteria, options);
             }
             if (Optional.IsDefined(MuteActionsDuration))
             {
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue(Actions);
+                writer.WriteObjectValue<ScheduledQueryRuleActions>(Actions, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsWorkspaceAlertsStorageConfigured))
             {
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledQueryRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledQueryRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -240,7 +239,7 @@ namespace Azure.ResourceManager.Monitor
             bool? skipQueryValidation = default;
             bool? autoMitigate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -478,10 +477,10 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ScheduledQueryRuleData(
                 id,
                 name,
@@ -521,7 +520,7 @@ namespace Azure.ResourceManager.Monitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledQueryRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledQueryRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -537,7 +536,7 @@ namespace Azure.ResourceManager.Monitor
                         return DeserializeScheduledQueryRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledQueryRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledQueryRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

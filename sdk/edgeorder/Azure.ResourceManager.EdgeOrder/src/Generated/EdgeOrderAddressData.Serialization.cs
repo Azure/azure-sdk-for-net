@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderAddressData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderAddressData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderAddressData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.EdgeOrder
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                writer.WriteObjectValue<EdgeOrderShippingAddress>(ShippingAddress, options);
             }
             writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails);
+            writer.WriteObjectValue<EdgeOrderAddressContactDetails>(ContactDetails, options);
             if (options.Format != "W" && Optional.IsDefined(AddressValidationStatus))
             {
                 writer.WritePropertyName("addressValidationStatus"u8);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EdgeOrder
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderAddressData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderAddressData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderAddressData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EdgeOrder
             EdgeOrderAddressContactDetails contactDetails = default;
             EdgeOrderAddressValidationStatus? addressValidationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.EdgeOrder
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeOrderAddressData(
                 id,
                 name,
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderAddressData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderAddressData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.EdgeOrder
                         return DeserializeEdgeOrderAddressData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderAddressData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderAddressData)} does not support reading '{options.Format}' format.");
             }
         }
 

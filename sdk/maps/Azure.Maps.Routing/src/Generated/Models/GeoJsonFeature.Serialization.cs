@@ -17,11 +17,11 @@ namespace Azure.Maps.Routing.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue(Geometry);
+            writer.WriteObjectValue<GeoJsonGeometry>(Geometry);
             if (Common.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<object>(Properties);
             }
             if (Common.Optional.IsDefined(Id))
             {
@@ -36,6 +36,14 @@ namespace Azure.Maps.Routing.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToSerialString());
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<GeoJsonFeature>(this);
+            return content;
         }
     }
 }

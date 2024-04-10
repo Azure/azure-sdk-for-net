@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Result of the List NetworkRuleSet operation. </summary>
+        [WirePath("value")]
         public IReadOnlyList<EventHubsNetworkRuleSetData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of NetworkRuleSet. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

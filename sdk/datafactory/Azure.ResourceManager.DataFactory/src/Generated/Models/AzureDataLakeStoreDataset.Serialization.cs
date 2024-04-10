@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDataLakeStoreDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDataLakeStoreDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDataLakeStoreDataset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<EntityParameterSpecification>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue<DatasetFolder>(Folder, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
@@ -100,12 +99,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue(Format);
+                writer.WriteObjectValue<DatasetStorageFormat>(Format, options);
             }
             if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
-                writer.WriteObjectValue(Compression);
+                writer.WriteObjectValue<DatasetCompression>(Compression, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDataLakeStoreDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDataLakeStoreDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDataLakeStoreDataset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -312,7 +311,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDataLakeStoreDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDataLakeStoreDataset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -328,7 +327,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAzureDataLakeStoreDataset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDataLakeStoreDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDataLakeStoreDataset)} does not support reading '{options.Format}' format.");
             }
         }
 

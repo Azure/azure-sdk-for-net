@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -86,6 +85,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The standard JSON format of a Cassandra keyspace. </summary>
         internal CassandraKeyspaceResourceInfo Resource { get; set; }
         /// <summary> Name of the Cosmos DB Cassandra keyspace. </summary>
+        [WirePath("properties.resource.id")]
         public string ResourceKeyspaceName
         {
             get => Resource is null ? default : Resource.KeyspaceName;
@@ -93,8 +93,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </summary>
+        [WirePath("properties.options")]
         public CosmosDBCreateUpdateConfig Options { get; set; }
         /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

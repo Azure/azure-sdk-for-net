@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Workloads
             var format = options.Format == "W" ? ((IPersistableModel<SapCentralServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapCentralServerInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapCentralServerInstanceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,22 +77,22 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(MessageServerProperties))
             {
                 writer.WritePropertyName("messageServerProperties"u8);
-                writer.WriteObjectValue(MessageServerProperties);
+                writer.WriteObjectValue<MessageServerProperties>(MessageServerProperties, options);
             }
             if (Optional.IsDefined(EnqueueServerProperties))
             {
                 writer.WritePropertyName("enqueueServerProperties"u8);
-                writer.WriteObjectValue(EnqueueServerProperties);
+                writer.WriteObjectValue<EnqueueServerProperties>(EnqueueServerProperties, options);
             }
             if (Optional.IsDefined(GatewayServerProperties))
             {
                 writer.WritePropertyName("gatewayServerProperties"u8);
-                writer.WriteObjectValue(GatewayServerProperties);
+                writer.WriteObjectValue<GatewayServerProperties>(GatewayServerProperties, options);
             }
             if (Optional.IsDefined(EnqueueReplicationServerProperties))
             {
                 writer.WritePropertyName("enqueueReplicationServerProperties"u8);
-                writer.WriteObjectValue(EnqueueReplicationServerProperties);
+                writer.WriteObjectValue<EnqueueReplicationServerProperties>(EnqueueReplicationServerProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(KernelVersion))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Workloads
                 writer.WriteStartArray();
                 foreach (var item in VmDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CentralServerVmDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors);
+                writer.WriteObjectValue<SapVirtualInstanceError>(Errors, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Workloads
             var format = options.Format == "W" ? ((IPersistableModel<SapCentralServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapCentralServerInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapCentralServerInstanceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Workloads
             SapVirtualInstanceProvisioningState? provisioningState = default;
             SapVirtualInstanceError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -402,10 +402,10 @@ namespace Azure.ResourceManager.Workloads
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SapCentralServerInstanceData(
                 id,
                 name,
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Workloads
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapCentralServerInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapCentralServerInstanceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Workloads
                         return DeserializeSapCentralServerInstanceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapCentralServerInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapCentralServerInstanceData)} does not support reading '{options.Format}' format.");
             }
         }
 

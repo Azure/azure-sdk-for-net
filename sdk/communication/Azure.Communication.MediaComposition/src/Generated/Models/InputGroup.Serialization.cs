@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
@@ -20,7 +21,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
-                writer.WriteObjectValue(Position);
+                writer.WriteObjectValue<InputPosition>(Position);
             }
             if (Optional.IsDefined(Width))
             {
@@ -60,6 +61,22 @@ namespace Azure.Communication.MediaComposition
                 }
             }
             return UnknownInputGroup.DeserializeUnknownInputGroup(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static InputGroup FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeInputGroup(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<InputGroup>(this);
+            return content;
         }
     }
 }

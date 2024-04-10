@@ -77,14 +77,19 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Display name of the detector. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> Description of the detector. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> Detector Rank. </summary>
+        [WirePath("properties.rank")]
         public double? Rank { get; }
         /// <summary> Flag representing whether detector is enabled or not. </summary>
+        [WirePath("properties.isEnabled")]
         public bool? IsEnabled { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

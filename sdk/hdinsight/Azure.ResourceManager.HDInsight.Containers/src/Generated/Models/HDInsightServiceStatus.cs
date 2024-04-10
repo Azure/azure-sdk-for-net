@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    /// <summary> Describes the status of a service of a HDInsight on aks cluster. </summary>
+    /// <summary> Describes the status of a service of a HDInsight on AKS cluster. </summary>
     public partial class HDInsightServiceStatus
     {
         /// <summary>

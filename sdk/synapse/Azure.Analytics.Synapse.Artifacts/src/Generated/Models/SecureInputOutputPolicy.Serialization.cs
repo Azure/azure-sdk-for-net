@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -64,12 +63,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SecureInputOutputPolicy(secureInput, secureOutput);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SecureInputOutputPolicy FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSecureInputOutputPolicy(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SecureInputOutputPolicy>(this);
+            return content;
+        }
+
         internal partial class SecureInputOutputPolicyConverter : JsonConverter<SecureInputOutputPolicy>
         {
             public override void Write(Utf8JsonWriter writer, SecureInputOutputPolicy model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SecureInputOutputPolicy>(model);
             }
+
             public override SecureInputOutputPolicy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

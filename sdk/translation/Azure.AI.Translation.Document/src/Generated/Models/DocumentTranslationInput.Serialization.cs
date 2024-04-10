@@ -16,12 +16,12 @@ namespace Azure.AI.Translation.Document
         {
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue<TranslationSource>(Source);
             writer.WritePropertyName("targets"u8);
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<TranslationTarget>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(StorageUriKind))
@@ -30,6 +30,14 @@ namespace Azure.AI.Translation.Document
                 writer.WriteStringValue(StorageUriKind.Value.ToSerialString());
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DocumentTranslationInput>(this);
+            return content;
         }
     }
 }

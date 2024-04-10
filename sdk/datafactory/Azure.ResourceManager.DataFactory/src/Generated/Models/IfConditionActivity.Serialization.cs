@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<IfConditionActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IfConditionActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IfConditionActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,21 +61,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("expression"u8);
-            writer.WriteObjectValue(Expression);
+            writer.WriteObjectValue<DataFactoryExpression>(Expression, options);
             if (Optional.IsCollectionDefined(IfTrueActivities))
             {
                 writer.WritePropertyName("ifTrueActivities"u8);
                 writer.WriteStartArray();
                 foreach (var item in IfTrueActivities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivity>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in IfFalseActivities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivity>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<IfConditionActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IfConditionActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IfConditionActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -272,7 +271,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IfConditionActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IfConditionActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeIfConditionActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IfConditionActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IfConditionActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

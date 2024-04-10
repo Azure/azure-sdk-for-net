@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Which Redis node(s) to reboot. Depending on this value data loss is possible. </summary>
+        [WirePath("rebootType")]
         public RedisRebootType? RebootType { get; set; }
         /// <summary> If clustering is enabled, the ID of the shard to be rebooted. </summary>
+        [WirePath("shardId")]
         public int? ShardId { get; set; }
         /// <summary> A list of redis instances to reboot, specified by per-instance SSL ports or non-SSL ports. </summary>
+        [WirePath("ports")]
         public IList<int> Ports { get; }
     }
 }

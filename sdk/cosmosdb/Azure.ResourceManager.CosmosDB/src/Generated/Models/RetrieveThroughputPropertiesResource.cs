@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -73,6 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Array of PhysicalPartitionId objects. </summary>
+        [WirePath("physicalPartitionIds")]
         public IList<WritableSubResource> PhysicalPartitionIds { get; }
     }
 }

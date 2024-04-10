@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The domain name of the dependency. </summary>
+        [WirePath("domainName")]
         public string DomainName { get; }
         /// <summary> The IP Addresses and Ports used when connecting to DomainName. </summary>
+        [WirePath("endpointDetails")]
         public IReadOnlyList<ManagedInstanceEndpointDetail> EndpointDetails { get; }
     }
 }

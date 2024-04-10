@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -73,8 +72,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> A message that describes why a resource is non-compliant with the policy. This is shown in 'deny' error messages and on resource's non-compliant compliance results. </summary>
+        [WirePath("message")]
         public string Message { get; set; }
         /// <summary> The policy definition reference ID within a policy set definition the message is intended for. This is only applicable if the policy assignment assigns a policy set definition. If this is not provided the message applies to all policies assigned by this policy assignment. </summary>
+        [WirePath("policyDefinitionReferenceId")]
         public string PolicyDefinitionReferenceId { get; set; }
     }
 }

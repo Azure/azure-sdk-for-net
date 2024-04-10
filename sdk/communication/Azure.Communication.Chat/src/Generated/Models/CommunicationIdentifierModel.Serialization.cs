@@ -29,17 +29,17 @@ namespace Azure.Communication
             if (Chat.Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser"u8);
-                writer.WriteObjectValue(CommunicationUser);
+                writer.WriteObjectValue<CommunicationUserIdentifierModel>(CommunicationUser);
             }
             if (Chat.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
-                writer.WriteObjectValue(PhoneNumber);
+                writer.WriteObjectValue<PhoneNumberIdentifierModel>(PhoneNumber);
             }
             if (Chat.Optional.IsDefined(MicrosoftTeamsUser))
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
-                writer.WriteObjectValue(MicrosoftTeamsUser);
+                writer.WriteObjectValue<MicrosoftTeamsUserIdentifierModel>(MicrosoftTeamsUser);
             }
             writer.WriteEndObject();
         }
@@ -100,6 +100,22 @@ namespace Azure.Communication
                 }
             }
             return new CommunicationIdentifierModel(kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CommunicationIdentifierModel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCommunicationIdentifierModel(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Chat.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CommunicationIdentifierModel>(this);
+            return content;
         }
     }
 }

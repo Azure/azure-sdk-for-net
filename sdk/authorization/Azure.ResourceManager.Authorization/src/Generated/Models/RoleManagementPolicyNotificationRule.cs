@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -42,14 +41,19 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The type of notification. </summary>
+        [WirePath("notificationType")]
         public NotificationDeliveryType? NotificationDeliveryType { get; set; }
         /// <summary> The notification level. </summary>
+        [WirePath("notificationLevel")]
         public RoleManagementPolicyNotificationLevel? NotificationLevel { get; set; }
         /// <summary> The recipient type. </summary>
+        [WirePath("recipientType")]
         public RoleManagementPolicyRecipientType? RecipientType { get; set; }
         /// <summary> The list of notification recipients. </summary>
+        [WirePath("notificationRecipients")]
         public IList<string> NotificationRecipients { get; }
         /// <summary> Determines if the notification will be sent to the recipient type specified in the policy rule. </summary>
+        [WirePath("isDefaultRecipientsEnabled")]
         public bool? AreDefaultRecipientsEnabled { get; set; }
     }
 }

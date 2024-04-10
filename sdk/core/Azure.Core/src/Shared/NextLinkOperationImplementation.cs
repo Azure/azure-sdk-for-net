@@ -18,6 +18,7 @@ namespace Azure.Core
 {
     internal class NextLinkOperationImplementation : IOperation
     {
+        internal const string NotSet = "NOT_SET";
         internal const string RehydrationTokenVersion = "1.0.0";
         private const string ApiVersionParam = "api-version";
         private static readonly string[] FailureStates = { "failed", "canceled" };
@@ -35,7 +36,7 @@ namespace Azure.Core
         // We can only get OperationId when
         // - The operation is still in progress and nextRequestUri contains it
         // - During rehydration, rehydrationToken.Id is the operation id
-        public string? OperationId { get; private set; }
+        public string OperationId { get; private set; } = NotSet;
         public RequestMethod RequestMethod { get; }
 
         public static IOperation Create(
@@ -171,7 +172,10 @@ namespace Azure.Core
             _finalStateVia = finalStateVia;
             _pipeline = pipeline;
             _apiVersion = apiVersion;
-            OperationId = operationId;
+            if (operationId is not null)
+            {
+                OperationId = operationId;
+            }
         }
 
         private string ParseOperationId(Uri startRequestUri, string nextRequestUri)
@@ -193,26 +197,14 @@ namespace Azure.Core
             RequestMethod requestMethod,
             Uri startRequestUri,
             Response response,
-            OperationFinalStateVia finalStateVia,
-            bool skipApiVersionOverride = false,
-            string? apiVersionOverrideValue = null)
+            OperationFinalStateVia finalStateVia)
         {
             AssertNotNull(requestMethod, nameof(requestMethod));
             AssertNotNull(startRequestUri, nameof(startRequestUri));
             AssertNotNull(response, nameof(response));
             AssertNotNull(finalStateVia, nameof(finalStateVia));
 
-            string? apiVersionStr;
-            if (apiVersionOverrideValue is not null)
-            {
-                apiVersionStr = apiVersionOverrideValue;
-            }
-            else
-            {
-                apiVersionStr = !skipApiVersionOverride && TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null;
-            }
-
-            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out var nextRequestUri);
+            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, null, out var nextRequestUri);
             string? lastKnownLocation;
             if (!response.Headers.TryGetValue("Location", out lastKnownLocation))
             {
@@ -236,7 +228,9 @@ namespace Azure.Core
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            Response response = await GetResponseAsync(async, _nextRequestUri, cancellationToken).ConfigureAwait(false);
+            Response response = async
+                ? await GetResponseAsync(_nextRequestUri, cancellationToken).ConfigureAwait(false)
+                : GetResponse(_nextRequestUri, cancellationToken);
 
             var hasCompleted = IsFinalState(response, _headerSource, out var failureState, out var resourceLocation);
             if (failureState != null)
@@ -247,10 +241,17 @@ namespace Azure.Core
             if (hasCompleted)
             {
                 string? finalUri = GetFinalUri(resourceLocation);
-                var finalResponse = finalUri != null
-                    ? await GetResponseAsync(async, finalUri, cancellationToken).ConfigureAwait(false)
-                    : response;
-
+                Response finalResponse;
+                if (finalUri != null)
+                {
+                    finalResponse = async
+                        ? await GetResponseAsync(finalUri, cancellationToken).ConfigureAwait(false)
+                        : GetResponse(finalUri, cancellationToken);
+                }
+                else
+                {
+                    finalResponse = response;
+                }
                 return GetOperationStateFromFinalResponse(RequestMethod, finalResponse);
             }
 
@@ -410,17 +411,23 @@ namespace Azure.Core
             return null;
         }
 
-        private async ValueTask<Response> GetResponseAsync(bool async, string uri, CancellationToken cancellationToken)
+        private Response GetResponse(string uri, CancellationToken cancellationToken)
         {
             using HttpMessage message = CreateRequest(uri);
-            if (async)
+            _pipeline.Send(message, cancellationToken);
+
+            // If we are doing final get for a delete LRO with 404, just return empty response with 204
+            if (message.Response.Status == 404 && RequestMethod == RequestMethod.Delete)
             {
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                return new EmptyResponse(HttpStatusCode.NoContent, message.Response.ClientRequestId);
             }
-            else
-            {
-                _pipeline.Send(message, cancellationToken);
-            }
+            return message.Response;
+        }
+
+        private async ValueTask<Response> GetResponseAsync(string uri, CancellationToken cancellationToken)
+        {
+            using HttpMessage message = CreateRequest(uri);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
             // If we are doing final get for a delete LRO with 404, just return empty response with 204
             if (message.Response.Status == 404 && RequestMethod == RequestMethod.Delete)

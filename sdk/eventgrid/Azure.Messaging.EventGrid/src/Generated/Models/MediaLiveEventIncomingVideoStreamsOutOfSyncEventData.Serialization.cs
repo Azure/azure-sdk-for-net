@@ -56,12 +56,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new MediaLiveEventIncomingVideoStreamsOutOfSyncEventData(firstTimestamp, firstDuration, secondTimestamp, secondDuration, timescale);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaLiveEventIncomingVideoStreamsOutOfSyncEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaLiveEventIncomingVideoStreamsOutOfSyncEventData(document.RootElement);
+        }
+
         internal partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventDataConverter : JsonConverter<MediaLiveEventIncomingVideoStreamsOutOfSyncEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaLiveEventIncomingVideoStreamsOutOfSyncEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override MediaLiveEventIncomingVideoStreamsOutOfSyncEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

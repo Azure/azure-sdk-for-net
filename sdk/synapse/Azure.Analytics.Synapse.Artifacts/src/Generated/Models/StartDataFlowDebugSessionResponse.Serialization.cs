@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -45,12 +44,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new StartDataFlowDebugSessionResponse(jobVersion);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StartDataFlowDebugSessionResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStartDataFlowDebugSessionResponse(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<StartDataFlowDebugSessionResponse>(this);
+            return content;
+        }
+
         internal partial class StartDataFlowDebugSessionResponseConverter : JsonConverter<StartDataFlowDebugSessionResponse>
         {
             public override void Write(Utf8JsonWriter writer, StartDataFlowDebugSessionResponse model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<StartDataFlowDebugSessionResponse>(model);
             }
+
             public override StartDataFlowDebugSessionResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
