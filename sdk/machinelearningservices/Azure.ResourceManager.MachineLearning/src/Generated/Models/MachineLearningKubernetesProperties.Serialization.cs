@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 foreach (var item in InstanceTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<MachineLearningInstanceTypeSchema>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

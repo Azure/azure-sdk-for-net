@@ -20,7 +20,7 @@ namespace Azure.Maps.Routing.Models
             writer.WriteStartArray();
             foreach (var item in Geometries)
             {
-                writer.WriteObjectValue<GeoJsonGeometry>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -30,7 +30,7 @@ namespace Azure.Maps.Routing.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GeoJsonGeometryCollectionData>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

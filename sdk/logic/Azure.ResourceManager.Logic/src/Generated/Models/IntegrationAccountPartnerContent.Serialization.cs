@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(B2B))
             {
                 writer.WritePropertyName("b2b"u8);
-                writer.WriteObjectValue<B2BPartnerContent>(B2B, options);
+                writer.WriteObjectValue(B2B, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

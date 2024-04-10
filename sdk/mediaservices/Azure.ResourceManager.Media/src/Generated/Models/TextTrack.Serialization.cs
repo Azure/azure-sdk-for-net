@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(HlsSettings))
             {
                 writer.WritePropertyName("hlsSettings"u8);
-                writer.WriteObjectValue<HlsSettings>(HlsSettings, options);
+                writer.WriteObjectValue(HlsSettings, options);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);

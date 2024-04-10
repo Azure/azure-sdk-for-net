@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue<MachineLearningScheduleAction>(Action, options);
+            writer.WriteObjectValue(Action, options);
             if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue<MachineLearningTriggerBase>(Trigger, options);
+            writer.WriteObjectValue(Trigger, options);
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)

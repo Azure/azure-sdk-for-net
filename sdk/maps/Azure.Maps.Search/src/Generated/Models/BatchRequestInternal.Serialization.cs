@@ -22,7 +22,7 @@ namespace Azure.Maps.Search.Models
                 writer.WriteStartArray();
                 foreach (var item in BatchItems)
                 {
-                    writer.WriteObjectValue<BatchRequestItemInternal>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -33,7 +33,7 @@ namespace Azure.Maps.Search.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchRequestInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

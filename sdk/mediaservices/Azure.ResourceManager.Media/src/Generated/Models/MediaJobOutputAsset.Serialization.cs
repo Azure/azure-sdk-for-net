@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Media.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<MediaJobError>(Error, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (Optional.IsDefined(PresetOverride))
             {
                 writer.WritePropertyName("presetOverride"u8);
-                writer.WriteObjectValue<MediaTransformPreset>(PresetOverride, options);
+                writer.WriteObjectValue(PresetOverride, options);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {

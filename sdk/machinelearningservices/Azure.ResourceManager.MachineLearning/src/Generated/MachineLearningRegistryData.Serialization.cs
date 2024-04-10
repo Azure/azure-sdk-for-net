@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<MachineLearningSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning
                 if (ManagedResourceGroup != null)
                 {
                     writer.WritePropertyName("managedResourceGroup"u8);
-                    writer.WriteObjectValue<ArmResourceId>(ManagedResourceGroup, options);
+                    writer.WriteObjectValue(ManagedResourceGroup, options);
                 }
                 else
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteStartArray();
                     foreach (var item in PrivateEndpointConnections)
                     {
-                        writer.WriteObjectValue<RegistryPrivateEndpointConnection>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteStartArray();
                     foreach (var item in RegionDetails)
                     {
-                        writer.WriteObjectValue<RegistryRegionArmDetails>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }

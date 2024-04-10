@@ -153,7 +153,7 @@ namespace Azure.AI.MetricsAdvisor
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MetricCommentFeedback>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

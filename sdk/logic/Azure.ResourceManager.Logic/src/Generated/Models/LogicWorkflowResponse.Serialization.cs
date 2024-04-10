@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(BodyLink))
             {
                 writer.WritePropertyName("bodyLink"u8);
-                writer.WriteObjectValue<LogicContentLink>(BodyLink, options);
+                writer.WriteObjectValue(BodyLink, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

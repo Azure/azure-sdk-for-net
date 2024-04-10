@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedCallerIPAddresses)
                 {
-                    writer.WriteObjectValue<FlowAccessControlIPAddressRange>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OpenAuthenticationPolicies))
             {
                 writer.WritePropertyName("openAuthenticationPolicies"u8);
-                writer.WriteObjectValue<OpenAuthenticationAccessPolicies>(OpenAuthenticationPolicies, options);
+                writer.WriteObjectValue(OpenAuthenticationPolicies, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

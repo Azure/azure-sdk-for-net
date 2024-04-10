@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in Series)
             {
-                writer.WriteObjectValue<SeriesIdentity>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -33,7 +33,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DetectionSeriesQuery>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }
