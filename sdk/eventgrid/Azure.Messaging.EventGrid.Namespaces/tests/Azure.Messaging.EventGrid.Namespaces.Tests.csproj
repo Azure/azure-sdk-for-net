@@ -24,11 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SessionRecords\" />
-    <Folder Include="SessionRecords\EventGridClientLiveTests\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="..\..\Azure.Messaging.EventGrid\tests\Infrastructure\EventGridTestEnvironment.cs">
       <Link>EventGridTestEnvironment.cs</Link>
     </Compile>
