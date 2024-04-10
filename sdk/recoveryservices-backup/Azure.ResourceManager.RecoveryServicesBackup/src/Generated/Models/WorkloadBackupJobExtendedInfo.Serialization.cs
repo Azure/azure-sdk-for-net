@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in TasksList)
                 {
-                    writer.WriteObjectValue<WorkloadBackupJobTaskDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

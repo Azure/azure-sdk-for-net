@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Relay
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue<RelayPrivateLinkServiceConnectionState>(ConnectionState, options);
+                writer.WriteObjectValue(ConnectionState, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {

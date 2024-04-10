@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(RecoveryAzureStorageAccountCustomContent))
             {
                 writer.WritePropertyName("recoveryAzureStorageAccountCustomInput"u8);
-                writer.WriteObjectValue<StorageAccountCustomDetails>(RecoveryAzureStorageAccountCustomContent, options);
+                writer.WriteObjectValue(RecoveryAzureStorageAccountCustomContent, options);
             }
             if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
             {
                 writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
-                writer.WriteObjectValue<StorageAccountCustomDetails>(PrimaryStagingStorageAccountCustomContent, options);
+                writer.WriteObjectValue(PrimaryStagingStorageAccountCustomContent, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

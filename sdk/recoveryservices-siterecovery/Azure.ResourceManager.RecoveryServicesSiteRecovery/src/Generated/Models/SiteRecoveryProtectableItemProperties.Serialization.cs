@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
-                writer.WriteObjectValue<SiteRecoveryReplicationProviderSettings>(CustomDetails, options);
+                writer.WriteObjectValue(CustomDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

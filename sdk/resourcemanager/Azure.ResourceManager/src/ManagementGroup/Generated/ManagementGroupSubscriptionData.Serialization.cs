@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagementGroups
                 if (Parent != null)
                 {
                     writer.WritePropertyName("parent"u8);
-                    writer.WriteObjectValue<DescendantParentGroupInfo>(Parent, options);
+                    writer.WriteObjectValue(Parent, options);
                 }
                 else
                 {

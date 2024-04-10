@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<QuantumProviderDescription>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

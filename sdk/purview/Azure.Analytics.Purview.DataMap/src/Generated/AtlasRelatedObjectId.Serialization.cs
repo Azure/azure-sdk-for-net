@@ -77,7 +77,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(RelationshipAttributes))
             {
                 writer.WritePropertyName("relationshipAttributes"u8);
-                writer.WriteObjectValue<AtlasStruct>(RelationshipAttributes, options);
+                writer.WriteObjectValue(RelationshipAttributes, options);
             }
             if (Optional.IsDefined(RelationshipGuid))
             {
@@ -279,7 +279,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AtlasRelatedObjectId>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

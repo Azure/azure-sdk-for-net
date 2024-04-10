@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
-                writer.WriteObjectValue<ManagementGroupParentCreateOptions>(Parent, options);
+                writer.WriteObjectValue(Parent, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<DataReplicationVaultProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

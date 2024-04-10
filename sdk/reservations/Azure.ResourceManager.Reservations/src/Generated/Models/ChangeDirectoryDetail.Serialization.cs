@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservationOrder))
             {
                 writer.WritePropertyName("reservationOrder"u8);
-                writer.WriteObjectValue<ChangeDirectoryResult>(ReservationOrder, options);
+                writer.WriteObjectValue(ReservationOrder, options);
             }
             if (Optional.IsCollectionDefined(Reservations))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Reservations)
                 {
-                    writer.WriteObjectValue<ChangeDirectoryResult>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

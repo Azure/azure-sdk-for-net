@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue<InMageRcmProtectedDiskDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(MobilityAgentDetails))
             {
                 writer.WritePropertyName("mobilityAgentDetails"u8);
-                writer.WriteObjectValue<InMageRcmMobilityAgentDetails>(MobilityAgentDetails, options);
+                writer.WriteObjectValue(MobilityAgentDetails, options);
             }
             if (Optional.IsCollectionDefined(LastAgentUpgradeErrorDetails))
             {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in LastAgentUpgradeErrorDetails)
                 {
-                    writer.WriteObjectValue<InMageRcmLastAgentUpgradeErrorDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AgentUpgradeBlockingErrorDetails)
                 {
-                    writer.WriteObjectValue<InMageRcmAgentUpgradeBlockingErrorDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -298,14 +298,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue<InMageRcmNicDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DiscoveredVmDetails))
             {
                 writer.WritePropertyName("discoveredVmDetails"u8);
-                writer.WriteObjectValue<InMageRcmDiscoveredProtectedVmDetails>(DiscoveredVmDetails, options);
+                writer.WriteObjectValue(DiscoveredVmDetails, options);
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);

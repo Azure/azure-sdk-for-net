@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Selectors)
                 {
-                    writer.WriteObjectValue<ResourceSelectorExpression>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

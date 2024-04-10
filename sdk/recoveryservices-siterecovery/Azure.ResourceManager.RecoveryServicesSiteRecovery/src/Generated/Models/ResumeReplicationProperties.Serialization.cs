@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("providerSpecificDetails"u8);
-            writer.WriteObjectValue<ResumeReplicationProviderSpecificContent>(ProviderSpecificDetails, options);
+            writer.WriteObjectValue(ProviderSpecificDetails, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

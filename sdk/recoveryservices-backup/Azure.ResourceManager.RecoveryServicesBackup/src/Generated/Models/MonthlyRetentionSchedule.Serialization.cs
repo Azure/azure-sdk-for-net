@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RetentionScheduleDaily))
             {
                 writer.WritePropertyName("retentionScheduleDaily"u8);
-                writer.WriteObjectValue<DailyRetentionFormat>(RetentionScheduleDaily, options);
+                writer.WriteObjectValue(RetentionScheduleDaily, options);
             }
             if (Optional.IsDefined(RetentionScheduleWeekly))
             {
                 writer.WritePropertyName("retentionScheduleWeekly"u8);
-                writer.WriteObjectValue<WeeklyRetentionFormat>(RetentionScheduleWeekly, options);
+                writer.WriteObjectValue(RetentionScheduleWeekly, options);
             }
             if (Optional.IsCollectionDefined(RetentionTimes))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RetentionDuration))
             {
                 writer.WritePropertyName("retentionDuration"u8);
-                writer.WriteObjectValue<RetentionDuration>(RetentionDuration, options);
+                writer.WriteObjectValue(RetentionDuration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

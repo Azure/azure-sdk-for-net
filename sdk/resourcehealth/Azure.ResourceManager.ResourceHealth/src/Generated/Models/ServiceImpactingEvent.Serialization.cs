@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<ServiceImpactingEventStatus>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (Optional.IsDefined(IncidentProperties))
             {
                 writer.WritePropertyName("incidentProperties"u8);
-                writer.WriteObjectValue<ServiceImpactingEventIncidentProperties>(IncidentProperties, options);
+                writer.WriteObjectValue(IncidentProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
