@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 foreach (var item in ExtensionTargets)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ExtensionTargetProperties>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

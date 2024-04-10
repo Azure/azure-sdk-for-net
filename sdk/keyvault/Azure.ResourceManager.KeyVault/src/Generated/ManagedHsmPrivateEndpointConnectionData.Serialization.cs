@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KeyVault
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<ManagedHsmSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.KeyVault
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue<ManagedHsmPrivateLinkServiceConnectionState>(PrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

@@ -18,12 +18,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(SymmetricKey))
             {
                 writer.WritePropertyName("symmetricKey"u8);
-                writer.WriteObjectValue<SymmetricKey>(SymmetricKey);
+                writer.WriteObjectValue(SymmetricKey);
             }
             if (Optional.IsDefined(X509Thumbprint))
             {
                 writer.WritePropertyName("x509Thumbprint"u8);
-                writer.WriteObjectValue<X509Thumbprint>(X509Thumbprint);
+                writer.WriteObjectValue(X509Thumbprint);
             }
             if (Optional.IsDefined(Type))
             {
@@ -87,7 +87,7 @@ namespace Azure.IoT.Hub.Service.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AuthenticationMechanism>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

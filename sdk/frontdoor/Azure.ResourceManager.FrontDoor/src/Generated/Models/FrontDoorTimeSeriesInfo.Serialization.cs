@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in TimeSeriesData)
                 {
-                    writer.WriteObjectValue<FrontDoorTimeSeriesDataPoint>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

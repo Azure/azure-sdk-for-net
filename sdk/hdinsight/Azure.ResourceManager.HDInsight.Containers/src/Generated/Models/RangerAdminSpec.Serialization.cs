@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("database"u8);
-            writer.WriteObjectValue<RangerAdminSpecDatabase>(Database, options);
+            writer.WriteObjectValue(Database, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

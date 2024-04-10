@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in ControlPlaneStatus)
                 {
-                    writer.WriteObjectValue<ProvisionedClusterAddonStatusProfile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

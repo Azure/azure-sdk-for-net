@@ -164,7 +164,7 @@ namespace Azure.AI.FormRecognizer
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, object value)
+        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value)
         {
             switch (value)
             {

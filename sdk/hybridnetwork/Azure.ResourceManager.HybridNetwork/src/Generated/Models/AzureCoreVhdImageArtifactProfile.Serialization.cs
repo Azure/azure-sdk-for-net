@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(VhdArtifactProfile))
             {
                 writer.WritePropertyName("vhdArtifactProfile"u8);
-                writer.WriteObjectValue<VhdImageArtifactProfile>(VhdArtifactProfile, options);
+                writer.WriteObjectValue(VhdArtifactProfile, options);
             }
             if (Optional.IsDefined(ArtifactStore))
             {

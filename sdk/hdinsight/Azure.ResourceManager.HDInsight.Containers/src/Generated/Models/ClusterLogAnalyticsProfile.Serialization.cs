@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(ApplicationLogs))
             {
                 writer.WritePropertyName("applicationLogs"u8);
-                writer.WriteObjectValue<ClusterLogAnalyticsApplicationLogs>(ApplicationLogs, options);
+                writer.WriteObjectValue(ApplicationLogs, options);
             }
             if (Optional.IsDefined(IsMetricsEnabled))
             {

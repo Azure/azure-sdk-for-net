@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue<ManagedResourceGroupConfiguration>(ManagedResourceGroupConfiguration, options);
+                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
             }
             if (Optional.IsDefined(SiteReference))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(NetworkServiceDesignVersionResourceReference))
             {
                 writer.WritePropertyName("networkServiceDesignVersionResourceReference"u8);
-                writer.WriteObjectValue<DeploymentResourceIdReference>(NetworkServiceDesignVersionResourceReference, options);
+                writer.WriteObjectValue(NetworkServiceDesignVersionResourceReference, options);
             }
             if (Optional.IsCollectionDefined(DesiredStateConfigurationGroupValueReferences))
             {

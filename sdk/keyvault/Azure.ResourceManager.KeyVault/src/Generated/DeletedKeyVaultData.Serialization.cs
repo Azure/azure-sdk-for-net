@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<DeletedKeyVaultProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W")
             {

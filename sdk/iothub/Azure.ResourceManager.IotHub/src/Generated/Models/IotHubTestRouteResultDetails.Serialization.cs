@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in CompilationErrors)
                 {
-                    writer.WriteObjectValue<RouteCompilationError>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

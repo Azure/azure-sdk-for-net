@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<HardwareSecurityModulesSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue<NetworkProfile>(NetworkProfile, options);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (Optional.IsDefined(ManagementNetworkProfile))
             {
                 writer.WritePropertyName("managementNetworkProfile"u8);
-                writer.WriteObjectValue<NetworkProfile>(ManagementNetworkProfile, options);
+                writer.WriteObjectValue(ManagementNetworkProfile, options);
             }
             if (Optional.IsDefined(StampId))
             {

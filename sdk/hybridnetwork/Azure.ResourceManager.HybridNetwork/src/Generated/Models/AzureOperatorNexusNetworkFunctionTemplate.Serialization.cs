@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkFunctionApplications)
                 {
-                    writer.WriteObjectValue<AzureOperatorNexusNetworkFunctionApplication>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

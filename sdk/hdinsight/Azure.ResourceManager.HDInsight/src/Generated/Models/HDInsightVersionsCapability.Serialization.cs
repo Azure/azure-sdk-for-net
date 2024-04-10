@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Available)
                 {
-                    writer.WriteObjectValue<HDInsightVersionSpec>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

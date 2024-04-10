@@ -53,22 +53,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
-                writer.WriteObjectValue<HybridComputeLocation>(LocationData, options);
+                writer.WriteObjectValue(LocationData, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue<HybridComputeOSProfile>(OSProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (Optional.IsDefined(CloudMetadata))
             {
                 writer.WritePropertyName("cloudMetadata"u8);
-                writer.WriteObjectValue<HybridComputeCloudMetadata>(CloudMetadata, options);
+                writer.WriteObjectValue(CloudMetadata, options);
             }
             if (Optional.IsDefined(AgentUpgrade))
             {
                 writer.WritePropertyName("agentUpgrade"u8);
-                writer.WriteObjectValue<AgentUpgrade>(AgentUpgrade, options);
+                writer.WriteObjectValue(AgentUpgrade, options);
             }
             if (Optional.IsDefined(ParentClusterResourceId))
             {

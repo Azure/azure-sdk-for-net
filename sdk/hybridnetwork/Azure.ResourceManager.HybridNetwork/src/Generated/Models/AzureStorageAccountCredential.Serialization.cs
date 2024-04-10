@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in ContainerCredentials)
                 {
-                    writer.WriteObjectValue<AzureStorageAccountContainerCredential>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
