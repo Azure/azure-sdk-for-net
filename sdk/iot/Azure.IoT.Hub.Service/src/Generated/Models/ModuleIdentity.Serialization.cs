@@ -64,7 +64,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue<AuthenticationMechanism>(Authentication);
+                writer.WriteObjectValue(Authentication);
             }
             writer.WriteEndObject();
         }
@@ -183,7 +183,7 @@ namespace Azure.IoT.Hub.Service.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ModuleIdentity>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

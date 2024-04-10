@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in OciArtifacts)
                 {
-                    writer.WriteObjectValue<HealthcareApisServiceOciArtifactEntry>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

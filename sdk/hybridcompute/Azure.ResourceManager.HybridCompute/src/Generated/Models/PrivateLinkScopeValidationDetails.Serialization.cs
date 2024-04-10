@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectionDetails)
                 {
-                    writer.WriteObjectValue<HybridComputeConnectionDetail>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

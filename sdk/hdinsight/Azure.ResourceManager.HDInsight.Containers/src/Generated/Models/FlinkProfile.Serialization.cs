@@ -27,25 +27,25 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("storage"u8);
-            writer.WriteObjectValue<FlinkStorageProfile>(Storage, options);
+            writer.WriteObjectValue(Storage, options);
             if (Optional.IsDefined(NumReplicas))
             {
                 writer.WritePropertyName("numReplicas"u8);
                 writer.WriteNumberValue(NumReplicas.Value);
             }
             writer.WritePropertyName("jobManager"u8);
-            writer.WriteObjectValue<ComputeResourceRequirement>(JobManager, options);
+            writer.WriteObjectValue(JobManager, options);
             if (Optional.IsDefined(HistoryServer))
             {
                 writer.WritePropertyName("historyServer"u8);
-                writer.WriteObjectValue<ComputeResourceRequirement>(HistoryServer, options);
+                writer.WriteObjectValue(HistoryServer, options);
             }
             writer.WritePropertyName("taskManager"u8);
-            writer.WriteObjectValue<ComputeResourceRequirement>(TaskManager, options);
+            writer.WriteObjectValue(TaskManager, options);
             if (Optional.IsDefined(CatalogOptions))
             {
                 writer.WritePropertyName("catalogOptions"u8);
-                writer.WriteObjectValue<FlinkCatalogOptions>(CatalogOptions, options);
+                writer.WriteObjectValue(CatalogOptions, options);
             }
             if (Optional.IsDefined(DeploymentMode))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(JobSpec))
             {
                 writer.WritePropertyName("jobSpec"u8);
-                writer.WriteObjectValue<FlinkJobProfile>(JobSpec, options);
+                writer.WriteObjectValue(JobSpec, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

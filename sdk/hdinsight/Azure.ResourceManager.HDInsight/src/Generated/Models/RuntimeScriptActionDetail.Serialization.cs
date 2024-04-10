@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ExecutionSummary)
                 {
-                    writer.WriteObjectValue<ScriptActionExecutionSummary>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

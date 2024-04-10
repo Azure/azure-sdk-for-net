@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.FrontDoor
                 if (CustomHttpsConfiguration != null)
                 {
                     writer.WritePropertyName("customHttpsConfiguration"u8);
-                    writer.WriteObjectValue<CustomHttpsConfiguration>(CustomHttpsConfiguration, options);
+                    writer.WriteObjectValue(CustomHttpsConfiguration, options);
                 }
                 else
                 {

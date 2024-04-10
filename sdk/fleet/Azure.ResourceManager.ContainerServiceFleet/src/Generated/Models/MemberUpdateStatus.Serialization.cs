@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<ContainerServiceFleetUpdateStatus>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {

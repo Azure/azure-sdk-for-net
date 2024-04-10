@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(InfraVnetProfile))
             {
                 writer.WritePropertyName("infraVnetProfile"u8);
-                writer.WriteObjectValue<InfraVnetProfile>(InfraVnetProfile, options);
+                writer.WriteObjectValue(InfraVnetProfile, options);
             }
             if (Optional.IsCollectionDefined(VipPool))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in VipPool)
                 {
-                    writer.WriteObjectValue<KubernetesVirtualIPItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in VmipPool)
                 {
-                    writer.WriteObjectValue<VirtualMachineIPItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<HybridContainerServiceNetworkStatus>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

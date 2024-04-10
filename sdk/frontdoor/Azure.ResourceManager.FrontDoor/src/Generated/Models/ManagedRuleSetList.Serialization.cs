@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagedRuleSets)
                 {
-                    writer.WriteObjectValue<ManagedRuleSet>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

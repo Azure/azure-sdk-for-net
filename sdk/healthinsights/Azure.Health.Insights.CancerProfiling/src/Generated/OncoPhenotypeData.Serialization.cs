@@ -30,13 +30,13 @@ namespace Azure.Health.Insights.CancerProfiling
             writer.WriteStartArray();
             foreach (var item in Patients)
             {
-                writer.WriteObjectValue<PatientRecord>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue<OncoPhenotypeModelConfiguration>(Configuration, options);
+                writer.WriteObjectValue(Configuration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -153,7 +153,7 @@ namespace Azure.Health.Insights.CancerProfiling
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<OncoPhenotypeData>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

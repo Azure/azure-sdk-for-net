@@ -30,7 +30,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartArray();
             foreach (var item in PatientResults)
             {
-                writer.WriteObjectValue<RadiologyInsightsPatientResult>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("modelVersion"u8);
@@ -146,7 +146,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RadiologyInsightsInferenceResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

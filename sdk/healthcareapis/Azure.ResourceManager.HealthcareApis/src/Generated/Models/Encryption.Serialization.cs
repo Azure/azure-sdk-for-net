@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             if (Optional.IsDefined(CustomerManagedKeyEncryption))
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
-                writer.WriteObjectValue<EncryptionCustomerManagedKeyEncryption>(CustomerManagedKeyEncryption, options);
+                writer.WriteObjectValue(CustomerManagedKeyEncryption, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

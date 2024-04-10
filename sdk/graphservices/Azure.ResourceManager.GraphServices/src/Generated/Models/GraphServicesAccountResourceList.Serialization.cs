@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.GraphServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<GraphServicesAccountResourceData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

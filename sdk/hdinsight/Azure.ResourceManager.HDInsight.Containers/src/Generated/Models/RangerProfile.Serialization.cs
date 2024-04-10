@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("rangerAdmin"u8);
-            writer.WriteObjectValue<RangerAdminSpec>(RangerAdmin, options);
+            writer.WriteObjectValue(RangerAdmin, options);
             if (Optional.IsDefined(RangerAudit))
             {
                 writer.WritePropertyName("rangerAudit"u8);
-                writer.WriteObjectValue<RangerAuditSpec>(RangerAudit, options);
+                writer.WriteObjectValue(RangerAudit, options);
             }
             writer.WritePropertyName("rangerUsersync"u8);
-            writer.WriteObjectValue<RangerUsersyncSpec>(RangerUsersync, options);
+            writer.WriteObjectValue(RangerUsersync, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

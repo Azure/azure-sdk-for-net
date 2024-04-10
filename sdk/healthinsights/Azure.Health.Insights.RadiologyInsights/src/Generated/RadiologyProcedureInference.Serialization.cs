@@ -32,7 +32,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in ProcedureCodes)
                 {
-                    writer.WriteObjectValue<FhirR4CodeableConcept>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -40,11 +40,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartArray();
             foreach (var item in ImagingProcedures)
             {
-                writer.WriteObjectValue<ImagingProcedure>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("orderedProcedure"u8);
-            writer.WriteObjectValue<FhirR4Extendible>(OrderedProcedure, options);
+            writer.WriteObjectValue(OrderedProcedure, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsCollectionDefined(Extension))
@@ -53,7 +53,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue<FhirR4Extension>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -210,7 +210,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RadiologyProcedureInference>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }
