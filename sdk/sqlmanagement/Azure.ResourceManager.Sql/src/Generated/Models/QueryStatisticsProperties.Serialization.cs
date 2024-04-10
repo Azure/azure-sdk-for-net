@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Intervals)
                 {
-                    writer.WriteObjectValue<QueryMetricInterval>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

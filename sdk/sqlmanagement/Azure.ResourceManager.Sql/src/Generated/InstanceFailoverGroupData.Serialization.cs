@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(ReadWriteEndpoint))
             {
                 writer.WritePropertyName("readWriteEndpoint"u8);
-                writer.WriteObjectValue<InstanceFailoverGroupReadWriteEndpoint>(ReadWriteEndpoint, options);
+                writer.WriteObjectValue(ReadWriteEndpoint, options);
             }
             if (Optional.IsDefined(ReadOnlyEndpoint))
             {
                 writer.WritePropertyName("readOnlyEndpoint"u8);
-                writer.WriteObjectValue<InstanceFailoverGroupReadOnlyEndpoint>(ReadOnlyEndpoint, options);
+                writer.WriteObjectValue(ReadOnlyEndpoint, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReplicationRole))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in PartnerRegions)
                 {
-                    writer.WriteObjectValue<PartnerRegionInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in ManagedInstancePairs)
                 {
-                    writer.WriteObjectValue<ManagedInstancePairInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

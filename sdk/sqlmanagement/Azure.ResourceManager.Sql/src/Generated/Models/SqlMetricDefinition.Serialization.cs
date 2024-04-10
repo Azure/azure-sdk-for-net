@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue<SqlMetricName>(Name, options);
+                writer.WriteObjectValue(Name, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PrimaryAggregationType))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricAvailabilities)
                 {
-                    writer.WriteObjectValue<SqlMetricAvailability>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

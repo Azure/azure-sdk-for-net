@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("freshness"u8);
-            writer.WriteObjectValue<FreshnessScoringParameters>(Parameters);
+            writer.WriteObjectValue(Parameters);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("fieldName"u8);
@@ -89,7 +89,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<FreshnessScoringFunction>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

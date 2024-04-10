@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(ApplicationPorts))
             {
                 writer.WritePropertyName("applicationPorts"u8);
-                writer.WriteObjectValue<ClusterEndpointRangeDescription>(ApplicationPorts, options);
+                writer.WriteObjectValue(ApplicationPorts, options);
             }
             if (Optional.IsDefined(EphemeralPorts))
             {
                 writer.WritePropertyName("ephemeralPorts"u8);
-                writer.WriteObjectValue<ClusterEndpointRangeDescription>(EphemeralPorts, options);
+                writer.WriteObjectValue(EphemeralPorts, options);
             }
             writer.WritePropertyName("isPrimary"u8);
             writer.WriteBooleanValue(IsPrimary);

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WriteStartArray();
                 foreach (var item in ShareablePrivateLinkResourceTypes)
                 {
-                    writer.WriteObjectValue<ShareableSearchServicePrivateLinkResourceType>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

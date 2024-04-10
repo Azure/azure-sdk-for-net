@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<StorageSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W")
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue<StorageCorsRules>(Cors, options);
+                writer.WriteObjectValue(Cors, options);
             }
             if (Optional.IsDefined(DefaultServiceVersion))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(DeleteRetentionPolicy))
             {
                 writer.WritePropertyName("deleteRetentionPolicy"u8);
-                writer.WriteObjectValue<DeleteRetentionPolicy>(DeleteRetentionPolicy, options);
+                writer.WriteObjectValue(DeleteRetentionPolicy, options);
             }
             if (Optional.IsDefined(IsVersioningEnabled))
             {
@@ -85,22 +85,22 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(ChangeFeed))
             {
                 writer.WritePropertyName("changeFeed"u8);
-                writer.WriteObjectValue<BlobServiceChangeFeed>(ChangeFeed, options);
+                writer.WriteObjectValue(ChangeFeed, options);
             }
             if (Optional.IsDefined(RestorePolicy))
             {
                 writer.WritePropertyName("restorePolicy"u8);
-                writer.WriteObjectValue<RestorePolicy>(RestorePolicy, options);
+                writer.WriteObjectValue(RestorePolicy, options);
             }
             if (Optional.IsDefined(ContainerDeleteRetentionPolicy))
             {
                 writer.WritePropertyName("containerDeleteRetentionPolicy"u8);
-                writer.WriteObjectValue<DeleteRetentionPolicy>(ContainerDeleteRetentionPolicy, options);
+                writer.WriteObjectValue(ContainerDeleteRetentionPolicy, options);
             }
             if (Optional.IsDefined(LastAccessTimeTrackingPolicy))
             {
                 writer.WritePropertyName("lastAccessTimeTrackingPolicy"u8);
-                writer.WriteObjectValue<LastAccessTimeTrackingPolicy>(LastAccessTimeTrackingPolicy, options);
+                writer.WriteObjectValue(LastAccessTimeTrackingPolicy, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

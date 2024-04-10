@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 writer.WriteStartArray();
                 foreach (var item in Projects)
                 {
-                    writer.WriteObjectValue<AzureDevOpsProjectMetadata>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

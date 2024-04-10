@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in KillChainPhases)
                 {
-                    writer.WriteObjectValue<ThreatIntelligenceKillChainPhase>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ParsedPattern)
                 {
-                    writer.WriteObjectValue<ThreatIntelligenceParsedPattern>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ExternalReferences)
                 {
-                    writer.WriteObjectValue<ThreatIntelligenceExternalReference>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in GranularMarkings)
                 {
-                    writer.WriteObjectValue<ThreatIntelligenceGranularMarkingEntity>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

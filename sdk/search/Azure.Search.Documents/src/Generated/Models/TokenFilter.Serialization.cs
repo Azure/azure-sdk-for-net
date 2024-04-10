@@ -75,7 +75,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TokenFilter>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

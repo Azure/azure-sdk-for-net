@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(IncludedMaxSize))
             {
                 writer.WritePropertyName("includedMaxSize"u8);
-                writer.WriteObjectValue<MaxSizeCapability>(IncludedMaxSize, options);
+                writer.WriteObjectValue(IncludedMaxSize, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageSizes))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageSizes)
                 {
-                    writer.WriteObjectValue<MaxSizeRangeCapability>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedMaintenanceConfigurations)
                 {
-                    writer.WriteObjectValue<ManagedInstanceMaintenanceConfigurationCapability>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -135,17 +135,17 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(OwnerSource))
             {
                 writer.WritePropertyName("ownerSource"u8);
-                writer.WriteObjectValue<GovernanceRuleOwnerSource>(OwnerSource, options);
+                writer.WriteObjectValue(OwnerSource, options);
             }
             if (Optional.IsDefined(GovernanceEmailNotification))
             {
                 writer.WritePropertyName("governanceEmailNotification"u8);
-                writer.WriteObjectValue<GovernanceRuleEmailNotification>(GovernanceEmailNotification, options);
+                writer.WriteObjectValue(GovernanceEmailNotification, options);
             }
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<GovernanceRuleMetadata>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

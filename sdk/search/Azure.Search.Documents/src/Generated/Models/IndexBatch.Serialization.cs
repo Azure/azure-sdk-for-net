@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartArray();
             foreach (var item in Actions)
             {
-                writer.WriteObjectValue<IndexAction>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<IndexBatch>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

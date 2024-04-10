@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<ArmApplicationSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue<ArmApplicationAuthorization>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue<ArmApplicationDefinitionArtifact>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,22 +144,22 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(NotificationPolicy))
             {
                 writer.WritePropertyName("notificationPolicy"u8);
-                writer.WriteObjectValue<ArmApplicationNotificationPolicy>(NotificationPolicy, options);
+                writer.WriteObjectValue(NotificationPolicy, options);
             }
             if (Optional.IsDefined(LockingPolicy))
             {
                 writer.WritePropertyName("lockingPolicy"u8);
-                writer.WriteObjectValue<ArmApplicationPackageLockingPolicy>(LockingPolicy, options);
+                writer.WriteObjectValue(LockingPolicy, options);
             }
             if (Optional.IsDefined(DeploymentPolicy))
             {
                 writer.WritePropertyName("deploymentPolicy"u8);
-                writer.WriteObjectValue<ArmApplicationDeploymentPolicy>(DeploymentPolicy, options);
+                writer.WriteObjectValue(DeploymentPolicy, options);
             }
             if (Optional.IsDefined(ManagementPolicy))
             {
                 writer.WritePropertyName("managementPolicy"u8);
-                writer.WriteObjectValue<ArmApplicationManagementPolicy>(ManagementPolicy, options);
+                writer.WriteObjectValue(ManagementPolicy, options);
             }
             if (Optional.IsCollectionDefined(Policies))
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Policies)
                 {
-                    writer.WriteObjectValue<ArmApplicationPolicy>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

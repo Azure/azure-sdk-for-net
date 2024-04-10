@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (MappingFunction != null)
                 {
                     writer.WritePropertyName("mappingFunction"u8);
-                    writer.WriteObjectValue<FieldMappingFunction>(MappingFunction);
+                    writer.WriteObjectValue(MappingFunction);
                 }
                 else
                 {
@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<FieldMapping>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue<SearchIndexerDataIdentity>(Identity);
+                    writer.WriteObjectValue(Identity);
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchResourceEncryptionKey>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }
