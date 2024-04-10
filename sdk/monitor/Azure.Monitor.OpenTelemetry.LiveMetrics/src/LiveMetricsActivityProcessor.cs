@@ -11,7 +11,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
     internal sealed class LiveMetricsActivityProcessor : BaseProcessor<Activity>
     {
-        private bool _disposed;
         private LiveMetricsResource? _resource;
         private readonly Manager _manager;
 
