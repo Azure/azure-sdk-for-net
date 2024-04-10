@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="DummyOperationAsync(RequestContext)">
+      <example>
+This sample shows how to call DummyOperationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JsonMergePatchClient client = new JsonMergePatchClient(endpoint);
+
+Response response = await client.DummyOperationAsync();
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DummyOperationAsync with all request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JsonMergePatchClient client = new JsonMergePatchClient(endpoint);
+
+Response response = await client.DummyOperationAsync();
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DummyOperation(RequestContext)">
+      <example>
+This sample shows how to call DummyOperation.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JsonMergePatchClient client = new JsonMergePatchClient(endpoint);
+
+Response response = client.DummyOperation();
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DummyOperation with all request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JsonMergePatchClient client = new JsonMergePatchClient(endpoint);
+
+Response response = client.DummyOperation();
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+  </members>
+</doc>
