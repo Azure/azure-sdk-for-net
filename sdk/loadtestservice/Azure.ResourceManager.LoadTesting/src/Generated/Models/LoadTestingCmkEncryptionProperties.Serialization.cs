@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue<LoadTestingCmkIdentity>(Identity, options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(KeyUri))
             {

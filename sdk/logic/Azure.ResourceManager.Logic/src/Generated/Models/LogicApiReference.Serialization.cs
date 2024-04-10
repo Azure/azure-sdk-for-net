@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue<LogicResourceReference>(IntegrationServiceEnvironment, options);
+                writer.WriteObjectValue(IntegrationServiceEnvironment, options);
             }
             if (Optional.IsDefined(Id))
             {

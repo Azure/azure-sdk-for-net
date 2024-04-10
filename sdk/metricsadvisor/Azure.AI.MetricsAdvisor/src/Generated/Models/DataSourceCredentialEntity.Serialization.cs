@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DataSourceCredentialEntity>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

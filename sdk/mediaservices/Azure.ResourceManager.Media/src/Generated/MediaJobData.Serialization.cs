@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue<MediaJobInputBasicProperties>(Input, options);
+                writer.WriteObjectValue(Input, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue<MediaJobOutput>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

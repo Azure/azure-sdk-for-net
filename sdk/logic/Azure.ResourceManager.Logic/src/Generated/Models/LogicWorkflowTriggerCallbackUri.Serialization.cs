@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);
-                writer.WriteObjectValue<LogicWorkflowTriggerCallbackQueryParameterInfo>(Queries, options);
+                writer.WriteObjectValue(Queries, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

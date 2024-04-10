@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(RecurrencePattern))
             {
                 writer.WritePropertyName("recurrencePattern"u8);
-                writer.WriteObjectValue<LabServicesRecurrencePattern>(RecurrencePattern, options);
+                writer.WriteObjectValue(RecurrencePattern, options);
             }
             if (Optional.IsDefined(TimeZoneId))
             {

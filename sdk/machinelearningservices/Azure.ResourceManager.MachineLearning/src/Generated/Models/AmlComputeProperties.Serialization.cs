@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (VirtualMachineImage != null)
                 {
                     writer.WritePropertyName("virtualMachineImage"u8);
-                    writer.WriteObjectValue<VirtualMachineImage>(VirtualMachineImage, options);
+                    writer.WriteObjectValue(VirtualMachineImage, options);
                 }
                 else
                 {
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue<AmlComputeScaleSettings>(ScaleSettings, options);
+                writer.WriteObjectValue(ScaleSettings, options);
             }
             if (Optional.IsDefined(UserAccountCredentials))
             {
                 if (UserAccountCredentials != null)
                 {
                     writer.WritePropertyName("userAccountCredentials"u8);
-                    writer.WriteObjectValue<MachineLearningUserAccountCredentials>(UserAccountCredentials, options);
+                    writer.WriteObjectValue(UserAccountCredentials, options);
                 }
                 else
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Subnet != null)
                 {
                     writer.WritePropertyName("subnet"u8);
-                    writer.WriteObjectValue<ResourceId>(Subnet, options);
+                    writer.WriteObjectValue(Subnet, options);
                 }
                 else
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in Errors)
                     {
-                        writer.WriteObjectValue<MachineLearningError>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NodeStateCounts != null)
                 {
                     writer.WritePropertyName("nodeStateCounts"u8);
-                    writer.WriteObjectValue<MachineLearningNodeStateCounts>(NodeStateCounts, options);
+                    writer.WriteObjectValue(NodeStateCounts, options);
                 }
                 else
                 {

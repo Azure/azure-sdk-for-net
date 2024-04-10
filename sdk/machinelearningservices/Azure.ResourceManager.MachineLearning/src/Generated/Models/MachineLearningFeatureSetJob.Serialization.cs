@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FeatureWindow != null)
                 {
                     writer.WritePropertyName("featureWindow"u8);
-                    writer.WriteObjectValue<FeatureWindow>(FeatureWindow, options);
+                    writer.WriteObjectValue(FeatureWindow, options);
                 }
                 else
                 {

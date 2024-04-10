@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<StorageAccountRegenerteKeyParameters>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

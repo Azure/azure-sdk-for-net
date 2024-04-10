@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Threshold != null)
                 {
                     writer.WritePropertyName("threshold"u8);
-                    writer.WriteObjectValue<MonitoringThreshold>(Threshold, options);
+                    writer.WriteObjectValue(Threshold, options);
                 }
                 else
                 {

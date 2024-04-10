@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue<LogicWorkflowTriggerRecurrence>(Recurrence, options);
+                writer.WriteObjectValue(Recurrence, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

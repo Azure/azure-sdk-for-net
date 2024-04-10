@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<IntegrationServiceEnvironmentSkuDefinitionSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue<IntegrationServiceEnvironmentSkuCapacity>(Capacity, options);
+                writer.WriteObjectValue(Capacity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

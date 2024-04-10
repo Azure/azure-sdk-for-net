@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue<MachineLearningCmkIdentity>(Identity, options);
+                writer.WriteObjectValue(Identity, options);
             }
             writer.WritePropertyName("keyVaultProperties"u8);
-            writer.WriteObjectValue<MachineLearningEncryptionKeyVaultProperties>(KeyVaultProperties, options);
+            writer.WriteObjectValue(KeyVaultProperties, options);
             if (Optional.IsDefined(SearchAccountResourceId))
             {
                 writer.WritePropertyName("searchAccountResourceId"u8);

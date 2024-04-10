@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(AssignedUser))
             {
                 writer.WritePropertyName("assignedUser"u8);
-                writer.WriteObjectValue<MachineLearningComputeInstanceAssignedUser>(AssignedUser, options);
+                writer.WriteObjectValue(AssignedUser, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

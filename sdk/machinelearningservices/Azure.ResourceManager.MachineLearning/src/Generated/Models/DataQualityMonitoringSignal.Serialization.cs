@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Features != null)
                 {
                     writer.WritePropertyName("features"u8);
-                    writer.WriteObjectValue<MonitoringFeatureFilterBase>(Features, options);
+                    writer.WriteObjectValue(Features, options);
                 }
                 else
                 {
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue<DataQualityMetricThresholdBase>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("productionData"u8);
-            writer.WriteObjectValue<MonitoringInputDataBase>(ProductionData, options);
+            writer.WriteObjectValue(ProductionData, options);
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue<MonitoringInputDataBase>(ReferenceData, options);
+            writer.WriteObjectValue(ReferenceData, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);

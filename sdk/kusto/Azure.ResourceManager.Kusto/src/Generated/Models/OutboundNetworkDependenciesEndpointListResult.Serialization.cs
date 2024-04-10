@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<OutboundNetworkDependenciesEndpoint>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
