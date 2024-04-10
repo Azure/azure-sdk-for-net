@@ -934,7 +934,7 @@
 /sdk/cdn/                                                          @ptnan7
 
 # ServiceLabel: %Network - CDN %Mgmt
-# ServiceOwners:                                                   @cdnfdsuppgithub
+# ServiceOwners:                                                   @ptnan7
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
