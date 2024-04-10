@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             WebSiteCollection webSiteCollection = rg.GetWebSites();
             WebSiteResource webSiteResource = await webSiteCollection.GetAsync("FunctionApp1Lwm");
             SiteFunctionResource siteFuncResource = await webSiteResource.GetSiteFunctionAsync("HttpTrigger1");
-            IReadOnlyDictionary<string, string> funtionKeys = (await siteFuncResource.GetFunctionKeysAsDictionaryAsync()).Value;
-            Assert.GreaterOrEqual(funtionKeys.Count, 1);
+            var funtionKeys = (await siteFuncResource.GetFunctionKeysAsync()).Value;
+            Assert.GreaterOrEqual(funtionKeys.Properties.Count, 1);
         }
 
         //Manual operation needed to create website/function resource, get it from existing one.
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var subId = DefaultSubscription.Data.SubscriptionId;
             var siteSlotFunction = SiteSlotFunctionResource.CreateResourceIdentifier(subId, "Lwm_Rg", "FunctionApp1Lwm", "FunctionApp1Slot", "HttpTrigger1");
             var slot = Client.GetSiteSlotFunctionResource(siteSlotFunction);
-            IReadOnlyDictionary<string, string> funtionKeys = (await slot.GetFunctionKeysSlotAsDictionaryAsync()).Value;
-            Assert.NotZero(funtionKeys.Count);
+            var funtionKeys = (await slot.GetFunctionKeysSlotAsync()).Value;
+            Assert.NotZero(funtionKeys.Properties.Count);
         }
 
         //Manual operation needed to create website/function resource, get it from existing one.

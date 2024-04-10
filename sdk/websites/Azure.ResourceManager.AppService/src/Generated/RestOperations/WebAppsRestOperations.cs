@@ -6626,7 +6626,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListFunctionKeysAsDictionaryRequest(string subscriptionId, string resourceGroupName, string name, string functionName)
+        internal HttpMessage CreateListFunctionKeysRequest(string subscriptionId, string resourceGroupName, string name, string functionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -6647,78 +6647,6 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
-        }
-
-        /// <summary> Description for Get function keys for a function in a web site, or a deployment slot. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Site name. </param>
-        /// <param name="functionName"> Function name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyDictionary<string, string>>> ListFunctionKeysAsDictionaryAsync(string subscriptionId, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
-
-            using var message = CreateListFunctionKeysAsDictionaryRequest(subscriptionId, resourceGroupName, name, functionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IReadOnlyDictionary<string, string> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                        foreach (var property in document.RootElement.EnumerateObject())
-                        {
-                            dictionary.Add(property.Name, property.Value.GetString());
-                        }
-                        value = dictionary;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Description for Get function keys for a function in a web site, or a deployment slot. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Site name. </param>
-        /// <param name="functionName"> Function name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyDictionary<string, string>> ListFunctionKeysAsDictionary(string subscriptionId, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
-
-            using var message = CreateListFunctionKeysAsDictionaryRequest(subscriptionId, resourceGroupName, name, functionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IReadOnlyDictionary<string, string> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                        foreach (var property in document.RootElement.EnumerateObject())
-                        {
-                            dictionary.Add(property.Name, property.Value.GetString());
-                        }
-                        value = dictionary;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal HttpMessage CreateListFunctionSecretsRequest(string subscriptionId, string resourceGroupName, string name, string functionName)
@@ -20750,7 +20678,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListFunctionKeysSlotAsDictionaryRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName)
+        internal HttpMessage CreateListFunctionKeysSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -20773,82 +20701,6 @@ namespace Azure.ResourceManager.AppService
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
-        }
-
-        /// <summary> Description for Get function keys for a function in a web site, or a deployment slot. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Site name. </param>
-        /// <param name="slot"> Name of the deployment slot. </param>
-        /// <param name="functionName"> Function name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyDictionary<string, string>>> ListFunctionKeysSlotAsDictionaryAsync(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
-
-            using var message = CreateListFunctionKeysSlotAsDictionaryRequest(subscriptionId, resourceGroupName, name, slot, functionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IReadOnlyDictionary<string, string> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                        foreach (var property in document.RootElement.EnumerateObject())
-                        {
-                            dictionary.Add(property.Name, property.Value.GetString());
-                        }
-                        value = dictionary;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Description for Get function keys for a function in a web site, or a deployment slot. </summary>
-        /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="name"> Site name. </param>
-        /// <param name="slot"> Name of the deployment slot. </param>
-        /// <param name="functionName"> Function name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyDictionary<string, string>> ListFunctionKeysSlotAsDictionary(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
-
-            using var message = CreateListFunctionKeysSlotAsDictionaryRequest(subscriptionId, resourceGroupName, name, slot, functionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IReadOnlyDictionary<string, string> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                        foreach (var property in document.RootElement.EnumerateObject())
-                        {
-                            dictionary.Add(property.Name, property.Value.GetString());
-                        }
-                        value = dictionary;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal HttpMessage CreateListFunctionSecretsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName)
