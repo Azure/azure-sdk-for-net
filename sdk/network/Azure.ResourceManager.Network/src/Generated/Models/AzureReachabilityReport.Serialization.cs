@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("aggregationLevel"u8);
             writer.WriteStringValue(AggregationLevel);
             writer.WritePropertyName("providerLocation"u8);
-            writer.WriteObjectValue<AzureReachabilityReportLocation>(ProviderLocation, options);
+            writer.WriteObjectValue(ProviderLocation, options);
             writer.WritePropertyName("reachabilityReport"u8);
             writer.WriteStartArray();
             foreach (var item in ReachabilityReport)
             {
-                writer.WriteObjectValue<AzureReachabilityReportItem>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

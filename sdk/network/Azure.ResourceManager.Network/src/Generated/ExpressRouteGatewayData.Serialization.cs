@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoScaleConfiguration"u8);
-                writer.WriteObjectValue<ExpressRouteGatewayPropertiesAutoScaleConfiguration>(AutoScaleConfiguration, options);
+                writer.WriteObjectValue(AutoScaleConfiguration, options);
             }
             if (Optional.IsCollectionDefined(ExpressRouteConnectionList))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ExpressRouteConnectionList)
                 {
-                    writer.WriteObjectValue<ExpressRouteConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in Files)
                 {
-                    writer.WriteObjectValue<NginxConfigurationFile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedFiles)
                 {
-                    writer.WriteObjectValue<NginxConfigurationFile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Package))
             {
                 writer.WritePropertyName("package"u8);
-                writer.WriteObjectValue<NginxConfigurationPackage>(Package, options);
+                writer.WriteObjectValue(Package, options);
             }
             if (Optional.IsDefined(RootFile))
             {

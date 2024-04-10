@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue<MobileNetworkManagedServiceIdentity>(UserAssignedIdentity, options);
+                writer.WriteObjectValue(UserAssignedIdentity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(Installation))
             {
                 writer.WritePropertyName("installation"u8);
-                writer.WriteObjectValue<MobileNetworkInstallation>(Installation, options);
+                writer.WriteObjectValue(Installation, options);
             }
             writer.WritePropertyName("sites"u8);
             writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
             writer.WriteEndArray();
             writer.WritePropertyName("platform"u8);
-            writer.WriteObjectValue<MobileNetworkPlatformConfiguration>(Platform, options);
+            writer.WriteObjectValue(Platform, options);
             if (Optional.IsDefined(CoreNetworkTechnology))
             {
                 writer.WritePropertyName("coreNetworkTechnology"u8);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(RollbackVersion);
             }
             writer.WritePropertyName("controlPlaneAccessInterface"u8);
-            writer.WriteObjectValue<MobileNetworkInterfaceProperties>(ControlPlaneAccessInterface, options);
+            writer.WriteObjectValue(ControlPlaneAccessInterface, options);
             if (Optional.IsCollectionDefined(ControlPlaneAccessVirtualIPv4Addresses))
             {
                 writer.WritePropertyName("controlPlaneAccessVirtualIpv4Addresses"u8);
@@ -128,21 +128,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteNumberValue(UEMtu.Value);
             }
             writer.WritePropertyName("localDiagnosticsAccess"u8);
-            writer.WriteObjectValue<MobileNetworkLocalDiagnosticsAccessConfiguration>(LocalDiagnosticsAccess, options);
+            writer.WriteObjectValue(LocalDiagnosticsAccess, options);
             if (Optional.IsDefined(DiagnosticsUpload))
             {
                 writer.WritePropertyName("diagnosticsUpload"u8);
-                writer.WriteObjectValue<DiagnosticsUploadConfiguration>(DiagnosticsUpload, options);
+                writer.WriteObjectValue(DiagnosticsUpload, options);
             }
             if (Optional.IsDefined(EventHub))
             {
                 writer.WritePropertyName("eventHub"u8);
-                writer.WriteObjectValue<MobileNetworkEventHubConfiguration>(EventHub, options);
+                writer.WriteObjectValue(EventHub, options);
             }
             if (Optional.IsDefined(Signaling))
             {
                 writer.WritePropertyName("signaling"u8);
-                writer.WriteObjectValue<SignalingConfiguration>(Signaling, options);
+                writer.WriteObjectValue(Signaling, options);
             }
             if (Optional.IsDefined(InteropSettings))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (options.Format != "W" && Optional.IsDefined(HomeNetworkPrivateKeysProvisioning))
             {
                 writer.WritePropertyName("homeNetworkPrivateKeysProvisioning"u8);
-                writer.WriteObjectValue<HomeNetworkPrivateKeysProvisioning>(HomeNetworkPrivateKeysProvisioning, options);
+                writer.WriteObjectValue(HomeNetworkPrivateKeysProvisioning, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

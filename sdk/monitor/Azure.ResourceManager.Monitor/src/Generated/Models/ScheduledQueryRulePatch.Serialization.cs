@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
-                writer.WriteObjectValue<ScheduledQueryRuleCriteria>(Criteria, options);
+                writer.WriteObjectValue(Criteria, options);
             }
             if (Optional.IsDefined(MuteActionsDuration))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue<ScheduledQueryRuleActions>(Actions, options);
+                writer.WriteObjectValue(Actions, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsWorkspaceAlertsStorageConfigured))
             {

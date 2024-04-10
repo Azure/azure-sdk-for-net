@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AvailableRuleSets)
                 {
-                    writer.WriteObjectValue<ApplicationGatewayFirewallManifestRuleSet>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

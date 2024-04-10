@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Association))
             {
                 writer.WritePropertyName("association"u8);
-                writer.WriteObjectValue<EffectiveNetworkSecurityGroupAssociation>(Association, options);
+                writer.WriteObjectValue(Association, options);
             }
             if (Optional.IsCollectionDefined(EffectiveSecurityRules))
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in EffectiveSecurityRules)
                 {
-                    writer.WriteObjectValue<EffectiveNetworkSecurityRule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

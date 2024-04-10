@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Match))
             {
                 writer.WritePropertyName("match"u8);
-                writer.WriteObjectValue<ApplicationGatewayProbeHealthResponseMatch>(Match, options);
+                writer.WriteObjectValue(Match, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

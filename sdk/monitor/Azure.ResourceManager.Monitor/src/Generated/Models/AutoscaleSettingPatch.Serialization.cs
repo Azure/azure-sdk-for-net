@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Profiles)
                 {
-                    writer.WriteObjectValue<AutoscaleProfile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteStartArray();
                     foreach (var item in Notifications)
                     {
-                        writer.WriteObjectValue<AutoscaleNotification>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 if (PredictiveAutoscalePolicy != null)
                 {
                     writer.WritePropertyName("predictiveAutoscalePolicy"u8);
-                    writer.WriteObjectValue<PredictiveAutoscalePolicy>(PredictiveAutoscalePolicy, options);
+                    writer.WriteObjectValue(PredictiveAutoscalePolicy, options);
                 }
                 else
                 {

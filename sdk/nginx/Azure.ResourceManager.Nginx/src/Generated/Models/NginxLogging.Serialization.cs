@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
-                writer.WriteObjectValue<NginxStorageAccount>(StorageAccount, options);
+                writer.WriteObjectValue(StorageAccount, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

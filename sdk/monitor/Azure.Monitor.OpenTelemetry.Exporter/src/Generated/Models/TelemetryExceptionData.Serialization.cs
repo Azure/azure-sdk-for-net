@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteStartArray();
             foreach (var item in Exceptions)
             {
-                writer.WriteObjectValue<TelemetryExceptionDetails>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(SeverityLevel))
@@ -75,7 +75,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TelemetryExceptionData>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

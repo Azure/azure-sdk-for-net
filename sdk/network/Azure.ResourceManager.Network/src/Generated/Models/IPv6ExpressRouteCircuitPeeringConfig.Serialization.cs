@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
                 writer.WritePropertyName("microsoftPeeringConfig"u8);
-                writer.WriteObjectValue<ExpressRouteCircuitPeeringConfig>(MicrosoftPeeringConfig, options);
+                writer.WriteObjectValue(MicrosoftPeeringConfig, options);
             }
             if (Optional.IsDefined(RouteFilter))
             {
