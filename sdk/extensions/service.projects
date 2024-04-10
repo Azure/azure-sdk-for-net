@@ -8,16 +8,16 @@
 
   SDKType values
    - "all" will build all projects
-   - "aspnetcoreext" will build the asp.net core extension libraries contained at the top level extensions folder
-   - "wcfext" will build the WCF/CoreWCF extension libraries contained in the wcf folder
+   - "client" will build the asp.net core extension libraries contained at the top level extensions folder
+   - "wcf" will build the WCF/CoreWCF extension libraries contained in the wcf folder
 -->
 
 <Project>
-  <ItemGroup Condition="'$(SDKType)' == 'aspnetcoreext'">
+  <ItemGroup Condition="'$(SDKType)' == 'client'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)**\*.csproj" Exclude="$(MSBuildThisFileDirectory)wcf\**\*.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(SDKType)' == 'wcfext'">
+  <ItemGroup Condition="'$(SDKType)' == 'wcf'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)wcf\**\*.csproj" />
   </ItemGroup>
 </Project>

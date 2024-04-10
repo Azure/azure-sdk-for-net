@@ -25,80 +25,104 @@ Here's an example using the Azure CLI:
 az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
 ```
 
-### Authenticate the service to Azure
+### Configure ASP.NET Core to use CoreWCF with Queue transports
 
-In order to receive requests from the Azure Queue Storage service, you'll need to configure CoreWCF with the appropriate endpoint and credentials.  The [Azure Identity library][identity] makes it easy to add Microsoft Entra ID support for authenticating with Azure services.
+In order to receive requests from the Azure Queue Storage service, you'll need to configure CoreWCF to use queue transports.
 
-```C#
-app.UseServiceModel(services =>
+```C# Snippet:Configure_CoreWCF_QueueTransport
+public void ConfigureServices(IServiceCollection services)
 {
-    // Configure CoreWCF to dispatch to service type Service
-    services.AddService<Service>();
-    // Create a binding instance to use Azure Queue Storage, passing an optional queue name for the dead letter queue 
-    var aqsBinding = new AzureQueueStorageBinding("DEADLETTERQUEUENAME");
-    // Configure the client credential type to use DefaultAzureCredential
-    binding.Security.Transport.ClientCredentialType = AzureClientCredentialType.Default;
-    string queueEndpointString = "https://MYSTORAGEACCOUNT.queue.core.windows.net/QUEUENAME";
-    services.AddServiceEndpoint<Service, IServiceContract>(aqsBinding, queueEndpointString);
-});
+    services.AddServiceModelServices()
+            .AddQueueTransport();
+}
 ```
+
+### Authenticate the service to Azure Queue Storage
+
+To receive requests from the Azure Queue Storage service, you'll need to configure CoreWCF with the appropriate endpoint, and configure credentials.  The [Azure Identity library][identity] makes it easy to add Microsoft Entra ID support for authenticating with Azure services.  
+
+There are multiple authentication mechanisms for Azure Queue Storage. Which mechanism to use is configured via the property `AzureQueueStorageBinding.Security.Transport.ClientCredentialType`. The default authentication mechanism is `Default` which uses `DefaultAzureCredential`.
+
+```C# Snippet:CoreWCF_Azure_Storage_Queues_Sample_DefaultAzureCredential
+public void Configure(IApplicationBuilder app)
+{
+    app.UseServiceModel(serviceBuilder =>
+    {
+        // Configure CoreWCF to dispatch to service type Service
+        serviceBuilder.AddService<Service>();
+
+        // Create a binding instance to use Azure Queue Storage, passing an optional queue name for the dead letter queue
+        // The default client credential type is Default, which uses DefaultAzureCredential
+        var aqsBinding = new AzureQueueStorageBinding("DEADLETTERQUEUENAME");
+
+        // Add a service endpoint using the AzureQueueStorageBinding
+        string queueEndpointString = "https://MYSTORAGEACCOUNT.queue.core.windows.net/QUEUENAME";
+        serviceBuilder.AddServiceEndpoint<Service, IService>(aqsBinding, queueEndpointString);
+    });
+}
+```
+
 Learn more about enabling Microsoft Entra ID for authentication with Azure Storage in [our documentation][storage_ad].  
 
-If you are using a different credential mechanism such as `StorageSharedKeyCredential`, you can configure the appropriate `ClientCredentialType` and set the credential on an `AzureServiceCredential` instance via an extension method.
-```C#
-StorageSharedKeyCredential storageSharedKey = GetStorageSharedKey();
-app.UseServiceModel(services =>
+### Other authentication credential mechanisms
+
+If you are using a different credential mechanism such as `StorageSharedKeyCredential`, you configure the appropriate `ClientCredentialType` on the binding and set the credential on an `AzureServiceCredentials` instance via an extension method.
+
+```C# Snippet:CoreWCF_Azure_Storage_Queus_Sample_StorageSharedKey
+public void Configure(IApplicationBuilder app)
 {
-    // Configure CoreWCF to dispatch to service type Service
-    services.AddService<Service>();
-    // Create a binding instance to use Azure Queue Storage, passing an optional queue name for the dead letter queue 
-    var aqsBinding = new AzureQueueStorageBinding("DEADLETTERQUEUENAME");
-    // Configure the client credential type to use StorageSharedKeyCredential
-    binding.Security.Transport.ClientCredentialType = AzureClientCredentialType.StorageSharedKey;
-    string queueEndpointString = "https://MYSTORAGEACCOUNT.queue.core.windows.net/QUEUENAME";
-    services.AddServiceEndpoint<Service, IServiceContract>(aqsBinding, queueEndpointString);
-    services.UseAzureCredentials<Service>(credentials =>
+    app.UseServiceModel(serviceBuilder =>
     {
-        credentials.StorageSharedKey = storageSharedKey;
+        // Configure CoreWCF to dispatch to service type Service
+        serviceBuilder.AddService<Service>();
+
+        // Create a binding instance to use Azure Queue Storage, passing an optional queue name for the dead letter queue
+        var aqsBinding = new AzureQueueStorageBinding("DEADLETTERQUEUENAME");
+
+        // Configure the client credential type to use StorageSharedKeyCredential
+        aqsBinding.Security.Transport.ClientCredentialType = AzureClientCredentialType.StorageSharedKey;
+
+        // Add a service endpoint using the AzureQueueStorageBinding
+        string queueEndpointString = "https://MYSTORAGEACCOUNT.queue.core.windows.net/QUEUENAME";
+        serviceBuilder.AddServiceEndpoint<Service, IService>(aqsBinding, queueEndpointString);
+
+        // Use extension method to configure CoreWCF to use AzureServiceCredentials and set the
+        // StorageSharedKeyCredential instance.
+        serviceBuilder.UseAzureCredentials<Service>(credentials =>
+        {
+            credentials.StorageSharedKey = GetStorageSharedKey();
+        });
     });
-});
+}
+
+public StorageSharedKeyCredential GetStorageSharedKey()
+{
+    // Fetch shared key using a secure mechanism such as Azure Key Vault
+    // and construct an instance of StorageSharedKeyCredential to return;
+    return default;
+}
 ```
+
+Other values for ClientCredentialType are `Sas`, `Token`, and `ConnectionString`. The credentials class `AzureServiceCredentials` has corresponding properties to set each of these credential types.
 
 ## Troubleshooting
 
-Queue send operations will throw an exception if the operation fails.
+If there are any errors receiving a message from Azure Queue Storage, the CoreWCF transport will log the details at the `Debug` log level. You can configure logging for the category `Microsoft.CoreWCF` at the `Debug` level to see any errors.
 
-```C#
-
-// Receive a message from the queue.
-QueueMessage message = null;
-
-try
+```C# Snippet:CoreWCF_Azure_Storage_Queus_Sample_Logging
+.ConfigureLogging((logging) =>
 {
-    message = await _client.ReceiveMessageAsync(visibilityTimeout, cancellationToken).ConfigureAwait(false);
-}
-catch (Exception e)
-{
-    _logger.LogDebug(Task.CurrentId + "MessageQueue ReceiveMessageAsync: ReceiveMessageAsync failed with error message: " + e.Message);
-}
+    logging.AddFilter("Microsoft.CoreWCF", LogLevel.Debug);
+});
 ```
+
+If a message was recevied from the queue, but wasn't able to be processed, it will be placed in the dead letter queue. You can sepcify the dead letter queue name by passing it to the constructor of `AazureQueueStorageBinding`. If not specified, the default value of `default-dead-letter-queue` will be used.
 
 ## Key concepts
 
 CoreWCF is an implementation of the service side features of Windows Communication Foundation (WCF) for .NET. The goal of this project is to enable migrating existing WCF services to .NET that are currently using MSMQ and wish to deploy their service to Azure, replacing MSMQ with Azure Queue Storage.
 
-## Examples
-
-## Examples
-
-Get started with a sample of CoreWCF https://github.com/CoreWCF/samples
-
-## Next steps
-
-Get started with our examples below:
-
-1. [Sample code](tests/IntegrationTests_EndToEnd.cs): Send and receive messages using Azure Storage Queues.)
-2. [Auth](tests/AuthenticationTests.cs): Authenticate with shared keys, connection strings and token.
+More general samples of using CoreWCF can be found in the [CoreWCF samples repository][corewcf_repo]. To create a client to send messages to an Azure Storage Queue, see the To create a service to receive messages sent to an Azure Storage Queue, see the [Microsoft.WCF.Azure.StorageQueues documentation][wcf_docs]. 
 
 ## Contributing
 
@@ -124,3 +148,5 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[corewcf_repo]: https://github.com/CoreWCF/samples/
+[wcf_docs]: <!--https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/extensions/wcf/Microsoft.WCF.Azure.StorageQueues-->

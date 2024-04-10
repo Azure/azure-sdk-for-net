@@ -24,7 +24,7 @@ pr:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SdkType: wcfext
+    SDKType: wcf
     ServiceDirectory: extensions/wcf
     ArtifactName: packages
     Artifacts:

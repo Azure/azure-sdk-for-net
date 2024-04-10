@@ -6,7 +6,7 @@
 		<None Include="$(OutputPath)\Icon.png" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
-	<Target Condition="'$(IsTestProject)' != 'true'" Name="CopyIconFile" AfterTargets="AfterCompile">
+	<Target Condition="('$(IsTestProject)' != 'true') and ('$(IsSamplesProject)' != 'true')" Name="CopyIconFile" AfterTargets="AfterCompile">
 		<ItemGroup>
 			<SystemServiceModelIconFile Include="$(PkgSystem_ServiceModel_Primitives)\Icon.png"/>
 		</ItemGroup>
@@ -20,5 +20,5 @@
     <IsWcfLibrary>true</IsWcfLibrary>
   </PropertyGroup>
 
-  <Import Project="$([MSBuild]::GetPathOfFileAbove(Directory.Build.props, $(MSBuildThisFileDirectory)..))"/>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove(Directory.Build.props, $(MSBuildThisFileDirectory)..))" Condition="'$([MSBuild]::GetPathOfFileAbove(Directory.Build.props, $(MSBuildThisFileDirectory)..))' != ''"/>
 </Project>

@@ -6,7 +6,7 @@ WCF Azure Queue Storage client is the client side library that will enable WCF c
 
 ### Install the package
 
-Install the Azure.WCF.AzureQueueStorage.Client library for .NET with [NuGet][nuget]:
+Install the Microsoft.WCF.Azure.StorageQueues.Client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
 dotnet add package Microsoft.WCF.Azure.StorageQueues.Client
@@ -25,88 +25,81 @@ Here's an example using the Azure CLI:
 az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
 ```
 
-### Authenticate the client
+### Authenticate the service to Azure Queue Storage
 
-In order to send requests to the Azure Queue Storage service, you'll need to configure WCF with the appropriate endpoint and credentials.  The [Azure Identity library][identity] makes it easy to add Microsoft Entra ID support for authenticating with Azure services.
+To send requests to the Azure Queue Storage service, you'll need to configure WCF with the appropriate endpoint, and configure credentials.  The [Azure Identity library][identity] makes it easy to add Microsoft Entra ID support for authenticating with Azure services.
 
-```C#
+There are multiple authentication mechanisms for Azure Queue Storage. Which mechanism to use is configured via the property `AzureQueueStorageBinding.Security.Transport.ClientCredentialType`. The default authentication mechanism is `Default` which uses `DefaultAzureCredential`.
+
+```C# Snippet:WCF_Azure_Storage_Queues_Sample_DefaultAzureCredential
+// Create a binding instance to use Azure Queue Storage.
+// The default client credential type is Default, which uses DefaultAzureCredential
+var aqsBinding = new AzureQueueStorageBinding();
+
+// Create a ChannelFactory to using the binding and endpoint address, open it, and create a channel
 string queueEndpointString = "https://MYSTORAGEACCOUNT.queue.core.windows.net/QUEUENAME";
-// Create a binding instance to use Azure Queue Storage
-var aqsBinding = new AzureQueueStorageBinding("DEADLETTERQUEUENAME");
-// Configure the client credential type to use DefaultAzureCredential
-binding.Security.Transport.ClientCredentialType = AzureClientCredentialType.Default;
+var factory = new ChannelFactory<IService>(aqsBinding, new EndpointAddress(queueEndpointString));
+factory.Open();
+IService channel = factory.CreateChannel();
 
-await using(var factory = new ChannelFactory<IServiceContract>(aqsBinding, new EndpointAddress(queueEndpointString)))
-{
-    factory.Open();
-    await using (IServiceContract client = factory.CreateChannel())
-    {
-        ((System.ServiceModel.Channels.IChannel)channel).Open();
-        await client.SendAsync("Hello World!");
-    }
-}
+// IService dervies from IChannel so you can call channel.Open without casting
+channel.Open();
+await channel.SendDataAsync(42);
 ```
+
 Learn more about enabling Microsoft Entra ID for authentication with Azure Storage in [our documentation][storage_ad].  
 
-If you are using a different credential mechanism such as `StorageSharedKeyCredential`, you can configure the appropriate `ClientCredentialType` and set the credential on an `AzureServiceCredential` instance via an extension method.
-```C#
-StorageSharedKeyCredential storageSharedKey = GetStorageSharedKey();
-string queueEndpointString = "https://MYSTORAGEACCOUNT.queue.core.windows.net/QUEUENAME";
-// Create a binding instance to use Azure Queue Storage
-var aqsBinding = new AzureQueueStorageBinding("DEADLETTERQUEUENAME");
+### Other authentication credential mechanisms
+
+If you are using a different credential mechanism such as `StorageSharedKeyCredential`, you configure the appropriate `ClientCredentialType` on the binding and set the credential on an `AzureClientCredentials` instance via an extension method.
+
+```C# Snippet:WCF_Azure_Storage_Queus_Sample_StorageSharedKey
+// Create a binding instance to use Azure Queue Storage.
+var aqsBinding = new AzureQueueStorageBinding();
+
 // Configure the client credential type to use StorageSharedKeyCredential
-binding.Security.Transport.ClientCredentialType = AzureClientCredentialType.StorageSharedKey;
+aqsBinding.Security.Transport.ClientCredentialType = AzureClientCredentialType.StorageSharedKey;
 
-await using(var factory = new ChannelFactory<IServiceContract>(aqsBinding, new EndpointAddress(queueEndpointString)))
+// Create a ChannelFactory to using the binding and endpoint address
+string queueEndpointString = "https://MYSTORAGEACCOUNT.queue.core.windows.net/QUEUENAME";
+var factory = new ChannelFactory<IService>(aqsBinding, new EndpointAddress(queueEndpointString));
+
+// Use extension method to configure WCF to use AzureClientCredentials and set the
+// StorageSharedKeyCredential instance.
+factory.UseAzureCredentials(credentials =>
 {
-    channelFactory.UseAzureCredentials(credentials =>
-    {
-        credentials.StorageSharedKey = storageSharedKey;
-    });
+    credentials.StorageSharedKey = GetStorageSharedKey();
+});
 
-    factory.Open();
-    await using (IServiceContract client = factory.CreateChannel())
-    {
-        ((System.ServiceModel.Channels.IChannel)channel).Open();
-        await client.SendAsync("Hello World!");
-    }
+// Local function to get the StorageSharedKey
+StorageSharedKeyCredential GetStorageSharedKey()
+{
+    // Fetch shared key using a secure mechanism such as Azure Key Vault
+    // and construct an instance of StorageSharedKeyCredential to return;
+    return default;
 }
+
+// Open the factory and create a channel
+factory.Open();
+IService channel = factory.CreateChannel();
+
+// IService dervies from IChannel so you can call channel.Open without casting
+channel.Open();
+await channel.SendDataAsync(42);
 ```
+
+Other values for ClientCredentialType are `Sas`, `Token`, and `ConnectionString`. The credentials class `AzureClientCredentials` has corresponding properties to set each of these credential types.
 
 ## Troubleshooting
 
-Queue send operations will throw an exception if the operation fails.
-
-```C#
-
-// Try to send a message to the queue.
-try
-{
-    ArraySegment<byte> messageBuffer = EncodeMessage(message);
-    BinaryData binaryData = new(new ReadOnlyMemory<byte>(messageBuffer.Array, messageBuffer.Offset, messageBuffer.Count));
-    _queueClient.SendMessage(binaryData, default, default, cts.Token);
-}
-catch (Exception e)
-{
-    throw AzureQueueStorageChannelHelpers.ConvertTransferException(e);
-}
-```
+If there is a problem with sending a request to Azure Queue Storage, the operation call will throw a `CommunicationException` exception. See `CommunicationException.InnerException` for the original exception thrown by the Azure Storage Queues client.
 
 ## Key concepts
 
 The goal of this project is to enable migrating existing WCF clients to .NET that are currently using MSMQ and wish to deploy their service to Azure, replacing MSMQ with Azure Queue Storage.
 
-## Examples
-
-Get started with a sample of CoreWCF https://github.com/CoreWCF/samples
-
-
-## Next steps
-
-Get started with our examples below:
-
-1. [Sample code](tests/IntegrationTests.cs): Send and receive messages using Azure Storage Queues.)
-2. [Auth](tests/AuthenticationTests.cs): Authenticate with shared keys, connection strings and token.
+More general samples of using WCF can be found in the [.NET samples repository][dotnet_repo_wcf_samples].
+To create a service to receive messages sent to an Azure Storage Queue, see the [Microsoft.CoreWCF.Azure.StorageQueues documentation][corewcf_docs]. 
 
 ## Contributing
 
@@ -131,3 +124,5 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[dotnet_repo_wcf_samples]: https://github.com/dotnet/samples/tree/main/framework/wcf
+[corewcf_docs]: <!--https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/extensions/wcf/Microsoft.CoreWCF.Azure.StorageQueues-->
