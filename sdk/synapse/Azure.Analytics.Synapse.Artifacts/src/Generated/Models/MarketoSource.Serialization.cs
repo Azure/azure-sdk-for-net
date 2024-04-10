@@ -161,7 +161,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MarketoSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, MarketoSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<MarketoSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override MarketoSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -145,7 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CommonDataServiceForAppsSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -153,7 +153,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, CommonDataServiceForAppsSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<CommonDataServiceForAppsSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override CommonDataServiceForAppsSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

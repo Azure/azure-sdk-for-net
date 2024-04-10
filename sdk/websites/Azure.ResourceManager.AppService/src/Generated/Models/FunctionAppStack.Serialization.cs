@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MajorVersions)
                 {
-                    writer.WriteObjectValue<FunctionAppMajorVersion>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

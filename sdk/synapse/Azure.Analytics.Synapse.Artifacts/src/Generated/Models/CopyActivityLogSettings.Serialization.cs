@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CopyActivityLogSettings>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -83,7 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, CopyActivityLogSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<CopyActivityLogSettings>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override CopyActivityLogSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

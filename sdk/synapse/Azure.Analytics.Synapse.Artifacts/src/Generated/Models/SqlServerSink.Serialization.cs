@@ -241,7 +241,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SqlServerSink>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -249,7 +249,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SqlServerSink model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SqlServerSink>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SqlServerSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

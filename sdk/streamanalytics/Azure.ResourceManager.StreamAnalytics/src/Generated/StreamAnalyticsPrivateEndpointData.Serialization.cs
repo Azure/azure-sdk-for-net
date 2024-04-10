@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<StreamAnalyticsPrivateEndpointProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {

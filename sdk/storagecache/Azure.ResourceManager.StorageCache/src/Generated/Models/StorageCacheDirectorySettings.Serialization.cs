@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(ActiveDirectory))
             {
                 writer.WritePropertyName("activeDirectory"u8);
-                writer.WriteObjectValue<StorageCacheActiveDirectorySettings>(ActiveDirectory, options);
+                writer.WriteObjectValue(ActiveDirectory, options);
             }
             if (Optional.IsDefined(UsernameDownload))
             {
                 writer.WritePropertyName("usernameDownload"u8);
-                writer.WriteObjectValue<StorageCacheUsernameDownloadSettings>(UsernameDownload, options);
+                writer.WriteObjectValue(UsernameDownload, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

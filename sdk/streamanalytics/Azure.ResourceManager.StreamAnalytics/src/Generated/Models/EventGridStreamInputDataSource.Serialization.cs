@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(Subscriber))
             {
                 writer.WritePropertyName("subscriber"u8);
-                writer.WriteObjectValue<EventHubV2StreamInputDataSource>(Subscriber, options);
+                writer.WriteObjectValue(Subscriber, options);
             }
             if (Optional.IsDefined(Schema))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue<StreamAnalyticsStorageAccount>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

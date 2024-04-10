@@ -23,7 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue<TimeSeriesHierarchySource>(Source);
+            writer.WriteObjectValue(Source);
             writer.WriteEndObject();
         }
 
@@ -69,7 +69,7 @@ namespace Azure.IoT.TimeSeriesInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TimeSeriesHierarchy>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

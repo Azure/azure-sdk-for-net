@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(DeployerVmPackages))
             {
                 writer.WritePropertyName("deployerVmPackages"u8);
-                writer.WriteObjectValue<DeployerVmPackages>(DeployerVmPackages, options);
+                writer.WriteObjectValue(DeployerVmPackages, options);
             }
             if (Optional.IsDefined(SapFqdn))
             {

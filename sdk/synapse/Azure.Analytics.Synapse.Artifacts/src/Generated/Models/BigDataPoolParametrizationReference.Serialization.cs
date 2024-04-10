@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BigDataPoolParametrizationReference>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, BigDataPoolParametrizationReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<BigDataPoolParametrizationReference>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override BigDataPoolParametrizationReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

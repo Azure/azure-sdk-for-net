@@ -241,7 +241,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzureFileStorageReadSettings>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -249,7 +249,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AzureFileStorageReadSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AzureFileStorageReadSettings>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override AzureFileStorageReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

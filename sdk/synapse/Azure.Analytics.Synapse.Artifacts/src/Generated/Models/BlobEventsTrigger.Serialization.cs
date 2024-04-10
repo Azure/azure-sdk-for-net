@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
-                    writer.WriteObjectValue<TriggerPipelineReference>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -235,7 +235,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BlobEventsTrigger>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -243,7 +243,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, BlobEventsTrigger model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<BlobEventsTrigger>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override BlobEventsTrigger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (Optional.IsDefined(PublicNetwork))
             {
                 writer.WritePropertyName("publicNetwork"u8);
-                writer.WriteObjectValue<PublicNetworkAcls>(PublicNetwork, options);
+                writer.WriteObjectValue(PublicNetwork, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpoints))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpoints)
                 {
-                    writer.WriteObjectValue<PrivateEndpointAcl>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

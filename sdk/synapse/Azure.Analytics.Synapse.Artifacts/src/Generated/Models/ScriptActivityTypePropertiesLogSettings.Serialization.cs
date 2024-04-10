@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);
-                writer.WriteObjectValue<LogLocationSettings>(LogLocationSettings);
+                writer.WriteObjectValue(LogLocationSettings);
             }
             writer.WriteEndObject();
         }
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ScriptActivityTypePropertiesLogSettings>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

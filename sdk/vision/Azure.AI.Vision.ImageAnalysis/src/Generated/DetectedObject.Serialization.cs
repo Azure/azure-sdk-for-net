@@ -27,12 +27,12 @@ namespace Azure.AI.Vision.ImageAnalysis
 
             writer.WriteStartObject();
             writer.WritePropertyName("boundingBox"u8);
-            writer.WriteObjectValue<ImageBoundingBox>(BoundingBox, options);
+            writer.WriteObjectValue(BoundingBox, options);
             writer.WritePropertyName("tags"u8);
             writer.WriteStartArray();
             foreach (var item in Tags)
             {
-                writer.WriteObjectValue<DetectedTag>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -146,7 +146,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DetectedObject>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(TransportFileShareConfiguration))
             {
                 writer.WritePropertyName("transportFileShareConfiguration"u8);
-                writer.WriteObjectValue<FileShareConfiguration>(TransportFileShareConfiguration, options);
+                writer.WriteObjectValue(TransportFileShareConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -29,7 +29,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             if (options.Format != "W")
             {
                 writer.WritePropertyName("boundingBox"u8);
-                writer.WriteObjectValue<ImageBoundingBox>(BoundingBox, options);
+                writer.WriteObjectValue(BoundingBox, options);
             }
             if (options.Format != "W")
             {
@@ -142,7 +142,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DetectedPerson>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

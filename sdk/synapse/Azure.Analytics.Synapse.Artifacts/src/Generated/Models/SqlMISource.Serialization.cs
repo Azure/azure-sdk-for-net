@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue<SqlPartitionSettings>(PartitionSettings);
+                writer.WriteObjectValue(PartitionSettings);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -257,7 +257,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SqlMISource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -265,7 +265,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SqlMISource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SqlMISource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SqlMISource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

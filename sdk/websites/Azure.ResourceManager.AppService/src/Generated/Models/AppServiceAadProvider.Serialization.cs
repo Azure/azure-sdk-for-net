@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue<AppServiceAadRegistration>(Registration, options);
+                writer.WriteObjectValue(Registration, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue<AppServiceAadLoginFlow>(Login, options);
+                writer.WriteObjectValue(Login, options);
             }
             if (Optional.IsDefined(Validation))
             {
                 writer.WritePropertyName("validation"u8);
-                writer.WriteObjectValue<AppServiceAadValidation>(Validation, options);
+                writer.WriteObjectValue(Validation, options);
             }
             if (Optional.IsDefined(IsAutoProvisioned))
             {

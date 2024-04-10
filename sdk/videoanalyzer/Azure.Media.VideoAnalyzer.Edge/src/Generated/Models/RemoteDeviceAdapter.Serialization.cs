@@ -20,12 +20,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue<SystemData>(SystemData);
+                writer.WriteObjectValue(SystemData);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<RemoteDeviceAdapterProperties>(Properties);
+                writer.WriteObjectValue(Properties);
             }
             writer.WriteEndObject();
         }
@@ -80,7 +80,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RemoteDeviceAdapter>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ManagedPrivateEndpointConnectionState>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

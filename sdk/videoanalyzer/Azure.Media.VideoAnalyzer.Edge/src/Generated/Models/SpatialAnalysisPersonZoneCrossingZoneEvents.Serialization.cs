@@ -17,14 +17,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("zone"u8);
-            writer.WriteObjectValue<NamedPolygonBase>(Zone);
+            writer.WriteObjectValue(Zone);
             if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue<SpatialAnalysisPersonZoneCrossingEvent>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SpatialAnalysisPersonZoneCrossingZoneEvents>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

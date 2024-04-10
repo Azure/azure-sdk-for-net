@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticAcls)
                 {
-                    writer.WriteObjectValue<DiskPoolIscsiTargetPortalGroupAcl>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Luns)
                 {
-                    writer.WriteObjectValue<ManagedDiskIscsiLun>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

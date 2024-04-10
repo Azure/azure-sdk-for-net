@@ -161,7 +161,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<VerticaSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, VerticaSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<VerticaSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override VerticaSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

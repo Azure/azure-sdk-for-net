@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue<object>(Query);
             }
             writer.WritePropertyName("exportSettings"u8);
-            writer.WriteObjectValue<SnowflakeExportCopyCommand>(ExportSettings);
+            writer.WriteObjectValue(ExportSettings);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
@@ -138,7 +138,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SnowflakeSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -146,7 +146,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SnowflakeSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SnowflakeSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SnowflakeSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

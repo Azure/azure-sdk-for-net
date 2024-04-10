@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.WebPubSub
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                writer.WriteObjectValue<PrivateEndpoint>(PrivateEndpoint, options);
+                writer.WriteObjectValue(PrivateEndpoint, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(GroupIds))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.WebPubSub
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue<WebPubSubPrivateLinkServiceConnectionState>(ConnectionState, options);
+                writer.WriteObjectValue(ConnectionState, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

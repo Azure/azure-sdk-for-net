@@ -108,7 +108,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzureBlobStorageWriteSettings>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -116,7 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AzureBlobStorageWriteSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AzureBlobStorageWriteSettings>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override AzureBlobStorageWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

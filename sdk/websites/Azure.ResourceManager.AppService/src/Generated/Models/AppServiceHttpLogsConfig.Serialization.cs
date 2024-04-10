@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
-                writer.WriteObjectValue<FileSystemHttpLogsConfig>(FileSystem, options);
+                writer.WriteObjectValue(FileSystem, options);
             }
             if (Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
-                writer.WriteObjectValue<AppServiceBlobStorageHttpLogsConfig>(AzureBlobStorage, options);
+                writer.WriteObjectValue(AzureBlobStorage, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

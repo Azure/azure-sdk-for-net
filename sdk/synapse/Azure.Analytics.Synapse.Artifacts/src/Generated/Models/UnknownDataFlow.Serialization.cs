@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue<DataFlowFolder>(Folder);
+                writer.WriteObjectValue(Folder);
             }
             writer.WriteEndObject();
         }
@@ -114,7 +114,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnknownDataFlow>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

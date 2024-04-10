@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
-                writer.WriteObjectValue<AbstractiveSummaryDocumentResult>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -61,7 +61,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AbstractiveSummarizationResultBase>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }
