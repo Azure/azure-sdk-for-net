@@ -35,7 +35,8 @@ namespace Azure.Core.Tests
                 "x-ms-requestId: 123" + s_nl
                 :
                 "Service request failed." + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -68,7 +69,8 @@ namespace Azure.Core.Tests
                 "x-ms-requestId: 123" + s_nl
                 :
                 "Service request failed." + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -101,7 +103,8 @@ namespace Azure.Core.Tests
                 "x-ms-requestId: REDACTED" + s_nl
                 :
                 "Service request failed." + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -133,7 +136,8 @@ namespace Azure.Core.Tests
                 "x-ms-requestId-2: REDACTED" + s_nl
                 :
                 "Service request failed." + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -158,7 +162,8 @@ namespace Azure.Core.Tests
                 "x-ms-requestId-2: REDACTED" + s_nl
                 :
                 "Service request failed." + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -186,7 +191,8 @@ namespace Azure.Core.Tests
                 "x-ms-requestId: 123" + s_nl
                 :
                 "Service request failed." + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -221,7 +227,8 @@ namespace Azure.Core.Tests
                 "Content-Type: binary" + s_nl
                 :
                 "Service request failed." + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -253,7 +260,9 @@ namespace Azure.Core.Tests
                 "x-ms-requestId: 123" + s_nl
                 :
                 "Service request failed." + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                "ErrorCode: CUSTOM CODE" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -284,7 +293,12 @@ namespace Azure.Core.Tests
                 "x-ms-requestId: 123" + s_nl
                 :
                 "Service request failed." + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                "Additional Information:" + s_nl +
+                "a: a-value" + s_nl +
+                "b: b-value" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -315,7 +329,8 @@ namespace Azure.Core.Tests
                 "x-ms-requestId: 123" + s_nl
                 :
                 "Service request failed." + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -365,7 +380,9 @@ namespace Azure.Core.Tests
                 "Content-Type: text/json" + s_nl
                 :
                 "Custom message" + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                "ErrorCode: StatusCode" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -399,7 +416,9 @@ namespace Azure.Core.Tests
                 "Content-Type: text/json" + s_nl
                 :
                 "Custom message" + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                "ErrorCode: StatusCode" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -434,7 +453,9 @@ namespace Azure.Core.Tests
                 "Content-Type: text/json" + s_nl
                 :
                 "Custom message" + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                "ErrorCode: StatusCode" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -475,7 +496,9 @@ namespace Azure.Core.Tests
                 "Content-Type: text/json" + s_nl
                 :
                 "Custom message" + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                "ErrorCode: StatusCode" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -511,7 +534,8 @@ namespace Azure.Core.Tests
                 "Content-Type: text/json" + s_nl
                 :
                 "Service request failed." + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -539,7 +563,8 @@ namespace Azure.Core.Tests
                 "Content-Type: text/json" + s_nl
                 :
                 "Service request failed." + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
@@ -567,7 +592,8 @@ namespace Azure.Core.Tests
                 "Content-Type: text/json" + s_nl
                 :
                 "Service request failed." + s_nl +
-                "Status: 210" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
                 RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
