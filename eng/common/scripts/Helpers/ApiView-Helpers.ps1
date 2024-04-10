@@ -1,4 +1,4 @@
-function MapLanguageName($language)
+function MapLanguageToRequestParam($language)
 {
     $lang = $language
     # Update language name to match those in API cosmos DB. Cosmos SQL is case sensitive and handling this within the query makes it slow.
@@ -6,7 +6,7 @@ function MapLanguageName($language)
         $lang = "JavaScript"
     }
     elseif ($lang -eq "dotnet"){
-        $lang = "C#"
+        $lang = "C%23"
     }
     elseif ($lang -eq "java"){
         $lang = "Java"
@@ -23,17 +23,12 @@ function MapLanguageName($language)
 function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $apiKey, $apiApprovalStatus = $null, $packageNameStatus = $null)
 {
   # Get API view URL and API Key to check status
-  Write-Host "Checking API review status"
-  $lang = MapLanguageName -language $language
+  Write-Host "Checking API review status for package: ${packageName}"
+  $lang = MapLanguageToRequestParam -language $language
   if ($lang -eq $null) {
     return
   }
   $headers = @{ "ApiKey" = $apiKey }
-  $body = @{
-    language = $lang
-    packageName = $packageName
-    packageVersion = $packageVersion
-  }
 
   if (!$apiApprovalStatus) {
     $apiApprovalStatus = [PSCustomObject]@{
@@ -51,7 +46,10 @@ function Check-ApiReviewStatus($packageName, $packageVersion, $language, $url, $
 
   try
   {
-    $response = Invoke-WebRequest $url -Method 'GET' -Headers $headers -Body $body
+    $requestUrl = "${url}?language=${lang}&packageName=${packageName}&packageVersion=${packageVersion}"
+    Write-Host "Request to APIView: [${requestUrl}]"
+    $response = Invoke-WebRequest $requestUrl -Method 'GET' -Headers $headers
+    Write-Host "Response: $($response.StatusCode)"
     Process-ReviewStatusCode -statusCode $response.StatusCode -packageName $packageName -apiApprovalStatus $apiApprovalStatus -packageNameStatus $packageNameStatus
     if ($apiApprovalStatus.IsApproved) {
       Write-Host $($apiApprovalStatus.Details)

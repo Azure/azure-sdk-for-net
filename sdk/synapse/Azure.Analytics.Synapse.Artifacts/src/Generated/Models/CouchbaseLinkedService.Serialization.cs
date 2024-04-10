@@ -209,12 +209,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CouchbaseLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCouchbaseLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CouchbaseLinkedService>(this);
+            return content;
+        }
+
         internal partial class CouchbaseLinkedServiceConverter : JsonConverter<CouchbaseLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, CouchbaseLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<CouchbaseLinkedService>(model);
             }
+
             public override CouchbaseLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

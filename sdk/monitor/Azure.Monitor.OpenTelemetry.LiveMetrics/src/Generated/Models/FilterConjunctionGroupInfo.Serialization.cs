@@ -38,5 +38,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             }
             return new FilterConjunctionGroupInfo(filters ?? new ChangeTrackingList<FilterInfo>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static FilterConjunctionGroupInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFilterConjunctionGroupInfo(document.RootElement);
+        }
     }
 }

@@ -218,12 +218,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 tableName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HBaseObjectDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHBaseObjectDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HBaseObjectDataset>(this);
+            return content;
+        }
+
         internal partial class HBaseObjectDatasetConverter : JsonConverter<HBaseObjectDataset>
         {
             public override void Write(Utf8JsonWriter writer, HBaseObjectDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<HBaseObjectDataset>(model);
             }
+
             public override HBaseObjectDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

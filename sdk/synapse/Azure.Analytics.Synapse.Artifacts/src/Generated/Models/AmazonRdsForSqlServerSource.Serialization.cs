@@ -245,12 +245,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 partitionSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AmazonRdsForSqlServerSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAmazonRdsForSqlServerSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AmazonRdsForSqlServerSource>(this);
+            return content;
+        }
+
         internal partial class AmazonRdsForSqlServerSourceConverter : JsonConverter<AmazonRdsForSqlServerSource>
         {
             public override void Write(Utf8JsonWriter writer, AmazonRdsForSqlServerSource model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<AmazonRdsForSqlServerSource>(model);
             }
+
             public override AmazonRdsForSqlServerSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -66,12 +66,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new DatasetCompression(type, level, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DatasetCompression FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDatasetCompression(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DatasetCompression>(this);
+            return content;
+        }
+
         internal partial class DatasetCompressionConverter : JsonConverter<DatasetCompression>
         {
             public override void Write(Utf8JsonWriter writer, DatasetCompression model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<DatasetCompression>(model);
             }
+
             public override DatasetCompression Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
