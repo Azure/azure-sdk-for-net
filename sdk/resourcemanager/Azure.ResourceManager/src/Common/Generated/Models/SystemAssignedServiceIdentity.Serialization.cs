@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Models
         {
             public override void Write(Utf8JsonWriter writer, SystemAssignedServiceIdentity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SystemAssignedServiceIdentity>(model, new ModelReaderWriterOptions("W"));
+                writer.WriteObjectValue(model, new ModelReaderWriterOptions("W"));
             }
 
             public override SystemAssignedServiceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

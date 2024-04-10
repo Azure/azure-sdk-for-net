@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStringValue(BiosId);
             }
             writer.WritePropertyName("authenticationIdentityInput"u8);
-            writer.WriteObjectValue<IdentityProviderContent>(AuthenticationIdentityContent, options);
+            writer.WriteObjectValue(AuthenticationIdentityContent, options);
             writer.WritePropertyName("resourceAccessIdentityInput"u8);
-            writer.WriteObjectValue<IdentityProviderContent>(ResourceAccessIdentityContent, options);
+            writer.WriteObjectValue(ResourceAccessIdentityContent, options);
             if (Optional.IsDefined(DataPlaneAuthenticationIdentityContent))
             {
                 writer.WritePropertyName("dataPlaneAuthenticationIdentityInput"u8);
-                writer.WriteObjectValue<IdentityProviderContent>(DataPlaneAuthenticationIdentityContent, options);
+                writer.WriteObjectValue(DataPlaneAuthenticationIdentityContent, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(ImmutabilitySettings))
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
-                writer.WriteObjectValue<ImmutabilitySettings>(ImmutabilitySettings, options);
+                writer.WriteObjectValue(ImmutabilitySettings, options);
             }
             if (Optional.IsDefined(SoftDeleteSettings))
             {
                 writer.WritePropertyName("softDeleteSettings"u8);
-                writer.WriteObjectValue<RecoveryServicesSoftDeleteSettings>(SoftDeleteSettings, options);
+                writer.WriteObjectValue(SoftDeleteSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MultiUserAuthorization))
             {

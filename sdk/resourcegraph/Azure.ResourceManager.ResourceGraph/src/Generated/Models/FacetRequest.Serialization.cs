@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue<FacetRequestOptions>(Options, options);
+                writer.WriteObjectValue(Options, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

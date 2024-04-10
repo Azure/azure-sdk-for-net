@@ -53,7 +53,7 @@ namespace Azure.MixedReality.RemoteRendering
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CreateConversionSettings>(body);
+            content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
         }
@@ -279,7 +279,7 @@ namespace Azure.MixedReality.RemoteRendering
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RenderingSessionOptions>(body);
+            content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
         }
@@ -443,7 +443,7 @@ namespace Azure.MixedReality.RemoteRendering
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UpdateSessionOptions>(body);
+            content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
         }

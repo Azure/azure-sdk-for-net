@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservationToReturn))
             {
                 writer.WritePropertyName("reservationToReturn"u8);
-                writer.WriteObjectValue<ReservationToReturn>(ReservationToReturn, options);
+                writer.WriteObjectValue(ReservationToReturn, options);
             }
             if (Optional.IsDefined(ReturnReason))
             {
