@@ -955,7 +955,7 @@
 /sdk/frontdoor/                                                    @ptnan7
 
 # ServiceLabel: %Network - Front Door %Mgmt
-# ServiceOwners:                                                   @cdnfdsuppgithub
+# ServiceOwners:                                                   @ptnan7
 
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                   @sunkun99 @archerzz @ArcturusZhang @ArthurMa1978
