@@ -936,9 +936,6 @@
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
 
-# PRLabel: %Network - Front Door
-/sdk/frontdoor/                                                    @ptnan7
-
 # PRLabel: %Device Registry
 /sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
@@ -953,6 +950,12 @@
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
+
+# PRLabel: %Network - Front Door
+/sdk/frontdoor/                                                    @ptnan7
+
+# ServiceLabel: %Network - Front Door %Mgmt
+# ServiceOwners:                                                   @cdnfdsuppgithub
 
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                   @sunkun99 @archerzz @ArcturusZhang @ArthurMa1978
