@@ -104,8 +104,8 @@ namespace Azure.AI.Vision.ImageAnalysis
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = imageContent;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AnalyzeFromImageDataAsync(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context).ConfigureAwait(false);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
@@ -147,8 +147,8 @@ namespace Azure.AI.Vision.ImageAnalysis
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = imageContent;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AnalyzeFromImageData(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
@@ -324,8 +324,8 @@ namespace Azure.AI.Vision.ImageAnalysis
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = imageContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AnalyzeFromUrlAsync(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context).ConfigureAwait(false);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
@@ -367,8 +367,8 @@ namespace Azure.AI.Vision.ImageAnalysis
             Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = imageContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AnalyzeFromUrl(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }

@@ -314,12 +314,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 libraries ?? new ChangeTrackingList<IDictionary<string, object>>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DatabricksNotebookActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDatabricksNotebookActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DatabricksNotebookActivity>(this);
+            return content;
+        }
+
         internal partial class DatabricksNotebookActivityConverter : JsonConverter<DatabricksNotebookActivity>
         {
             public override void Write(Utf8JsonWriter writer, DatabricksNotebookActivity model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<DatabricksNotebookActivity>(model);
             }
+
             public override DatabricksNotebookActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

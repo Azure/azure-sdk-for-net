@@ -75,5 +75,21 @@ namespace Azure.Maps.Search.Models
             }
             return new GeoJsonFeatureData(geometry, properties, id, featureType);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GeoJsonFeatureData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGeoJsonFeatureData(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<GeoJsonFeatureData>(this);
+            return content;
+        }
     }
 }

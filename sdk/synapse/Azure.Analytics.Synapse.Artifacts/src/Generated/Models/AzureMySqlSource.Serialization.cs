@@ -149,12 +149,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 query);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureMySqlSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureMySqlSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureMySqlSource>(this);
+            return content;
+        }
+
         internal partial class AzureMySqlSourceConverter : JsonConverter<AzureMySqlSource>
         {
             public override void Write(Utf8JsonWriter writer, AzureMySqlSource model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<AzureMySqlSource>(model);
             }
+
             public override AzureMySqlSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

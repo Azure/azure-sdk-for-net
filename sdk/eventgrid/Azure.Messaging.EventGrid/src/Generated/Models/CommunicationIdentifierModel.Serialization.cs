@@ -17,12 +17,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            CommunicationIdentifierKind? kind = default;
+            AcsCommunicationIdentifierKind? kind = default;
             string rawId = default;
             CommunicationUserIdentifierModel communicationUser = default;
             PhoneNumberIdentifierModel phoneNumber = default;
             MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default;
-            MicrosoftTeamsAppIdentifier microsoftTeamsApp = default;
+            AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    kind = new CommunicationIdentifierKind(property.Value.GetString());
+                    kind = new AcsCommunicationIdentifierKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rawId"u8))
@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    microsoftTeamsApp = MicrosoftTeamsAppIdentifier.DeserializeMicrosoftTeamsAppIdentifier(property.Value);
+                    microsoftTeamsApp = AcsMicrosoftTeamsAppIdentifier.DeserializeAcsMicrosoftTeamsAppIdentifier(property.Value);
                     continue;
                 }
             }
@@ -83,6 +83,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 phoneNumber,
                 microsoftTeamsUser,
                 microsoftTeamsApp);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CommunicationIdentifierModel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCommunicationIdentifierModel(document.RootElement);
         }
     }
 }
