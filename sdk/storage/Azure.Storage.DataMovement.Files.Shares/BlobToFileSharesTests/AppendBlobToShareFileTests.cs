@@ -17,6 +17,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Shared;
 using Azure.Storage.DataMovement.Files.Shares;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
@@ -152,7 +153,9 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             return InstrumentClient(new ShareFileClient(sourceUri, GetShareOptions()));
         }
 
-        protected override StorageResourceItem GetDestinationStorageResourceItem(ShareFileClient objectClient)
+        protected override StorageResourceItem GetDestinationStorageResourceItem(
+            ShareFileClient objectClient,
+            TransferPropertiesTestType type = TransferPropertiesTestType.Default)
             => new ShareFileStorageResource(objectClient);
 
         protected override Task<Stream> DestinationOpenReadAsync(ShareFileClient objectClient)
@@ -201,6 +204,48 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
 
             return InstrumentClientOptions(options);
+        }
+
+        protected override Task VerifyPropertiesCopyAsync(
+            DataTransfer transfer,
+            TransferPropertiesTestType transferPropertiesTestType,
+            TestEventsRaised testEventsRaised,
+            AppendBlobClient sourceClient,
+            ShareFileClient destinationClient)
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        [Ignore("Not implemented yet")]
+        public override Task SourceObjectToDestinationObject_DefaultProperties()
+        {
+            Assert.Fail("Feature not implemented yet for this source and destination resource.");
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        [Ignore("Not implemented yet")]
+        public override Task SourceObjectToDestinationObject_PreserveProperties()
+        {
+            Assert.Fail("Feature not implemented yet for this source and destination resource.");
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        [Ignore("Not implemented yet")]
+        public override Task SourceObjectToDestinationObject_NoPreserveProperties()
+        {
+            Assert.Fail("Feature not implemented yet for this source and destination resource.");
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        [Ignore("Not implemented yet")]
+        public override Task SourceObjectToDestinationObject_NewProperties()
+        {
+            Assert.Fail("Feature not implemented yet for this source and destination resource.");
+            return Task.CompletedTask;
         }
     }
 }

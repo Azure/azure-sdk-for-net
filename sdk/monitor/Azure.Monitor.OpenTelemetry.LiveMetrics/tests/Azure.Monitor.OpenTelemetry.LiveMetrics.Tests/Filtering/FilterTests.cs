@@ -912,6 +912,20 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
         }
 
+        [Fact]
+        public void FilterDurationAsString()
+        {
+            // ARRANGE
+            var equalsValue = new FilterInfo("Duration", FilterInfoPredicate.Equal, "123");
+
+            // ACT
+            bool result1 = new Filter<DocumentMockWithStringDuration>(equalsValue).Check(new DocumentMockWithStringDuration(TimeSpan.Parse("123", CultureInfo.InvariantCulture).ToString()));
+            bool result2 = new Filter<DocumentMockWithStringDuration>(equalsValue).Check(new DocumentMockWithStringDuration(TimeSpan.Parse("124", CultureInfo.InvariantCulture).ToString()));
+
+            // ASSERT
+            Assert.True(result1);
+            Assert.False(result2);
+        }
         #endregion
 
         #region String
