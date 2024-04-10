@@ -27,21 +27,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("tag"u8);
-            writer.WriteObjectValue<AssociatedTagProperties>(Tag, options);
+            writer.WriteObjectValue(Tag, options);
             if (Optional.IsDefined(Api))
             {
                 writer.WritePropertyName("api"u8);
-                writer.WriteObjectValue<AssociatedApiProperties>(Api, options);
+                writer.WriteObjectValue(Api, options);
             }
             if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
-                writer.WriteObjectValue<AssociatedOperationProperties>(Operation, options);
+                writer.WriteObjectValue(Operation, options);
             }
             if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
-                writer.WriteObjectValue<AssociatedProductProperties>(Product, options);
+                writer.WriteObjectValue(Product, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

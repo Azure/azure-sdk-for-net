@@ -27,7 +27,7 @@ namespace Azure.Security.Attestation
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TpmAttestationRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

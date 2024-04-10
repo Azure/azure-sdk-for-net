@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<ScVmmHybridIdentityMetadataData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

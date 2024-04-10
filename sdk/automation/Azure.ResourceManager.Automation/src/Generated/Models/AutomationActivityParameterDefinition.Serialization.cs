@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationSet)
                 {
-                    writer.WriteObjectValue<AutomationActivityParameterValidationSet>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

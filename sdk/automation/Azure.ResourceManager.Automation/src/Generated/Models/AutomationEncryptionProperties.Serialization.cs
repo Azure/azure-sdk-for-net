@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue<AutomationKeyVaultProperties>(KeyVaultProperties, options);
+                writer.WriteObjectValue(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(KeySource))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue<EncryptionPropertiesIdentity>(Identity, options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

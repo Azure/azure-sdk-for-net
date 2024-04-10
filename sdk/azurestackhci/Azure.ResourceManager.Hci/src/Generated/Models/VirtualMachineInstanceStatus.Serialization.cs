@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
-                writer.WriteObjectValue<VirtualMachineInstanceStatusProvisioningStatus>(ProvisioningStatus, options);
+                writer.WriteObjectValue(ProvisioningStatus, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

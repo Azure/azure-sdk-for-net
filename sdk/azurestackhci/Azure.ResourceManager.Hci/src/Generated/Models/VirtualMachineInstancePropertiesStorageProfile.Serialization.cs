@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue<VirtualMachineInstancePropertiesStorageProfileOSDisk>(OSDisk, options);
+                writer.WriteObjectValue(OSDisk, options);
             }
             if (Optional.IsDefined(VmConfigStoragePathId))
             {

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WriteStartArray();
                 foreach (var item in Digests)
                 {
-                    writer.WriteObjectValue<DigestConfig>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

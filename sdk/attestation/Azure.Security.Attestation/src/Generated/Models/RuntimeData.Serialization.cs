@@ -32,7 +32,7 @@ namespace Azure.Security.Attestation
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RuntimeData>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

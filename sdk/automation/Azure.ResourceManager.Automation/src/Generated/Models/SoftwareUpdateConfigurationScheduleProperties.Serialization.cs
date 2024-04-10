@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(AdvancedSchedule))
             {
                 writer.WritePropertyName("advancedSchedule"u8);
-                writer.WriteObjectValue<AutomationAdvancedSchedule>(AdvancedSchedule, options);
+                writer.WriteObjectValue(AdvancedSchedule, options);
             }
             if (Optional.IsDefined(CreatedOn))
             {
