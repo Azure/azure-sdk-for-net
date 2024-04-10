@@ -58,6 +58,8 @@ To send events to a topic or domain using Azure Active Directory, the authentica
 var client = new EventGridClient(new Uri(namespaceTopicHost), new DefaultAzureCredential());
 ```
 
+## Key concepts
+
 ### Thread safety
 
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.

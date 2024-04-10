@@ -186,7 +186,7 @@ namespace Azure.Messaging.EventGrid.Tests
             // Construct the client using an Endpoint for a namespace as well as the DefaultAzureCredential
             var client = new EventGridClient(new Uri(namespaceTopicHost), new DefaultAzureCredential());
 #else
-            var client = InstrumentClient(new EventGridClient(new Uri(namespaceTopicHost), new DefaultAzureCredential(), InstrumentClientOptions(new EventGridClientOptions())));
+            var client = InstrumentClient(new EventGridClient(new Uri(namespaceTopicHost), TestEnvironment.Credential, InstrumentClientOptions(new EventGridClientOptions())));
 #endif
             #endregion
 
