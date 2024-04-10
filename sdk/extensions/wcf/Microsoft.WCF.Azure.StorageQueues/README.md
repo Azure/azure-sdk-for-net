@@ -105,8 +105,8 @@ Get started with a sample of CoreWCF https://github.com/CoreWCF/samples
 
 Get started with our examples below:
 
-1. [Sample code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/extensions/wcf/Microsoft.WCF.Azure.StorageQueues/tests/IntegrationTests.cs): Send and receive messages using Azure Storage Queues.)
-2. [Auth](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/extensions/wcf/Microsoft.WCF.Azure.StorageQueues/tests/AuthenticationTests.cs): Authenticate with shared keys, connection strings and token.
+1. [Sample code](tests/IntegrationTests.cs): Send and receive messages using Azure Storage Queues.)
+2. [Auth](tests/AuthenticationTests.cs): Authenticate with shared keys, connection strings and token.
 
 ## Contributing
 
