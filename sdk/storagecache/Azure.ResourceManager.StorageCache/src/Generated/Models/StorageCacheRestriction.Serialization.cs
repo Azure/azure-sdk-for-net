@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheRestriction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RestrictionType != null)
+            if (options.Format != "W" && Optional.IsDefined(RestrictionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestrictionType);
             }
-            if (options.Format != "W" && !(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ReasonCode.HasValue)
+            if (Optional.IsDefined(ReasonCode))
             {
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteStringValue(ReasonCode.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheRestriction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             IReadOnlyList<string> values = default;
             StorageCacheRestrictionReasonCode? reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageCacheRestriction(type, values ?? new ChangeTrackingList<string>(), reasonCode, serializedAdditionalRawData);
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheRestriction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeStorageCacheRestriction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheRestriction)} does not support reading '{options.Format}' format.");
             }
         }
 

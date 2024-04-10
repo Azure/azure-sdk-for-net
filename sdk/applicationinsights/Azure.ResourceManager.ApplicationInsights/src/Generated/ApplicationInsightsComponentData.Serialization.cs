@@ -8,8 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Models;
@@ -25,18 +26,18 @@ namespace Azure.ResourceManager.ApplicationInsights
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -64,139 +65,139 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ApplicationId != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("ApplicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (options.Format != "W" && AppId != null)
+            if (options.Format != "W" && Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("AppId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (options.Format != "W" && NamePropertiesName != null)
+            if (options.Format != "W" && Optional.IsDefined(NamePropertiesName))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(NamePropertiesName);
             }
-            if (ApplicationType.HasValue)
+            if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("Application_Type"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
-            if (FlowType.HasValue)
+            if (Optional.IsDefined(FlowType))
             {
                 writer.WritePropertyName("Flow_Type"u8);
                 writer.WriteStringValue(FlowType.Value.ToString());
             }
-            if (RequestSource.HasValue)
+            if (Optional.IsDefined(RequestSource))
             {
                 writer.WritePropertyName("Request_Source"u8);
                 writer.WriteStringValue(RequestSource.Value.ToString());
             }
-            if (options.Format != "W" && InstrumentationKey != null)
+            if (options.Format != "W" && Optional.IsDefined(InstrumentationKey))
             {
                 writer.WritePropertyName("InstrumentationKey"u8);
                 writer.WriteStringValue(InstrumentationKey);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("CreationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("TenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (HockeyAppId != null)
+            if (Optional.IsDefined(HockeyAppId))
             {
                 writer.WritePropertyName("HockeyAppId"u8);
                 writer.WriteStringValue(HockeyAppId);
             }
-            if (options.Format != "W" && HockeyAppToken != null)
+            if (options.Format != "W" && Optional.IsDefined(HockeyAppToken))
             {
                 writer.WritePropertyName("HockeyAppToken"u8);
                 writer.WriteStringValue(HockeyAppToken);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (SamplingPercentage.HasValue)
+            if (Optional.IsDefined(SamplingPercentage))
             {
                 writer.WritePropertyName("SamplingPercentage"u8);
                 writer.WriteNumberValue(SamplingPercentage.Value);
             }
-            if (options.Format != "W" && ConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("ConnectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (RetentionInDays.HasValue)
+            if (Optional.IsDefined(RetentionInDays))
             {
                 writer.WritePropertyName("RetentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
-            if (IsDisableIPMasking.HasValue)
+            if (Optional.IsDefined(IsDisableIPMasking))
             {
                 writer.WritePropertyName("DisableIpMasking"u8);
                 writer.WriteBooleanValue(IsDisableIPMasking.Value);
             }
-            if (IsImmediatePurgeDataOn30Days.HasValue)
+            if (Optional.IsDefined(IsImmediatePurgeDataOn30Days))
             {
                 writer.WritePropertyName("ImmediatePurgeDataOn30Days"u8);
                 writer.WriteBooleanValue(IsImmediatePurgeDataOn30Days.Value);
             }
-            if (WorkspaceResourceId != null)
+            if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("WorkspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
             }
-            if (options.Format != "W" && LaMigrationOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LaMigrationOn))
             {
                 writer.WritePropertyName("LaMigrationDate"u8);
                 writer.WriteStringValue(LaMigrationOn.Value, "O");
             }
-            if (options.Format != "W" && !(PrivateLinkScopedResources is ChangeTrackingList<PrivateLinkScopedResourceContent> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateLinkScopedResources))
             {
                 writer.WritePropertyName("PrivateLinkScopedResources"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkScopedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateLinkScopedResourceContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (PublicNetworkAccessForIngestion.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccessForIngestion))
             {
                 writer.WritePropertyName("publicNetworkAccessForIngestion"u8);
                 writer.WriteStringValue(PublicNetworkAccessForIngestion.Value.ToString());
             }
-            if (PublicNetworkAccessForQuery.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccessForQuery))
             {
                 writer.WritePropertyName("publicNetworkAccessForQuery"u8);
                 writer.WriteStringValue(PublicNetworkAccessForQuery.Value.ToString());
             }
-            if (IngestionMode.HasValue)
+            if (Optional.IsDefined(IngestionMode))
             {
                 writer.WritePropertyName("IngestionMode"u8);
                 writer.WriteStringValue(IngestionMode.Value.ToString());
             }
-            if (IsDisableLocalAuth.HasValue)
+            if (Optional.IsDefined(IsDisableLocalAuth))
             {
                 writer.WritePropertyName("DisableLocalAuth"u8);
                 writer.WriteBooleanValue(IsDisableLocalAuth.Value);
             }
-            if (IsForceCustomerStorageForProfiler.HasValue)
+            if (Optional.IsDefined(IsForceCustomerStorageForProfiler))
             {
                 writer.WritePropertyName("ForceCustomerStorageForProfiler"u8);
                 writer.WriteBooleanValue(IsForceCustomerStorageForProfiler.Value);
@@ -225,7 +226,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -274,7 +275,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             bool? disableLocalAuth = default;
             bool? forceCustomerStorageForProfiler = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -542,10 +543,10 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationInsightsComponentData(
                 id,
                 name,
@@ -583,6 +584,593 @@ namespace Azure.ResourceManager.ApplicationInsights
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (Optional.IsCollectionDefined(Tags) || hasPropertyOverride)
+            {
+                if (Tags.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  tags: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (Optional.IsDefined(ETag) || hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationId), out propertyOverride);
+            if (Optional.IsDefined(ApplicationId) || hasPropertyOverride)
+            {
+                builder.Append("    ApplicationId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ApplicationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApplicationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApplicationId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppId), out propertyOverride);
+            if (Optional.IsDefined(AppId) || hasPropertyOverride)
+            {
+                builder.Append("    AppId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (AppId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AppId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AppId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NamePropertiesName), out propertyOverride);
+            if (Optional.IsDefined(NamePropertiesName) || hasPropertyOverride)
+            {
+                builder.Append("    Name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (NamePropertiesName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NamePropertiesName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NamePropertiesName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationType), out propertyOverride);
+            if (Optional.IsDefined(ApplicationType) || hasPropertyOverride)
+            {
+                builder.Append("    Application_Type: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ApplicationType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FlowType), out propertyOverride);
+            if (Optional.IsDefined(FlowType) || hasPropertyOverride)
+            {
+                builder.Append("    Flow_Type: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{FlowType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestSource), out propertyOverride);
+            if (Optional.IsDefined(RequestSource) || hasPropertyOverride)
+            {
+                builder.Append("    Request_Source: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{RequestSource.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstrumentationKey), out propertyOverride);
+            if (Optional.IsDefined(InstrumentationKey) || hasPropertyOverride)
+            {
+                builder.Append("    InstrumentationKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (InstrumentationKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{InstrumentationKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{InstrumentationKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (Optional.IsDefined(CreatedOn) || hasPropertyOverride)
+            {
+                builder.Append("    CreationDate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
+            {
+                builder.Append("    TenantId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HockeyAppId), out propertyOverride);
+            if (Optional.IsDefined(HockeyAppId) || hasPropertyOverride)
+            {
+                builder.Append("    HockeyAppId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (HockeyAppId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HockeyAppId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HockeyAppId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HockeyAppToken), out propertyOverride);
+            if (Optional.IsDefined(HockeyAppToken) || hasPropertyOverride)
+            {
+                builder.Append("    HockeyAppToken: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (HockeyAppToken.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HockeyAppToken}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HockeyAppToken}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ProvisioningState.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProvisioningState}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProvisioningState}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SamplingPercentage), out propertyOverride);
+            if (Optional.IsDefined(SamplingPercentage) || hasPropertyOverride)
+            {
+                builder.Append("    SamplingPercentage: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SamplingPercentage.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionString), out propertyOverride);
+            if (Optional.IsDefined(ConnectionString) || hasPropertyOverride)
+            {
+                builder.Append("    ConnectionString: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ConnectionString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConnectionString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConnectionString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionInDays), out propertyOverride);
+            if (Optional.IsDefined(RetentionInDays) || hasPropertyOverride)
+            {
+                builder.Append("    RetentionInDays: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{RetentionInDays.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDisableIPMasking), out propertyOverride);
+            if (Optional.IsDefined(IsDisableIPMasking) || hasPropertyOverride)
+            {
+                builder.Append("    DisableIpMasking: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsDisableIPMasking.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsImmediatePurgeDataOn30Days), out propertyOverride);
+            if (Optional.IsDefined(IsImmediatePurgeDataOn30Days) || hasPropertyOverride)
+            {
+                builder.Append("    ImmediatePurgeDataOn30Days: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsImmediatePurgeDataOn30Days.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceResourceId), out propertyOverride);
+            if (Optional.IsDefined(WorkspaceResourceId) || hasPropertyOverride)
+            {
+                builder.Append("    WorkspaceResourceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (WorkspaceResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WorkspaceResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WorkspaceResourceId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LaMigrationOn), out propertyOverride);
+            if (Optional.IsDefined(LaMigrationOn) || hasPropertyOverride)
+            {
+                builder.Append("    LaMigrationDate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(LaMigrationOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkScopedResources), out propertyOverride);
+            if (Optional.IsCollectionDefined(PrivateLinkScopedResources) || hasPropertyOverride)
+            {
+                if (PrivateLinkScopedResources.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    PrivateLinkScopedResources: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateLinkScopedResources)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    PrivateLinkScopedResources: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccessForIngestion), out propertyOverride);
+            if (Optional.IsDefined(PublicNetworkAccessForIngestion) || hasPropertyOverride)
+            {
+                builder.Append("    publicNetworkAccessForIngestion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PublicNetworkAccessForIngestion.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccessForQuery), out propertyOverride);
+            if (Optional.IsDefined(PublicNetworkAccessForQuery) || hasPropertyOverride)
+            {
+                builder.Append("    publicNetworkAccessForQuery: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PublicNetworkAccessForQuery.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IngestionMode), out propertyOverride);
+            if (Optional.IsDefined(IngestionMode) || hasPropertyOverride)
+            {
+                builder.Append("    IngestionMode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{IngestionMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDisableLocalAuth), out propertyOverride);
+            if (Optional.IsDefined(IsDisableLocalAuth) || hasPropertyOverride)
+            {
+                builder.Append("    DisableLocalAuth: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsDisableLocalAuth.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsForceCustomerStorageForProfiler), out propertyOverride);
+            if (Optional.IsDefined(IsForceCustomerStorageForProfiler) || hasPropertyOverride)
+            {
+                builder.Append("    ForceCustomerStorageForProfiler: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsForceCustomerStorageForProfiler.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ApplicationInsightsComponentData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentData>)this).GetFormatFromOptions(options) : options.Format;
@@ -591,8 +1179,10 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -608,7 +1198,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                         return DeserializeApplicationInsightsComponentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentData)} does not support reading '{options.Format}' format.");
             }
         }
 

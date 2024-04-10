@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AProtectionContainerMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AProtectionContainerMappingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AProtectionContainerMappingDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AgentAutoUpdateStatus.HasValue)
+            if (Optional.IsDefined(AgentAutoUpdateStatus))
             {
                 writer.WritePropertyName("agentAutoUpdateStatus"u8);
                 writer.WriteStringValue(AgentAutoUpdateStatus.Value.ToString());
             }
-            if (AutomationAccountArmId != null)
+            if (Optional.IsDefined(AutomationAccountArmId))
             {
                 writer.WritePropertyName("automationAccountArmId"u8);
                 writer.WriteStringValue(AutomationAccountArmId);
             }
-            if (AutomationAccountAuthenticationType.HasValue)
+            if (Optional.IsDefined(AutomationAccountAuthenticationType))
             {
                 writer.WritePropertyName("automationAccountAuthenticationType"u8);
                 writer.WriteStringValue(AutomationAccountAuthenticationType.Value.ToString());
             }
-            if (ScheduleName != null)
+            if (Optional.IsDefined(ScheduleName))
             {
                 writer.WritePropertyName("scheduleName"u8);
                 writer.WriteStringValue(ScheduleName);
             }
-            if (JobScheduleName != null)
+            if (Optional.IsDefined(JobScheduleName))
             {
                 writer.WritePropertyName("jobScheduleName"u8);
                 writer.WriteStringValue(JobScheduleName);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AProtectionContainerMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AProtectionContainerMappingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AProtectionContainerMappingDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string jobScheduleName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agentAutoUpdateStatus"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new A2AProtectionContainerMappingDetails(
                 instanceType,
                 serializedAdditionalRawData,
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2AProtectionContainerMappingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AProtectionContainerMappingDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2AProtectionContainerMappingDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2AProtectionContainerMappingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AProtectionContainerMappingDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

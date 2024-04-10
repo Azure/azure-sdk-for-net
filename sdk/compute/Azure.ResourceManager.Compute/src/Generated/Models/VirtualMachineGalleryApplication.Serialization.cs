@@ -22,33 +22,33 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineGalleryApplication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineGalleryApplication)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStringValue(Tags);
             }
-            if (Order.HasValue)
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
             writer.WritePropertyName("packageReferenceId"u8);
             writer.WriteStringValue(PackageReferenceId);
-            if (ConfigurationReference != null)
+            if (Optional.IsDefined(ConfigurationReference))
             {
                 writer.WritePropertyName("configurationReference"u8);
                 writer.WriteStringValue(ConfigurationReference);
             }
-            if (TreatFailureAsDeploymentFailure.HasValue)
+            if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
             {
                 writer.WritePropertyName("treatFailureAsDeploymentFailure"u8);
                 writer.WriteBooleanValue(TreatFailureAsDeploymentFailure.Value);
             }
-            if (EnableAutomaticUpgrade.HasValue)
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineGalleryApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineGalleryApplication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineGalleryApplication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? treatFailureAsDeploymentFailure = default;
             bool? enableAutomaticUpgrade = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineGalleryApplication(
                 tags,
                 order,
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineGalleryApplication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineGalleryApplication)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineGalleryApplication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineGalleryApplication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineGalleryApplication)} does not support reading '{options.Format}' format.");
             }
         }
 

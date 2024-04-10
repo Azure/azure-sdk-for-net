@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (StringIndexType.HasValue)
+            if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(ProjectName);
             writer.WritePropertyName("deploymentName"u8);
             writer.WriteStringValue(DeploymentName);
-            if (LoggingOptOut.HasValue)
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
@@ -74,6 +74,22 @@ namespace Azure.AI.TextAnalytics.Models
                 }
             }
             return new CustomEntitiesTaskParameters(loggingOptOut, projectName, deploymentName, stringIndexType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CustomEntitiesTaskParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomEntitiesTaskParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CustomEntitiesTaskParameters>(this);
+            return content;
         }
     }
 }

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StandardEncoderPreset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandardEncoderPreset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StandardEncoderPreset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ExperimentalOptions is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExperimentalOptions))
             {
                 writer.WritePropertyName("experimentalOptions"u8);
                 writer.WriteStartObject();
@@ -37,23 +37,23 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Filters != null)
+            if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters);
+                writer.WriteObjectValue<FilteringOperations>(Filters, options);
             }
             writer.WritePropertyName("codecs"u8);
             writer.WriteStartArray();
             foreach (var item in Codecs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MediaCodecBase>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("formats"u8);
             writer.WriteStartArray();
             foreach (var item in Formats)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MediaFormatBase>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("@odata.type"u8);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StandardEncoderPreset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StandardEncoderPreset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StandardEncoderPreset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Media.Models
             IList<MediaFormatBase> formats = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("experimentalOptions"u8))
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StandardEncoderPreset(
                 odataType,
                 serializedAdditionalRawData,
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StandardEncoderPreset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandardEncoderPreset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStandardEncoderPreset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StandardEncoderPreset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StandardEncoderPreset)} does not support reading '{options.Format}' format.");
             }
         }
 

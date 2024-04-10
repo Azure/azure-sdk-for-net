@@ -18,22 +18,22 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("hookParameter"u8);
-            writer.WriteObjectValue(HookParameter);
+            writer.WriteObjectValue<EmailHookParameter>(HookParameter);
             writer.WritePropertyName("hookType"u8);
             writer.WriteStringValue(HookKind.ToString());
             writer.WritePropertyName("hookName"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (InternalExternalLink != null)
+            if (Optional.IsDefined(InternalExternalLink))
             {
                 writer.WritePropertyName("externalLink"u8);
                 writer.WriteStringValue(InternalExternalLink);
             }
-            if (!(Administrators is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Administrators))
             {
                 writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();
@@ -114,6 +114,22 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 externalLink,
                 admins ?? new ChangeTrackingList<string>(),
                 hookParameter);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new EmailNotificationHook FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEmailNotificationHook(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<EmailNotificationHook>(this);
+            return content;
         }
     }
 }

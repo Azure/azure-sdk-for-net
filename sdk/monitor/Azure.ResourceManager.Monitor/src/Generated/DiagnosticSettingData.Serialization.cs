@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticSettingData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,64 +43,64 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageAccountId != null)
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (ServiceBusRuleId != null)
+            if (Optional.IsDefined(ServiceBusRuleId))
             {
                 writer.WritePropertyName("serviceBusRuleId"u8);
                 writer.WriteStringValue(ServiceBusRuleId);
             }
-            if (EventHubAuthorizationRuleId != null)
+            if (Optional.IsDefined(EventHubAuthorizationRuleId))
             {
                 writer.WritePropertyName("eventHubAuthorizationRuleId"u8);
                 writer.WriteStringValue(EventHubAuthorizationRuleId);
             }
-            if (EventHubName != null)
+            if (Optional.IsDefined(EventHubName))
             {
                 writer.WritePropertyName("eventHubName"u8);
                 writer.WriteStringValue(EventHubName);
             }
-            if (!(Metrics is ChangeTrackingList<MetricSettings> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricSettings>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Logs is ChangeTrackingList<LogSettings> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Logs))
             {
                 writer.WritePropertyName("logs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Logs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LogSettings>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (WorkspaceId != null)
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (MarketplacePartnerId != null)
+            if (Optional.IsDefined(MarketplacePartnerId))
             {
                 writer.WritePropertyName("marketplacePartnerId"u8);
                 writer.WriteStringValue(MarketplacePartnerId);
             }
-            if (LogAnalyticsDestinationType != null)
+            if (Optional.IsDefined(LogAnalyticsDestinationType))
             {
                 writer.WritePropertyName("logAnalyticsDestinationType"u8);
                 writer.WriteStringValue(LogAnalyticsDestinationType);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticSettingData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceIdentifier marketplacePartnerId = default;
             string logAnalyticsDestinationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -282,10 +282,10 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DiagnosticSettingData(
                 id,
                 name,
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Monitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticSettingData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Monitor
                         return DeserializeDiagnosticSettingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticSettingData)} does not support reading '{options.Format}' format.");
             }
         }
 

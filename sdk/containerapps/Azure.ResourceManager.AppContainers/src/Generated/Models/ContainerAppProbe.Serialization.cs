@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppProbe>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FailureThreshold.HasValue)
+            if (Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (HttpGet != null)
+            if (Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
-                writer.WriteObjectValue(HttpGet);
+                writer.WriteObjectValue<ContainerAppHttpRequestInfo>(HttpGet, options);
             }
-            if (InitialDelaySeconds.HasValue)
+            if (Optional.IsDefined(InitialDelaySeconds))
             {
                 writer.WritePropertyName("initialDelaySeconds"u8);
                 writer.WriteNumberValue(InitialDelaySeconds.Value);
             }
-            if (PeriodSeconds.HasValue)
+            if (Optional.IsDefined(PeriodSeconds))
             {
                 writer.WritePropertyName("periodSeconds"u8);
                 writer.WriteNumberValue(PeriodSeconds.Value);
             }
-            if (SuccessThreshold.HasValue)
+            if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (TcpSocket != null)
+            if (Optional.IsDefined(TcpSocket))
             {
                 writer.WritePropertyName("tcpSocket"u8);
-                writer.WriteObjectValue(TcpSocket);
+                writer.WriteObjectValue<ContainerAppTcpSocketRequestInfo>(TcpSocket, options);
             }
-            if (TerminationGracePeriodSeconds.HasValue)
+            if (Optional.IsDefined(TerminationGracePeriodSeconds))
             {
                 writer.WritePropertyName("terminationGracePeriodSeconds"u8);
                 writer.WriteNumberValue(TerminationGracePeriodSeconds.Value);
             }
-            if (TimeoutSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutSeconds.Value);
             }
-            if (ProbeType.HasValue)
+            if (Optional.IsDefined(ProbeType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ProbeType.Value.ToString());
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppProbe>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             int? timeoutSeconds = default;
             ContainerAppProbeType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureThreshold"u8))
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppProbe(
                 failureThreshold,
                 httpGet,
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppProbe(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppProbe)} does not support reading '{options.Format}' format.");
             }
         }
 

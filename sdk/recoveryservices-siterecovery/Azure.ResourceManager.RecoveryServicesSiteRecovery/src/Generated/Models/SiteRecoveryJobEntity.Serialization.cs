@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryJobEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryJobEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (JobId != null)
+            if (Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (JobFriendlyName != null)
+            if (Optional.IsDefined(JobFriendlyName))
             {
                 writer.WritePropertyName("jobFriendlyName"u8);
                 writer.WriteStringValue(JobFriendlyName);
             }
-            if (TargetObjectId != null)
+            if (Optional.IsDefined(TargetObjectId))
             {
                 writer.WritePropertyName("targetObjectId"u8);
                 writer.WriteStringValue(TargetObjectId);
             }
-            if (TargetObjectName != null)
+            if (Optional.IsDefined(TargetObjectName))
             {
                 writer.WritePropertyName("targetObjectName"u8);
                 writer.WriteStringValue(TargetObjectName);
             }
-            if (TargetInstanceType != null)
+            if (Optional.IsDefined(TargetInstanceType))
             {
                 writer.WritePropertyName("targetInstanceType"u8);
                 writer.WriteStringValue(TargetInstanceType);
             }
-            if (JobScenarioName != null)
+            if (Optional.IsDefined(JobScenarioName))
             {
                 writer.WritePropertyName("jobScenarioName"u8);
                 writer.WriteStringValue(JobScenarioName);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryJobEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryJobEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string targetInstanceType = default;
             string jobScenarioName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobId"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SiteRecoveryJobEntity(
                 jobId,
                 jobFriendlyName,
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryJobEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryJobEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryJobEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

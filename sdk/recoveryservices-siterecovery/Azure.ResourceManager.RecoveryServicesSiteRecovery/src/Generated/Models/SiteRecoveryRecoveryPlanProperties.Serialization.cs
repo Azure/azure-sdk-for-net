@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryRecoveryPlanProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryRecoveryPlanProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryRecoveryPlanProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (PrimaryFabricId != null)
+            if (Optional.IsDefined(PrimaryFabricId))
             {
                 writer.WritePropertyName("primaryFabricId"u8);
                 writer.WriteStringValue(PrimaryFabricId);
             }
-            if (PrimaryFabricFriendlyName != null)
+            if (Optional.IsDefined(PrimaryFabricFriendlyName))
             {
                 writer.WritePropertyName("primaryFabricFriendlyName"u8);
                 writer.WriteStringValue(PrimaryFabricFriendlyName);
             }
-            if (RecoveryFabricId != null)
+            if (Optional.IsDefined(RecoveryFabricId))
             {
                 writer.WritePropertyName("recoveryFabricId"u8);
                 writer.WriteStringValue(RecoveryFabricId);
             }
-            if (RecoveryFabricFriendlyName != null)
+            if (Optional.IsDefined(RecoveryFabricFriendlyName))
             {
                 writer.WritePropertyName("recoveryFabricFriendlyName"u8);
                 writer.WriteStringValue(RecoveryFabricFriendlyName);
             }
-            if (FailoverDeploymentModel != null)
+            if (Optional.IsDefined(FailoverDeploymentModel))
             {
                 writer.WritePropertyName("failoverDeploymentModel"u8);
                 writer.WriteStringValue(FailoverDeploymentModel);
             }
-            if (!(ReplicationProviders is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ReplicationProviders))
             {
                 writer.WritePropertyName("replicationProviders"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AllowedOperations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedOperations))
             {
                 writer.WritePropertyName("allowedOperations"u8);
                 writer.WriteStartArray();
@@ -76,53 +76,53 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LastPlannedFailoverOn.HasValue)
+            if (Optional.IsDefined(LastPlannedFailoverOn))
             {
                 writer.WritePropertyName("lastPlannedFailoverTime"u8);
                 writer.WriteStringValue(LastPlannedFailoverOn.Value, "O");
             }
-            if (LastUnplannedFailoverOn.HasValue)
+            if (Optional.IsDefined(LastUnplannedFailoverOn))
             {
                 writer.WritePropertyName("lastUnplannedFailoverTime"u8);
                 writer.WriteStringValue(LastUnplannedFailoverOn.Value, "O");
             }
-            if (LastTestFailoverOn.HasValue)
+            if (Optional.IsDefined(LastTestFailoverOn))
             {
                 writer.WritePropertyName("lastTestFailoverTime"u8);
                 writer.WriteStringValue(LastTestFailoverOn.Value, "O");
             }
-            if (CurrentScenario != null)
+            if (Optional.IsDefined(CurrentScenario))
             {
                 writer.WritePropertyName("currentScenario"u8);
-                writer.WriteObjectValue(CurrentScenario);
+                writer.WriteObjectValue<CurrentScenarioDetails>(CurrentScenario, options);
             }
-            if (CurrentScenarioStatus != null)
+            if (Optional.IsDefined(CurrentScenarioStatus))
             {
                 writer.WritePropertyName("currentScenarioStatus"u8);
                 writer.WriteStringValue(CurrentScenarioStatus);
             }
-            if (CurrentScenarioStatusDescription != null)
+            if (Optional.IsDefined(CurrentScenarioStatusDescription))
             {
                 writer.WritePropertyName("currentScenarioStatusDescription"u8);
                 writer.WriteStringValue(CurrentScenarioStatusDescription);
             }
-            if (!(Groups is ChangeTrackingList<SiteRecoveryPlanGroup> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryPlanGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ProviderSpecificDetails is ChangeTrackingList<RecoveryPlanProviderSpecificDetails> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProviderSpecificDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecoveryPlanProviderSpecificDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryRecoveryPlanProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryRecoveryPlanProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryRecoveryPlanProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IReadOnlyList<SiteRecoveryPlanGroup> groups = default;
             IReadOnlyList<RecoveryPlanProviderSpecificDetails> providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -326,10 +326,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SiteRecoveryRecoveryPlanProperties(
                 friendlyName,
                 primaryFabricId,
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryRecoveryPlanProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryRecoveryPlanProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryRecoveryPlanProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryRecoveryPlanProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryRecoveryPlanProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

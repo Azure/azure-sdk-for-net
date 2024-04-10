@@ -15,7 +15,7 @@ namespace Azure.Communication.Email
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Headers is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
@@ -29,35 +29,43 @@ namespace Azure.Communication.Email
             writer.WritePropertyName("senderAddress"u8);
             writer.WriteStringValue(SenderAddress);
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            writer.WriteObjectValue<EmailContent>(Content);
             writer.WritePropertyName("recipients"u8);
-            writer.WriteObjectValue(Recipients);
-            if (!(Attachments is ChangeTrackingList<EmailAttachment> collection0 && collection0.IsUndefined))
+            writer.WriteObjectValue<EmailRecipients>(Recipients);
+            if (Optional.IsCollectionDefined(Attachments))
             {
                 writer.WritePropertyName("attachments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Attachments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmailAttachment>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ReplyTo is ChangeTrackingList<EmailAddress> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ReplyTo))
             {
                 writer.WritePropertyName("replyTo"u8);
                 writer.WriteStartArray();
                 foreach (var item in ReplyTo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmailAddress>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (UserEngagementTrackingDisabled.HasValue)
+            if (Optional.IsDefined(UserEngagementTrackingDisabled))
             {
                 writer.WritePropertyName("userEngagementTrackingDisabled"u8);
                 writer.WriteBooleanValue(UserEngagementTrackingDisabled.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<EmailMessage>(this);
+            return content;
         }
     }
 }

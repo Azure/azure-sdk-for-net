@@ -18,17 +18,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CrossTableTransaction.HasValue)
+            if (Optional.IsDefined(CrossTableTransaction))
             {
                 writer.WritePropertyName("crossTableTransaction"u8);
                 writer.WriteBooleanValue(CrossTableTransaction.Value);
             }
-            if (DropExistingTargetTableOnStart.HasValue)
+            if (Optional.IsDefined(DropExistingTargetTableOnStart))
             {
                 writer.WritePropertyName("dropExistingTargetTableOnStart"u8);
                 writer.WriteBooleanValue(DropExistingTargetTableOnStart.Value);
             }
-            if (ActionOnExistingTargetTable.HasValue)
+            if (Optional.IsDefined(ActionOnExistingTargetTable))
             {
                 writer.WritePropertyName("actionOnExistingTargetTable"u8);
                 writer.WriteStringValue(ActionOnExistingTargetTable.Value.ToString());
@@ -78,12 +78,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkConnectionTargetDatabaseTypeProperties(crossTableTransaction, dropExistingTargetTableOnStart, actionOnExistingTargetTable);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkConnectionTargetDatabaseTypeProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkConnectionTargetDatabaseTypeProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LinkConnectionTargetDatabaseTypeProperties>(this);
+            return content;
+        }
+
         internal partial class LinkConnectionTargetDatabaseTypePropertiesConverter : JsonConverter<LinkConnectionTargetDatabaseTypeProperties>
         {
             public override void Write(Utf8JsonWriter writer, LinkConnectionTargetDatabaseTypeProperties model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LinkConnectionTargetDatabaseTypeProperties>(model);
             }
+
             public override LinkConnectionTargetDatabaseTypeProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

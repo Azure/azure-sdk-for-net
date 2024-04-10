@@ -22,42 +22,42 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VirtualMachine != null)
+            if (options.Format != "W" && Optional.IsDefined(VirtualMachine))
             {
                 writer.WritePropertyName("virtualMachine"u8);
-                writer.WriteObjectValue(VirtualMachine);
+                writer.WriteObjectValue<VirtualMachineScaleSetInstanceViewStatusesSummary>(VirtualMachine, options);
             }
-            if (options.Format != "W" && !(Extensions is ChangeTrackingList<VirtualMachineScaleSetVmExtensionsSummary> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualMachineScaleSetVmExtensionsSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InstanceViewStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(OrchestrationServices is ChangeTrackingList<OrchestrationServiceSummary> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OrchestrationServices))
             {
                 writer.WritePropertyName("orchestrationServices"u8);
                 writer.WriteStartArray();
                 foreach (var item in OrchestrationServices)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OrchestrationServiceSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
             IReadOnlyList<InstanceViewStatus> statuses = default;
             IReadOnlyList<OrchestrationServiceSummary> orchestrationServices = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachine"u8))
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineScaleSetInstanceView(virtualMachine, extensions ?? new ChangeTrackingList<VirtualMachineScaleSetVmExtensionsSummary>(), statuses ?? new ChangeTrackingList<InstanceViewStatus>(), orchestrationServices ?? new ChangeTrackingList<OrchestrationServiceSummary>(), serializedAdditionalRawData);
         }
 
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineScaleSetInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

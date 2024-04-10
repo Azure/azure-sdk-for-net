@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiscoveredSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiscoveredSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string publisher = default;
             string sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DiscoveredSecuritySolution(
                 id,
                 name,
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDiscoveredSecuritySolution(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveredSecuritySolution)} does not support reading '{options.Format}' format.");
             }
         }
 

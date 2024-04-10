@@ -24,26 +24,26 @@ namespace Azure.ResourceManager.Elastic
             var format = options.Format == "W" ? ((IPersistableModel<ElasticMonitorResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticMonitorResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticMonitorResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ResourceSku>(Sku, options);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<MonitorProperties>(Properties, options);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Elastic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Elastic
             var format = options.Format == "W" ? ((IPersistableModel<ElasticMonitorResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticMonitorResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticMonitorResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Elastic
             ResourceType type = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.Elastic
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ElasticMonitorResourceData(
                 id,
                 name,
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Elastic
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticMonitorResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticMonitorResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Elastic
                         return DeserializeElasticMonitorResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticMonitorResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticMonitorResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

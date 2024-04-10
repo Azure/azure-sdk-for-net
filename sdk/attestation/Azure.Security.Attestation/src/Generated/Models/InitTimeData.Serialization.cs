@@ -15,17 +15,25 @@ namespace Azure.Security.Attestation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Data != null)
+            if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteBase64StringValue(Data, "U");
             }
-            if (DataType.HasValue)
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType.Value.ToString());
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<InitTimeData>(this);
+            return content;
         }
     }
 }

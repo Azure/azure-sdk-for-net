@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
@@ -101,6 +100,14 @@ namespace Azure.AI.Translation.Document
                 progress,
                 id,
                 characterCharged);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentStatusResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentStatusResult(document.RootElement);
         }
     }
 }

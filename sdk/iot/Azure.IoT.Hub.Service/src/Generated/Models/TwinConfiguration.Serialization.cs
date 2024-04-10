@@ -17,17 +17,17 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (SchemaVersion != null)
+            if (Optional.IsDefined(SchemaVersion))
             {
                 writer.WritePropertyName("schemaVersion"u8);
                 writer.WriteStringValue(SchemaVersion);
             }
-            if (!(Labels is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -38,42 +38,42 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
-                writer.WriteObjectValue(Content);
+                writer.WriteObjectValue<ConfigurationContent>(Content);
             }
-            if (TargetCondition != null)
+            if (Optional.IsDefined(TargetCondition))
             {
                 writer.WritePropertyName("targetCondition"u8);
                 writer.WriteStringValue(TargetCondition);
             }
-            if (CreatedTimeUtc.HasValue)
+            if (Optional.IsDefined(CreatedTimeUtc))
             {
                 writer.WritePropertyName("createdTimeUtc"u8);
                 writer.WriteStringValue(CreatedTimeUtc.Value, "O");
             }
-            if (LastUpdatedTimeUtc.HasValue)
+            if (Optional.IsDefined(LastUpdatedTimeUtc))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (SystemMetrics != null)
+            if (Optional.IsDefined(SystemMetrics))
             {
                 writer.WritePropertyName("systemMetrics"u8);
-                writer.WriteObjectValue(SystemMetrics);
+                writer.WriteObjectValue<ConfigurationMetrics>(SystemMetrics);
             }
-            if (Metrics != null)
+            if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics);
+                writer.WriteObjectValue<ConfigurationMetrics>(Metrics);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(Etag);
@@ -201,6 +201,22 @@ namespace Azure.IoT.Hub.Service.Models
                 systemMetrics,
                 metrics,
                 etag);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TwinConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTwinConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TwinConfiguration>(this);
+            return content;
         }
     }
 }

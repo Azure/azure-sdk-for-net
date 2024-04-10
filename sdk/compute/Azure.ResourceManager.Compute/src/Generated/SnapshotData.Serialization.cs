@@ -25,26 +25,26 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ManagedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SnapshotSku>(Sku, options);
             }
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,124 +72,124 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && TimeCreated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (OSType.HasValue)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (HyperVGeneration.HasValue)
+            if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (PurchasePlan != null)
+            if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                writer.WriteObjectValue<DiskPurchasePlan>(PurchasePlan, options);
             }
-            if (SupportedCapabilities != null)
+            if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities);
+                writer.WriteObjectValue<SupportedCapabilities>(SupportedCapabilities, options);
             }
-            if (CreationData != null)
+            if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData);
+                writer.WriteObjectValue<DiskCreationData>(CreationData, options);
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (options.Format != "W" && DiskSizeBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskSizeBytes))
             {
                 writer.WritePropertyName("diskSizeBytes"u8);
                 writer.WriteNumberValue(DiskSizeBytes.Value);
             }
-            if (options.Format != "W" && DiskState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskState))
             {
                 writer.WritePropertyName("diskState"u8);
                 writer.WriteStringValue(DiskState.Value.ToString());
             }
-            if (options.Format != "W" && UniqueId != null)
+            if (options.Format != "W" && Optional.IsDefined(UniqueId))
             {
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId);
             }
-            if (EncryptionSettingsGroup != null)
+            if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsGroup);
+                writer.WriteObjectValue<EncryptionSettingsGroup>(EncryptionSettingsGroup, options);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Incremental.HasValue)
+            if (Optional.IsDefined(Incremental))
             {
                 writer.WritePropertyName("incremental"u8);
                 writer.WriteBooleanValue(Incremental.Value);
             }
-            if (options.Format != "W" && IncrementalSnapshotFamilyId != null)
+            if (options.Format != "W" && Optional.IsDefined(IncrementalSnapshotFamilyId))
             {
                 writer.WritePropertyName("incrementalSnapshotFamilyId"u8);
                 writer.WriteStringValue(IncrementalSnapshotFamilyId);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<DiskEncryption>(Encryption, options);
             }
-            if (NetworkAccessPolicy.HasValue)
+            if (Optional.IsDefined(NetworkAccessPolicy))
             {
                 writer.WritePropertyName("networkAccessPolicy"u8);
                 writer.WriteStringValue(NetworkAccessPolicy.Value.ToString());
             }
-            if (DiskAccessId != null)
+            if (Optional.IsDefined(DiskAccessId))
             {
                 writer.WritePropertyName("diskAccessId"u8);
                 writer.WriteStringValue(DiskAccessId);
             }
-            if (SecurityProfile != null)
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<DiskSecurityProfile>(SecurityProfile, options);
             }
-            if (SupportsHibernation.HasValue)
+            if (Optional.IsDefined(SupportsHibernation))
             {
                 writer.WritePropertyName("supportsHibernation"u8);
                 writer.WriteBooleanValue(SupportsHibernation.Value);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (CompletionPercent.HasValue)
+            if (Optional.IsDefined(CompletionPercent))
             {
                 writer.WritePropertyName("completionPercent"u8);
                 writer.WriteNumberValue(CompletionPercent.Value);
             }
-            if (CopyCompletionError != null)
+            if (Optional.IsDefined(CopyCompletionError))
             {
                 writer.WritePropertyName("copyCompletionError"u8);
-                writer.WriteObjectValue(CopyCompletionError);
+                writer.WriteObjectValue<CopyCompletionError>(CopyCompletionError, options);
             }
-            if (DataAccessAuthMode.HasValue)
+            if (Optional.IsDefined(DataAccessAuthMode))
             {
                 writer.WritePropertyName("dataAccessAuthMode"u8);
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Compute
             CopyCompletionError copyCompletionError = default;
             DataAccessAuthMode? dataAccessAuthMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -544,10 +544,10 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SnapshotData(
                 id,
                 name,
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeSnapshotData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotData)} does not support reading '{options.Format}' format.");
             }
         }
 

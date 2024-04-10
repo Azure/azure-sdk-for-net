@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual async Task<Response<SynapseSqlPoolSchemaResource>> GetAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _synapseSqlPoolSchemaSqlPoolSchemasClientDiagnostics.CreateScope("SynapseSqlPoolSchemaCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual Response<SynapseSqlPoolSchemaResource> Get(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _synapseSqlPoolSchemaSqlPoolSchemasClientDiagnostics.CreateScope("SynapseSqlPoolSchemaCollection.Get");
             scope.Start();
@@ -246,14 +230,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _synapseSqlPoolSchemaSqlPoolSchemasClientDiagnostics.CreateScope("SynapseSqlPoolSchemaCollection.Exists");
             scope.Start();
@@ -296,14 +273,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual Response<bool> Exists(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _synapseSqlPoolSchemaSqlPoolSchemasClientDiagnostics.CreateScope("SynapseSqlPoolSchemaCollection.Exists");
             scope.Start();
@@ -346,14 +316,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseSqlPoolSchemaResource>> GetIfExistsAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _synapseSqlPoolSchemaSqlPoolSchemasClientDiagnostics.CreateScope("SynapseSqlPoolSchemaCollection.GetIfExists");
             scope.Start();
@@ -398,14 +361,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         public virtual NullableResponse<SynapseSqlPoolSchemaResource> GetIfExists(string schemaName, CancellationToken cancellationToken = default)
         {
-            if (schemaName == null)
-            {
-                throw new ArgumentNullException(nameof(schemaName));
-            }
-            if (schemaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(schemaName));
-            }
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
 
             using var scope = _synapseSqlPoolSchemaSqlPoolSchemasClientDiagnostics.CreateScope("SynapseSqlPoolSchemaCollection.GetIfExists");
             scope.Start();

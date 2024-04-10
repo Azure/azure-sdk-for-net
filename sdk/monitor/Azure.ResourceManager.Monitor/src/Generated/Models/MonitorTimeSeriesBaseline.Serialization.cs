@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorTimeSeriesBaseline>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("aggregation"u8);
             writer.WriteStringValue(Aggregation);
-            if (!(Dimensions is ChangeTrackingList<MonitorMetricSingleDimension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorMetricSingleDimension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,16 +49,16 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MonitorSingleBaseline>(item, options);
             }
             writer.WriteEndArray();
-            if (!(MetadataValues is ChangeTrackingList<MonitorBaselineMetadata> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MetadataValues))
             {
                 writer.WritePropertyName("metadataValues"u8);
                 writer.WriteStartArray();
                 foreach (var item in MetadataValues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorBaselineMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorTimeSeriesBaseline>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IReadOnlyList<MonitorSingleBaseline> data = default;
             IReadOnlyList<MonitorBaselineMetadata> metadataValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregation"u8))
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MonitorTimeSeriesBaseline(
                 aggregation,
                 dimensions ?? new ChangeTrackingList<MonitorMetricSingleDimension>(),
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorTimeSeriesBaseline(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorTimeSeriesBaseline)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
@@ -55,6 +55,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
             }
             return new ServicePrincipalParam(clientId, clientSecret, tenantId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ServicePrincipalParam FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeServicePrincipalParam(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ServicePrincipalParam>(this);
+            return content;
         }
     }
 }

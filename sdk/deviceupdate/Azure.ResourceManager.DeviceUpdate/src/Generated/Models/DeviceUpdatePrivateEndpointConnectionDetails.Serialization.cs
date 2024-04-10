@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateEndpointConnectionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && PrivateIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (options.Format != "W" && LinkIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkIdentifier))
             {
                 writer.WritePropertyName("linkIdentifier"u8);
                 writer.WriteStringValue(LinkIdentifier);
             }
-            if (options.Format != "W" && GroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && MemberName != null)
+            if (options.Format != "W" && Optional.IsDefined(MemberName))
             {
                 writer.WritePropertyName("memberName"u8);
                 writer.WriteStringValue(MemberName);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateEndpointConnectionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             string groupId = default;
             string memberName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DeviceUpdatePrivateEndpointConnectionDetails(
                 id,
                 privateIPAddress,
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         return DeserializeDeviceUpdatePrivateEndpointConnectionDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -19,17 +19,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (VNetId != null)
+            if (Optional.IsDefined(VNetId))
             {
                 writer.WritePropertyName("vNetId"u8);
                 writer.WriteStringValue(VNetId);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
-            if (!(PublicIPs is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PublicIPs))
             {
                 writer.WritePropertyName("publicIPs"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -90,12 +90,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new IntegrationRuntimeVNetProperties(vNetId, subnet, publicIPs ?? new ChangeTrackingList<string>(), additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IntegrationRuntimeVNetProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIntegrationRuntimeVNetProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<IntegrationRuntimeVNetProperties>(this);
+            return content;
+        }
+
         internal partial class IntegrationRuntimeVNetPropertiesConverter : JsonConverter<IntegrationRuntimeVNetProperties>
         {
             public override void Write(Utf8JsonWriter writer, IntegrationRuntimeVNetProperties model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<IntegrationRuntimeVNetProperties>(model);
             }
+
             public override IntegrationRuntimeVNetProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -19,7 +19,7 @@ namespace Azure.Communication.MediaComposition
             writer.WriteStringValue(Id);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (PlaceholderImageUri != null)
+            if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
@@ -55,6 +55,22 @@ namespace Azure.Communication.MediaComposition
                 }
             }
             return new GroupCallInput(kind, placeholderImageUri, id);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GroupCallInput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGroupCallInput(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<GroupCallInput>(this);
+            return content;
         }
     }
 }

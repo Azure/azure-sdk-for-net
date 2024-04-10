@@ -17,17 +17,25 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("invitationId"u8);
             writer.WriteStringValue(InvitationId);
-            if (OperationContext != null)
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (OperationCallbackUri != null)
+            if (Optional.IsDefined(OperationCallbackUri))
             {
                 writer.WritePropertyName("operationCallbackUri"u8);
                 writer.WriteStringValue(OperationCallbackUri);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CancelAddParticipantRequestInternal>(this);
+            return content;
         }
     }
 }

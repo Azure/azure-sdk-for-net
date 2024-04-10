@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,64 +43,64 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (CurrentValue != null)
+            if (Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteStringValue(CurrentValue);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && DocumentationLink != null)
+            if (options.Format != "W" && Optional.IsDefined(DocumentationLink))
             {
                 writer.WritePropertyName("documentationLink"u8);
                 writer.WriteStringValue(DocumentationLink);
             }
-            if (options.Format != "W" && DefaultValue != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (options.Format != "W" && DataType != null)
+            if (options.Format != "W" && Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
-            if (options.Format != "W" && AllowedValues != null)
+            if (options.Format != "W" && Optional.IsDefined(AllowedValues))
             {
                 writer.WritePropertyName("allowedValues"u8);
                 writer.WriteStringValue(AllowedValues);
             }
-            if (Source.HasValue)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (options.Format != "W" && IsReadOnly.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("isReadOnly"u8);
                 writer.WriteStringValue(IsReadOnly.Value.ToString());
             }
-            if (options.Format != "W" && IsConfigPendingRestart.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsConfigPendingRestart))
             {
                 writer.WritePropertyName("isConfigPendingRestart"u8);
                 writer.WriteStringValue(IsConfigPendingRestart.Value.ToString());
             }
-            if (options.Format != "W" && IsDynamicConfig.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDynamicConfig))
             {
                 writer.WritePropertyName("isDynamicConfig"u8);
                 writer.WriteStringValue(IsDynamicConfig.Value.ToString());
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             MySqlFlexibleServerConfigPendingRestartState? isConfigPendingRestart = default;
             MySqlFlexibleServerConfigDynamicState? isDynamicConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -272,10 +272,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlFlexibleServerConfigurationData(
                 id,
                 name,
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         return DeserializeMySqlFlexibleServerConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

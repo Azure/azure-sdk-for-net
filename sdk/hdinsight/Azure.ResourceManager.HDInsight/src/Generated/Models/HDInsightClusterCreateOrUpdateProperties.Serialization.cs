@@ -22,82 +22,82 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterCreateOrUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterCreateOrUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterCreateOrUpdateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ClusterVersion != null)
+            if (Optional.IsDefined(ClusterVersion))
             {
                 writer.WritePropertyName("clusterVersion"u8);
                 writer.WriteStringValue(ClusterVersion);
             }
-            if (OSType.HasValue)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (Tier.HasValue)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (ClusterDefinition != null)
+            if (Optional.IsDefined(ClusterDefinition))
             {
                 writer.WritePropertyName("clusterDefinition"u8);
-                writer.WriteObjectValue(ClusterDefinition);
+                writer.WriteObjectValue<HDInsightClusterDefinition>(ClusterDefinition, options);
             }
-            if (KafkaRestProperties != null)
+            if (Optional.IsDefined(KafkaRestProperties))
             {
                 writer.WritePropertyName("kafkaRestProperties"u8);
-                writer.WriteObjectValue(KafkaRestProperties);
+                writer.WriteObjectValue<KafkaRestProperties>(KafkaRestProperties, options);
             }
-            if (SecurityProfile != null)
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<HDInsightSecurityProfile>(SecurityProfile, options);
             }
-            if (ComputeProfile != null)
+            if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile);
+                writer.WriteObjectValue<ComputeProfile>(ComputeProfile, options);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<StorageProfile>(StorageProfile, options);
             }
-            if (DiskEncryptionProperties != null)
+            if (Optional.IsDefined(DiskEncryptionProperties))
             {
                 writer.WritePropertyName("diskEncryptionProperties"u8);
-                writer.WriteObjectValue(DiskEncryptionProperties);
+                writer.WriteObjectValue<HDInsightDiskEncryptionProperties>(DiskEncryptionProperties, options);
             }
-            if (EncryptionInTransitProperties != null)
+            if (Optional.IsDefined(EncryptionInTransitProperties))
             {
                 writer.WritePropertyName("encryptionInTransitProperties"u8);
-                writer.WriteObjectValue(EncryptionInTransitProperties);
+                writer.WriteObjectValue<EncryptionInTransitProperties>(EncryptionInTransitProperties, options);
             }
-            if (MinSupportedTlsVersion != null)
+            if (Optional.IsDefined(MinSupportedTlsVersion))
             {
                 writer.WritePropertyName("minSupportedTlsVersion"u8);
                 writer.WriteStringValue(MinSupportedTlsVersion);
             }
-            if (NetworkProperties != null)
+            if (Optional.IsDefined(NetworkProperties))
             {
                 writer.WritePropertyName("networkProperties"u8);
-                writer.WriteObjectValue(NetworkProperties);
+                writer.WriteObjectValue<HDInsightClusterNetworkProperties>(NetworkProperties, options);
             }
-            if (ComputeIsolationProperties != null)
+            if (Optional.IsDefined(ComputeIsolationProperties))
             {
                 writer.WritePropertyName("computeIsolationProperties"u8);
-                writer.WriteObjectValue(ComputeIsolationProperties);
+                writer.WriteObjectValue<HDInsightComputeIsolationProperties>(ComputeIsolationProperties, options);
             }
-            if (!(PrivateLinkConfigurations is ChangeTrackingList<HDInsightPrivateLinkConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
                 writer.WritePropertyName("privateLinkConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightPrivateLinkConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterCreateOrUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterCreateOrUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterCreateOrUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             HDInsightComputeIsolationProperties computeIsolationProperties = default;
             IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterVersion"u8))
@@ -282,10 +282,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HDInsightClusterCreateOrUpdateProperties(
                 clusterVersion,
                 osType,
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterCreateOrUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterCreateOrUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightClusterCreateOrUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterCreateOrUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterCreateOrUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

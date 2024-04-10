@@ -20,13 +20,13 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Selectors)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SearchIndexerIndexProjectionSelector>(item);
             }
             writer.WriteEndArray();
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue<SearchIndexerIndexProjectionsParameters>(Parameters);
             }
             writer.WriteEndObject();
         }
@@ -62,6 +62,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new SearchIndexerIndexProjections(selectors, parameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchIndexerIndexProjections FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchIndexerIndexProjections(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SearchIndexerIndexProjections>(this);
+            return content;
         }
     }
 }

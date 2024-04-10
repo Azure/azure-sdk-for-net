@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryDataDiskImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryDataDiskImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryDataDiskImage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
-            if (options.Format != "W" && SizeInGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SizeInGB))
             {
                 writer.WritePropertyName("sizeInGB"u8);
                 writer.WriteNumberValue(SizeInGB.Value);
             }
-            if (HostCaching.HasValue)
+            if (Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToSerialString());
             }
-            if (GallerySource != null)
+            if (Optional.IsDefined(GallerySource))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(GallerySource);
+                writer.WriteObjectValue<GalleryDiskImageSource>(GallerySource, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryDataDiskImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryDataDiskImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryDataDiskImage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
             HostCaching? hostCaching = default;
             GalleryDiskImageSource source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GalleryDataDiskImage(sizeInGB, hostCaching, source, serializedAdditionalRawData, lun);
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryDataDiskImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryDataDiskImage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryDataDiskImage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryDataDiskImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryDataDiskImage)} does not support reading '{options.Format}' format.");
             }
         }
 

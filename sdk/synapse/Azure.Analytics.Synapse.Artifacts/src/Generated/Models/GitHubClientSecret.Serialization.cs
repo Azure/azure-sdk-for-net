@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ByoaSecretAkvUrl != null)
+            if (Optional.IsDefined(ByoaSecretAkvUrl))
             {
                 writer.WritePropertyName("byoaSecretAkvUrl"u8);
                 writer.WriteStringValue(ByoaSecretAkvUrl);
             }
-            if (ByoaSecretName != null)
+            if (Optional.IsDefined(ByoaSecretName))
             {
                 writer.WritePropertyName("byoaSecretName"u8);
                 writer.WriteStringValue(ByoaSecretName);
@@ -55,12 +55,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new GitHubClientSecret(byoaSecretAkvUrl, byoaSecretName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GitHubClientSecret FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGitHubClientSecret(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<GitHubClientSecret>(this);
+            return content;
+        }
+
         internal partial class GitHubClientSecretConverter : JsonConverter<GitHubClientSecret>
         {
             public override void Write(Utf8JsonWriter writer, GitHubClientSecret model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<GitHubClientSecret>(model);
             }
+
             public override GitHubClientSecret Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -26,27 +26,27 @@ namespace Azure.Communication.MediaComposition
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Position != null)
+            if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
-                writer.WriteObjectValue(Position);
+                writer.WriteObjectValue<InputPosition>(Position);
             }
-            if (Width != null)
+            if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Height != null)
+            if (Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Layer != null)
+            if (Optional.IsDefined(Layer))
             {
                 writer.WritePropertyName("layer"u8);
                 writer.WriteStringValue(Layer);
             }
-            if (ScalingMode.HasValue)
+            if (Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -126,6 +126,22 @@ namespace Azure.Communication.MediaComposition
                 layer,
                 scalingMode,
                 inputIds);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AutoGridInputGroup FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAutoGridInputGroup(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AutoGridInputGroup>(this);
+            return content;
         }
     }
 }

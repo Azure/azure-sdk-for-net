@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackEventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFailbackEventDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFailbackEventDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProtectedItemName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProtectedItemName))
             {
                 writer.WritePropertyName("protectedItemName"u8);
                 writer.WriteStringValue(ProtectedItemName);
             }
-            if (options.Format != "W" && VmName != null)
+            if (options.Format != "W" && Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (options.Format != "W" && ApplianceName != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplianceName))
             {
                 writer.WritePropertyName("applianceName"u8);
                 writer.WriteStringValue(ApplianceName);
             }
-            if (options.Format != "W" && ServerType != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerType))
             {
                 writer.WritePropertyName("serverType"u8);
                 writer.WriteStringValue(ServerType);
             }
-            if (options.Format != "W" && ComponentDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(ComponentDisplayName))
             {
                 writer.WritePropertyName("componentDisplayName"u8);
                 writer.WriteStringValue(ComponentDisplayName);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackEventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFailbackEventDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFailbackEventDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string componentDisplayName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectedItemName"u8))
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new InMageRcmFailbackEventDetails(
                 instanceType,
                 serializedAdditionalRawData,
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackEventDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackEventDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmFailbackEventDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackEventDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackEventDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

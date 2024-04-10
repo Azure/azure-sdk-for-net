@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="names"/> is null. </exception>
         public NamedPartitionScheme(IEnumerable<string> names)
         {
-            if (names == null)
-            {
-                throw new ArgumentNullException(nameof(names));
-            }
+            Argument.AssertNotNull(names, nameof(names));
 
             Names = names.ToList();
             PartitionScheme = PartitionScheme.Named;

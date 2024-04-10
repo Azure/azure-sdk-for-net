@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TaskName != null)
+            if (Optional.IsDefined(TaskName))
             {
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
@@ -39,6 +39,22 @@ namespace Azure.AI.TextAnalytics.Models
                 }
             }
             return new TaskIdentifier(taskName);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TaskIdentifier FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTaskIdentifier(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TaskIdentifier>(this);
+            return content;
         }
     }
 }

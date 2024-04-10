@@ -23,44 +23,44 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebActivityAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebActivityAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebActivityAuthentication)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (WebActivityAuthenticationType != null)
+            if (Optional.IsDefined(WebActivityAuthenticationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(WebActivityAuthenticationType);
             }
-            if (Pfx != null)
+            if (Optional.IsDefined(Pfx))
             {
                 writer.WritePropertyName("pfx"u8);
                 JsonSerializer.Serialize(writer, Pfx);
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 JsonSerializer.Serialize(writer, Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (Resource != null)
+            if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
                 JsonSerializer.Serialize(writer, Resource);
             }
-            if (UserTenant != null)
+            if (Optional.IsDefined(UserTenant))
             {
                 writer.WritePropertyName("userTenant"u8);
                 JsonSerializer.Serialize(writer, UserTenant);
             }
-            if (Credential != null)
+            if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                writer.WriteObjectValue<DataFactoryCredentialReference>(Credential, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebActivityAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebActivityAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebActivityAuthentication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            DataFactorySecretBaseDefinition pfx = default;
+            DataFactorySecret pfx = default;
             DataFactoryElement<string> username = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> resource = default;
             DataFactoryElement<string> userTenant = default;
             DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pfx = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
+                    pfx = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("username"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
+                    password = JsonSerializer.Deserialize<DataFactorySecret>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("resource"u8))
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebActivityAuthentication(
                 type,
                 pfx,
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebActivityAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebActivityAuthentication)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeWebActivityAuthentication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebActivityAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebActivityAuthentication)} does not support reading '{options.Format}' format.");
             }
         }
 

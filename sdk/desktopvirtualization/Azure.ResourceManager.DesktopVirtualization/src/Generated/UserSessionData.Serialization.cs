@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             var format = options.Format == "W" ? ((IPersistableModel<UserSessionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserSessionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserSessionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (UserPrincipalName != null)
+            if (Optional.IsDefined(UserPrincipalName))
             {
                 writer.WritePropertyName("userPrincipalName"u8);
                 writer.WriteStringValue(UserPrincipalName);
             }
-            if (ApplicationType.HasValue)
+            if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
-            if (SessionState.HasValue)
+            if (Optional.IsDefined(SessionState))
             {
                 writer.WritePropertyName("sessionState"u8);
                 writer.WriteStringValue(SessionState.Value.ToString());
             }
-            if (ActiveDirectoryUserName != null)
+            if (Optional.IsDefined(ActiveDirectoryUserName))
             {
                 writer.WritePropertyName("activeDirectoryUserName"u8);
                 writer.WriteStringValue(ActiveDirectoryUserName);
             }
-            if (CreateOn.HasValue)
+            if (Optional.IsDefined(CreateOn))
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreateOn.Value, "O");
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             var format = options.Format == "W" ? ((IPersistableModel<UserSessionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserSessionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserSessionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             string activeDirectoryUserName = default;
             DateTimeOffset? createTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UserSessionData(
                 id,
                 name,
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserSessionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserSessionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         return DeserializeUserSessionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserSessionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserSessionData)} does not support reading '{options.Format}' format.");
             }
         }
 

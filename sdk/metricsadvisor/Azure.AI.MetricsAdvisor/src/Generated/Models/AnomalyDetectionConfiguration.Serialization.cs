@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -26,24 +26,24 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("wholeMetricConfiguration"u8);
-            writer.WriteObjectValue(WholeSeriesDetectionConditions);
-            if (!(SeriesGroupDetectionConditions is ChangeTrackingList<MetricSeriesGroupDetectionCondition> collection && collection.IsUndefined))
+            writer.WriteObjectValue<MetricWholeSeriesDetectionCondition>(WholeSeriesDetectionConditions);
+            if (Optional.IsCollectionDefined(SeriesGroupDetectionConditions))
             {
                 writer.WritePropertyName("dimensionGroupOverrideConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in SeriesGroupDetectionConditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricSeriesGroupDetectionCondition>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(SeriesDetectionConditions is ChangeTrackingList<MetricSingleSeriesDetectionCondition> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SeriesDetectionConditions))
             {
                 writer.WritePropertyName("seriesOverrideConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in SeriesDetectionConditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricSingleSeriesDetectionCondition>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -127,6 +127,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 wholeMetricConfiguration,
                 dimensionGroupOverrideConfigurations ?? new ChangeTrackingList<MetricSeriesGroupDetectionCondition>(),
                 seriesOverrideConfigurations ?? new ChangeTrackingList<MetricSingleSeriesDetectionCondition>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnomalyDetectionConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnomalyDetectionConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AnomalyDetectionConfiguration>(this);
+            return content;
         }
     }
 }

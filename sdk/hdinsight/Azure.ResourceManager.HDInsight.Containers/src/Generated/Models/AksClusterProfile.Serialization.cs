@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<AksClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AksClusterProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AksClusterProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AksClusterResourceId != null)
+            if (Optional.IsDefined(AksClusterResourceId))
             {
                 writer.WritePropertyName("aksClusterResourceId"u8);
                 writer.WriteStringValue(AksClusterResourceId);
             }
-            if (AksClusterAgentPoolIdentityProfile != null)
+            if (Optional.IsDefined(AksClusterAgentPoolIdentityProfile))
             {
                 writer.WritePropertyName("aksClusterAgentPoolIdentityProfile"u8);
-                writer.WriteObjectValue(AksClusterAgentPoolIdentityProfile);
+                writer.WriteObjectValue<HDInsightIdentityProfile>(AksClusterAgentPoolIdentityProfile, options);
             }
-            if (options.Format != "W" && AksVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(AksVersion))
             {
                 writer.WritePropertyName("aksVersion"u8);
                 writer.WriteStringValue(AksVersion);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<AksClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AksClusterProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AksClusterProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             HDInsightIdentityProfile aksClusterAgentPoolIdentityProfile = default;
             string aksVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aksClusterResourceId"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AksClusterProfile(aksClusterResourceId, aksClusterAgentPoolIdentityProfile, aksVersion, serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AksClusterProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AksClusterProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeAksClusterProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AksClusterProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AksClusterProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

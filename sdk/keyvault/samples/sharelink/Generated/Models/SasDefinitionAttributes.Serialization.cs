@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
@@ -84,6 +84,22 @@ namespace Azure.Security.KeyVault.Storage.Models
                 }
             }
             return new SasDefinitionAttributes(enabled, created, updated, recoverableDays, recoveryLevel);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SasDefinitionAttributes FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSasDefinitionAttributes(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SasDefinitionAttributes>(this);
+            return content;
         }
     }
 }

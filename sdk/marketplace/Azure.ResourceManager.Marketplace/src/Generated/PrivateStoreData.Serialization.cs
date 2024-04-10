@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Marketplace.Models;
 using Azure.ResourceManager.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Marketplace
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStoreData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStoreData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,44 +43,44 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Availability.HasValue)
+            if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
                 writer.WriteStringValue(Availability.Value.ToString());
             }
-            if (options.Format != "W" && PrivateStoreId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrivateStoreId))
             {
                 writer.WritePropertyName("privateStoreId"u8);
                 writer.WriteStringValue(PrivateStoreId.Value);
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (PrivateStoreName != null)
+            if (Optional.IsDefined(PrivateStoreName))
             {
                 writer.WritePropertyName("privateStoreName"u8);
                 writer.WriteStringValue(PrivateStoreName);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (IsGov.HasValue)
+            if (Optional.IsDefined(IsGov))
             {
                 writer.WritePropertyName("isGov"u8);
                 writer.WriteBooleanValue(IsGov.Value);
             }
-            if (options.Format != "W" && !(CollectionIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CollectionIds))
             {
                 writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (!(Branding is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Branding))
             {
                 writer.WritePropertyName("branding"u8);
                 writer.WriteStartObject();
@@ -104,17 +103,17 @@ namespace Azure.ResourceManager.Marketplace
             }
             writer.WritePropertyName("notificationsSettings"u8);
             writer.WriteStartObject();
-            if (!(Recipients is ChangeTrackingList<NotificationRecipient> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Recipients))
             {
                 writer.WritePropertyName("recipients"u8);
                 writer.WriteStartArray();
                 foreach (var item in Recipients)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NotificationRecipient>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (SendToAllMarketplaceAdmins.HasValue)
+            if (Optional.IsDefined(SendToAllMarketplaceAdmins))
             {
                 writer.WritePropertyName("sendToAllMarketplaceAdmins"u8);
                 writer.WriteBooleanValue(SendToAllMarketplaceAdmins.Value);
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.Marketplace
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStoreData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStoreData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.Marketplace
             IList<NotificationRecipient> recipients = default;
             bool? sendToAllMarketplaceAdmins = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -328,10 +327,10 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PrivateStoreData(
                 id,
                 name,
@@ -359,7 +358,7 @@ namespace Azure.ResourceManager.Marketplace
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStoreData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStoreData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -375,7 +374,7 @@ namespace Azure.ResourceManager.Marketplace
                         return DeserializePrivateStoreData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStoreData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStoreData)} does not support reading '{options.Format}' format.");
             }
         }
 

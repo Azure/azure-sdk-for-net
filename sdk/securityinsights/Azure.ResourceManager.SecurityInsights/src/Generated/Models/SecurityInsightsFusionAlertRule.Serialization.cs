@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,13 +23,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsFusionAlertRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,44 +49,44 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AlertRuleTemplateName != null)
+            if (Optional.IsDefined(AlertRuleTemplateName))
             {
                 writer.WritePropertyName("alertRuleTemplateName"u8);
                 writer.WriteStringValue(AlertRuleTemplateName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Severity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && !(Tactics is ChangeTrackingList<SecurityInsightsAttackTactic> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tactics))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Techniques is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Techniques))
             {
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
@@ -131,7 +130,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsFusionAlertRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IReadOnlyList<SecurityInsightsAttackTactic> tactics = default;
             IReadOnlyList<string> techniques = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -286,10 +285,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsFusionAlertRule(
                 id,
                 name,
@@ -317,7 +316,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -333,7 +332,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsFusionAlertRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRule)} does not support reading '{options.Format}' format.");
             }
         }
 

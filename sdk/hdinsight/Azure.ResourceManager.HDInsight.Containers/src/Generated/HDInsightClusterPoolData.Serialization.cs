@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.HDInsight.Containers
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,59 +56,59 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DeploymentId != null)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentId))
             {
                 writer.WritePropertyName("deploymentId"u8);
                 writer.WriteStringValue(DeploymentId);
             }
-            if (ManagedResourceGroupName != null)
+            if (Optional.IsDefined(ManagedResourceGroupName))
             {
                 writer.WritePropertyName("managedResourceGroupName"u8);
                 writer.WriteStringValue(ManagedResourceGroupName);
             }
-            if (options.Format != "W" && AksManagedResourceGroupName != null)
+            if (options.Format != "W" && Optional.IsDefined(AksManagedResourceGroupName))
             {
                 writer.WritePropertyName("aksManagedResourceGroupName"u8);
                 writer.WriteStringValue(AksManagedResourceGroupName);
             }
-            if (ClusterPoolProfile != null)
+            if (Optional.IsDefined(ClusterPoolProfile))
             {
                 writer.WritePropertyName("clusterPoolProfile"u8);
-                writer.WriteObjectValue(ClusterPoolProfile);
+                writer.WriteObjectValue<ClusterPoolProfile>(ClusterPoolProfile, options);
             }
-            if (ComputeProfile != null)
+            if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile);
+                writer.WriteObjectValue<ClusterPoolComputeProfile>(ComputeProfile, options);
             }
-            if (options.Format != "W" && AksClusterProfile != null)
+            if (options.Format != "W" && Optional.IsDefined(AksClusterProfile))
             {
                 writer.WritePropertyName("aksClusterProfile"u8);
-                writer.WriteObjectValue(AksClusterProfile);
+                writer.WriteObjectValue<AksClusterProfile>(AksClusterProfile, options);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<ClusterPoolNetworkProfile>(NetworkProfile, options);
             }
-            if (LogAnalyticsProfile != null)
+            if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
-                writer.WriteObjectValue(LogAnalyticsProfile);
+                writer.WriteObjectValue<ClusterPoolLogAnalyticsProfile>(LogAnalyticsProfile, options);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             ClusterPoolLogAnalyticsProfile logAnalyticsProfile = default;
             string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -303,10 +303,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HDInsightClusterPoolData(
                 id,
                 name,
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                         return DeserializeHDInsightClusterPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 

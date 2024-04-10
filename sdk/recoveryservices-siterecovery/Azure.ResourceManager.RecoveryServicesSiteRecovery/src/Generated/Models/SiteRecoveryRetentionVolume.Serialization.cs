@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryRetentionVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryRetentionVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryRetentionVolume)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VolumeName != null)
+            if (Optional.IsDefined(VolumeName))
             {
                 writer.WritePropertyName("volumeName"u8);
                 writer.WriteStringValue(VolumeName);
             }
-            if (CapacityInBytes.HasValue)
+            if (Optional.IsDefined(CapacityInBytes))
             {
                 writer.WritePropertyName("capacityInBytes"u8);
                 writer.WriteNumberValue(CapacityInBytes.Value);
             }
-            if (FreeSpaceInBytes.HasValue)
+            if (Optional.IsDefined(FreeSpaceInBytes))
             {
                 writer.WritePropertyName("freeSpaceInBytes"u8);
                 writer.WriteNumberValue(FreeSpaceInBytes.Value);
             }
-            if (ThresholdPercentage.HasValue)
+            if (Optional.IsDefined(ThresholdPercentage))
             {
                 writer.WritePropertyName("thresholdPercentage"u8);
                 writer.WriteNumberValue(ThresholdPercentage.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryRetentionVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryRetentionVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryRetentionVolume)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             long? freeSpaceInBytes = default;
             int? thresholdPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("volumeName"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SiteRecoveryRetentionVolume(volumeName, capacityInBytes, freeSpaceInBytes, thresholdPercentage, serializedAdditionalRawData);
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryRetentionVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryRetentionVolume)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryRetentionVolume(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryRetentionVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryRetentionVolume)} does not support reading '{options.Format}' format.");
             }
         }
 

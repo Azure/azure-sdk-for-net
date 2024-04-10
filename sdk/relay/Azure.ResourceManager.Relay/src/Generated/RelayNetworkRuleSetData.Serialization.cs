@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Relay
             var format = options.Format == "W" ? ((IPersistableModel<RelayNetworkRuleSetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayNetworkRuleSetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayNetworkRuleSetData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,30 +43,30 @@ namespace Azure.ResourceManager.Relay
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (!(IPRules is ChangeTrackingList<RelayNetworkRuleSetIPRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RelayNetworkRuleSetIPRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Relay
             var format = options.Format == "W" ? ((IPersistableModel<RelayNetworkRuleSetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayNetworkRuleSetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayNetworkRuleSetData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Relay
             RelayPublicNetworkAccess? publicNetworkAccess = default;
             IList<RelayNetworkRuleSetIPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.Relay
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RelayNetworkRuleSetData(
                 id,
                 name,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Relay
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RelayNetworkRuleSetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayNetworkRuleSetData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Relay
                         return DeserializeRelayNetworkRuleSetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelayNetworkRuleSetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayNetworkRuleSetData)} does not support reading '{options.Format}' format.");
             }
         }
 

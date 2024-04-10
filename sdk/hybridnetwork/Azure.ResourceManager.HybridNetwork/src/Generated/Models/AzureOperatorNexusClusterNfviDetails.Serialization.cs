@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusClusterNfviDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureOperatorNexusClusterNfviDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureOperatorNexusClusterNfviDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CustomLocationReference != null)
+            if (Optional.IsDefined(CustomLocationReference))
             {
                 writer.WritePropertyName("customLocationReference"u8);
                 JsonSerializer.Serialize(writer, CustomLocationReference);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusClusterNfviDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureOperatorNexusClusterNfviDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureOperatorNexusClusterNfviDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             string name = default;
             NfviType nfviType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customLocationReference"u8))
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureOperatorNexusClusterNfviDetails(name, nfviType, serializedAdditionalRawData, customLocationReference);
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureOperatorNexusClusterNfviDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusClusterNfviDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeAzureOperatorNexusClusterNfviDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureOperatorNexusClusterNfviDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusClusterNfviDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

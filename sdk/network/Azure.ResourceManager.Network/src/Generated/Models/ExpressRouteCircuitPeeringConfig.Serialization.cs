@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(AdvertisedPublicPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdvertisedPublicPrefixes))
             {
                 writer.WritePropertyName("advertisedPublicPrefixes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdvertisedCommunities is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AdvertisedCommunities))
             {
                 writer.WritePropertyName("advertisedCommunities"u8);
                 writer.WriteStartArray();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && AdvertisedPublicPrefixesState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdvertisedPublicPrefixesState))
             {
                 writer.WritePropertyName("advertisedPublicPrefixesState"u8);
                 writer.WriteStringValue(AdvertisedPublicPrefixesState.Value.ToString());
             }
-            if (LegacyMode.HasValue)
+            if (Optional.IsDefined(LegacyMode))
             {
                 writer.WritePropertyName("legacyMode"u8);
                 writer.WriteNumberValue(LegacyMode.Value);
             }
-            if (CustomerASN.HasValue)
+            if (Optional.IsDefined(CustomerASN))
             {
                 writer.WritePropertyName("customerASN"u8);
                 writer.WriteNumberValue(CustomerASN.Value);
             }
-            if (RoutingRegistryName != null)
+            if (Optional.IsDefined(RoutingRegistryName))
             {
                 writer.WritePropertyName("routingRegistryName"u8);
                 writer.WriteStringValue(RoutingRegistryName);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
             int? customerASN = default;
             string routingRegistryName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("advertisedPublicPrefixes"u8))
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ExpressRouteCircuitPeeringConfig(
                 advertisedPublicPrefixes ?? new ChangeTrackingList<string>(),
                 advertisedCommunities ?? new ChangeTrackingList<string>(),
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeExpressRouteCircuitPeeringConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

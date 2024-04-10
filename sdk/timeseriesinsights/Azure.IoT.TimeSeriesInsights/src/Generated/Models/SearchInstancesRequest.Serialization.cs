@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             writer.WritePropertyName("searchString"u8);
             writer.WriteStringValue(SearchString);
-            if (!(Path is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStartArray();
@@ -27,17 +27,25 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Instances != null)
+            if (Optional.IsDefined(Instances))
             {
                 writer.WritePropertyName("instances"u8);
-                writer.WriteObjectValue(Instances);
+                writer.WriteObjectValue<SearchInstancesParameters>(Instances);
             }
-            if (Hierarchies != null)
+            if (Optional.IsDefined(Hierarchies))
             {
                 writer.WritePropertyName("hierarchies"u8);
-                writer.WriteObjectValue(Hierarchies);
+                writer.WriteObjectValue<SearchInstancesHierarchiesParameters>(Hierarchies);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SearchInstancesRequest>(this);
+            return content;
         }
     }
 }

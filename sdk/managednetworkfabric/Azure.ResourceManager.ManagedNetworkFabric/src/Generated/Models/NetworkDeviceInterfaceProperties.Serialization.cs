@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identifier != null)
+            if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteStringValue(Identifier);
             }
-            if (InterfaceType != null)
+            if (Optional.IsDefined(InterfaceType))
             {
                 writer.WritePropertyName("interfaceType"u8);
                 writer.WriteStringValue(InterfaceType);
             }
-            if (!(SupportedConnectorTypes is ChangeTrackingList<SupportedConnectorProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedConnectorTypes))
             {
                 writer.WritePropertyName("supportedConnectorTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in SupportedConnectorTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SupportedConnectorProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string interfaceType = default;
             IList<SupportedConnectorProperties> supportedConnectorTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identifier"u8))
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkDeviceInterfaceProperties(identifier, interfaceType, supportedConnectorTypes ?? new ChangeTrackingList<SupportedConnectorProperties>(), serializedAdditionalRawData);
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNetworkDeviceInterfaceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

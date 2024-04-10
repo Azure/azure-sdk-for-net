@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -60,10 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<GovernanceRuleList>> ListAsync(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -87,10 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<GovernanceRuleList> List(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope);
             _pipeline.Send(message, cancellationToken);
@@ -134,18 +128,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GovernanceRuleData>> GetAsync(string scope, string ruleId, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var message = CreateGetRequest(scope, ruleId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -173,18 +157,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GovernanceRuleData> Get(string scope, string ruleId, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var message = CreateGetRequest(scope, ruleId);
             _pipeline.Send(message, cancellationToken);
@@ -220,7 +194,7 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<GovernanceRuleData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -235,22 +209,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GovernanceRuleData>> CreateOrUpdateAsync(string scope, string ruleId, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(scope, ruleId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -278,22 +239,9 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GovernanceRuleData> CreateOrUpdate(string scope, string ruleId, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(scope, ruleId, data);
             _pipeline.Send(message, cancellationToken);
@@ -337,18 +285,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string scope, string ruleId, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var message = CreateDeleteRequest(scope, ruleId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -371,18 +309,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string scope, string ruleId, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var message = CreateDeleteRequest(scope, ruleId);
             _pipeline.Send(message, cancellationToken);
@@ -416,7 +344,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(executeGovernanceRuleParams);
+                content.JsonWriter.WriteObjectValue<ExecuteGovernanceRuleParams>(executeGovernanceRuleParams, new ModelReaderWriterOptions("W"));
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -432,18 +360,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ExecuteAsync(string scope, string ruleId, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var message = CreateExecuteRequest(scope, ruleId, executeGovernanceRuleParams);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -465,18 +383,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Execute(string scope, string ruleId, ExecuteGovernanceRuleParams executeGovernanceRuleParams = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (ruleId == null)
-            {
-                throw new ArgumentNullException(nameof(ruleId));
-            }
-            if (ruleId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleId));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
             using var message = CreateExecuteRequest(scope, ruleId, executeGovernanceRuleParams);
             _pipeline.Send(message, cancellationToken);
@@ -510,14 +418,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<GovernanceRuleList>> ListNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -542,14 +444,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<GovernanceRuleList> ListNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope);
             _pipeline.Send(message, cancellationToken);

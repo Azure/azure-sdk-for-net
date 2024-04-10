@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,13 +23,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlStoredProcedureResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBSqlStoredProcedureResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBSqlStoredProcedureResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(StoredProcedureName);
-            if (Body != null)
+            if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBSqlStoredProcedureResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBSqlStoredProcedureResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBSqlStoredProcedureResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string id = default;
             string body = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -89,11 +90,70 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CosmosDBSqlStoredProcedureResourceInfo(id, body, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StoredProcedureName), out propertyOverride);
+            if (Optional.IsDefined(StoredProcedureName) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (StoredProcedureName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StoredProcedureName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StoredProcedureName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Body), out propertyOverride);
+            if (Optional.IsDefined(Body) || hasPropertyOverride)
+            {
+                builder.Append("  body: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Body.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Body}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Body}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CosmosDBSqlStoredProcedureResourceInfo>.Write(ModelReaderWriterOptions options)
@@ -104,8 +164,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBSqlStoredProcedureResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBSqlStoredProcedureResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +183,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBSqlStoredProcedureResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBSqlStoredProcedureResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBSqlStoredProcedureResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

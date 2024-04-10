@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CostManagement.Models;
 using Azure.ResourceManager.Models;
@@ -25,11 +24,11 @@ namespace Azure.ResourceManager.CostManagement
             var format = options.Format == "W" ? ((IPersistableModel<CostManagementExportData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostManagementExportData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CostManagementExportData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,47 +48,47 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Format.HasValue)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
             }
-            if (DeliveryInfo != null)
+            if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
-                writer.WriteObjectValue(DeliveryInfo);
+                writer.WriteObjectValue<ExportDeliveryInfo>(DeliveryInfo, options);
             }
-            if (Definition != null)
+            if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition);
+                writer.WriteObjectValue<ExportDefinition>(Definition, options);
             }
-            if (RunHistory != null)
+            if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
-                writer.WriteObjectValue(RunHistory);
+                writer.WriteObjectValue<ExportExecutionListResult>(RunHistory, options);
             }
-            if (PartitionData.HasValue)
+            if (Optional.IsDefined(PartitionData))
             {
                 writer.WritePropertyName("partitionData"u8);
                 writer.WriteBooleanValue(PartitionData.Value);
             }
-            if (options.Format != "W" && NextRunTimeEstimate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NextRunTimeEstimate))
             {
                 writer.WritePropertyName("nextRunTimeEstimate"u8);
                 writer.WriteStringValue(NextRunTimeEstimate.Value, "O");
             }
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule);
+                writer.WriteObjectValue<ExportSchedule>(Schedule, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.CostManagement
             var format = options.Format == "W" ? ((IPersistableModel<CostManagementExportData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostManagementExportData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CostManagementExportData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.CostManagement
             DateTimeOffset? nextRunTimeEstimate = default;
             ExportSchedule schedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -256,10 +255,10 @@ namespace Azure.ResourceManager.CostManagement
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CostManagementExportData(
                 id,
                 name,
@@ -285,7 +284,7 @@ namespace Azure.ResourceManager.CostManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CostManagementExportData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostManagementExportData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -301,7 +300,7 @@ namespace Azure.ResourceManager.CostManagement
                         return DeserializeCostManagementExportData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CostManagementExportData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostManagementExportData)} does not support reading '{options.Format}' format.");
             }
         }
 

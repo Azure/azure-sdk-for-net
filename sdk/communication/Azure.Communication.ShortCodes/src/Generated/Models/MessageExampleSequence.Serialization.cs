@@ -16,13 +16,13 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Messages is ChangeTrackingList<MessageExample> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Messages))
             {
                 writer.WritePropertyName("messages"u8);
                 writer.WriteStartArray();
                 foreach (var item in Messages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MessageExample>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -54,6 +54,22 @@ namespace Azure.Communication.ShortCodes.Models
                 }
             }
             return new MessageExampleSequence(messages ?? new ChangeTrackingList<MessageExample>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MessageExampleSequence FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMessageExampleSequence(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MessageExampleSequence>(this);
+            return content;
         }
     }
 }

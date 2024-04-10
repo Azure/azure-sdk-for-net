@@ -23,30 +23,30 @@ namespace Azure.ResourceManager.PowerBIDedicated
             var format = options.Format == "W" ? ((IPersistableModel<DedicatedCapacityData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedCapacityData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedCapacityData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
-            if (options.Format != "W" && Id != null)
+            writer.WriteObjectValue<CapacitySku>(Sku, options);
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,39 +57,39 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 }
                 writer.WriteEndObject();
             }
-            if (SystemData != null)
+            if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue(SystemData);
+                writer.WriteObjectValue<SystemData>(SystemData, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Administration != null)
+            if (Optional.IsDefined(Administration))
             {
                 writer.WritePropertyName("administration"u8);
-                writer.WriteObjectValue(Administration);
+                writer.WriteObjectValue<DedicatedCapacityAdministrators>(Administration, options);
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             var format = options.Format == "W" ? ((IPersistableModel<DedicatedCapacityData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedCapacityData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedCapacityData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             State? state = default;
             CapacityProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -262,10 +262,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DedicatedCapacityData(
                 id,
                 name,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedCapacityData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedCapacityData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                         return DeserializeDedicatedCapacityData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedCapacityData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedCapacityData)} does not support reading '{options.Format}' format.");
             }
         }
 

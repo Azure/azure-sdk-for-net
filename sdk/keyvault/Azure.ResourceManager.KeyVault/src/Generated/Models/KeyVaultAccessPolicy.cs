@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="permissions"/> is null. </exception>
         public KeyVaultAccessPolicy(Guid tenantId, string objectId, IdentityAccessPermissions permissions)
         {
-            if (objectId == null)
-            {
-                throw new ArgumentNullException(nameof(objectId));
-            }
-            if (permissions == null)
-            {
-                throw new ArgumentNullException(nameof(permissions));
-            }
+            Argument.AssertNotNull(objectId, nameof(objectId));
+            Argument.AssertNotNull(permissions, nameof(permissions));
 
             TenantId = tenantId;
             ObjectId = objectId;
@@ -87,12 +81,16 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </summary>
+        [WirePath("tenantId")]
         public Guid TenantId { get; set; }
         /// <summary> The object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies. </summary>
+        [WirePath("objectId")]
         public string ObjectId { get; set; }
         /// <summary> Application ID of the client making request on behalf of a principal. </summary>
+        [WirePath("applicationId")]
         public Guid? ApplicationId { get; set; }
         /// <summary> Permissions the identity has for keys, secrets and certificates. </summary>
+        [WirePath("permissions")]
         public IdentityAccessPermissions Permissions { get; set; }
     }
 }

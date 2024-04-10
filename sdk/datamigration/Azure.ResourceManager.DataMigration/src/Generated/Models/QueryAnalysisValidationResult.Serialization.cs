@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryAnalysisValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryAnalysisValidationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryAnalysisValidationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (QueryResults != null)
+            if (Optional.IsDefined(QueryResults))
             {
                 writer.WritePropertyName("queryResults"u8);
-                writer.WriteObjectValue(QueryResults);
+                writer.WriteObjectValue<QueryExecutionResult>(QueryResults, options);
             }
-            if (ValidationErrors != null)
+            if (Optional.IsDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
-                writer.WriteObjectValue(ValidationErrors);
+                writer.WriteObjectValue<ValidationError>(ValidationErrors, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryAnalysisValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryAnalysisValidationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryAnalysisValidationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             QueryExecutionResult queryResults = default;
             ValidationError validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryResults"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new QueryAnalysisValidationResult(queryResults, validationErrors, serializedAdditionalRawData);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryAnalysisValidationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryAnalysisValidationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeQueryAnalysisValidationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryAnalysisValidationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryAnalysisValidationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

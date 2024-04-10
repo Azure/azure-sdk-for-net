@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,16 +24,16 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderResourceType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderResourceType)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceType != null)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (!(Locations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -41,27 +43,27 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LocationMappings is ChangeTrackingList<ProviderExtendedLocation> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(LocationMappings))
             {
                 writer.WritePropertyName("locationMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in LocationMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProviderExtendedLocation>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Aliases is ChangeTrackingList<ResourceTypeAlias> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Aliases))
             {
                 writer.WritePropertyName("aliases"u8);
                 writer.WriteStartArray();
                 foreach (var item in Aliases)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceTypeAlias>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ApiVersions is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ApiVersions))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -71,37 +73,37 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DefaultApiVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultApiVersion))
             {
                 writer.WritePropertyName("defaultApiVersion"u8);
                 writer.WriteStringValue(DefaultApiVersion);
             }
-            if (!(ZoneMappings is ChangeTrackingList<ZoneMapping> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ZoneMappings))
             {
                 writer.WritePropertyName("zoneMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in ZoneMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ZoneMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ApiProfiles is ChangeTrackingList<ApiProfile> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ApiProfiles))
             {
                 writer.WritePropertyName("apiProfiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in ApiProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApiProfile>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Capabilities != null)
+            if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStringValue(Capabilities);
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -135,7 +137,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderResourceType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderResourceType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +163,7 @@ namespace Azure.ResourceManager.Resources.Models
             string capabilities = default;
             IReadOnlyDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -279,10 +281,10 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProviderResourceType(
                 resourceType,
                 locations ?? new ChangeTrackingList<string>(),
@@ -297,6 +299,281 @@ namespace Azure.ResourceManager.Resources.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
+            if (Optional.IsDefined(ResourceType) || hasPropertyOverride)
+            {
+                builder.Append("  resourceType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ResourceType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
+            if (Optional.IsCollectionDefined(Locations) || hasPropertyOverride)
+            {
+                if (Locations.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  locations: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Locations)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocationMappings), out propertyOverride);
+            if (Optional.IsCollectionDefined(LocationMappings) || hasPropertyOverride)
+            {
+                if (LocationMappings.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  locationMappings: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in LocationMappings)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  locationMappings: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Aliases), out propertyOverride);
+            if (Optional.IsCollectionDefined(Aliases) || hasPropertyOverride)
+            {
+                if (Aliases.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  aliases: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Aliases)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  aliases: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiVersions), out propertyOverride);
+            if (Optional.IsCollectionDefined(ApiVersions) || hasPropertyOverride)
+            {
+                if (ApiVersions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  apiVersions: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ApiVersions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultApiVersion), out propertyOverride);
+            if (Optional.IsDefined(DefaultApiVersion) || hasPropertyOverride)
+            {
+                builder.Append("  defaultApiVersion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DefaultApiVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DefaultApiVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DefaultApiVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ZoneMappings), out propertyOverride);
+            if (Optional.IsCollectionDefined(ZoneMappings) || hasPropertyOverride)
+            {
+                if (ZoneMappings.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  zoneMappings: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ZoneMappings)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  zoneMappings: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiProfiles), out propertyOverride);
+            if (Optional.IsCollectionDefined(ApiProfiles) || hasPropertyOverride)
+            {
+                if (ApiProfiles.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  apiProfiles: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ApiProfiles)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  apiProfiles: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capabilities), out propertyOverride);
+            if (Optional.IsDefined(Capabilities) || hasPropertyOverride)
+            {
+                builder.Append("  capabilities: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Capabilities.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Capabilities}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Capabilities}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (Optional.IsCollectionDefined(Properties) || hasPropertyOverride)
+            {
+                if (Properties.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  properties: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in Properties)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ProviderResourceType>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProviderResourceType>)this).GetFormatFromOptions(options) : options.Format;
@@ -305,8 +582,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderResourceType)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -322,7 +601,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeProviderResourceType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderResourceType)} does not support reading '{options.Format}' format.");
             }
         }
 

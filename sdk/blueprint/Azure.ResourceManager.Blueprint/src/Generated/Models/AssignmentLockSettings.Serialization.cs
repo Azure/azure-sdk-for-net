@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentLockSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (!(ExcludedPrincipals is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedPrincipals))
             {
                 writer.WritePropertyName("excludedPrincipals"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExcludedActions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedActions))
             {
                 writer.WritePropertyName("excludedActions"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentLockSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             IList<string> excludedPrincipals = default;
             IList<string> excludedActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AssignmentLockSettings(mode, excludedPrincipals ?? new ChangeTrackingList<string>(), excludedActions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializeAssignmentLockSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

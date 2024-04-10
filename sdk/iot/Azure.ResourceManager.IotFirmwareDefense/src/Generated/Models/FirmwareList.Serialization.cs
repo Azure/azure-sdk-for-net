@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
@@ -23,21 +22,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirmwareList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<FirmwareData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotFirmwareData>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirmwareList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,10 +79,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            IReadOnlyList<FirmwareData> value = default;
+            IReadOnlyList<IotFirmwareData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -92,10 +91,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<FirmwareData> array = new List<FirmwareData>();
+                    List<IotFirmwareData> array = new List<IotFirmwareData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirmwareData.DeserializeFirmwareData(item, options));
+                        array.Add(IotFirmwareData.DeserializeIotFirmwareData(item, options));
                     }
                     value = array;
                     continue;
@@ -107,11 +106,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareList(value ?? new ChangeTrackingList<FirmwareData>(), nextLink, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FirmwareList(value ?? new ChangeTrackingList<IotFirmwareData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareList>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeFirmwareList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareList)} does not support reading '{options.Format}' format.");
             }
         }
 

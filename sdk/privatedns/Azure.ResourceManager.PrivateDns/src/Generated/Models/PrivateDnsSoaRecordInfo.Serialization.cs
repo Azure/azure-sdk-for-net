@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.PrivateDns.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsSoaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateDnsSoaRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateDnsSoaRecordInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (SerialNumber.HasValue)
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteNumberValue(SerialNumber.Value);
             }
-            if (RefreshTimeInSeconds.HasValue)
+            if (Optional.IsDefined(RefreshTimeInSeconds))
             {
                 writer.WritePropertyName("refreshTime"u8);
                 writer.WriteNumberValue(RefreshTimeInSeconds.Value);
             }
-            if (RetryTimeInSeconds.HasValue)
+            if (Optional.IsDefined(RetryTimeInSeconds))
             {
                 writer.WritePropertyName("retryTime"u8);
                 writer.WriteNumberValue(RetryTimeInSeconds.Value);
             }
-            if (ExpireTimeInSeconds.HasValue)
+            if (Optional.IsDefined(ExpireTimeInSeconds))
             {
                 writer.WritePropertyName("expireTime"u8);
                 writer.WriteNumberValue(ExpireTimeInSeconds.Value);
             }
-            if (MinimumTtlInSeconds.HasValue)
+            if (Optional.IsDefined(MinimumTtlInSeconds))
             {
                 writer.WritePropertyName("minimumTtl"u8);
                 writer.WriteNumberValue(MinimumTtlInSeconds.Value);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsSoaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateDnsSoaRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateDnsSoaRecordInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             long? expireTime = default;
             long? minimumTtl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("host"u8))
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PrivateDnsSoaRecordInfo(
                 host,
                 email,
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateDnsSoaRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateDnsSoaRecordInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                         return DeserializePrivateDnsSoaRecordInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateDnsSoaRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateDnsSoaRecordInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookEventTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventTarget)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventTarget)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MediaType != null)
+            if (Optional.IsDefined(MediaType))
             {
                 writer.WritePropertyName("mediaType"u8);
                 writer.WriteStringValue(MediaType);
             }
-            if (Size.HasValue)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (Digest != null)
+            if (Optional.IsDefined(Digest))
             {
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
             }
-            if (Length.HasValue)
+            if (Optional.IsDefined(Length))
             {
                 writer.WritePropertyName("length"u8);
                 writer.WriteNumberValue(Length.Value);
             }
-            if (Repository != null)
+            if (Optional.IsDefined(Repository))
             {
                 writer.WritePropertyName("repository"u8);
                 writer.WriteStringValue(Repository);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Tag != null)
+            if (Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookEventTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventTarget)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventTarget)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string name = default;
             string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mediaType"u8))
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerRegistryWebhookEventTarget(
                 mediaType,
                 size,
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventTarget)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventTarget)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryWebhookEventTarget(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventTarget)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventTarget)} does not support reading '{options.Format}' format.");
             }
         }
 

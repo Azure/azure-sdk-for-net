@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.Identity;
 using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
@@ -16,7 +15,7 @@ namespace Azure.Communication.Identity.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(CreateTokenWithScopes is ChangeTrackingList<CommunicationTokenScope> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CreateTokenWithScopes))
             {
                 writer.WritePropertyName("createTokenWithScopes"u8);
                 writer.WriteStartArray();
@@ -26,12 +25,20 @@ namespace Azure.Communication.Identity.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ExpiresInMinutes.HasValue)
+            if (Optional.IsDefined(ExpiresInMinutes))
             {
                 writer.WritePropertyName("expiresInMinutes"u8);
                 writer.WriteNumberValue(ExpiresInMinutes.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CommunicationIdentityCreateRequest>(this);
+            return content;
         }
     }
 }

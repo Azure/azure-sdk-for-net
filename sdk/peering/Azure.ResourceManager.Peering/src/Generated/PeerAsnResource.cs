@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Peering
@@ -280,10 +278,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PeerAsnResource>> UpdateAsync(WaitUntil waitUntil, PeerAsnData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _peerAsnClientDiagnostics.CreateScope("PeerAsnResource.Update");
             scope.Start();
@@ -329,10 +324,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PeerAsnResource> Update(WaitUntil waitUntil, PeerAsnData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _peerAsnClientDiagnostics.CreateScope("PeerAsnResource.Update");
             scope.Start();

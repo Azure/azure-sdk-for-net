@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ServiceBus;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus.Mocking
@@ -131,10 +128,7 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<ServiceBusNameAvailabilityResult>> CheckServiceBusNamespaceNameAvailabilityAsync(ServiceBusNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ServiceBusNamespaceNamespacesClientDiagnostics.CreateScope("MockableServiceBusSubscriptionResource.CheckServiceBusNamespaceNameAvailability");
             scope.Start();
@@ -176,10 +170,7 @@ namespace Azure.ResourceManager.ServiceBus.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<ServiceBusNameAvailabilityResult> CheckServiceBusNamespaceNameAvailability(ServiceBusNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ServiceBusNamespaceNamespacesClientDiagnostics.CreateScope("MockableServiceBusSubscriptionResource.CheckServiceBusNamespaceNameAvailability");
             scope.Start();

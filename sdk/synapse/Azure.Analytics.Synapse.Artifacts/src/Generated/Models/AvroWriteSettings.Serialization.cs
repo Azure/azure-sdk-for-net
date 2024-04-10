@@ -19,32 +19,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (RecordName != null)
+            if (Optional.IsDefined(RecordName))
             {
                 writer.WritePropertyName("recordName"u8);
                 writer.WriteStringValue(RecordName);
             }
-            if (RecordNamespace != null)
+            if (Optional.IsDefined(RecordNamespace))
             {
                 writer.WritePropertyName("recordNamespace"u8);
                 writer.WriteStringValue(RecordNamespace);
             }
-            if (MaxRowsPerFile != null)
+            if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
-                writer.WriteObjectValue(MaxRowsPerFile);
+                writer.WriteObjectValue<object>(MaxRowsPerFile);
             }
-            if (FileNamePrefix != null)
+            if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
-                writer.WriteObjectValue(FileNamePrefix);
+                writer.WriteObjectValue<object>(FileNamePrefix);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -109,12 +109,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 fileNamePrefix);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AvroWriteSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAvroWriteSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AvroWriteSettings>(this);
+            return content;
+        }
+
         internal partial class AvroWriteSettingsConverter : JsonConverter<AvroWriteSettings>
         {
             public override void Write(Utf8JsonWriter writer, AvroWriteSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AvroWriteSettings>(model);
             }
+
             public override AvroWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

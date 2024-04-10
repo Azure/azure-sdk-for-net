@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<EventGridSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Topic != null)
+            if (options.Format != "W" && Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Destination != null)
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                writer.WriteObjectValue<EventSubscriptionDestination>(Destination, options);
             }
-            if (DeliveryWithResourceIdentity != null)
+            if (Optional.IsDefined(DeliveryWithResourceIdentity))
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeliveryWithResourceIdentity);
+                writer.WriteObjectValue<DeliveryWithResourceIdentity>(DeliveryWithResourceIdentity, options);
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<EventSubscriptionFilter>(Filter, options);
             }
-            if (!(Labels is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -85,30 +85,30 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 writer.WriteEndArray();
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (EventDeliverySchema.HasValue)
+            if (Optional.IsDefined(EventDeliverySchema))
             {
                 writer.WritePropertyName("eventDeliverySchema"u8);
                 writer.WriteStringValue(EventDeliverySchema.Value.ToString());
             }
-            if (RetryPolicy != null)
+            if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
-                writer.WriteObjectValue(RetryPolicy);
+                writer.WriteObjectValue<EventSubscriptionRetryPolicy>(RetryPolicy, options);
             }
-            if (DeadLetterDestination != null)
+            if (Optional.IsDefined(DeadLetterDestination))
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
-                writer.WriteObjectValue(DeadLetterDestination);
+                writer.WriteObjectValue<DeadLetterDestination>(DeadLetterDestination, options);
             }
-            if (DeadLetterWithResourceIdentity != null)
+            if (Optional.IsDefined(DeadLetterWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeadLetterWithResourceIdentity);
+                writer.WriteObjectValue<DeadLetterWithResourceIdentity>(DeadLetterWithResourceIdentity, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<EventGridSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EventGrid
             DeadLetterDestination deadLetterDestination = default;
             DeadLetterWithResourceIdentity deadLetterWithResourceIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -306,10 +306,10 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EventGridSubscriptionData(
                 id,
                 name,
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.EventGrid
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.EventGrid
                         return DeserializeEventGridSubscriptionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support reading '{options.Format}' format.");
             }
         }
 

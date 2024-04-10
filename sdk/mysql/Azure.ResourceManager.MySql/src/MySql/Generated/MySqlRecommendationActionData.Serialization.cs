@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MySql
             var format = options.Format == "W" ? ((IPersistableModel<MySqlRecommendationActionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlRecommendationActionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlRecommendationActionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,49 +42,49 @@ namespace Azure.ResourceManager.MySql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AdvisorName != null)
+            if (Optional.IsDefined(AdvisorName))
             {
                 writer.WritePropertyName("advisorName"u8);
                 writer.WriteStringValue(AdvisorName);
             }
-            if (SessionId.HasValue)
+            if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (ActionId.HasValue)
+            if (Optional.IsDefined(ActionId))
             {
                 writer.WritePropertyName("actionId"u8);
                 writer.WriteNumberValue(ActionId.Value);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (RecommendationType != null)
+            if (Optional.IsDefined(RecommendationType))
             {
                 writer.WritePropertyName("recommendationType"u8);
                 writer.WriteStringValue(RecommendationType);
             }
-            if (!(Details is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MySql
             var format = options.Format == "W" ? ((IPersistableModel<MySqlRecommendationActionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlRecommendationActionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlRecommendationActionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MySql
             string recommendationType = default;
             IDictionary<string, string> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -253,10 +253,10 @@ namespace Azure.ResourceManager.MySql
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlRecommendationActionData(
                 id,
                 name,
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.MySql
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlRecommendationActionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlRecommendationActionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.MySql
                         return DeserializeMySqlRecommendationActionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlRecommendationActionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlRecommendationActionData)} does not support reading '{options.Format}' format.");
             }
         }
 

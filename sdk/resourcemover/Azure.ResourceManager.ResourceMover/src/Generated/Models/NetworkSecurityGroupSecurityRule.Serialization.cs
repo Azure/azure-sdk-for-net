@@ -22,56 +22,56 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Access != null)
+            if (Optional.IsDefined(Access))
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DestinationAddressPrefix != null)
+            if (Optional.IsDefined(DestinationAddressPrefix))
             {
                 writer.WritePropertyName("destinationAddressPrefix"u8);
                 writer.WriteStringValue(DestinationAddressPrefix);
             }
-            if (DestinationPortRange != null)
+            if (Optional.IsDefined(DestinationPortRange))
             {
                 writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteStringValue(DestinationPortRange);
             }
-            if (Direction != null)
+            if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            if (SourceAddressPrefix != null)
+            if (Optional.IsDefined(SourceAddressPrefix))
             {
                 writer.WritePropertyName("sourceAddressPrefix"u8);
                 writer.WriteStringValue(SourceAddressPrefix);
             }
-            if (SourcePortRange != null)
+            if (Optional.IsDefined(SourcePortRange))
             {
                 writer.WritePropertyName("sourcePortRange"u8);
                 writer.WriteStringValue(SourcePortRange);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             string sourceAddressPrefix = default;
             string sourcePortRange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkSecurityGroupSecurityRule(
                 name,
                 access,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeNetworkSecurityGroupSecurityRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityGroupSecurityRule)} does not support reading '{options.Format}' format.");
             }
         }
 

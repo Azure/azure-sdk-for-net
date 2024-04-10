@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDBForPostgreSql;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
@@ -131,10 +128,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult>> CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = CosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("MockableCosmosDBForPostgreSqlSubscriptionResource.CheckCosmosDBForPostgreSqlClusterNameAvailability");
             scope.Start();
@@ -176,10 +170,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> CheckCosmosDBForPostgreSqlClusterNameAvailability(CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = CosmosDBForPostgreSqlClusterClustersClientDiagnostics.CreateScope("MockableCosmosDBForPostgreSqlSubscriptionResource.CheckCosmosDBForPostgreSqlClusterNameAvailability");
             scope.Start();

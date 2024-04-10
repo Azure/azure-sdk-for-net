@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -24,53 +23,53 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<HubIPConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HubIPConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HubIPConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (PrivateIPAllocationMethod.HasValue)
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet);
+                writer.WriteObjectValue<SubnetData>(Subnet, options);
             }
-            if (PublicIPAddress != null)
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
-                writer.WriteObjectValue(PublicIPAddress);
+                writer.WriteObjectValue<PublicIPAddressData>(PublicIPAddress, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<HubIPConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HubIPConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HubIPConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.Network
             PublicIPAddressData publicIPAddress = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -214,10 +213,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HubIPConfigurationData(
                 id,
                 name,
@@ -240,7 +239,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HubIPConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HubIPConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -256,7 +255,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeHubIPConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HubIPConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HubIPConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

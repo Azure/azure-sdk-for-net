@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileShareBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileShareBackupContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileShareBackupContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointExpireOn.HasValue)
+            if (Optional.IsDefined(RecoveryPointExpireOn))
             {
                 writer.WritePropertyName("recoveryPointExpiryTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointExpireOn.Value, "O");
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileShareBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileShareBackupContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileShareBackupContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             DateTimeOffset? recoveryPointExpiryTimeInUTC = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointExpiryTimeInUTC"u8))
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FileShareBackupContent(objectType, serializedAdditionalRawData, recoveryPointExpiryTimeInUTC);
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FileShareBackupContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileShareBackupContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeFileShareBackupContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileShareBackupContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileShareBackupContent)} does not support reading '{options.Format}' format.");
             }
         }
 

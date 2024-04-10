@@ -15,12 +15,20 @@ namespace Azure.Communication.PhoneNumbers
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SearchId != null)
+            if (Optional.IsDefined(SearchId))
             {
                 writer.WritePropertyName("searchId"u8);
                 writer.WriteStringValue(SearchId);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PhoneNumberPurchaseRequest>(this);
+            return content;
         }
     }
 }

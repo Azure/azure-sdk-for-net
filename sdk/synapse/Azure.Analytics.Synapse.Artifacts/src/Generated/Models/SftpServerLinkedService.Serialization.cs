@@ -21,28 +21,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -53,69 +53,69 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
-            writer.WriteObjectValue(Host);
-            if (Port != null)
+            writer.WriteObjectValue<object>(Host);
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port);
+                writer.WriteObjectValue<object>(Port);
             }
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName);
+                writer.WriteObjectValue<object>(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                writer.WriteObjectValue<SecretBase>(Password);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
-            if (PrivateKeyPath != null)
+            if (Optional.IsDefined(PrivateKeyPath))
             {
                 writer.WritePropertyName("privateKeyPath"u8);
-                writer.WriteObjectValue(PrivateKeyPath);
+                writer.WriteObjectValue<object>(PrivateKeyPath);
             }
-            if (PrivateKeyContent != null)
+            if (Optional.IsDefined(PrivateKeyContent))
             {
                 writer.WritePropertyName("privateKeyContent"u8);
-                writer.WriteObjectValue(PrivateKeyContent);
+                writer.WriteObjectValue<SecretBase>(PrivateKeyContent);
             }
-            if (PassPhrase != null)
+            if (Optional.IsDefined(PassPhrase))
             {
                 writer.WritePropertyName("passPhrase"u8);
-                writer.WriteObjectValue(PassPhrase);
+                writer.WriteObjectValue<SecretBase>(PassPhrase);
             }
-            if (SkipHostKeyValidation != null)
+            if (Optional.IsDefined(SkipHostKeyValidation))
             {
                 writer.WritePropertyName("skipHostKeyValidation"u8);
-                writer.WriteObjectValue(SkipHostKeyValidation);
+                writer.WriteObjectValue<object>(SkipHostKeyValidation);
             }
-            if (HostKeyFingerprint != null)
+            if (Optional.IsDefined(HostKeyFingerprint))
             {
                 writer.WritePropertyName("hostKeyFingerprint"u8);
-                writer.WriteObjectValue(HostKeyFingerprint);
+                writer.WriteObjectValue<object>(HostKeyFingerprint);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -330,12 +330,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 hostKeyFingerprint);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SftpServerLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSftpServerLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SftpServerLinkedService>(this);
+            return content;
+        }
+
         internal partial class SftpServerLinkedServiceConverter : JsonConverter<SftpServerLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, SftpServerLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SftpServerLinkedService>(model);
             }
+
             public override SftpServerLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

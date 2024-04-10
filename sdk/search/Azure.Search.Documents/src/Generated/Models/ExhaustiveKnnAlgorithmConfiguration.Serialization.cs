@@ -15,10 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("exhaustiveKnnParameters"u8);
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue<ExhaustiveKnnParameters>(Parameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -59,6 +59,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new ExhaustiveKnnAlgorithmConfiguration(name, kind, exhaustiveKnnParameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExhaustiveKnnAlgorithmConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExhaustiveKnnAlgorithmConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ExhaustiveKnnAlgorithmConfiguration>(this);
+            return content;
         }
     }
 }

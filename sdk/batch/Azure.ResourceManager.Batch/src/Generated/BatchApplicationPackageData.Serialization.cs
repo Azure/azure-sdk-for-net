@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
@@ -25,11 +24,11 @@ namespace Azure.ResourceManager.Batch
             var format = options.Format == "W" ? ((IPersistableModel<BatchApplicationPackageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchApplicationPackageData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchApplicationPackageData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,34 +48,34 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && Format != null)
+            if (options.Format != "W" && Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
             }
-            if (options.Format != "W" && StorageUri != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageUri))
             {
                 writer.WritePropertyName("storageUrl"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
-            if (options.Format != "W" && StorageUriExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StorageUriExpireOn))
             {
                 writer.WritePropertyName("storageUrlExpiry"u8);
                 writer.WriteStringValue(StorageUriExpireOn.Value, "O");
             }
-            if (options.Format != "W" && LastActivatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastActivatedOn))
             {
                 writer.WritePropertyName("lastActivationTime"u8);
                 writer.WriteStringValue(LastActivatedOn.Value, "O");
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.Batch
             var format = options.Format == "W" ? ((IPersistableModel<BatchApplicationPackageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchApplicationPackageData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchApplicationPackageData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +130,7 @@ namespace Azure.ResourceManager.Batch
             DateTimeOffset? storageUrlExpiry = default;
             DateTimeOffset? lastActivationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -222,10 +221,10 @@ namespace Azure.ResourceManager.Batch
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchApplicationPackageData(
                 id,
                 name,
@@ -249,7 +248,7 @@ namespace Azure.ResourceManager.Batch
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchApplicationPackageData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchApplicationPackageData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -265,7 +264,7 @@ namespace Azure.ResourceManager.Batch
                         return DeserializeBatchApplicationPackageData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchApplicationPackageData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchApplicationPackageData)} does not support reading '{options.Format}' format.");
             }
         }
 

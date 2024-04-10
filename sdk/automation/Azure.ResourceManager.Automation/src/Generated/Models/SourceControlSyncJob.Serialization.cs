@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceControlSyncJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceControlSyncJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceControlSyncJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SourceControlSyncJobId != null)
+            if (Optional.IsDefined(SourceControlSyncJobId))
             {
                 writer.WritePropertyName("sourceControlSyncJobId"u8);
                 writer.WriteStringValue(SourceControlSyncJobId);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 if (StartOn != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 if (EndOn != null)
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (SyncType.HasValue)
+            if (Optional.IsDefined(SyncType))
             {
                 writer.WritePropertyName("syncType"u8);
                 writer.WriteStringValue(SyncType.Value.ToString());
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceControlSyncJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceControlSyncJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceControlSyncJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Automation.Models
             DateTimeOffset? endTime = default;
             SourceControlSyncType? syncType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SourceControlSyncJob(
                 id,
                 name,
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SourceControlSyncJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceControlSyncJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeSourceControlSyncJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceControlSyncJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceControlSyncJob)} does not support reading '{options.Format}' format.");
             }
         }
 

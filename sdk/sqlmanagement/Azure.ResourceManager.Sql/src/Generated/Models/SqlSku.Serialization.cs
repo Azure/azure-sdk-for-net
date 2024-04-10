@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,28 +23,28 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Size != null)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Family != null)
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (Capacity.HasValue)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Sql.Models
             string family = default;
             int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -126,10 +127,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlSku(
                 name,
                 tier,
@@ -137,6 +138,123 @@ namespace Azure.ResourceManager.Sql.Models
                 family,
                 capacity,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tier), out propertyOverride);
+            if (Optional.IsDefined(Tier) || hasPropertyOverride)
+            {
+                builder.Append("  tier: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Tier.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Tier}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Tier}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Size), out propertyOverride);
+            if (Optional.IsDefined(Size) || hasPropertyOverride)
+            {
+                builder.Append("  size: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Size.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Size}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Size}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Family), out propertyOverride);
+            if (Optional.IsDefined(Family) || hasPropertyOverride)
+            {
+                builder.Append("  family: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Family.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Family}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Family}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capacity), out propertyOverride);
+            if (Optional.IsDefined(Capacity) || hasPropertyOverride)
+            {
+                builder.Append("  capacity: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{Capacity.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SqlSku>.Write(ModelReaderWriterOptions options)
@@ -147,8 +265,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +284,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSqlSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlSku)} does not support reading '{options.Format}' format.");
             }
         }
 

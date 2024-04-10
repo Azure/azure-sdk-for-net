@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubBaiduCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubBaiduCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubBaiduCredential)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BaiduApiKey != null)
+            if (Optional.IsDefined(BaiduApiKey))
             {
                 writer.WritePropertyName("baiduApiKey"u8);
                 writer.WriteStringValue(BaiduApiKey);
             }
-            if (BaiduEndpoint != null)
+            if (Optional.IsDefined(BaiduEndpoint))
             {
                 writer.WritePropertyName("baiduEndPoint"u8);
                 writer.WriteStringValue(BaiduEndpoint.AbsoluteUri);
             }
-            if (BaiduSecretKey != null)
+            if (Optional.IsDefined(BaiduSecretKey))
             {
                 writer.WritePropertyName("baiduSecretKey"u8);
                 writer.WriteStringValue(BaiduSecretKey);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubBaiduCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubBaiduCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubBaiduCredential)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             Uri baiduEndPoint = default;
             string baiduSecretKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NotificationHubBaiduCredential(baiduApiKey, baiduEndPoint, baiduSecretKey, serializedAdditionalRawData);
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubBaiduCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubBaiduCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         return DeserializeNotificationHubBaiduCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubBaiduCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubBaiduCredential)} does not support reading '{options.Format}' format.");
             }
         }
 

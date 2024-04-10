@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerJobStepResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string stepName, SqlServerJobStepData data, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
-            if (stepName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stepName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerJobStepJobStepsClientDiagnostics.CreateScope("SqlServerJobStepCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerJobStepResource> CreateOrUpdate(WaitUntil waitUntil, string stepName, SqlServerJobStepData data, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
-            if (stepName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stepName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerJobStepJobStepsClientDiagnostics.CreateScope("SqlServerJobStepCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
         public virtual async Task<Response<SqlServerJobStepResource>> GetAsync(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
-            if (stepName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stepName));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
             using var scope = _sqlServerJobStepJobStepsClientDiagnostics.CreateScope("SqlServerJobStepCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
         public virtual Response<SqlServerJobStepResource> Get(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
-            if (stepName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stepName));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
             using var scope = _sqlServerJobStepJobStepsClientDiagnostics.CreateScope("SqlServerJobStepCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
-            if (stepName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stepName));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
             using var scope = _sqlServerJobStepJobStepsClientDiagnostics.CreateScope("SqlServerJobStepCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
         public virtual Response<bool> Exists(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
-            if (stepName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stepName));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
             using var scope = _sqlServerJobStepJobStepsClientDiagnostics.CreateScope("SqlServerJobStepCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlServerJobStepResource>> GetIfExistsAsync(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
-            if (stepName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stepName));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
             using var scope = _sqlServerJobStepJobStepsClientDiagnostics.CreateScope("SqlServerJobStepCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> is null. </exception>
         public virtual NullableResponse<SqlServerJobStepResource> GetIfExists(string stepName, CancellationToken cancellationToken = default)
         {
-            if (stepName == null)
-            {
-                throw new ArgumentNullException(nameof(stepName));
-            }
-            if (stepName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(stepName));
-            }
+            Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
 
             using var scope = _sqlServerJobStepJobStepsClientDiagnostics.CreateScope("SqlServerJobStepCollection.GetIfExists");
             scope.Start();

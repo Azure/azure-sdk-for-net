@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AUpdateNetworkMappingContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AUpdateNetworkMappingContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AUpdateNetworkMappingContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrimaryNetworkId != null)
+            if (Optional.IsDefined(PrimaryNetworkId))
             {
                 writer.WritePropertyName("primaryNetworkId"u8);
                 writer.WriteStringValue(PrimaryNetworkId);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AUpdateNetworkMappingContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AUpdateNetworkMappingContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AUpdateNetworkMappingContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier primaryNetworkId = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryNetworkId"u8))
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new A2AUpdateNetworkMappingContent(instanceType, serializedAdditionalRawData, primaryNetworkId);
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2AUpdateNetworkMappingContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AUpdateNetworkMappingContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2AUpdateNetworkMappingContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2AUpdateNetworkMappingContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AUpdateNetworkMappingContent)} does not support reading '{options.Format}' format.");
             }
         }
 

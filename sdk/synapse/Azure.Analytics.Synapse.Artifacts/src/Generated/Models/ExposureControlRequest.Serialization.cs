@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (FeatureName != null)
+            if (Optional.IsDefined(FeatureName))
             {
                 writer.WritePropertyName("featureName"u8);
                 writer.WriteStringValue(FeatureName);
             }
-            if (FeatureType != null)
+            if (Optional.IsDefined(FeatureType))
             {
                 writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType);
@@ -55,12 +55,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ExposureControlRequest(featureName, featureType);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ExposureControlRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExposureControlRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ExposureControlRequest>(this);
+            return content;
+        }
+
         internal partial class ExposureControlRequestConverter : JsonConverter<ExposureControlRequest>
         {
             public override void Write(Utf8JsonWriter writer, ExposureControlRequest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ExposureControlRequest>(model);
             }
+
             public override ExposureControlRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

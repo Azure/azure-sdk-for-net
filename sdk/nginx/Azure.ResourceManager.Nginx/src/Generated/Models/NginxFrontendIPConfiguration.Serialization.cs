@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxFrontendIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxFrontendIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxFrontendIPConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(PublicIPAddresses is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PublicIPAddresses))
             {
                 writer.WritePropertyName("publicIPAddresses"u8);
                 writer.WriteStartArray();
@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PrivateIPAddresses is ChangeTrackingList<NginxPrivateIPAddress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateIPAddresses))
             {
                 writer.WritePropertyName("privateIPAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NginxPrivateIPAddress>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxFrontendIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxFrontendIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxFrontendIPConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Nginx.Models
             IList<WritableSubResource> publicIPAddresses = default;
             IList<NginxPrivateIPAddress> privateIPAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIPAddresses"u8))
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NginxFrontendIPConfiguration(publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(), privateIPAddresses ?? new ChangeTrackingList<NginxPrivateIPAddress>(), serializedAdditionalRawData);
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxFrontendIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxFrontendIPConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Nginx.Models
                         return DeserializeNginxFrontendIPConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxFrontendIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxFrontendIPConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

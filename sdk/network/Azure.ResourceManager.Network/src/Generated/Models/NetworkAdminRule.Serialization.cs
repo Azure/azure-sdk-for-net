@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,13 +23,13 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkAdminRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkAdminRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,44 +49,44 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (!(Sources is ChangeTrackingList<AddressPrefixItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AddressPrefixItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Destinations is ChangeTrackingList<AddressPrefixItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Destinations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AddressPrefixItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourcePortRanges is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SourcePortRanges))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationPortRanges is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationPortRanges))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -107,27 +106,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Access.HasValue)
+            if (Optional.IsDefined(Access))
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access.Value.ToString());
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Direction.HasValue)
+            if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkAdminRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkAdminRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkProvisioningState? provisioningState = default;
             Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -359,10 +358,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkAdminRule(
                 id,
                 name,
@@ -393,7 +392,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkAdminRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkAdminRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -409,7 +408,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkAdminRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkAdminRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkAdminRule)} does not support reading '{options.Format}' format.");
             }
         }
 

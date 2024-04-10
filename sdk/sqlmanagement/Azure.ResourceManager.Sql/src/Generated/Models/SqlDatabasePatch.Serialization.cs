@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabasePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDatabasePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDatabasePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SqlSku>(Sku, options);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<DatabaseIdentity>(Identity, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,238 +49,238 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Collation != null)
+            if (Optional.IsDefined(Collation))
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (MaxSizeBytes.HasValue)
+            if (Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
-            if (SampleName.HasValue)
+            if (Optional.IsDefined(SampleName))
             {
                 writer.WritePropertyName("sampleName"u8);
                 writer.WriteStringValue(SampleName.Value.ToString());
             }
-            if (ElasticPoolId != null)
+            if (Optional.IsDefined(ElasticPoolId))
             {
                 writer.WritePropertyName("elasticPoolId"u8);
                 writer.WriteStringValue(ElasticPoolId);
             }
-            if (SourceDatabaseId != null)
+            if (Optional.IsDefined(SourceDatabaseId))
             {
                 writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && DatabaseId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseId))
             {
                 writer.WritePropertyName("databaseId"u8);
                 writer.WriteStringValue(DatabaseId.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && CurrentServiceObjectiveName != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentServiceObjectiveName))
             {
                 writer.WritePropertyName("currentServiceObjectiveName"u8);
                 writer.WriteStringValue(CurrentServiceObjectiveName);
             }
-            if (options.Format != "W" && RequestedServiceObjectiveName != null)
+            if (options.Format != "W" && Optional.IsDefined(RequestedServiceObjectiveName))
             {
                 writer.WritePropertyName("requestedServiceObjectiveName"u8);
                 writer.WriteStringValue(RequestedServiceObjectiveName);
             }
-            if (options.Format != "W" && DefaultSecondaryLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultSecondaryLocation))
             {
                 writer.WritePropertyName("defaultSecondaryLocation"u8);
                 writer.WriteStringValue(DefaultSecondaryLocation.Value);
             }
-            if (options.Format != "W" && FailoverGroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(FailoverGroupId))
             {
                 writer.WritePropertyName("failoverGroupId"u8);
                 writer.WriteStringValue(FailoverGroupId);
             }
-            if (RestorePointInTime.HasValue)
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (SourceDatabaseDeletedOn.HasValue)
+            if (Optional.IsDefined(SourceDatabaseDeletedOn))
             {
                 writer.WritePropertyName("sourceDatabaseDeletionDate"u8);
                 writer.WriteStringValue(SourceDatabaseDeletedOn.Value, "O");
             }
-            if (RecoveryServicesRecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryServicesRecoveryPointId))
             {
                 writer.WritePropertyName("recoveryServicesRecoveryPointId"u8);
                 writer.WriteStringValue(RecoveryServicesRecoveryPointId);
             }
-            if (LongTermRetentionBackupResourceId != null)
+            if (Optional.IsDefined(LongTermRetentionBackupResourceId))
             {
                 writer.WritePropertyName("longTermRetentionBackupResourceId"u8);
                 writer.WriteStringValue(LongTermRetentionBackupResourceId);
             }
-            if (RecoverableDatabaseId != null)
+            if (Optional.IsDefined(RecoverableDatabaseId))
             {
                 writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
-            if (RestorableDroppedDatabaseId != null)
+            if (Optional.IsDefined(RestorableDroppedDatabaseId))
             {
                 writer.WritePropertyName("restorableDroppedDatabaseId"u8);
                 writer.WriteStringValue(RestorableDroppedDatabaseId);
             }
-            if (CatalogCollation.HasValue)
+            if (Optional.IsDefined(CatalogCollation))
             {
                 writer.WritePropertyName("catalogCollation"u8);
                 writer.WriteStringValue(CatalogCollation.Value.ToString());
             }
-            if (IsZoneRedundant.HasValue)
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (options.Format != "W" && MaxLogSizeBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxLogSizeBytes))
             {
                 writer.WritePropertyName("maxLogSizeBytes"u8);
                 writer.WriteNumberValue(MaxLogSizeBytes.Value);
             }
-            if (options.Format != "W" && EarliestRestoreOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EarliestRestoreOn))
             {
                 writer.WritePropertyName("earliestRestoreDate"u8);
                 writer.WriteStringValue(EarliestRestoreOn.Value, "O");
             }
-            if (ReadScale.HasValue)
+            if (Optional.IsDefined(ReadScale))
             {
                 writer.WritePropertyName("readScale"u8);
                 writer.WriteStringValue(ReadScale.Value.ToString());
             }
-            if (HighAvailabilityReplicaCount.HasValue)
+            if (Optional.IsDefined(HighAvailabilityReplicaCount))
             {
                 writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
             }
-            if (SecondaryType.HasValue)
+            if (Optional.IsDefined(SecondaryType))
             {
                 writer.WritePropertyName("secondaryType"u8);
                 writer.WriteStringValue(SecondaryType.Value.ToString());
             }
-            if (options.Format != "W" && CurrentSku != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentSku))
             {
                 writer.WritePropertyName("currentSku"u8);
-                writer.WriteObjectValue(CurrentSku);
+                writer.WriteObjectValue<SqlSku>(CurrentSku, options);
             }
-            if (AutoPauseDelay.HasValue)
+            if (Optional.IsDefined(AutoPauseDelay))
             {
                 writer.WritePropertyName("autoPauseDelay"u8);
                 writer.WriteNumberValue(AutoPauseDelay.Value);
             }
-            if (options.Format != "W" && CurrentBackupStorageRedundancy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentBackupStorageRedundancy))
             {
                 writer.WritePropertyName("currentBackupStorageRedundancy"u8);
                 writer.WriteStringValue(CurrentBackupStorageRedundancy.Value.ToString());
             }
-            if (RequestedBackupStorageRedundancy.HasValue)
+            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
-            if (MinCapacity.HasValue)
+            if (Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
-            if (options.Format != "W" && PausedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PausedOn))
             {
                 writer.WritePropertyName("pausedDate"u8);
                 writer.WriteStringValue(PausedOn.Value, "O");
             }
-            if (options.Format != "W" && ResumedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResumedOn))
             {
                 writer.WritePropertyName("resumedDate"u8);
                 writer.WriteStringValue(ResumedOn.Value, "O");
             }
-            if (MaintenanceConfigurationId != null)
+            if (Optional.IsDefined(MaintenanceConfigurationId))
             {
                 writer.WritePropertyName("maintenanceConfigurationId"u8);
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
-            if (IsLedgerOn.HasValue)
+            if (Optional.IsDefined(IsLedgerOn))
             {
                 writer.WritePropertyName("isLedgerOn"u8);
                 writer.WriteBooleanValue(IsLedgerOn.Value);
             }
-            if (options.Format != "W" && IsInfraEncryptionEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsInfraEncryptionEnabled))
             {
                 writer.WritePropertyName("isInfraEncryptionEnabled"u8);
                 writer.WriteBooleanValue(IsInfraEncryptionEnabled.Value);
             }
-            if (FederatedClientId.HasValue)
+            if (Optional.IsDefined(FederatedClientId))
             {
                 writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId.Value);
             }
-            if (!(Keys is ChangeTrackingDictionary<string, SqlDatabaseKey> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
                 writer.WriteStartObject();
                 foreach (var item in Keys)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SqlDatabaseKey>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (EncryptionProtector != null)
+            if (Optional.IsDefined(EncryptionProtector))
             {
                 writer.WritePropertyName("encryptionProtector"u8);
                 writer.WriteStringValue(EncryptionProtector);
             }
-            if (PreferredEnclaveType.HasValue)
+            if (Optional.IsDefined(PreferredEnclaveType))
             {
                 writer.WritePropertyName("preferredEnclaveType"u8);
                 writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
             }
-            if (UseFreeLimit.HasValue)
+            if (Optional.IsDefined(UseFreeLimit))
             {
                 writer.WritePropertyName("useFreeLimit"u8);
                 writer.WriteBooleanValue(UseFreeLimit.Value);
             }
-            if (FreeLimitExhaustionBehavior.HasValue)
+            if (Optional.IsDefined(FreeLimitExhaustionBehavior))
             {
                 writer.WritePropertyName("freeLimitExhaustionBehavior"u8);
                 writer.WriteStringValue(FreeLimitExhaustionBehavior.Value.ToString());
             }
-            if (ManualCutover.HasValue)
+            if (Optional.IsDefined(ManualCutover))
             {
                 writer.WritePropertyName("manualCutover"u8);
                 writer.WriteBooleanValue(ManualCutover.Value);
             }
-            if (PerformCutover.HasValue)
+            if (Optional.IsDefined(PerformCutover))
             {
                 writer.WritePropertyName("performCutover"u8);
                 writer.WriteBooleanValue(PerformCutover.Value);
             }
-            if (EncryptionProtectorAutoRotation.HasValue)
+            if (Optional.IsDefined(EncryptionProtectorAutoRotation))
             {
                 writer.WritePropertyName("encryptionProtectorAutoRotation"u8);
                 writer.WriteBooleanValue(EncryptionProtectorAutoRotation.Value);
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabasePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDatabasePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDatabasePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Sql.Models
             bool? performCutover = default;
             bool? encryptionProtectorAutoRotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -826,10 +826,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlDatabasePatch(
                 sku,
                 identity,
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDatabasePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDatabasePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSqlDatabasePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDatabasePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDatabasePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

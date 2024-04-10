@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsCredentialEnabled.HasValue)
+            if (Optional.IsDefined(IsCredentialEnabled))
             {
                 writer.WritePropertyName("restAuthCredential.isEnabled"u8);
                 writer.WriteBooleanValue(IsCredentialEnabled.Value);
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("restAuthCredential.username"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("restAuthCredential.password"u8);
                 writer.WriteStringValue(Password);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             string restAuthCredentialUsername = default;
             string restAuthCredentialPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restAuthCredential.isEnabled"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HDInsightClusterUpdateGatewaySettingsContent(restAuthCredentialIsEnabled, restAuthCredentialUsername, restAuthCredentialPassword, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightClusterUpdateGatewaySettingsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support reading '{options.Format}' format.");
             }
         }
 

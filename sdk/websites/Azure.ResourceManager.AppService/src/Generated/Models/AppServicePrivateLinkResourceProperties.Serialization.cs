@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,16 +24,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServicePrivateLinkResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServicePrivateLinkResourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && GroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && !(RequiredMembers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredMembers))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(RequiredZoneNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServicePrivateLinkResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServicePrivateLinkResourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
             IReadOnlyList<string> requiredMembers = default;
             IReadOnlyList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -131,11 +133,118 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppServicePrivateLinkResourceProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupId), out propertyOverride);
+            if (Optional.IsDefined(GroupId) || hasPropertyOverride)
+            {
+                builder.Append("  groupId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (GroupId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GroupId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GroupId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiredMembers), out propertyOverride);
+            if (Optional.IsCollectionDefined(RequiredMembers) || hasPropertyOverride)
+            {
+                if (RequiredMembers.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  requiredMembers: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in RequiredMembers)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiredZoneNames), out propertyOverride);
+            if (Optional.IsCollectionDefined(RequiredZoneNames) || hasPropertyOverride)
+            {
+                if (RequiredZoneNames.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  requiredZoneNames: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in RequiredZoneNames)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<AppServicePrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)
@@ -146,8 +255,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServicePrivateLinkResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServicePrivateLinkResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +274,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServicePrivateLinkResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServicePrivateLinkResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServicePrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

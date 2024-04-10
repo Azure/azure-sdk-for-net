@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
@@ -73,18 +71,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PolicyRemediationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string remediationName, PolicyRemediationData data, CancellationToken cancellationToken = default)
         {
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.CreateOrUpdate");
             scope.Start();
@@ -132,18 +120,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PolicyRemediationResource> CreateOrUpdate(WaitUntil waitUntil, string remediationName, PolicyRemediationData data, CancellationToken cancellationToken = default)
         {
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.CreateOrUpdate");
             scope.Start();
@@ -189,14 +167,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
         public virtual async Task<Response<PolicyRemediationResource>> GetAsync(string remediationName, CancellationToken cancellationToken = default)
         {
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.Get");
             scope.Start();
@@ -241,14 +212,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
         public virtual Response<PolicyRemediationResource> Get(string remediationName, CancellationToken cancellationToken = default)
         {
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.Get");
             scope.Start();
@@ -355,14 +319,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string remediationName, CancellationToken cancellationToken = default)
         {
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.Exists");
             scope.Start();
@@ -405,14 +362,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
         public virtual Response<bool> Exists(string remediationName, CancellationToken cancellationToken = default)
         {
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.Exists");
             scope.Start();
@@ -455,14 +405,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
         public virtual async Task<NullableResponse<PolicyRemediationResource>> GetIfExistsAsync(string remediationName, CancellationToken cancellationToken = default)
         {
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.GetIfExists");
             scope.Start();
@@ -507,14 +450,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
         public virtual NullableResponse<PolicyRemediationResource> GetIfExists(string remediationName, CancellationToken cancellationToken = default)
         {
-            if (remediationName == null)
-            {
-                throw new ArgumentNullException(nameof(remediationName));
-            }
-            if (remediationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(remediationName));
-            }
+            Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
             using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.GetIfExists");
             scope.Start();

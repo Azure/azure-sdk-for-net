@@ -17,17 +17,25 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("sourceType"u8);
             writer.WriteStringValue(SourceType.ToString());
-            if (PlaySourceId != null)
+            if (Optional.IsDefined(PlaySourceId))
             {
                 writer.WritePropertyName("playSourceId"u8);
                 writer.WriteStringValue(PlaySourceId);
             }
-            if (FileSource != null)
+            if (Optional.IsDefined(FileSource))
             {
                 writer.WritePropertyName("fileSource"u8);
-                writer.WriteObjectValue(FileSource);
+                writer.WriteObjectValue<FileSourceInternal>(FileSource);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PlaySourceInternal>(this);
+            return content;
         }
     }
 }

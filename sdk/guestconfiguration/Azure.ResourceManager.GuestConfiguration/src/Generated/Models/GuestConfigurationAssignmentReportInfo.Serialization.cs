@@ -22,57 +22,57 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentReportInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && ReportId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReportId))
             {
                 writer.WritePropertyName("reportId"u8);
                 writer.WriteStringValue(ReportId.Value);
             }
-            if (Assignment != null)
+            if (Optional.IsDefined(Assignment))
             {
                 writer.WritePropertyName("assignment"u8);
-                writer.WriteObjectValue(Assignment);
+                writer.WriteObjectValue<GuestConfigurationAssignmentInfo>(Assignment, options);
             }
-            if (Vm != null)
+            if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue(Vm);
+                writer.WriteObjectValue<GuestConfigurationVmInfo>(Vm, options);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && ComplianceStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteStringValue(ComplianceStatus.Value.ToString());
             }
-            if (options.Format != "W" && OperationType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (!(Resources is ChangeTrackingList<AssignmentReportResourceInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AssignmentReportResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentReportInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             GuestConfigurationAssignmentReportType? operationType = default;
             IList<AssignmentReportResourceInfo> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -215,10 +215,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GuestConfigurationAssignmentReportInfo(
                 id,
                 reportId,
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         return DeserializeGuestConfigurationAssignmentReportInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

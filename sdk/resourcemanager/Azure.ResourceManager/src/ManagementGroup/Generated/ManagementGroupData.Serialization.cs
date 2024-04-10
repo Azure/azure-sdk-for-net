@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagementGroups.Models;
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.ManagementGroups
             var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,29 +45,29 @@ namespace Azure.ResourceManager.ManagementGroups
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                writer.WriteObjectValue<ManagementGroupInfo>(Details, options);
             }
-            if (!(Children is ChangeTrackingList<ManagementGroupChildInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Children))
             {
                 if (Children != null)
                 {
@@ -73,7 +75,7 @@ namespace Azure.ResourceManager.ManagementGroups
                     writer.WriteStartArray();
                     foreach (var item in Children)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<ManagementGroupChildInfo>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -106,7 +108,7 @@ namespace Azure.ResourceManager.ManagementGroups
             var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +132,7 @@ namespace Azure.ResourceManager.ManagementGroups
             ManagementGroupInfo details = default;
             IReadOnlyList<ManagementGroupChildInfo> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -209,10 +211,10 @@ namespace Azure.ResourceManager.ManagementGroups
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagementGroupData(
                 id,
                 name,
@@ -225,6 +227,146 @@ namespace Azure.ResourceManager.ManagementGroups
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
+            {
+                builder.Append("    tenantId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (Optional.IsDefined(DisplayName) || hasPropertyOverride)
+            {
+                builder.Append("    displayName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Details), out propertyOverride);
+            if (Optional.IsDefined(Details) || hasPropertyOverride)
+            {
+                builder.Append("    details: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Details, options, 4, false, "    details: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Children), out propertyOverride);
+            if (Optional.IsCollectionDefined(Children) || hasPropertyOverride)
+            {
+                if (Children.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    children: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Children)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    children: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagementGroupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -233,8 +375,10 @@ namespace Azure.ResourceManager.ManagementGroups
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -250,7 +394,7 @@ namespace Azure.ResourceManager.ManagementGroups
                         return DeserializeManagementGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

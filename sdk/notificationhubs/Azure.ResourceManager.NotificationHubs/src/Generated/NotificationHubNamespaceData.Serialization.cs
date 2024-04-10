@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.NotificationHubs
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<NotificationHubSku>(Sku, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,79 +61,79 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (NamespaceName != null)
+            if (Optional.IsDefined(NamespaceName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamespaceName);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (options.Format != "W" && MetricId != null)
+            if (options.Format != "W" && Optional.IsDefined(MetricId))
             {
                 writer.WritePropertyName("metricId"u8);
                 writer.WriteStringValue(MetricId);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (ServiceBusEndpoint != null)
+            if (Optional.IsDefined(ServiceBusEndpoint))
             {
                 writer.WritePropertyName("serviceBusEndpoint"u8);
                 writer.WriteStringValue(ServiceBusEndpoint.AbsoluteUri);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (ScaleUnit != null)
+            if (Optional.IsDefined(ScaleUnit))
             {
                 writer.WritePropertyName("scaleUnit"u8);
                 writer.WriteStringValue(ScaleUnit);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (IsCritical.HasValue)
+            if (Optional.IsDefined(IsCritical))
             {
                 writer.WritePropertyName("critical"u8);
                 writer.WriteBooleanValue(IsCritical.Value);
             }
-            if (DataCenter != null)
+            if (Optional.IsDefined(DataCenter))
             {
                 writer.WritePropertyName("dataCenter"u8);
                 writer.WriteStringValue(DataCenter);
             }
-            if (NamespaceType.HasValue)
+            if (Optional.IsDefined(NamespaceType))
             {
                 writer.WritePropertyName("namespaceType"u8);
                 writer.WriteStringValue(NamespaceType.Value.ToSerialString());
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NotificationHubs
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.NotificationHubs
             string dataCenter = default;
             NotificationHubNamespaceType? namespaceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -362,10 +362,10 @@ namespace Azure.ResourceManager.NotificationHubs
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NotificationHubNamespaceData(
                 id,
                 name,
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.NotificationHubs
                         return DeserializeNotificationHubNamespaceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubNamespaceData)} does not support reading '{options.Format}' format.");
             }
         }
 

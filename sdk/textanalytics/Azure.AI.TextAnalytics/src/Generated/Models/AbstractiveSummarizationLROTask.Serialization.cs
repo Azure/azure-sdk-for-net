@@ -16,10 +16,10 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Parameters);
+            writer.WriteObjectValue<AbstractiveSummarizationTaskParameters>(Parameters);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (TaskName != null)
+            if (Optional.IsDefined(TaskName))
             {
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
@@ -55,6 +55,22 @@ namespace Azure.AI.TextAnalytics.Models
                 }
             }
             return new AbstractiveSummarizationLROTask(taskName, kind, parameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AbstractiveSummarizationLROTask FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAbstractiveSummarizationLROTask(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AbstractiveSummarizationLROTask>(this);
+            return content;
         }
     }
 }

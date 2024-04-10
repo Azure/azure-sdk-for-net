@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkuRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuRestriction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SkuRestrictionType != null)
+            if (Optional.IsDefined(SkuRestrictionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SkuRestrictionType);
             }
-            if (!(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ReasonCode != null)
+            if (Optional.IsDefined(ReasonCode))
             {
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteStringValue(ReasonCode);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkuRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuRestriction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Reservations.Models
             IReadOnlyList<string> values = default;
             string reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SkuRestriction(type, values ?? new ChangeTrackingList<string>(), reasonCode, serializedAdditionalRawData);
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SkuRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuRestriction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeSkuRestriction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuRestriction)} does not support reading '{options.Format}' format.");
             }
         }
 

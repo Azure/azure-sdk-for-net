@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,16 +23,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,19 +60,19 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TypeVersion != null)
+            if (Optional.IsDefined(TypeVersion))
             {
                 writer.WritePropertyName("typeVersion"u8);
                 writer.WriteStringValue(TypeVersion);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -84,43 +83,43 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndObject();
             }
-            if (UpgradePolicy != null)
+            if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue(UpgradePolicy);
+                writer.WriteObjectValue<ApplicationUpgradePolicy>(UpgradePolicy, options);
             }
-            if (MinimumNodes.HasValue)
+            if (Optional.IsDefined(MinimumNodes))
             {
                 writer.WritePropertyName("minimumNodes"u8);
                 writer.WriteNumberValue(MinimumNodes.Value);
             }
-            if (MaximumNodes.HasValue)
+            if (Optional.IsDefined(MaximumNodes))
             {
                 writer.WritePropertyName("maximumNodes"u8);
                 writer.WriteNumberValue(MaximumNodes.Value);
             }
-            if (RemoveApplicationCapacity.HasValue)
+            if (Optional.IsDefined(RemoveApplicationCapacity))
             {
                 writer.WritePropertyName("removeApplicationCapacity"u8);
                 writer.WriteBooleanValue(RemoveApplicationCapacity.Value);
             }
-            if (!(Metrics is ChangeTrackingList<ApplicationMetricDescription> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationMetricDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ManagedIdentities is ChangeTrackingList<ApplicationUserAssignedIdentity> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagedIdentities))
             {
                 writer.WritePropertyName("managedIdentities"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManagedIdentities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationUserAssignedIdentity>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +178,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             IList<ApplicationMetricDescription> metrics = default;
             IList<ApplicationUserAssignedIdentity> managedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -331,10 +330,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceFabricApplicationPatch(
                 id,
                 name,
@@ -363,7 +362,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -379,7 +378,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeServiceFabricApplicationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricApplicationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

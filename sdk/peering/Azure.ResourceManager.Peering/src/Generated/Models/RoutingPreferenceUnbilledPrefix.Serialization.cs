@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingPreferenceUnbilledPrefix>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingPreferenceUnbilledPrefix)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingPreferenceUnbilledPrefix)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Prefix != null)
+            if (options.Format != "W" && Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (options.Format != "W" && AzureRegion.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AzureRegion))
             {
                 writer.WritePropertyName("azureRegion"u8);
                 writer.WriteStringValue(AzureRegion.Value);
             }
-            if (options.Format != "W" && PeerAsn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingPreferenceUnbilledPrefix>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingPreferenceUnbilledPrefix)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingPreferenceUnbilledPrefix)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Peering.Models
             AzureLocation? azureRegion = default;
             int? peerAsn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefix"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RoutingPreferenceUnbilledPrefix(prefix, azureRegion, peerAsn, serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingPreferenceUnbilledPrefix)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingPreferenceUnbilledPrefix)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializeRoutingPreferenceUnbilledPrefix(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingPreferenceUnbilledPrefix)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingPreferenceUnbilledPrefix)} does not support reading '{options.Format}' format.");
             }
         }
 

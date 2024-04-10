@@ -11,10 +11,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Quota
 {
@@ -79,18 +77,8 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CurrentQuotaLimitBaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.CreateOrUpdate");
             scope.Start();
@@ -145,18 +133,8 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CurrentQuotaLimitBaseResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.CreateOrUpdate");
             scope.Start();
@@ -207,14 +185,7 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<CurrentQuotaLimitBaseResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Get");
             scope.Start();
@@ -264,14 +235,7 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<CurrentQuotaLimitBaseResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Get");
             scope.Start();
@@ -381,14 +345,7 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Exists");
             scope.Start();
@@ -436,14 +393,7 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.Exists");
             scope.Start();
@@ -491,14 +441,7 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<CurrentQuotaLimitBaseResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.GetIfExists");
             scope.Start();
@@ -548,14 +491,7 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         public virtual NullableResponse<CurrentQuotaLimitBaseResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseCollection.GetIfExists");
             scope.Start();

@@ -3,6 +3,7 @@
 ## 12.20.0-beta.2 (Unreleased)
 - Added support for service version 2024-05-04.
 - Fixed bug where BlockBlobClient.Upload() and .UploadAsync() would throw an exception if BlobUploadOptions was null.
+- Fixed a bug where some valid shared access signatures were improperly parsed, throwing an exception.
 
 ## 12.20.0-beta.1 (2023-12-05)
 - Added support for service version 2024-02-04.

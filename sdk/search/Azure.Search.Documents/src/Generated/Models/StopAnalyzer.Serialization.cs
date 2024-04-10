@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Stopwords is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Stopwords))
             {
                 writer.WritePropertyName("stopwords"u8);
                 writer.WriteStartArray();
@@ -70,6 +70,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new StopAnalyzer(odataType, name, stopwords ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new StopAnalyzer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStopAnalyzer(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<StopAnalyzer>(this);
+            return content;
         }
     }
 }

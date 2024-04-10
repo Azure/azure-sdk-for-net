@@ -18,10 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key);
+                writer.WriteObjectValue<WorkspaceKeyDetails>(Key);
             }
             writer.WriteEndObject();
         }
@@ -54,12 +54,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new CustomerManagedKeyDetails(status, key);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CustomerManagedKeyDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomerManagedKeyDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CustomerManagedKeyDetails>(this);
+            return content;
+        }
+
         internal partial class CustomerManagedKeyDetailsConverter : JsonConverter<CustomerManagedKeyDetails>
         {
             public override void Write(Utf8JsonWriter writer, CustomerManagedKeyDetails model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<CustomerManagedKeyDetails>(model);
             }
+
             public override CustomerManagedKeyDetails Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

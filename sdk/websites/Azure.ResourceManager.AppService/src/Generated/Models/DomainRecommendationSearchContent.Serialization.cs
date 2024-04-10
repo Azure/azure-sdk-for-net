@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DomainRecommendationSearchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainRecommendationSearchContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainRecommendationSearchContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Keywords != null)
+            if (Optional.IsDefined(Keywords))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStringValue(Keywords);
             }
-            if (MaxDomainRecommendations.HasValue)
+            if (Optional.IsDefined(MaxDomainRecommendations))
             {
                 writer.WritePropertyName("maxDomainRecommendations"u8);
                 writer.WriteNumberValue(MaxDomainRecommendations.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DomainRecommendationSearchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainRecommendationSearchContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainRecommendationSearchContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
             string keywords = default;
             int? maxDomainRecommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keywords"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DomainRecommendationSearchContent(keywords, maxDomainRecommendations, serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DomainRecommendationSearchContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainRecommendationSearchContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeDomainRecommendationSearchContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DomainRecommendationSearchContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainRecommendationSearchContent)} does not support reading '{options.Format}' format.");
             }
         }
 

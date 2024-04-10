@@ -22,62 +22,62 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmergingIssueActiveEventType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (TrackingId != null)
+            if (Optional.IsDefined(TrackingId))
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Cloud != null)
+            if (Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud);
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Stage.HasValue)
+            if (Optional.IsDefined(Stage))
             {
                 writer.WritePropertyName("stage"u8);
                 writer.WriteStringValue(Stage.Value.ToString());
             }
-            if (IsPublished.HasValue)
+            if (Optional.IsDefined(IsPublished))
             {
                 writer.WritePropertyName("published"u8);
                 writer.WriteBooleanValue(IsPublished.Value);
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (!(Impacts is ChangeTrackingList<EmergingIssueImpact> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Impacts))
             {
                 writer.WritePropertyName("impacts"u8);
                 writer.WriteStartArray();
                 foreach (var item in Impacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmergingIssueImpact>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmergingIssueActiveEventType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             DateTimeOffset? lastModifiedTime = default;
             IReadOnlyList<EmergingIssueImpact> impacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("title"u8))
@@ -214,10 +214,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EmergingIssueActiveEventType(
                 title,
                 description,
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeEmergingIssueActiveEventType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support reading '{options.Format}' format.");
             }
         }
 

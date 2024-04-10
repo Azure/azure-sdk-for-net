@@ -19,12 +19,28 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WriteStringValue(CredentialKind.ToString());
             writer.WritePropertyName("dataSourceCredentialName"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("dataSourceCredentialDescription"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataSourceCredentialEntity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataSourceCredentialEntity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DataSourceCredentialEntity>(this);
+            return content;
         }
     }
 }

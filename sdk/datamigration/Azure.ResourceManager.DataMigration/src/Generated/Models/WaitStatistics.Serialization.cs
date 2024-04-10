@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<WaitStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WaitStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WaitStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (WaitType != null)
+            if (Optional.IsDefined(WaitType))
             {
                 writer.WritePropertyName("waitType"u8);
                 writer.WriteStringValue(WaitType);
             }
-            if (WaitTimeMs.HasValue)
+            if (Optional.IsDefined(WaitTimeMs))
             {
                 writer.WritePropertyName("waitTimeMs"u8);
                 writer.WriteNumberValue(WaitTimeMs.Value);
             }
-            if (WaitCount.HasValue)
+            if (Optional.IsDefined(WaitCount))
             {
                 writer.WritePropertyName("waitCount"u8);
                 writer.WriteNumberValue(WaitCount.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<WaitStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WaitStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WaitStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             float? waitTimeMs = default;
             long? waitCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("waitType"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WaitStatistics(waitType, waitTimeMs, waitCount, serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WaitStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WaitStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeWaitStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WaitStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WaitStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DomainFqdn != null)
+            if (Optional.IsDefined(DomainFqdn))
             {
                 writer.WritePropertyName("domainFqdn"u8);
                 writer.WriteStringValue(DomainFqdn);
             }
-            if (OrganizationalUnitPath != null)
+            if (Optional.IsDefined(OrganizationalUnitPath))
             {
                 writer.WritePropertyName("ouPath"u8);
                 writer.WriteStringValue(OrganizationalUnitPath);
             }
-            if (ClusterBootstrapAccount != null)
+            if (Optional.IsDefined(ClusterBootstrapAccount))
             {
                 writer.WritePropertyName("clusterBootstrapAccount"u8);
                 writer.WriteStringValue(ClusterBootstrapAccount);
             }
-            if (ClusterOperatorAccount != null)
+            if (Optional.IsDefined(ClusterOperatorAccount))
             {
                 writer.WritePropertyName("clusterOperatorAccount"u8);
                 writer.WriteStringValue(ClusterOperatorAccount);
             }
-            if (SqlServiceAccount != null)
+            if (Optional.IsDefined(SqlServiceAccount))
             {
                 writer.WritePropertyName("sqlServiceAccount"u8);
                 writer.WriteStringValue(SqlServiceAccount);
             }
-            if (FileShareWitnessPath != null)
+            if (Optional.IsDefined(FileShareWitnessPath))
             {
                 writer.WritePropertyName("fileShareWitnessPath"u8);
                 writer.WriteStringValue(FileShareWitnessPath);
             }
-            if (StorageAccountUri != null)
+            if (Optional.IsDefined(StorageAccountUri))
             {
                 writer.WritePropertyName("storageAccountUrl"u8);
                 writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
-            if (StorageAccountPrimaryKey != null)
+            if (Optional.IsDefined(StorageAccountPrimaryKey))
             {
                 writer.WritePropertyName("storageAccountPrimaryKey"u8);
                 writer.WriteStringValue(StorageAccountPrimaryKey);
             }
-            if (ClusterSubnetType.HasValue)
+            if (Optional.IsDefined(ClusterSubnetType))
             {
                 writer.WritePropertyName("clusterSubnetType"u8);
                 writer.WriteStringValue(ClusterSubnetType.Value.ToString());
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             string storageAccountPrimaryKey = default;
             SqlVmClusterSubnetType? clusterSubnetType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainFqdn"u8))
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WindowsServerFailoverClusterDomainProfile(
                 domainFqdn,
                 ouPath,
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeWindowsServerFailoverClusterDomainProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

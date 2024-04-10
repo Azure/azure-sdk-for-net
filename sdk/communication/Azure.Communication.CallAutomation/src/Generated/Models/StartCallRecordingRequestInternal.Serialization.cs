@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -17,58 +16,66 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator"u8);
-            writer.WriteObjectValue(CallLocator);
-            if (RecordingStateCallbackUri != null)
+            writer.WriteObjectValue<CallLocatorInternal>(CallLocator);
+            if (Optional.IsDefined(RecordingStateCallbackUri))
             {
                 writer.WritePropertyName("recordingStateCallbackUri"u8);
                 writer.WriteStringValue(RecordingStateCallbackUri);
             }
-            if (RecordingContentType.HasValue)
+            if (Optional.IsDefined(RecordingContentType))
             {
                 writer.WritePropertyName("recordingContentType"u8);
                 writer.WriteStringValue(RecordingContentType.Value.ToString());
             }
-            if (RecordingChannelType.HasValue)
+            if (Optional.IsDefined(RecordingChannelType))
             {
                 writer.WritePropertyName("recordingChannelType"u8);
                 writer.WriteStringValue(RecordingChannelType.Value.ToString());
             }
-            if (RecordingFormatType.HasValue)
+            if (Optional.IsDefined(RecordingFormatType))
             {
                 writer.WritePropertyName("recordingFormatType"u8);
                 writer.WriteStringValue(RecordingFormatType.Value.ToString());
             }
-            if (!(AudioChannelParticipantOrdering is ChangeTrackingList<CommunicationIdentifierModel> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AudioChannelParticipantOrdering))
             {
                 writer.WritePropertyName("audioChannelParticipantOrdering"u8);
                 writer.WriteStartArray();
                 foreach (var item in AudioChannelParticipantOrdering)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CommunicationIdentifierModel>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ChannelAffinity is ChangeTrackingList<ChannelAffinityInternal> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ChannelAffinity))
             {
                 writer.WritePropertyName("channelAffinity"u8);
                 writer.WriteStartArray();
                 foreach (var item in ChannelAffinity)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ChannelAffinityInternal>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (ExternalStorage != null)
+            if (Optional.IsDefined(ExternalStorage))
             {
                 writer.WritePropertyName("externalStorage"u8);
-                writer.WriteObjectValue(ExternalStorage);
+                writer.WriteObjectValue<ExternalStorageInternal>(ExternalStorage);
             }
-            if (PauseOnStart.HasValue)
+            if (Optional.IsDefined(PauseOnStart))
             {
                 writer.WritePropertyName("pauseOnStart"u8);
                 writer.WriteBooleanValue(PauseOnStart.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<StartCallRecordingRequestInternal>(this);
+            return content;
         }
     }
 }

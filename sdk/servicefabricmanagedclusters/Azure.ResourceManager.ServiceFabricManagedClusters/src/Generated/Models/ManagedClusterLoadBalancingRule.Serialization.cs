@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterLoadBalancingRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancingRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancingRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,19 +32,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteNumberValue(BackendPort);
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
-            if (ProbePort.HasValue)
+            if (Optional.IsDefined(ProbePort))
             {
                 writer.WritePropertyName("probePort"u8);
                 writer.WriteNumberValue(ProbePort.Value);
             }
             writer.WritePropertyName("probeProtocol"u8);
             writer.WriteStringValue(ProbeProtocol.ToString());
-            if (ProbeRequestPath != null)
+            if (Optional.IsDefined(ProbeRequestPath))
             {
                 writer.WritePropertyName("probeRequestPath"u8);
                 writer.WriteStringValue(ProbeRequestPath);
             }
-            if (LoadDistribution != null)
+            if (Optional.IsDefined(LoadDistribution))
             {
                 writer.WritePropertyName("loadDistribution"u8);
                 writer.WriteStringValue(LoadDistribution);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterLoadBalancingRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancingRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancingRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             string probeRequestPath = default;
             string loadDistribution = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frontendPort"u8))
@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedClusterLoadBalancingRule(
                 frontendPort,
                 backendPort,
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterLoadBalancingRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterLoadBalancingRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeManagedClusterLoadBalancingRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterLoadBalancingRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterLoadBalancingRule)} does not support reading '{options.Format}' format.");
             }
         }
 

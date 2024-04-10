@@ -19,82 +19,82 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (RowCount != null)
+            if (Optional.IsDefined(RowCount))
             {
                 writer.WritePropertyName("rowCount"u8);
-                writer.WriteObjectValue(RowCount);
+                writer.WriteObjectValue<object>(RowCount);
             }
-            if (RowSkips != null)
+            if (Optional.IsDefined(RowSkips))
             {
                 writer.WritePropertyName("rowSkips"u8);
-                writer.WriteObjectValue(RowSkips);
+                writer.WriteObjectValue<object>(RowSkips);
             }
-            if (RfcTableFields != null)
+            if (Optional.IsDefined(RfcTableFields))
             {
                 writer.WritePropertyName("rfcTableFields"u8);
-                writer.WriteObjectValue(RfcTableFields);
+                writer.WriteObjectValue<object>(RfcTableFields);
             }
-            if (RfcTableOptions != null)
+            if (Optional.IsDefined(RfcTableOptions))
             {
                 writer.WritePropertyName("rfcTableOptions"u8);
-                writer.WriteObjectValue(RfcTableOptions);
+                writer.WriteObjectValue<object>(RfcTableOptions);
             }
-            if (BatchSize != null)
+            if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
-                writer.WriteObjectValue(BatchSize);
+                writer.WriteObjectValue<object>(BatchSize);
             }
-            if (CustomRfcReadTableFunctionModule != null)
+            if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
-                writer.WriteObjectValue(CustomRfcReadTableFunctionModule);
+                writer.WriteObjectValue<object>(CustomRfcReadTableFunctionModule);
             }
-            if (SapDataColumnDelimiter != null)
+            if (Optional.IsDefined(SapDataColumnDelimiter))
             {
                 writer.WritePropertyName("sapDataColumnDelimiter"u8);
-                writer.WriteObjectValue(SapDataColumnDelimiter);
+                writer.WriteObjectValue<object>(SapDataColumnDelimiter);
             }
-            if (PartitionOption != null)
+            if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-                writer.WriteObjectValue(PartitionOption);
+                writer.WriteObjectValue<object>(PartitionOption);
             }
-            if (PartitionSettings != null)
+            if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                writer.WriteObjectValue<SapTablePartitionSettings>(PartitionSettings);
             }
-            if (QueryTimeout != null)
+            if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteObjectValue(QueryTimeout);
+                writer.WriteObjectValue<object>(QueryTimeout);
             }
-            if (AdditionalColumns != null)
+            if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
-                writer.WriteObjectValue(AdditionalColumns);
+                writer.WriteObjectValue<object>(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (SourceRetryCount != null)
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-                writer.WriteObjectValue(SourceRetryCount);
+                writer.WriteObjectValue<object>(SourceRetryCount);
             }
-            if (SourceRetryWait != null)
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-                writer.WriteObjectValue(SourceRetryWait);
+                writer.WriteObjectValue<object>(SourceRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -277,12 +277,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 partitionSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SapTableSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSapTableSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SapTableSource>(this);
+            return content;
+        }
+
         internal partial class SapTableSourceConverter : JsonConverter<SapTableSource>
         {
             public override void Write(Utf8JsonWriter writer, SapTableSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SapTableSource>(model);
             }
+
             public override SapTableSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

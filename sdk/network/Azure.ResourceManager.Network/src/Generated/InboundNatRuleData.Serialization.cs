@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,88 +24,88 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<InboundNatRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InboundNatRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InboundNatRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FrontendIPConfiguration != null)
+            if (Optional.IsDefined(FrontendIPConfiguration))
             {
                 writer.WritePropertyName("frontendIPConfiguration"u8);
                 JsonSerializer.Serialize(writer, FrontendIPConfiguration);
             }
-            if (options.Format != "W" && BackendIPConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(BackendIPConfiguration))
             {
                 writer.WritePropertyName("backendIPConfiguration"u8);
-                writer.WriteObjectValue(BackendIPConfiguration);
+                writer.WriteObjectValue<NetworkInterfaceIPConfigurationData>(BackendIPConfiguration, options);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (FrontendPort.HasValue)
+            if (Optional.IsDefined(FrontendPort))
             {
                 writer.WritePropertyName("frontendPort"u8);
                 writer.WriteNumberValue(FrontendPort.Value);
             }
-            if (BackendPort.HasValue)
+            if (Optional.IsDefined(BackendPort))
             {
                 writer.WritePropertyName("backendPort"u8);
                 writer.WriteNumberValue(BackendPort.Value);
             }
-            if (IdleTimeoutInMinutes.HasValue)
+            if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (EnableFloatingIP.HasValue)
+            if (Optional.IsDefined(EnableFloatingIP))
             {
                 writer.WritePropertyName("enableFloatingIP"u8);
                 writer.WriteBooleanValue(EnableFloatingIP.Value);
             }
-            if (EnableTcpReset.HasValue)
+            if (Optional.IsDefined(EnableTcpReset))
             {
                 writer.WritePropertyName("enableTcpReset"u8);
                 writer.WriteBooleanValue(EnableTcpReset.Value);
             }
-            if (FrontendPortRangeStart.HasValue)
+            if (Optional.IsDefined(FrontendPortRangeStart))
             {
                 writer.WritePropertyName("frontendPortRangeStart"u8);
                 writer.WriteNumberValue(FrontendPortRangeStart.Value);
             }
-            if (FrontendPortRangeEnd.HasValue)
+            if (Optional.IsDefined(FrontendPortRangeEnd))
             {
                 writer.WritePropertyName("frontendPortRangeEnd"u8);
                 writer.WriteNumberValue(FrontendPortRangeEnd.Value);
             }
-            if (BackendAddressPool != null)
+            if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
                 JsonSerializer.Serialize(writer, BackendAddressPool);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<InboundNatRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InboundNatRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InboundNatRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.Network
             WritableSubResource backendAddressPool = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -324,10 +323,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new InboundNatRuleData(
                 id,
                 name,
@@ -357,7 +356,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InboundNatRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InboundNatRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -373,7 +372,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeInboundNatRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InboundNatRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InboundNatRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

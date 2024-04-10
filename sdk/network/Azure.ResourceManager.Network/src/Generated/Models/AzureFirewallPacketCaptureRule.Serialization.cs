@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallPacketCaptureRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFirewallPacketCaptureRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFirewallPacketCaptureRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Sources is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Destinations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationPorts is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationPorts))
             {
                 writer.WritePropertyName("destinationPorts"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallPacketCaptureRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFirewallPacketCaptureRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFirewallPacketCaptureRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> destinations = default;
             IList<string> destinationPorts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sources"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureFirewallPacketCaptureRule(sources ?? new ChangeTrackingList<string>(), destinations ?? new ChangeTrackingList<string>(), destinationPorts ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureFirewallPacketCaptureRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFirewallPacketCaptureRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAzureFirewallPacketCaptureRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureFirewallPacketCaptureRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFirewallPacketCaptureRule)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,42 +22,42 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningIndexChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<OnYourDataAuthenticationOptions>(Authentication, options);
             }
-            if (DocumentCount.HasValue)
+            if (Optional.IsDefined(DocumentCount))
             {
-                writer.WritePropertyName("topNDocuments"u8);
+                writer.WritePropertyName("top_n_documents"u8);
                 writer.WriteNumberValue(DocumentCount.Value);
             }
-            if (ShouldRestrictResultScope.HasValue)
+            if (Optional.IsDefined(ShouldRestrictResultScope))
             {
-                writer.WritePropertyName("inScope"u8);
+                writer.WritePropertyName("in_scope"u8);
                 writer.WriteBooleanValue(ShouldRestrictResultScope.Value);
             }
-            if (Strictness.HasValue)
+            if (Optional.IsDefined(Strictness))
             {
                 writer.WritePropertyName("strictness"u8);
                 writer.WriteNumberValue(Strictness.Value);
             }
-            if (RoleInformation != null)
+            if (Optional.IsDefined(RoleInformation))
             {
-                writer.WritePropertyName("roleInformation"u8);
+                writer.WritePropertyName("role_information"u8);
                 writer.WriteStringValue(RoleInformation);
             }
-            writer.WritePropertyName("projectResourceId"u8);
+            writer.WritePropertyName("project_resource_id"u8);
             writer.WriteStringValue(ProjectResourceId);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version);
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
@@ -86,7 +85,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningIndexChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +110,7 @@ namespace Azure.AI.OpenAI
             string version = default;
             string filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authentication"u8))
@@ -123,7 +122,7 @@ namespace Azure.AI.OpenAI
                     authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("topNDocuments"u8))
+                if (property.NameEquals("top_n_documents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +131,7 @@ namespace Azure.AI.OpenAI
                     topNDocuments = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("inScope"u8))
+                if (property.NameEquals("in_scope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,12 +149,12 @@ namespace Azure.AI.OpenAI
                     strictness = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("roleInformation"u8))
+                if (property.NameEquals("role_information"u8))
                 {
                     roleInformation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("projectResourceId"u8))
+                if (property.NameEquals("project_resource_id"u8))
                 {
                     projectResourceId = property.Value.GetString();
                     continue;
@@ -177,10 +176,10 @@ namespace Azure.AI.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureMachineLearningIndexChatExtensionParameters(
                 authentication,
                 topNDocuments,
@@ -203,7 +202,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -219,7 +218,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeAzureMachineLearningIndexChatExtensionParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureMachineLearningIndexChatExtensionParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -237,7 +236,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AzureMachineLearningIndexChatExtensionParameters>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

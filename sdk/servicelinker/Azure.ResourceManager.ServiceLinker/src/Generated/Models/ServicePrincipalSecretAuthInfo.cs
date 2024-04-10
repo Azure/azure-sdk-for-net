@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="secret"/> is null. </exception>
         public ServicePrincipalSecretAuthInfo(string clientId, Guid principalId, string secret)
         {
-            if (clientId == null)
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (secret == null)
-            {
-                throw new ArgumentNullException(nameof(secret));
-            }
+            Argument.AssertNotNull(clientId, nameof(clientId));
+            Argument.AssertNotNull(secret, nameof(secret));
 
             ClientId = clientId;
             PrincipalId = principalId;

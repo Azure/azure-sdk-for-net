@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerSecurityContextDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsPrivileged.HasValue)
+            if (Optional.IsDefined(IsPrivileged))
             {
                 writer.WritePropertyName("privileged"u8);
                 writer.WriteBooleanValue(IsPrivileged.Value);
             }
-            if (AllowPrivilegeEscalation.HasValue)
+            if (Optional.IsDefined(AllowPrivilegeEscalation))
             {
                 writer.WritePropertyName("allowPrivilegeEscalation"u8);
                 writer.WriteBooleanValue(AllowPrivilegeEscalation.Value);
             }
-            if (Capabilities != null)
+            if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities);
+                writer.WriteObjectValue<ContainerSecurityContextCapabilitiesDefinition>(Capabilities, options);
             }
-            if (RunAsGroup.HasValue)
+            if (Optional.IsDefined(RunAsGroup))
             {
                 writer.WritePropertyName("runAsGroup"u8);
                 writer.WriteNumberValue(RunAsGroup.Value);
             }
-            if (RunAsUser.HasValue)
+            if (Optional.IsDefined(RunAsUser))
             {
                 writer.WritePropertyName("runAsUser"u8);
                 writer.WriteNumberValue(RunAsUser.Value);
             }
-            if (SeccompProfile != null)
+            if (Optional.IsDefined(SeccompProfile))
             {
                 writer.WritePropertyName("seccompProfile"u8);
                 writer.WriteStringValue(SeccompProfile);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerSecurityContextDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             int? runAsUser = default;
             string seccompProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("privileged"u8))
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerSecurityContextDefinition(
                 privileged,
                 allowPrivilegeEscalation,
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerSecurityContextDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerSecurityContextDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

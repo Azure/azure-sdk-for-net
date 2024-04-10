@@ -17,12 +17,12 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Parameters);
+            writer.WriteObjectValue<DataLakeGen2SharedKeyParam>(Parameters);
             writer.WritePropertyName("dataSourceCredentialType"u8);
             writer.WriteStringValue(CredentialKind.ToString());
             writer.WritePropertyName("dataSourceCredentialName"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("dataSourceCredentialDescription"u8);
                 writer.WriteStringValue(Description);
@@ -70,6 +70,22 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 }
             }
             return new DataLakeSharedKeyCredentialEntity(dataSourceCredentialType, dataSourceCredentialId, dataSourceCredentialName, dataSourceCredentialDescription, parameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DataLakeSharedKeyCredentialEntity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataLakeSharedKeyCredentialEntity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DataLakeSharedKeyCredentialEntity>(this);
+            return content;
         }
     }
 }

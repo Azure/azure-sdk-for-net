@@ -4,9 +4,19 @@
 
 ### Features Added
 
+  - It is now possible for processors extending `EventProcessor<T>` to disable the batch-level tracing emitted when processing events.  This is intended to allow derived processors dispatching single events or partial batches to emit their own trace information that more accurately correlates to the set of events being processed.  Previously all events in a batch were tracked under a single span regardless of how they were dispatched for processing.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed a warning for "too many parameters" that was written to logs when the processor attempted to log load balancing messages due to improper ETW attribute use.
+
+### Other Changes
+
+- It is now possible to set `byte[]` values as [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `EventData.Properties` collection.
+
+## 5.11.1 (2024-03-05)
 
 ### Other Changes
 

@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && State != null)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && ProgressPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProgressPercentage))
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (options.Format != "W" && TimeElapsed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeElapsed))
             {
                 writer.WritePropertyName("timeElapsed"u8);
                 writer.WriteNumberValue(TimeElapsed.Value);
             }
-            if (options.Format != "W" && TimeRemaining.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeRemaining))
             {
                 writer.WritePropertyName("timeRemaining"u8);
                 writer.WriteNumberValue(TimeRemaining.Value);
             }
-            if (options.Format != "W" && UploadSpeed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UploadSpeed))
             {
                 writer.WritePropertyName("uploadSpeed"u8);
                 writer.WriteNumberValue(UploadSpeed.Value);
             }
-            if (options.Format != "W" && HostName != null)
+            if (options.Format != "W" && Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && !(DataStores is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataStores))
             {
                 writer.WritePropertyName("dataStores"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && VMwareReadThroughput.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VMwareReadThroughput))
             {
                 writer.WritePropertyName("vmwareReadThroughput"u8);
                 writer.WriteNumberValue(VMwareReadThroughput.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IReadOnlyList<string> dataStores = default;
             long? vmwareReadThroughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GatewayOperationDetails(
                 state,
                 progressPercentage,
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeGatewayOperationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayOperationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 if (ConnectionString != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("connectionString");
                 }
             }
-            if (Database != null)
+            if (Optional.IsDefined(Database))
             {
                 if (Database != null)
                 {
@@ -94,6 +94,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
             }
             return new MongoDBParameter(connectionString, database, command);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MongoDBParameter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMongoDBParameter(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MongoDBParameter>(this);
+            return content;
         }
     }
 }

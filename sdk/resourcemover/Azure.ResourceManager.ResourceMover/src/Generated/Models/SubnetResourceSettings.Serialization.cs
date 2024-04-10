@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubnetResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubnetResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubnetResourceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (NetworkSecurityGroup != null)
+            if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 if (NetworkSecurityGroup != null)
                 {
                     writer.WritePropertyName("networkSecurityGroup"u8);
-                    writer.WriteObjectValue(NetworkSecurityGroup);
+                    writer.WriteObjectValue<NetworkSecurityGroupResourceReferenceInfo>(NetworkSecurityGroup, options);
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubnetResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubnetResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubnetResourceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             string addressPrefix = default;
             NetworkSecurityGroupResourceReferenceInfo networkSecurityGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SubnetResourceSettings(name, addressPrefix, networkSecurityGroup, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubnetResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubnetResourceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeSubnetResourceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubnetResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubnetResourceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

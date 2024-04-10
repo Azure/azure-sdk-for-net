@@ -19,47 +19,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (FilePattern != null)
+            if (Optional.IsDefined(FilePattern))
             {
                 writer.WritePropertyName("filePattern"u8);
-                writer.WriteObjectValue(FilePattern);
+                writer.WriteObjectValue<object>(FilePattern);
             }
-            if (NestingSeparator != null)
+            if (Optional.IsDefined(NestingSeparator))
             {
                 writer.WritePropertyName("nestingSeparator"u8);
-                writer.WriteObjectValue(NestingSeparator);
+                writer.WriteObjectValue<object>(NestingSeparator);
             }
-            if (EncodingName != null)
+            if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
-                writer.WriteObjectValue(EncodingName);
+                writer.WriteObjectValue<object>(EncodingName);
             }
-            if (JsonNodeReference != null)
+            if (Optional.IsDefined(JsonNodeReference))
             {
                 writer.WritePropertyName("jsonNodeReference"u8);
-                writer.WriteObjectValue(JsonNodeReference);
+                writer.WriteObjectValue<object>(JsonNodeReference);
             }
-            if (JsonPathDefinition != null)
+            if (Optional.IsDefined(JsonPathDefinition))
             {
                 writer.WritePropertyName("jsonPathDefinition"u8);
-                writer.WriteObjectValue(JsonPathDefinition);
+                writer.WriteObjectValue<object>(JsonPathDefinition);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Serializer != null)
+            if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
-                writer.WriteObjectValue(Serializer);
+                writer.WriteObjectValue<object>(Serializer);
             }
-            if (Deserializer != null)
+            if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
-                writer.WriteObjectValue(Deserializer);
+                writer.WriteObjectValue<object>(Deserializer);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -165,12 +165,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 jsonPathDefinition);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new JsonFormat FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeJsonFormat(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<JsonFormat>(this);
+            return content;
+        }
+
         internal partial class JsonFormatConverter : JsonConverter<JsonFormat>
         {
             public override void Write(Utf8JsonWriter writer, JsonFormat model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<JsonFormat>(model);
             }
+
             public override JsonFormat Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

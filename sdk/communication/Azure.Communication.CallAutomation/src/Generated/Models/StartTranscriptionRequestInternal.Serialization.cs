@@ -15,17 +15,25 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Locale != null)
+            if (Optional.IsDefined(Locale))
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);
             }
-            if (OperationContext != null)
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<StartTranscriptionRequestInternal>(this);
+            return content;
         }
     }
 }

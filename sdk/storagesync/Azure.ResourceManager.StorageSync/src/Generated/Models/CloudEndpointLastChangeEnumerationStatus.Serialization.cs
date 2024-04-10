@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointLastChangeEnumerationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudEndpointLastChangeEnumerationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudEndpointLastChangeEnumerationStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedTimestamp"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && CompletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completedTimestamp"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (options.Format != "W" && NamespaceFilesCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NamespaceFilesCount))
             {
                 writer.WritePropertyName("namespaceFilesCount"u8);
                 writer.WriteNumberValue(NamespaceFilesCount.Value);
             }
-            if (options.Format != "W" && NamespaceDirectoriesCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NamespaceDirectoriesCount))
             {
                 writer.WritePropertyName("namespaceDirectoriesCount"u8);
                 writer.WriteNumberValue(NamespaceDirectoriesCount.Value);
             }
-            if (options.Format != "W" && NamespaceSizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NamespaceSizeInBytes))
             {
                 writer.WritePropertyName("namespaceSizeBytes"u8);
                 writer.WriteNumberValue(NamespaceSizeInBytes.Value);
             }
-            if (options.Format != "W" && NextRunTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NextRunTimestamp))
             {
                 writer.WritePropertyName("nextRunTimestamp"u8);
                 writer.WriteStringValue(NextRunTimestamp.Value, "O");
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointLastChangeEnumerationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudEndpointLastChangeEnumerationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudEndpointLastChangeEnumerationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             long? namespaceSizeBytes = default;
             DateTimeOffset? nextRunTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startedTimestamp"u8))
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CloudEndpointLastChangeEnumerationStatus(
                 startedTimestamp,
                 completedTimestamp,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudEndpointLastChangeEnumerationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudEndpointLastChangeEnumerationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeCloudEndpointLastChangeEnumerationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudEndpointLastChangeEnumerationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudEndpointLastChangeEnumerationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

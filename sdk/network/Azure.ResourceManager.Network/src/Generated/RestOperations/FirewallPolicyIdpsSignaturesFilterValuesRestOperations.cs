@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<SignatureOverridesFilterValuesQueryContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -72,34 +72,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SignatureOverridesFilterValuesResult>> ListAsync(string subscriptionId, string resourceGroupName, string firewallPolicyName, SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (firewallPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallPolicyName));
-            }
-            if (firewallPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallPolicyName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(firewallPolicyName, nameof(firewallPolicyName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, firewallPolicyName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -127,34 +103,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="firewallPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SignatureOverridesFilterValuesResult> List(string subscriptionId, string resourceGroupName, string firewallPolicyName, SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (firewallPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(firewallPolicyName));
-            }
-            if (firewallPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallPolicyName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(firewallPolicyName, nameof(firewallPolicyName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, firewallPolicyName, content);
             _pipeline.Send(message, cancellationToken);

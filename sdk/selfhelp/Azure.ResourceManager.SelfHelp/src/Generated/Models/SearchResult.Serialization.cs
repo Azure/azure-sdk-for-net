@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SolutionId != null)
+            if (Optional.IsDefined(SolutionId))
             {
                 writer.WritePropertyName("solutionId"u8);
                 writer.WriteStringValue(SolutionId);
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Confidence.HasValue)
+            if (Optional.IsDefined(Confidence))
             {
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteStringValue(Confidence.Value.ToString());
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (ResultType.HasValue)
+            if (Optional.IsDefined(ResultType))
             {
                 writer.WritePropertyName("resultType"u8);
                 writer.WriteStringValue(ResultType.Value.ToString());
             }
-            if (Rank.HasValue)
+            if (Optional.IsDefined(Rank))
             {
                 writer.WritePropertyName("rank"u8);
                 writer.WriteNumberValue(Rank.Value);
             }
-            if (Link != null)
+            if (Optional.IsDefined(Link))
             {
                 writer.WritePropertyName("link"u8);
                 writer.WriteStringValue(Link);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             int? rank = default;
             string link = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("solutionId"u8))
@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SearchResult(
                 solutionId,
                 content,
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SearchResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeSearchResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ManagedServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesRegistrationAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("registrationDefinitionId"u8);
             writer.WriteStringValue(RegistrationId);
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && RegistrationDefinition != null)
+            if (options.Format != "W" && Optional.IsDefined(RegistrationDefinition))
             {
                 writer.WritePropertyName("registrationDefinition"u8);
-                writer.WriteObjectValue(RegistrationDefinition);
+                writer.WriteObjectValue<ManagedServicesRegistrationAssignmentRegistrationData>(RegistrationDefinition, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesRegistrationAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             ManagedServicesProvisioningState? provisioningState = default;
             ManagedServicesRegistrationAssignmentRegistrationData registrationDefinition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registrationDefinitionId"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedServicesRegistrationAssignmentProperties(registrationDefinitionId, provisioningState, registrationDefinition, serializedAdditionalRawData);
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                         return DeserializeManagedServicesRegistrationAssignmentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

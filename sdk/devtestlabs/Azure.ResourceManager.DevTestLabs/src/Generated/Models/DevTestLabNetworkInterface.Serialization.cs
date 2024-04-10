@@ -22,54 +22,54 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabNetworkInterface)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabNetworkInterface)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VirtualNetworkId != null)
+            if (Optional.IsDefined(VirtualNetworkId))
             {
                 writer.WritePropertyName("virtualNetworkId"u8);
                 writer.WriteStringValue(VirtualNetworkId);
             }
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (PublicIPAddressId != null)
+            if (Optional.IsDefined(PublicIPAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (PublicIPAddress != null)
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
             }
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (DnsName != null)
+            if (Optional.IsDefined(DnsName))
             {
                 writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
             }
-            if (RdpAuthority != null)
+            if (Optional.IsDefined(RdpAuthority))
             {
                 writer.WritePropertyName("rdpAuthority"u8);
                 writer.WriteStringValue(RdpAuthority);
             }
-            if (SshAuthority != null)
+            if (Optional.IsDefined(SshAuthority))
             {
                 writer.WritePropertyName("sshAuthority"u8);
                 writer.WriteStringValue(SshAuthority);
             }
-            if (SharedPublicIPAddressConfiguration != null)
+            if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
-                writer.WriteObjectValue(SharedPublicIPAddressConfiguration);
+                writer.WriteObjectValue<SharedPublicIPAddressConfiguration>(SharedPublicIPAddressConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabNetworkInterface)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabNetworkInterface)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             string sshAuthority = default;
             SharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualNetworkId"u8))
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevTestLabNetworkInterface(
                 virtualNetworkId,
                 subnetId,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabNetworkInterface)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabNetworkInterface)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabNetworkInterface(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabNetworkInterface)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabNetworkInterface)} does not support reading '{options.Format}' format.");
             }
         }
 

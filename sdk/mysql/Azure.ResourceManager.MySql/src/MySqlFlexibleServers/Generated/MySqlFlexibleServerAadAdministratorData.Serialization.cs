@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerAadAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerAadAdministratorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerAadAdministratorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AdministratorType.HasValue)
+            if (Optional.IsDefined(AdministratorType))
             {
                 writer.WritePropertyName("administratorType"u8);
                 writer.WriteStringValue(AdministratorType.Value.ToString());
             }
-            if (Login != null)
+            if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteStringValue(Login);
             }
-            if (Sid != null)
+            if (Optional.IsDefined(Sid))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (IdentityResourceId != null)
+            if (Optional.IsDefined(IdentityResourceId))
             {
                 writer.WritePropertyName("identityResourceId"u8);
                 writer.WriteStringValue(IdentityResourceId);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerAadAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerAadAdministratorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerAadAdministratorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Guid? tenantId = default;
             ResourceIdentifier identityResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -202,10 +202,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlFlexibleServerAadAdministratorData(
                 id,
                 name,
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerAadAdministratorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerAadAdministratorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         return DeserializeMySqlFlexibleServerAadAdministratorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerAadAdministratorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerAadAdministratorData)} does not support reading '{options.Format}' format.");
             }
         }
 

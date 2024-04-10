@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementAuthorizationServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementAuthorizationServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementAuthorizationServerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(AuthorizationMethods is ChangeTrackingList<AuthorizationMethod> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AuthorizationMethods))
             {
                 writer.WritePropertyName("authorizationMethods"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (!(ClientAuthenticationMethods is ChangeTrackingList<ClientAuthenticationMethod> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ClientAuthenticationMethods))
             {
                 writer.WritePropertyName("clientAuthenticationMethod"u8);
                 writer.WriteStartArray();
@@ -75,32 +75,32 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (!(TokenBodyParameters is ChangeTrackingList<TokenBodyParameterContract> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TokenBodyParameters))
             {
                 writer.WritePropertyName("tokenBodyParameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in TokenBodyParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TokenBodyParameterContract>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (TokenEndpoint != null)
+            if (Optional.IsDefined(TokenEndpoint))
             {
                 writer.WritePropertyName("tokenEndpoint"u8);
                 writer.WriteStringValue(TokenEndpoint);
             }
-            if (DoesSupportState.HasValue)
+            if (Optional.IsDefined(DoesSupportState))
             {
                 writer.WritePropertyName("supportState"u8);
                 writer.WriteBooleanValue(DoesSupportState.Value);
             }
-            if (DefaultScope != null)
+            if (Optional.IsDefined(DefaultScope))
             {
                 writer.WritePropertyName("defaultScope"u8);
                 writer.WriteStringValue(DefaultScope);
             }
-            if (!(BearerTokenSendingMethods is ChangeTrackingList<BearerTokenSendingMethod> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
             {
                 writer.WritePropertyName("bearerTokenSendingMethods"u8);
                 writer.WriteStartArray();
@@ -110,32 +110,32 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (ResourceOwnerUsername != null)
+            if (Optional.IsDefined(ResourceOwnerUsername))
             {
                 writer.WritePropertyName("resourceOwnerUsername"u8);
                 writer.WriteStringValue(ResourceOwnerUsername);
             }
-            if (ResourceOwnerPassword != null)
+            if (Optional.IsDefined(ResourceOwnerPassword))
             {
                 writer.WritePropertyName("resourceOwnerPassword"u8);
                 writer.WriteStringValue(ResourceOwnerPassword);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (ClientRegistrationEndpoint != null)
+            if (Optional.IsDefined(ClientRegistrationEndpoint))
             {
                 writer.WritePropertyName("clientRegistrationEndpoint"u8);
                 writer.WriteStringValue(ClientRegistrationEndpoint);
             }
-            if (AuthorizationEndpoint != null)
+            if (Optional.IsDefined(AuthorizationEndpoint))
             {
                 writer.WritePropertyName("authorizationEndpoint"u8);
                 writer.WriteStringValue(AuthorizationEndpoint);
             }
-            if (!(GrantTypes is ChangeTrackingList<GrantType> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(GrantTypes))
             {
                 writer.WritePropertyName("grantTypes"u8);
                 writer.WriteStartArray();
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndArray();
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementAuthorizationServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementAuthorizationServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementAuthorizationServerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ApiManagement
             string clientId = default;
             string clientSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -385,10 +385,10 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApiManagementAuthorizationServerData(
                 id,
                 name,
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementAuthorizationServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementAuthorizationServerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeApiManagementAuthorizationServerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementAuthorizationServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementAuthorizationServerData)} does not support reading '{options.Format}' format.");
             }
         }
 

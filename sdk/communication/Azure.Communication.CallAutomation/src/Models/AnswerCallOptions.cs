@@ -55,11 +55,5 @@ namespace Azure.Communication.CallAutomation
         /// The operation context.
         /// </summary>
         public string OperationContext { get; set; }
-
-        /// <summary>
-        /// The caller ID number which is a phone number that will be used when inviting a pstn target.
-        /// Required only when this is an incoming voip call and there will be a transfer call request to a PSTN target.
-        /// </summary>
-        public PhoneNumberIdentifier SourceCallerIdNumber { get; set; }
     }
 }

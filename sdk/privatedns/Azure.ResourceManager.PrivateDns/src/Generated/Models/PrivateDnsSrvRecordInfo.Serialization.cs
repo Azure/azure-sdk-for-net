@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.PrivateDns.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsSrvRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateDnsSrvRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateDnsSrvRecordInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Weight.HasValue)
+            if (Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsSrvRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateDnsSrvRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateDnsSrvRecordInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             int? port = default;
             string target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("priority"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PrivateDnsSrvRecordInfo(priority, weight, port, target, serializedAdditionalRawData);
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateDnsSrvRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateDnsSrvRecordInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                         return DeserializePrivateDnsSrvRecordInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateDnsSrvRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateDnsSrvRecordInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

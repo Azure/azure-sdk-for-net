@@ -15,10 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AzureOpenAIParameters != null)
+            if (Optional.IsDefined(AzureOpenAIParameters))
             {
                 writer.WritePropertyName("azureOpenAIParameters"u8);
-                writer.WriteObjectValue(AzureOpenAIParameters);
+                writer.WriteObjectValue<AzureOpenAIParameters>(AzureOpenAIParameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -59,6 +59,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new AzureOpenAIVectorizer(name, kind, azureOpenAIParameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureOpenAIVectorizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureOpenAIVectorizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureOpenAIVectorizer>(this);
+            return content;
         }
     }
 }

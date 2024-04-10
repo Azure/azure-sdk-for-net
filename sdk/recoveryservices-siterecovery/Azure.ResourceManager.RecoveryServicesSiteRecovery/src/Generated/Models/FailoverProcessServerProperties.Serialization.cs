@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<FailoverProcessServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (SourceProcessServerId.HasValue)
+            if (Optional.IsDefined(SourceProcessServerId))
             {
                 writer.WritePropertyName("sourceProcessServerId"u8);
                 writer.WriteStringValue(SourceProcessServerId.Value);
             }
-            if (TargetProcessServerId.HasValue)
+            if (Optional.IsDefined(TargetProcessServerId))
             {
                 writer.WritePropertyName("targetProcessServerId"u8);
                 writer.WriteStringValue(TargetProcessServerId.Value);
             }
-            if (!(VmsToMigrate is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmsToMigrate))
             {
                 writer.WritePropertyName("vmsToMigrate"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (UpdateType != null)
+            if (Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<FailoverProcessServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IList<string> vmsToMigrate = default;
             string updateType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerName"u8))
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FailoverProcessServerProperties(
                 containerName,
                 sourceProcessServerId,
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeFailoverProcessServerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FailoverProcessServerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

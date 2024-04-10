@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
@@ -80,18 +78,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<BackupProtectedItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string protectedItemName, BackupProtectedItemData data, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemCollection.CreateOrUpdate");
             scope.Start();
@@ -140,18 +128,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<BackupProtectedItemResource> CreateOrUpdate(WaitUntil waitUntil, string protectedItemName, BackupProtectedItemData data, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
         public virtual async Task<Response<BackupProtectedItemResource>> GetAsync(string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemCollection.Get");
             scope.Start();
@@ -253,14 +224,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
         public virtual Response<BackupProtectedItemResource> Get(string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemCollection.Get");
             scope.Start();
@@ -306,14 +270,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemCollection.Exists");
             scope.Start();
@@ -357,14 +314,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
         public virtual Response<bool> Exists(string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemCollection.Exists");
             scope.Start();
@@ -408,14 +358,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
         public virtual async Task<NullableResponse<BackupProtectedItemResource>> GetIfExistsAsync(string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemCollection.GetIfExists");
             scope.Start();
@@ -461,14 +404,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
         public virtual NullableResponse<BackupProtectedItemResource> GetIfExists(string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (protectedItemName == null)
-            {
-                throw new ArgumentNullException(nameof(protectedItemName));
-            }
-            if (protectedItemName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(protectedItemName));
-            }
+            Argument.AssertNotNullOrEmpty(protectedItemName, nameof(protectedItemName));
 
             using var scope = _backupProtectedItemProtectedItemsClientDiagnostics.CreateScope("BackupProtectedItemCollection.GetIfExists");
             scope.Start();

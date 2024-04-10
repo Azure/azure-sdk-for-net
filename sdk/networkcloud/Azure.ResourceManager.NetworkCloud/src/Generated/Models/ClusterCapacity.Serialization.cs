@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AvailableApplianceStorageGB.HasValue)
+            if (Optional.IsDefined(AvailableApplianceStorageGB))
             {
                 writer.WritePropertyName("availableApplianceStorageGB"u8);
                 writer.WriteNumberValue(AvailableApplianceStorageGB.Value);
             }
-            if (AvailableCoreCount.HasValue)
+            if (Optional.IsDefined(AvailableCoreCount))
             {
                 writer.WritePropertyName("availableCoreCount"u8);
                 writer.WriteNumberValue(AvailableCoreCount.Value);
             }
-            if (AvailableHostStorageGB.HasValue)
+            if (Optional.IsDefined(AvailableHostStorageGB))
             {
                 writer.WritePropertyName("availableHostStorageGB"u8);
                 writer.WriteNumberValue(AvailableHostStorageGB.Value);
             }
-            if (AvailableMemoryGB.HasValue)
+            if (Optional.IsDefined(AvailableMemoryGB))
             {
                 writer.WritePropertyName("availableMemoryGB"u8);
                 writer.WriteNumberValue(AvailableMemoryGB.Value);
             }
-            if (TotalApplianceStorageGB.HasValue)
+            if (Optional.IsDefined(TotalApplianceStorageGB))
             {
                 writer.WritePropertyName("totalApplianceStorageGB"u8);
                 writer.WriteNumberValue(TotalApplianceStorageGB.Value);
             }
-            if (TotalCoreCount.HasValue)
+            if (Optional.IsDefined(TotalCoreCount))
             {
                 writer.WritePropertyName("totalCoreCount"u8);
                 writer.WriteNumberValue(TotalCoreCount.Value);
             }
-            if (TotalHostStorageGB.HasValue)
+            if (Optional.IsDefined(TotalHostStorageGB))
             {
                 writer.WritePropertyName("totalHostStorageGB"u8);
                 writer.WriteNumberValue(TotalHostStorageGB.Value);
             }
-            if (TotalMemoryGB.HasValue)
+            if (Optional.IsDefined(TotalMemoryGB))
             {
                 writer.WritePropertyName("totalMemoryGB"u8);
                 writer.WriteNumberValue(TotalMemoryGB.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             long? totalHostStorageGB = default;
             long? totalMemoryGB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availableApplianceStorageGB"u8))
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClusterCapacity(
                 availableApplianceStorageGB,
                 availableCoreCount,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeClusterCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

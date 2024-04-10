@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FileShare != null)
+            if (Optional.IsDefined(FileShare))
             {
                 writer.WritePropertyName("fileShare"u8);
-                writer.WriteObjectValue(FileShare);
+                writer.WriteObjectValue<SqlFileShare>(FileShare, options);
             }
-            if (AzureBlob != null)
+            if (Optional.IsDefined(AzureBlob))
             {
                 writer.WritePropertyName("azureBlob"u8);
-                writer.WriteObjectValue(AzureBlob);
+                writer.WriteObjectValue<AzureBlob>(AzureBlob, options);
             }
-            if (options.Format != "W" && FileStorageType != null)
+            if (options.Format != "W" && Optional.IsDefined(FileStorageType))
             {
                 writer.WritePropertyName("fileStorageType"u8);
                 writer.WriteStringValue(FileStorageType);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             AzureBlob azureBlob = default;
             string fileStorageType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileShare"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SourceLocation(fileShare, azureBlob, fileStorageType, serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SourceLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeSourceLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceLocation)} does not support reading '{options.Format}' format.");
             }
         }
 

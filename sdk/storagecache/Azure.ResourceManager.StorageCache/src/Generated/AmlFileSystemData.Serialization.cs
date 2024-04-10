@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.StorageCache
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<StorageCacheSkuName>(Sku, options);
             }
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -76,62 +76,62 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageCapacityTiB.HasValue)
+            if (Optional.IsDefined(StorageCapacityTiB))
             {
                 writer.WritePropertyName("storageCapacityTiB"u8);
                 writer.WriteNumberValue(StorageCapacityTiB.Value);
             }
-            if (options.Format != "W" && Health != null)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
-                writer.WriteObjectValue(Health);
+                writer.WriteObjectValue<AmlFileSystemHealth>(Health, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (FilesystemSubnet != null)
+            if (Optional.IsDefined(FilesystemSubnet))
             {
                 writer.WritePropertyName("filesystemSubnet"u8);
                 writer.WriteStringValue(FilesystemSubnet);
             }
-            if (options.Format != "W" && ClientInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(ClientInfo))
             {
                 writer.WritePropertyName("clientInfo"u8);
-                writer.WriteObjectValue(ClientInfo);
+                writer.WriteObjectValue<AmlFileSystemClientInfo>(ClientInfo, options);
             }
-            if (options.Format != "W" && ThroughputProvisionedMBps.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ThroughputProvisionedMBps))
             {
                 writer.WritePropertyName("throughputProvisionedMBps"u8);
                 writer.WriteNumberValue(ThroughputProvisionedMBps.Value);
             }
-            if (EncryptionSettings != null)
+            if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings);
+                writer.WriteObjectValue<AmlFileSystemEncryptionSettings>(EncryptionSettings, options);
             }
-            if (MaintenanceWindow != null)
+            if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow);
+                writer.WriteObjectValue<AmlFileSystemPropertiesMaintenanceWindow>(MaintenanceWindow, options);
             }
-            if (Hsm != null)
+            if (Optional.IsDefined(Hsm))
             {
                 writer.WritePropertyName("hsm"u8);
-                writer.WriteObjectValue(Hsm);
+                writer.WriteObjectValue<AmlFileSystemPropertiesHsm>(Hsm, options);
             }
-            if (RootSquashSettings != null)
+            if (Optional.IsDefined(RootSquashSettings))
             {
                 writer.WritePropertyName("rootSquashSettings"u8);
-                writer.WriteObjectValue(RootSquashSettings);
+                writer.WriteObjectValue<AmlFileSystemRootSquashSettings>(RootSquashSettings, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.StorageCache
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.StorageCache
             AmlFileSystemPropertiesHsm hsm = default;
             AmlFileSystemRootSquashSettings rootSquashSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -370,10 +370,10 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AmlFileSystemData(
                 id,
                 name,
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.StorageCache
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.StorageCache
                         return DeserializeAmlFileSystemData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemData)} does not support reading '{options.Format}' format.");
             }
         }
 

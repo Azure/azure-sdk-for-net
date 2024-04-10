@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
             var format = options.Format == "W" ? ((IPersistableModel<PublicNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicNetworkAcls)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublicNetworkAcls)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Allow is ChangeTrackingList<WebPubSubRequestType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Allow))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Deny is ChangeTrackingList<WebPubSubRequestType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Deny))
             {
                 writer.WritePropertyName("deny"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             var format = options.Format == "W" ? ((IPersistableModel<PublicNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicNetworkAcls)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublicNetworkAcls)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             IList<WebPubSubRequestType> allow = default;
             IList<WebPubSubRequestType> deny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allow"u8))
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PublicNetworkAcls(allow ?? new ChangeTrackingList<WebPubSubRequestType>(), deny ?? new ChangeTrackingList<WebPubSubRequestType>(), serializedAdditionalRawData);
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PublicNetworkAcls)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublicNetworkAcls)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         return DeserializePublicNetworkAcls(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PublicNetworkAcls)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublicNetworkAcls)} does not support reading '{options.Format}' format.");
             }
         }
 

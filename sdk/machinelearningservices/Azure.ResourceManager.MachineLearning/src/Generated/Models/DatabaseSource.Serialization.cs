@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 if (Query != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("query");
                 }
             }
-            if (StoredProcedure != null)
+            if (Optional.IsDefined(StoredProcedure))
             {
                 if (StoredProcedure != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("storedProcedure");
                 }
             }
-            if (!(StoredProcedureParams is ChangeTrackingList<IDictionary<string, string>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StoredProcedureParams))
             {
                 if (StoredProcedureParams != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("storedProcedureParams");
                 }
             }
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 if (TableName != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tableName");
                 }
             }
-            if (Connection != null)
+            if (Optional.IsDefined(Connection))
             {
                 if (Connection != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string connection = default;
             DataImportSourceType sourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("query"u8))
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DatabaseSource(
                 connection,
                 sourceType,
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeDatabaseSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseSource)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlProtectedItemExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlProtectedItemExtendedInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OldestRecoverOn.HasValue)
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (RecoveryPointCount.HasValue)
+            if (Optional.IsDefined(RecoveryPointCount))
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (PolicyState != null)
+            if (Optional.IsDefined(PolicyState))
             {
                 writer.WritePropertyName("policyState"u8);
                 writer.WriteStringValue(PolicyState);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlProtectedItemExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlProtectedItemExtendedInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             int? recoveryPointCount = default;
             string policyState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("oldestRecoveryPoint"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlProtectedItemExtendedInfo(oldestRecoveryPoint, recoveryPointCount, policyState, serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlProtectedItemExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeSqlProtectedItemExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlProtectedItemExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

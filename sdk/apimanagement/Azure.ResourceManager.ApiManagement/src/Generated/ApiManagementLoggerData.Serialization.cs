@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementLoggerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementLoggerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementLoggerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (LoggerType.HasValue)
+            if (Optional.IsDefined(LoggerType))
             {
                 writer.WritePropertyName("loggerType"u8);
                 writer.WriteStringValue(LoggerType.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Credentials is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteStartObject();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 writer.WriteEndObject();
             }
-            if (IsBuffered.HasValue)
+            if (Optional.IsDefined(IsBuffered))
             {
                 writer.WritePropertyName("isBuffered"u8);
                 writer.WriteBooleanValue(IsBuffered.Value);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementLoggerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementLoggerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementLoggerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement
             bool? isBuffered = default;
             ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -217,10 +217,10 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApiManagementLoggerData(
                 id,
                 name,
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementLoggerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementLoggerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeApiManagementLoggerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementLoggerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementLoggerData)} does not support reading '{options.Format}' format.");
             }
         }
 

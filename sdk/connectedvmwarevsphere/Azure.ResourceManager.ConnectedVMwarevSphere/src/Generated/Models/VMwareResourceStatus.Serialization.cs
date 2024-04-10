@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareResourceStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareResourceStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceStatusType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceStatusType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceStatusType);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Severity != null)
+            if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedAt"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareResourceStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareResourceStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             string severity = default;
             DateTimeOffset? lastUpdatedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VMwareResourceStatus(
                 type,
                 status,
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareResourceStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareResourceStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializeVMwareResourceStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareResourceStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareResourceStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

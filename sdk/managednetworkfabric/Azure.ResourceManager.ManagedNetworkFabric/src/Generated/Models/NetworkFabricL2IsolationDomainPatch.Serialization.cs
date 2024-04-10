@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL2IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricL2IsolationDomainPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricL2IsolationDomainPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Mtu.HasValue)
+            if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL2IsolationDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricL2IsolationDomainPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricL2IsolationDomainPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string annotation = default;
             int? mtu = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkFabricL2IsolationDomainPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, annotation, mtu);
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricL2IsolationDomainPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricL2IsolationDomainPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNetworkFabricL2IsolationDomainPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricL2IsolationDomainPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricL2IsolationDomainPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

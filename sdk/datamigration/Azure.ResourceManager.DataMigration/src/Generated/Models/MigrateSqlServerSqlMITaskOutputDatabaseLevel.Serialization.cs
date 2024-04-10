@@ -22,56 +22,56 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && SizeMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SizeMB))
             {
                 writer.WritePropertyName("sizeMB"u8);
                 writer.WriteNumberValue(SizeMB.Value);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Stage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Stage))
             {
                 writer.WritePropertyName("stage"u8);
                 writer.WriteStringValue(Stage.Value.ToString());
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && EndedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && !(ExceptionsAndWarnings is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExceptionsAndWarnings))
             {
                 writer.WritePropertyName("exceptionsAndWarnings"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExceptionsAndWarnings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -211,10 +211,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MigrateSqlServerSqlMITaskOutputDatabaseLevel(
                 id,
                 resultType,
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSqlServerSqlMITaskOutputDatabaseLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskOutputDatabaseLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

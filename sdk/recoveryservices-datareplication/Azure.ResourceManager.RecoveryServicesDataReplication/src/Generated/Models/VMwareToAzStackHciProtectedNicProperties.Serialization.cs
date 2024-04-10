@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedNicProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedNicProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NicId != null)
+            if (options.Format != "W" && Optional.IsDefined(NicId))
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
-            if (options.Format != "W" && MacAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Label != null)
+            if (options.Format != "W" && Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (IsPrimaryNic.HasValue)
+            if (Optional.IsDefined(IsPrimaryNic))
             {
                 writer.WritePropertyName("isPrimaryNic"u8);
                 writer.WriteBooleanValue(IsPrimaryNic.Value);
             }
-            if (options.Format != "W" && NetworkName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkName))
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (options.Format != "W" && TargetNetworkId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetNetworkId))
             {
                 writer.WritePropertyName("targetNetworkId"u8);
                 writer.WriteStringValue(TargetNetworkId);
             }
-            if (options.Format != "W" && TestNetworkId != null)
+            if (options.Format != "W" && Optional.IsDefined(TestNetworkId))
             {
                 writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
-            if (options.Format != "W" && SelectionTypeForFailover.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SelectionTypeForFailover))
             {
                 writer.WritePropertyName("selectionTypeForFailover"u8);
                 writer.WriteStringValue(SelectionTypeForFailover.Value.ToString());
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedNicProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedNicProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedNicProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string testNetworkId = default;
             VmNicSelection? selectionTypeForFailover = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nicId"u8))
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VMwareToAzStackHciProtectedNicProperties(
                 nicId,
                 macAddress,
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedNicProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedNicProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeVMwareToAzStackHciProtectedNicProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedNicProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedNicProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

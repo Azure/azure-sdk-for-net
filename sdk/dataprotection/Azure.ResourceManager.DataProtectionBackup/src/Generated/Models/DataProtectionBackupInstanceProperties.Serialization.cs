@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -23,58 +22,58 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupInstanceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupInstanceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WritePropertyName("dataSourceInfo"u8);
-            writer.WriteObjectValue(DataSourceInfo);
-            if (DataSourceSetInfo != null)
+            writer.WriteObjectValue<DataSourceInfo>(DataSourceInfo, options);
+            if (Optional.IsDefined(DataSourceSetInfo))
             {
                 writer.WritePropertyName("dataSourceSetInfo"u8);
-                writer.WriteObjectValue(DataSourceSetInfo);
+                writer.WriteObjectValue<DataSourceSetInfo>(DataSourceSetInfo, options);
             }
             writer.WritePropertyName("policyInfo"u8);
-            writer.WriteObjectValue(PolicyInfo);
-            if (options.Format != "W" && ProtectionStatus != null)
+            writer.WriteObjectValue<BackupInstancePolicyInfo>(PolicyInfo, options);
+            if (options.Format != "W" && Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
-                writer.WriteObjectValue(ProtectionStatus);
+                writer.WriteObjectValue<BackupInstanceProtectionStatusDetails>(ProtectionStatus, options);
             }
-            if (options.Format != "W" && CurrentProtectionState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentProtectionState))
             {
                 writer.WritePropertyName("currentProtectionState"u8);
                 writer.WriteStringValue(CurrentProtectionState.Value.ToString());
             }
-            if (options.Format != "W" && ProtectionErrorDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(ProtectionErrorDetails))
             {
                 writer.WritePropertyName("protectionErrorDetails"u8);
                 JsonSerializer.Serialize(writer, ProtectionErrorDetails);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (DataSourceAuthCredentials != null)
+            if (Optional.IsDefined(DataSourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue(DataSourceAuthCredentials);
+                writer.WriteObjectValue<DataProtectionBackupAuthCredentials>(DataSourceAuthCredentials, options);
             }
-            if (ValidationType.HasValue)
+            if (Optional.IsDefined(ValidationType))
             {
                 writer.WritePropertyName("validationType"u8);
                 writer.WriteStringValue(ValidationType.Value.ToString());
             }
-            if (IdentityDetails != null)
+            if (Optional.IsDefined(IdentityDetails))
             {
                 writer.WritePropertyName("identityDetails"u8);
-                writer.WriteObjectValue(IdentityDetails);
+                writer.WriteObjectValue<DataProtectionIdentityDetails>(IdentityDetails, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupInstanceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupInstanceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DataProtectionIdentityDetails identityDetails = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -222,10 +221,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataProtectionBackupInstanceProperties(
                 friendlyName,
                 dataSourceInfo,
@@ -251,7 +250,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupInstanceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupInstanceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -267,7 +266,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionBackupInstanceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupInstanceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupInstanceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

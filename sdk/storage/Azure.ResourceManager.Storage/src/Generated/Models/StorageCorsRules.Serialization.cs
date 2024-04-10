@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,17 +24,17 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCorsRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCorsRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCorsRules)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(CorsRules is ChangeTrackingList<StorageCorsRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CorsRules))
             {
                 writer.WritePropertyName("corsRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in CorsRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageCorsRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +61,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCorsRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCorsRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCorsRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +78,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             IList<StorageCorsRule> corsRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("corsRules"u8))
@@ -95,11 +97,48 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageCorsRules(corsRules ?? new ChangeTrackingList<StorageCorsRule>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CorsRules), out propertyOverride);
+            if (Optional.IsCollectionDefined(CorsRules) || hasPropertyOverride)
+            {
+                if (CorsRules.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  corsRules: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in CorsRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  corsRules: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<StorageCorsRules>.Write(ModelReaderWriterOptions options)
@@ -110,8 +149,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCorsRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCorsRules)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +168,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageCorsRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCorsRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCorsRules)} does not support reading '{options.Format}' format.");
             }
         }
 

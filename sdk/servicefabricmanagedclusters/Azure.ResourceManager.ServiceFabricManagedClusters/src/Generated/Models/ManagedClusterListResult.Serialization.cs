@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -23,21 +22,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<ServiceFabricManagedClusterData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceFabricManagedClusterData>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             IReadOnlyList<ServiceFabricManagedClusterData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -107,10 +106,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedClusterListResult(value ?? new ChangeTrackingList<ServiceFabricManagedClusterData>(), nextLink, serializedAdditionalRawData);
         }
 
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeManagedClusterListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -20,14 +19,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="encodedTaskContent"/> or <paramref name="platform"/> is null. </exception>
         public ContainerRegistryEncodedTaskRunContent(string encodedTaskContent, ContainerRegistryPlatformProperties platform)
         {
-            if (encodedTaskContent == null)
-            {
-                throw new ArgumentNullException(nameof(encodedTaskContent));
-            }
-            if (platform == null)
-            {
-                throw new ArgumentNullException(nameof(platform));
-            }
+            Argument.AssertNotNull(encodedTaskContent, nameof(encodedTaskContent));
+            Argument.AssertNotNull(platform, nameof(platform));
 
             EncodedTaskContent = encodedTaskContent;
             Values = new ChangeTrackingList<ContainerRegistryTaskOverridableValue>();

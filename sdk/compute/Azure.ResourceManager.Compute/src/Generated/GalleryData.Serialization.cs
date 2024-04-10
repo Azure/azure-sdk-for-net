@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<GalleryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,42 +56,42 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Identifier != null)
+            if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier);
+                writer.WriteObjectValue<GalleryIdentifier>(Identifier, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (SharingProfile != null)
+            if (Optional.IsDefined(SharingProfile))
             {
                 writer.WritePropertyName("sharingProfile"u8);
-                writer.WriteObjectValue(SharingProfile);
+                writer.WriteObjectValue<SharingProfile>(SharingProfile, options);
             }
-            if (SoftDeletePolicy != null)
+            if (Optional.IsDefined(SoftDeletePolicy))
             {
                 writer.WritePropertyName("softDeletePolicy"u8);
-                writer.WriteObjectValue(SoftDeletePolicy);
+                writer.WriteObjectValue<SoftDeletePolicy>(SoftDeletePolicy, options);
             }
-            if (options.Format != "W" && SharingStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(SharingStatus))
             {
                 writer.WritePropertyName("sharingStatus"u8);
-                writer.WriteObjectValue(SharingStatus);
+                writer.WriteObjectValue<SharingStatus>(SharingStatus, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<GalleryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute
             SoftDeletePolicy softDeletePolicy = default;
             SharingStatus sharingStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -255,10 +255,10 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GalleryData(
                 id,
                 name,
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeGalleryData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryData)} does not support reading '{options.Format}' format.");
             }
         }
 

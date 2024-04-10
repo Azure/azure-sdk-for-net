@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
@@ -82,10 +80,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<OperationalInsightsLinkedStorageAccountsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, OperationalInsightsDataSourceType dataSourceType, OperationalInsightsLinkedStorageAccountsData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics.CreateScope("OperationalInsightsLinkedStorageAccountsCollection.CreateOrUpdate");
             scope.Start();
@@ -132,10 +127,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<OperationalInsightsLinkedStorageAccountsResource> CreateOrUpdate(WaitUntil waitUntil, OperationalInsightsDataSourceType dataSourceType, OperationalInsightsLinkedStorageAccountsData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics.CreateScope("OperationalInsightsLinkedStorageAccountsCollection.CreateOrUpdate");
             scope.Start();

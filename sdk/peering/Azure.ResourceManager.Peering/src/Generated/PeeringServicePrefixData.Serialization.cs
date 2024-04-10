@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Peering
             var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringServicePrefixData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServicePrefixData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Prefix != null)
+            if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
-            if (options.Format != "W" && PrefixValidationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrefixValidationState))
             {
                 writer.WritePropertyName("prefixValidationState"u8);
                 writer.WriteStringValue(PrefixValidationState.Value.ToString());
             }
-            if (options.Format != "W" && LearnedType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LearnedType))
             {
                 writer.WritePropertyName("learnedType"u8);
                 writer.WriteStringValue(LearnedType.Value.ToString());
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && !(Events is ChangeTrackingList<PeeringServicePrefixEvent> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PeeringServicePrefixEvent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (PeeringServicePrefixKey != null)
+            if (Optional.IsDefined(PeeringServicePrefixKey))
             {
                 writer.WritePropertyName("peeringServicePrefixKey"u8);
                 writer.WriteStringValue(PeeringServicePrefixKey);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Peering
             var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringServicePrefixData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServicePrefixData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Peering
             string peeringServicePrefixKey = default;
             PeeringProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.Peering
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PeeringServicePrefixData(
                 id,
                 name,
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Peering
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringServicePrefixData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServicePrefixData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Peering
                         return DeserializePeeringServicePrefixData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringServicePrefixData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServicePrefixData)} does not support reading '{options.Format}' format.");
             }
         }
 

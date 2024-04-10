@@ -16,17 +16,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<PipelineTopology> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineTopology>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (ContinuationToken != null)
+            if (Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("@continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
@@ -65,6 +65,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new PipelineTopologyCollection(value ?? new ChangeTrackingList<PipelineTopology>(), continuationToken);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PipelineTopologyCollection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePipelineTopologyCollection(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PipelineTopologyCollection>(this);
+            return content;
         }
     }
 }

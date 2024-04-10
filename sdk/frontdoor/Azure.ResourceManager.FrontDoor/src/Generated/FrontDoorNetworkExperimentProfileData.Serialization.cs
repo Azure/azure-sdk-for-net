@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Models;
@@ -25,16 +24,16 @@ namespace Azure.ResourceManager.FrontDoor
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorNetworkExperimentProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfileData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,19 +61,19 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.FrontDoor
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorNetworkExperimentProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfileData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.FrontDoor
             NetworkExperimentResourceState? resourceState = default;
             FrontDoorExperimentState? enabledState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -215,10 +214,10 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FrontDoorNetworkExperimentProfileData(
                 id,
                 name,
@@ -241,7 +240,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfileData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -257,7 +256,7 @@ namespace Azure.ResourceManager.FrontDoor
                         return DeserializeFrontDoorNetworkExperimentProfileData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorNetworkExperimentProfileData)} does not support reading '{options.Format}' format.");
             }
         }
 

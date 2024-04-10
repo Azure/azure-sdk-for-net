@@ -19,27 +19,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ExpiryDateTime != null)
+            if (Optional.IsDefined(ExpiryDateTime))
             {
                 writer.WritePropertyName("expiryDateTime"u8);
-                writer.WriteObjectValue(ExpiryDateTime);
+                writer.WriteObjectValue<object>(ExpiryDateTime);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
-            if (CopyBehavior != null)
+            if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
-                writer.WriteObjectValue(CopyBehavior);
+                writer.WriteObjectValue<object>(CopyBehavior);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -96,12 +96,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AzureDataLakeStoreWriteSettings(type, maxConcurrentConnections, copyBehavior, additionalProperties, expiryDateTime);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureDataLakeStoreWriteSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureDataLakeStoreWriteSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureDataLakeStoreWriteSettings>(this);
+            return content;
+        }
+
         internal partial class AzureDataLakeStoreWriteSettingsConverter : JsonConverter<AzureDataLakeStoreWriteSettings>
         {
             public override void Write(Utf8JsonWriter writer, AzureDataLakeStoreWriteSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AzureDataLakeStoreWriteSettings>(model);
             }
+
             public override AzureDataLakeStoreWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

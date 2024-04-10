@@ -17,12 +17,20 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("storageType"u8);
             writer.WriteStringValue(StorageType.ToString());
-            if (BlobStorage != null)
+            if (Optional.IsDefined(BlobStorage))
             {
                 writer.WritePropertyName("blobStorage"u8);
-                writer.WriteObjectValue(BlobStorage);
+                writer.WriteObjectValue<BlobStorageInternal>(BlobStorage);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ExternalStorageInternal>(this);
+            return content;
         }
     }
 }

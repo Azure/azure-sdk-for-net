@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlStorageUpdateSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlStorageUpdateSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlStorageUpdateSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DiskCount.HasValue)
+            if (Optional.IsDefined(DiskCount))
             {
                 writer.WritePropertyName("diskCount"u8);
                 writer.WriteNumberValue(DiskCount.Value);
             }
-            if (StartingDeviceId.HasValue)
+            if (Optional.IsDefined(StartingDeviceId))
             {
                 writer.WritePropertyName("startingDeviceId"u8);
                 writer.WriteNumberValue(StartingDeviceId.Value);
             }
-            if (DiskConfigurationType.HasValue)
+            if (Optional.IsDefined(DiskConfigurationType))
             {
                 writer.WritePropertyName("diskConfigurationType"u8);
                 writer.WriteStringValue(DiskConfigurationType.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlStorageUpdateSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlStorageUpdateSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlStorageUpdateSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             int? startingDeviceId = default;
             SqlVmDiskConfigurationType? diskConfigurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskCount"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlStorageUpdateSettings(diskCount, startingDeviceId, diskConfigurationType, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlStorageUpdateSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlStorageUpdateSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeSqlStorageUpdateSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlStorageUpdateSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlStorageUpdateSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

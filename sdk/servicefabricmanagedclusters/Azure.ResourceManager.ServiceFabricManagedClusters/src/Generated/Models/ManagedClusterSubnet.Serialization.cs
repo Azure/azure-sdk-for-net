@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSubnet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterSubnet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterSubnet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (IsIPv6Enabled.HasValue)
+            if (Optional.IsDefined(IsIPv6Enabled))
             {
                 writer.WritePropertyName("enableIpv6"u8);
                 writer.WriteBooleanValue(IsIPv6Enabled.Value);
             }
-            if (PrivateEndpointNetworkPolicies.HasValue)
+            if (Optional.IsDefined(PrivateEndpointNetworkPolicies))
             {
                 writer.WritePropertyName("privateEndpointNetworkPolicies"u8);
                 writer.WriteStringValue(PrivateEndpointNetworkPolicies.Value.ToString());
             }
-            if (PrivateLinkServiceNetworkPolicies.HasValue)
+            if (Optional.IsDefined(PrivateLinkServiceNetworkPolicies))
             {
                 writer.WritePropertyName("privateLinkServiceNetworkPolicies"u8);
                 writer.WriteStringValue(PrivateLinkServiceNetworkPolicies.Value.ToString());
             }
-            if (NetworkSecurityGroupId != null)
+            if (Optional.IsDefined(NetworkSecurityGroupId))
             {
                 writer.WritePropertyName("networkSecurityGroupId"u8);
                 writer.WriteStringValue(NetworkSecurityGroupId);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSubnet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterSubnet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterSubnet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState? privateLinkServiceNetworkPolicies = default;
             ResourceIdentifier networkSecurityGroupId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedClusterSubnet(
                 name,
                 enableIPv6,
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterSubnet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterSubnet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeManagedClusterSubnet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterSubnet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterSubnet)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="commands"/> is null. </exception>
         public BareMetalMachineRunReadCommandsContent(IEnumerable<BareMetalMachineCommandSpecification> commands, long limitTimeSeconds)
         {
-            if (commands == null)
-            {
-                throw new ArgumentNullException(nameof(commands));
-            }
+            Argument.AssertNotNull(commands, nameof(commands));
 
             Commands = commands.ToList();
             LimitTimeSeconds = limitTimeSeconds;

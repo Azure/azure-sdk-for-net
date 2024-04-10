@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Qumulo
             var format = options.Format == "W" ? ((IPersistableModel<QumuloFileSystemResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QumuloFileSystemResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QumuloFileSystemResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Qumulo
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Qumulo
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("marketplaceDetails"u8);
-            writer.WriteObjectValue(MarketplaceDetails);
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            writer.WriteObjectValue<MarketplaceDetails>(MarketplaceDetails, options);
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.Qumulo
             writer.WritePropertyName("storageSku"u8);
             writer.WriteStringValue(StorageSku.ToSerialString());
             writer.WritePropertyName("userDetails"u8);
-            writer.WriteObjectValue(UserDetails);
+            writer.WriteObjectValue<QumuloUserDetails>(UserDetails, options);
             writer.WritePropertyName("delegatedSubnetId"u8);
             writer.WriteStringValue(DelegatedSubnetId);
-            if (ClusterLoginUri != null)
+            if (Optional.IsDefined(ClusterLoginUri))
             {
                 writer.WritePropertyName("clusterLoginUrl"u8);
                 writer.WriteStringValue(ClusterLoginUri.AbsoluteUri);
             }
-            if (!(PrivateIPs is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateIPs))
             {
                 writer.WritePropertyName("privateIPs"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Qumulo
             writer.WriteStringValue(AdminPassword);
             writer.WritePropertyName("initialCapacity"u8);
             writer.WriteNumberValue(InitialCapacity);
-            if (AvailabilityZone != null)
+            if (Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Qumulo
             var format = options.Format == "W" ? ((IPersistableModel<QumuloFileSystemResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QumuloFileSystemResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QumuloFileSystemResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Qumulo
             int initialCapacity = default;
             string availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -311,10 +311,10 @@ namespace Azure.ResourceManager.Qumulo
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new QumuloFileSystemResourceData(
                 id,
                 name,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Qumulo
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QumuloFileSystemResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QumuloFileSystemResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Qumulo
                         return DeserializeQumuloFileSystemResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QumuloFileSystemResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QumuloFileSystemResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

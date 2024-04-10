@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<PropertyChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropertyChange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PropertyChange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ChangeType.HasValue)
+            if (Optional.IsDefined(ChangeType))
             {
                 writer.WritePropertyName("changeType"u8);
                 writer.WriteStringValue(ChangeType.Value.ToString());
             }
-            if (ChangeCategory.HasValue)
+            if (Optional.IsDefined(ChangeCategory))
             {
                 writer.WritePropertyName("changeCategory"u8);
                 writer.WriteStringValue(ChangeCategory.Value.ToSerialString());
             }
-            if (JsonPath != null)
+            if (Optional.IsDefined(JsonPath))
             {
                 writer.WritePropertyName("jsonPath"u8);
                 writer.WriteStringValue(JsonPath);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Level.HasValue)
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (OldValue != null)
+            if (Optional.IsDefined(OldValue))
             {
                 writer.WritePropertyName("oldValue"u8);
                 writer.WriteStringValue(OldValue);
             }
-            if (NewValue != null)
+            if (Optional.IsDefined(NewValue))
             {
                 writer.WritePropertyName("newValue"u8);
                 writer.WriteStringValue(NewValue);
             }
-            if (IsDataMasked.HasValue)
+            if (Optional.IsDefined(IsDataMasked))
             {
                 writer.WritePropertyName("isDataMasked"u8);
                 writer.WriteBooleanValue(IsDataMasked.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<PropertyChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropertyChange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PropertyChange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             string newValue = default;
             bool? isDataMasked = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("changeType"u8))
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PropertyChange(
                 changeType,
                 changeCategory,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PropertyChange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PropertyChange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                         return DeserializePropertyChange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PropertyChange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PropertyChange)} does not support reading '{options.Format}' format.");
             }
         }
 

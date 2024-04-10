@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<CSharpFunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(BindingType);
             writer.WritePropertyName("bindingRetrievalProperties"u8);
             writer.WriteStartObject();
-            if (Script != null)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (UdfType.HasValue)
+            if (Optional.IsDefined(UdfType))
             {
                 writer.WritePropertyName("udfType"u8);
                 writer.WriteStringValue(UdfType.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<CSharpFunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             string script = default;
             StreamingJobFunctionUdfType? udfType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bindingType"u8))
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CSharpFunctionRetrieveDefaultDefinitionContent(bindingType, serializedAdditionalRawData, script, udfType);
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeCSharpFunctionRetrieveDefaultDefinitionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

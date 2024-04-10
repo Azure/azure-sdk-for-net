@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -25,11 +24,11 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,59 +48,59 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ConnectivityTopology.HasValue)
+            if (Optional.IsDefined(ConnectivityTopology))
             {
                 writer.WritePropertyName("connectivityTopology"u8);
                 writer.WriteStringValue(ConnectivityTopology.Value.ToString());
             }
-            if (!(Hubs is ChangeTrackingList<ConnectivityHub> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Hubs))
             {
                 writer.WritePropertyName("hubs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Hubs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectivityHub>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (IsGlobal.HasValue)
+            if (Optional.IsDefined(IsGlobal))
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteStringValue(IsGlobal.Value.ToString());
             }
-            if (!(AppliesToGroups is ChangeTrackingList<ConnectivityGroupItem> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AppliesToGroups))
             {
                 writer.WritePropertyName("appliesToGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in AppliesToGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectivityGroupItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (DeleteExistingPeering.HasValue)
+            if (Optional.IsDefined(DeleteExistingPeering))
             {
                 writer.WritePropertyName("deleteExistingPeering"u8);
                 writer.WriteStringValue(DeleteExistingPeering.Value.ToString());
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.Network
             DeleteExistingPeering? deleteExistingPeering = default;
             Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -287,10 +286,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectivityConfigurationData(
                 id,
                 name,
@@ -317,7 +316,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -333,7 +332,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeConnectivityConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

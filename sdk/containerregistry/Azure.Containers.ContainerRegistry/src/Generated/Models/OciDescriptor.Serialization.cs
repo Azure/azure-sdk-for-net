@@ -17,22 +17,22 @@ namespace Azure.Containers.ContainerRegistry
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MediaType != null)
+            if (Optional.IsDefined(MediaType))
             {
                 writer.WritePropertyName("mediaType"u8);
                 writer.WriteStringValue(MediaType);
             }
-            if (SizeInBytes.HasValue)
+            if (Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(SizeInBytes.Value);
             }
-            if (Digest != null)
+            if (Optional.IsDefined(Digest))
             {
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
             }
-            if (!(Urls is ChangeTrackingList<Uri> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Urls))
             {
                 writer.WritePropertyName("urls"u8);
                 writer.WriteStartArray();
@@ -47,12 +47,12 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (Annotations != null)
+            if (Optional.IsDefined(Annotations))
             {
                 if (Annotations != null)
                 {
                     writer.WritePropertyName("annotations"u8);
-                    writer.WriteObjectValue(Annotations);
+                    writer.WriteObjectValue<OciAnnotations>(Annotations);
                 }
                 else
                 {
@@ -127,6 +127,22 @@ namespace Azure.Containers.ContainerRegistry
                 }
             }
             return new OciDescriptor(mediaType, size, digest, urls ?? new ChangeTrackingList<Uri>(), annotations);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OciDescriptor FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOciDescriptor(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<OciDescriptor>(this);
+            return content;
         }
     }
 }

@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiscoverProtectableItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoverProtectableItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoverProtectableItemProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (OSType != null)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiscoverProtectableItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoverProtectableItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoverProtectableItemProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IPAddress ipAddress = default;
             string osType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DiscoverProtectableItemProperties(friendlyName, ipAddress, osType, serializedAdditionalRawData);
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiscoverProtectableItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoverProtectableItemProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeDiscoverProtectableItemProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiscoverProtectableItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoverProtectableItemProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

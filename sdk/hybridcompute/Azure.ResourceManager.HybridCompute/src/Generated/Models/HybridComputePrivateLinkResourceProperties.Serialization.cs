@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && GroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && !(RequiredMembers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredMembers))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(RequiredZoneNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             IReadOnlyList<string> requiredMembers = default;
             IReadOnlyList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HybridComputePrivateLinkResourceProperties(groupId, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputePrivateLinkResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

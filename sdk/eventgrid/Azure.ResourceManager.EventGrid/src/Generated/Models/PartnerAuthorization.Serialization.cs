@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<PartnerAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerAuthorization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DefaultMaximumExpirationTimeInDays.HasValue)
+            if (Optional.IsDefined(DefaultMaximumExpirationTimeInDays))
             {
                 writer.WritePropertyName("defaultMaximumExpirationTimeInDays"u8);
                 writer.WriteNumberValue(DefaultMaximumExpirationTimeInDays.Value);
             }
-            if (!(AuthorizedPartnersList is ChangeTrackingList<EventGridPartnerContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AuthorizedPartnersList))
             {
                 writer.WritePropertyName("authorizedPartnersList"u8);
                 writer.WriteStartArray();
                 foreach (var item in AuthorizedPartnersList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventGridPartnerContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<PartnerAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerAuthorization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             int? defaultMaximumExpirationTimeInDays = default;
             IList<EventGridPartnerContent> authorizedPartnersList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultMaximumExpirationTimeInDays"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PartnerAuthorization(defaultMaximumExpirationTimeInDays, authorizedPartnersList ?? new ChangeTrackingList<EventGridPartnerContent>(), serializedAdditionalRawData);
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PartnerAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerAuthorization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializePartnerAuthorization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartnerAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerAuthorization)} does not support reading '{options.Format}' format.");
             }
         }
 

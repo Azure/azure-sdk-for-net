@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapSshKeyPair>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapSshKeyPair)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapSshKeyPair)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PublicKey != null)
+            if (Optional.IsDefined(PublicKey))
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
-            if (PrivateKey != null)
+            if (Optional.IsDefined(PrivateKey))
             {
                 writer.WritePropertyName("privateKey"u8);
                 writer.WriteStringValue(PrivateKey);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapSshKeyPair>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapSshKeyPair)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapSshKeyPair)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Workloads.Models
             string publicKey = default;
             string privateKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicKey"u8))
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SapSshKeyPair(publicKey, privateKey, serializedAdditionalRawData);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapSshKeyPair)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapSshKeyPair)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeSapSshKeyPair(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapSshKeyPair)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapSshKeyPair)} does not support reading '{options.Format}' format.");
             }
         }
 

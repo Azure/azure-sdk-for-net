@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitServiceProviderProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuitServiceProviderProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitServiceProviderProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ServiceProviderName != null)
+            if (Optional.IsDefined(ServiceProviderName))
             {
                 writer.WritePropertyName("serviceProviderName"u8);
                 writer.WriteStringValue(ServiceProviderName);
             }
-            if (PeeringLocation != null)
+            if (Optional.IsDefined(PeeringLocation))
             {
                 writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocation);
             }
-            if (BandwidthInMbps.HasValue)
+            if (Optional.IsDefined(BandwidthInMbps))
             {
                 writer.WritePropertyName("bandwidthInMbps"u8);
                 writer.WriteNumberValue(BandwidthInMbps.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitServiceProviderProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuitServiceProviderProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitServiceProviderProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
             string peeringLocation = default;
             int? bandwidthInMbps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceProviderName"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ExpressRouteCircuitServiceProviderProperties(serviceProviderName, peeringLocation, bandwidthInMbps, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitServiceProviderProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitServiceProviderProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeExpressRouteCircuitServiceProviderProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitServiceProviderProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitServiceProviderProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

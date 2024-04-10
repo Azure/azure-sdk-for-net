@@ -16,48 +16,48 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingList<ParameterDeclaration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ParameterDeclaration>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sources is ChangeTrackingList<SourceNodeBase> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SourceNodeBase>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Processors is ChangeTrackingList<ProcessorNodeBase> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Processors))
             {
                 writer.WritePropertyName("processors"u8);
                 writer.WriteStartArray();
                 foreach (var item in Processors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProcessorNodeBase>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sinks is ChangeTrackingList<SinkNodeBase> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Sinks))
             {
                 writer.WritePropertyName("sinks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sinks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SinkNodeBase>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -140,6 +140,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new PipelineTopologyProperties(description, parameters ?? new ChangeTrackingList<ParameterDeclaration>(), sources ?? new ChangeTrackingList<SourceNodeBase>(), processors ?? new ChangeTrackingList<ProcessorNodeBase>(), sinks ?? new ChangeTrackingList<SinkNodeBase>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PipelineTopologyProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePipelineTopologyProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PipelineTopologyProperties>(this);
+            return content;
         }
     }
 }

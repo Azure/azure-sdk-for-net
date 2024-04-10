@@ -16,27 +16,27 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (TopologyName != null)
+            if (Optional.IsDefined(TopologyName))
             {
                 writer.WritePropertyName("topologyName"u8);
                 writer.WriteStringValue(TopologyName);
             }
-            if (!(Parameters is ChangeTrackingList<ParameterDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ParameterDefinition>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -91,6 +91,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new LivePipelineProperties(description, topologyName, parameters ?? new ChangeTrackingList<ParameterDefinition>(), state);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LivePipelineProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLivePipelineProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LivePipelineProperties>(this);
+            return content;
         }
     }
 }

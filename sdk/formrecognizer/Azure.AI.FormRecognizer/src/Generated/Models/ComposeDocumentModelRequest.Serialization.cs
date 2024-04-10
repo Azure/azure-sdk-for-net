@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WriteStartObject();
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -26,10 +26,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WriteStartArray();
             foreach (var item in ComponentModels)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ComponentDocumentModelDetails>(item);
             }
             writer.WriteEndArray();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -41,6 +41,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ComposeDocumentModelRequest>(this);
+            return content;
         }
     }
 }

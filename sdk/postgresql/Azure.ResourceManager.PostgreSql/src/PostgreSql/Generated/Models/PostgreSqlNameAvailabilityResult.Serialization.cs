@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,21 +23,21 @@ namespace Azure.ResourceManager.PostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlNameAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlNameAvailabilityResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (IsNameAvailable.HasValue)
+            if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(IsNameAvailable.Value);
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlNameAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlNameAvailabilityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             bool? nameAvailable = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -107,11 +108,85 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PostgreSqlNameAvailabilityResult(message, nameAvailable, reason, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Message), out propertyOverride);
+            if (Optional.IsDefined(Message) || hasPropertyOverride)
+            {
+                builder.Append("  message: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Message.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Message}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Message}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsNameAvailable), out propertyOverride);
+            if (Optional.IsDefined(IsNameAvailable) || hasPropertyOverride)
+            {
+                builder.Append("  nameAvailable: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsNameAvailable.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<PostgreSqlNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
@@ -122,8 +197,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlNameAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlNameAvailabilityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +216,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                         return DeserializePostgreSqlNameAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlNameAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlNameAvailabilityResult)} does not support reading '{options.Format}' format.");
             }
         }
 

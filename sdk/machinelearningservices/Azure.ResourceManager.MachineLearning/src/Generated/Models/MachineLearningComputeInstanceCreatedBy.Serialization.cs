@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceCreatedBy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceCreatedBy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceCreatedBy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && UserName != null)
+            if (options.Format != "W" && Optional.IsDefined(UserName))
             {
                 if (UserName != null)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("userName");
                 }
             }
-            if (options.Format != "W" && UserOrgId != null)
+            if (options.Format != "W" && Optional.IsDefined(UserOrgId))
             {
                 writer.WritePropertyName("userOrgId"u8);
                 writer.WriteStringValue(UserOrgId);
             }
-            if (options.Format != "W" && UserId != null)
+            if (options.Format != "W" && Optional.IsDefined(UserId))
             {
                 if (UserId != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceCreatedBy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceCreatedBy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceCreatedBy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string userOrgId = default;
             string userId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userName"u8))
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningComputeInstanceCreatedBy(userName, userOrgId, userId, serializedAdditionalRawData);
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceCreatedBy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceCreatedBy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningComputeInstanceCreatedBy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceCreatedBy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceCreatedBy)} does not support reading '{options.Format}' format.");
             }
         }
 

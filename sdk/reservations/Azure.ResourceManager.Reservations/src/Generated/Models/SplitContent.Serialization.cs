@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SplitContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SplitContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SplitContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Quantities is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Quantities))
             {
                 writer.WritePropertyName("quantities"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ReservationId != null)
+            if (Optional.IsDefined(ReservationId))
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SplitContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SplitContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SplitContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Reservations.Models
             IList<int> quantities = default;
             ResourceIdentifier reservationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SplitContent(quantities ?? new ChangeTrackingList<int>(), reservationId, serializedAdditionalRawData);
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SplitContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SplitContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeSplitContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SplitContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SplitContent)} does not support reading '{options.Format}' format.");
             }
         }
 

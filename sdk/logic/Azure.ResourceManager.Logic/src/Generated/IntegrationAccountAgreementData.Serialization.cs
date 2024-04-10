@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountAgreementData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountAgreementData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountAgreementData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,24 +56,24 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ChangedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChangedOn))
             {
                 writer.WritePropertyName("changedTime"u8);
                 writer.WriteStringValue(ChangedOn.Value, "O");
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Logic
             writer.WritePropertyName("guestPartner"u8);
             writer.WriteStringValue(GuestPartner);
             writer.WritePropertyName("hostIdentity"u8);
-            writer.WriteObjectValue(HostIdentity);
+            writer.WriteObjectValue<IntegrationAccountBusinessIdentity>(HostIdentity, options);
             writer.WritePropertyName("guestIdentity"u8);
-            writer.WriteObjectValue(GuestIdentity);
+            writer.WriteObjectValue<IntegrationAccountBusinessIdentity>(GuestIdentity, options);
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            writer.WriteObjectValue<IntegrationAccountAgreementContent>(Content, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountAgreementData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountAgreementData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountAgreementData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Logic
             IntegrationAccountBusinessIdentity guestIdentity = default;
             IntegrationAccountAgreementContent content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -269,10 +269,10 @@ namespace Azure.ResourceManager.Logic
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IntegrationAccountAgreementData(
                 id,
                 name,
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Logic
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountAgreementData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountAgreementData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Logic
                         return DeserializeIntegrationAccountAgreementData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountAgreementData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountAgreementData)} does not support reading '{options.Format}' format.");
             }
         }
 

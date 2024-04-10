@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterAaddsDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterAaddsDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterAaddsDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DomainName != null)
+            if (Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (IsInitialSyncComplete.HasValue)
+            if (Optional.IsDefined(IsInitialSyncComplete))
             {
                 writer.WritePropertyName("initialSyncComplete"u8);
                 writer.WriteBooleanValue(IsInitialSyncComplete.Value);
             }
-            if (IsLdapsEnabled.HasValue)
+            if (Optional.IsDefined(IsLdapsEnabled))
             {
                 writer.WritePropertyName("ldapsEnabled"u8);
                 writer.WriteBooleanValue(IsLdapsEnabled.Value);
             }
-            if (LdapsPublicCertificateInBase64 != null)
+            if (Optional.IsDefined(LdapsPublicCertificateInBase64))
             {
                 writer.WritePropertyName("ldapsPublicCertificateInBase64"u8);
                 writer.WriteStringValue(LdapsPublicCertificateInBase64);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterAaddsDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterAaddsDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterAaddsDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             ResourceIdentifier subnetId = default;
             Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HDInsightClusterAaddsDetail(
                 domainName,
                 initialSyncComplete,
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterAaddsDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterAaddsDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightClusterAaddsDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterAaddsDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterAaddsDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

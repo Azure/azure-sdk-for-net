@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("operatingSystem"u8);
             writer.WriteStringValue(OperatingSystem.ToSerialString());
-            if (Windows != null)
+            if (Optional.IsDefined(Windows))
             {
                 writer.WritePropertyName("windows"u8);
-                writer.WriteObjectValue(Windows);
+                writer.WriteObjectValue<WindowsUpdateConfigurationProperties>(Windows, options);
             }
-            if (Linux != null)
+            if (Optional.IsDefined(Linux))
             {
                 writer.WritePropertyName("linux"u8);
-                writer.WriteObjectValue(Linux);
+                writer.WriteObjectValue<LinuxUpdateConfigurationProperties>(Linux, options);
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (!(AzureVirtualMachines is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AzureVirtualMachines))
             {
                 writer.WritePropertyName("azureVirtualMachines"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NonAzureComputerNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NonAzureComputerNames))
             {
                 writer.WritePropertyName("nonAzureComputerNames"u8);
                 writer.WriteStartArray();
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Targets != null)
+            if (Optional.IsDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
-                writer.WriteObjectValue(Targets);
+                writer.WriteObjectValue<SoftwareUpdateConfigurationTargetProperties>(Targets, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Automation.Models
             IList<string> nonAzureComputerNames = default;
             SoftwareUpdateConfigurationTargetProperties targets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operatingSystem"u8))
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SoftwareUpdateConfigurationSpecificProperties(
                 operatingSystem,
                 windows,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeSoftwareUpdateConfigurationSpecificProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

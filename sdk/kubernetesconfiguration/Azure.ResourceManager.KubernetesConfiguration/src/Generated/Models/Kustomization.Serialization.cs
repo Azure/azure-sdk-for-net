@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<Kustomization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Kustomization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Kustomization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (!(DependsOn is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 if (DependsOn != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("dependsOn");
                 }
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (SyncIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(SyncIntervalInSeconds))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (RetryIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(RetryIntervalInSeconds))
             {
                 if (RetryIntervalInSeconds != null)
                 {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("retryIntervalInSeconds");
                 }
             }
-            if (Prune.HasValue)
+            if (Optional.IsDefined(Prune))
             {
                 writer.WritePropertyName("prune"u8);
                 writer.WriteBooleanValue(Prune.Value);
             }
-            if (Force.HasValue)
+            if (Optional.IsDefined(Force))
             {
                 writer.WritePropertyName("force"u8);
                 writer.WriteBooleanValue(Force.Value);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<Kustomization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Kustomization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Kustomization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             bool? prune = default;
             bool? force = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new Kustomization(
                 name,
                 path,
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Kustomization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Kustomization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKustomization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Kustomization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Kustomization)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.WebPubSub.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubNetworkAcls)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubNetworkAcls)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (PublicNetwork != null)
+            if (Optional.IsDefined(PublicNetwork))
             {
                 writer.WritePropertyName("publicNetwork"u8);
-                writer.WriteObjectValue(PublicNetwork);
+                writer.WriteObjectValue<PublicNetworkAcls>(PublicNetwork, options);
             }
-            if (!(PrivateEndpoints is ChangeTrackingList<PrivateEndpointAcl> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateEndpoints))
             {
                 writer.WritePropertyName("privateEndpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateEndpointAcl>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubNetworkAcls>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubNetworkAcls)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubNetworkAcls)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             PublicNetworkAcls publicNetwork = default;
             IList<PrivateEndpointAcl> privateEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"u8))
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebPubSubNetworkAcls(defaultAction, publicNetwork, privateEndpoints ?? new ChangeTrackingList<PrivateEndpointAcl>(), serializedAdditionalRawData);
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubNetworkAcls)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubNetworkAcls)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         return DeserializeWebPubSubNetworkAcls(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubNetworkAcls)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubNetworkAcls)} does not support reading '{options.Format}' format.");
             }
         }
 

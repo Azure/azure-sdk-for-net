@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudCloudServicesNetworkPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(AdditionalEgressEndpoints is ChangeTrackingList<EgressEndpoint> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalEgressEndpoints))
             {
                 writer.WritePropertyName("additionalEgressEndpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalEgressEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EgressEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (EnableDefaultEgressEndpoints.HasValue)
+            if (Optional.IsDefined(EnableDefaultEgressEndpoints))
             {
                 writer.WritePropertyName("enableDefaultEgressEndpoints"u8);
                 writer.WriteStringValue(EnableDefaultEgressEndpoints.Value.ToString());
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudCloudServicesNetworkPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             IList<EgressEndpoint> additionalEgressEndpoints = default;
             CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudCloudServicesNetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(), enableDefaultEgressEndpoints, serializedAdditionalRawData);
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeNetworkCloudCloudServicesNetworkPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

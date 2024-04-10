@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PartnerManagedResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerManagedResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerManagedResourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && InternalLoadBalancerId != null)
+            if (options.Format != "W" && Optional.IsDefined(InternalLoadBalancerId))
             {
                 writer.WritePropertyName("internalLoadBalancerId"u8);
                 writer.WriteStringValue(InternalLoadBalancerId);
             }
-            if (options.Format != "W" && StandardLoadBalancerId != null)
+            if (options.Format != "W" && Optional.IsDefined(StandardLoadBalancerId))
             {
                 writer.WritePropertyName("standardLoadBalancerId"u8);
                 writer.WriteStringValue(StandardLoadBalancerId);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PartnerManagedResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerManagedResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerManagedResourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier internalLoadBalancerId = default;
             ResourceIdentifier standardLoadBalancerId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PartnerManagedResourceProperties(id, internalLoadBalancerId, standardLoadBalancerId, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PartnerManagedResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerManagedResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePartnerManagedResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartnerManagedResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerManagedResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

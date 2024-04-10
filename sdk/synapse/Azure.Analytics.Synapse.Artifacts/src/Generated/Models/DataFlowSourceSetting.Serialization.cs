@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SourceName != null)
+            if (Optional.IsDefined(SourceName))
             {
                 writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
-            if (RowLimit.HasValue)
+            if (Optional.IsDefined(RowLimit))
             {
                 writer.WritePropertyName("rowLimit"u8);
                 writer.WriteNumberValue(RowLimit.Value);
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -69,12 +69,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new DataFlowSourceSetting(sourceName, rowLimit, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataFlowSourceSetting FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataFlowSourceSetting(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DataFlowSourceSetting>(this);
+            return content;
+        }
+
         internal partial class DataFlowSourceSettingConverter : JsonConverter<DataFlowSourceSetting>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowSourceSetting model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DataFlowSourceSetting>(model);
             }
+
             public override DataFlowSourceSetting Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecuteDataFlowActivityComputeType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecuteDataFlowActivityComputeType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecuteDataFlowActivityComputeType)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ComputeType != null)
+            if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
                 JsonSerializer.Serialize(writer, ComputeType);
             }
-            if (CoreCount != null)
+            if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 JsonSerializer.Serialize(writer, CoreCount);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecuteDataFlowActivityComputeType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecuteDataFlowActivityComputeType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecuteDataFlowActivityComputeType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> computeType = default;
             DataFactoryElement<int> coreCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"u8))
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ExecuteDataFlowActivityComputeType(computeType, coreCount, serializedAdditionalRawData);
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExecuteDataFlowActivityComputeType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecuteDataFlowActivityComputeType)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeExecuteDataFlowActivityComputeType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecuteDataFlowActivityComputeType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecuteDataFlowActivityComputeType)} does not support reading '{options.Format}' format.");
             }
         }
 

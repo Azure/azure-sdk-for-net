@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
@@ -48,12 +48,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new DynamicExecutorAllocation(enabled);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DynamicExecutorAllocation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDynamicExecutorAllocation(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DynamicExecutorAllocation>(this);
+            return content;
+        }
+
         internal partial class DynamicExecutorAllocationConverter : JsonConverter<DynamicExecutorAllocation>
         {
             public override void Write(Utf8JsonWriter writer, DynamicExecutorAllocation model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DynamicExecutorAllocation>(model);
             }
+
             public override DynamicExecutorAllocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

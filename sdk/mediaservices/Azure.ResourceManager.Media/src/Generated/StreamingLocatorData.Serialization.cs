@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<StreamingLocatorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingLocatorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingLocatorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,64 +43,64 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AssetName != null)
+            if (Optional.IsDefined(AssetName))
             {
                 writer.WritePropertyName("assetName"u8);
                 writer.WriteStringValue(AssetName);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (StreamingLocatorId.HasValue)
+            if (Optional.IsDefined(StreamingLocatorId))
             {
                 writer.WritePropertyName("streamingLocatorId"u8);
                 writer.WriteStringValue(StreamingLocatorId.Value);
             }
-            if (StreamingPolicyName != null)
+            if (Optional.IsDefined(StreamingPolicyName))
             {
                 writer.WritePropertyName("streamingPolicyName"u8);
                 writer.WriteStringValue(StreamingPolicyName);
             }
-            if (DefaultContentKeyPolicyName != null)
+            if (Optional.IsDefined(DefaultContentKeyPolicyName))
             {
                 writer.WritePropertyName("defaultContentKeyPolicyName"u8);
                 writer.WriteStringValue(DefaultContentKeyPolicyName);
             }
-            if (!(ContentKeys is ChangeTrackingList<StreamingLocatorContentKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContentKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingLocatorContentKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (AlternativeMediaId != null)
+            if (Optional.IsDefined(AlternativeMediaId))
             {
                 writer.WritePropertyName("alternativeMediaId"u8);
                 writer.WriteStringValue(AlternativeMediaId);
             }
-            if (!(Filters is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<StreamingLocatorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingLocatorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingLocatorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Media
             string alternativeMediaId = default;
             IList<string> filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -289,10 +289,10 @@ namespace Azure.ResourceManager.Media
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StreamingLocatorData(
                 id,
                 name,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Media
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingLocatorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingLocatorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Media
                         return DeserializeStreamingLocatorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingLocatorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingLocatorData)} does not support reading '{options.Format}' format.");
             }
         }
 

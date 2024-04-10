@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PublisherUriString != null)
+            if (Optional.IsDefined(PublisherUriString))
             {
                 writer.WritePropertyName("publisherUri"u8);
                 writer.WriteStringValue(PublisherUriString);
             }
-            if (PublisherContact != null)
+            if (Optional.IsDefined(PublisherContact))
             {
                 writer.WritePropertyName("publisherContact"u8);
                 writer.WriteStringValue(PublisherContact);
             }
-            if (Eula != null)
+            if (Optional.IsDefined(Eula))
             {
                 writer.WritePropertyName("eula"u8);
                 writer.WriteStringValue(Eula);
             }
-            if (PublicNamePrefix != null)
+            if (Optional.IsDefined(PublicNamePrefix))
             {
                 writer.WritePropertyName("publicNamePrefix"u8);
                 writer.WriteStringValue(PublicNamePrefix);
             }
-            if (options.Format != "W" && CommunityGalleryEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CommunityGalleryEnabled))
             {
                 writer.WritePropertyName("communityGalleryEnabled"u8);
                 writer.WriteBooleanValue(CommunityGalleryEnabled.Value);
             }
-            if (options.Format != "W" && !(PublicNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PublicNames))
             {
                 writer.WritePropertyName("publicNames"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? communityGalleryEnabled = default;
             IReadOnlyList<string> publicNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisherUri"u8))
@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CommunityGalleryInfo(
                 publisherUri,
                 publisherContact,
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCommunityGalleryInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

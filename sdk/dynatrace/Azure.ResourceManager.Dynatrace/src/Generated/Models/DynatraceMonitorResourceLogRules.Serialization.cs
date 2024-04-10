@@ -22,32 +22,32 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorResourceLogRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceMonitorResourceLogRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMonitorResourceLogRules)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SendAadLogs.HasValue)
+            if (Optional.IsDefined(SendAadLogs))
             {
                 writer.WritePropertyName("sendAadLogs"u8);
                 writer.WriteStringValue(SendAadLogs.Value.ToString());
             }
-            if (SendSubscriptionLogs.HasValue)
+            if (Optional.IsDefined(SendSubscriptionLogs))
             {
                 writer.WritePropertyName("sendSubscriptionLogs"u8);
                 writer.WriteStringValue(SendSubscriptionLogs.Value.ToString());
             }
-            if (SendActivityLogs.HasValue)
+            if (Optional.IsDefined(SendActivityLogs))
             {
                 writer.WritePropertyName("sendActivityLogs"u8);
                 writer.WriteStringValue(SendActivityLogs.Value.ToString());
             }
-            if (!(FilteringTags is ChangeTrackingList<DynatraceMonitorResourceFilteringTag> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilteringTags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DynatraceMonitorResourceFilteringTag>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorResourceLogRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceMonitorResourceLogRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMonitorResourceLogRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             ActivityLogsSendingStatus? sendActivityLogs = default;
             IList<DynatraceMonitorResourceFilteringTag> filteringTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sendAadLogs"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DynatraceMonitorResourceLogRules(sendAadLogs, sendSubscriptionLogs, sendActivityLogs, filteringTags ?? new ChangeTrackingList<DynatraceMonitorResourceFilteringTag>(), serializedAdditionalRawData);
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceMonitorResourceLogRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMonitorResourceLogRules)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeDynatraceMonitorResourceLogRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceMonitorResourceLogRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMonitorResourceLogRules)} does not support reading '{options.Format}' format.");
             }
         }
 

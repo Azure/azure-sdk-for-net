@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,31 +23,31 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DimensionName != null)
+            if (options.Format != "W" && Optional.IsDefined(DimensionName))
             {
                 writer.WritePropertyName("dimensionName"u8);
                 writer.WriteStringValue(DimensionName);
             }
-            if (options.Format != "W" && Unit != null)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (options.Format != "W" && AbsoluteValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AbsoluteValue))
             {
                 writer.WritePropertyName("absoluteValue"u8);
                 writer.WriteNumberValue(AbsoluteValue.Value);
             }
-            if (options.Format != "W" && ChangeValueAbsolute.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChangeValueAbsolute))
             {
                 writer.WritePropertyName("changeValueAbsolute"u8);
                 writer.WriteNumberValue(ChangeValueAbsolute.Value);
             }
-            if (options.Format != "W" && ChangeValueRelative.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChangeValueRelative))
             {
                 writer.WritePropertyName("changeValueRelative"u8);
                 writer.WriteNumberValue(ChangeValueRelative.Value);
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionImpactRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Models
             double? changeValueAbsolute = default;
             double? changeValueRelative = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimensionName"u8))
@@ -137,10 +138,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RecommendedActionImpactRecord(
                 dimensionName,
                 unit,
@@ -148,6 +149,107 @@ namespace Azure.ResourceManager.Sql.Models
                 changeValueAbsolute,
                 changeValueRelative,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DimensionName), out propertyOverride);
+            if (Optional.IsDefined(DimensionName) || hasPropertyOverride)
+            {
+                builder.Append("  dimensionName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DimensionName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DimensionName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DimensionName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
+            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            {
+                builder.Append("  unit: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Unit.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Unit}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Unit}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AbsoluteValue), out propertyOverride);
+            if (Optional.IsDefined(AbsoluteValue) || hasPropertyOverride)
+            {
+                builder.Append("  absoluteValue: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{AbsoluteValue.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeValueAbsolute), out propertyOverride);
+            if (Optional.IsDefined(ChangeValueAbsolute) || hasPropertyOverride)
+            {
+                builder.Append("  changeValueAbsolute: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ChangeValueAbsolute.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeValueRelative), out propertyOverride);
+            if (Optional.IsDefined(ChangeValueRelative) || hasPropertyOverride)
+            {
+                builder.Append("  changeValueRelative: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ChangeValueRelative.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<RecommendedActionImpactRecord>.Write(ModelReaderWriterOptions options)
@@ -158,8 +260,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +279,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeRecommendedActionImpactRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedActionImpactRecord)} does not support reading '{options.Format}' format.");
             }
         }
 

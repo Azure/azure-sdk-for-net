@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleEmailAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleEmailAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleEmailAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SendToServiceOwners.HasValue)
+            if (Optional.IsDefined(SendToServiceOwners))
             {
                 writer.WritePropertyName("sendToServiceOwners"u8);
                 writer.WriteBooleanValue(SendToServiceOwners.Value);
             }
-            if (!(CustomEmails is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomEmails))
             {
                 writer.WritePropertyName("customEmails"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleEmailAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleEmailAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleEmailAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<string> customEmails = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sendToServiceOwners"u8))
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RuleEmailAction(odataType, serializedAdditionalRawData, sendToServiceOwners, customEmails ?? new ChangeTrackingList<string>());
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RuleEmailAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleEmailAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeRuleEmailAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuleEmailAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleEmailAction)} does not support reading '{options.Format}' format.");
             }
         }
 

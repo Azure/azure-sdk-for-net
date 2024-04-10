@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -23,33 +22,33 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallCustomRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (RateLimitDuration.HasValue)
+            if (Optional.IsDefined(RateLimitDuration))
             {
                 writer.WritePropertyName("rateLimitDuration"u8);
                 writer.WriteStringValue(RateLimitDuration.Value.ToString());
             }
-            if (RateLimitThreshold.HasValue)
+            if (Optional.IsDefined(RateLimitThreshold))
             {
                 writer.WritePropertyName("rateLimitThreshold"u8);
                 writer.WriteNumberValue(RateLimitThreshold.Value);
@@ -60,16 +59,16 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in MatchConditions)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MatchCondition>(item, options);
             }
             writer.WriteEndArray();
-            if (!(GroupByUserSession is ChangeTrackingList<GroupByUserSession> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupByUserSession))
             {
                 writer.WritePropertyName("groupByUserSession"u8);
                 writer.WriteStartArray();
                 foreach (var item in GroupByUserSession)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GroupByUserSession>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallCustomRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<GroupByUserSession> groupByUserSession = default;
             WebApplicationFirewallAction action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -209,10 +208,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebApplicationFirewallCustomRule(
                 name,
                 etag,
@@ -236,7 +235,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +251,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeWebApplicationFirewallCustomRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support reading '{options.Format}' format.");
             }
         }
 

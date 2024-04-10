@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -15,17 +16,25 @@ namespace Azure.Maps.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(BatchItems is ChangeTrackingList<BatchRequestItemInternal> collection && collection.IsUndefined))
+            if (Common.Optional.IsCollectionDefined(BatchItems))
             {
                 writer.WritePropertyName("batchItems"u8);
                 writer.WriteStartArray();
                 foreach (var item in BatchItems)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchRequestItemInternal>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<BatchRequestInternal>(this);
+            return content;
         }
     }
 }

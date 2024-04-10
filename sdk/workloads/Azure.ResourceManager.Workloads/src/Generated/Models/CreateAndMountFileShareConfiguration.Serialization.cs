@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<CreateAndMountFileShareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateAndMountFileShareConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateAndMountFileShareConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceGroup != null)
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (StorageAccountName != null)
+            if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<CreateAndMountFileShareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateAndMountFileShareConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateAndMountFileShareConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
             string storageAccountName = default;
             ConfigurationType configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceGroup"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CreateAndMountFileShareConfiguration(configurationType, serializedAdditionalRawData, resourceGroup, storageAccountName);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CreateAndMountFileShareConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateAndMountFileShareConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeCreateAndMountFileShareConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateAndMountFileShareConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateAndMountFileShareConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -16,7 +16,7 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Results is ChangeTrackingDictionary<string, long> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartObject();
@@ -27,7 +27,7 @@ namespace Azure.IoT.Hub.Service.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Queries is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);
                 writer.WriteStartObject();
@@ -81,6 +81,22 @@ namespace Azure.IoT.Hub.Service.Models
                 }
             }
             return new ConfigurationMetrics(results ?? new ChangeTrackingDictionary<string, long>(), queries ?? new ChangeTrackingDictionary<string, string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ConfigurationMetrics FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeConfigurationMetrics(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ConfigurationMetrics>(this);
+            return content;
         }
     }
 }

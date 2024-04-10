@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobExecutionTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppJobExecutionTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppJobExecutionTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Containers is ChangeTrackingList<JobExecutionContainer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Containers))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Containers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<JobExecutionContainer>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(InitContainers is ChangeTrackingList<JobExecutionContainer> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(InitContainers))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
                 foreach (var item in InitContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<JobExecutionContainer>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobExecutionTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppJobExecutionTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppJobExecutionTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             IList<JobExecutionContainer> containers = default;
             IList<JobExecutionContainer> initContainers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containers"u8))
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppJobExecutionTemplate(containers ?? new ChangeTrackingList<JobExecutionContainer>(), initContainers ?? new ChangeTrackingList<JobExecutionContainer>(), serializedAdditionalRawData);
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppJobExecutionTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppJobExecutionTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppJobExecutionTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppJobExecutionTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppJobExecutionTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

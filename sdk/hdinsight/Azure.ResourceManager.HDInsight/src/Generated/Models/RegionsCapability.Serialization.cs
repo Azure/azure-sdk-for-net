@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegionsCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegionsCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegionsCapability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Available is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Available))
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegionsCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegionsCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegionsCapability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             IReadOnlyList<string> available = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("available"u8))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RegionsCapability(available ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegionsCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegionsCapability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeRegionsCapability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegionsCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegionsCapability)} does not support reading '{options.Format}' format.");
             }
         }
 

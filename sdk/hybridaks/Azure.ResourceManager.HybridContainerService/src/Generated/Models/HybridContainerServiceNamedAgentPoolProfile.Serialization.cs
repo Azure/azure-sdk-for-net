@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (options.Format != "W" && KubernetesVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (OSType.HasValue)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (OSSku.HasValue)
+            if (Optional.IsDefined(OSSku))
             {
                 writer.WritePropertyName("osSKU"u8);
                 writer.WriteStringValue(OSSku.Value.ToString());
             }
-            if (!(NodeLabels is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NodeLabels))
             {
                 writer.WritePropertyName("nodeLabels"u8);
                 writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(NodeTaints is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NodeTaints))
             {
                 writer.WritePropertyName("nodeTaints"u8);
                 writer.WriteStartArray();
@@ -77,22 +77,22 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MaxCount.HasValue)
+            if (Optional.IsDefined(MaxCount))
             {
                 writer.WritePropertyName("maxCount"u8);
                 writer.WriteNumberValue(MaxCount.Value);
             }
-            if (MinCount.HasValue)
+            if (Optional.IsDefined(MinCount))
             {
                 writer.WritePropertyName("minCount"u8);
                 writer.WriteNumberValue(MinCount.Value);
             }
-            if (EnableAutoScaling.HasValue)
+            if (Optional.IsDefined(EnableAutoScaling))
             {
                 writer.WritePropertyName("enableAutoScaling"u8);
                 writer.WriteBooleanValue(EnableAutoScaling.Value);
             }
-            if (MaxPods.HasValue)
+            if (Optional.IsDefined(MaxPods))
             {
                 writer.WritePropertyName("maxPods"u8);
                 writer.WriteNumberValue(MaxPods.Value);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             bool? enableAutoScaling = default;
             int? maxPods = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -259,10 +259,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HybridContainerServiceNamedAgentPoolProfile(
                 osType,
                 ossku,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeHybridContainerServiceNamedAgentPoolProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

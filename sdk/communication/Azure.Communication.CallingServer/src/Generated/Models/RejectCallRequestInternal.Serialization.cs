@@ -17,12 +17,20 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartObject();
             writer.WritePropertyName("incomingCallContext"u8);
             writer.WriteStringValue(IncomingCallContext);
-            if (CallRejectReason.HasValue)
+            if (Optional.IsDefined(CallRejectReason))
             {
                 writer.WritePropertyName("callRejectReason"u8);
                 writer.WriteStringValue(CallRejectReason.Value.ToString());
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RejectCallRequestInternal>(this);
+            return content;
         }
     }
 }

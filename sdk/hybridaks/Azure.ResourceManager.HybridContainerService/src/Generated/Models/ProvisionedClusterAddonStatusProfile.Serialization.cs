@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterAddonStatusProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionedClusterAddonStatusProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionedClusterAddonStatusProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Phase.HasValue)
+            if (Optional.IsDefined(Phase))
             {
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase.Value.ToString());
             }
-            if (Ready.HasValue)
+            if (Optional.IsDefined(Ready))
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteBooleanValue(Ready.Value);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterAddonStatusProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionedClusterAddonStatusProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionedClusterAddonStatusProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             bool? ready = default;
             string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProvisionedClusterAddonStatusProfile(name, phase, ready, errorMessage, serializedAdditionalRawData);
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionedClusterAddonStatusProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionedClusterAddonStatusProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeProvisionedClusterAddonStatusProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionedClusterAddonStatusProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionedClusterAddonStatusProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

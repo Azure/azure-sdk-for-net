@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Attestation
             var format = options.Format == "W" ? ((IPersistableModel<AttestationPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Attestation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PrivateEndpoint != null)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                writer.WriteObjectValue(PrivateEndpoint);
+                writer.WriteObjectValue<PrivateEndpoint>(PrivateEndpoint, options);
             }
-            if (ConnectionState != null)
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<AttestationPrivateLinkServiceConnectionState>(ConnectionState, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Attestation
             var format = options.Format == "W" ? ((IPersistableModel<AttestationPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Attestation
             AttestationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             AttestationPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.Attestation
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AttestationPrivateEndpointConnectionData(
                 id,
                 name,
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Attestation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Attestation
                         return DeserializeAttestationPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

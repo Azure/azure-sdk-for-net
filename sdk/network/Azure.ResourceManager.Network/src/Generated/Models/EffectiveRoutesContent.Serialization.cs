@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveRoutesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (VirtualWanResourceType != null)
+            if (Optional.IsDefined(VirtualWanResourceType))
             {
                 writer.WritePropertyName("virtualWanResourceType"u8);
                 writer.WriteStringValue(VirtualWanResourceType);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveRoutesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier resourceId = default;
             string virtualWanResourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EffectiveRoutesContent(resourceId, virtualWanResourceType, serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeEffectiveRoutesContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveRoutesContent)} does not support reading '{options.Format}' format.");
             }
         }
 

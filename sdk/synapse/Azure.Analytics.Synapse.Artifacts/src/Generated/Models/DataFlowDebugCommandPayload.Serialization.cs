@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("streamName"u8);
             writer.WriteStringValue(StreamName);
-            if (RowLimits.HasValue)
+            if (Optional.IsDefined(RowLimits))
             {
                 writer.WritePropertyName("rowLimits"u8);
                 writer.WriteNumberValue(RowLimits.Value);
             }
-            if (!(Columns is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Expression != null)
+            if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
@@ -43,12 +43,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DataFlowDebugCommandPayload>(this);
+            return content;
+        }
+
         internal partial class DataFlowDebugCommandPayloadConverter : JsonConverter<DataFlowDebugCommandPayload>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowDebugCommandPayload model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DataFlowDebugCommandPayload>(model);
             }
+
             public override DataFlowDebugCommandPayload Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();

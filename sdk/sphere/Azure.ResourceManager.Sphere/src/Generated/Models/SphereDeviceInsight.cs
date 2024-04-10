@@ -57,26 +57,11 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/>, <paramref name="description"/>, <paramref name="eventCategory"/>, <paramref name="eventClass"/> or <paramref name="eventType"/> is null. </exception>
         internal SphereDeviceInsight(string deviceId, string description, DateTimeOffset startTimestampUtc, DateTimeOffset endTimestampUtc, string eventCategory, string eventClass, string eventType, int eventCount)
         {
-            if (deviceId == null)
-            {
-                throw new ArgumentNullException(nameof(deviceId));
-            }
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
-            if (eventCategory == null)
-            {
-                throw new ArgumentNullException(nameof(eventCategory));
-            }
-            if (eventClass == null)
-            {
-                throw new ArgumentNullException(nameof(eventClass));
-            }
-            if (eventType == null)
-            {
-                throw new ArgumentNullException(nameof(eventType));
-            }
+            Argument.AssertNotNull(deviceId, nameof(deviceId));
+            Argument.AssertNotNull(description, nameof(description));
+            Argument.AssertNotNull(eventCategory, nameof(eventCategory));
+            Argument.AssertNotNull(eventClass, nameof(eventClass));
+            Argument.AssertNotNull(eventType, nameof(eventType));
 
             DeviceId = deviceId;
             Description = description;

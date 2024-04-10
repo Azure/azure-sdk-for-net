@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MySql
             var format = options.Format == "W" ? ((IPersistableModel<MySqlWaitStatisticData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlWaitStatisticData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlWaitStatisticData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,54 +42,54 @@ namespace Azure.ResourceManager.MySql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (EventName != null)
+            if (Optional.IsDefined(EventName))
             {
                 writer.WritePropertyName("eventName"u8);
                 writer.WriteStringValue(EventName);
             }
-            if (EventTypeName != null)
+            if (Optional.IsDefined(EventTypeName))
             {
                 writer.WritePropertyName("eventTypeName"u8);
                 writer.WriteStringValue(EventTypeName);
             }
-            if (QueryId.HasValue)
+            if (Optional.IsDefined(QueryId))
             {
                 writer.WritePropertyName("queryId"u8);
                 writer.WriteNumberValue(QueryId.Value);
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (UserId.HasValue)
+            if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteNumberValue(UserId.Value);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (TotalTimeInMinutes.HasValue)
+            if (Optional.IsDefined(TotalTimeInMinutes))
             {
                 writer.WritePropertyName("totalTimeInMs"u8);
                 writer.WriteNumberValue(TotalTimeInMinutes.Value);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MySql
             var format = options.Format == "W" ? ((IPersistableModel<MySqlWaitStatisticData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlWaitStatisticData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlWaitStatisticData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MySql
             long? count = default;
             double? totalTimeInMs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -257,10 +257,10 @@ namespace Azure.ResourceManager.MySql
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlWaitStatisticData(
                 id,
                 name,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.MySql
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlWaitStatisticData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlWaitStatisticData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.MySql
                         return DeserializeMySqlWaitStatisticData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlWaitStatisticData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlWaitStatisticData)} does not support reading '{options.Format}' format.");
             }
         }
 

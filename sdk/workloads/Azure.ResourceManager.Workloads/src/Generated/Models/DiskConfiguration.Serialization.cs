@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(DiskVolumeConfigurations is ChangeTrackingDictionary<string, DiskVolumeConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskVolumeConfigurations))
             {
                 writer.WritePropertyName("diskVolumeConfigurations"u8);
                 writer.WriteStartObject();
                 foreach (var item in DiskVolumeConfigurations)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DiskVolumeConfiguration>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             IDictionary<string, DiskVolumeConfiguration> diskVolumeConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskVolumeConfigurations"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DiskConfiguration(diskVolumeConfigurations ?? new ChangeTrackingDictionary<string, DiskVolumeConfiguration>(), serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeDiskConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

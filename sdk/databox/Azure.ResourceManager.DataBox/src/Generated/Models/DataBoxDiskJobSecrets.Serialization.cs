@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -23,38 +22,38 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxDiskJobSecrets)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxDiskJobSecrets)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(DiskSecrets is ChangeTrackingList<DataBoxDiskSecret> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DiskSecrets))
             {
                 writer.WritePropertyName("diskSecrets"u8);
                 writer.WriteStartArray();
                 foreach (var item in DiskSecrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxDiskSecret>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Passkey != null)
+            if (options.Format != "W" && Optional.IsDefined(Passkey))
             {
                 writer.WritePropertyName("passKey"u8);
                 writer.WriteStringValue(Passkey);
             }
-            if (options.Format != "W" && IsPasskeyUserDefined.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPasskeyUserDefined))
             {
                 writer.WritePropertyName("isPasskeyUserDefined"u8);
                 writer.WriteBooleanValue(IsPasskeyUserDefined.Value);
             }
             writer.WritePropertyName("jobSecretsType"u8);
             writer.WriteStringValue(JobSecretsType.ToSerialString());
-            if (options.Format != "W" && DataCenterAccessSecurityCode != null)
+            if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
-                writer.WriteObjectValue(DataCenterAccessSecurityCode);
+                writer.WriteObjectValue<DataCenterAccessSecurityCode>(DataCenterAccessSecurityCode, options);
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxDiskJobSecrets)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxDiskJobSecrets)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataCenterAccessSecurityCode dcAccessSecurityCode = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskSecrets"u8))
@@ -160,10 +159,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxDiskJobSecrets(
                 jobSecretsType,
                 dcAccessSecurityCode,
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxDiskJobSecrets)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxDiskJobSecrets)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +198,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxDiskJobSecrets(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxDiskJobSecrets)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxDiskJobSecrets)} does not support reading '{options.Format}' format.");
             }
         }
 

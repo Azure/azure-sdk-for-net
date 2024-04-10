@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseEventGridDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseEventGridDataConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseEventGridDataConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,54 +49,54 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageAccountResourceId != null)
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (EventHubResourceId != null)
+            if (Optional.IsDefined(EventHubResourceId))
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (ConsumerGroup != null)
+            if (Optional.IsDefined(ConsumerGroup))
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (MappingRuleName != null)
+            if (Optional.IsDefined(MappingRuleName))
             {
                 writer.WritePropertyName("mappingRuleName"u8);
                 writer.WriteStringValue(MappingRuleName);
             }
-            if (DataFormat.HasValue)
+            if (Optional.IsDefined(DataFormat))
             {
                 writer.WritePropertyName("dataFormat"u8);
                 writer.WriteStringValue(DataFormat.Value.ToString());
             }
-            if (IgnoreFirstRecord.HasValue)
+            if (Optional.IsDefined(IgnoreFirstRecord))
             {
                 writer.WritePropertyName("ignoreFirstRecord"u8);
                 writer.WriteBooleanValue(IgnoreFirstRecord.Value);
             }
-            if (BlobStorageEventType.HasValue)
+            if (Optional.IsDefined(BlobStorageEventType))
             {
                 writer.WritePropertyName("blobStorageEventType"u8);
                 writer.WriteStringValue(BlobStorageEventType.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseEventGridDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseEventGridDataConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseEventGridDataConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Synapse.Models
             SynapseBlobStorageEventType? blobStorageEventType = default;
             ResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -280,10 +280,10 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SynapseEventGridDataConnection(
                 id,
                 name,
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseEventGridDataConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseEventGridDataConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseEventGridDataConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseEventGridDataConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseEventGridDataConnection)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityConnectorGitHubRepositoryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityConnectorGitHubRepositoryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityConnectorGitHubRepositoryProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
             {
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && ProvisioningStatusUpdateTimeUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
                 writer.WriteStringValue(ProvisioningStatusUpdateTimeUtc.Value, "O");
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && RepoId != null)
+            if (options.Format != "W" && Optional.IsDefined(RepoId))
             {
                 writer.WritePropertyName("repoId"u8);
                 writer.WriteStringValue(RepoId);
             }
-            if (options.Format != "W" && RepoName != null)
+            if (options.Format != "W" && Optional.IsDefined(RepoName))
             {
                 writer.WritePropertyName("repoName"u8);
                 writer.WriteStringValue(RepoName);
             }
-            if (options.Format != "W" && RepoFullName != null)
+            if (options.Format != "W" && Optional.IsDefined(RepoFullName))
             {
                 writer.WritePropertyName("repoFullName"u8);
                 writer.WriteStringValue(RepoFullName);
             }
-            if (OnboardingState.HasValue)
+            if (Optional.IsDefined(OnboardingState))
             {
                 writer.WritePropertyName("onboardingState"u8);
                 writer.WriteStringValue(OnboardingState.Value.ToString());
             }
-            if (options.Format != "W" && RepoUri != null)
+            if (options.Format != "W" && Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (ParentOwnerName != null)
+            if (Optional.IsDefined(ParentOwnerName))
             {
                 writer.WritePropertyName("parentOwnerName"u8);
                 writer.WriteStringValue(ParentOwnerName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityConnectorGitHubRepositoryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityConnectorGitHubRepositoryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityConnectorGitHubRepositoryProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Uri repoUrl = default;
             string parentOwnerName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningStatusMessage"u8))
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityConnectorGitHubRepositoryProperties(
                 provisioningStatusMessage,
                 provisioningStatusUpdateTimeUtc,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityConnectorGitHubRepositoryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityConnectorGitHubRepositoryProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityConnectorGitHubRepositoryProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityConnectorGitHubRepositoryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityConnectorGitHubRepositoryProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

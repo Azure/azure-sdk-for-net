@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (K1.HasValue)
+            if (Optional.IsDefined(K1))
             {
                 if (K1 != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("k1");
                 }
             }
-            if (B.HasValue)
+            if (Optional.IsDefined(B))
             {
                 if (B != null)
                 {
@@ -82,6 +82,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new BM25Similarity(odataType, k1, b);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new BM25Similarity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBM25Similarity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<BM25Similarity>(this);
+            return content;
         }
     }
 }

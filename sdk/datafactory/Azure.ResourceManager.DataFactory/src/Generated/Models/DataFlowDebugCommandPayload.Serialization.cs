@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugCommandPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFlowDebugCommandPayload)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFlowDebugCommandPayload)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("streamName"u8);
             writer.WriteStringValue(StreamName);
-            if (RowLimits.HasValue)
+            if (Optional.IsDefined(RowLimits))
             {
                 writer.WritePropertyName("rowLimits"u8);
                 writer.WriteNumberValue(RowLimits.Value);
             }
-            if (!(Columns is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Expression != null)
+            if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugCommandPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFlowDebugCommandPayload)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFlowDebugCommandPayload)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<string> columns = default;
             string expression = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streamName"u8))
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataFlowDebugCommandPayload(streamName, rowLimits, columns ?? new ChangeTrackingList<string>(), expression, serializedAdditionalRawData);
         }
 
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFlowDebugCommandPayload)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFlowDebugCommandPayload)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFlowDebugCommandPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFlowDebugCommandPayload)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFlowDebugCommandPayload)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsQueryCompilationError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && StartLine.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartLine))
             {
                 writer.WritePropertyName("startLine"u8);
                 writer.WriteNumberValue(StartLine.Value);
             }
-            if (options.Format != "W" && StartColumn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartColumn))
             {
                 writer.WritePropertyName("startColumn"u8);
                 writer.WriteNumberValue(StartColumn.Value);
             }
-            if (options.Format != "W" && EndLine.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndLine))
             {
                 writer.WritePropertyName("endLine"u8);
                 writer.WriteNumberValue(EndLine.Value);
             }
-            if (options.Format != "W" && EndColumn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndColumn))
             {
                 writer.WritePropertyName("endColumn"u8);
                 writer.WriteNumberValue(EndColumn.Value);
             }
-            if (options.Format != "W" && IsGlobal.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsGlobal))
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteBooleanValue(IsGlobal.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsQueryCompilationError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             int? endColumn = default;
             bool? isGlobal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StreamAnalyticsQueryCompilationError(
                 message,
                 startLine,
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamAnalyticsQueryCompilationError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationError)} does not support reading '{options.Format}' format.");
             }
         }
 

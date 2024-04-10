@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EntityFriendlyName != null)
+            if (Optional.IsDefined(EntityFriendlyName))
             {
                 writer.WritePropertyName("entityFriendlyName"u8);
                 writer.WriteStringValue(EntityFriendlyName);
             }
-            if (BackupManagementType.HasValue)
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (Operation != null)
+            if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (ActivityId != null)
+            if (Optional.IsDefined(ActivityId))
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string activityId = default;
             string jobType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entityFriendlyName"u8))
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UnknownJob(
                 entityFriendlyName,
                 backupManagementType,
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupGenericJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericJob)} does not support reading '{options.Format}' format.");
             }
         }
 

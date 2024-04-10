@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoPoolSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoPoolSkuDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoPoolSkuDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Size != null)
+            if (options.Format != "W" && Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (options.Format != "W" && !(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(LocationInfo is ChangeTrackingList<KustoPoolSkuLocationInfoItem> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LocationInfo))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KustoPoolSkuLocationInfoItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Restrictions is ChangeTrackingList<BinaryData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Restrictions))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoPoolSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoPoolSkuDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoPoolSkuDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Synapse.Models
             IReadOnlyList<KustoPoolSkuLocationInfoItem> locationInfo = default;
             IReadOnlyList<BinaryData> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -197,10 +197,10 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KustoPoolSkuDescription(
                 resourceType,
                 name,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoPoolSkuDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoPoolSkuDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeKustoPoolSkuDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoPoolSkuDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoPoolSkuDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

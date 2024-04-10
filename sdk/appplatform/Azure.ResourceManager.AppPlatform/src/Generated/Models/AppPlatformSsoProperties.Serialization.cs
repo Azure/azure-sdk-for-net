@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformSsoProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformSsoProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformSsoProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Scope is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (IssuerUri != null)
+            if (Optional.IsDefined(IssuerUri))
             {
                 writer.WritePropertyName("issuerUri"u8);
                 writer.WriteStringValue(IssuerUri.AbsoluteUri);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformSsoProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformSsoProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformSsoProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             string clientSecret = default;
             Uri issuerUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"u8))
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppPlatformSsoProperties(scope ?? new ChangeTrackingList<string>(), clientId, clientSecret, issuerUri, serializedAdditionalRawData);
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformSsoProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformSsoProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformSsoProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformSsoProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformSsoProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

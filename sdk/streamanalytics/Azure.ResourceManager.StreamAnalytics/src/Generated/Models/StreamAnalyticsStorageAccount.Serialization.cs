@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsStorageAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsStorageAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsStorageAccount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (AccountKey != null)
+            if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (AuthenticationMode.HasValue)
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsStorageAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsStorageAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsStorageAccount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             string accountKey = default;
             StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StreamAnalyticsStorageAccount(accountName, accountKey, authenticationMode, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsStorageAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsStorageAccount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamAnalyticsStorageAccount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsStorageAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsStorageAccount)} does not support reading '{options.Format}' format.");
             }
         }
 

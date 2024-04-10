@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkItemCreateConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ConnectorId != null)
+            if (Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("ConnectorId"u8);
                 writer.WriteStringValue(ConnectorId);
             }
-            if (ConnectorDataConfiguration != null)
+            if (Optional.IsDefined(ConnectorDataConfiguration))
             {
                 writer.WritePropertyName("ConnectorDataConfiguration"u8);
                 writer.WriteStringValue(ConnectorDataConfiguration);
             }
-            if (IsValidateOnly.HasValue)
+            if (Optional.IsDefined(IsValidateOnly))
             {
                 writer.WritePropertyName("ValidateOnly"u8);
                 writer.WriteBooleanValue(IsValidateOnly.Value);
             }
-            if (!(WorkItemProperties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(WorkItemProperties))
             {
                 writer.WritePropertyName("WorkItemProperties"u8);
                 writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkItemCreateConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             bool? validateOnly = default;
             IDictionary<string, string> workItemProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ConnectorId"u8))
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WorkItemCreateConfiguration(connectorId, connectorDataConfiguration, validateOnly, workItemProperties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeWorkItemCreateConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkItemCreateConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

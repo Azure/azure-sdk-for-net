@@ -15,17 +15,25 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Documents is ChangeTrackingList<LanguageInput> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Documents))
             {
                 writer.WritePropertyName("documents"u8);
                 writer.WriteStartArray();
                 foreach (var item in Documents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LanguageInput>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LanguageDetectionAnalysisInput>(this);
+            return content;
         }
     }
 }

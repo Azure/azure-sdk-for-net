@@ -15,12 +15,12 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TollFreeNumber != null)
+            if (Optional.IsDefined(TollFreeNumber))
             {
                 writer.WritePropertyName("tollFreeNumber"u8);
                 writer.WriteStringValue(TollFreeNumber);
             }
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
@@ -50,6 +50,22 @@ namespace Azure.Communication.ShortCodes.Models
                 }
             }
             return new CustomerCareInformation(tollFreeNumber, email);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CustomerCareInformation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomerCareInformation(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CustomerCareInformation>(this);
+            return content;
         }
     }
 }

@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionCalculatedSavingsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionCalculatedSavingsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionCalculatedSavingsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && OnDemandCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OnDemandCost))
             {
                 writer.WritePropertyName("onDemandCost"u8);
                 writer.WriteNumberValue(OnDemandCost.Value);
             }
-            if (options.Format != "W" && OverageCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OverageCost))
             {
                 writer.WritePropertyName("overageCost"u8);
                 writer.WriteNumberValue(OverageCost.Value);
             }
-            if (options.Format != "W" && Quantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && ReservationCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReservationCost))
             {
                 writer.WritePropertyName("reservationCost"u8);
                 writer.WriteNumberValue(ReservationCost.Value);
             }
-            if (options.Format != "W" && TotalReservationCost.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalReservationCost))
             {
                 writer.WritePropertyName("totalReservationCost"u8);
                 writer.WriteNumberValue(TotalReservationCost.Value);
             }
-            if (ReservedUnitCount.HasValue)
+            if (Optional.IsDefined(ReservedUnitCount))
             {
                 writer.WritePropertyName("reservedUnitCount"u8);
                 writer.WriteNumberValue(ReservedUnitCount.Value);
             }
-            if (options.Format != "W" && Savings.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Savings))
             {
                 writer.WritePropertyName("savings"u8);
                 writer.WriteNumberValue(Savings.Value);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionCalculatedSavingsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionCalculatedSavingsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionCalculatedSavingsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Consumption.Models
             float? reservedUnitCount = default;
             float? savings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("onDemandCost"u8))
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumptionCalculatedSavingsProperties(
                 onDemandCost,
                 overageCost,
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionCalculatedSavingsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionCalculatedSavingsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionCalculatedSavingsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionCalculatedSavingsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionCalculatedSavingsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

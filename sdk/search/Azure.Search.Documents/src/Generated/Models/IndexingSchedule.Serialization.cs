@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("interval"u8);
             writer.WriteStringValue(Interval, "P");
-            if (StartTime.HasValue)
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime.Value, "O");
@@ -52,6 +52,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new IndexingSchedule(interval, startTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IndexingSchedule FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIndexingSchedule(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<IndexingSchedule>(this);
+            return content;
         }
     }
 }

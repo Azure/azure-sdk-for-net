@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAppleRegistrationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppAppleRegistrationConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppAppleRegistrationConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecretSettingName != null)
+            if (Optional.IsDefined(ClientSecretSettingName))
             {
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAppleRegistrationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppAppleRegistrationConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppAppleRegistrationConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string clientId = default;
             string clientSecretSettingName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppAppleRegistrationConfiguration(clientId, clientSecretSettingName, serializedAdditionalRawData);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppAppleRegistrationConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppAppleRegistrationConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppAppleRegistrationConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppAppleRegistrationConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppAppleRegistrationConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

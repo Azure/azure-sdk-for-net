@@ -22,48 +22,48 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<TestFailoverJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TestFailoverStatus != null)
+            if (Optional.IsDefined(TestFailoverStatus))
             {
                 writer.WritePropertyName("testFailoverStatus"u8);
                 writer.WriteStringValue(TestFailoverStatus);
             }
-            if (Comments != null)
+            if (Optional.IsDefined(Comments))
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (NetworkName != null)
+            if (Optional.IsDefined(NetworkName))
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (NetworkFriendlyName != null)
+            if (Optional.IsDefined(NetworkFriendlyName))
             {
                 writer.WritePropertyName("networkFriendlyName"u8);
                 writer.WriteStringValue(NetworkFriendlyName);
             }
-            if (NetworkType != null)
+            if (Optional.IsDefined(NetworkType))
             {
                 writer.WritePropertyName("networkType"u8);
                 writer.WriteStringValue(NetworkType);
             }
-            if (!(ProtectedItemDetails is ChangeTrackingList<FailoverReplicationProtectedItemDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedItemDetails))
             {
                 writer.WritePropertyName("protectedItemDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProtectedItemDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FailoverReplicationProtectedItemDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (!(AffectedObjectDetails is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AffectedObjectDetails))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
                 writer.WriteStartObject();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<TestFailoverJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = default;
             IReadOnlyDictionary<string, string> affectedObjectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("testFailoverStatus"u8))
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TestFailoverJobDetails(
                 instanceType,
                 affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(),
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeTestFailoverJobDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

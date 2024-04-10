@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (StorageConnectionString != null)
+            if (Optional.IsDefined(StorageConnectionString))
             {
                 writer.WritePropertyName("storageConnectionString"u8);
                 writer.WriteStringValue(StorageConnectionString);
             }
-            if (EnableReprocessing.HasValue)
+            if (Optional.IsDefined(EnableReprocessing))
             {
                 if (EnableReprocessing != null)
                 {
@@ -32,12 +32,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("enableReprocessing");
                 }
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    writer.WriteObjectValue<SearchIndexerDataIdentity>(Identity);
                 }
                 else
                 {
@@ -85,6 +85,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new SearchIndexerCache(storageConnectionString, enableReprocessing, identity);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchIndexerCache FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchIndexerCache(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SearchIndexerCache>(this);
+            return content;
         }
     }
 }

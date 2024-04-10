@@ -19,12 +19,20 @@ namespace Azure.Communication.CallingServer
             writer.WriteStringValue(IncomingCallContext);
             writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
-            if (MediaStreamingConfiguration != null)
+            if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
-                writer.WriteObjectValue(MediaStreamingConfiguration);
+                writer.WriteObjectValue<MediaStreamingOptionsInternal>(MediaStreamingConfiguration);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AnswerCallRequestInternal>(this);
+            return content;
         }
     }
 }

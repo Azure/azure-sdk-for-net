@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,26 +23,26 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsKeyVaultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (KeyVaultUri != null)
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (KeyRsaSize.HasValue)
+            if (Optional.IsDefined(KeyRsaSize))
             {
                 writer.WritePropertyName("keyRsaSize"u8);
                 writer.WriteNumberValue(KeyRsaSize.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsKeyVaultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             string keyVersion = default;
             int? keyRsaSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultUri"u8))
@@ -122,11 +123,98 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OperationalInsightsKeyVaultProperties(keyVaultUri, keyName, keyVersion, keyRsaSize, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultUri), out propertyOverride);
+            if (Optional.IsDefined(KeyVaultUri) || hasPropertyOverride)
+            {
+                builder.Append("  keyVaultUri: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{KeyVaultUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyName), out propertyOverride);
+            if (Optional.IsDefined(KeyName) || hasPropertyOverride)
+            {
+                builder.Append("  keyName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (KeyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVersion), out propertyOverride);
+            if (Optional.IsDefined(KeyVersion) || hasPropertyOverride)
+            {
+                builder.Append("  keyVersion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (KeyVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyRsaSize), out propertyOverride);
+            if (Optional.IsDefined(KeyRsaSize) || hasPropertyOverride)
+            {
+                builder.Append("  keyRsaSize: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{KeyRsaSize.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<OperationalInsightsKeyVaultProperties>.Write(ModelReaderWriterOptions options)
@@ -137,8 +225,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsKeyVaultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +244,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsKeyVaultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsKeyVaultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

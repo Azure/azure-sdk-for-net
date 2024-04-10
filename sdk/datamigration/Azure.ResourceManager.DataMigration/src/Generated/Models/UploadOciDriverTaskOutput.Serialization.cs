@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<UploadOciDriverTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UploadOciDriverTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UploadOciDriverTaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DriverPackageName != null)
+            if (options.Format != "W" && Optional.IsDefined(DriverPackageName))
             {
                 writer.WritePropertyName("driverPackageName"u8);
                 writer.WriteStringValue(DriverPackageName);
             }
-            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<UploadOciDriverTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UploadOciDriverTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UploadOciDriverTaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string driverPackageName = default;
             IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("driverPackageName"u8))
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UploadOciDriverTaskOutput(driverPackageName, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UploadOciDriverTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UploadOciDriverTaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeUploadOciDriverTaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UploadOciDriverTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UploadOciDriverTaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContactInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContactInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContactInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(ContactName);
             writer.WritePropertyName("phone"u8);
             writer.WriteStringValue(Phone);
-            if (PhoneExtension != null)
+            if (Optional.IsDefined(PhoneExtension))
             {
                 writer.WritePropertyName("phoneExtension"u8);
                 writer.WriteStringValue(PhoneExtension);
             }
-            if (Mobile != null)
+            if (Optional.IsDefined(Mobile))
             {
                 writer.WritePropertyName("mobile"u8);
                 writer.WriteStringValue(Mobile);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContactInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContactInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContactInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataBox.Models
             string phoneExtension = default;
             string mobile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contactName"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContactInfo(contactName, phone, phoneExtension, mobile, serializedAdditionalRawData);
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContactInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContactInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeContactInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContactInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContactInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

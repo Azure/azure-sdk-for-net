@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("botAppId"u8);
             writer.WriteStringValue(BotAppId);
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
                     writer.WriteNullValue();
                     continue;
                 }
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -87,6 +87,22 @@ namespace Azure.Communication.CallAutomation
                 }
             }
             return new PowerVirtualAgentsDialog(kind, context, botAppId, language);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PowerVirtualAgentsDialog FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePowerVirtualAgentsDialog(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PowerVirtualAgentsDialog>(this);
+            return content;
         }
     }
 }

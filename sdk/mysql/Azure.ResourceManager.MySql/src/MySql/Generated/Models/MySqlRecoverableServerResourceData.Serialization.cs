@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlRecoverableServerResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlRecoverableServerResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlRecoverableServerResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && LastAvailableBackupOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastAvailableBackupOn))
             {
                 writer.WritePropertyName("lastAvailableBackupDateTime"u8);
                 writer.WriteStringValue(LastAvailableBackupOn.Value, "O");
             }
-            if (options.Format != "W" && ServiceLevelObjective != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceLevelObjective))
             {
                 writer.WritePropertyName("serviceLevelObjective"u8);
                 writer.WriteStringValue(ServiceLevelObjective);
             }
-            if (options.Format != "W" && Edition != null)
+            if (options.Format != "W" && Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (options.Format != "W" && VCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCore"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (options.Format != "W" && HardwareGeneration != null)
+            if (options.Format != "W" && Optional.IsDefined(HardwareGeneration))
             {
                 writer.WritePropertyName("hardwareGeneration"u8);
                 writer.WriteStringValue(HardwareGeneration);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlRecoverableServerResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlRecoverableServerResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlRecoverableServerResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MySql.Models
             string hardwareGeneration = default;
             string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -208,10 +208,10 @@ namespace Azure.ResourceManager.MySql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlRecoverableServerResourceData(
                 id,
                 name,
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlRecoverableServerResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlRecoverableServerResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlRecoverableServerResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlRecoverableServerResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlRecoverableServerResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

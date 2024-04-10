@@ -16,27 +16,27 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (PrivateLinkResourceId != null)
+            if (Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (ConnectionState != null)
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<ManagedPrivateEndpointConnectionState>(ConnectionState);
             }
-            if (!(Fqdns is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Fqdns))
             {
                 writer.WritePropertyName("fqdns"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsCompliant.HasValue)
+            if (Optional.IsDefined(IsCompliant))
             {
                 writer.WritePropertyName("isCompliant"u8);
                 writer.WriteBooleanValue(IsCompliant.Value);
@@ -141,6 +141,22 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 isReserved,
                 fqdns ?? new ChangeTrackingList<string>(),
                 isCompliant);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ManagedPrivateEndpointProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeManagedPrivateEndpointProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ManagedPrivateEndpointProperties>(this);
+            return content;
         }
     }
 }

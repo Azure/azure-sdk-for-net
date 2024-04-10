@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLocationToServiceLocationMap>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLocationToServiceLocationMap)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLocationToServiceLocationMap)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DataLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("dataLocation"u8);
                 writer.WriteStringValue(DataLocation.Value);
             }
-            if (options.Format != "W" && ServiceLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServiceLocation))
             {
                 writer.WritePropertyName("serviceLocation"u8);
                 writer.WriteStringValue(ServiceLocation.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLocationToServiceLocationMap>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLocationToServiceLocationMap)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLocationToServiceLocationMap)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataBox.Models
             AzureLocation? dataLocation = default;
             AzureLocation? serviceLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataLocation"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataLocationToServiceLocationMap(dataLocation, serviceLocation, serializedAdditionalRawData);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLocationToServiceLocationMap)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLocationToServiceLocationMap)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataLocationToServiceLocationMap(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLocationToServiceLocationMap)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLocationToServiceLocationMap)} does not support reading '{options.Format}' format.");
             }
         }
 

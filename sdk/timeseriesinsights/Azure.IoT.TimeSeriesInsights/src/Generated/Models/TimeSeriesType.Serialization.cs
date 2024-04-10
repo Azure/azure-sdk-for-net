@@ -16,14 +16,14 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -33,7 +33,7 @@ namespace Azure.IoT.TimeSeriesInsights
             foreach (var item in Variables)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<TimeSeriesVariable>(item.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -78,6 +78,22 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
             }
             return new TimeSeriesType(id, name, description, variables);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TimeSeriesType FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTimeSeriesType(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TimeSeriesType>(this);
+            return content;
         }
     }
 }

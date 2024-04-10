@@ -18,12 +18,12 @@ namespace Azure.MixedReality.RemoteRendering
             writer.WriteStartObject();
             writer.WritePropertyName("storageContainerUri"u8);
             writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
-            if (StorageContainerReadListSas != null)
+            if (Optional.IsDefined(StorageContainerReadListSas))
             {
                 writer.WritePropertyName("storageContainerReadListSas"u8);
                 writer.WriteStringValue(StorageContainerReadListSas);
             }
-            if (BlobPrefix != null)
+            if (Optional.IsDefined(BlobPrefix))
             {
                 writer.WritePropertyName("blobPrefix"u8);
                 writer.WriteStringValue(BlobPrefix);
@@ -67,6 +67,22 @@ namespace Azure.MixedReality.RemoteRendering
                 }
             }
             return new AssetConversionInputOptions(storageContainerUri, storageContainerReadListSas, blobPrefix, relativeInputAssetPath);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AssetConversionInputOptions FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAssetConversionInputOptions(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AssetConversionInputOptions>(this);
+            return content;
         }
     }
 }

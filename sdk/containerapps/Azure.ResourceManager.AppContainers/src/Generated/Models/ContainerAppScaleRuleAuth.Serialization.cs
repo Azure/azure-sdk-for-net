@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScaleRuleAuth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppScaleRuleAuth)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppScaleRuleAuth)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SecretRef != null)
+            if (Optional.IsDefined(SecretRef))
             {
                 writer.WritePropertyName("secretRef"u8);
                 writer.WriteStringValue(SecretRef);
             }
-            if (TriggerParameter != null)
+            if (Optional.IsDefined(TriggerParameter))
             {
                 writer.WritePropertyName("triggerParameter"u8);
                 writer.WriteStringValue(TriggerParameter);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScaleRuleAuth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppScaleRuleAuth)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppScaleRuleAuth)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string secretRef = default;
             string triggerParameter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretRef"u8))
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppScaleRuleAuth(secretRef, triggerParameter, serializedAdditionalRawData);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppScaleRuleAuth)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppScaleRuleAuth)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppScaleRuleAuth(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppScaleRuleAuth)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppScaleRuleAuth)} does not support reading '{options.Format}' format.");
             }
         }
 

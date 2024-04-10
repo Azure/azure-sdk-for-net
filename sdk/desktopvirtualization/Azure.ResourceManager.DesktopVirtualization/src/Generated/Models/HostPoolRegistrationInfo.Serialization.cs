@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Token != null)
+            if (Optional.IsDefined(Token))
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
-            if (RegistrationTokenOperation.HasValue)
+            if (Optional.IsDefined(RegistrationTokenOperation))
             {
                 writer.WritePropertyName("registrationTokenOperation"u8);
                 writer.WriteStringValue(RegistrationTokenOperation.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string token = default;
             HostPoolRegistrationTokenOperation? registrationTokenOperation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expirationTime"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HostPoolRegistrationInfo(expirationTime, token, registrationTokenOperation, serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeHostPoolRegistrationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCheckRequestHttpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityCheckRequestHttpConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityCheckRequestHttpConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Method.HasValue)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (!(ValidStatusCodes is ChangeTrackingList<long> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidStatusCodes))
             {
                 writer.WritePropertyName("validStatusCodes"u8);
                 writer.WriteStartArray();
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Headers is ChangeTrackingList<HttpHeaderConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HttpHeaderConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCheckRequestHttpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityCheckRequestHttpConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityCheckRequestHttpConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IList<long> validStatusCodes = default;
             IList<HttpHeaderConfiguration> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("method"u8))
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectivityCheckRequestHttpConfiguration(method, validStatusCodes ?? new ChangeTrackingList<long>(), headers ?? new ChangeTrackingList<HttpHeaderConfiguration>(), serializedAdditionalRawData);
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityCheckRequestHttpConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityCheckRequestHttpConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeConnectivityCheckRequestHttpConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityCheckRequestHttpConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityCheckRequestHttpConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

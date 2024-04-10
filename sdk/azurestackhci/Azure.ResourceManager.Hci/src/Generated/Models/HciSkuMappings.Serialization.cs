@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciSkuMappings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciSkuMappings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciSkuMappings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CatalogPlanId != null)
+            if (Optional.IsDefined(CatalogPlanId))
             {
                 writer.WritePropertyName("catalogPlanId"u8);
                 writer.WriteStringValue(CatalogPlanId);
             }
-            if (MarketplaceSkuId != null)
+            if (Optional.IsDefined(MarketplaceSkuId))
             {
                 writer.WritePropertyName("marketplaceSkuId"u8);
                 writer.WriteStringValue(MarketplaceSkuId);
             }
-            if (!(MarketplaceSkuVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MarketplaceSkuVersions))
             {
                 writer.WritePropertyName("marketplaceSkuVersions"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciSkuMappings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciSkuMappings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciSkuMappings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Hci.Models
             string marketplaceSkuId = default;
             IList<string> marketplaceSkuVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("catalogPlanId"u8))
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HciSkuMappings(catalogPlanId, marketplaceSkuId, marketplaceSkuVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HciSkuMappings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciSkuMappings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeHciSkuMappings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciSkuMappings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciSkuMappings)} does not support reading '{options.Format}' format.");
             }
         }
 

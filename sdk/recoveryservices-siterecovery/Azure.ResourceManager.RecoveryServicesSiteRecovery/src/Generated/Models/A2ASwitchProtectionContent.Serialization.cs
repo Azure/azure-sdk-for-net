@@ -22,84 +22,84 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2ASwitchProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2ASwitchProtectionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ASwitchProtectionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryContainerId != null)
+            if (Optional.IsDefined(RecoveryContainerId))
             {
                 writer.WritePropertyName("recoveryContainerId"u8);
                 writer.WriteStringValue(RecoveryContainerId);
             }
-            if (!(VmDisks is ChangeTrackingList<A2AVmDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmDisks))
             {
                 writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<A2AVmDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(VmManagedDisks is ChangeTrackingList<A2AVmManagedDiskDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VmManagedDisks))
             {
                 writer.WritePropertyName("vmManagedDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmManagedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<A2AVmManagedDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (RecoveryResourceGroupId != null)
+            if (Optional.IsDefined(RecoveryResourceGroupId))
             {
                 writer.WritePropertyName("recoveryResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryResourceGroupId);
             }
-            if (RecoveryCloudServiceId != null)
+            if (Optional.IsDefined(RecoveryCloudServiceId))
             {
                 writer.WritePropertyName("recoveryCloudServiceId"u8);
                 writer.WriteStringValue(RecoveryCloudServiceId);
             }
-            if (RecoveryAvailabilitySetId != null)
+            if (Optional.IsDefined(RecoveryAvailabilitySetId))
             {
                 writer.WritePropertyName("recoveryAvailabilitySetId"u8);
                 writer.WriteStringValue(RecoveryAvailabilitySetId);
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (RecoveryBootDiagStorageAccountId != null)
+            if (Optional.IsDefined(RecoveryBootDiagStorageAccountId))
             {
                 writer.WritePropertyName("recoveryBootDiagStorageAccountId"u8);
                 writer.WriteStringValue(RecoveryBootDiagStorageAccountId);
             }
-            if (RecoveryAvailabilityZone != null)
+            if (Optional.IsDefined(RecoveryAvailabilityZone))
             {
                 writer.WritePropertyName("recoveryAvailabilityZone"u8);
                 writer.WriteStringValue(RecoveryAvailabilityZone);
             }
-            if (RecoveryProximityPlacementGroupId != null)
+            if (Optional.IsDefined(RecoveryProximityPlacementGroupId))
             {
                 writer.WritePropertyName("recoveryProximityPlacementGroupId"u8);
                 writer.WriteStringValue(RecoveryProximityPlacementGroupId);
             }
-            if (RecoveryVirtualMachineScaleSetId != null)
+            if (Optional.IsDefined(RecoveryVirtualMachineScaleSetId))
             {
                 writer.WritePropertyName("recoveryVirtualMachineScaleSetId"u8);
                 writer.WriteStringValue(RecoveryVirtualMachineScaleSetId);
             }
-            if (RecoveryCapacityReservationGroupId != null)
+            if (Optional.IsDefined(RecoveryCapacityReservationGroupId))
             {
                 writer.WritePropertyName("recoveryCapacityReservationGroupId"u8);
                 writer.WriteStringValue(RecoveryCapacityReservationGroupId);
             }
-            if (DiskEncryptionInfo != null)
+            if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
-                writer.WriteObjectValue(DiskEncryptionInfo);
+                writer.WriteObjectValue<SiteRecoveryDiskEncryptionInfo>(DiskEncryptionInfo, options);
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2ASwitchProtectionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2ASwitchProtectionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ASwitchProtectionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryContainerId"u8))
@@ -285,10 +285,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new A2ASwitchProtectionContent(
                 instanceType,
                 serializedAdditionalRawData,
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2ASwitchProtectionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ASwitchProtectionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2ASwitchProtectionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2ASwitchProtectionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ASwitchProtectionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Advisor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,30 +42,30 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Exclude.HasValue)
+            if (Optional.IsDefined(Exclude))
             {
                 writer.WritePropertyName("exclude"u8);
                 writer.WriteBooleanValue(Exclude.Value);
             }
-            if (LowCpuThreshold.HasValue)
+            if (Optional.IsDefined(LowCpuThreshold))
             {
                 writer.WritePropertyName("lowCpuThreshold"u8);
                 writer.WriteStringValue(LowCpuThreshold.Value.ToString());
             }
-            if (!(Digests is ChangeTrackingList<DigestConfig> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Digests))
             {
                 writer.WritePropertyName("digests"u8);
                 writer.WriteStartArray();
                 foreach (var item in Digests)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DigestConfig>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Advisor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Advisor.Models
             CpuThreshold? lowCpuThreshold = default;
             IList<DigestConfig> digests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConfigData(
                 id,
                 name,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Advisor.Models
                         return DeserializeConfigData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomDomainProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformCustomDomainProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformCustomDomainProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Thumbprint != null)
+            if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && AppName != null)
+            if (options.Format != "W" && Optional.IsDefined(AppName))
             {
                 writer.WritePropertyName("appName"u8);
                 writer.WriteStringValue(AppName);
             }
-            if (CertName != null)
+            if (Optional.IsDefined(CertName))
             {
                 writer.WritePropertyName("certName"u8);
                 writer.WriteStringValue(CertName);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomDomainProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformCustomDomainProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformCustomDomainProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             string certName = default;
             AppPlatformCustomDomainProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thumbprint"u8))
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppPlatformCustomDomainProperties(thumbprint, appName, certName, provisioningState, serializedAdditionalRawData);
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformCustomDomainProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformCustomDomainProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformCustomDomainProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformCustomDomainProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformCustomDomainProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

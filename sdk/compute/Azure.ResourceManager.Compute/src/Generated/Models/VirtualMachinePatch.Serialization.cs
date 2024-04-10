@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachinePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachinePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachinePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan);
+                writer.WriteObjectValue<ComputePlan>(Plan, options);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,132 +61,132 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (HardwareProfile != null)
+            if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue<VirtualMachineHardwareProfile>(HardwareProfile, options);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<VirtualMachineStorageProfile>(StorageProfile, options);
             }
-            if (AdditionalCapabilities != null)
+            if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue(AdditionalCapabilities);
+                writer.WriteObjectValue<AdditionalCapabilities>(AdditionalCapabilities, options);
             }
-            if (OSProfile != null)
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue<VirtualMachineOSProfile>(OSProfile, options);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<VirtualMachineNetworkProfile>(NetworkProfile, options);
             }
-            if (SecurityProfile != null)
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<SecurityProfile>(SecurityProfile, options);
             }
-            if (DiagnosticsProfile != null)
+            if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
-                writer.WriteObjectValue(DiagnosticsProfile);
+                writer.WriteObjectValue<DiagnosticsProfile>(DiagnosticsProfile, options);
             }
-            if (AvailabilitySet != null)
+            if (Optional.IsDefined(AvailabilitySet))
             {
                 writer.WritePropertyName("availabilitySet"u8);
                 JsonSerializer.Serialize(writer, AvailabilitySet);
             }
-            if (VirtualMachineScaleSet != null)
+            if (Optional.IsDefined(VirtualMachineScaleSet))
             {
                 writer.WritePropertyName("virtualMachineScaleSet"u8);
                 JsonSerializer.Serialize(writer, VirtualMachineScaleSet);
             }
-            if (ProximityPlacementGroup != null)
+            if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
                 JsonSerializer.Serialize(writer, ProximityPlacementGroup);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteStringValue(Priority.Value.ToString());
             }
-            if (EvictionPolicy.HasValue)
+            if (Optional.IsDefined(EvictionPolicy))
             {
                 writer.WritePropertyName("evictionPolicy"u8);
                 writer.WriteStringValue(EvictionPolicy.Value.ToString());
             }
-            if (BillingProfile != null)
+            if (Optional.IsDefined(BillingProfile))
             {
                 writer.WritePropertyName("billingProfile"u8);
-                writer.WriteObjectValue(BillingProfile);
+                writer.WriteObjectValue<BillingProfile>(BillingProfile, options);
             }
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 JsonSerializer.Serialize(writer, Host);
             }
-            if (HostGroup != null)
+            if (Optional.IsDefined(HostGroup))
             {
                 writer.WritePropertyName("hostGroup"u8);
                 JsonSerializer.Serialize(writer, HostGroup);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<VirtualMachineInstanceView>(InstanceView, options);
             }
-            if (LicenseType != null)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
-            if (options.Format != "W" && VmId != null)
+            if (options.Format != "W" && Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (ExtensionsTimeBudget != null)
+            if (Optional.IsDefined(ExtensionsTimeBudget))
             {
                 writer.WritePropertyName("extensionsTimeBudget"u8);
                 writer.WriteStringValue(ExtensionsTimeBudget);
             }
-            if (PlatformFaultDomain.HasValue)
+            if (Optional.IsDefined(PlatformFaultDomain))
             {
                 writer.WritePropertyName("platformFaultDomain"u8);
                 writer.WriteNumberValue(PlatformFaultDomain.Value);
             }
-            if (ScheduledEventsProfile != null)
+            if (Optional.IsDefined(ScheduledEventsProfile))
             {
                 writer.WritePropertyName("scheduledEventsProfile"u8);
-                writer.WriteObjectValue(ScheduledEventsProfile);
+                writer.WriteObjectValue<ComputeScheduledEventsProfile>(ScheduledEventsProfile, options);
             }
-            if (UserData != null)
+            if (Optional.IsDefined(UserData))
             {
                 writer.WritePropertyName("userData"u8);
                 writer.WriteStringValue(UserData);
             }
-            if (CapacityReservation != null)
+            if (Optional.IsDefined(CapacityReservation))
             {
                 writer.WritePropertyName("capacityReservation"u8);
-                writer.WriteObjectValue(CapacityReservation);
+                writer.WriteObjectValue<CapacityReservationProfile>(CapacityReservation, options);
             }
-            if (ApplicationProfile != null)
+            if (Optional.IsDefined(ApplicationProfile))
             {
                 writer.WritePropertyName("applicationProfile"u8);
-                writer.WriteObjectValue(ApplicationProfile);
+                writer.WriteObjectValue<ApplicationProfile>(ApplicationProfile, options);
             }
-            if (options.Format != "W" && TimeCreated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachinePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachinePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachinePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Compute.Models
             ApplicationProfile applicationProfile = default;
             DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"u8))
@@ -538,10 +538,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachinePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachinePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachinePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachinePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachinePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachinePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

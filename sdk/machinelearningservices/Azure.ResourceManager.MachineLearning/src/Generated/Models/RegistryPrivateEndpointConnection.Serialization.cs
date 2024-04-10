@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegistryPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistryPrivateEndpointConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegistryPrivateEndpointConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 if (Id != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("id");
                 }
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 if (Location != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupIds))
             {
                 if (GroupIds != null)
                 {
@@ -69,31 +69,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("groupIds");
                 }
             }
-            if (PrivateEndpoint != null)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 if (PrivateEndpoint != null)
                 {
                     writer.WritePropertyName("privateEndpoint"u8);
-                    writer.WriteObjectValue(PrivateEndpoint);
+                    writer.WriteObjectValue<RegistryPrivateEndpoint>(PrivateEndpoint, options);
                 }
                 else
                 {
                     writer.WriteNull("privateEndpoint");
                 }
             }
-            if (PrivateLinkServiceConnectionState != null)
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 if (PrivateLinkServiceConnectionState != null)
                 {
                     writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                    writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                    writer.WriteObjectValue<RegistryPrivateLinkServiceConnectionState>(PrivateLinkServiceConnectionState, options);
                 }
                 else
                 {
                     writer.WriteNull("privateLinkServiceConnectionState");
                 }
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 if (ProvisioningState != null)
                 {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegistryPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistryPrivateEndpointConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegistryPrivateEndpointConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             RegistryPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -233,10 +233,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RegistryPrivateEndpointConnection(
                 id,
                 location,
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegistryPrivateEndpointConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegistryPrivateEndpointConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeRegistryPrivateEndpointConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegistryPrivateEndpointConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegistryPrivateEndpointConnection)} does not support reading '{options.Format}' format.");
             }
         }
 

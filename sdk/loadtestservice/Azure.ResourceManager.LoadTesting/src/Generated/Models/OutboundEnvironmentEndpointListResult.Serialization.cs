@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<OutboundEnvironmentEndpointListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<LoadTestingOutboundEnvironmentEndpoint> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LoadTestingOutboundEnvironmentEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<OutboundEnvironmentEndpointListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             IReadOnlyList<LoadTestingOutboundEnvironmentEndpoint> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OutboundEnvironmentEndpointListResult(value ?? new ChangeTrackingList<LoadTestingOutboundEnvironmentEndpoint>(), nextLink, serializedAdditionalRawData);
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                         return DeserializeOutboundEnvironmentEndpointListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OutboundEnvironmentEndpointListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

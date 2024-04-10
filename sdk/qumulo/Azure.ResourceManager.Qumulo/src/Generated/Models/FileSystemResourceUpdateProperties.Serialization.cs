@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Qumulo.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MarketplaceDetails != null)
+            if (Optional.IsDefined(MarketplaceDetails))
             {
                 writer.WritePropertyName("marketplaceDetails"u8);
-                writer.WriteObjectValue(MarketplaceDetails);
+                writer.WriteObjectValue<MarketplaceDetails>(MarketplaceDetails, options);
             }
-            if (UserDetails != null)
+            if (Optional.IsDefined(UserDetails))
             {
                 writer.WritePropertyName("userDetails"u8);
-                writer.WriteObjectValue(UserDetails);
+                writer.WriteObjectValue<QumuloUserDetails>(UserDetails, options);
             }
-            if (DelegatedSubnetId != null)
+            if (Optional.IsDefined(DelegatedSubnetId))
             {
                 writer.WritePropertyName("delegatedSubnetId"u8);
                 writer.WriteStringValue(DelegatedSubnetId);
             }
-            if (ClusterLoginUri != null)
+            if (Optional.IsDefined(ClusterLoginUri))
             {
                 writer.WritePropertyName("clusterLoginUrl"u8);
                 writer.WriteStringValue(ClusterLoginUri.AbsoluteUri);
             }
-            if (!(PrivateIPs is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateIPs))
             {
                 writer.WritePropertyName("privateIPs"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileSystemResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             Uri clusterLoginUrl = default;
             IList<string> privateIPs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("marketplaceDetails"u8))
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FileSystemResourceUpdateProperties(
                 marketplaceDetails,
                 userDetails,
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                         return DeserializeFileSystemResourceUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileSystemResourceUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

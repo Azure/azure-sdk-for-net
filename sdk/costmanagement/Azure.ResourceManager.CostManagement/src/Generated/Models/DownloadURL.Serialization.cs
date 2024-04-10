@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<DownloadURL>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DownloadURL)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DownloadURL)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ExpiryOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiryOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpiryOn.Value, "O");
             }
-            if (ValidTill.HasValue)
+            if (Optional.IsDefined(ValidTill))
             {
                 writer.WritePropertyName("validTill"u8);
                 writer.WriteStringValue(ValidTill.Value, "O");
             }
-            if (DownloadUri != null)
+            if (Optional.IsDefined(DownloadUri))
             {
                 writer.WritePropertyName("downloadUrl"u8);
                 writer.WriteStringValue(DownloadUri.AbsoluteUri);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<DownloadURL>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DownloadURL)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DownloadURL)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             DateTimeOffset? validTill = default;
             Uri downloadUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiryTime"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DownloadURL(expiryTime, validTill, downloadUrl, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DownloadURL)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DownloadURL)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeDownloadURL(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DownloadURL)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DownloadURL)} does not support reading '{options.Format}' format.");
             }
         }
 

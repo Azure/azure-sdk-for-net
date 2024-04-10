@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlComputeNodeInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NodeId != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeId))
             {
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId);
             }
-            if (options.Format != "W" && PrivateIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 if (PrivateIPAddress != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("privateIpAddress");
                 }
             }
-            if (options.Format != "W" && PublicIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
             {
                 if (PublicIPAddress != null)
                 {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("publicIpAddress");
                 }
             }
-            if (options.Format != "W" && Port.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (options.Format != "W" && NodeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NodeState))
             {
                 writer.WritePropertyName("nodeState"u8);
                 writer.WriteStringValue(NodeState.Value.ToString());
             }
-            if (options.Format != "W" && RunId != null)
+            if (options.Format != "W" && Optional.IsDefined(RunId))
             {
                 if (RunId != null)
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlComputeNodeInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningNodeState? nodeState = default;
             string runId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeId"u8))
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AmlComputeNodeInformation(
                 nodeId,
                 privateIPAddress,
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeAmlComputeNodeInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlComputeNodeInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -19,57 +19,57 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (BlobWriterOverwriteFiles != null)
+            if (Optional.IsDefined(BlobWriterOverwriteFiles))
             {
                 writer.WritePropertyName("blobWriterOverwriteFiles"u8);
-                writer.WriteObjectValue(BlobWriterOverwriteFiles);
+                writer.WriteObjectValue<object>(BlobWriterOverwriteFiles);
             }
-            if (BlobWriterDateTimeFormat != null)
+            if (Optional.IsDefined(BlobWriterDateTimeFormat))
             {
                 writer.WritePropertyName("blobWriterDateTimeFormat"u8);
-                writer.WriteObjectValue(BlobWriterDateTimeFormat);
+                writer.WriteObjectValue<object>(BlobWriterDateTimeFormat);
             }
-            if (BlobWriterAddHeader != null)
+            if (Optional.IsDefined(BlobWriterAddHeader))
             {
                 writer.WritePropertyName("blobWriterAddHeader"u8);
-                writer.WriteObjectValue(BlobWriterAddHeader);
+                writer.WriteObjectValue<object>(BlobWriterAddHeader);
             }
-            if (CopyBehavior != null)
+            if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
-                writer.WriteObjectValue(CopyBehavior);
+                writer.WriteObjectValue<object>(CopyBehavior);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (WriteBatchSize != null)
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
-                writer.WriteObjectValue(WriteBatchSize);
+                writer.WriteObjectValue<object>(WriteBatchSize);
             }
-            if (WriteBatchTimeout != null)
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
-                writer.WriteObjectValue(WriteBatchTimeout);
+                writer.WriteObjectValue<object>(WriteBatchTimeout);
             }
-            if (SinkRetryCount != null)
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
-                writer.WriteObjectValue(SinkRetryCount);
+                writer.WriteObjectValue<object>(SinkRetryCount);
             }
-            if (SinkRetryWait != null)
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
-                writer.WriteObjectValue(SinkRetryWait);
+                writer.WriteObjectValue<object>(SinkRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -197,12 +197,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 copyBehavior);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new BlobSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBlobSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<BlobSink>(this);
+            return content;
+        }
+
         internal partial class BlobSinkConverter : JsonConverter<BlobSink>
         {
             public override void Write(Utf8JsonWriter writer, BlobSink model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<BlobSink>(model);
             }
+
             public override BlobSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

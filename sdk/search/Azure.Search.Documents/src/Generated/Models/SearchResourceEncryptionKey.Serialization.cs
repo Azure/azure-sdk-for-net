@@ -21,17 +21,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(KeyVersion);
             writer.WritePropertyName("keyVaultUri"u8);
             writer.WriteStringValue(_vaultUri);
-            if (AccessCredentialsInternal != null)
+            if (Optional.IsDefined(AccessCredentialsInternal))
             {
                 writer.WritePropertyName("accessCredentials"u8);
-                writer.WriteObjectValue(AccessCredentialsInternal);
+                writer.WriteObjectValue<AzureActiveDirectoryApplicationCredentials>(AccessCredentialsInternal);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    writer.WriteObjectValue<SearchIndexerDataIdentity>(Identity);
                 }
                 else
                 {
@@ -90,6 +90,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new SearchResourceEncryptionKey(keyVaultKeyName, keyVaultKeyVersion, keyVaultUri, accessCredentials, identity);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchResourceEncryptionKey FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchResourceEncryptionKey(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SearchResourceEncryptionKey>(this);
+            return content;
         }
     }
 }

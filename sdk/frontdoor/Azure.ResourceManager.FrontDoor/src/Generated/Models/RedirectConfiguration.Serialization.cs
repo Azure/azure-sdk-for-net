@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedirectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedirectConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedirectConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RedirectType.HasValue)
+            if (Optional.IsDefined(RedirectType))
             {
                 writer.WritePropertyName("redirectType"u8);
                 writer.WriteStringValue(RedirectType.Value.ToString());
             }
-            if (RedirectProtocol.HasValue)
+            if (Optional.IsDefined(RedirectProtocol))
             {
                 writer.WritePropertyName("redirectProtocol"u8);
                 writer.WriteStringValue(RedirectProtocol.Value.ToString());
             }
-            if (CustomHost != null)
+            if (Optional.IsDefined(CustomHost))
             {
                 writer.WritePropertyName("customHost"u8);
                 writer.WriteStringValue(CustomHost);
             }
-            if (CustomPath != null)
+            if (Optional.IsDefined(CustomPath))
             {
                 writer.WritePropertyName("customPath"u8);
                 writer.WriteStringValue(CustomPath);
             }
-            if (CustomFragment != null)
+            if (Optional.IsDefined(CustomFragment))
             {
                 writer.WritePropertyName("customFragment"u8);
                 writer.WriteStringValue(CustomFragment);
             }
-            if (CustomQueryString != null)
+            if (Optional.IsDefined(CustomQueryString))
             {
                 writer.WritePropertyName("customQueryString"u8);
                 writer.WriteStringValue(CustomQueryString);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedirectConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedirectConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedirectConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string customQueryString = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("redirectType"u8))
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RedirectConfiguration(
                 odataType,
                 serializedAdditionalRawData,
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedirectConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedirectConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeRedirectConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedirectConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedirectConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,48 +22,48 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<H265VideoLayer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(H265VideoLayer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(H265VideoLayer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("bitrate"u8);
             writer.WriteNumberValue(Bitrate);
-            if (MaxBitrate.HasValue)
+            if (Optional.IsDefined(MaxBitrate))
             {
                 writer.WritePropertyName("maxBitrate"u8);
                 writer.WriteNumberValue(MaxBitrate.Value);
             }
-            if (BFrames.HasValue)
+            if (Optional.IsDefined(BFrames))
             {
                 writer.WritePropertyName("bFrames"u8);
                 writer.WriteNumberValue(BFrames.Value);
             }
-            if (FrameRate != null)
+            if (Optional.IsDefined(FrameRate))
             {
                 writer.WritePropertyName("frameRate"u8);
                 writer.WriteStringValue(FrameRate);
             }
-            if (Slices.HasValue)
+            if (Optional.IsDefined(Slices))
             {
                 writer.WritePropertyName("slices"u8);
                 writer.WriteNumberValue(Slices.Value);
             }
-            if (UseAdaptiveBFrame.HasValue)
+            if (Optional.IsDefined(UseAdaptiveBFrame))
             {
                 writer.WritePropertyName("adaptiveBFrame"u8);
                 writer.WriteBooleanValue(UseAdaptiveBFrame.Value);
             }
-            if (Width != null)
+            if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Height != null)
+            if (Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<H265VideoLayer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(H265VideoLayer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(H265VideoLayer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
             string height = default;
             string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bitrate"u8))
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new H265VideoLayer(
                 width,
                 height,
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(H265VideoLayer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(H265VideoLayer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeH265VideoLayer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(H265VideoLayer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(H265VideoLayer)} does not support reading '{options.Format}' format.");
             }
         }
 

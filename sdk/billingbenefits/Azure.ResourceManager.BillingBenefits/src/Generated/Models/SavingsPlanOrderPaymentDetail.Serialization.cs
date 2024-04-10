@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanOrderPaymentDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanOrderPaymentDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanOrderPaymentDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DueOn.HasValue)
+            if (Optional.IsDefined(DueOn))
             {
                 writer.WritePropertyName("dueDate"u8);
                 writer.WriteStringValue(DueOn.Value, "D");
             }
-            if (PayOn.HasValue)
+            if (Optional.IsDefined(PayOn))
             {
                 writer.WritePropertyName("paymentDate"u8);
                 writer.WriteStringValue(PayOn.Value, "D");
             }
-            if (PricingCurrencyTotal != null)
+            if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal);
+                writer.WriteObjectValue<BillingBenefitsPrice>(PricingCurrencyTotal, options);
             }
-            if (BillingCurrencyTotal != null)
+            if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
-                writer.WriteObjectValue(BillingCurrencyTotal);
+                writer.WriteObjectValue<BillingBenefitsPrice>(BillingCurrencyTotal, options);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && ExtendedStatusInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo);
+                writer.WriteObjectValue<BillingBenefitsExtendedStatusInfo>(ExtendedStatusInfo, options);
             }
-            if (BillingAccount != null)
+            if (Optional.IsDefined(BillingAccount))
             {
                 writer.WritePropertyName("billingAccount"u8);
                 writer.WriteStringValue(BillingAccount);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanOrderPaymentDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanOrderPaymentDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanOrderPaymentDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             BillingBenefitsExtendedStatusInfo extendedStatusInfo = default;
             string billingAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dueDate"u8))
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SavingsPlanOrderPaymentDetail(
                 dueDate,
                 paymentDate,
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanOrderPaymentDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanOrderPaymentDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         return DeserializeSavingsPlanOrderPaymentDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanOrderPaymentDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanOrderPaymentDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

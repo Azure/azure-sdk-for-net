@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,61 +24,61 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceVcoresCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceVcoresCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceVcoresCapability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Value.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (options.Format != "W" && IncludedMaxSize != null)
+            if (options.Format != "W" && Optional.IsDefined(IncludedMaxSize))
             {
                 writer.WritePropertyName("includedMaxSize"u8);
-                writer.WriteObjectValue(IncludedMaxSize);
+                writer.WriteObjectValue<MaxSizeCapability>(IncludedMaxSize, options);
             }
-            if (options.Format != "W" && !(SupportedStorageSizes is ChangeTrackingList<MaxSizeRangeCapability> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageSizes))
             {
                 writer.WritePropertyName("supportedStorageSizes"u8);
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageSizes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MaxSizeRangeCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsInstancePoolSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsInstancePoolSupported))
             {
                 writer.WritePropertyName("instancePoolSupported"u8);
                 writer.WriteBooleanValue(IsInstancePoolSupported.Value);
             }
-            if (options.Format != "W" && IsStandaloneSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsStandaloneSupported))
             {
                 writer.WritePropertyName("standaloneSupported"u8);
                 writer.WriteBooleanValue(IsStandaloneSupported.Value);
             }
-            if (options.Format != "W" && !(SupportedMaintenanceConfigurations is ChangeTrackingList<ManagedInstanceMaintenanceConfigurationCapability> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
             {
                 writer.WritePropertyName("supportedMaintenanceConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in SupportedMaintenanceConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedInstanceMaintenanceConfigurationCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -104,7 +106,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceVcoresCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstanceVcoresCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstanceVcoresCapability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,7 +131,7 @@ namespace Azure.ResourceManager.Sql.Models
             SqlCapabilityStatus? status = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -217,10 +219,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedInstanceVcoresCapability(
                 name,
                 value,
@@ -234,6 +236,181 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (Optional.IsDefined(Value) || hasPropertyOverride)
+            {
+                builder.Append("  value: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{Value.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedMaxSize), out propertyOverride);
+            if (Optional.IsDefined(IncludedMaxSize) || hasPropertyOverride)
+            {
+                builder.Append("  includedMaxSize: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, IncludedMaxSize, options, 2, false, "  includedMaxSize: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedStorageSizes), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedStorageSizes) || hasPropertyOverride)
+            {
+                if (SupportedStorageSizes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedStorageSizes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedStorageSizes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedStorageSizes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInstancePoolSupported), out propertyOverride);
+            if (Optional.IsDefined(IsInstancePoolSupported) || hasPropertyOverride)
+            {
+                builder.Append("  instancePoolSupported: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsInstancePoolSupported.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStandaloneSupported), out propertyOverride);
+            if (Optional.IsDefined(IsStandaloneSupported) || hasPropertyOverride)
+            {
+                builder.Append("  standaloneSupported: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsStandaloneSupported.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMaintenanceConfigurations), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedMaintenanceConfigurations) || hasPropertyOverride)
+            {
+                if (SupportedMaintenanceConfigurations.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedMaintenanceConfigurations: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedMaintenanceConfigurations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedMaintenanceConfigurations: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedInstanceVcoresCapability>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceVcoresCapability>)this).GetFormatFromOptions(options) : options.Format;
@@ -242,8 +419,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceVcoresCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceVcoresCapability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +438,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedInstanceVcoresCapability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstanceVcoresCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstanceVcoresCapability)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public CosmosDBSqlUserDefinedFunctionResourceInfo(string functionName)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
+            Argument.AssertNotNull(functionName, nameof(functionName));
 
             FunctionName = functionName;
         }
@@ -75,8 +72,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB SQL userDefinedFunction. </summary>
+        [WirePath("id")]
         public string FunctionName { get; set; }
         /// <summary> Body of the User Defined Function. </summary>
+        [WirePath("body")]
         public string Body { get; set; }
     }
 }

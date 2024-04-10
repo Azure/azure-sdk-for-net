@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageClassification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageClassification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageClassification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrimaryMetric.HasValue)
+            if (Optional.IsDefined(PrimaryMetric))
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (ModelSettings != null)
+            if (Optional.IsDefined(ModelSettings))
             {
                 if (ModelSettings != null)
                 {
                     writer.WritePropertyName("modelSettings"u8);
-                    writer.WriteObjectValue(ModelSettings);
+                    writer.WriteObjectValue<ImageModelSettingsClassification>(ModelSettings, options);
                 }
                 else
                 {
                     writer.WriteNull("modelSettings");
                 }
             }
-            if (!(SearchSpace is ChangeTrackingList<ImageModelDistributionSettingsClassification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SearchSpace))
             {
                 if (SearchSpace != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in SearchSpace)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<ImageModelDistributionSettingsClassification>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -61,32 +61,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("limitSettings"u8);
-            writer.WriteObjectValue(LimitSettings);
-            if (SweepSettings != null)
+            writer.WriteObjectValue<ImageLimitSettings>(LimitSettings, options);
+            if (Optional.IsDefined(SweepSettings))
             {
                 if (SweepSettings != null)
                 {
                     writer.WritePropertyName("sweepSettings"u8);
-                    writer.WriteObjectValue(SweepSettings);
+                    writer.WriteObjectValue<ImageSweepSettings>(SweepSettings, options);
                 }
                 else
                 {
                     writer.WriteNull("sweepSettings");
                 }
             }
-            if (ValidationData != null)
+            if (Optional.IsDefined(ValidationData))
             {
                 if (ValidationData != null)
                 {
                     writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData);
+                    writer.WriteObjectValue<MachineLearningTableJobInput>(ValidationData, options);
                 }
                 else
                 {
                     writer.WriteNull("validationData");
                 }
             }
-            if (ValidationDataSize.HasValue)
+            if (Optional.IsDefined(ValidationDataSize))
             {
                 if (ValidationDataSize != null)
                 {
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationDataSize");
                 }
             }
-            if (LogVerbosity.HasValue)
+            if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (TargetColumnName != null)
+            if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
                 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData);
+            writer.WriteObjectValue<MachineLearningTableJobInput>(TrainingData, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageClassification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageClassification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageClassification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryMetric"u8))
@@ -272,10 +272,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ImageClassification(
                 logVerbosity,
                 targetColumnName,
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageClassification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageClassification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeImageClassification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageClassification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageClassification)} does not support reading '{options.Format}' format.");
             }
         }
 

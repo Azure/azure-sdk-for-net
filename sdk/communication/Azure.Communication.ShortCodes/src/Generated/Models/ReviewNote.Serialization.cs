@@ -16,12 +16,12 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Date.HasValue)
+            if (Optional.IsDefined(Date))
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date.Value, "O");
@@ -55,6 +55,22 @@ namespace Azure.Communication.ShortCodes.Models
                 }
             }
             return new ReviewNote(message, date);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ReviewNote FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeReviewNote(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ReviewNote>(this);
+            return content;
         }
     }
 }

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SyncMigrationDatabaseErrorEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncMigrationDatabaseErrorEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncMigrationDatabaseErrorEvent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TimestampString != null)
+            if (options.Format != "W" && Optional.IsDefined(TimestampString))
             {
                 writer.WritePropertyName("timestampString"u8);
                 writer.WriteStringValue(TimestampString);
             }
-            if (options.Format != "W" && EventTypeString != null)
+            if (options.Format != "W" && Optional.IsDefined(EventTypeString))
             {
                 writer.WritePropertyName("eventTypeString"u8);
                 writer.WriteStringValue(EventTypeString);
             }
-            if (options.Format != "W" && EventText != null)
+            if (options.Format != "W" && Optional.IsDefined(EventText))
             {
                 writer.WritePropertyName("eventText"u8);
                 writer.WriteStringValue(EventText);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SyncMigrationDatabaseErrorEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncMigrationDatabaseErrorEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncMigrationDatabaseErrorEvent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string eventTypeString = default;
             string eventText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestampString"u8))
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SyncMigrationDatabaseErrorEvent(timestampString, eventTypeString, eventText, serializedAdditionalRawData);
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SyncMigrationDatabaseErrorEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncMigrationDatabaseErrorEvent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeSyncMigrationDatabaseErrorEvent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SyncMigrationDatabaseErrorEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncMigrationDatabaseErrorEvent)} does not support reading '{options.Format}' format.");
             }
         }
 

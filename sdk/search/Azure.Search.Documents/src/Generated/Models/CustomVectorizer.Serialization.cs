@@ -15,10 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CustomWebApiParameters != null)
+            if (Optional.IsDefined(CustomWebApiParameters))
             {
                 writer.WritePropertyName("customWebApiParameters"u8);
-                writer.WriteObjectValue(CustomWebApiParameters);
+                writer.WriteObjectValue<CustomWebApiParameters>(CustomWebApiParameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -59,6 +59,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new CustomVectorizer(name, kind, customWebApiParameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CustomVectorizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomVectorizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CustomVectorizer>(this);
+            return content;
         }
     }
 }

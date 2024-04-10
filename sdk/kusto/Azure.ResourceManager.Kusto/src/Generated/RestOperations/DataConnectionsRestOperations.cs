@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Kusto.Models;
@@ -70,38 +70,10 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataConnectionListResult>> ListByDatabaseAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, clusterName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -129,38 +101,10 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataConnectionListResult> ListByDatabase(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var message = CreateListByDatabaseRequest(subscriptionId, resourceGroupName, clusterName, databaseName);
             _pipeline.Send(message, cancellationToken);
@@ -199,7 +143,7 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<DataConnectionValidationContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -216,42 +160,11 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DataConnectionValidationAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DataConnectionValidationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateDataConnectionValidationRequest(subscriptionId, resourceGroupName, clusterName, databaseName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -276,42 +189,11 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response DataConnectionValidation(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, DataConnectionValidationContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateDataConnectionValidationRequest(subscriptionId, resourceGroupName, clusterName, databaseName, content);
             _pipeline.Send(message, cancellationToken);
@@ -346,7 +228,7 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<KustoDataConnectionNameAvailabilityContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -363,42 +245,11 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<KustoNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, KustoDataConnectionNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, clusterName, databaseName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -427,42 +278,11 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<KustoNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, KustoDataConnectionNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, clusterName, databaseName, content);
             _pipeline.Send(message, cancellationToken);
@@ -515,46 +335,11 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<KustoDataConnectionData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, databaseName, dataConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -585,46 +370,11 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<KustoDataConnectionData> Get(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, databaseName, dataConnectionName);
             _pipeline.Send(message, cancellationToken);
@@ -666,7 +416,7 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<KustoDataConnectionData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -684,50 +434,12 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, KustoDataConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, databaseName, dataConnectionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -754,50 +466,12 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, KustoDataConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, databaseName, dataConnectionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -834,7 +508,7 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<KustoDataConnectionData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -852,50 +526,12 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, KustoDataConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, databaseName, dataConnectionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -922,50 +558,12 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, KustoDataConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, databaseName, dataConnectionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -1015,46 +613,11 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, databaseName, dataConnectionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1080,46 +643,11 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="databaseName"/> or <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, databaseName, dataConnectionName);
             _pipeline.Send(message, cancellationToken);

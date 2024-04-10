@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DescriptionType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DescriptionType))
             {
                 writer.WritePropertyName("descriptionType"u8);
                 writer.WriteStringValue(DescriptionType.Value.ToString());
             }
-            if (options.Format != "W" && ShortDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(ShortDescription))
             {
                 writer.WritePropertyName("shortDescription"u8);
                 writer.WriteStringValue(ShortDescription);
             }
-            if (options.Format != "W" && LongDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(LongDescription))
             {
                 writer.WritePropertyName("longDescription"u8);
                 writer.WriteStringValue(LongDescription);
             }
-            if (options.Format != "W" && !(Keywords is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Keywords))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Attributes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartArray();
@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Links is ChangeTrackingList<ProductLink> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProductLink>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             IReadOnlyList<string> attributes = default;
             IReadOnlyList<ProductLink> links = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("descriptionType"u8))
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProductDescription(
                 descriptionType,
                 shortDescription,
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProductDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeProductDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProductDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

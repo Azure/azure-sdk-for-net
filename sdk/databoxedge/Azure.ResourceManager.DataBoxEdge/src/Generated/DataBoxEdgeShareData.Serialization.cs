@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShareData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeShareData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeShareData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -59,49 +59,49 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WriteStringValue(ShareStatus.ToString());
             writer.WritePropertyName("monitoringStatus"u8);
             writer.WriteStringValue(MonitoringStatus.ToString());
-            if (AzureContainerInfo != null)
+            if (Optional.IsDefined(AzureContainerInfo))
             {
                 writer.WritePropertyName("azureContainerInfo"u8);
-                writer.WriteObjectValue(AzureContainerInfo);
+                writer.WriteObjectValue<DataBoxEdgeStorageContainerInfo>(AzureContainerInfo, options);
             }
             writer.WritePropertyName("accessProtocol"u8);
             writer.WriteStringValue(AccessProtocol.ToString());
-            if (!(UserAccessRights is ChangeTrackingList<UserAccessRight> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(UserAccessRights))
             {
                 writer.WritePropertyName("userAccessRights"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserAccessRights)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserAccessRight>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ClientAccessRights is ChangeTrackingList<ClientAccessRight> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ClientAccessRights))
             {
                 writer.WritePropertyName("clientAccessRights"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClientAccessRights)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClientAccessRight>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (RefreshDetails != null)
+            if (Optional.IsDefined(RefreshDetails))
             {
                 writer.WritePropertyName("refreshDetails"u8);
-                writer.WriteObjectValue(RefreshDetails);
+                writer.WriteObjectValue<DataBoxEdgeRefreshDetails>(RefreshDetails, options);
             }
-            if (options.Format != "W" && !(ShareMappings is ChangeTrackingList<DataBoxEdgeMountPointMap> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ShareMappings))
             {
                 writer.WritePropertyName("shareMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in ShareMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxEdgeMountPointMap>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DataPolicy.HasValue)
+            if (Optional.IsDefined(DataPolicy))
             {
                 writer.WritePropertyName("dataPolicy"u8);
                 writer.WriteStringValue(DataPolicy.Value.ToString());
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeShareData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeShareData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeShareData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             IReadOnlyList<DataBoxEdgeMountPointMap> shareMappings = default;
             DataBoxEdgeDataPolicy? dataPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -290,10 +290,10 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxEdgeShareData(
                 id,
                 name,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeShareData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeShareData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                         return DeserializeDataBoxEdgeShareData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeShareData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeShareData)} does not support reading '{options.Format}' format.");
             }
         }
 

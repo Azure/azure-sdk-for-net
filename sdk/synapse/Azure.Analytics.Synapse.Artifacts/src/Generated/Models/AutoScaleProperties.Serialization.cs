@@ -18,17 +18,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MinNodeCount.HasValue)
+            if (Optional.IsDefined(MinNodeCount))
             {
                 writer.WritePropertyName("minNodeCount"u8);
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (MaxNodeCount.HasValue)
+            if (Optional.IsDefined(MaxNodeCount))
             {
                 writer.WritePropertyName("maxNodeCount"u8);
                 writer.WriteNumberValue(MaxNodeCount.Value);
@@ -78,12 +78,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AutoScaleProperties(minNodeCount, enabled, maxNodeCount);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AutoScaleProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAutoScaleProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AutoScaleProperties>(this);
+            return content;
+        }
+
         internal partial class AutoScalePropertiesConverter : JsonConverter<AutoScaleProperties>
         {
             public override void Write(Utf8JsonWriter writer, AutoScaleProperties model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AutoScaleProperties>(model);
             }
+
             public override AutoScaleProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

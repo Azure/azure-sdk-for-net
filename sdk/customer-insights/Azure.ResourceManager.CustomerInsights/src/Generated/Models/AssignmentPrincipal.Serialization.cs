@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentPrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("principalType"u8);
             writer.WriteStringValue(PrincipalType);
-            if (!(PrincipalMetadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrincipalMetadata))
             {
                 writer.WritePropertyName("principalMetadata"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentPrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string principalType = default;
             IDictionary<string, string> principalMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AssignmentPrincipal(principalId, principalType, principalMetadata ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeAssignmentPrincipal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support reading '{options.Format}' format.");
             }
         }
 

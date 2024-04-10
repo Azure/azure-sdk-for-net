@@ -21,17 +21,17 @@ namespace Azure.Security.KeyVault.Storage.Models
             writer.WriteStringValue(ActiveKeyName);
             writer.WritePropertyName("autoRegenerateKey"u8);
             writer.WriteBooleanValue(AutoRegenerateKey);
-            if (RegenerationPeriod != null)
+            if (Optional.IsDefined(RegenerationPeriod))
             {
                 writer.WritePropertyName("regenerationPeriod"u8);
                 writer.WriteStringValue(RegenerationPeriod);
             }
-            if (StorageAccountAttributes != null)
+            if (Optional.IsDefined(StorageAccountAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(StorageAccountAttributes);
+                writer.WriteObjectValue<StorageAccountAttributes>(StorageAccountAttributes);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,6 +43,14 @@ namespace Azure.Security.KeyVault.Storage.Models
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<StorageAccountCreateParameters>(this);
+            return content;
         }
     }
 }

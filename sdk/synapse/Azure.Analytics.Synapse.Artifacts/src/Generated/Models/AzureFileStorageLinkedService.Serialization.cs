@@ -21,28 +21,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -53,64 +53,64 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
-            writer.WriteObjectValue(Host);
-            if (UserId != null)
+            writer.WriteObjectValue<object>(Host);
+            if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
-                writer.WriteObjectValue(UserId);
+                writer.WriteObjectValue<object>(UserId);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                writer.WriteObjectValue<SecretBase>(Password);
             }
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString);
+                writer.WriteObjectValue<object>(ConnectionString);
             }
-            if (AccountKey != null)
+            if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
-                writer.WriteObjectValue(AccountKey);
+                writer.WriteObjectValue<AzureKeyVaultSecretReference>(AccountKey);
             }
-            if (SasUri != null)
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
-                writer.WriteObjectValue(SasUri);
+                writer.WriteObjectValue<object>(SasUri);
             }
-            if (SasToken != null)
+            if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue(SasToken);
+                writer.WriteObjectValue<AzureKeyVaultSecretReference>(SasToken);
             }
-            if (FileShare != null)
+            if (Optional.IsDefined(FileShare))
             {
                 writer.WritePropertyName("fileShare"u8);
-                writer.WriteObjectValue(FileShare);
+                writer.WriteObjectValue<object>(FileShare);
             }
-            if (Snapshot != null)
+            if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
-                writer.WriteObjectValue(Snapshot);
+                writer.WriteObjectValue<object>(Snapshot);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -314,12 +314,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureFileStorageLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureFileStorageLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureFileStorageLinkedService>(this);
+            return content;
+        }
+
         internal partial class AzureFileStorageLinkedServiceConverter : JsonConverter<AzureFileStorageLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, AzureFileStorageLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AzureFileStorageLinkedService>(model);
             }
+
             public override AzureFileStorageLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

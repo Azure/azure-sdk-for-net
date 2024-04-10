@@ -16,18 +16,26 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dialog"u8);
-            writer.WriteObjectValue(Dialog);
-            if (OperationCallbackUri != null)
+            writer.WriteObjectValue<BaseDialog>(Dialog);
+            if (Optional.IsDefined(OperationCallbackUri))
             {
                 writer.WritePropertyName("operationCallbackUri"u8);
                 writer.WriteStringValue(OperationCallbackUri);
             }
-            if (OperationContext != null)
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<StartDialogRequestInternal>(this);
+            return content;
         }
     }
 }

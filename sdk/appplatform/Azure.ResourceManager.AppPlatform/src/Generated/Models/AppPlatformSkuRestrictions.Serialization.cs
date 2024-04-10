@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformSkuRestrictions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformSkuRestrictions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RestrictionsType.HasValue)
+            if (Optional.IsDefined(RestrictionsType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestrictionsType.Value.ToString());
             }
-            if (!(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RestrictionInfo != null)
+            if (Optional.IsDefined(RestrictionInfo))
             {
                 writer.WritePropertyName("restrictionInfo"u8);
-                writer.WriteObjectValue(RestrictionInfo);
+                writer.WriteObjectValue<AppPlatformSkuRestrictionInfo>(RestrictionInfo, options);
             }
-            if (ReasonCode.HasValue)
+            if (Optional.IsDefined(ReasonCode))
             {
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteStringValue(ReasonCode.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformSkuRestrictions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformSkuRestrictions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             AppPlatformSkuRestrictionInfo restrictionInfo = default;
             AppPlatformSkuRestrictionsReasonCode? reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppPlatformSkuRestrictions(type, values ?? new ChangeTrackingList<string>(), restrictionInfo, reasonCode, serializedAdditionalRawData);
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformSkuRestrictions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformSkuRestrictions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformSkuRestrictions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformSkuRestrictions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformSkuRestrictions)} does not support reading '{options.Format}' format.");
             }
         }
 

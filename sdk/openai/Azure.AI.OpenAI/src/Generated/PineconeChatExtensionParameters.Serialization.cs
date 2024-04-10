@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,43 +22,43 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<PineconeChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PineconeChatExtensionParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PineconeChatExtensionParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<OnYourDataAuthenticationOptions>(Authentication, options);
             }
-            if (DocumentCount.HasValue)
+            if (Optional.IsDefined(DocumentCount))
             {
-                writer.WritePropertyName("topNDocuments"u8);
+                writer.WritePropertyName("top_n_documents"u8);
                 writer.WriteNumberValue(DocumentCount.Value);
             }
-            if (ShouldRestrictResultScope.HasValue)
+            if (Optional.IsDefined(ShouldRestrictResultScope))
             {
-                writer.WritePropertyName("inScope"u8);
+                writer.WritePropertyName("in_scope"u8);
                 writer.WriteBooleanValue(ShouldRestrictResultScope.Value);
             }
-            if (Strictness.HasValue)
+            if (Optional.IsDefined(Strictness))
             {
                 writer.WritePropertyName("strictness"u8);
                 writer.WriteNumberValue(Strictness.Value);
             }
-            if (RoleInformation != null)
+            if (Optional.IsDefined(RoleInformation))
             {
-                writer.WritePropertyName("roleInformation"u8);
+                writer.WritePropertyName("role_information"u8);
                 writer.WriteStringValue(RoleInformation);
             }
             writer.WritePropertyName("environment"u8);
             writer.WriteStringValue(EnvironmentName);
-            writer.WritePropertyName("indexName"u8);
+            writer.WritePropertyName("index_name"u8);
             writer.WriteStringValue(IndexName);
-            writer.WritePropertyName("fieldsMapping"u8);
-            writer.WriteObjectValue(FieldMappingOptions);
-            writer.WritePropertyName("embeddingDependency"u8);
-            writer.WriteObjectValue(EmbeddingDependency);
+            writer.WritePropertyName("fields_mapping"u8);
+            writer.WriteObjectValue<PineconeFieldMappingOptions>(FieldMappingOptions, options);
+            writer.WritePropertyName("embedding_dependency"u8);
+            writer.WriteObjectValue<OnYourDataVectorizationSource>(EmbeddingDependency, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,7 +82,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<PineconeChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PineconeChatExtensionParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PineconeChatExtensionParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +107,7 @@ namespace Azure.AI.OpenAI
             PineconeFieldMappingOptions fieldsMapping = default;
             OnYourDataVectorizationSource embeddingDependency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authentication"u8))
@@ -120,7 +119,7 @@ namespace Azure.AI.OpenAI
                     authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("topNDocuments"u8))
+                if (property.NameEquals("top_n_documents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -129,7 +128,7 @@ namespace Azure.AI.OpenAI
                     topNDocuments = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("inScope"u8))
+                if (property.NameEquals("in_scope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -147,7 +146,7 @@ namespace Azure.AI.OpenAI
                     strictness = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("roleInformation"u8))
+                if (property.NameEquals("role_information"u8))
                 {
                     roleInformation = property.Value.GetString();
                     continue;
@@ -157,27 +156,27 @@ namespace Azure.AI.OpenAI
                     environment = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("indexName"u8))
+                if (property.NameEquals("index_name"u8))
                 {
                     indexName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fieldsMapping"u8))
+                if (property.NameEquals("fields_mapping"u8))
                 {
                     fieldsMapping = PineconeFieldMappingOptions.DeserializePineconeFieldMappingOptions(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("embeddingDependency"u8))
+                if (property.NameEquals("embedding_dependency"u8))
                 {
                     embeddingDependency = OnYourDataVectorizationSource.DeserializeOnYourDataVectorizationSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PineconeChatExtensionParameters(
                 authentication,
                 topNDocuments,
@@ -200,7 +199,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PineconeChatExtensionParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PineconeChatExtensionParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +215,7 @@ namespace Azure.AI.OpenAI
                         return DeserializePineconeChatExtensionParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PineconeChatExtensionParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PineconeChatExtensionParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -234,7 +233,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<PineconeChatExtensionParameters>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

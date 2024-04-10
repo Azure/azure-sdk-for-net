@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.Chat;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -15,30 +16,30 @@ namespace Azure.Communication
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Chat.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (RawId != null)
+            if (Chat.Optional.IsDefined(RawId))
             {
                 writer.WritePropertyName("rawId"u8);
                 writer.WriteStringValue(RawId);
             }
-            if (CommunicationUser != null)
+            if (Chat.Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser"u8);
-                writer.WriteObjectValue(CommunicationUser);
+                writer.WriteObjectValue<CommunicationUserIdentifierModel>(CommunicationUser);
             }
-            if (PhoneNumber != null)
+            if (Chat.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
-                writer.WriteObjectValue(PhoneNumber);
+                writer.WriteObjectValue<PhoneNumberIdentifierModel>(PhoneNumber);
             }
-            if (MicrosoftTeamsUser != null)
+            if (Chat.Optional.IsDefined(MicrosoftTeamsUser))
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
-                writer.WriteObjectValue(MicrosoftTeamsUser);
+                writer.WriteObjectValue<MicrosoftTeamsUserIdentifierModel>(MicrosoftTeamsUser);
             }
             writer.WriteEndObject();
         }
@@ -99,6 +100,22 @@ namespace Azure.Communication
                 }
             }
             return new CommunicationIdentifierModel(kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CommunicationIdentifierModel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCommunicationIdentifierModel(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Chat.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CommunicationIdentifierModel>(this);
+            return content;
         }
     }
 }

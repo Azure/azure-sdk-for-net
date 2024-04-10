@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlRecoverableServerResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlRecoverableServerResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlRecoverableServerResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,39 +43,39 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && LastAvailableBackupOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastAvailableBackupOn))
             {
                 writer.WritePropertyName("lastAvailableBackupDateTime"u8);
                 writer.WriteStringValue(LastAvailableBackupOn.Value, "O");
             }
-            if (options.Format != "W" && ServiceLevelObjective != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceLevelObjective))
             {
                 writer.WritePropertyName("serviceLevelObjective"u8);
                 writer.WriteStringValue(ServiceLevelObjective);
             }
-            if (options.Format != "W" && Edition != null)
+            if (options.Format != "W" && Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (options.Format != "W" && VCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCore"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (options.Format != "W" && HardwareGeneration != null)
+            if (options.Format != "W" && Optional.IsDefined(HardwareGeneration))
             {
                 writer.WritePropertyName("hardwareGeneration"u8);
                 writer.WriteStringValue(HardwareGeneration);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlRecoverableServerResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlRecoverableServerResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlRecoverableServerResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             string hardwareGeneration = default;
             string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -208,10 +209,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PostgreSqlRecoverableServerResourceData(
                 id,
                 name,
@@ -226,6 +227,191 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastAvailableBackupOn), out propertyOverride);
+            if (Optional.IsDefined(LastAvailableBackupOn) || hasPropertyOverride)
+            {
+                builder.Append("    lastAvailableBackupDateTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(LastAvailableBackupOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceLevelObjective), out propertyOverride);
+            if (Optional.IsDefined(ServiceLevelObjective) || hasPropertyOverride)
+            {
+                builder.Append("    serviceLevelObjective: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ServiceLevelObjective.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceLevelObjective}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceLevelObjective}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Edition), out propertyOverride);
+            if (Optional.IsDefined(Edition) || hasPropertyOverride)
+            {
+                builder.Append("    edition: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Edition.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Edition}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Edition}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VCores), out propertyOverride);
+            if (Optional.IsDefined(VCores) || hasPropertyOverride)
+            {
+                builder.Append("    vCore: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{VCores.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HardwareGeneration), out propertyOverride);
+            if (Optional.IsDefined(HardwareGeneration) || hasPropertyOverride)
+            {
+                builder.Append("    hardwareGeneration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (HardwareGeneration.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HardwareGeneration}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HardwareGeneration}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (Optional.IsDefined(Version) || hasPropertyOverride)
+            {
+                builder.Append("    version: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Version.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Version}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Version}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PostgreSqlRecoverableServerResourceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlRecoverableServerResourceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -234,8 +420,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlRecoverableServerResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlRecoverableServerResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -251,7 +439,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                         return DeserializePostgreSqlRecoverableServerResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlRecoverableServerResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlRecoverableServerResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

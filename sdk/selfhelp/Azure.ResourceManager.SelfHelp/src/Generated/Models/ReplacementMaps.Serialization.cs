@@ -22,67 +22,67 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplacementMaps>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplacementMaps)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplacementMaps)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(WebResults is ChangeTrackingList<WebResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(WebResults))
             {
                 writer.WritePropertyName("webResults"u8);
                 writer.WriteStartArray();
                 foreach (var item in WebResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WebResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Diagnostics is ChangeTrackingList<SolutionsDiagnostic> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
                 writer.WriteStartArray();
                 foreach (var item in Diagnostics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SolutionsDiagnostic>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Troubleshooters is ChangeTrackingList<SolutionsTroubleshooters> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Troubleshooters))
             {
                 writer.WritePropertyName("troubleshooters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Troubleshooters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SolutionsTroubleshooters>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(MetricsBasedCharts is ChangeTrackingList<MetricsBasedChart> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(MetricsBasedCharts))
             {
                 writer.WritePropertyName("metricsBasedCharts"u8);
                 writer.WriteStartArray();
                 foreach (var item in MetricsBasedCharts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricsBasedChart>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Videos is ChangeTrackingList<SelfHelpVideo> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Videos))
             {
                 writer.WritePropertyName("videos"u8);
                 writer.WriteStartArray();
                 foreach (var item in Videos)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SelfHelpVideo>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(VideoGroups is ChangeTrackingList<VideoGroup> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(VideoGroups))
             {
                 writer.WritePropertyName("videoGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in VideoGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VideoGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplacementMaps>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplacementMaps)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplacementMaps)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             IList<SelfHelpVideo> videos = default;
             IList<VideoGroup> videoGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("webResults"u8))
@@ -220,10 +220,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReplacementMaps(
                 webResults ?? new ChangeTrackingList<WebResult>(),
                 diagnostics ?? new ChangeTrackingList<SolutionsDiagnostic>(),
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReplacementMaps)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplacementMaps)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeReplacementMaps(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplacementMaps)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplacementMaps)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryMappingDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryMappingDataFlowProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryMappingDataFlowProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DataFlowType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -55,49 +55,49 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue<DataFlowFolder>(Folder, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (!(Sources is ChangeTrackingList<DataFlowSource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFlowSource>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sinks is ChangeTrackingList<DataFlowSink> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Sinks))
             {
                 writer.WritePropertyName("sinks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sinks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFlowSink>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Transformations is ChangeTrackingList<DataFlowTransformation> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Transformations))
             {
                 writer.WritePropertyName("transformations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Transformations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFlowTransformation>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Script != null)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
             }
-            if (!(ScriptLines is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ScriptLines))
             {
                 writer.WritePropertyName("scriptLines"u8);
                 writer.WriteStartArray();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryMappingDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryMappingDataFlowProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryMappingDataFlowProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string script = default;
             IList<string> scriptLines = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -274,10 +274,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataFactoryMappingDataFlowProperties(
                 type,
                 description,
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryMappingDataFlowProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryMappingDataFlowProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryMappingDataFlowProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryMappingDataFlowProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryMappingDataFlowProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

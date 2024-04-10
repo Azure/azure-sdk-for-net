@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableOutputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableOutputDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,32 +30,32 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (AccountKey != null)
+            if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
                 writer.WriteStringValue(AccountKey);
             }
-            if (Table != null)
+            if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
-            if (PartitionKey != null)
+            if (Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
                 writer.WriteStringValue(PartitionKey);
             }
-            if (RowKey != null)
+            if (Optional.IsDefined(RowKey))
             {
                 writer.WritePropertyName("rowKey"u8);
                 writer.WriteStringValue(RowKey);
             }
-            if (!(ColumnsToRemove is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ColumnsToRemove))
             {
                 writer.WritePropertyName("columnsToRemove"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (BatchSize.HasValue)
+            if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
                 writer.WriteNumberValue(BatchSize.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableOutputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableOutputDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             IList<string> columnsToRemove = default;
             int? batchSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TableOutputDataSource(
                 type,
                 serializedAdditionalRawData,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TableOutputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableOutputDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeTableOutputDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TableOutputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableOutputDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

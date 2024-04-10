@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudRackSkuData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,64 +43,64 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(ComputeMachines is ChangeTrackingList<MachineSkuSlot> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ComputeMachines))
             {
                 writer.WritePropertyName("computeMachines"u8);
                 writer.WriteStartArray();
                 foreach (var item in ComputeMachines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineSkuSlot>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ControllerMachines is ChangeTrackingList<MachineSkuSlot> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ControllerMachines))
             {
                 writer.WritePropertyName("controllerMachines"u8);
                 writer.WriteStartArray();
                 foreach (var item in ControllerMachines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineSkuSlot>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && MaxClusterSlots.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxClusterSlots))
             {
                 writer.WritePropertyName("maxClusterSlots"u8);
                 writer.WriteNumberValue(MaxClusterSlots.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && RackType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RackType))
             {
                 writer.WritePropertyName("rackType"u8);
                 writer.WriteStringValue(RackType.Value.ToString());
             }
-            if (options.Format != "W" && !(StorageAppliances is ChangeTrackingList<StorageApplianceSkuSlot> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(StorageAppliances))
             {
                 writer.WritePropertyName("storageAppliances"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageAppliances)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageApplianceSkuSlot>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(SupportedRackSkuIds is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedRackSkuIds))
             {
                 writer.WritePropertyName("supportedRackSkuIds"u8);
                 writer.WriteStartArray();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudRackSkuData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetworkCloud
             IReadOnlyList<StorageApplianceSkuSlot> storageAppliances = default;
             IReadOnlyList<string> supportedRackSkuIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -291,10 +291,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudRackSkuData(
                 id,
                 name,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         return DeserializeNetworkCloudRackSkuData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudRackSkuData)} does not support reading '{options.Format}' format.");
             }
         }
 

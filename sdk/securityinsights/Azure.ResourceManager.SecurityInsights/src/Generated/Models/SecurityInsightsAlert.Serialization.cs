@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlert>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsAlert)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsAlert)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,92 +74,92 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && AlertDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(AlertDisplayName))
             {
                 writer.WritePropertyName("alertDisplayName"u8);
                 writer.WriteStringValue(AlertDisplayName);
             }
-            if (options.Format != "W" && AlertType != null)
+            if (options.Format != "W" && Optional.IsDefined(AlertType))
             {
                 writer.WritePropertyName("alertType"u8);
                 writer.WriteStringValue(AlertType);
             }
-            if (options.Format != "W" && CompromisedEntity != null)
+            if (options.Format != "W" && Optional.IsDefined(CompromisedEntity))
             {
                 writer.WritePropertyName("compromisedEntity"u8);
                 writer.WriteStringValue(CompromisedEntity);
             }
-            if (options.Format != "W" && ConfidenceLevel.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfidenceLevel))
             {
                 writer.WritePropertyName("confidenceLevel"u8);
                 writer.WriteStringValue(ConfidenceLevel.Value.ToString());
             }
-            if (options.Format != "W" && !(ConfidenceReasons is ChangeTrackingList<SecurityInsightsAlertConfidenceReason> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ConfidenceReasons))
             {
                 writer.WritePropertyName("confidenceReasons"u8);
                 writer.WriteStartArray();
                 foreach (var item in ConfidenceReasons)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityInsightsAlertConfidenceReason>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ConfidenceScore.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfidenceScore))
             {
                 writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
             }
-            if (options.Format != "W" && ConfidenceScoreStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfidenceScoreStatus))
             {
                 writer.WritePropertyName("confidenceScoreStatus"u8);
                 writer.WriteStringValue(ConfidenceScoreStatus.Value.ToString());
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Intent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Intent))
             {
                 writer.WritePropertyName("intent"u8);
                 writer.WriteStringValue(Intent.Value.ToString());
             }
-            if (options.Format != "W" && ProviderAlertId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProviderAlertId))
             {
                 writer.WritePropertyName("providerAlertId"u8);
                 writer.WriteStringValue(ProviderAlertId);
             }
-            if (options.Format != "W" && ProcessingEndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessingEndOn))
             {
                 writer.WritePropertyName("processingEndTime"u8);
                 writer.WriteStringValue(ProcessingEndOn.Value, "O");
             }
-            if (options.Format != "W" && ProductComponentName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductComponentName))
             {
                 writer.WritePropertyName("productComponentName"u8);
                 writer.WriteStringValue(ProductComponentName);
             }
-            if (options.Format != "W" && ProductName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductName))
             {
                 writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
             }
-            if (options.Format != "W" && ProductVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductVersion))
             {
                 writer.WritePropertyName("productVersion"u8);
                 writer.WriteStringValue(ProductVersion);
             }
-            if (options.Format != "W" && !(RemediationSteps is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RemediationSteps))
             {
                 writer.WritePropertyName("remediationSteps"u8);
                 writer.WriteStartArray();
@@ -169,27 +169,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && SystemAlertId != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemAlertId))
             {
                 writer.WritePropertyName("systemAlertId"u8);
                 writer.WriteStringValue(SystemAlertId);
             }
-            if (options.Format != "W" && !(Tactics is ChangeTrackingList<SecurityInsightsAttackTactic> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tactics))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -199,22 +199,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && AlertGeneratedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AlertGeneratedOn))
             {
                 writer.WritePropertyName("timeGenerated"u8);
                 writer.WriteStringValue(AlertGeneratedOn.Value, "O");
             }
-            if (options.Format != "W" && VendorName != null)
+            if (options.Format != "W" && Optional.IsDefined(VendorName))
             {
                 writer.WritePropertyName("vendorName"u8);
                 writer.WriteStringValue(VendorName);
             }
-            if (options.Format != "W" && AlertLink != null)
+            if (options.Format != "W" && Optional.IsDefined(AlertLink))
             {
                 writer.WritePropertyName("alertLink"u8);
                 writer.WriteStringValue(AlertLink);
             }
-            if (options.Format != "W" && !(ResourceIdentifiers is ChangeTrackingList<BinaryData> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceIdentifiers))
             {
                 writer.WritePropertyName("resourceIdentifiers"u8);
                 writer.WriteStartArray();
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlert>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsAlert)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsAlert)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string alertLink = default;
             IReadOnlyList<BinaryData> resourceIdentifiers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -588,10 +588,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsAlert(
                 id,
                 name,
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsAlert)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsAlert)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsAlert(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsAlert)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsAlert)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,20 +15,20 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (MediaUri != null)
+            if (Optional.IsDefined(MediaUri))
             {
                 writer.WritePropertyName("mediaUri"u8);
-                writer.WriteObjectValue(MediaUri);
+                writer.WriteObjectValue<object>(MediaUri);
             }
-            if (VideoEncoderConfiguration != null)
+            if (Optional.IsDefined(VideoEncoderConfiguration))
             {
                 writer.WritePropertyName("videoEncoderConfiguration"u8);
-                writer.WriteObjectValue(VideoEncoderConfiguration);
+                writer.WriteObjectValue<VideoEncoderConfiguration>(VideoEncoderConfiguration);
             }
             writer.WriteEndObject();
         }
@@ -69,6 +69,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new MediaProfile(name, mediaUri, videoEncoderConfiguration);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaProfile FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaProfile(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MediaProfile>(this);
+            return content;
         }
     }
 }

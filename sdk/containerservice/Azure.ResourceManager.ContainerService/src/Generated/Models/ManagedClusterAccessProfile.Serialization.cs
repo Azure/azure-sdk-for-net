@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAccessProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterAccessProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterAccessProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (KubeConfig != null)
+            if (Optional.IsDefined(KubeConfig))
             {
                 writer.WritePropertyName("kubeConfig"u8);
                 writer.WriteBase64StringValue(KubeConfig, "D");
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAccessProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterAccessProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterAccessProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             SystemData systemData = default;
             byte[] kubeConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedClusterAccessProfile(
                 id,
                 name,
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterAccessProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterAccessProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterAccessProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterAccessProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterAccessProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

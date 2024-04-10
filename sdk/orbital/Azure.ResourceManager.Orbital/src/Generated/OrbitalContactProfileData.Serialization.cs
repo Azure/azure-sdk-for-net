@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Orbital.Models;
@@ -25,16 +24,16 @@ namespace Azure.ResourceManager.Orbital
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalContactProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrbitalContactProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrbitalContactProfileData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,50 +61,50 @@ namespace Azure.ResourceManager.Orbital
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (MinimumViableContactDuration.HasValue)
+            if (Optional.IsDefined(MinimumViableContactDuration))
             {
                 writer.WritePropertyName("minimumViableContactDuration"u8);
                 writer.WriteStringValue(MinimumViableContactDuration.Value, "P");
             }
-            if (MinimumElevationDegrees.HasValue)
+            if (Optional.IsDefined(MinimumElevationDegrees))
             {
                 writer.WritePropertyName("minimumElevationDegrees"u8);
                 writer.WriteNumberValue(MinimumElevationDegrees.Value);
             }
-            if (AutoTrackingConfiguration.HasValue)
+            if (Optional.IsDefined(AutoTrackingConfiguration))
             {
                 writer.WritePropertyName("autoTrackingConfiguration"u8);
                 writer.WriteStringValue(AutoTrackingConfiguration.Value.ToSerialString());
             }
-            if (EventHubUri != null)
+            if (Optional.IsDefined(EventHubUri))
             {
                 writer.WritePropertyName("eventHubUri"u8);
                 writer.WriteStringValue(EventHubUri.AbsoluteUri);
             }
-            if (NetworkConfiguration != null)
+            if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                writer.WriteObjectValue<ContactProfilesPropertiesNetworkConfiguration>(NetworkConfiguration, options);
             }
-            if (!(Links is ChangeTrackingList<OrbitalContactProfileLink> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OrbitalContactProfileLink>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.Orbital
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalContactProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrbitalContactProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrbitalContactProfileData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.Orbital
             ContactProfilesPropertiesNetworkConfiguration networkConfiguration = default;
             IList<OrbitalContactProfileLink> links = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -300,10 +299,10 @@ namespace Azure.ResourceManager.Orbital
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OrbitalContactProfileData(
                 id,
                 name,
@@ -331,7 +330,7 @@ namespace Azure.ResourceManager.Orbital
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OrbitalContactProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrbitalContactProfileData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -347,7 +346,7 @@ namespace Azure.ResourceManager.Orbital
                         return DeserializeOrbitalContactProfileData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrbitalContactProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrbitalContactProfileData)} does not support reading '{options.Format}' format.");
             }
         }
 

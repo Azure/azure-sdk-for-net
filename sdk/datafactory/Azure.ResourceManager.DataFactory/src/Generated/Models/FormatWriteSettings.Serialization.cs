@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<FormatWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<FormatWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 switch (discriminator.GetString())
                 {
                     case "AvroWriteSettings": return AvroWriteSettings.DeserializeAvroWriteSettings(element, options);
+                    case "DelimitedTextWriteSettings": return DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(element, options);
                     case "JsonWriteSettings": return JsonWriteSettings.DeserializeJsonWriteSettings(element, options);
                     case "OrcWriteSettings": return OrcWriteSettings.DeserializeOrcWriteSettings(element, options);
                     case "ParquetWriteSettings": return ParquetWriteSettings.DeserializeParquetWriteSettings(element, options);
-                    case "DelimitedTextWriteSettings": return DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(element, options);
                 }
             }
             return UnknownFormatWriteSettings.DeserializeUnknownFormatWriteSettings(element, options);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeFormatWriteSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FormatWriteSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

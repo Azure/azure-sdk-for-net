@@ -22,117 +22,117 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AvailabilityState.HasValue)
+            if (Optional.IsDefined(AvailabilityState))
             {
                 writer.WritePropertyName("availabilityState"u8);
                 writer.WriteStringValue(AvailabilityState.Value.ToString());
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (DetailedStatus != null)
+            if (Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus);
             }
-            if (ReasonType != null)
+            if (Optional.IsDefined(ReasonType))
             {
                 writer.WritePropertyName("reasonType"u8);
                 writer.WriteStringValue(ReasonType);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (ArticleId != null)
+            if (Optional.IsDefined(ArticleId))
             {
                 writer.WritePropertyName("articleId"u8);
                 writer.WriteStringValue(ArticleId);
             }
-            if (RootCauseAttributionOn.HasValue)
+            if (Optional.IsDefined(RootCauseAttributionOn))
             {
                 writer.WritePropertyName("rootCauseAttributionTime"u8);
                 writer.WriteStringValue(RootCauseAttributionOn.Value, "O");
             }
-            if (HealthEventType != null)
+            if (Optional.IsDefined(HealthEventType))
             {
                 writer.WritePropertyName("healthEventType"u8);
                 writer.WriteStringValue(HealthEventType);
             }
-            if (HealthEventCause != null)
+            if (Optional.IsDefined(HealthEventCause))
             {
                 writer.WritePropertyName("healthEventCause"u8);
                 writer.WriteStringValue(HealthEventCause);
             }
-            if (HealthEventCategory != null)
+            if (Optional.IsDefined(HealthEventCategory))
             {
                 writer.WritePropertyName("healthEventCategory"u8);
                 writer.WriteStringValue(HealthEventCategory);
             }
-            if (HealthEventId != null)
+            if (Optional.IsDefined(HealthEventId))
             {
                 writer.WritePropertyName("healthEventId"u8);
                 writer.WriteStringValue(HealthEventId);
             }
-            if (ResolutionEta.HasValue)
+            if (Optional.IsDefined(ResolutionEta))
             {
                 writer.WritePropertyName("resolutionETA"u8);
                 writer.WriteStringValue(ResolutionEta.Value, "O");
             }
-            if (OccuredOn.HasValue)
+            if (Optional.IsDefined(OccuredOn))
             {
                 writer.WritePropertyName("occuredTime"u8);
                 writer.WriteStringValue(OccuredOn.Value, "O");
             }
-            if (ReasonChronicity.HasValue)
+            if (Optional.IsDefined(ReasonChronicity))
             {
                 writer.WritePropertyName("reasonChronicity"u8);
                 writer.WriteStringValue(ReasonChronicity.Value.ToString());
             }
-            if (ReportedOn.HasValue)
+            if (Optional.IsDefined(ReportedOn))
             {
                 writer.WritePropertyName("reportedTime"u8);
                 writer.WriteStringValue(ReportedOn.Value, "O");
             }
-            if (RecentlyResolved != null)
+            if (Optional.IsDefined(RecentlyResolved))
             {
                 writer.WritePropertyName("recentlyResolved"u8);
-                writer.WriteObjectValue(RecentlyResolved);
+                writer.WriteObjectValue<ResourceHealthAvailabilityStateRecentlyResolved>(RecentlyResolved, options);
             }
-            if (!(RecommendedActions is ChangeTrackingList<ResourceHealthRecommendedAction> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RecommendedActions))
             {
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in RecommendedActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceHealthRecommendedAction>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceImpactingEvents is ChangeTrackingList<ServiceImpactingEvent> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceImpactingEvents))
             {
                 writer.WritePropertyName("serviceImpactingEvents"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceImpactingEvents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceImpactingEvent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             IReadOnlyList<ResourceHealthRecommendedAction> recommendedActions = default;
             IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availabilityState"u8))
@@ -346,10 +346,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceHealthAvailabilityStatusProperties(
                 availabilityState,
                 title,
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeResourceHealthAvailabilityStatusProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

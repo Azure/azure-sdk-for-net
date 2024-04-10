@@ -15,17 +15,17 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ValuesInternal.ValueKind != JsonValueKind.Undefined)
+            if (Optional.IsDefined(ValuesInternal))
             {
                 writer.WritePropertyName("values"u8);
                 ValuesInternal.WriteTo(writer);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (PropertyValueType.HasValue)
+            if (Optional.IsDefined(PropertyValueType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PropertyValueType.Value.ToString());
@@ -65,6 +65,22 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
             }
             return new PropertyValues(name, type, values);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PropertyValues FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePropertyValues(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PropertyValues>(this);
+            return content;
         }
     }
 }

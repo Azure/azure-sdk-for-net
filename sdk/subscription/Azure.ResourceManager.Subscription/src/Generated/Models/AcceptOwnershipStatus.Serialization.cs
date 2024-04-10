@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<AcceptOwnershipStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcceptOwnershipStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AcceptOwnershipStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && AcceptOwnershipState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AcceptOwnershipState))
             {
                 writer.WritePropertyName("acceptOwnershipState"u8);
                 writer.WriteStringValue(AcceptOwnershipState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && BillingOwner != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingOwner))
             {
                 writer.WritePropertyName("billingOwner"u8);
                 writer.WriteStringValue(BillingOwner);
             }
-            if (SubscriptionTenantId.HasValue)
+            if (Optional.IsDefined(SubscriptionTenantId))
             {
                 writer.WritePropertyName("subscriptionTenantId"u8);
                 writer.WriteStringValue(SubscriptionTenantId.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<AcceptOwnershipStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcceptOwnershipStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AcceptOwnershipStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Subscription.Models
             string displayName = default;
             IReadOnlyDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AcceptOwnershipStatus(
                 subscriptionId,
                 acceptOwnershipState,
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AcceptOwnershipStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcceptOwnershipStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Subscription.Models
                         return DeserializeAcceptOwnershipStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcceptOwnershipStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcceptOwnershipStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

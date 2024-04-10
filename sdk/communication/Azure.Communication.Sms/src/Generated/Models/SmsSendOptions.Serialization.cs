@@ -17,12 +17,20 @@ namespace Azure.Communication.Sms
             writer.WriteStartObject();
             writer.WritePropertyName("enableDeliveryReport"u8);
             writer.WriteBooleanValue(EnableDeliveryReport);
-            if (Tag != null)
+            if (Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SmsSendOptions>(this);
+            return content;
         }
     }
 }

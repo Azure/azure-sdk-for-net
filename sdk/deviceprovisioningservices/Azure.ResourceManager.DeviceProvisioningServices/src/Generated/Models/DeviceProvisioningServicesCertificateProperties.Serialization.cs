@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Subject != null)
+            if (options.Format != "W" && Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(ExpireOn.Value, "R");
             }
-            if (options.Format != "W" && Thumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
 #endif
             }
-            if (IsVerified.HasValue)
+            if (Optional.IsDefined(IsVerified))
             {
                 writer.WritePropertyName("isVerified"u8);
                 writer.WriteBooleanValue(IsVerified.Value);
             }
-            if (Certificate != null)
+            if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
 #if NET6_0_OR_GREATER
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
 #endif
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "R");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "R");
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceProvisioningServicesCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             DateTimeOffset? created = default;
             DateTimeOffset? updated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subject"u8))
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DeviceProvisioningServicesCertificateProperties(
                 subject,
                 expiry,
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         return DeserializeDeviceProvisioningServicesCertificateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceProvisioningServicesCertificateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

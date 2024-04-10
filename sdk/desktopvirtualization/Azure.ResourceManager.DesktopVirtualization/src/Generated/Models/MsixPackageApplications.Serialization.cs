@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<MsixPackageApplications>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AppId != null)
+            if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (AppUserModelId != null)
+            if (Optional.IsDefined(AppUserModelId))
             {
                 writer.WritePropertyName("appUserModelID"u8);
                 writer.WriteStringValue(AppUserModelId);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (IconImageName != null)
+            if (Optional.IsDefined(IconImageName))
             {
                 writer.WritePropertyName("iconImageName"u8);
                 writer.WriteStringValue(IconImageName);
             }
-            if (RawIcon != null)
+            if (Optional.IsDefined(RawIcon))
             {
                 writer.WritePropertyName("rawIcon"u8);
 #if NET6_0_OR_GREATER
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
 #endif
             }
-            if (RawPng != null)
+            if (Optional.IsDefined(RawPng))
             {
                 writer.WritePropertyName("rawPng"u8);
 #if NET6_0_OR_GREATER
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<MsixPackageApplications>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             BinaryData rawIcon = default;
             BinaryData rawPng = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appId"u8))
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MsixPackageApplications(
                 appId,
                 description,
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeMsixPackageApplications(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support reading '{options.Format}' format.");
             }
         }
 

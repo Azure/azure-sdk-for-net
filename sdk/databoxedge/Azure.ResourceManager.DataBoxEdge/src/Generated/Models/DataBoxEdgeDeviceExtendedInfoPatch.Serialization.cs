@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfoPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfoPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ClientSecretStoreId != null)
+            if (Optional.IsDefined(ClientSecretStoreId))
             {
                 writer.WritePropertyName("clientSecretStoreId"u8);
                 writer.WriteStringValue(ClientSecretStoreId);
             }
-            if (ClientSecretStoreUri != null)
+            if (Optional.IsDefined(ClientSecretStoreUri))
             {
                 writer.WritePropertyName("clientSecretStoreUrl"u8);
                 writer.WriteStringValue(ClientSecretStoreUri.AbsoluteUri);
             }
-            if (ChannelIntegrityKeyName != null)
+            if (Optional.IsDefined(ChannelIntegrityKeyName))
             {
                 writer.WritePropertyName("channelIntegrityKeyName"u8);
                 writer.WriteStringValue(ChannelIntegrityKeyName);
             }
-            if (ChannelIntegrityKeyVersion != null)
+            if (Optional.IsDefined(ChannelIntegrityKeyVersion))
             {
                 writer.WritePropertyName("channelIntegrityKeyVersion"u8);
                 writer.WriteStringValue(ChannelIntegrityKeyVersion);
             }
-            if (SyncStatus.HasValue)
+            if (Optional.IsDefined(SyncStatus))
             {
                 writer.WritePropertyName("syncStatus"u8);
                 writer.WriteStringValue(SyncStatus.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfoPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfoPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string channelIntegrityKeyVersion = default;
             EdgeKeyVaultSyncStatus? syncStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientSecretStoreId"u8))
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxEdgeDeviceExtendedInfoPatch(
                 clientSecretStoreId,
                 clientSecretStoreUrl,
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfoPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfoPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeDeviceExtendedInfoPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfoPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceExtendedInfoPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

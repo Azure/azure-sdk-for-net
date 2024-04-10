@@ -22,40 +22,40 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectorMappingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectorMappingProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (FileFilter != null)
+            if (Optional.IsDefined(FileFilter))
             {
                 writer.WritePropertyName("fileFilter"u8);
                 writer.WriteStringValue(FileFilter);
             }
-            if (HasHeader.HasValue)
+            if (Optional.IsDefined(HasHeader))
             {
                 writer.WritePropertyName("hasHeader"u8);
                 writer.WriteBooleanValue(HasHeader.Value);
             }
             writer.WritePropertyName("errorManagement"u8);
-            writer.WriteObjectValue(ErrorManagement);
+            writer.WriteObjectValue<ConnectorMappingErrorManagement>(ErrorManagement, options);
             writer.WritePropertyName("format"u8);
-            writer.WriteObjectValue(Format);
+            writer.WriteObjectValue<ConnectorMappingFormat>(Format, options);
             writer.WritePropertyName("availability"u8);
-            writer.WriteObjectValue(Availability);
+            writer.WriteObjectValue<ConnectorMappingAvailability>(Availability, options);
             writer.WritePropertyName("structure"u8);
             writer.WriteStartArray();
             foreach (var item in Structure)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ConnectorMappingStructure>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("completeOperation"u8);
-            writer.WriteObjectValue(CompleteOperation);
+            writer.WriteObjectValue<ConnectorMappingCompleteOperation>(CompleteOperation, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectorMappingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectorMappingProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             IList<ConnectorMappingStructure> structure = default;
             ConnectorMappingCompleteOperation completeOperation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("folderPath"u8))
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectorMappingProperties(
                 folderPath,
                 fileFilter,
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectorMappingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectorMappingProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeConnectorMappingProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectorMappingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectorMappingProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

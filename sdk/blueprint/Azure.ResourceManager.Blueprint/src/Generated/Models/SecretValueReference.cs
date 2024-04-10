@@ -53,14 +53,8 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyVault"/> or <paramref name="secretName"/> is null. </exception>
         public SecretValueReference(WritableSubResource keyVault, string secretName)
         {
-            if (keyVault == null)
-            {
-                throw new ArgumentNullException(nameof(keyVault));
-            }
-            if (secretName == null)
-            {
-                throw new ArgumentNullException(nameof(secretName));
-            }
+            Argument.AssertNotNull(keyVault, nameof(keyVault));
+            Argument.AssertNotNull(secretName, nameof(secretName));
 
             KeyVault = keyVault;
             SecretName = secretName;

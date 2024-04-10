@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiRevisionContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiRevisionContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiRevisionContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ApiId != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiId))
             {
                 writer.WritePropertyName("apiId"u8);
                 writer.WriteStringValue(ApiId);
             }
-            if (options.Format != "W" && ApiRevision != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiRevision))
             {
                 writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedDateTime"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && PrivateUriString != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateUriString))
             {
                 writer.WritePropertyName("privateUrl"u8);
                 writer.WriteStringValue(PrivateUriString);
             }
-            if (options.Format != "W" && IsOnline.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsOnline))
             {
                 writer.WritePropertyName("isOnline"u8);
                 writer.WriteBooleanValue(IsOnline.Value);
             }
-            if (options.Format != "W" && IsCurrent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsCurrent))
             {
                 writer.WritePropertyName("isCurrent"u8);
                 writer.WriteBooleanValue(IsCurrent.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiRevisionContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiRevisionContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiRevisionContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             bool? isOnline = default;
             bool? isCurrent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiId"u8))
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApiRevisionContract(
                 apiId,
                 apiRevision,
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiRevisionContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiRevisionContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiRevisionContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiRevisionContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiRevisionContract)} does not support reading '{options.Format}' format.");
             }
         }
 

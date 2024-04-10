@@ -22,30 +22,30 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebApplicationCustomRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebApplicationCustomRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebApplicationCustomRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (RateLimitDurationInMinutes.HasValue)
+            if (Optional.IsDefined(RateLimitDurationInMinutes))
             {
                 writer.WritePropertyName("rateLimitDurationInMinutes"u8);
                 writer.WriteNumberValue(RateLimitDurationInMinutes.Value);
             }
-            if (RateLimitThreshold.HasValue)
+            if (Optional.IsDefined(RateLimitThreshold))
             {
                 writer.WritePropertyName("rateLimitThreshold"u8);
                 writer.WriteNumberValue(RateLimitThreshold.Value);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartArray();
             foreach (var item in MatchConditions)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<WebApplicationRuleMatchCondition>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebApplicationCustomRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebApplicationCustomRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebApplicationCustomRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             IList<WebApplicationRuleMatchCondition> matchConditions = default;
             RuleMatchActionType action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebApplicationCustomRule(
                 name,
                 priority,
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebApplicationCustomRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebApplicationCustomRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeWebApplicationCustomRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebApplicationCustomRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebApplicationCustomRule)} does not support reading '{options.Format}' format.");
             }
         }
 

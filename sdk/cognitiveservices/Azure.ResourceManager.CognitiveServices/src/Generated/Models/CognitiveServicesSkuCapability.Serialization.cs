@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,16 +23,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSkuCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesSkuCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesSkuCapability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSkuCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesSkuCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesSkuCapability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string name = default;
             string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -92,11 +93,70 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CognitiveServicesSkuCapability(name, value, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (Optional.IsDefined(Value) || hasPropertyOverride)
+            {
+                builder.Append("  value: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Value.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Value}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Value}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CognitiveServicesSkuCapability>.Write(ModelReaderWriterOptions options)
@@ -107,8 +167,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesSkuCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesSkuCapability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +186,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCognitiveServicesSkuCapability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesSkuCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesSkuCapability)} does not support reading '{options.Format}' format.");
             }
         }
 

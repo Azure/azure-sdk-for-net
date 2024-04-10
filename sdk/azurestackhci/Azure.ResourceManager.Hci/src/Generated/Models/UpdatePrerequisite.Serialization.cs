@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdatePrerequisite>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UpdateType != null)
+            if (Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (PackageName != null)
+            if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdatePrerequisite>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Models
             string version = default;
             string packageName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("updateType"u8))
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UpdatePrerequisite(updateType, version, packageName, serializedAdditionalRawData);
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeUpdatePrerequisite(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support reading '{options.Format}' format.");
             }
         }
 

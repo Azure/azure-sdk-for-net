@@ -22,97 +22,97 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDiagnoseResultValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningDiagnoseResultValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningDiagnoseResultValue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(UserDefinedRouteResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(UserDefinedRouteResults))
             {
                 writer.WritePropertyName("userDefinedRouteResults"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserDefinedRouteResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningDiagnoseResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(NetworkSecurityRuleResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkSecurityRuleResults))
             {
                 writer.WritePropertyName("networkSecurityRuleResults"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityRuleResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningDiagnoseResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResourceLockResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceLockResults))
             {
                 writer.WritePropertyName("resourceLockResults"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceLockResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningDiagnoseResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(DnsResolutionResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsResolutionResults))
             {
                 writer.WritePropertyName("dnsResolutionResults"u8);
                 writer.WriteStartArray();
                 foreach (var item in DnsResolutionResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningDiagnoseResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(StorageAccountResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccountResults))
             {
                 writer.WritePropertyName("storageAccountResults"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageAccountResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningDiagnoseResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(KeyVaultResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(KeyVaultResults))
             {
                 writer.WritePropertyName("keyVaultResults"u8);
                 writer.WriteStartArray();
                 foreach (var item in KeyVaultResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningDiagnoseResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ContainerRegistryResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(ContainerRegistryResults))
             {
                 writer.WritePropertyName("containerRegistryResults"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContainerRegistryResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningDiagnoseResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ApplicationInsightsResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationInsightsResults))
             {
                 writer.WritePropertyName("applicationInsightsResults"u8);
                 writer.WriteStartArray();
                 foreach (var item in ApplicationInsightsResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningDiagnoseResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(OtherResults is ChangeTrackingList<MachineLearningDiagnoseResult> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(OtherResults))
             {
                 writer.WritePropertyName("otherResults"u8);
                 writer.WriteStartArray();
                 foreach (var item in OtherResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningDiagnoseResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDiagnoseResultValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningDiagnoseResultValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningDiagnoseResultValue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IReadOnlyList<MachineLearningDiagnoseResult> applicationInsightsResults = default;
             IReadOnlyList<MachineLearningDiagnoseResult> otherResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userDefinedRouteResults"u8))
@@ -295,10 +295,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningDiagnoseResultValue(
                 userDefinedRouteResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
                 networkSecurityRuleResults ?? new ChangeTrackingList<MachineLearningDiagnoseResult>(),
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningDiagnoseResultValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningDiagnoseResultValue)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningDiagnoseResultValue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningDiagnoseResultValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningDiagnoseResultValue)} does not support reading '{options.Format}' format.");
             }
         }
 

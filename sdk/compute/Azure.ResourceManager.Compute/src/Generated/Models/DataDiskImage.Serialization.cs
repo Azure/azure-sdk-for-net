@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataDiskImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataDiskImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataDiskImage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Lun.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataDiskImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataDiskImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataDiskImage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             int? lun = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataDiskImage(lun, serializedAdditionalRawData);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataDiskImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataDiskImage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDataDiskImage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataDiskImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataDiskImage)} does not support reading '{options.Format}' format.");
             }
         }
 

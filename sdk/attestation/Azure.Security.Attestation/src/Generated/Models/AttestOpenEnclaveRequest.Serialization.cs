@@ -15,27 +15,35 @@ namespace Azure.Security.Attestation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Report != null)
+            if (Optional.IsDefined(Report))
             {
                 writer.WritePropertyName("report"u8);
                 writer.WriteBase64StringValue(Report, "U");
             }
-            if (RuntimeData != null)
+            if (Optional.IsDefined(RuntimeData))
             {
                 writer.WritePropertyName("runtimeData"u8);
-                writer.WriteObjectValue(RuntimeData);
+                writer.WriteObjectValue<RuntimeData>(RuntimeData);
             }
-            if (InitTimeData != null)
+            if (Optional.IsDefined(InitTimeData))
             {
                 writer.WritePropertyName("initTimeData"u8);
-                writer.WriteObjectValue(InitTimeData);
+                writer.WriteObjectValue<InitTimeData>(InitTimeData);
             }
-            if (DraftPolicyForAttestation != null)
+            if (Optional.IsDefined(DraftPolicyForAttestation))
             {
                 writer.WritePropertyName("draftPolicyForAttestation"u8);
                 writer.WriteStringValue(DraftPolicyForAttestation);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AttestOpenEnclaveRequest>(this);
+            return content;
         }
     }
 }

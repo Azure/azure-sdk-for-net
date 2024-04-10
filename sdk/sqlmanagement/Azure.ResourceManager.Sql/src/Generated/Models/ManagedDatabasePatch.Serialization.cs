@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabasePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,112 +39,112 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Collation != null)
+            if (Optional.IsDefined(Collation))
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && EarliestRestorePoint.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EarliestRestorePoint))
             {
                 writer.WritePropertyName("earliestRestorePoint"u8);
                 writer.WriteStringValue(EarliestRestorePoint.Value, "O");
             }
-            if (RestorePointInTime.HasValue)
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (options.Format != "W" && DefaultSecondaryLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultSecondaryLocation))
             {
                 writer.WritePropertyName("defaultSecondaryLocation"u8);
                 writer.WriteStringValue(DefaultSecondaryLocation.Value);
             }
-            if (CatalogCollation.HasValue)
+            if (Optional.IsDefined(CatalogCollation))
             {
                 writer.WritePropertyName("catalogCollation"u8);
                 writer.WriteStringValue(CatalogCollation.Value.ToString());
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (StorageContainerUri != null)
+            if (Optional.IsDefined(StorageContainerUri))
             {
                 writer.WritePropertyName("storageContainerUri"u8);
                 writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
             }
-            if (SourceDatabaseId != null)
+            if (Optional.IsDefined(SourceDatabaseId))
             {
                 writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (CrossSubscriptionSourceDatabaseId != null)
+            if (Optional.IsDefined(CrossSubscriptionSourceDatabaseId))
             {
                 writer.WritePropertyName("crossSubscriptionSourceDatabaseId"u8);
                 writer.WriteStringValue(CrossSubscriptionSourceDatabaseId);
             }
-            if (RestorableDroppedDatabaseId != null)
+            if (Optional.IsDefined(RestorableDroppedDatabaseId))
             {
                 writer.WritePropertyName("restorableDroppedDatabaseId"u8);
                 writer.WriteStringValue(RestorableDroppedDatabaseId);
             }
-            if (CrossSubscriptionRestorableDroppedDatabaseId != null)
+            if (Optional.IsDefined(CrossSubscriptionRestorableDroppedDatabaseId))
             {
                 writer.WritePropertyName("crossSubscriptionRestorableDroppedDatabaseId"u8);
                 writer.WriteStringValue(CrossSubscriptionRestorableDroppedDatabaseId);
             }
-            if (StorageContainerIdentity != null)
+            if (Optional.IsDefined(StorageContainerIdentity))
             {
                 writer.WritePropertyName("storageContainerIdentity"u8);
                 writer.WriteStringValue(StorageContainerIdentity);
             }
-            if (StorageContainerSasToken != null)
+            if (Optional.IsDefined(StorageContainerSasToken))
             {
                 writer.WritePropertyName("storageContainerSasToken"u8);
                 writer.WriteStringValue(StorageContainerSasToken);
             }
-            if (options.Format != "W" && FailoverGroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(FailoverGroupId))
             {
                 writer.WritePropertyName("failoverGroupId"u8);
                 writer.WriteStringValue(FailoverGroupId);
             }
-            if (RecoverableDatabaseId != null)
+            if (Optional.IsDefined(RecoverableDatabaseId))
             {
                 writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
-            if (LongTermRetentionBackupResourceId != null)
+            if (Optional.IsDefined(LongTermRetentionBackupResourceId))
             {
                 writer.WritePropertyName("longTermRetentionBackupResourceId"u8);
                 writer.WriteStringValue(LongTermRetentionBackupResourceId);
             }
-            if (AllowAutoCompleteRestore.HasValue)
+            if (Optional.IsDefined(AllowAutoCompleteRestore))
             {
                 writer.WritePropertyName("autoCompleteRestore"u8);
                 writer.WriteBooleanValue(AllowAutoCompleteRestore.Value);
             }
-            if (LastBackupName != null)
+            if (Optional.IsDefined(LastBackupName))
             {
                 writer.WritePropertyName("lastBackupName"u8);
                 writer.WriteStringValue(LastBackupName);
             }
-            if (CrossSubscriptionTargetManagedInstanceId != null)
+            if (Optional.IsDefined(CrossSubscriptionTargetManagedInstanceId))
             {
                 writer.WritePropertyName("crossSubscriptionTargetManagedInstanceId"u8);
                 writer.WriteStringValue(CrossSubscriptionTargetManagedInstanceId);
             }
-            if (IsLedgerOn.HasValue)
+            if (Optional.IsDefined(IsLedgerOn))
             {
                 writer.WritePropertyName("isLedgerOn"u8);
                 writer.WriteBooleanValue(IsLedgerOn.Value);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabasePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier crossSubscriptionTargetManagedInstanceId = default;
             bool? isLedgerOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -425,10 +425,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedDatabasePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 collation,
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedDatabasePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDatabasePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

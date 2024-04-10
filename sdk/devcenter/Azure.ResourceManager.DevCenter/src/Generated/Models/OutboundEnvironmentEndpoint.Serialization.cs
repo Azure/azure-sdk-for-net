@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<OutboundEnvironmentEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OutboundEnvironmentEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OutboundEnvironmentEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Category != null)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && !(Endpoints is ChangeTrackingList<EndpointDependency> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EndpointDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<OutboundEnvironmentEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OutboundEnvironmentEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OutboundEnvironmentEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             string category = default;
             IReadOnlyList<EndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OutboundEnvironmentEndpoint(category, endpoints ?? new ChangeTrackingList<EndpointDependency>(), serializedAdditionalRawData);
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OutboundEnvironmentEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OutboundEnvironmentEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                         return DeserializeOutboundEnvironmentEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OutboundEnvironmentEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OutboundEnvironmentEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

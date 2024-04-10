@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionHostData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionHostData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,100 +43,100 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (LastHeartBeatOn.HasValue)
+            if (Optional.IsDefined(LastHeartBeatOn))
             {
                 writer.WritePropertyName("lastHeartBeat"u8);
                 writer.WriteStringValue(LastHeartBeatOn.Value, "O");
             }
-            if (Sessions.HasValue)
+            if (Optional.IsDefined(Sessions))
             {
                 writer.WritePropertyName("sessions"u8);
                 writer.WriteNumberValue(Sessions.Value);
             }
-            if (AgentVersion != null)
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (AllowNewSession.HasValue)
+            if (Optional.IsDefined(AllowNewSession))
             {
                 writer.WritePropertyName("allowNewSession"u8);
                 writer.WriteBooleanValue(AllowNewSession.Value);
             }
-            if (options.Format != "W" && VmId != null)
+            if (options.Format != "W" && Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (AssignedUser != null)
+            if (Optional.IsDefined(AssignedUser))
             {
                 writer.WritePropertyName("assignedUser"u8);
                 writer.WriteStringValue(AssignedUser);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && StatusTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StatusTimestamp))
             {
                 writer.WritePropertyName("statusTimestamp"u8);
                 writer.WriteStringValue(StatusTimestamp.Value, "O");
             }
-            if (OSVersion != null)
+            if (Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (SxsStackVersion != null)
+            if (Optional.IsDefined(SxsStackVersion))
             {
                 writer.WritePropertyName("sxSStackVersion"u8);
                 writer.WriteStringValue(SxsStackVersion);
             }
-            if (UpdateState.HasValue)
+            if (Optional.IsDefined(UpdateState))
             {
                 writer.WritePropertyName("updateState"u8);
                 writer.WriteStringValue(UpdateState.Value.ToString());
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (UpdateErrorMessage != null)
+            if (Optional.IsDefined(UpdateErrorMessage))
             {
                 writer.WritePropertyName("updateErrorMessage"u8);
                 writer.WriteStringValue(UpdateErrorMessage);
             }
-            if (options.Format != "W" && !(SessionHostHealthCheckResults is ChangeTrackingList<SessionHostHealthCheckReport> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SessionHostHealthCheckResults))
             {
                 writer.WritePropertyName("sessionHostHealthCheckResults"u8);
                 writer.WriteStartArray();
                 foreach (var item in SessionHostHealthCheckResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SessionHostHealthCheckReport>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionHostData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionHostData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             string updateErrorMessage = default;
             IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -368,10 +368,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SessionHostData(
                 id,
                 name,
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SessionHostData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionHostData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         return DeserializeSessionHostData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionHostData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionHostData)} does not support reading '{options.Format}' format.");
             }
         }
 

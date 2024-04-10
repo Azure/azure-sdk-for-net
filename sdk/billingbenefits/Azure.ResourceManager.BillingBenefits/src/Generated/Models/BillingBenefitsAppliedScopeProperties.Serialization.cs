@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsAppliedScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingBenefitsAppliedScopeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingBenefitsAppliedScopeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (ManagementGroupId != null)
+            if (Optional.IsDefined(ManagementGroupId))
             {
                 writer.WritePropertyName("managementGroupId"u8);
                 writer.WriteStringValue(ManagementGroupId);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (ResourceGroupId != null)
+            if (Optional.IsDefined(ResourceGroupId))
             {
                 writer.WritePropertyName("resourceGroupId"u8);
                 writer.WriteStringValue(ResourceGroupId);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsAppliedScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingBenefitsAppliedScopeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingBenefitsAppliedScopeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             ResourceIdentifier resourceGroupId = default;
             string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BillingBenefitsAppliedScopeProperties(
                 tenantId,
                 managementGroupId,
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsAppliedScopeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingBenefitsAppliedScopeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         return DeserializeBillingBenefitsAppliedScopeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingBenefitsAppliedScopeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingBenefitsAppliedScopeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

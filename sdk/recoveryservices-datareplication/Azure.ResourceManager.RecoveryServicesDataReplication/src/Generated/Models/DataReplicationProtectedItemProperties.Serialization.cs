@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,107 +30,107 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(PolicyName);
             writer.WritePropertyName("replicationExtensionName"u8);
             writer.WriteStringValue(ReplicationExtensionName);
-            if (options.Format != "W" && CorrelationId != null)
+            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ProtectionState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
-            if (options.Format != "W" && ProtectionStateDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(ProtectionStateDescription))
             {
                 writer.WritePropertyName("protectionStateDescription"u8);
                 writer.WriteStringValue(ProtectionStateDescription);
             }
-            if (options.Format != "W" && TestFailoverState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TestFailoverState))
             {
                 writer.WritePropertyName("testFailoverState"u8);
                 writer.WriteStringValue(TestFailoverState.Value.ToString());
             }
-            if (options.Format != "W" && TestFailoverStateDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(TestFailoverStateDescription))
             {
                 writer.WritePropertyName("testFailoverStateDescription"u8);
                 writer.WriteStringValue(TestFailoverStateDescription);
             }
-            if (options.Format != "W" && ResynchronizationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResynchronizationState))
             {
                 writer.WritePropertyName("resynchronizationState"u8);
                 writer.WriteStringValue(ResynchronizationState.Value.ToString());
             }
-            if (options.Format != "W" && FabricObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(FabricObjectId))
             {
                 writer.WritePropertyName("fabricObjectId"u8);
                 writer.WriteStringValue(FabricObjectId);
             }
-            if (options.Format != "W" && FabricObjectName != null)
+            if (options.Format != "W" && Optional.IsDefined(FabricObjectName))
             {
                 writer.WritePropertyName("fabricObjectName"u8);
                 writer.WriteStringValue(FabricObjectName);
             }
-            if (options.Format != "W" && SourceFabricProviderId != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceFabricProviderId))
             {
                 writer.WritePropertyName("sourceFabricProviderId"u8);
                 writer.WriteStringValue(SourceFabricProviderId);
             }
-            if (options.Format != "W" && TargetFabricProviderId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetFabricProviderId))
             {
                 writer.WritePropertyName("targetFabricProviderId"u8);
                 writer.WriteStringValue(TargetFabricProviderId);
             }
-            if (options.Format != "W" && FabricId != null)
+            if (options.Format != "W" && Optional.IsDefined(FabricId))
             {
                 writer.WritePropertyName("fabricId"u8);
                 writer.WriteStringValue(FabricId);
             }
-            if (options.Format != "W" && TargetFabricId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetFabricId))
             {
                 writer.WritePropertyName("targetFabricId"u8);
                 writer.WriteStringValue(TargetFabricId);
             }
-            if (options.Format != "W" && DraId != null)
+            if (options.Format != "W" && Optional.IsDefined(DraId))
             {
                 writer.WritePropertyName("draId"u8);
                 writer.WriteStringValue(DraId);
             }
-            if (options.Format != "W" && TargetDraId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetDraId))
             {
                 writer.WritePropertyName("targetDraId"u8);
                 writer.WriteStringValue(TargetDraId);
             }
-            if (options.Format != "W" && IsResyncRequired.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsResyncRequired))
             {
                 writer.WritePropertyName("resyncRequired"u8);
                 writer.WriteBooleanValue(IsResyncRequired.Value);
             }
-            if (options.Format != "W" && LastSuccessfulPlannedFailoverOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSuccessfulPlannedFailoverOn))
             {
                 writer.WritePropertyName("lastSuccessfulPlannedFailoverTime"u8);
                 writer.WriteStringValue(LastSuccessfulPlannedFailoverOn.Value, "O");
             }
-            if (options.Format != "W" && LastSuccessfulUnplannedFailoverOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSuccessfulUnplannedFailoverOn))
             {
                 writer.WritePropertyName("lastSuccessfulUnplannedFailoverTime"u8);
                 writer.WriteStringValue(LastSuccessfulUnplannedFailoverOn.Value, "O");
             }
-            if (options.Format != "W" && LastSuccessfulTestFailoverOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSuccessfulTestFailoverOn))
             {
                 writer.WritePropertyName("lastSuccessfulTestFailoverTime"u8);
                 writer.WriteStringValue(LastSuccessfulTestFailoverOn.Value, "O");
             }
-            if (options.Format != "W" && CurrentJob != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentJob))
             {
                 writer.WritePropertyName("currentJob"u8);
-                writer.WriteObjectValue(CurrentJob);
+                writer.WriteObjectValue<ProtectedItemJobProperties>(CurrentJob, options);
             }
-            if (options.Format != "W" && !(AllowedJobs is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AllowedJobs))
             {
                 writer.WritePropertyName("allowedJobs"u8);
                 writer.WriteStartArray();
@@ -140,38 +140,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastFailedEnableProtectionJob != null)
+            if (options.Format != "W" && Optional.IsDefined(LastFailedEnableProtectionJob))
             {
                 writer.WritePropertyName("lastFailedEnableProtectionJob"u8);
-                writer.WriteObjectValue(LastFailedEnableProtectionJob);
+                writer.WriteObjectValue<ProtectedItemJobProperties>(LastFailedEnableProtectionJob, options);
             }
-            if (options.Format != "W" && LastFailedPlannedFailoverJob != null)
+            if (options.Format != "W" && Optional.IsDefined(LastFailedPlannedFailoverJob))
             {
                 writer.WritePropertyName("lastFailedPlannedFailoverJob"u8);
-                writer.WriteObjectValue(LastFailedPlannedFailoverJob);
+                writer.WriteObjectValue<ProtectedItemJobProperties>(LastFailedPlannedFailoverJob, options);
             }
-            if (options.Format != "W" && LastTestFailoverJob != null)
+            if (options.Format != "W" && Optional.IsDefined(LastTestFailoverJob))
             {
                 writer.WritePropertyName("lastTestFailoverJob"u8);
-                writer.WriteObjectValue(LastTestFailoverJob);
+                writer.WriteObjectValue<ProtectedItemJobProperties>(LastTestFailoverJob, options);
             }
-            if (options.Format != "W" && ReplicationHealth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReplicationHealth))
             {
                 writer.WritePropertyName("replicationHealth"u8);
                 writer.WriteStringValue(ReplicationHealth.Value.ToString());
             }
-            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<DataReplicationHealthErrorInfo> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataReplicationHealthErrorInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties);
+            writer.WriteObjectValue<ProtectedItemModelCustomProperties>(CustomProperties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             ProtectedItemModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyName"u8))
@@ -460,10 +460,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataReplicationProtectedItemProperties(
                 policyName,
                 replicationExtensionName,
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeDataReplicationProtectedItemProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationProtectedItemProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

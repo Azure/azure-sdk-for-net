@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Display != null)
+            if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue(Display);
+                writer.WriteObjectValue<OperationDisplay>(Display, options);
             }
-            if (Origin != null)
+            if (Optional.IsDefined(Origin))
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             OperationDisplay display = default;
             string origin = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OperationResponse(name, display, origin, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                         return DeserializeOperationResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

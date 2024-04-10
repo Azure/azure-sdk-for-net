@@ -20,30 +20,30 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(Code.ToString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (!(Details is ChangeTrackingList<Error> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Error>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Innererror != null)
+            if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror);
+                writer.WriteObjectValue<InnerErrorModel>(Innererror);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -111,6 +111,22 @@ namespace Azure.AI.TextAnalytics.Models
                 details ?? new ChangeTrackingList<Error>(),
                 innererror,
                 additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Error FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeError(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<Error>(this);
+            return content;
         }
     }
 }

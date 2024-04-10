@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogApiKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogApiKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogApiKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CreatedBy != null)
+            if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
-            if (Created != null)
+            if (Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogApiKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogApiKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogApiKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Datadog.Models
             string key = default;
             string created = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdBy"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DatadogApiKey(createdBy, name, key, created, serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogApiKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogApiKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeDatadogApiKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogApiKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogApiKey)} does not support reading '{options.Format}' format.");
             }
         }
 

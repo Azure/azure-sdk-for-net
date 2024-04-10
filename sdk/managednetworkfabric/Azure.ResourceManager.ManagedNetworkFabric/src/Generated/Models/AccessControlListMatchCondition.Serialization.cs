@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(EtherTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EtherTypes))
             {
                 writer.WritePropertyName("etherTypes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Fragments is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Fragments))
             {
                 writer.WritePropertyName("fragments"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPLengths is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IPLengths))
             {
                 writer.WritePropertyName("ipLengths"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TtlValues is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(TtlValues))
             {
                 writer.WritePropertyName("ttlValues"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DscpMarkings is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(DscpMarkings))
             {
                 writer.WritePropertyName("dscpMarkings"u8);
                 writer.WriteStartArray();
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PortCondition != null)
+            if (Optional.IsDefined(PortCondition))
             {
                 writer.WritePropertyName("portCondition"u8);
-                writer.WriteObjectValue(PortCondition);
+                writer.WriteObjectValue<AccessControlListPortCondition>(PortCondition, options);
             }
-            if (!(ProtocolTypes is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtocolTypes))
             {
                 writer.WritePropertyName("protocolTypes"u8);
                 writer.WriteStartArray();
@@ -91,15 +91,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (VlanMatchCondition != null)
+            if (Optional.IsDefined(VlanMatchCondition))
             {
                 writer.WritePropertyName("vlanMatchCondition"u8);
-                writer.WriteObjectValue(VlanMatchCondition);
+                writer.WriteObjectValue<VlanMatchCondition>(VlanMatchCondition, options);
             }
-            if (IPCondition != null)
+            if (Optional.IsDefined(IPCondition))
             {
                 writer.WritePropertyName("ipCondition"u8);
-                writer.WriteObjectValue(IPCondition);
+                writer.WriteObjectValue<IPMatchCondition>(IPCondition, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             VlanMatchCondition vlanMatchCondition = default;
             IPMatchCondition ipCondition = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etherTypes"u8))
@@ -265,10 +265,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AccessControlListMatchCondition(
                 protocolTypes ?? new ChangeTrackingList<string>(),
                 vlanMatchCondition,
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeAccessControlListMatchCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessControlListMatchCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

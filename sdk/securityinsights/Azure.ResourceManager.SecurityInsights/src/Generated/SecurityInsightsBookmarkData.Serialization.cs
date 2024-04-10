@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -25,11 +24,11 @@ namespace Azure.ResourceManager.SecurityInsights
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsBookmarkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsBookmarkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsBookmarkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,29 +48,29 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (CreatedBy != null)
+            if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy);
+                writer.WriteObjectValue<SecurityInsightsUserInfo>(CreatedBy, options);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(Labels is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -81,50 +80,50 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Notes != null)
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (QueryResult != null)
+            if (Optional.IsDefined(QueryResult))
             {
                 writer.WritePropertyName("queryResult"u8);
                 writer.WriteStringValue(QueryResult);
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (UpdatedBy != null)
+            if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy);
+                writer.WriteObjectValue<SecurityInsightsUserInfo>(UpdatedBy, options);
             }
-            if (EventOn.HasValue)
+            if (Optional.IsDefined(EventOn))
             {
                 writer.WritePropertyName("eventTime"u8);
                 writer.WriteStringValue(EventOn.Value, "O");
             }
-            if (QueryStartOn.HasValue)
+            if (Optional.IsDefined(QueryStartOn))
             {
                 writer.WritePropertyName("queryStartTime"u8);
                 writer.WriteStringValue(QueryStartOn.Value, "O");
             }
-            if (QueryEndOn.HasValue)
+            if (Optional.IsDefined(QueryEndOn))
             {
                 writer.WritePropertyName("queryEndTime"u8);
                 writer.WriteStringValue(QueryEndOn.Value, "O");
             }
-            if (IncidentInfo != null)
+            if (Optional.IsDefined(IncidentInfo))
             {
                 writer.WritePropertyName("incidentInfo"u8);
-                writer.WriteObjectValue(IncidentInfo);
+                writer.WriteObjectValue<SecurityInsightsBookmarkIncidentInfo>(IncidentInfo, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.SecurityInsights
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsBookmarkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsBookmarkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsBookmarkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.SecurityInsights
             DateTimeOffset? queryEndTime = default;
             SecurityInsightsBookmarkIncidentInfo incidentInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -340,10 +339,10 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsBookmarkData(
                 id,
                 name,
@@ -375,7 +374,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsBookmarkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsBookmarkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -391,7 +390,7 @@ namespace Azure.ResourceManager.SecurityInsights
                         return DeserializeSecurityInsightsBookmarkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsBookmarkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsBookmarkData)} does not support reading '{options.Format}' format.");
             }
         }
 

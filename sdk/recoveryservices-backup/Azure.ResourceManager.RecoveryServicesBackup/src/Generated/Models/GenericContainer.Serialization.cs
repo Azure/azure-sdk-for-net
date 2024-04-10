@@ -22,43 +22,43 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenericContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenericContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenericContainer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FabricName != null)
+            if (Optional.IsDefined(FabricName))
             {
                 writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName);
             }
-            if (ExtendedInformation != null)
+            if (Optional.IsDefined(ExtendedInformation))
             {
                 writer.WritePropertyName("extendedInformation"u8);
-                writer.WriteObjectValue(ExtendedInformation);
+                writer.WriteObjectValue<GenericContainerExtendedInfo>(ExtendedInformation, options);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (BackupManagementType.HasValue)
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (RegistrationStatus != null)
+            if (Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (HealthStatus != null)
+            if (Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("containerType"u8);
             writer.WriteStringValue(ContainerType.ToSerialString());
-            if (ProtectableObjectType != null)
+            if (Optional.IsDefined(ProtectableObjectType))
             {
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<GenericContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenericContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GenericContainer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectableContainerType containerType = default;
             string protectableObjectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fabricName"u8))
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GenericContainer(
                 friendlyName,
                 backupManagementType,
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GenericContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenericContainer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeGenericContainer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenericContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenericContainer)} does not support reading '{options.Format}' format.");
             }
         }
 

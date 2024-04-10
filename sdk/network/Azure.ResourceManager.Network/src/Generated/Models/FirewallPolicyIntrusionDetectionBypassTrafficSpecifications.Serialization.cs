@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionBypassTrafficSpecifications)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionBypassTrafficSpecifications)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (!(SourceAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceAddresses))
             {
                 writer.WritePropertyName("sourceAddresses"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationAddresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationAddresses))
             {
                 writer.WritePropertyName("destinationAddresses"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationPorts is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationPorts))
             {
                 writer.WritePropertyName("destinationPorts"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourceIPGroups is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationIPGroups is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationIPGroups))
             {
                 writer.WritePropertyName("destinationIpGroups"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionBypassTrafficSpecifications)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionBypassTrafficSpecifications)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> sourceIPGroups = default;
             IList<string> destinationIPGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FirewallPolicyIntrusionDetectionBypassTrafficSpecifications(
                 name,
                 description,
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionBypassTrafficSpecifications)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionBypassTrafficSpecifications)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeFirewallPolicyIntrusionDetectionBypassTrafficSpecifications(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionBypassTrafficSpecifications)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionBypassTrafficSpecifications)} does not support reading '{options.Format}' format.");
             }
         }
 

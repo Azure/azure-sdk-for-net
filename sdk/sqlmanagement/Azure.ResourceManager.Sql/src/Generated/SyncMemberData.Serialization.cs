@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SyncMemberData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncMemberData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncMemberData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,69 +44,69 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DatabaseType.HasValue)
+            if (Optional.IsDefined(DatabaseType))
             {
                 writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
             }
-            if (SyncAgentId != null)
+            if (Optional.IsDefined(SyncAgentId))
             {
                 writer.WritePropertyName("syncAgentId"u8);
                 writer.WriteStringValue(SyncAgentId);
             }
-            if (SqlServerDatabaseId.HasValue)
+            if (Optional.IsDefined(SqlServerDatabaseId))
             {
                 writer.WritePropertyName("sqlServerDatabaseId"u8);
                 writer.WriteStringValue(SqlServerDatabaseId.Value);
             }
-            if (SyncMemberAzureDatabaseResourceId != null)
+            if (Optional.IsDefined(SyncMemberAzureDatabaseResourceId))
             {
                 writer.WritePropertyName("syncMemberAzureDatabaseResourceId"u8);
                 writer.WriteStringValue(SyncMemberAzureDatabaseResourceId);
             }
-            if (UsePrivateLinkConnection.HasValue)
+            if (Optional.IsDefined(UsePrivateLinkConnection))
             {
                 writer.WritePropertyName("usePrivateLinkConnection"u8);
                 writer.WriteBooleanValue(UsePrivateLinkConnection.Value);
             }
-            if (options.Format != "W" && PrivateEndpointName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointName))
             {
                 writer.WritePropertyName("privateEndpointName"u8);
                 writer.WriteStringValue(PrivateEndpointName);
             }
-            if (ServerName != null)
+            if (Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (SyncDirection.HasValue)
+            if (Optional.IsDefined(SyncDirection))
             {
                 writer.WritePropertyName("syncDirection"u8);
                 writer.WriteStringValue(SyncDirection.Value.ToString());
             }
-            if (options.Format != "W" && SyncState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SyncState))
             {
                 writer.WritePropertyName("syncState"u8);
                 writer.WriteStringValue(SyncState.Value.ToString());
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SyncMemberData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyncMemberData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyncMemberData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Sql
             SyncDirection? syncDirection = default;
             SyncMemberState? syncState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -295,10 +296,10 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SyncMemberData(
                 id,
                 name,
@@ -319,6 +320,283 @@ namespace Azure.ResourceManager.Sql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseType), out propertyOverride);
+            if (Optional.IsDefined(DatabaseType) || hasPropertyOverride)
+            {
+                builder.Append("    databaseType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DatabaseType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncAgentId), out propertyOverride);
+            if (Optional.IsDefined(SyncAgentId) || hasPropertyOverride)
+            {
+                builder.Append("    syncAgentId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SyncAgentId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SqlServerDatabaseId), out propertyOverride);
+            if (Optional.IsDefined(SqlServerDatabaseId) || hasPropertyOverride)
+            {
+                builder.Append("    sqlServerDatabaseId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SqlServerDatabaseId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncMemberAzureDatabaseResourceId), out propertyOverride);
+            if (Optional.IsDefined(SyncMemberAzureDatabaseResourceId) || hasPropertyOverride)
+            {
+                builder.Append("    syncMemberAzureDatabaseResourceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SyncMemberAzureDatabaseResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UsePrivateLinkConnection), out propertyOverride);
+            if (Optional.IsDefined(UsePrivateLinkConnection) || hasPropertyOverride)
+            {
+                builder.Append("    usePrivateLinkConnection: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = UsePrivateLinkConnection.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointName), out propertyOverride);
+            if (Optional.IsDefined(PrivateEndpointName) || hasPropertyOverride)
+            {
+                builder.Append("    privateEndpointName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PrivateEndpointName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrivateEndpointName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrivateEndpointName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerName), out propertyOverride);
+            if (Optional.IsDefined(ServerName) || hasPropertyOverride)
+            {
+                builder.Append("    serverName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ServerName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServerName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServerName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
+            if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
+            {
+                builder.Append("    databaseName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DatabaseName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DatabaseName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DatabaseName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserName), out propertyOverride);
+            if (Optional.IsDefined(UserName) || hasPropertyOverride)
+            {
+                builder.Append("    userName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (UserName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Password), out propertyOverride);
+            if (Optional.IsDefined(Password) || hasPropertyOverride)
+            {
+                builder.Append("    password: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Password.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Password}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Password}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncDirection), out propertyOverride);
+            if (Optional.IsDefined(SyncDirection) || hasPropertyOverride)
+            {
+                builder.Append("    syncDirection: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SyncDirection.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncState), out propertyOverride);
+            if (Optional.IsDefined(SyncState) || hasPropertyOverride)
+            {
+                builder.Append("    syncState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SyncState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SyncMemberData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SyncMemberData>)this).GetFormatFromOptions(options) : options.Format;
@@ -327,8 +605,10 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SyncMemberData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncMemberData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -344,7 +624,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeSyncMemberData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SyncMemberData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyncMemberData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (BatchSize.HasValue)
+            if (Optional.IsDefined(BatchSize))
             {
                 if (BatchSize != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("batchSize");
                 }
             }
-            if (MaxFailedItems.HasValue)
+            if (Optional.IsDefined(MaxFailedItems))
             {
                 if (MaxFailedItems != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxFailedItems");
                 }
             }
-            if (MaxFailedItemsPerBatch.HasValue)
+            if (Optional.IsDefined(MaxFailedItemsPerBatch))
             {
                 if (MaxFailedItemsPerBatch != null)
                 {
@@ -51,10 +51,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxFailedItemsPerBatch");
                 }
             }
-            if (IndexingParametersConfiguration != null)
+            if (Optional.IsDefined(IndexingParametersConfiguration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(IndexingParametersConfiguration);
+                writer.WriteObjectValue<IndexingParametersConfiguration>(IndexingParametersConfiguration);
             }
             writer.WriteEndObject();
         }
@@ -112,6 +112,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new IndexingParameters(batchSize, maxFailedItems, maxFailedItemsPerBatch, configuration);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IndexingParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIndexingParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<IndexingParameters>(this);
+            return content;
         }
     }
 }

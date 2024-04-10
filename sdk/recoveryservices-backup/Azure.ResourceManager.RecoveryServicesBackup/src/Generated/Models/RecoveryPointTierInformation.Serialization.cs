@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointTierInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPointTierInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointTierInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TierType.HasValue)
+            if (Optional.IsDefined(TierType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TierType.Value.ToSerialString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (!(ExtendedInfo is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
                 writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPointTierInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPointTierInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPointTierInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RecoveryPointTierStatus? status = default;
             IDictionary<string, string> extendedInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RecoveryPointTierInformation(type, status, extendedInfo ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPointTierInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointTierInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeRecoveryPointTierInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPointTierInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPointTierInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

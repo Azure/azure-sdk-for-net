@@ -18,22 +18,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStringValue(Properties);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
@@ -77,12 +77,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SsisObjectMetadataStatusResponse(status, name, properties, error);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SsisObjectMetadataStatusResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSsisObjectMetadataStatusResponse(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SsisObjectMetadataStatusResponse>(this);
+            return content;
+        }
+
         internal partial class SsisObjectMetadataStatusResponseConverter : JsonConverter<SsisObjectMetadataStatusResponse>
         {
             public override void Write(Utf8JsonWriter writer, SsisObjectMetadataStatusResponse model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SsisObjectMetadataStatusResponse>(model);
             }
+
             public override SsisObjectMetadataStatusResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

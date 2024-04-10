@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Tier.HasValue)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (Capacity.HasValue)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (Size != null)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (Family != null)
+            if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MySql.Models
             string size = default;
             string family = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.MySql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlSku(
                 name,
                 tier,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlSku)} does not support reading '{options.Format}' format.");
             }
         }
 

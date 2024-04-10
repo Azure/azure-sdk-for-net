@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupInstanceDeletionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DeleteOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeleteOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeleteOn.Value, "O");
             }
-            if (options.Format != "W" && BillingEndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BillingEndOn))
             {
                 writer.WritePropertyName("billingEndDate"u8);
                 writer.WriteStringValue(BillingEndOn.Value, "O");
             }
-            if (options.Format != "W" && ScheduledPurgeOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
             {
                 writer.WritePropertyName("scheduledPurgeTime"u8);
                 writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
             }
-            if (options.Format != "W" && DeleteActivityId != null)
+            if (options.Format != "W" && Optional.IsDefined(DeleteActivityId))
             {
                 writer.WritePropertyName("deleteActivityID"u8);
                 writer.WriteStringValue(DeleteActivityId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupInstanceDeletionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DateTimeOffset? scheduledPurgeTime = default;
             string deleteActivityId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deletionTime"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackupInstanceDeletionInfo(deletionTime, billingEndDate, scheduledPurgeTime, deleteActivityId, serializedAdditionalRawData);
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupInstanceDeletionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

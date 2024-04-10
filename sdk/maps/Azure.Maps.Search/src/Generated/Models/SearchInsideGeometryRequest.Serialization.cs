@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -15,12 +16,20 @@ namespace Azure.Maps.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Geometry != null)
+            if (Common.Optional.IsDefined(Geometry))
             {
                 writer.WritePropertyName("geometry"u8);
-                writer.WriteObjectValue(Geometry);
+                writer.WriteObjectValue<GeoJsonObject>(Geometry);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SearchInsideGeometryRequest>(this);
+            return content;
         }
     }
 }

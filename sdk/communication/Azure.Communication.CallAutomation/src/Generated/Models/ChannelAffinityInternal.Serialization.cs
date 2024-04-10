@@ -15,14 +15,22 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Channel.HasValue)
+            if (Optional.IsDefined(Channel))
             {
                 writer.WritePropertyName("channel"u8);
                 writer.WriteNumberValue(Channel.Value);
             }
             writer.WritePropertyName("participant"u8);
-            writer.WriteObjectValue(Participant);
+            writer.WriteObjectValue<CommunicationIdentifierModel>(Participant);
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ChannelAffinityInternal>(this);
+            return content;
         }
     }
 }

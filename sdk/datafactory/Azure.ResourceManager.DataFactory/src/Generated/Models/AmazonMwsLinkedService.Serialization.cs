@@ -23,34 +23,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmazonMwsLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmazonMwsLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmazonMwsLinkedService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia, options);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<EntityParameterSpecification>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -80,34 +80,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, MarketplaceId);
             writer.WritePropertyName("sellerID"u8);
             JsonSerializer.Serialize(writer, SellerId);
-            if (MwsAuthToken != null)
+            if (Optional.IsDefined(MwsAuthToken))
             {
                 writer.WritePropertyName("mwsAuthToken"u8);
                 JsonSerializer.Serialize(writer, MwsAuthToken);
             }
             writer.WritePropertyName("accessKeyId"u8);
             JsonSerializer.Serialize(writer, AccessKeyId);
-            if (SecretKey != null)
+            if (Optional.IsDefined(SecretKey))
             {
                 writer.WritePropertyName("secretKey"u8);
                 JsonSerializer.Serialize(writer, SecretKey);
             }
-            if (UseEncryptedEndpoints != null)
+            if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
                 JsonSerializer.Serialize(writer, UseEncryptedEndpoints);
             }
-            if (UseHostVerification != null)
+            if (Optional.IsDefined(UseHostVerification))
             {
                 writer.WritePropertyName("useHostVerification"u8);
                 JsonSerializer.Serialize(writer, UseHostVerification);
             }
-            if (UsePeerVerification != null)
+            if (Optional.IsDefined(UsePeerVerification))
             {
                 writer.WritePropertyName("usePeerVerification"u8);
                 JsonSerializer.Serialize(writer, UsePeerVerification);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmazonMwsLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmazonMwsLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmazonMwsLinkedService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> endpoint = default;
             DataFactoryElement<string> marketplaceId = default;
             DataFactoryElement<string> sellerId = default;
-            DataFactorySecretBaseDefinition mwsAuthToken = default;
+            DataFactorySecret mwsAuthToken = default;
             DataFactoryElement<string> accessKeyId = default;
-            DataFactorySecretBaseDefinition secretKey = default;
+            DataFactorySecret secretKey = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             DataFactoryElement<bool> useHostVerification = default;
             DataFactoryElement<bool> usePeerVerification = default;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            mwsAuthToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            mwsAuthToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessKeyId"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            secretKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            secretKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmazonMwsLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmazonMwsLinkedService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAmazonMwsLinkedService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmazonMwsLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmazonMwsLinkedService)} does not support reading '{options.Format}' format.");
             }
         }
 

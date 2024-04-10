@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppKeyVaultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && KeyVaultId != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteStringValue(KeyName);
             writer.WritePropertyName("keyVaultResourceId"u8);
             writer.WriteStringValue(KeyVaultResourceId);
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppKeyVaultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string keyVaultResourceId = default;
             NetAppKeyVaultStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultId"u8))
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetAppKeyVaultProperties(
                 keyVaultId,
                 keyVaultUri,
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppKeyVaultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppKeyVaultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppKeyVaultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

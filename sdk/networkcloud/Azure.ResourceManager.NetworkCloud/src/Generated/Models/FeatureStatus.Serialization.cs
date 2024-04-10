@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<FeatureStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FeatureStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FeatureStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DetailedStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && DetailedStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<FeatureStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FeatureStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FeatureStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string name = default;
             string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("detailedStatus"u8))
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FeatureStatus(detailedStatus, detailedStatusMessage, name, version, serializedAdditionalRawData);
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FeatureStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FeatureStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeFeatureStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FeatureStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FeatureStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

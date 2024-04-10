@@ -53,18 +53,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="destination"/> or <paramref name="definition"/> is null. </exception>
         public BlobInventoryPolicyRule(bool isEnabled, string name, string destination, BlobInventoryPolicyDefinition definition)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (destination == null)
-            {
-                throw new ArgumentNullException(nameof(destination));
-            }
-            if (definition == null)
-            {
-                throw new ArgumentNullException(nameof(definition));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(destination, nameof(destination));
+            Argument.AssertNotNull(definition, nameof(definition));
 
             IsEnabled = isEnabled;
             Name = name;
@@ -93,12 +84,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Rule is enabled when set to true. </summary>
+        [WirePath("enabled")]
         public bool IsEnabled { get; set; }
         /// <summary> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Container name where blob inventory files are stored. Must be pre-created. </summary>
+        [WirePath("destination")]
         public string Destination { get; set; }
         /// <summary> An object that defines the blob inventory policy rule. </summary>
+        [WirePath("definition")]
         public BlobInventoryPolicyDefinition Definition { get; set; }
     }
 }

@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteConfigurationOverrideActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteConfigurationOverrideActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteConfigurationOverrideActionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
-            if (OriginGroupOverride != null)
+            if (Optional.IsDefined(OriginGroupOverride))
             {
                 if (OriginGroupOverride != null)
                 {
                     writer.WritePropertyName("originGroupOverride"u8);
-                    writer.WriteObjectValue(OriginGroupOverride);
+                    writer.WriteObjectValue<OriginGroupOverride>(OriginGroupOverride, options);
                 }
                 else
                 {
                     writer.WriteNull("originGroupOverride");
                 }
             }
-            if (CacheConfiguration != null)
+            if (Optional.IsDefined(CacheConfiguration))
             {
                 writer.WritePropertyName("cacheConfiguration"u8);
-                writer.WriteObjectValue(CacheConfiguration);
+                writer.WriteObjectValue<CacheConfiguration>(CacheConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteConfigurationOverrideActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteConfigurationOverrideActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteConfigurationOverrideActionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Models
             OriginGroupOverride originGroupOverride = default;
             CacheConfiguration cacheConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RouteConfigurationOverrideActionProperties(typeName, originGroupOverride, cacheConfiguration, serializedAdditionalRawData);
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouteConfigurationOverrideActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteConfigurationOverrideActionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeRouteConfigurationOverrideActionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouteConfigurationOverrideActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteConfigurationOverrideActionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name of the column. </summary>
+        [WirePath("columnName")]
         public string ColumnName { get; set; }
         /// <summary> Data type which looks like 'String' or 'Int32'. </summary>
+        [WirePath("dataType")]
         public string DataType { get; set; }
         /// <summary> Column Type. </summary>
+        [WirePath("columnType")]
         public string ColumnType { get; set; }
     }
 }

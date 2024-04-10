@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareInventoryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareInventoryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareInventoryData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DeviceId != null)
+            if (Optional.IsDefined(DeviceId))
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
-            if (OSPlatform != null)
+            if (Optional.IsDefined(OSPlatform))
             {
                 writer.WritePropertyName("osPlatform"u8);
                 writer.WriteStringValue(OSPlatform);
             }
-            if (Vendor != null)
+            if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (SoftwareName != null)
+            if (Optional.IsDefined(SoftwareName))
             {
                 writer.WritePropertyName("softwareName"u8);
                 writer.WriteStringValue(SoftwareName);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (EndOfSupportStatus.HasValue)
+            if (Optional.IsDefined(EndOfSupportStatus))
             {
                 writer.WritePropertyName("endOfSupportStatus"u8);
                 writer.WriteStringValue(EndOfSupportStatus.Value.ToString());
             }
-            if (EndOfSupportDate != null)
+            if (Optional.IsDefined(EndOfSupportDate))
             {
                 writer.WritePropertyName("endOfSupportDate"u8);
                 writer.WriteStringValue(EndOfSupportDate);
             }
-            if (NumberOfKnownVulnerabilities.HasValue)
+            if (Optional.IsDefined(NumberOfKnownVulnerabilities))
             {
                 writer.WritePropertyName("numberOfKnownVulnerabilities"u8);
                 writer.WriteNumberValue(NumberOfKnownVulnerabilities.Value);
             }
-            if (FirstSeenOn.HasValue)
+            if (Optional.IsDefined(FirstSeenOn))
             {
                 writer.WritePropertyName("firstSeenAt"u8);
                 writer.WriteStringValue(FirstSeenOn.Value, "O");
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareInventoryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareInventoryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareInventoryData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityCenter
             int? numberOfKnownVulnerabilities = default;
             DateTimeOffset? firstSeenAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SoftwareInventoryData(
                 id,
                 name,
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareInventoryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareInventoryData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeSoftwareInventoryData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareInventoryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareInventoryData)} does not support reading '{options.Format}' format.");
             }
         }
 

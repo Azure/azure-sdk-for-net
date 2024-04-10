@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Mtu.HasValue)
+            if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (options.Format != "W" && !(UtilityAddresses is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(UtilityAddresses))
             {
                 writer.WritePropertyName("utilityAddresses"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DnsServers is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DnsSearchDomain != null)
+            if (Optional.IsDefined(DnsSearchDomain))
             {
                 writer.WritePropertyName("dnsSearchDomain"u8);
                 writer.WriteStringValue(DnsSearchDomain);
             }
-            if (NtpServer != null)
+            if (Optional.IsDefined(NtpServer))
             {
                 writer.WritePropertyName("ntpServer"u8);
                 writer.WriteStringValue(NtpServer);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             string dnsSearchDomain = default;
             string ntpServer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mtu"u8))
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageCacheNetworkSettings(
                 mtu,
                 utilityAddresses ?? new ChangeTrackingList<IPAddress>(),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeStorageCacheNetworkSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

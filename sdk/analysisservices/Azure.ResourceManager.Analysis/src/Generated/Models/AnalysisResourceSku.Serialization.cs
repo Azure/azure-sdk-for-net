@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Analysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisResourceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisResourceSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisResourceSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Tier.HasValue)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (Capacity.HasValue)
+            if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Analysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisResourceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisResourceSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisResourceSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Analysis.Models
             AnalysisSkuTier? tier = default;
             int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AnalysisResourceSku(name, tier, capacity, serializedAdditionalRawData);
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisResourceSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisResourceSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Analysis.Models
                         return DeserializeAnalysisResourceSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisResourceSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisResourceSku)} does not support reading '{options.Format}' format.");
             }
         }
 

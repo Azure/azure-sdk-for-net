@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<TestFailoverCleanupWorkflowModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestFailoverCleanupWorkflowModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TestFailoverCleanupWorkflowModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Comments != null)
+            if (options.Format != "W" && Optional.IsDefined(Comments))
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && !(AffectedObjectDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AffectedObjectDetails))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
                 writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<TestFailoverCleanupWorkflowModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestFailoverCleanupWorkflowModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TestFailoverCleanupWorkflowModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string instanceType = default;
             IReadOnlyDictionary<string, string> affectedObjectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("comments"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TestFailoverCleanupWorkflowModelCustomProperties(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, comments);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TestFailoverCleanupWorkflowModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestFailoverCleanupWorkflowModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeTestFailoverCleanupWorkflowModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TestFailoverCleanupWorkflowModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestFailoverCleanupWorkflowModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

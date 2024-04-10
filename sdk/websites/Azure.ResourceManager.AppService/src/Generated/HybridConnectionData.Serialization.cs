@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -23,11 +24,11 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<HybridConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridConnectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,49 +48,49 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ServiceBusNamespace != null)
+            if (Optional.IsDefined(ServiceBusNamespace))
             {
                 writer.WritePropertyName("serviceBusNamespace"u8);
                 writer.WriteStringValue(ServiceBusNamespace);
             }
-            if (RelayName != null)
+            if (Optional.IsDefined(RelayName))
             {
                 writer.WritePropertyName("relayName"u8);
                 writer.WriteStringValue(RelayName);
             }
-            if (RelayArmId != null)
+            if (Optional.IsDefined(RelayArmId))
             {
                 writer.WritePropertyName("relayArmUri"u8);
                 writer.WriteStringValue(RelayArmId);
             }
-            if (Hostname != null)
+            if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (SendKeyName != null)
+            if (Optional.IsDefined(SendKeyName))
             {
                 writer.WritePropertyName("sendKeyName"u8);
                 writer.WriteStringValue(SendKeyName);
             }
-            if (SendKeyValue != null)
+            if (Optional.IsDefined(SendKeyValue))
             {
                 writer.WritePropertyName("sendKeyValue"u8);
                 writer.WriteStringValue(SendKeyValue);
             }
-            if (ServiceBusSuffix != null)
+            if (Optional.IsDefined(ServiceBusSuffix))
             {
                 writer.WritePropertyName("serviceBusSuffix"u8);
                 writer.WriteStringValue(ServiceBusSuffix);
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<HybridConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +148,7 @@ namespace Azure.ResourceManager.AppService
             string sendKeyValue = default;
             string serviceBusSuffix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -241,10 +242,10 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HybridConnectionData(
                 id,
                 name,
@@ -262,6 +263,256 @@ namespace Azure.ResourceManager.AppService
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceBusNamespace), out propertyOverride);
+            if (Optional.IsDefined(ServiceBusNamespace) || hasPropertyOverride)
+            {
+                builder.Append("    serviceBusNamespace: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ServiceBusNamespace.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceBusNamespace}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceBusNamespace}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelayName), out propertyOverride);
+            if (Optional.IsDefined(RelayName) || hasPropertyOverride)
+            {
+                builder.Append("    relayName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RelayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RelayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RelayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelayArmId), out propertyOverride);
+            if (Optional.IsDefined(RelayArmId) || hasPropertyOverride)
+            {
+                builder.Append("    relayArmUri: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{RelayArmId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Hostname), out propertyOverride);
+            if (Optional.IsDefined(Hostname) || hasPropertyOverride)
+            {
+                builder.Append("    hostname: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Hostname.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Hostname}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Hostname}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
+            if (Optional.IsDefined(Port) || hasPropertyOverride)
+            {
+                builder.Append("    port: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{Port.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SendKeyName), out propertyOverride);
+            if (Optional.IsDefined(SendKeyName) || hasPropertyOverride)
+            {
+                builder.Append("    sendKeyName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SendKeyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SendKeyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SendKeyName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SendKeyValue), out propertyOverride);
+            if (Optional.IsDefined(SendKeyValue) || hasPropertyOverride)
+            {
+                builder.Append("    sendKeyValue: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SendKeyValue.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SendKeyValue}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SendKeyValue}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceBusSuffix), out propertyOverride);
+            if (Optional.IsDefined(ServiceBusSuffix) || hasPropertyOverride)
+            {
+                builder.Append("    serviceBusSuffix: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ServiceBusSuffix.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceBusSuffix}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceBusSuffix}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<HybridConnectionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HybridConnectionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -270,8 +521,10 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -287,7 +540,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeHybridConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

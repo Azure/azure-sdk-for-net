@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeletedAutomationAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AutomationAccountResourceId != null)
+            if (Optional.IsDefined(AutomationAccountResourceId))
             {
                 writer.WritePropertyName("automationAccountResourceId"u8);
                 writer.WriteStringValue(AutomationAccountResourceId);
             }
-            if (AutomationAccountId != null)
+            if (Optional.IsDefined(AutomationAccountId))
             {
                 writer.WritePropertyName("automationAccountId"u8);
                 writer.WriteStringValue(AutomationAccountId);
             }
-            if (LocationPropertiesLocation != null)
+            if (Optional.IsDefined(LocationPropertiesLocation))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(LocationPropertiesLocation);
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeletedAutomationAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Automation.Models
             string location0 = default;
             DateTimeOffset? deletionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -201,10 +201,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DeletedAutomationAccount(
                 id,
                 name,
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDeletedAutomationAccount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support reading '{options.Format}' format.");
             }
         }
 

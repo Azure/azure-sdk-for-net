@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlComputeNodesInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlComputeNodesInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlComputeNodesInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Nodes is ChangeTrackingList<AmlComputeNodeInformation> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AmlComputeNodeInformation>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && NextLink != null)
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlComputeNodesInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlComputeNodesInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlComputeNodesInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IReadOnlyList<AmlComputeNodeInformation> nodes = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodes"u8))
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AmlComputeNodesInformation(nodes ?? new ChangeTrackingList<AmlComputeNodeInformation>(), nextLink, serializedAdditionalRawData);
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlComputeNodesInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlComputeNodesInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeAmlComputeNodesInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlComputeNodesInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlComputeNodesInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<JarUploadedUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JarUploadedUserSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JarUploadedUserSourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RuntimeVersion != null)
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (JvmOptions != null)
+            if (Optional.IsDefined(JvmOptions))
             {
                 writer.WritePropertyName("jvmOptions"u8);
                 writer.WriteStringValue(JvmOptions);
             }
-            if (RelativePath != null)
+            if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<JarUploadedUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JarUploadedUserSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JarUploadedUserSourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             string type = default;
             string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runtimeVersion"u8))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new JarUploadedUserSourceInfo(
                 type,
                 version,
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JarUploadedUserSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JarUploadedUserSourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeJarUploadedUserSourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JarUploadedUserSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JarUploadedUserSourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

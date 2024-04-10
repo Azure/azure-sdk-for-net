@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryLogicalNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryLogicalNetworkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryLogicalNetworkProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (NetworkVirtualizationStatus != null)
+            if (Optional.IsDefined(NetworkVirtualizationStatus))
             {
                 writer.WritePropertyName("networkVirtualizationStatus"u8);
                 writer.WriteStringValue(NetworkVirtualizationStatus);
             }
-            if (LogicalNetworkUsage != null)
+            if (Optional.IsDefined(LogicalNetworkUsage))
             {
                 writer.WritePropertyName("logicalNetworkUsage"u8);
                 writer.WriteStringValue(LogicalNetworkUsage);
             }
-            if (LogicalNetworkDefinitionsStatus != null)
+            if (Optional.IsDefined(LogicalNetworkDefinitionsStatus))
             {
                 writer.WritePropertyName("logicalNetworkDefinitionsStatus"u8);
                 writer.WriteStringValue(LogicalNetworkDefinitionsStatus);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryLogicalNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryLogicalNetworkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryLogicalNetworkProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string logicalNetworkUsage = default;
             string logicalNetworkDefinitionsStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SiteRecoveryLogicalNetworkProperties(friendlyName, networkVirtualizationStatus, logicalNetworkUsage, logicalNetworkDefinitionsStatus, serializedAdditionalRawData);
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryLogicalNetworkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryLogicalNetworkProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryLogicalNetworkProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryLogicalNetworkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryLogicalNetworkProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

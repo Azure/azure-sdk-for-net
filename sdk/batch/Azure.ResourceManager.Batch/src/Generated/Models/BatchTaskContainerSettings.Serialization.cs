@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchTaskContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchTaskContainerSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchTaskContainerSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ContainerRunOptions != null)
+            if (Optional.IsDefined(ContainerRunOptions))
             {
                 writer.WritePropertyName("containerRunOptions"u8);
                 writer.WriteStringValue(ContainerRunOptions);
             }
             writer.WritePropertyName("imageName"u8);
             writer.WriteStringValue(ImageName);
-            if (Registry != null)
+            if (Optional.IsDefined(Registry))
             {
                 writer.WritePropertyName("registry"u8);
-                writer.WriteObjectValue(Registry);
+                writer.WriteObjectValue<BatchVmContainerRegistry>(Registry, options);
             }
-            if (WorkingDirectory.HasValue)
+            if (Optional.IsDefined(WorkingDirectory))
             {
                 writer.WritePropertyName("workingDirectory"u8);
                 writer.WriteStringValue(WorkingDirectory.Value.ToSerialString());
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchTaskContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchTaskContainerSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchTaskContainerSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchVmContainerRegistry registry = default;
             BatchContainerWorkingDirectory? workingDirectory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerRunOptions"u8))
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchTaskContainerSettings(containerRunOptions, imageName, registry, workingDirectory, serializedAdditionalRawData);
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchTaskContainerSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchTaskContainerSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchTaskContainerSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchTaskContainerSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchTaskContainerSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

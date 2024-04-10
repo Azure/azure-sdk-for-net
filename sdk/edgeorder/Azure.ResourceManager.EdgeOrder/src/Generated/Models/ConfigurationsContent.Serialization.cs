@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartArray();
             foreach (var item in ConfigurationFilters)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ConfigurationFilters>(item, options);
             }
             writer.WriteEndArray();
-            if (CustomerSubscriptionDetails != null)
+            if (Optional.IsDefined(CustomerSubscriptionDetails))
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
-                writer.WriteObjectValue(CustomerSubscriptionDetails);
+                writer.WriteObjectValue<CustomerSubscriptionDetails>(CustomerSubscriptionDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             IList<ConfigurationFilters> configurationFilters = default;
             CustomerSubscriptionDetails customerSubscriptionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationFilters"u8))
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConfigurationsContent(configurationFilters, customerSubscriptionDetails, serializedAdditionalRawData);
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeConfigurationsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support reading '{options.Format}' format.");
             }
         }
 

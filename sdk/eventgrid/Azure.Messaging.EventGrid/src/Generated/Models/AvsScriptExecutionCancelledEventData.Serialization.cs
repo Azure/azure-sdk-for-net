@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -55,12 +54,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AvsScriptExecutionCancelledEventData(operationId, cmdletId, output ?? new ChangeTrackingList<string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AvsScriptExecutionCancelledEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAvsScriptExecutionCancelledEventData(document.RootElement);
+        }
+
         internal partial class AvsScriptExecutionCancelledEventDataConverter : JsonConverter<AvsScriptExecutionCancelledEventData>
         {
             public override void Write(Utf8JsonWriter writer, AvsScriptExecutionCancelledEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AvsScriptExecutionCancelledEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

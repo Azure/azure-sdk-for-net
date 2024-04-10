@@ -22,37 +22,37 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationRuntimeDataFlowProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationRuntimeDataFlowProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ComputeType.HasValue)
+            if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType.Value.ToString());
             }
-            if (CoreCount.HasValue)
+            if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (TimeToLiveInMinutes.HasValue)
+            if (Optional.IsDefined(TimeToLiveInMinutes))
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLiveInMinutes.Value);
             }
-            if (ShouldCleanupAfterTtl.HasValue)
+            if (Optional.IsDefined(ShouldCleanupAfterTtl))
             {
                 writer.WritePropertyName("cleanup"u8);
                 writer.WriteBooleanValue(ShouldCleanupAfterTtl.Value);
             }
-            if (!(CustomProperties is ChangeTrackingList<IntegrationRuntimeDataFlowCustomItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomProperties))
             {
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IntegrationRuntimeDataFlowCustomItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationRuntimeDataFlowProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationRuntimeDataFlowProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeDataFlowProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeDataFlowProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeIntegrationRuntimeDataFlowProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeDataFlowProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeDataFlowProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

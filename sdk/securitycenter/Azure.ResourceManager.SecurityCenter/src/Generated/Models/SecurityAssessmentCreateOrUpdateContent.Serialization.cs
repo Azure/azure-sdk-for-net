@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAssessmentCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAssessmentCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ResourceDetails != null)
+            if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue(ResourceDetails);
+                writer.WriteObjectValue<SecurityCenterResourceDetails>(ResourceDetails, options);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(AdditionalData is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -70,25 +70,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Links != null)
+            if (options.Format != "W" && Optional.IsDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
-                writer.WriteObjectValue(Links);
+                writer.WriteObjectValue<AssessmentLinks>(Links, options);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<SecurityAssessmentMetadataProperties>(Metadata, options);
             }
-            if (PartnersData != null)
+            if (Optional.IsDefined(PartnersData))
             {
                 writer.WritePropertyName("partnersData"u8);
-                writer.WriteObjectValue(PartnersData);
+                writer.WriteObjectValue<SecurityAssessmentPartner>(PartnersData, options);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<SecurityAssessmentStatus>(Status, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAssessmentCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAssessmentCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             SecurityAssessmentPartner partnersData = default;
             SecurityAssessmentStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityAssessmentCreateOrUpdateContent(
                 id,
                 name,
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAssessmentCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAssessmentCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAssessmentCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAssessmentCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAssessmentCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

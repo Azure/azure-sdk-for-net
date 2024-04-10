@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubRegistryStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubRegistryStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubRegistryStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TotalDeviceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalDeviceCount))
             {
                 writer.WritePropertyName("totalDeviceCount"u8);
                 writer.WriteNumberValue(TotalDeviceCount.Value);
             }
-            if (options.Format != "W" && EnabledDeviceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EnabledDeviceCount))
             {
                 writer.WritePropertyName("enabledDeviceCount"u8);
                 writer.WriteNumberValue(EnabledDeviceCount.Value);
             }
-            if (options.Format != "W" && DisabledDeviceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DisabledDeviceCount))
             {
                 writer.WritePropertyName("disabledDeviceCount"u8);
                 writer.WriteNumberValue(DisabledDeviceCount.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubRegistryStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubRegistryStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubRegistryStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotHub.Models
             long? enabledDeviceCount = default;
             long? disabledDeviceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalDeviceCount"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IotHubRegistryStatistics(totalDeviceCount, enabledDeviceCount, disabledDeviceCount, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubRegistryStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubRegistryStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubRegistryStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubRegistryStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubRegistryStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

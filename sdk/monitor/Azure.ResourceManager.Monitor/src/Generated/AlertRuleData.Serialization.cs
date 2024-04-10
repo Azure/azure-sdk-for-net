@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<AlertRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(AlertRuleName);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -78,23 +78,23 @@ namespace Azure.ResourceManager.Monitor
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition);
-            if (Action != null)
+            writer.WriteObjectValue<AlertRuleCondition>(Condition, options);
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                writer.WriteObjectValue<AlertRuleAction>(Action, options);
             }
-            if (!(Actions is ChangeTrackingList<AlertRuleAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AlertRuleAction>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<AlertRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Monitor
             IList<AlertRuleAction> actions = default;
             DateTimeOffset? lastUpdatedTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -270,10 +270,10 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AlertRuleData(
                 id,
                 name,
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Monitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Monitor
                         return DeserializeAlertRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

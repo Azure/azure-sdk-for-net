@@ -22,83 +22,83 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CommittedOn.HasValue)
+            if (Optional.IsDefined(CommittedOn))
             {
                 writer.WritePropertyName("commitTime"u8);
                 writer.WriteStringValue(CommittedOn.Value, "O");
             }
-            if (Region.HasValue)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (!(ConfigurationGroups is ChangeTrackingList<NetworkConfigurationGroup> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationGroups))
             {
                 writer.WritePropertyName("configurationGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkConfigurationGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ConnectivityTopology.HasValue)
+            if (Optional.IsDefined(ConnectivityTopology))
             {
                 writer.WritePropertyName("connectivityTopology"u8);
                 writer.WriteStringValue(ConnectivityTopology.Value.ToString());
             }
-            if (!(Hubs is ChangeTrackingList<ConnectivityHub> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Hubs))
             {
                 writer.WritePropertyName("hubs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Hubs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectivityHub>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (IsGlobal.HasValue)
+            if (Optional.IsDefined(IsGlobal))
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteStringValue(IsGlobal.Value.ToString());
             }
-            if (!(AppliesToGroups is ChangeTrackingList<ConnectivityGroupItem> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AppliesToGroups))
             {
                 writer.WritePropertyName("appliesToGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in AppliesToGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectivityGroupItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (DeleteExistingPeering.HasValue)
+            if (Optional.IsDefined(DeleteExistingPeering))
             {
                 writer.WritePropertyName("deleteExistingPeering"u8);
                 writer.WriteStringValue(DeleteExistingPeering.Value.ToString());
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network.Models
             DeleteExistingPeering? deleteExistingPeering = default;
             Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commitTime"u8))
@@ -287,10 +287,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ActiveConnectivityConfiguration(
                 id,
                 configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeActiveConnectivityConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActiveConnectivityConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

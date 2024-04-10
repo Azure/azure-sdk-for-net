@@ -15,57 +15,65 @@ namespace Azure.AI.Language.QuestionAnswering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (QnaId.HasValue)
+            if (Optional.IsDefined(QnaId))
             {
                 writer.WritePropertyName("qnaId"u8);
                 writer.WriteNumberValue(QnaId.Value);
             }
-            if (Question != null)
+            if (Optional.IsDefined(Question))
             {
                 writer.WritePropertyName("question"u8);
                 writer.WriteStringValue(Question);
             }
-            if (Size.HasValue)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (UserId != null)
+            if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (ConfidenceThreshold.HasValue)
+            if (Optional.IsDefined(ConfidenceThreshold))
             {
                 writer.WritePropertyName("confidenceScoreThreshold"u8);
                 writer.WriteNumberValue(ConfidenceThreshold.Value);
             }
-            if (AnswerContext != null)
+            if (Optional.IsDefined(AnswerContext))
             {
                 writer.WritePropertyName("context"u8);
-                writer.WriteObjectValue(AnswerContext);
+                writer.WriteObjectValue<KnowledgeBaseAnswerContext>(AnswerContext);
             }
-            if (RankerKind.HasValue)
+            if (Optional.IsDefined(RankerKind))
             {
                 writer.WritePropertyName("rankerType"u8);
                 writer.WriteStringValue(RankerKind.Value.ToString());
             }
-            if (Filters != null)
+            if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters);
+                writer.WriteObjectValue<QueryFilters>(Filters);
             }
-            if (ShortAnswerOptions != null)
+            if (Optional.IsDefined(ShortAnswerOptions))
             {
                 writer.WritePropertyName("answerSpanRequest"u8);
-                writer.WriteObjectValue(ShortAnswerOptions);
+                writer.WriteObjectValue<ShortAnswerOptions>(ShortAnswerOptions);
             }
-            if (IncludeUnstructuredSources.HasValue)
+            if (Optional.IsDefined(IncludeUnstructuredSources))
             {
                 writer.WritePropertyName("includeUnstructuredSources"u8);
                 writer.WriteBooleanValue(IncludeUnstructuredSources.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AnswersOptions>(this);
+            return content;
         }
     }
 }

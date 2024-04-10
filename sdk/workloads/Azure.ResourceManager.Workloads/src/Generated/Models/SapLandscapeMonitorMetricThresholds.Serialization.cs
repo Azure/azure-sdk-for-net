@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapLandscapeMonitorMetricThresholds>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapLandscapeMonitorMetricThresholds)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapLandscapeMonitorMetricThresholds)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Green.HasValue)
+            if (Optional.IsDefined(Green))
             {
                 writer.WritePropertyName("green"u8);
                 writer.WriteNumberValue(Green.Value);
             }
-            if (Yellow.HasValue)
+            if (Optional.IsDefined(Yellow))
             {
                 writer.WritePropertyName("yellow"u8);
                 writer.WriteNumberValue(Yellow.Value);
             }
-            if (Red.HasValue)
+            if (Optional.IsDefined(Red))
             {
                 writer.WritePropertyName("red"u8);
                 writer.WriteNumberValue(Red.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapLandscapeMonitorMetricThresholds>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapLandscapeMonitorMetricThresholds)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapLandscapeMonitorMetricThresholds)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Workloads.Models
             float? yellow = default;
             float? red = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SapLandscapeMonitorMetricThresholds(name, green, yellow, red, serializedAdditionalRawData);
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapLandscapeMonitorMetricThresholds)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapLandscapeMonitorMetricThresholds)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeSapLandscapeMonitorMetricThresholds(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapLandscapeMonitorMetricThresholds)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapLandscapeMonitorMetricThresholds)} does not support reading '{options.Format}' format.");
             }
         }
 

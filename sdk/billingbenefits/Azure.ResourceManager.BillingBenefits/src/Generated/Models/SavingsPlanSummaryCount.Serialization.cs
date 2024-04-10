@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanSummaryCount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SucceededCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SucceededCount))
             {
                 writer.WritePropertyName("succeededCount"u8);
                 writer.WriteNumberValue(SucceededCount.Value);
             }
-            if (options.Format != "W" && FailedCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedCount))
             {
                 writer.WritePropertyName("failedCount"u8);
                 writer.WriteNumberValue(FailedCount.Value);
             }
-            if (options.Format != "W" && ExpiringCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiringCount))
             {
                 writer.WritePropertyName("expiringCount"u8);
                 writer.WriteNumberValue(ExpiringCount.Value);
             }
-            if (options.Format != "W" && ExpiredCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiredCount))
             {
                 writer.WritePropertyName("expiredCount"u8);
                 writer.WriteNumberValue(ExpiredCount.Value);
             }
-            if (options.Format != "W" && PendingCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PendingCount))
             {
                 writer.WritePropertyName("pendingCount"u8);
                 writer.WriteNumberValue(PendingCount.Value);
             }
-            if (options.Format != "W" && CancelledCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CancelledCount))
             {
                 writer.WritePropertyName("cancelledCount"u8);
                 writer.WriteNumberValue(CancelledCount.Value);
             }
-            if (options.Format != "W" && ProcessingCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessingCount))
             {
                 writer.WritePropertyName("processingCount"u8);
                 writer.WriteNumberValue(ProcessingCount.Value);
             }
-            if (options.Format != "W" && NoBenefitCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NoBenefitCount))
             {
                 writer.WritePropertyName("noBenefitCount"u8);
                 writer.WriteNumberValue(NoBenefitCount.Value);
             }
-            if (options.Format != "W" && WarningCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WarningCount))
             {
                 writer.WritePropertyName("warningCount"u8);
                 writer.WriteNumberValue(WarningCount.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanSummaryCount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             float? noBenefitCount = default;
             float? warningCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("succeededCount"u8))
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SavingsPlanSummaryCount(
                 succeededCount,
                 failedCount,
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         return DeserializeSavingsPlanSummaryCount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanSummaryCount)} does not support reading '{options.Format}' format.");
             }
         }
 

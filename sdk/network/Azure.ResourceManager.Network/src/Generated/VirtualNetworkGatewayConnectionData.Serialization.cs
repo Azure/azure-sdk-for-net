@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,36 +24,36 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,24 +66,24 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AuthorizationKey != null)
+            if (Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
             writer.WritePropertyName("virtualNetworkGateway1"u8);
-            writer.WriteObjectValue(VirtualNetworkGateway1);
-            if (VirtualNetworkGateway2 != null)
+            writer.WriteObjectValue<VirtualNetworkGatewayData>(VirtualNetworkGateway1, options);
+            if (Optional.IsDefined(VirtualNetworkGateway2))
             {
                 writer.WritePropertyName("virtualNetworkGateway2"u8);
-                writer.WriteObjectValue(VirtualNetworkGateway2);
+                writer.WriteObjectValue<VirtualNetworkGatewayData>(VirtualNetworkGateway2, options);
             }
-            if (LocalNetworkGateway2 != null)
+            if (Optional.IsDefined(LocalNetworkGateway2))
             {
                 writer.WritePropertyName("localNetworkGateway2"u8);
-                writer.WriteObjectValue(LocalNetworkGateway2);
+                writer.WriteObjectValue<LocalNetworkGatewayData>(LocalNetworkGateway2, options);
             }
-            if (!(IngressNatRules is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IngressNatRules))
             {
                 writer.WritePropertyName("ingressNatRules"u8);
                 writer.WriteStartArray();
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(EgressNatRules is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(EgressNatRules))
             {
                 writer.WritePropertyName("egressNatRules"u8);
                 writer.WriteStartArray();
@@ -106,122 +105,122 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (ConnectionProtocol.HasValue)
+            if (Optional.IsDefined(ConnectionProtocol))
             {
                 writer.WritePropertyName("connectionProtocol"u8);
                 writer.WriteStringValue(ConnectionProtocol.Value.ToString());
             }
-            if (RoutingWeight.HasValue)
+            if (Optional.IsDefined(RoutingWeight))
             {
                 writer.WritePropertyName("routingWeight"u8);
                 writer.WriteNumberValue(RoutingWeight.Value);
             }
-            if (DpdTimeoutSeconds.HasValue)
+            if (Optional.IsDefined(DpdTimeoutSeconds))
             {
                 writer.WritePropertyName("dpdTimeoutSeconds"u8);
                 writer.WriteNumberValue(DpdTimeoutSeconds.Value);
             }
-            if (ConnectionMode.HasValue)
+            if (Optional.IsDefined(ConnectionMode))
             {
                 writer.WritePropertyName("connectionMode"u8);
                 writer.WriteStringValue(ConnectionMode.Value.ToString());
             }
-            if (SharedKey != null)
+            if (Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
-            if (options.Format != "W" && ConnectionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
             {
                 writer.WritePropertyName("connectionStatus"u8);
                 writer.WriteStringValue(ConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && !(TunnelConnectionStatus is ChangeTrackingList<TunnelConnectionHealth> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TunnelConnectionStatus))
             {
                 writer.WritePropertyName("tunnelConnectionStatus"u8);
                 writer.WriteStartArray();
                 foreach (var item in TunnelConnectionStatus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TunnelConnectionHealth>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && EgressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
             {
                 writer.WritePropertyName("egressBytesTransferred"u8);
                 writer.WriteNumberValue(EgressBytesTransferred.Value);
             }
-            if (options.Format != "W" && IngressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
             {
                 writer.WritePropertyName("ingressBytesTransferred"u8);
                 writer.WriteNumberValue(IngressBytesTransferred.Value);
             }
-            if (Peer != null)
+            if (Optional.IsDefined(Peer))
             {
                 writer.WritePropertyName("peer"u8);
                 JsonSerializer.Serialize(writer, Peer);
             }
-            if (EnableBgp.HasValue)
+            if (Optional.IsDefined(EnableBgp))
             {
                 writer.WritePropertyName("enableBgp"u8);
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
-            if (!(GatewayCustomBgpIPAddresses is ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(GatewayCustomBgpIPAddresses))
             {
                 writer.WritePropertyName("gatewayCustomBgpIpAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in GatewayCustomBgpIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GatewayCustomBgpIPAddressIPConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (UseLocalAzureIPAddress.HasValue)
+            if (Optional.IsDefined(UseLocalAzureIPAddress))
             {
                 writer.WritePropertyName("useLocalAzureIpAddress"u8);
                 writer.WriteBooleanValue(UseLocalAzureIPAddress.Value);
             }
-            if (UsePolicyBasedTrafficSelectors.HasValue)
+            if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
             {
                 writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
                 writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
             }
-            if (!(IPsecPolicies is ChangeTrackingList<IPsecPolicy> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(IPsecPolicies))
             {
                 writer.WritePropertyName("ipsecPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPsecPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPsecPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(TrafficSelectorPolicies is ChangeTrackingList<TrafficSelectorPolicy> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(TrafficSelectorPolicies))
             {
                 writer.WritePropertyName("trafficSelectorPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in TrafficSelectorPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrafficSelectorPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ExpressRouteGatewayBypass.HasValue)
+            if (Optional.IsDefined(ExpressRouteGatewayBypass))
             {
                 writer.WritePropertyName("expressRouteGatewayBypass"u8);
                 writer.WriteBooleanValue(ExpressRouteGatewayBypass.Value);
             }
-            if (EnablePrivateLinkFastPath.HasValue)
+            if (Optional.IsDefined(EnablePrivateLinkFastPath))
             {
                 writer.WritePropertyName("enablePrivateLinkFastPath"u8);
                 writer.WriteBooleanValue(EnablePrivateLinkFastPath.Value);
@@ -250,7 +249,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -299,7 +298,7 @@ namespace Azure.ResourceManager.Network
             bool? expressRouteGatewayBypass = default;
             bool? enablePrivateLinkFastPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -628,10 +627,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualNetworkGatewayConnectionData(
                 id,
                 name,
@@ -678,7 +677,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -694,7 +693,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeVirtualNetworkGatewayConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

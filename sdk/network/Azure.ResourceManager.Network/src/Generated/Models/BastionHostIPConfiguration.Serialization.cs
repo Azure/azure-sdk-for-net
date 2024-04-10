@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -24,48 +23,48 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<BastionHostIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BastionHostIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BastionHostIPConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (PublicIPAddress != null)
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
                 JsonSerializer.Serialize(writer, PublicIPAddress);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (PrivateIPAllocationMethod.HasValue)
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<BastionHostIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BastionHostIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BastionHostIPConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkProvisioningState? provisioningState = default;
             NetworkIPAllocationMethod? privateIPAllocationMethod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -203,10 +202,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BastionHostIPConfiguration(
                 id,
                 name,
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BastionHostIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BastionHostIPConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +243,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeBastionHostIPConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BastionHostIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BastionHostIPConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

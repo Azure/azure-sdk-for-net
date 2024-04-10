@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceProviderResponseList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceProviderResponseList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceProviderResponseList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (options.Format != "W" && !(Value is ChangeTrackingList<BotServiceProvider> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BotServiceProvider>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceProviderResponseList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceProviderResponseList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceProviderResponseList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.BotService.Models
             string nextLink = default;
             IReadOnlyList<BotServiceProvider> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceProviderResponseList(nextLink, value ?? new ChangeTrackingList<BotServiceProvider>(), serializedAdditionalRawData);
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceProviderResponseList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceProviderResponseList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeServiceProviderResponseList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceProviderResponseList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceProviderResponseList)} does not support reading '{options.Format}' format.");
             }
         }
 

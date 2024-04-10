@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodLogo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaymentMethodLogo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaymentMethodLogo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MimeType != null)
+            if (options.Format != "W" && Optional.IsDefined(MimeType))
             {
                 writer.WritePropertyName("mimeType"u8);
                 writer.WriteStringValue(MimeType);
             }
-            if (options.Format != "W" && Uri != null)
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodLogo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaymentMethodLogo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaymentMethodLogo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Billing.Models
             string mimeType = default;
             Uri url = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mimeType"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Billing.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PaymentMethodLogo(mimeType, url, serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Billing.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PaymentMethodLogo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaymentMethodLogo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Billing.Models
                         return DeserializePaymentMethodLogo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PaymentMethodLogo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaymentMethodLogo)} does not support reading '{options.Format}' format.");
             }
         }
 

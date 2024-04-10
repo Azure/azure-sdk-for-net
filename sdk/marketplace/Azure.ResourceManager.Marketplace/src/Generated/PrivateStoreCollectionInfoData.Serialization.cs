@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Marketplace
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreCollectionInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStoreCollectionInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStoreCollectionInfoData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CollectionId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CollectionId))
             {
                 writer.WritePropertyName("collectionId"u8);
                 writer.WriteStringValue(CollectionId.Value);
             }
-            if (CollectionName != null)
+            if (Optional.IsDefined(CollectionName))
             {
                 writer.WritePropertyName("collectionName"u8);
                 writer.WriteStringValue(CollectionName);
             }
-            if (Claim != null)
+            if (Optional.IsDefined(Claim))
             {
                 writer.WritePropertyName("claim"u8);
                 writer.WriteStringValue(Claim);
             }
-            if (AreAllSubscriptionsSelected.HasValue)
+            if (Optional.IsDefined(AreAllSubscriptionsSelected))
             {
                 writer.WritePropertyName("allSubscriptions"u8);
                 writer.WriteBooleanValue(AreAllSubscriptionsSelected.Value);
             }
-            if (options.Format != "W" && AreAllItemsApproved.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AreAllItemsApproved))
             {
                 writer.WritePropertyName("approveAllItems"u8);
                 writer.WriteBooleanValue(AreAllItemsApproved.Value);
             }
-            if (options.Format != "W" && ApproveAllItemsModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ApproveAllItemsModifiedOn))
             {
                 writer.WritePropertyName("approveAllItemsModifiedAt"u8);
                 writer.WriteStringValue(ApproveAllItemsModifiedOn.Value, "O");
             }
-            if (!(SubscriptionsList is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SubscriptionsList))
             {
                 writer.WritePropertyName("subscriptionsList"u8);
                 writer.WriteStartArray();
@@ -90,23 +90,23 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && NumberOfOffers.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfOffers))
             {
                 writer.WritePropertyName("numberOfOffers"u8);
                 writer.WriteNumberValue(NumberOfOffers.Value);
             }
-            if (options.Format != "W" && !(AppliedRules is ChangeTrackingList<MarketplaceRule> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AppliedRules))
             {
                 writer.WritePropertyName("appliedRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in AppliedRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MarketplaceRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Marketplace
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreCollectionInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStoreCollectionInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStoreCollectionInfoData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Marketplace
             long? numberOfOffers = default;
             IReadOnlyList<MarketplaceRule> appliedRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -297,10 +297,10 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PrivateStoreCollectionInfoData(
                 id,
                 name,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Marketplace
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStoreCollectionInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStoreCollectionInfoData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Marketplace
                         return DeserializePrivateStoreCollectionInfoData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStoreCollectionInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStoreCollectionInfoData)} does not support reading '{options.Format}' format.");
             }
         }
 

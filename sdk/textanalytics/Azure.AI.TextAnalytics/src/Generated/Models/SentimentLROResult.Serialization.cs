@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -18,10 +17,10 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results);
+            writer.WriteObjectValue<SentimentResponse>(Results);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (TaskName != null)
+            if (Optional.IsDefined(TaskName))
             {
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
@@ -73,6 +72,22 @@ namespace Azure.AI.TextAnalytics.Models
                 }
             }
             return new SentimentLROResult(lastUpdateDateTime, status, kind, taskName, results);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SentimentLROResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSentimentLROResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SentimentLROResult>(this);
+            return content;
         }
     }
 }

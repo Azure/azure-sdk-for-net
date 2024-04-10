@@ -22,39 +22,39 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultUsage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Unit.HasValue)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (QuotaPeriod != null)
+            if (Optional.IsDefined(QuotaPeriod))
             {
                 writer.WritePropertyName("quotaPeriod"u8);
                 writer.WriteStringValue(QuotaPeriod);
             }
-            if (NextResetOn.HasValue)
+            if (Optional.IsDefined(NextResetOn))
             {
                 writer.WritePropertyName("nextResetTime"u8);
                 writer.WriteStringValue(NextResetOn.Value, "O");
             }
-            if (CurrentValue.HasValue)
+            if (Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<VaultUsageNameInfo>(Name, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultUsage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             long? limit = default;
             VaultUsageNameInfo name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VaultUsage(
                 unit,
                 quotaPeriod,
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VaultUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeVaultUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VaultUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultUsage)} does not support reading '{options.Format}' format.");
             }
         }
 

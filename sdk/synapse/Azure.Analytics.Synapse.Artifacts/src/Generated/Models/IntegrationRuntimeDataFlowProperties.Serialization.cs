@@ -19,22 +19,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ComputeType.HasValue)
+            if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType.Value.ToString());
             }
-            if (CoreCount.HasValue)
+            if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (TimeToLive.HasValue)
+            if (Optional.IsDefined(TimeToLive))
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLive.Value);
             }
-            if (Cleanup.HasValue)
+            if (Optional.IsDefined(Cleanup))
             {
                 writer.WritePropertyName("cleanup"u8);
                 writer.WriteBooleanValue(Cleanup.Value);
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -103,12 +103,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new IntegrationRuntimeDataFlowProperties(computeType, coreCount, timeToLive, cleanup, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IntegrationRuntimeDataFlowProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIntegrationRuntimeDataFlowProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<IntegrationRuntimeDataFlowProperties>(this);
+            return content;
+        }
+
         internal partial class IntegrationRuntimeDataFlowPropertiesConverter : JsonConverter<IntegrationRuntimeDataFlowProperties>
         {
             public override void Write(Utf8JsonWriter writer, IntegrationRuntimeDataFlowProperties model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<IntegrationRuntimeDataFlowProperties>(model);
             }
+
             public override IntegrationRuntimeDataFlowProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

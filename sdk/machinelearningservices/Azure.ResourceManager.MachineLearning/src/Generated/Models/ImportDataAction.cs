@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataImportDefinition"/> is null. </exception>
         public ImportDataAction(DataImport dataImportDefinition)
         {
-            if (dataImportDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(dataImportDefinition));
-            }
+            Argument.AssertNotNull(dataImportDefinition, nameof(dataImportDefinition));
 
             DataImportDefinition = dataImportDefinition;
             ActionType = ScheduleActionType.ImportData;

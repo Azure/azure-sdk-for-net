@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerStorage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerStorage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (StorageSizeInGB.HasValue)
+            if (Optional.IsDefined(StorageSizeInGB))
             {
                 writer.WritePropertyName("storageSizeGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
             }
-            if (Iops.HasValue)
+            if (Optional.IsDefined(Iops))
             {
                 writer.WritePropertyName("iops"u8);
                 writer.WriteNumberValue(Iops.Value);
             }
-            if (AutoGrow.HasValue)
+            if (Optional.IsDefined(AutoGrow))
             {
                 writer.WritePropertyName("autoGrow"u8);
                 writer.WriteStringValue(AutoGrow.Value.ToString());
             }
-            if (LogOnDisk.HasValue)
+            if (Optional.IsDefined(LogOnDisk))
             {
                 writer.WritePropertyName("logOnDisk"u8);
                 writer.WriteStringValue(LogOnDisk.Value.ToString());
             }
-            if (options.Format != "W" && StorageSku != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageSku))
             {
                 writer.WritePropertyName("storageSku"u8);
                 writer.WriteStringValue(StorageSku);
             }
-            if (AutoIoScaling.HasValue)
+            if (Optional.IsDefined(AutoIoScaling))
             {
                 writer.WritePropertyName("autoIoScaling"u8);
                 writer.WriteStringValue(AutoIoScaling.Value.ToString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerStorage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerStorage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             string storageSku = default;
             MySqlFlexibleServerEnableStatusEnum? autoIoScaling = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageSizeGB"u8))
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlFlexibleServerStorage(
                 storageSizeGB,
                 iops,
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerStorage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerStorage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         return DeserializeMySqlFlexibleServerStorage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerStorage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerStorage)} does not support reading '{options.Format}' format.");
             }
         }
 

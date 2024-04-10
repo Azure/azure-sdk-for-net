@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsResourceReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsResourceReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(DnsResources is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsResources))
             {
                 writer.WritePropertyName("dnsResources"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Dns.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TargetResource != null)
+            if (Optional.IsDefined(TargetResource))
             {
                 writer.WritePropertyName("targetResource"u8);
                 JsonSerializer.Serialize(writer, TargetResource);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsResourceReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsResourceReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Dns.Models
             IReadOnlyList<WritableSubResource> dnsResources = default;
             WritableSubResource targetResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dnsResources"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Dns.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DnsResourceReference(dnsResources ?? new ChangeTrackingList<WritableSubResource>(), targetResource, serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Dns.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsResourceReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsResourceReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Dns.Models
                         return DeserializeDnsResourceReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsResourceReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsResourceReference)} does not support reading '{options.Format}' format.");
             }
         }
 

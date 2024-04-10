@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Media
 {
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MediaLiveEventResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string liveEventName, MediaLiveEventData data, bool? autoStart = null, CancellationToken cancellationToken = default)
         {
-            if (liveEventName == null)
-            {
-                throw new ArgumentNullException(nameof(liveEventName));
-            }
-            if (liveEventName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveEventName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +131,8 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MediaLiveEventResource> CreateOrUpdate(WaitUntil waitUntil, string liveEventName, MediaLiveEventData data, bool? autoStart = null, CancellationToken cancellationToken = default)
         {
-            if (liveEventName == null)
-            {
-                throw new ArgumentNullException(nameof(liveEventName));
-            }
-            if (liveEventName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveEventName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +178,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
         public virtual async Task<Response<MediaLiveEventResource>> GetAsync(string liveEventName, CancellationToken cancellationToken = default)
         {
-            if (liveEventName == null)
-            {
-                throw new ArgumentNullException(nameof(liveEventName));
-            }
-            if (liveEventName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveEventName));
-            }
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
 
             using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.Get");
             scope.Start();
@@ -252,14 +223,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
         public virtual Response<MediaLiveEventResource> Get(string liveEventName, CancellationToken cancellationToken = default)
         {
-            if (liveEventName == null)
-            {
-                throw new ArgumentNullException(nameof(liveEventName));
-            }
-            if (liveEventName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveEventName));
-            }
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
 
             using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.Get");
             scope.Start();
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string liveEventName, CancellationToken cancellationToken = default)
         {
-            if (liveEventName == null)
-            {
-                throw new ArgumentNullException(nameof(liveEventName));
-            }
-            if (liveEventName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveEventName));
-            }
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
 
             using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.Exists");
             scope.Start();
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
         public virtual Response<bool> Exists(string liveEventName, CancellationToken cancellationToken = default)
         {
-            if (liveEventName == null)
-            {
-                throw new ArgumentNullException(nameof(liveEventName));
-            }
-            if (liveEventName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveEventName));
-            }
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
 
             using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.Exists");
             scope.Start();
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
         public virtual async Task<NullableResponse<MediaLiveEventResource>> GetIfExistsAsync(string liveEventName, CancellationToken cancellationToken = default)
         {
-            if (liveEventName == null)
-            {
-                throw new ArgumentNullException(nameof(liveEventName));
-            }
-            if (liveEventName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveEventName));
-            }
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
 
             using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.GetIfExists");
             scope.Start();
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
         public virtual NullableResponse<MediaLiveEventResource> GetIfExists(string liveEventName, CancellationToken cancellationToken = default)
         {
-            if (liveEventName == null)
-            {
-                throw new ArgumentNullException(nameof(liveEventName));
-            }
-            if (liveEventName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(liveEventName));
-            }
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
 
             using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.GetIfExists");
             scope.Start();

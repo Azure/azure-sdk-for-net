@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SqlSku>(Sku, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,47 +44,47 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (MaxSizeBytes.HasValue)
+            if (Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
-            if (MinCapacity.HasValue)
+            if (Optional.IsDefined(MinCapacity))
             {
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
-            if (PerDatabaseSettings != null)
+            if (Optional.IsDefined(PerDatabaseSettings))
             {
                 writer.WritePropertyName("perDatabaseSettings"u8);
-                writer.WriteObjectValue(PerDatabaseSettings);
+                writer.WriteObjectValue<ElasticPoolPerDatabaseSettings>(PerDatabaseSettings, options);
             }
-            if (IsZoneRedundant.HasValue)
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (MaintenanceConfigurationId != null)
+            if (Optional.IsDefined(MaintenanceConfigurationId))
             {
                 writer.WritePropertyName("maintenanceConfigurationId"u8);
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
-            if (HighAvailabilityReplicaCount.HasValue)
+            if (Optional.IsDefined(HighAvailabilityReplicaCount))
             {
                 writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
             }
-            if (PreferredEnclaveType.HasValue)
+            if (Optional.IsDefined(PreferredEnclaveType))
             {
                 writer.WritePropertyName("preferredEnclaveType"u8);
                 writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
             }
-            if (AvailabilityZone.HasValue)
+            if (Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone.Value.ToString());
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Sql.Models
             SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default;
             SqlAvailabilityZoneType? availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -261,10 +261,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ElasticPoolPatch(
                 sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeElasticPoolPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticPoolPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

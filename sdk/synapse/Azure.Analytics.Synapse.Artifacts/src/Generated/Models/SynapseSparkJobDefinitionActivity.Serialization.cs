@@ -19,60 +19,60 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<ActivityPolicy>(Policy);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ActivityDependency>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserProperty>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("sparkJob"u8);
-            writer.WriteObjectValue(SparkJob);
-            if (!(Arguments is ChangeTrackingList<object> collection1 && collection1.IsUndefined))
+            writer.WriteObjectValue<SynapseSparkJobReference>(SparkJob);
+            if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -83,26 +83,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (File != null)
+            if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
-                writer.WriteObjectValue(File);
+                writer.WriteObjectValue<object>(File);
             }
-            if (ScanFolder != null)
+            if (Optional.IsDefined(ScanFolder))
             {
                 writer.WritePropertyName("scanFolder"u8);
-                writer.WriteObjectValue(ScanFolder);
+                writer.WriteObjectValue<object>(ScanFolder);
             }
-            if (ClassName != null)
+            if (Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className"u8);
-                writer.WriteObjectValue(ClassName);
+                writer.WriteObjectValue<object>(ClassName);
             }
-            if (!(Files is ChangeTrackingList<object> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -113,11 +113,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(PythonCodeReference is ChangeTrackingList<object> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(PythonCodeReference))
             {
                 writer.WritePropertyName("pythonCodeReference"u8);
                 writer.WriteStartArray();
@@ -128,11 +128,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(FilesV2 is ChangeTrackingList<object> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(FilesV2))
             {
                 writer.WritePropertyName("filesV2"u8);
                 writer.WriteStartArray();
@@ -143,46 +143,46 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (TargetBigDataPool != null)
+            if (Optional.IsDefined(TargetBigDataPool))
             {
                 writer.WritePropertyName("targetBigDataPool"u8);
-                writer.WriteObjectValue(TargetBigDataPool);
+                writer.WriteObjectValue<BigDataPoolParametrizationReference>(TargetBigDataPool);
             }
-            if (ExecutorSize != null)
+            if (Optional.IsDefined(ExecutorSize))
             {
                 writer.WritePropertyName("executorSize"u8);
-                writer.WriteObjectValue(ExecutorSize);
+                writer.WriteObjectValue<object>(ExecutorSize);
             }
-            if (Conf != null)
+            if (Optional.IsDefined(Conf))
             {
                 writer.WritePropertyName("conf"u8);
-                writer.WriteObjectValue(Conf);
+                writer.WriteObjectValue<object>(Conf);
             }
-            if (DriverSize != null)
+            if (Optional.IsDefined(DriverSize))
             {
                 writer.WritePropertyName("driverSize"u8);
-                writer.WriteObjectValue(DriverSize);
+                writer.WriteObjectValue<object>(DriverSize);
             }
-            if (NumExecutors != null)
+            if (Optional.IsDefined(NumExecutors))
             {
                 writer.WritePropertyName("numExecutors"u8);
-                writer.WriteObjectValue(NumExecutors);
+                writer.WriteObjectValue<object>(NumExecutors);
             }
-            if (ConfigurationType.HasValue)
+            if (Optional.IsDefined(ConfigurationType))
             {
                 writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());
             }
-            if (TargetSparkConfiguration != null)
+            if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
-                writer.WriteObjectValue(TargetSparkConfiguration);
+                writer.WriteObjectValue<SparkConfigurationParametrizationReference>(TargetSparkConfiguration);
             }
-            if (!(SparkConfig is ChangeTrackingDictionary<string, object> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(SparkConfig))
             {
                 writer.WritePropertyName("sparkConfig"u8);
                 writer.WriteStartObject();
@@ -194,7 +194,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -202,7 +202,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -565,12 +565,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 sparkConfig ?? new ChangeTrackingDictionary<string, object>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SynapseSparkJobDefinitionActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSynapseSparkJobDefinitionActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SynapseSparkJobDefinitionActivity>(this);
+            return content;
+        }
+
         internal partial class SynapseSparkJobDefinitionActivityConverter : JsonConverter<SynapseSparkJobDefinitionActivity>
         {
             public override void Write(Utf8JsonWriter writer, SynapseSparkJobDefinitionActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SynapseSparkJobDefinitionActivity>(model);
             }
+
             public override SynapseSparkJobDefinitionActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (StartOn != null)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn);
             }
-            if (EndOn != null)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn);
             }
-            if (FabricId != null)
+            if (Optional.IsDefined(FabricId))
             {
                 writer.WritePropertyName("fabricId"u8);
                 writer.WriteStringValue(FabricId);
             }
-            if (AffectedObjectTypes != null)
+            if (Optional.IsDefined(AffectedObjectTypes))
             {
                 writer.WritePropertyName("affectedObjectTypes"u8);
                 writer.WriteStringValue(AffectedObjectTypes);
             }
-            if (JobStatus != null)
+            if (Optional.IsDefined(JobStatus))
             {
                 writer.WritePropertyName("jobStatus"u8);
                 writer.WriteStringValue(JobStatus);
             }
-            if (JobOutputType.HasValue)
+            if (Optional.IsDefined(JobOutputType))
             {
                 writer.WritePropertyName("jobOutputType"u8);
                 writer.WriteStringValue(JobOutputType.Value.ToString());
             }
-            if (JobName != null)
+            if (Optional.IsDefined(JobName))
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (TimezoneOffset.HasValue)
+            if (Optional.IsDefined(TimezoneOffset))
             {
                 writer.WritePropertyName("timezoneOffset"u8);
                 writer.WriteNumberValue(TimezoneOffset.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string jobName = default;
             double? timezoneOffset = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SiteRecoveryJobQueryContent(
                 startTime,
                 endTime,
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryJobQueryContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobQueryContent)} does not support reading '{options.Format}' format.");
             }
         }
 

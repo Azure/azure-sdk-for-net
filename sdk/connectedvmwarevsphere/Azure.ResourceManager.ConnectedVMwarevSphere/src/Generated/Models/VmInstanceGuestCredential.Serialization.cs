@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmInstanceGuestCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmInstanceGuestCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmInstanceGuestCredential)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmInstanceGuestCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmInstanceGuestCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmInstanceGuestCredential)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             string username = default;
             string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VmInstanceGuestCredential(username, password, serializedAdditionalRawData);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmInstanceGuestCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmInstanceGuestCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializeVmInstanceGuestCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmInstanceGuestCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmInstanceGuestCredential)} does not support reading '{options.Format}' format.");
             }
         }
 

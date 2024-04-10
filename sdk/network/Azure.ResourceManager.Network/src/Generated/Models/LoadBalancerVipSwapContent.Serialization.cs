@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerVipSwapContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(FrontendIPConfigurations is ChangeTrackingList<LoadBalancerVipSwapRequestFrontendIPConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FrontendIPConfigurations))
             {
                 writer.WritePropertyName("frontendIPConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in FrontendIPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LoadBalancerVipSwapRequestFrontendIPConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerVipSwapContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             IList<LoadBalancerVipSwapRequestFrontendIPConfiguration> frontendIPConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frontendIPConfigurations"u8))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LoadBalancerVipSwapContent(frontendIPConfigurations ?? new ChangeTrackingList<LoadBalancerVipSwapRequestFrontendIPConfiguration>(), serializedAdditionalRawData);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeLoadBalancerVipSwapContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support reading '{options.Format}' format.");
             }
         }
 

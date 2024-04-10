@@ -23,52 +23,52 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ActivityDependency>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserProperty>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("message"u8);
-            writer.WriteObjectValue(Message);
+            writer.WriteObjectValue<object>(Message);
             writer.WritePropertyName("errorCode"u8);
-            writer.WriteObjectValue(ErrorCode);
+            writer.WriteObjectValue<object>(ErrorCode);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -191,12 +191,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 errorCode);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new FailActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFailActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<FailActivity>(this);
+            return content;
+        }
+
         internal partial class FailActivityConverter : JsonConverter<FailActivity>
         {
             public override void Write(Utf8JsonWriter writer, FailActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<FailActivity>(model);
             }
+
             public override FailActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

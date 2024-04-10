@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,26 +24,26 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<PublicIPAddressSku>(Sku, options);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -54,27 +53,27 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -87,87 +86,87 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PublicIPAllocationMethod.HasValue)
+            if (Optional.IsDefined(PublicIPAllocationMethod))
             {
                 writer.WritePropertyName("publicIPAllocationMethod"u8);
                 writer.WriteStringValue(PublicIPAllocationMethod.Value.ToString());
             }
-            if (PublicIPAddressVersion.HasValue)
+            if (Optional.IsDefined(PublicIPAddressVersion))
             {
                 writer.WritePropertyName("publicIPAddressVersion"u8);
                 writer.WriteStringValue(PublicIPAddressVersion.Value.ToString());
             }
-            if (options.Format != "W" && IPConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
-                writer.WriteObjectValue(IPConfiguration);
+                writer.WriteObjectValue<NetworkIPConfiguration>(IPConfiguration, options);
             }
-            if (DnsSettings != null)
+            if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings);
+                writer.WriteObjectValue<PublicIPAddressDnsSettings>(DnsSettings, options);
             }
-            if (DdosSettings != null)
+            if (Optional.IsDefined(DdosSettings))
             {
                 writer.WritePropertyName("ddosSettings"u8);
-                writer.WriteObjectValue(DdosSettings);
+                writer.WriteObjectValue<DdosSettings>(DdosSettings, options);
             }
-            if (!(IPTags is ChangeTrackingList<IPTag> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPTag>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (PublicIPPrefix != null)
+            if (Optional.IsDefined(PublicIPPrefix))
             {
                 writer.WritePropertyName("publicIPPrefix"u8);
                 JsonSerializer.Serialize(writer, PublicIPPrefix);
             }
-            if (IdleTimeoutInMinutes.HasValue)
+            if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ServicePublicIPAddress != null)
+            if (Optional.IsDefined(ServicePublicIPAddress))
             {
                 writer.WritePropertyName("servicePublicIPAddress"u8);
-                writer.WriteObjectValue(ServicePublicIPAddress);
+                writer.WriteObjectValue<PublicIPAddressData>(ServicePublicIPAddress, options);
             }
-            if (NatGateway != null)
+            if (Optional.IsDefined(NatGateway))
             {
                 writer.WritePropertyName("natGateway"u8);
-                writer.WriteObjectValue(NatGateway);
+                writer.WriteObjectValue<NatGatewayData>(NatGateway, options);
             }
-            if (MigrationPhase.HasValue)
+            if (Optional.IsDefined(MigrationPhase))
             {
                 writer.WritePropertyName("migrationPhase"u8);
                 writer.WriteStringValue(MigrationPhase.Value.ToString());
             }
-            if (LinkedPublicIPAddress != null)
+            if (Optional.IsDefined(LinkedPublicIPAddress))
             {
                 writer.WritePropertyName("linkedPublicIPAddress"u8);
-                writer.WriteObjectValue(LinkedPublicIPAddress);
+                writer.WriteObjectValue<PublicIPAddressData>(LinkedPublicIPAddress, options);
             }
-            if (DeleteOption.HasValue)
+            if (Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -237,7 +236,7 @@ namespace Azure.ResourceManager.Network
             PublicIPAddressData linkedPublicIPAddress = default;
             IPAddressDeleteOption? deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -486,10 +485,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PublicIPAddressData(
                 id,
                 name,
@@ -528,7 +527,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -544,7 +543,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializePublicIPAddressData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support reading '{options.Format}' format.");
             }
         }
 

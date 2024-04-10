@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmCreationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabVmCreationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabVmCreationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,138 +49,138 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BulkCreationParameters != null)
+            if (Optional.IsDefined(BulkCreationParameters))
             {
                 writer.WritePropertyName("bulkCreationParameters"u8);
-                writer.WriteObjectValue(BulkCreationParameters);
+                writer.WriteObjectValue<BulkCreationParameters>(BulkCreationParameters, options);
             }
-            if (Notes != null)
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (OwnerObjectId != null)
+            if (Optional.IsDefined(OwnerObjectId))
             {
                 writer.WritePropertyName("ownerObjectId"u8);
                 writer.WriteStringValue(OwnerObjectId);
             }
-            if (OwnerUserPrincipalName != null)
+            if (Optional.IsDefined(OwnerUserPrincipalName))
             {
                 writer.WritePropertyName("ownerUserPrincipalName"u8);
                 writer.WriteStringValue(OwnerUserPrincipalName);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (CustomImageId != null)
+            if (Optional.IsDefined(CustomImageId))
             {
                 writer.WritePropertyName("customImageId"u8);
                 writer.WriteStringValue(CustomImageId);
             }
-            if (Size != null)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (SshKey != null)
+            if (Optional.IsDefined(SshKey))
             {
                 writer.WritePropertyName("sshKey"u8);
                 writer.WriteStringValue(SshKey);
             }
-            if (IsAuthenticationWithSshKey.HasValue)
+            if (Optional.IsDefined(IsAuthenticationWithSshKey))
             {
                 writer.WritePropertyName("isAuthenticationWithSshKey"u8);
                 writer.WriteBooleanValue(IsAuthenticationWithSshKey.Value);
             }
-            if (LabSubnetName != null)
+            if (Optional.IsDefined(LabSubnetName))
             {
                 writer.WritePropertyName("labSubnetName"u8);
                 writer.WriteStringValue(LabSubnetName);
             }
-            if (LabVirtualNetworkId != null)
+            if (Optional.IsDefined(LabVirtualNetworkId))
             {
                 writer.WritePropertyName("labVirtualNetworkId"u8);
                 writer.WriteStringValue(LabVirtualNetworkId);
             }
-            if (DisallowPublicIPAddress.HasValue)
+            if (Optional.IsDefined(DisallowPublicIPAddress))
             {
                 writer.WritePropertyName("disallowPublicIpAddress"u8);
                 writer.WriteBooleanValue(DisallowPublicIPAddress.Value);
             }
-            if (!(Artifacts is ChangeTrackingList<DevTestLabArtifactInstallInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Artifacts))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabArtifactInstallInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (GalleryImageReference != null)
+            if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
-                writer.WriteObjectValue(GalleryImageReference);
+                writer.WriteObjectValue<DevTestLabGalleryImageReference>(GalleryImageReference, options);
             }
-            if (PlanId != null)
+            if (Optional.IsDefined(PlanId))
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (NetworkInterface != null)
+            if (Optional.IsDefined(NetworkInterface))
             {
                 writer.WritePropertyName("networkInterface"u8);
-                writer.WriteObjectValue(NetworkInterface);
+                writer.WriteObjectValue<DevTestLabNetworkInterface>(NetworkInterface, options);
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (AllowClaim.HasValue)
+            if (Optional.IsDefined(AllowClaim))
             {
                 writer.WritePropertyName("allowClaim"u8);
                 writer.WriteBooleanValue(AllowClaim.Value);
             }
-            if (StorageType != null)
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType);
             }
-            if (EnvironmentId != null)
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (!(DataDiskParameters is ChangeTrackingList<DevTestLabDataDiskProperties> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDiskParameters))
             {
                 writer.WritePropertyName("dataDiskParameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataDiskParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabDataDiskProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ScheduleParameters is ChangeTrackingList<DevTestLabScheduleCreationParameter> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ScheduleParameters))
             {
                 writer.WritePropertyName("scheduleParameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScheduleParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabScheduleCreationParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmCreationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabVmCreationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabVmCreationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             IList<DevTestLabDataDiskProperties> dataDiskParameters = default;
             IList<DevTestLabScheduleCreationParameter> scheduleParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -479,10 +479,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevTestLabVmCreationContent(
                 name,
                 location,
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabVmCreationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabVmCreationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabVmCreationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabVmCreationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabVmCreationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

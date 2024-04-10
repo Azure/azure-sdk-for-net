@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,10 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public WordDelimiterTokenFilter(string name) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             ProtectedWords = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.WordDelimiterTokenFilter";

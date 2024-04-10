@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,11 +23,11 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionCreditSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionCreditSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionCreditSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,47 +47,47 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && BalanceSummary != null)
+            if (options.Format != "W" && Optional.IsDefined(BalanceSummary))
             {
                 writer.WritePropertyName("balanceSummary"u8);
-                writer.WriteObjectValue(BalanceSummary);
+                writer.WriteObjectValue<CreditBalanceSummary>(BalanceSummary, options);
             }
-            if (options.Format != "W" && PendingCreditAdjustments != null)
+            if (options.Format != "W" && Optional.IsDefined(PendingCreditAdjustments))
             {
                 writer.WritePropertyName("pendingCreditAdjustments"u8);
-                writer.WriteObjectValue(PendingCreditAdjustments);
+                writer.WriteObjectValue<ConsumptionAmount>(PendingCreditAdjustments, options);
             }
-            if (options.Format != "W" && ExpiredCredit != null)
+            if (options.Format != "W" && Optional.IsDefined(ExpiredCredit))
             {
                 writer.WritePropertyName("expiredCredit"u8);
-                writer.WriteObjectValue(ExpiredCredit);
+                writer.WriteObjectValue<ConsumptionAmount>(ExpiredCredit, options);
             }
-            if (options.Format != "W" && PendingEligibleCharges != null)
+            if (options.Format != "W" && Optional.IsDefined(PendingEligibleCharges))
             {
                 writer.WritePropertyName("pendingEligibleCharges"u8);
-                writer.WriteObjectValue(PendingEligibleCharges);
+                writer.WriteObjectValue<ConsumptionAmount>(PendingEligibleCharges, options);
             }
-            if (options.Format != "W" && CreditCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(CreditCurrency))
             {
                 writer.WritePropertyName("creditCurrency"u8);
                 writer.WriteStringValue(CreditCurrency);
             }
-            if (options.Format != "W" && BillingCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingCurrency))
             {
                 writer.WritePropertyName("billingCurrency"u8);
                 writer.WriteStringValue(BillingCurrency);
             }
-            if (options.Format != "W" && Reseller != null)
+            if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller);
+                writer.WriteObjectValue<ConsumptionReseller>(Reseller, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionCreditSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionCreditSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionCreditSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string billingCurrency = default;
             ConsumptionReseller reseller = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -247,10 +246,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumptionCreditSummary(
                 id,
                 name,
@@ -276,7 +275,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionCreditSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionCreditSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -292,7 +291,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionCreditSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionCreditSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionCreditSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

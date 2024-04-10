@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseRestorableDroppedSqlPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseRestorableDroppedSqlPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseRestorableDroppedSqlPoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,49 +47,49 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Edition != null)
+            if (options.Format != "W" && Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (options.Format != "W" && MaxSizeBytes != null)
+            if (options.Format != "W" && Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteStringValue(MaxSizeBytes);
             }
-            if (options.Format != "W" && ServiceLevelObjective != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceLevelObjective))
             {
                 writer.WritePropertyName("serviceLevelObjective"u8);
                 writer.WriteStringValue(ServiceLevelObjective);
             }
-            if (options.Format != "W" && ElasticPoolName != null)
+            if (options.Format != "W" && Optional.IsDefined(ElasticPoolName))
             {
                 writer.WritePropertyName("elasticPoolName"u8);
                 writer.WriteStringValue(ElasticPoolName);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionDate"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
             }
-            if (options.Format != "W" && EarliestRestoreOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EarliestRestoreOn))
             {
                 writer.WritePropertyName("earliestRestoreDate"u8);
                 writer.WriteStringValue(EarliestRestoreOn.Value, "O");
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseRestorableDroppedSqlPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseRestorableDroppedSqlPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseRestorableDroppedSqlPoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Synapse
             DateTimeOffset? deletionDate = default;
             DateTimeOffset? earliestRestoreDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -249,10 +249,10 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SynapseRestorableDroppedSqlPoolData(
                 id,
                 name,
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Synapse
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseRestorableDroppedSqlPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseRestorableDroppedSqlPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Synapse
                         return DeserializeSynapseRestorableDroppedSqlPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseRestorableDroppedSqlPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseRestorableDroppedSqlPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -16,18 +16,18 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ContentCategory.HasValue)
+            if (Optional.IsDefined(ContentCategory))
             {
                 writer.WritePropertyName("contentCategory"u8);
                 writer.WriteStringValue(ContentCategory.Value.ToString());
             }
-            if (!(Examples is ChangeTrackingList<MessageExampleSequence> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Examples))
             {
                 writer.WritePropertyName("examples"u8);
                 writer.WriteStartArray();
                 foreach (var item in Examples)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MessageExampleSequence>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -69,6 +69,22 @@ namespace Azure.Communication.ShortCodes.Models
                 }
             }
             return new UseCase(contentCategory, examples ?? new ChangeTrackingList<MessageExampleSequence>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static UseCase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUseCase(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<UseCase>(this);
+            return content;
         }
     }
 }

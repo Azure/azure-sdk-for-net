@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayHeaderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayHeaderConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayHeaderConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (HeaderName != null)
+            if (Optional.IsDefined(HeaderName))
             {
                 writer.WritePropertyName("headerName"u8);
                 writer.WriteStringValue(HeaderName);
             }
-            if (HeaderValue != null)
+            if (Optional.IsDefined(HeaderValue))
             {
                 writer.WritePropertyName("headerValue"u8);
                 writer.WriteStringValue(HeaderValue);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayHeaderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayHeaderConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayHeaderConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             string headerName = default;
             string headerValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("headerName"u8))
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationGatewayHeaderConfiguration(headerName, headerValue, serializedAdditionalRawData);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayHeaderConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayHeaderConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayHeaderConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayHeaderConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayHeaderConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

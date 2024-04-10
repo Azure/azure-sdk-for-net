@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(EmailOn is ChangeTrackingList<EmailNotificationEnableType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EmailOn))
             {
                 if (EmailOn != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("emailOn");
                 }
             }
-            if (!(Emails is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Emails))
             {
                 if (Emails != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("emails");
                 }
             }
-            if (!(Webhooks is ChangeTrackingDictionary<string, MachineLearningWebhook> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Webhooks))
             {
                 if (Webhooks != null)
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Webhooks)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<MachineLearningWebhook>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IList<string> emails = default;
             IDictionary<string, MachineLearningWebhook> webhooks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("emailOn"u8))
@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NotificationSetting(emailOn ?? new ChangeTrackingList<EmailNotificationEnableType>(), emails ?? new ChangeTrackingList<string>(), webhooks ?? new ChangeTrackingDictionary<string, MachineLearningWebhook>(), serializedAdditionalRawData);
         }
 
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeNotificationSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

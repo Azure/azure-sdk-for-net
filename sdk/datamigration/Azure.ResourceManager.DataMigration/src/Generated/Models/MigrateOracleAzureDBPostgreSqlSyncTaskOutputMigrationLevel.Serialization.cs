@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && EndedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && SourceServerVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceServerVersion))
             {
                 writer.WritePropertyName("sourceServerVersion"u8);
                 writer.WriteStringValue(SourceServerVersion);
             }
-            if (options.Format != "W" && SourceServer != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceServer))
             {
                 writer.WritePropertyName("sourceServer"u8);
                 writer.WriteStringValue(SourceServer);
             }
-            if (options.Format != "W" && TargetServerVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetServerVersion))
             {
                 writer.WritePropertyName("targetServerVersion"u8);
                 writer.WriteStringValue(TargetServerVersion);
             }
-            if (options.Format != "W" && TargetServer != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetServer))
             {
                 writer.WritePropertyName("targetServer"u8);
                 writer.WriteStringValue(TargetServer);
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startedOn"u8))
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel(
                 id,
                 resultType,
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

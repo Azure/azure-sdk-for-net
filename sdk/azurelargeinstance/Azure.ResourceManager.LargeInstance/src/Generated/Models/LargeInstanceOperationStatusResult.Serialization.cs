@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LargeInstance.Models
@@ -23,53 +22,53 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status);
-            if (PercentComplete.HasValue)
+            if (Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (!(Operations is ChangeTrackingList<LargeInstanceOperationStatusResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Operations))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LargeInstanceOperationStatusResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceOperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             IReadOnlyList<LargeInstanceOperationStatusResult> operations = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -205,10 +204,10 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LargeInstanceOperationStatusResult(
                 id,
                 resourceId,
@@ -231,7 +230,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -247,7 +246,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                         return DeserializeLargeInstanceOperationStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceOperationStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 

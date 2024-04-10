@@ -22,12 +22,20 @@ namespace Azure.Communication.Identity.Models
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
-            if (ExpiresInMinutes.HasValue)
+            if (Optional.IsDefined(ExpiresInMinutes))
             {
                 writer.WritePropertyName("expiresInMinutes"u8);
                 writer.WriteNumberValue(ExpiresInMinutes.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CommunicationIdentityAccessTokenRequest>(this);
+            return content;
         }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -23,16 +22,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdateCommonPostActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ConfigurationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (!(SuccessfulDevices is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SuccessfulDevices))
             {
                 writer.WritePropertyName("successfulDevices"u8);
                 writer.WriteStartArray();
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(FailedDevices is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FailedDevices))
             {
                 writer.WritePropertyName("failedDevices"u8);
                 writer.WriteStartArray();
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdateCommonPostActionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IReadOnlyList<string> failedDevices = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationState"u8))
@@ -151,10 +150,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DeviceUpdateCommonPostActionResult(error, serializedAdditionalRawData, configurationState, successfulDevices ?? new ChangeTrackingList<string>(), failedDevices ?? new ChangeTrackingList<string>());
         }
 
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeDeviceUpdateCommonPostActionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdateCommonPostActionResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Automanage.Models;
 using Azure.ResourceManager.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Automanage
             var format = options.Format == "W" ? ((IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentReportData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentReportData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,64 +43,64 @@ namespace Azure.ResourceManager.Automanage
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Duration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (options.Format != "W" && ConfigurationProfileAssignmentProcessingType != null)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationProfileAssignmentProcessingType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConfigurationProfileAssignmentProcessingType);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && ConfigurationProfile != null)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationProfile))
             {
                 writer.WritePropertyName("configurationProfile"u8);
                 writer.WriteStringValue(ConfigurationProfile);
             }
-            if (options.Format != "W" && !(Resources is ChangeTrackingList<ConfigurationProfileAssignmentReportResourceDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConfigurationProfileAssignmentReportResourceDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (options.Format != "W" && ReportFormatVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ReportFormatVersion))
             {
                 writer.WritePropertyName("reportFormatVersion"u8);
                 writer.WriteStringValue(ReportFormatVersion);
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.Automanage
             var format = options.Format == "W" ? ((IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentReportData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentReportData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.Automanage
             ResponseError error = default;
             string reportFormatVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -280,10 +279,10 @@ namespace Azure.ResourceManager.Automanage
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutomanageConfigurationProfileAssignmentReportData(
                 id,
                 name,
@@ -311,7 +310,7 @@ namespace Azure.ResourceManager.Automanage
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentReportData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentReportData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.Automanage
                         return DeserializeAutomanageConfigurationProfileAssignmentReportData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentReportData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentReportData)} does not support reading '{options.Format}' format.");
             }
         }
 

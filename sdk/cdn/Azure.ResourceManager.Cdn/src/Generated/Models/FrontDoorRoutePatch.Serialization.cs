@@ -23,38 +23,38 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorRoutePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorRoutePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorRoutePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && EndpointName != null)
+            if (options.Format != "W" && Optional.IsDefined(EndpointName))
             {
                 writer.WritePropertyName("endpointName"u8);
                 writer.WriteStringValue(EndpointName);
             }
-            if (!(CustomDomains is ChangeTrackingList<FrontDoorActivatedResourceInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomDomains))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FrontDoorActivatedResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (OriginGroup != null)
+            if (Optional.IsDefined(OriginGroup))
             {
                 writer.WritePropertyName("originGroup"u8);
                 JsonSerializer.Serialize(writer, OriginGroup);
             }
-            if (OriginPath != null)
+            if (Optional.IsDefined(OriginPath))
             {
                 writer.WritePropertyName("originPath"u8);
                 writer.WriteStringValue(OriginPath);
             }
-            if (!(RuleSets is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RuleSets))
             {
                 writer.WritePropertyName("ruleSets"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SupportedProtocols is ChangeTrackingList<FrontDoorEndpointProtocol> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedProtocols))
             {
                 writer.WritePropertyName("supportedProtocols"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PatternsToMatch is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(PatternsToMatch))
             {
                 writer.WritePropertyName("patternsToMatch"u8);
                 writer.WriteStartArray();
@@ -84,34 +84,34 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (CacheConfiguration != null)
+            if (Optional.IsDefined(CacheConfiguration))
             {
                 if (CacheConfiguration != null)
                 {
                     writer.WritePropertyName("cacheConfiguration"u8);
-                    writer.WriteObjectValue(CacheConfiguration);
+                    writer.WriteObjectValue<FrontDoorRouteCacheConfiguration>(CacheConfiguration, options);
                 }
                 else
                 {
                     writer.WriteNull("cacheConfiguration");
                 }
             }
-            if (ForwardingProtocol.HasValue)
+            if (Optional.IsDefined(ForwardingProtocol))
             {
                 writer.WritePropertyName("forwardingProtocol"u8);
                 writer.WriteStringValue(ForwardingProtocol.Value.ToString());
             }
-            if (LinkToDefaultDomain.HasValue)
+            if (Optional.IsDefined(LinkToDefaultDomain))
             {
                 writer.WritePropertyName("linkToDefaultDomain"u8);
                 writer.WriteStringValue(LinkToDefaultDomain.Value.ToString());
             }
-            if (HttpsRedirect.HasValue)
+            if (Optional.IsDefined(HttpsRedirect))
             {
                 writer.WritePropertyName("httpsRedirect"u8);
                 writer.WriteStringValue(HttpsRedirect.Value.ToString());
             }
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorRoutePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorRoutePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorRoutePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Cdn.Models
             HttpsRedirect? httpsRedirect = default;
             EnabledState? enabledState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -306,10 +306,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FrontDoorRoutePatch(
                 endpointName,
                 customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>(),
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorRoutePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorRoutePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeFrontDoorRoutePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorRoutePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorRoutePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

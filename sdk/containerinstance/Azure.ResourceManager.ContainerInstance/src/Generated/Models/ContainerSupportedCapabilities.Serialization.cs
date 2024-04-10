@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerSupportedCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MaxMemoryInGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxMemoryInGB))
             {
                 writer.WritePropertyName("maxMemoryInGB"u8);
                 writer.WriteNumberValue(MaxMemoryInGB.Value);
             }
-            if (options.Format != "W" && MaxCpu.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxCpu))
             {
                 writer.WritePropertyName("maxCpu"u8);
                 writer.WriteNumberValue(MaxCpu.Value);
             }
-            if (options.Format != "W" && MaxGpuCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxGpuCount))
             {
                 writer.WritePropertyName("maxGpuCount"u8);
                 writer.WriteNumberValue(MaxGpuCount.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerSupportedCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             float? maxCpu = default;
             float? maxGpuCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxMemoryInGB"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerSupportedCapabilities(maxMemoryInGB, maxCpu, maxGpuCount, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerSupportedCapabilities(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support reading '{options.Format}' format.");
             }
         }
 

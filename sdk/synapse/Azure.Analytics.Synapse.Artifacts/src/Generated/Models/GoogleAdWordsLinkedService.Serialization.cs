@@ -21,28 +21,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -53,77 +53,77 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (ConnectionProperties != null)
+            if (Optional.IsDefined(ConnectionProperties))
             {
                 writer.WritePropertyName("connectionProperties"u8);
-                writer.WriteObjectValue(ConnectionProperties);
+                writer.WriteObjectValue<object>(ConnectionProperties);
             }
-            if (ClientCustomerID != null)
+            if (Optional.IsDefined(ClientCustomerID))
             {
                 writer.WritePropertyName("clientCustomerID"u8);
-                writer.WriteObjectValue(ClientCustomerID);
+                writer.WriteObjectValue<object>(ClientCustomerID);
             }
-            if (DeveloperToken != null)
+            if (Optional.IsDefined(DeveloperToken))
             {
                 writer.WritePropertyName("developerToken"u8);
-                writer.WriteObjectValue(DeveloperToken);
+                writer.WriteObjectValue<SecretBase>(DeveloperToken);
             }
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (RefreshToken != null)
+            if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
-                writer.WriteObjectValue(RefreshToken);
+                writer.WriteObjectValue<SecretBase>(RefreshToken);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteObjectValue(ClientId);
+                writer.WriteObjectValue<object>(ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                writer.WriteObjectValue(ClientSecret);
+                writer.WriteObjectValue<SecretBase>(ClientSecret);
             }
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
-                writer.WriteObjectValue(Email);
+                writer.WriteObjectValue<object>(Email);
             }
-            if (KeyFilePath != null)
+            if (Optional.IsDefined(KeyFilePath))
             {
                 writer.WritePropertyName("keyFilePath"u8);
-                writer.WriteObjectValue(KeyFilePath);
+                writer.WriteObjectValue<object>(KeyFilePath);
             }
-            if (TrustedCertPath != null)
+            if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
-                writer.WriteObjectValue(TrustedCertPath);
+                writer.WriteObjectValue<object>(TrustedCertPath);
             }
-            if (UseSystemTrustStore != null)
+            if (Optional.IsDefined(UseSystemTrustStore))
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
-                writer.WriteObjectValue(UseSystemTrustStore);
+                writer.WriteObjectValue<object>(UseSystemTrustStore);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -353,12 +353,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GoogleAdWordsLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGoogleAdWordsLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<GoogleAdWordsLinkedService>(this);
+            return content;
+        }
+
         internal partial class GoogleAdWordsLinkedServiceConverter : JsonConverter<GoogleAdWordsLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, GoogleAdWordsLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<GoogleAdWordsLinkedService>(model);
             }
+
             public override GoogleAdWordsLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountFixedScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountFixedScaleSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountFixedScaleSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResizeTimeout.HasValue)
+            if (Optional.IsDefined(ResizeTimeout))
             {
                 writer.WritePropertyName("resizeTimeout"u8);
                 writer.WriteStringValue(ResizeTimeout.Value, "P");
             }
-            if (TargetDedicatedNodes.HasValue)
+            if (Optional.IsDefined(TargetDedicatedNodes))
             {
                 writer.WritePropertyName("targetDedicatedNodes"u8);
                 writer.WriteNumberValue(TargetDedicatedNodes.Value);
             }
-            if (TargetLowPriorityNodes.HasValue)
+            if (Optional.IsDefined(TargetLowPriorityNodes))
             {
                 writer.WritePropertyName("targetLowPriorityNodes"u8);
                 writer.WriteNumberValue(TargetLowPriorityNodes.Value);
             }
-            if (NodeDeallocationOption.HasValue)
+            if (Optional.IsDefined(NodeDeallocationOption))
             {
                 writer.WritePropertyName("nodeDeallocationOption"u8);
                 writer.WriteStringValue(NodeDeallocationOption.Value.ToSerialString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountFixedScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountFixedScaleSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountFixedScaleSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
             int? targetLowPriorityNodes = default;
             BatchNodeDeallocationOption? nodeDeallocationOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resizeTimeout"u8))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchAccountFixedScaleSettings(resizeTimeout, targetDedicatedNodes, targetLowPriorityNodes, nodeDeallocationOption, serializedAdditionalRawData);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountFixedScaleSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountFixedScaleSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchAccountFixedScaleSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountFixedScaleSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountFixedScaleSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

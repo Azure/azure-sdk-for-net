@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunCommandParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunCommandParameterDefinitionType);
-            if (DefaultValue != null)
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (Required.HasValue)
+            if (Optional.IsDefined(Required))
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(Required.Value);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunCommandParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
             string defaultValue = default;
             bool? required = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RunCommandParameterDefinition(name, type, defaultValue, required, serializedAdditionalRawData);
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRunCommandParameterDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunCommandParameterDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

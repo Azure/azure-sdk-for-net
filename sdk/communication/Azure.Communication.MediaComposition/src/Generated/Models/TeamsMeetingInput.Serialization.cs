@@ -19,7 +19,7 @@ namespace Azure.Communication.MediaComposition
             writer.WriteStringValue(TeamsJoinUrl);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (PlaceholderImageUri != null)
+            if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
@@ -55,6 +55,22 @@ namespace Azure.Communication.MediaComposition
                 }
             }
             return new TeamsMeetingInput(kind, placeholderImageUri, teamsJoinUrl);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TeamsMeetingInput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTeamsMeetingInput(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TeamsMeetingInput>(this);
+            return content;
         }
     }
 }

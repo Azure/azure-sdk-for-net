@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,46 +23,46 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<RampUpRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RampUpRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RampUpRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ActionHostName != null)
+            if (Optional.IsDefined(ActionHostName))
             {
                 writer.WritePropertyName("actionHostName"u8);
                 writer.WriteStringValue(ActionHostName);
             }
-            if (ReroutePercentage.HasValue)
+            if (Optional.IsDefined(ReroutePercentage))
             {
                 writer.WritePropertyName("reroutePercentage"u8);
                 writer.WriteNumberValue(ReroutePercentage.Value);
             }
-            if (ChangeStep.HasValue)
+            if (Optional.IsDefined(ChangeStep))
             {
                 writer.WritePropertyName("changeStep"u8);
                 writer.WriteNumberValue(ChangeStep.Value);
             }
-            if (ChangeIntervalInMinutes.HasValue)
+            if (Optional.IsDefined(ChangeIntervalInMinutes))
             {
                 writer.WritePropertyName("changeIntervalInMinutes"u8);
                 writer.WriteNumberValue(ChangeIntervalInMinutes.Value);
             }
-            if (MinReroutePercentage.HasValue)
+            if (Optional.IsDefined(MinReroutePercentage))
             {
                 writer.WritePropertyName("minReroutePercentage"u8);
                 writer.WriteNumberValue(MinReroutePercentage.Value);
             }
-            if (MaxReroutePercentage.HasValue)
+            if (Optional.IsDefined(MaxReroutePercentage))
             {
                 writer.WritePropertyName("maxReroutePercentage"u8);
                 writer.WriteNumberValue(MaxReroutePercentage.Value);
             }
-            if (ChangeDecisionCallbackUri != null)
+            if (Optional.IsDefined(ChangeDecisionCallbackUri))
             {
                 writer.WritePropertyName("changeDecisionCallbackUrl"u8);
                 writer.WriteStringValue(ChangeDecisionCallbackUri.AbsoluteUri);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<RampUpRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RampUpRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RampUpRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
             Uri changeDecisionCallbackUrl = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionHostName"u8))
@@ -182,10 +183,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RampUpRule(
                 actionHostName,
                 reroutePercentage,
@@ -198,6 +199,149 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionHostName), out propertyOverride);
+            if (Optional.IsDefined(ActionHostName) || hasPropertyOverride)
+            {
+                builder.Append("  actionHostName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ActionHostName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ActionHostName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ActionHostName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReroutePercentage), out propertyOverride);
+            if (Optional.IsDefined(ReroutePercentage) || hasPropertyOverride)
+            {
+                builder.Append("  reroutePercentage: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ReroutePercentage.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeStep), out propertyOverride);
+            if (Optional.IsDefined(ChangeStep) || hasPropertyOverride)
+            {
+                builder.Append("  changeStep: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ChangeStep.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeIntervalInMinutes), out propertyOverride);
+            if (Optional.IsDefined(ChangeIntervalInMinutes) || hasPropertyOverride)
+            {
+                builder.Append("  changeIntervalInMinutes: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ChangeIntervalInMinutes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinReroutePercentage), out propertyOverride);
+            if (Optional.IsDefined(MinReroutePercentage) || hasPropertyOverride)
+            {
+                builder.Append("  minReroutePercentage: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MinReroutePercentage.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxReroutePercentage), out propertyOverride);
+            if (Optional.IsDefined(MaxReroutePercentage) || hasPropertyOverride)
+            {
+                builder.Append("  maxReroutePercentage: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MaxReroutePercentage.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeDecisionCallbackUri), out propertyOverride);
+            if (Optional.IsDefined(ChangeDecisionCallbackUri) || hasPropertyOverride)
+            {
+                builder.Append("  changeDecisionCallbackUrl: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ChangeDecisionCallbackUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RampUpRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RampUpRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -206,8 +350,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RampUpRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RampUpRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +369,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeRampUpRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RampUpRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RampUpRule)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHostEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,52 +74,52 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && AzureId != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureId))
             {
                 writer.WritePropertyName("azureID"u8);
                 writer.WriteStringValue(AzureId);
             }
-            if (options.Format != "W" && DnsDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(DnsDomain))
             {
                 writer.WritePropertyName("dnsDomain"u8);
                 writer.WriteStringValue(DnsDomain);
             }
-            if (options.Format != "W" && HostName != null)
+            if (options.Format != "W" && Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && IsDomainJoined.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDomainJoined))
             {
                 writer.WritePropertyName("isDomainJoined"u8);
                 writer.WriteBooleanValue(IsDomainJoined.Value);
             }
-            if (options.Format != "W" && NetBiosName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetBiosName))
             {
                 writer.WritePropertyName("netBiosName"u8);
                 writer.WriteStringValue(NetBiosName);
             }
-            if (options.Format != "W" && NtDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(NtDomain))
             {
                 writer.WritePropertyName("ntDomain"u8);
                 writer.WriteStringValue(NtDomain);
             }
-            if (options.Format != "W" && OmsAgentId != null)
+            if (options.Format != "W" && Optional.IsDefined(OmsAgentId))
             {
                 writer.WritePropertyName("omsAgentID"u8);
                 writer.WriteStringValue(OmsAgentId);
             }
-            if (OSFamily.HasValue)
+            if (Optional.IsDefined(OSFamily))
             {
                 writer.WritePropertyName("osFamily"u8);
                 writer.WriteStringValue(OSFamily.Value.ToSerialString());
             }
-            if (options.Format != "W" && OSVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHostEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SecurityInsightsHostOSFamily? osFamily = default;
             string osVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -309,10 +309,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsHostEntity(
                 id,
                 name,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsHostEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsHostEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

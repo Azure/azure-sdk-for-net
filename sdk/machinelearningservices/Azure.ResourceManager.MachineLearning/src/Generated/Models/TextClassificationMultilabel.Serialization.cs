@@ -22,52 +22,52 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<TextClassificationMultilabel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TextClassificationMultilabel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TextClassificationMultilabel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrimaryMetric.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryMetric))
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (FeaturizationSettings != null)
+            if (Optional.IsDefined(FeaturizationSettings))
             {
                 if (FeaturizationSettings != null)
                 {
                     writer.WritePropertyName("featurizationSettings"u8);
-                    writer.WriteObjectValue(FeaturizationSettings);
+                    writer.WriteObjectValue<NlpVerticalFeaturizationSettings>(FeaturizationSettings, options);
                 }
                 else
                 {
                     writer.WriteNull("featurizationSettings");
                 }
             }
-            if (FixedParameters != null)
+            if (Optional.IsDefined(FixedParameters))
             {
                 if (FixedParameters != null)
                 {
                     writer.WritePropertyName("fixedParameters"u8);
-                    writer.WriteObjectValue(FixedParameters);
+                    writer.WriteObjectValue<NlpFixedParameters>(FixedParameters, options);
                 }
                 else
                 {
                     writer.WriteNull("fixedParameters");
                 }
             }
-            if (LimitSettings != null)
+            if (Optional.IsDefined(LimitSettings))
             {
                 if (LimitSettings != null)
                 {
                     writer.WritePropertyName("limitSettings"u8);
-                    writer.WriteObjectValue(LimitSettings);
+                    writer.WriteObjectValue<NlpVerticalLimitSettings>(LimitSettings, options);
                 }
                 else
                 {
                     writer.WriteNull("limitSettings");
                 }
             }
-            if (!(SearchSpace is ChangeTrackingList<NlpParameterSubspace> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SearchSpace))
             {
                 if (SearchSpace != null)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in SearchSpace)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<NlpParameterSubspace>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -84,36 +84,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("searchSpace");
                 }
             }
-            if (SweepSettings != null)
+            if (Optional.IsDefined(SweepSettings))
             {
                 if (SweepSettings != null)
                 {
                     writer.WritePropertyName("sweepSettings"u8);
-                    writer.WriteObjectValue(SweepSettings);
+                    writer.WriteObjectValue<NlpSweepSettings>(SweepSettings, options);
                 }
                 else
                 {
                     writer.WriteNull("sweepSettings");
                 }
             }
-            if (ValidationData != null)
+            if (Optional.IsDefined(ValidationData))
             {
                 if (ValidationData != null)
                 {
                     writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData);
+                    writer.WriteObjectValue<MachineLearningTableJobInput>(ValidationData, options);
                 }
                 else
                 {
                     writer.WriteNull("validationData");
                 }
             }
-            if (LogVerbosity.HasValue)
+            if (Optional.IsDefined(LogVerbosity))
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (TargetColumnName != null)
+            if (Optional.IsDefined(TargetColumnName))
             {
                 if (TargetColumnName != null)
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData);
+            writer.WriteObjectValue<MachineLearningTableJobInput>(TrainingData, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<TextClassificationMultilabel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TextClassificationMultilabel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TextClassificationMultilabel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryMetric"u8))
@@ -287,10 +287,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TextClassificationMultilabel(
                 logVerbosity,
                 targetColumnName,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TextClassificationMultilabel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TextClassificationMultilabel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeTextClassificationMultilabel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TextClassificationMultilabel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TextClassificationMultilabel)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,31 +23,31 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AssociatedRouteTable != null)
+            if (Optional.IsDefined(AssociatedRouteTable))
             {
                 writer.WritePropertyName("associatedRouteTable"u8);
                 JsonSerializer.Serialize(writer, AssociatedRouteTable);
             }
-            if (PropagatedRouteTables != null)
+            if (Optional.IsDefined(PropagatedRouteTables))
             {
                 writer.WritePropertyName("propagatedRouteTables"u8);
-                writer.WriteObjectValue(PropagatedRouteTables);
+                writer.WriteObjectValue<PropagatedRouteTable>(PropagatedRouteTables, options);
             }
-            if (VnetRoutes != null)
+            if (Optional.IsDefined(VnetRoutes))
             {
                 writer.WritePropertyName("vnetRoutes"u8);
-                writer.WriteObjectValue(VnetRoutes);
+                writer.WriteObjectValue<VnetRoute>(VnetRoutes, options);
             }
-            if (InboundRouteMap != null)
+            if (Optional.IsDefined(InboundRouteMap))
             {
                 writer.WritePropertyName("inboundRouteMap"u8);
                 JsonSerializer.Serialize(writer, InboundRouteMap);
             }
-            if (OutboundRouteMap != null)
+            if (Optional.IsDefined(OutboundRouteMap))
             {
                 writer.WritePropertyName("outboundRouteMap"u8);
                 JsonSerializer.Serialize(writer, OutboundRouteMap);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
             WritableSubResource inboundRouteMap = default;
             WritableSubResource outboundRouteMap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("associatedRouteTable"u8))
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RoutingConfiguration(
                 associatedRouteTable,
                 propagatedRouteTables,
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeRoutingConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProofOfPossessionNonceResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Certificate != null)
+            if (options.Format != "W" && Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Subject != null)
+            if (options.Format != "W" && Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && Thumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && ExpiryUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiryUtc))
             {
                 writer.WritePropertyName("expiryUtc"u8);
                 writer.WriteStringValue(ExpiryUtc.Value, "O");
             }
-            if (options.Format != "W" && NotBeforeUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NotBeforeUtc))
             {
                 writer.WritePropertyName("notBeforeUtc"u8);
                 writer.WriteStringValue(NotBeforeUtc.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProofOfPossessionNonceResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sphere.Models
             DateTimeOffset? notBeforeUtc = default;
             SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificate"u8))
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProofOfPossessionNonceResponse(
                 certificate,
                 status,
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sphere.Models
                         return DeserializeProofOfPossessionNonceResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProofOfPossessionNonceResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

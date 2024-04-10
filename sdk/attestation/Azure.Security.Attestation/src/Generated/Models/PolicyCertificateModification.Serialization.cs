@@ -18,10 +18,10 @@ namespace Azure.Security.Attestation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (InternalPolicyCertificate != null)
+            if (Optional.IsDefined(InternalPolicyCertificate))
             {
                 writer.WritePropertyName("policyCertificate"u8);
-                writer.WriteObjectValue(InternalPolicyCertificate);
+                writer.WriteObjectValue<JsonWebKey>(InternalPolicyCertificate);
             }
             writer.WriteEndObject();
         }
@@ -48,12 +48,29 @@ namespace Azure.Security.Attestation
             return new PolicyCertificateModification(policyCertificate);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PolicyCertificateModification FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePolicyCertificateModification(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PolicyCertificateModification>(this);
+            return content;
+        }
+
         internal partial class PolicyCertificateModificationConverter : JsonConverter<PolicyCertificateModification>
         {
             public override void Write(Utf8JsonWriter writer, PolicyCertificateModification model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<PolicyCertificateModification>(model);
             }
+
             public override PolicyCertificateModification Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

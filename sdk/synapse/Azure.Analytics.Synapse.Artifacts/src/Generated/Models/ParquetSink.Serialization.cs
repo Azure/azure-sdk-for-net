@@ -19,47 +19,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (StoreSettings != null)
+            if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue(StoreSettings);
+                writer.WriteObjectValue<StoreWriteSettings>(StoreSettings);
             }
-            if (FormatSettings != null)
+            if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue(FormatSettings);
+                writer.WriteObjectValue<ParquetWriteSettings>(FormatSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (WriteBatchSize != null)
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
-                writer.WriteObjectValue(WriteBatchSize);
+                writer.WriteObjectValue<object>(WriteBatchSize);
             }
-            if (WriteBatchTimeout != null)
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
-                writer.WriteObjectValue(WriteBatchTimeout);
+                writer.WriteObjectValue<object>(WriteBatchTimeout);
             }
-            if (SinkRetryCount != null)
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
-                writer.WriteObjectValue(SinkRetryCount);
+                writer.WriteObjectValue<object>(SinkRetryCount);
             }
-            if (SinkRetryWait != null)
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
-                writer.WriteObjectValue(SinkRetryWait);
+                writer.WriteObjectValue<object>(SinkRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -165,12 +165,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 formatSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ParquetSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeParquetSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ParquetSink>(this);
+            return content;
+        }
+
         internal partial class ParquetSinkConverter : JsonConverter<ParquetSink>
         {
             public override void Write(Utf8JsonWriter writer, ParquetSink model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ParquetSink>(model);
             }
+
             public override ParquetSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

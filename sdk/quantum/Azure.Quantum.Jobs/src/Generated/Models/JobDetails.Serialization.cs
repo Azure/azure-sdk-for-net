@@ -17,35 +17,35 @@ namespace Azure.Quantum.Jobs.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("containerUri"u8);
             writer.WriteStringValue(ContainerUri);
-            if (InputDataUri != null)
+            if (Optional.IsDefined(InputDataUri))
             {
                 writer.WritePropertyName("inputDataUri"u8);
                 writer.WriteStringValue(InputDataUri);
             }
             writer.WritePropertyName("inputDataFormat"u8);
             writer.WriteStringValue(InputDataFormat);
-            if (InputParams != null)
+            if (Optional.IsDefined(InputParams))
             {
                 writer.WritePropertyName("inputParams"u8);
-                writer.WriteObjectValue(InputParams);
+                writer.WriteObjectValue<object>(InputParams);
             }
             writer.WritePropertyName("providerId"u8);
             writer.WriteStringValue(ProviderId);
             writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target);
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 if (Metadata != null)
                 {
@@ -63,17 +63,17 @@ namespace Azure.Quantum.Jobs.Models
                     writer.WriteNull("metadata");
                 }
             }
-            if (OutputDataUri != null)
+            if (Optional.IsDefined(OutputDataUri))
             {
                 writer.WritePropertyName("outputDataUri"u8);
                 writer.WriteStringValue(OutputDataUri);
             }
-            if (OutputDataFormat != null)
+            if (Optional.IsDefined(OutputDataFormat))
             {
                 writer.WritePropertyName("outputDataFormat"u8);
                 writer.WriteStringValue(OutputDataFormat);
             }
-            if (!(Tags is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -291,6 +291,22 @@ namespace Azure.Quantum.Jobs.Models
                 costEstimate,
                 errorData,
                 tags ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static JobDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeJobDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<JobDetails>(this);
+            return content;
         }
     }
 }

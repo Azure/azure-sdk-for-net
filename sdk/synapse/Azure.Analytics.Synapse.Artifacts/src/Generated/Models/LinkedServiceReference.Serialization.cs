@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
-            if (!(Parameters is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -36,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -89,12 +88,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkedServiceReference(type, referenceName, parameters ?? new ChangeTrackingDictionary<string, object>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkedServiceReference FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkedServiceReference(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LinkedServiceReference>(this);
+            return content;
+        }
+
         internal partial class LinkedServiceReferenceConverter : JsonConverter<LinkedServiceReference>
         {
             public override void Write(Utf8JsonWriter writer, LinkedServiceReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LinkedServiceReference>(model);
             }
+
             public override LinkedServiceReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

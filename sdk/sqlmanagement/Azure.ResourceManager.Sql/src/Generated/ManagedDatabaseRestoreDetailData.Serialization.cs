@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseRestoreDetailData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,140 +45,140 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && RestoreType != null)
+            if (options.Format != "W" && Optional.IsDefined(RestoreType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RestoreType);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && BlockReason != null)
+            if (options.Format != "W" && Optional.IsDefined(BlockReason))
             {
                 writer.WritePropertyName("blockReason"u8);
                 writer.WriteStringValue(BlockReason);
             }
-            if (options.Format != "W" && LastUploadedFileName != null)
+            if (options.Format != "W" && Optional.IsDefined(LastUploadedFileName))
             {
                 writer.WritePropertyName("lastUploadedFileName"u8);
                 writer.WriteStringValue(LastUploadedFileName);
             }
-            if (options.Format != "W" && LastUploadedFileOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUploadedFileOn))
             {
                 writer.WritePropertyName("lastUploadedFileTime"u8);
                 writer.WriteStringValue(LastUploadedFileOn.Value, "O");
             }
-            if (options.Format != "W" && LastRestoredFileName != null)
+            if (options.Format != "W" && Optional.IsDefined(LastRestoredFileName))
             {
                 writer.WritePropertyName("lastRestoredFileName"u8);
                 writer.WriteStringValue(LastRestoredFileName);
             }
-            if (options.Format != "W" && LastRestoredFileOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastRestoredFileOn))
             {
                 writer.WritePropertyName("lastRestoredFileTime"u8);
                 writer.WriteStringValue(LastRestoredFileOn.Value, "O");
             }
-            if (options.Format != "W" && CompletedPercent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CompletedPercent))
             {
                 writer.WritePropertyName("percentCompleted"u8);
                 writer.WriteNumberValue(CompletedPercent.Value);
             }
-            if (options.Format != "W" && CurrentRestoredSizeInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentRestoredSizeInMB))
             {
                 writer.WritePropertyName("currentRestoredSizeMB"u8);
                 writer.WriteNumberValue(CurrentRestoredSizeInMB.Value);
             }
-            if (options.Format != "W" && CurrentRestorePlanSizeInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentRestorePlanSizeInMB))
             {
                 writer.WritePropertyName("currentRestorePlanSizeMB"u8);
                 writer.WriteNumberValue(CurrentRestorePlanSizeInMB.Value);
             }
-            if (options.Format != "W" && CurrentBackupType != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentBackupType))
             {
                 writer.WritePropertyName("currentBackupType"u8);
                 writer.WriteStringValue(CurrentBackupType);
             }
-            if (options.Format != "W" && CurrentRestoringFileName != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentRestoringFileName))
             {
                 writer.WritePropertyName("currentRestoringFileName"u8);
                 writer.WriteStringValue(CurrentRestoringFileName);
             }
-            if (options.Format != "W" && NumberOfFilesFound.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesFound))
             {
                 writer.WritePropertyName("numberOfFilesDetected"u8);
                 writer.WriteNumberValue(NumberOfFilesFound.Value);
             }
-            if (options.Format != "W" && NumberOfFilesQueued.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesQueued))
             {
                 writer.WritePropertyName("numberOfFilesQueued"u8);
                 writer.WriteNumberValue(NumberOfFilesQueued.Value);
             }
-            if (options.Format != "W" && NumberOfFilesSkipped.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesSkipped))
             {
                 writer.WritePropertyName("numberOfFilesSkipped"u8);
                 writer.WriteNumberValue(NumberOfFilesSkipped.Value);
             }
-            if (options.Format != "W" && NumberOfFilesRestoring.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesRestoring))
             {
                 writer.WritePropertyName("numberOfFilesRestoring"u8);
                 writer.WriteNumberValue(NumberOfFilesRestoring.Value);
             }
-            if (options.Format != "W" && NumberOfFilesRestored.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesRestored))
             {
                 writer.WritePropertyName("numberOfFilesRestored"u8);
                 writer.WriteNumberValue(NumberOfFilesRestored.Value);
             }
-            if (options.Format != "W" && NumberOfFilesUnrestorable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfFilesUnrestorable))
             {
                 writer.WritePropertyName("numberOfFilesUnrestorable"u8);
                 writer.WriteNumberValue(NumberOfFilesUnrestorable.Value);
             }
-            if (options.Format != "W" && !(FullBackupSets is ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FullBackupSets))
             {
                 writer.WritePropertyName("fullBackupSets"u8);
                 writer.WriteStartArray();
                 foreach (var item in FullBackupSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedDatabaseRestoreDetailBackupSetProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(DiffBackupSets is ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DiffBackupSets))
             {
                 writer.WritePropertyName("diffBackupSets"u8);
                 writer.WriteStartArray();
                 foreach (var item in DiffBackupSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedDatabaseRestoreDetailBackupSetProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(LogBackupSets is ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LogBackupSets))
             {
                 writer.WritePropertyName("logBackupSets"u8);
                 writer.WriteStartArray();
                 foreach (var item in LogBackupSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedDatabaseRestoreDetailBackupSetProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(UnrestorableFileList is ChangeTrackingList<ManagedDatabaseRestoreDetailUnrestorableFileProperties> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(UnrestorableFileList))
             {
                 writer.WritePropertyName("unrestorableFiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in UnrestorableFileList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedDatabaseRestoreDetailUnrestorableFileProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -204,7 +206,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseRestoreDetailData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -246,7 +248,7 @@ namespace Azure.ResourceManager.Sql
             IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> logBackupSets = default;
             IReadOnlyList<ManagedDatabaseRestoreDetailUnrestorableFileProperties> unrestorableFiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -477,10 +479,10 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedDatabaseRestoreDetailData(
                 id,
                 name,
@@ -511,6 +513,472 @@ namespace Azure.ResourceManager.Sql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreType), out propertyOverride);
+            if (Optional.IsDefined(RestoreType) || hasPropertyOverride)
+            {
+                builder.Append("    type: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RestoreType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RestoreType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RestoreType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            {
+                builder.Append("    status: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Status.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Status}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Status}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlockReason), out propertyOverride);
+            if (Optional.IsDefined(BlockReason) || hasPropertyOverride)
+            {
+                builder.Append("    blockReason: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (BlockReason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BlockReason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BlockReason}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUploadedFileName), out propertyOverride);
+            if (Optional.IsDefined(LastUploadedFileName) || hasPropertyOverride)
+            {
+                builder.Append("    lastUploadedFileName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (LastUploadedFileName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastUploadedFileName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastUploadedFileName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUploadedFileOn), out propertyOverride);
+            if (Optional.IsDefined(LastUploadedFileOn) || hasPropertyOverride)
+            {
+                builder.Append("    lastUploadedFileTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(LastUploadedFileOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastRestoredFileName), out propertyOverride);
+            if (Optional.IsDefined(LastRestoredFileName) || hasPropertyOverride)
+            {
+                builder.Append("    lastRestoredFileName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (LastRestoredFileName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastRestoredFileName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastRestoredFileName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastRestoredFileOn), out propertyOverride);
+            if (Optional.IsDefined(LastRestoredFileOn) || hasPropertyOverride)
+            {
+                builder.Append("    lastRestoredFileTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(LastRestoredFileOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompletedPercent), out propertyOverride);
+            if (Optional.IsDefined(CompletedPercent) || hasPropertyOverride)
+            {
+                builder.Append("    percentCompleted: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{CompletedPercent.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentRestoredSizeInMB), out propertyOverride);
+            if (Optional.IsDefined(CurrentRestoredSizeInMB) || hasPropertyOverride)
+            {
+                builder.Append("    currentRestoredSizeMB: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{CurrentRestoredSizeInMB.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentRestorePlanSizeInMB), out propertyOverride);
+            if (Optional.IsDefined(CurrentRestorePlanSizeInMB) || hasPropertyOverride)
+            {
+                builder.Append("    currentRestorePlanSizeMB: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{CurrentRestorePlanSizeInMB.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentBackupType), out propertyOverride);
+            if (Optional.IsDefined(CurrentBackupType) || hasPropertyOverride)
+            {
+                builder.Append("    currentBackupType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CurrentBackupType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CurrentBackupType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CurrentBackupType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentRestoringFileName), out propertyOverride);
+            if (Optional.IsDefined(CurrentRestoringFileName) || hasPropertyOverride)
+            {
+                builder.Append("    currentRestoringFileName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CurrentRestoringFileName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CurrentRestoringFileName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CurrentRestoringFileName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfFilesFound), out propertyOverride);
+            if (Optional.IsDefined(NumberOfFilesFound) || hasPropertyOverride)
+            {
+                builder.Append("    numberOfFilesDetected: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{NumberOfFilesFound.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfFilesQueued), out propertyOverride);
+            if (Optional.IsDefined(NumberOfFilesQueued) || hasPropertyOverride)
+            {
+                builder.Append("    numberOfFilesQueued: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{NumberOfFilesQueued.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfFilesSkipped), out propertyOverride);
+            if (Optional.IsDefined(NumberOfFilesSkipped) || hasPropertyOverride)
+            {
+                builder.Append("    numberOfFilesSkipped: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{NumberOfFilesSkipped.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfFilesRestoring), out propertyOverride);
+            if (Optional.IsDefined(NumberOfFilesRestoring) || hasPropertyOverride)
+            {
+                builder.Append("    numberOfFilesRestoring: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{NumberOfFilesRestoring.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfFilesRestored), out propertyOverride);
+            if (Optional.IsDefined(NumberOfFilesRestored) || hasPropertyOverride)
+            {
+                builder.Append("    numberOfFilesRestored: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{NumberOfFilesRestored.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfFilesUnrestorable), out propertyOverride);
+            if (Optional.IsDefined(NumberOfFilesUnrestorable) || hasPropertyOverride)
+            {
+                builder.Append("    numberOfFilesUnrestorable: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{NumberOfFilesUnrestorable.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FullBackupSets), out propertyOverride);
+            if (Optional.IsCollectionDefined(FullBackupSets) || hasPropertyOverride)
+            {
+                if (FullBackupSets.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    fullBackupSets: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in FullBackupSets)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    fullBackupSets: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiffBackupSets), out propertyOverride);
+            if (Optional.IsCollectionDefined(DiffBackupSets) || hasPropertyOverride)
+            {
+                if (DiffBackupSets.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    diffBackupSets: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in DiffBackupSets)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    diffBackupSets: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogBackupSets), out propertyOverride);
+            if (Optional.IsCollectionDefined(LogBackupSets) || hasPropertyOverride)
+            {
+                if (LogBackupSets.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    logBackupSets: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in LogBackupSets)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    logBackupSets: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnrestorableFileList), out propertyOverride);
+            if (Optional.IsCollectionDefined(UnrestorableFileList) || hasPropertyOverride)
+            {
+                if (UnrestorableFileList.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    unrestorableFiles: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in UnrestorableFileList)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    unrestorableFiles: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedDatabaseRestoreDetailData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDatabaseRestoreDetailData>)this).GetFormatFromOptions(options) : options.Format;
@@ -519,8 +987,10 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -536,7 +1006,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeManagedDatabaseRestoreDetailData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDatabaseRestoreDetailData)} does not support reading '{options.Format}' format.");
             }
         }
 

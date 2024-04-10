@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSqlPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSqlPoolPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSqlPoolPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,69 +37,69 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SynapseSku>(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (MaxSizeBytes.HasValue)
+            if (Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
-            if (Collation != null)
+            if (Optional.IsDefined(Collation))
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (SourceDatabaseId != null)
+            if (Optional.IsDefined(SourceDatabaseId))
             {
                 writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (RecoverableDatabaseId != null)
+            if (Optional.IsDefined(RecoverableDatabaseId))
             {
                 writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (RestorePointInTime.HasValue)
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (StorageAccountType.HasValue)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (SourceDatabaseDeletionOn.HasValue)
+            if (Optional.IsDefined(SourceDatabaseDeletionOn))
             {
                 writer.WritePropertyName("sourceDatabaseDeletionDate"u8);
                 writer.WriteStringValue(SourceDatabaseDeletionOn.Value, "O");
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSqlPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSqlPoolPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSqlPoolPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Synapse.Models
             SqlPoolStorageAccountType? storageAccountType = default;
             DateTimeOffset? sourceDatabaseDeletionDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -286,10 +286,10 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SynapseSqlPoolPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSqlPoolPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSqlPoolPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseSqlPoolPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSqlPoolPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSqlPoolPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

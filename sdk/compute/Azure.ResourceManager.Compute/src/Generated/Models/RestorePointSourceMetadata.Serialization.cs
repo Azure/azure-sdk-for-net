@@ -22,56 +22,56 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && HardwareProfile != null)
+            if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue<VirtualMachineHardwareProfile>(HardwareProfile, options);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<RestorePointSourceVmStorageProfile>(StorageProfile, options);
             }
-            if (options.Format != "W" && OSProfile != null)
+            if (options.Format != "W" && Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue<VirtualMachineOSProfile>(OSProfile, options);
             }
-            if (options.Format != "W" && DiagnosticsProfile != null)
+            if (options.Format != "W" && Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
-                writer.WriteObjectValue(DiagnosticsProfile);
+                writer.WriteObjectValue<DiagnosticsProfile>(DiagnosticsProfile, options);
             }
-            if (options.Format != "W" && LicenseType != null)
+            if (options.Format != "W" && Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
-            if (options.Format != "W" && VmId != null)
+            if (options.Format != "W" && Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (options.Format != "W" && SecurityProfile != null)
+            if (options.Format != "W" && Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<SecurityProfile>(SecurityProfile, options);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && UserData != null)
+            if (options.Format != "W" && Optional.IsDefined(UserData))
             {
                 writer.WritePropertyName("userData"u8);
                 writer.WriteStringValue(UserData);
             }
-            if (options.Format != "W" && HyperVGeneration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
             string userData = default;
             HyperVGeneration? hyperVGeneration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hardwareProfile"u8))
@@ -208,10 +208,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RestorePointSourceMetadata(
                 hardwareProfile,
                 storageProfile,
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRestorePointSourceMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

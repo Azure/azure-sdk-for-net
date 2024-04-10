@@ -22,37 +22,37 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppJobTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppJobTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(InitContainers is ChangeTrackingList<ContainerAppInitContainer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InitContainers))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
                 foreach (var item in InitContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppInitContainer>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Containers is ChangeTrackingList<ContainerAppContainer> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Containers))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Containers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppContainer>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Volumes is ChangeTrackingList<ContainerAppVolume> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Volumes))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppVolume>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppJobTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppJobTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             IList<ContainerAppContainer> containers = default;
             IList<ContainerAppVolume> volumes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("initContainers"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppJobTemplate(initContainers ?? new ChangeTrackingList<ContainerAppInitContainer>(), containers ?? new ChangeTrackingList<ContainerAppContainer>(), volumes ?? new ChangeTrackingList<ContainerAppVolume>(), serializedAdditionalRawData);
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppJobTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppJobTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppJobTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppJobTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppJobTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (LowerCaseKeepWords.HasValue)
+            if (Optional.IsDefined(LowerCaseKeepWords))
             {
                 writer.WritePropertyName("keepWordsCase"u8);
                 writer.WriteBooleanValue(LowerCaseKeepWords.Value);
@@ -78,6 +78,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new KeepTokenFilter(odataType, name, keepWords, keepWordsCase);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new KeepTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeepTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<KeepTokenFilter>(this);
+            return content;
         }
     }
 }

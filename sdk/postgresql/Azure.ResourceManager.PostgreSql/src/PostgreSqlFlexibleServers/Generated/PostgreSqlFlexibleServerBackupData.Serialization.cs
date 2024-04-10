@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerBackupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerBackupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,24 +44,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BackupType.HasValue)
+            if (Optional.IsDefined(BackupType))
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (CompletedOn.HasValue)
+            if (Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completedTime"u8);
                 writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerBackupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerBackupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             DateTimeOffset? completedTime = default;
             string source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -176,10 +177,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PostgreSqlFlexibleServerBackupData(
                 id,
                 name,
@@ -191,6 +192,125 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupType), out propertyOverride);
+            if (Optional.IsDefined(BackupType) || hasPropertyOverride)
+            {
+                builder.Append("    backupType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{BackupType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompletedOn), out propertyOverride);
+            if (Optional.IsDefined(CompletedOn) || hasPropertyOverride)
+            {
+                builder.Append("    completedTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(CompletedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
+            if (Optional.IsDefined(Source) || hasPropertyOverride)
+            {
+                builder.Append("    source: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Source.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Source}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Source}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PostgreSqlFlexibleServerBackupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerBackupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -199,8 +319,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerBackupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerBackupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +338,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         return DeserializePostgreSqlFlexibleServerBackupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerBackupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerBackupData)} does not support reading '{options.Format}' format.");
             }
         }
 

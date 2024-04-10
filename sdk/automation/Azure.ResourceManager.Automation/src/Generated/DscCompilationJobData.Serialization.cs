@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<DscCompilationJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscCompilationJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscCompilationJobData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<DscConfigurationAssociationProperty>(Configuration, options);
             }
-            if (options.Format != "W" && StartedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(StartedBy))
             {
                 writer.WritePropertyName("startedBy"u8);
                 writer.WriteStringValue(StartedBy);
             }
-            if (options.Format != "W" && JobId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (RunOn != null)
+            if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (StatusDetails != null)
+            if (Optional.IsDefined(StatusDetails))
             {
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 if (StartOn != null)
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("startTime");
                 }
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 if (EndOn != null)
                 {
@@ -114,17 +114,17 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("endTime");
                 }
             }
-            if (options.Format != "W" && Exception != null)
+            if (options.Format != "W" && Optional.IsDefined(Exception))
             {
                 writer.WritePropertyName("exception"u8);
                 writer.WriteStringValue(Exception);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && LastStatusModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStatusModifiedOn))
             {
                 if (LastStatusModifiedOn != null)
                 {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("lastStatusModifiedTime");
                 }
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<DscCompilationJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscCompilationJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscCompilationJobData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Automation
             DateTimeOffset? lastStatusModifiedTime = default;
             IDictionary<string, string> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -364,10 +364,10 @@ namespace Azure.ResourceManager.Automation
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DscCompilationJobData(
                 id,
                 name,
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Automation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscCompilationJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscCompilationJobData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Automation
                         return DeserializeDscCompilationJobData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscCompilationJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscCompilationJobData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureFileFilterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFileFilterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFileFilterDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(FilePrefixList is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FilePrefixList))
             {
                 writer.WritePropertyName("filePrefixList"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(FilePathList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FilePathList))
             {
                 writer.WritePropertyName("filePathList"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(FileShareList is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(FileShareList))
             {
                 writer.WritePropertyName("fileShareList"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureFileFilterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFileFilterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFileFilterDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataBox.Models
             IList<string> filePathList = default;
             IList<string> fileShareList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filePrefixList"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureFileFilterDetails(filePrefixList ?? new ChangeTrackingList<string>(), filePathList ?? new ChangeTrackingList<string>(), fileShareList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureFileFilterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFileFilterDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeAzureFileFilterDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureFileFilterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFileFilterDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

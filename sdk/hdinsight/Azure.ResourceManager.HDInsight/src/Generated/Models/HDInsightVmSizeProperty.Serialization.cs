@@ -22,56 +22,56 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Cores.HasValue)
+            if (Optional.IsDefined(Cores))
             {
                 writer.WritePropertyName("cores"u8);
                 writer.WriteNumberValue(Cores.Value);
             }
-            if (DataDiskStorageTier != null)
+            if (Optional.IsDefined(DataDiskStorageTier))
             {
                 writer.WritePropertyName("dataDiskStorageTier"u8);
                 writer.WriteStringValue(DataDiskStorageTier);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (MaxDataDiskCount.HasValue)
+            if (Optional.IsDefined(MaxDataDiskCount))
             {
                 writer.WritePropertyName("maxDataDiskCount"u8);
                 writer.WriteNumberValue(MaxDataDiskCount.Value);
             }
-            if (MemoryInMB.HasValue)
+            if (Optional.IsDefined(MemoryInMB))
             {
                 writer.WritePropertyName("memoryInMb"u8);
                 writer.WriteNumberValue(MemoryInMB.Value);
             }
-            if (IsSupportedByVirtualMachines.HasValue)
+            if (Optional.IsDefined(IsSupportedByVirtualMachines))
             {
                 writer.WritePropertyName("supportedByVirtualMachines"u8);
                 writer.WriteBooleanValue(IsSupportedByVirtualMachines.Value);
             }
-            if (IsSupportedByWebWorkerRoles.HasValue)
+            if (Optional.IsDefined(IsSupportedByWebWorkerRoles))
             {
                 writer.WritePropertyName("supportedByWebWorkerRoles"u8);
                 writer.WriteBooleanValue(IsSupportedByWebWorkerRoles.Value);
             }
-            if (VirtualMachineResourceDiskSizeInMB.HasValue)
+            if (Optional.IsDefined(VirtualMachineResourceDiskSizeInMB))
             {
                 writer.WritePropertyName("virtualMachineResourceDiskSizeInMb"u8);
                 writer.WriteNumberValue(VirtualMachineResourceDiskSizeInMB.Value);
             }
-            if (WebWorkerResourceDiskSizeInMB.HasValue)
+            if (Optional.IsDefined(WebWorkerResourceDiskSizeInMB))
             {
                 writer.WritePropertyName("webWorkerResourceDiskSizeInMb"u8);
                 writer.WriteNumberValue(WebWorkerResourceDiskSizeInMB.Value);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             long? virtualMachineResourceDiskSizeInMB = default;
             long? webWorkerResourceDiskSizeInMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -208,10 +208,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HDInsightVmSizeProperty(
                 name,
                 cores,
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightVmSizeProperty(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightVmSizeProperty)} does not support reading '{options.Format}' format.");
             }
         }
 

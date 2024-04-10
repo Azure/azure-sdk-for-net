@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (HubInputName != null)
+            if (Optional.IsDefined(HubInputName))
             {
                 writer.WritePropertyName("hubInputName"u8);
                 writer.WriteStringValue(HubInputName);
@@ -55,6 +55,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new IotHubMessageSource(type, name, hubInputName);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new IotHubMessageSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIotHubMessageSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<IotHubMessageSource>(this);
+            return content;
         }
     }
 }

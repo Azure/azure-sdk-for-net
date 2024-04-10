@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -44,12 +44,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SubResourceDebugResource(name);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SubResourceDebugResource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSubResourceDebugResource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SubResourceDebugResource>(this);
+            return content;
+        }
+
         internal partial class SubResourceDebugResourceConverter : JsonConverter<SubResourceDebugResource>
         {
             public override void Write(Utf8JsonWriter writer, SubResourceDebugResource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SubResourceDebugResource>(model);
             }
+
             public override SubResourceDebugResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

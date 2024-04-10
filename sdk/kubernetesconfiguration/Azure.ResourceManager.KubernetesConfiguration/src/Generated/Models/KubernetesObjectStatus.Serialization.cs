@@ -22,43 +22,43 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (ComplianceState.HasValue)
+            if (Optional.IsDefined(ComplianceState))
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (AppliedBy != null)
+            if (Optional.IsDefined(AppliedBy))
             {
                 if (AppliedBy != null)
                 {
                     writer.WritePropertyName("appliedBy"u8);
-                    writer.WriteObjectValue(AppliedBy);
+                    writer.WriteObjectValue<KubernetesObjectReference>(AppliedBy, options);
                 }
                 else
                 {
                     writer.WriteNull("appliedBy");
                 }
             }
-            if (!(StatusConditions is ChangeTrackingList<KubernetesObjectStatusCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StatusConditions))
             {
                 if (StatusConditions != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteStartArray();
                     foreach (var item in StatusConditions)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<KubernetesObjectStatusCondition>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("statusConditions");
                 }
             }
-            if (HelmReleaseProperties != null)
+            if (Optional.IsDefined(HelmReleaseProperties))
             {
                 if (HelmReleaseProperties != null)
                 {
                     writer.WritePropertyName("helmReleaseProperties"u8);
-                    writer.WriteObjectValue(HelmReleaseProperties);
+                    writer.WriteObjectValue<HelmReleaseProperties>(HelmReleaseProperties, options);
                 }
                 else
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesObjectStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             IReadOnlyList<KubernetesObjectStatusCondition> statusConditions = default;
             HelmReleaseProperties helmReleaseProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -197,10 +197,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KubernetesObjectStatus(
                 name,
                 @namespace,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesObjectStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesObjectStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

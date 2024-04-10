@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public MongoDBDatabaseResourceInfo(string databaseName)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
 
             DatabaseName = databaseName;
         }
@@ -77,10 +74,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB MongoDB database. </summary>
+        [WirePath("id")]
         public string DatabaseName { get; set; }
         /// <summary> Parameters to indicate the information about the restore. </summary>
+        [WirePath("restoreParameters")]
         public ResourceRestoreParameters RestoreParameters { get; set; }
         /// <summary> Enum to indicate the mode of resource creation. </summary>
+        [WirePath("createMode")]
         public CosmosDBAccountCreateMode? CreateMode { get; set; }
     }
 }

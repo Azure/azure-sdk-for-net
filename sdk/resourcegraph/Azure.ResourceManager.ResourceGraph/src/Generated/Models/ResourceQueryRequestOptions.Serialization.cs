@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceQueryRequestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("$skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
-            if (Top.HasValue)
+            if (Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("$top"u8);
                 writer.WriteNumberValue(Top.Value);
             }
-            if (Skip.HasValue)
+            if (Optional.IsDefined(Skip))
             {
                 writer.WritePropertyName("$skip"u8);
                 writer.WriteNumberValue(Skip.Value);
             }
-            if (ResultFormat.HasValue)
+            if (Optional.IsDefined(ResultFormat))
             {
                 writer.WritePropertyName("resultFormat"u8);
                 writer.WriteStringValue(ResultFormat.Value.ToSerialString());
             }
-            if (AllowPartialScopes.HasValue)
+            if (Optional.IsDefined(AllowPartialScopes))
             {
                 writer.WritePropertyName("allowPartialScopes"u8);
                 writer.WriteBooleanValue(AllowPartialScopes.Value);
             }
-            if (AuthorizationScopeFilter.HasValue)
+            if (Optional.IsDefined(AuthorizationScopeFilter))
             {
                 writer.WritePropertyName("authorizationScopeFilter"u8);
                 writer.WriteStringValue(AuthorizationScopeFilter.Value.ToSerialString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceQueryRequestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             bool? allowPartialScopes = default;
             AuthorizationScopeFilter? authorizationScopeFilter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("$skipToken"u8))
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceQueryRequestOptions(
                 skipToken,
                 top,
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                         return DeserializeResourceQueryRequestOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceQueryRequestOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

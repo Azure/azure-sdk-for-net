@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<AS2SecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AS2SecuritySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AS2SecuritySettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("overrideGroupSigningCertificate"u8);
             writer.WriteBooleanValue(OverrideGroupSigningCertificate);
-            if (SigningCertificateName != null)
+            if (Optional.IsDefined(SigningCertificateName))
             {
                 writer.WritePropertyName("signingCertificateName"u8);
                 writer.WriteStringValue(SigningCertificateName);
             }
-            if (EncryptionCertificateName != null)
+            if (Optional.IsDefined(EncryptionCertificateName))
             {
                 writer.WritePropertyName("encryptionCertificateName"u8);
                 writer.WriteStringValue(EncryptionCertificateName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(EnableNrrForOutboundDecodedMessages);
             writer.WritePropertyName("enableNRRForInboundMDN"u8);
             writer.WriteBooleanValue(EnableNrrForInboundMdn);
-            if (Sha2AlgorithmFormat != null)
+            if (Optional.IsDefined(Sha2AlgorithmFormat))
             {
                 writer.WritePropertyName("sha2AlgorithmFormat"u8);
                 writer.WriteStringValue(Sha2AlgorithmFormat);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<AS2SecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AS2SecuritySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AS2SecuritySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Logic.Models
             bool enableNrrForInboundMdn = default;
             string sha2AlgorithmFormat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("overrideGroupSigningCertificate"u8))
@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AS2SecuritySettings(
                 overrideGroupSigningCertificate,
                 signingCertificateName,
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AS2SecuritySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AS2SecuritySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeAS2SecuritySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AS2SecuritySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AS2SecuritySettings)} does not support reading '{options.Format}' format.");
             }
         }
 

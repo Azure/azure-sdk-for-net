@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,26 +23,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorableLocationResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorableLocationResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorableLocationResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LocationName.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LocationName))
             {
                 writer.WritePropertyName("locationName"u8);
                 writer.WriteStringValue(LocationName.Value);
             }
-            if (options.Format != "W" && RegionalDatabaseAccountInstanceId != null)
+            if (options.Format != "W" && Optional.IsDefined(RegionalDatabaseAccountInstanceId))
             {
                 writer.WritePropertyName("regionalDatabaseAccountInstanceId"u8);
                 writer.WriteStringValue(RegionalDatabaseAccountInstanceId);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && DeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeletedOn.Value, "O");
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestorableLocationResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorableLocationResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorableLocationResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DateTimeOffset? creationTime = default;
             DateTimeOffset? deletionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locationName"u8))
@@ -126,11 +127,92 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RestorableLocationResourceInfo(locationName, regionalDatabaseAccountInstanceId, creationTime, deletionTime, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocationName), out propertyOverride);
+            if (Optional.IsDefined(LocationName) || hasPropertyOverride)
+            {
+                builder.Append("  locationName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{LocationName.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegionalDatabaseAccountInstanceId), out propertyOverride);
+            if (Optional.IsDefined(RegionalDatabaseAccountInstanceId) || hasPropertyOverride)
+            {
+                builder.Append("  regionalDatabaseAccountInstanceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RegionalDatabaseAccountInstanceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RegionalDatabaseAccountInstanceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RegionalDatabaseAccountInstanceId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (Optional.IsDefined(CreatedOn) || hasPropertyOverride)
+            {
+                builder.Append("  creationTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeletedOn), out propertyOverride);
+            if (Optional.IsDefined(DeletedOn) || hasPropertyOverride)
+            {
+                builder.Append("  deletionTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(DeletedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<RestorableLocationResourceInfo>.Write(ModelReaderWriterOptions options)
@@ -141,8 +223,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RestorableLocationResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorableLocationResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +242,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeRestorableLocationResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestorableLocationResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorableLocationResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

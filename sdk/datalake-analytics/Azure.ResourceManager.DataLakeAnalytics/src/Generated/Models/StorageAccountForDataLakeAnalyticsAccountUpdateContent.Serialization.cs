@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountForDataLakeAnalyticsAccountUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountForDataLakeAnalyticsAccountUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountForDataLakeAnalyticsAccountUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AccessKey != null)
+            if (Optional.IsDefined(AccessKey))
             {
                 writer.WritePropertyName("accessKey"u8);
                 writer.WriteStringValue(AccessKey);
             }
-            if (Suffix != null)
+            if (Optional.IsDefined(Suffix))
             {
                 writer.WritePropertyName("suffix"u8);
                 writer.WriteStringValue(Suffix);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountForDataLakeAnalyticsAccountUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountForDataLakeAnalyticsAccountUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountForDataLakeAnalyticsAccountUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             string accessKey = default;
             string suffix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageAccountForDataLakeAnalyticsAccountUpdateContent(name, accessKey, suffix, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountForDataLakeAnalyticsAccountUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountForDataLakeAnalyticsAccountUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         return DeserializeStorageAccountForDataLakeAnalyticsAccountUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountForDataLakeAnalyticsAccountUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountForDataLakeAnalyticsAccountUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

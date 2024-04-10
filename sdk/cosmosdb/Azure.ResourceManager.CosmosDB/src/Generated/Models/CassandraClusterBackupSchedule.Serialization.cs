@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,21 +23,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterBackupSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ScheduleName != null)
+            if (Optional.IsDefined(ScheduleName))
             {
                 writer.WritePropertyName("scheduleName"u8);
                 writer.WriteStringValue(ScheduleName);
             }
-            if (CronExpression != null)
+            if (Optional.IsDefined(CronExpression))
             {
                 writer.WritePropertyName("cronExpression"u8);
                 writer.WriteStringValue(CronExpression);
             }
-            if (RetentionInHours.HasValue)
+            if (Optional.IsDefined(RetentionInHours))
             {
                 writer.WritePropertyName("retentionInHours"u8);
                 writer.WriteNumberValue(RetentionInHours.Value);
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterBackupSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string cronExpression = default;
             int? retentionInHours = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scheduleName"u8))
@@ -107,11 +108,84 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CassandraClusterBackupSchedule(scheduleName, cronExpression, retentionInHours, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScheduleName), out propertyOverride);
+            if (Optional.IsDefined(ScheduleName) || hasPropertyOverride)
+            {
+                builder.Append("  scheduleName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ScheduleName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ScheduleName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ScheduleName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CronExpression), out propertyOverride);
+            if (Optional.IsDefined(CronExpression) || hasPropertyOverride)
+            {
+                builder.Append("  cronExpression: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CronExpression.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CronExpression}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CronExpression}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionInHours), out propertyOverride);
+            if (Optional.IsDefined(RetentionInHours) || hasPropertyOverride)
+            {
+                builder.Append("  retentionInHours: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{RetentionInHours.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CassandraClusterBackupSchedule>.Write(ModelReaderWriterOptions options)
@@ -122,8 +196,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +215,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraClusterBackupSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterBackupSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

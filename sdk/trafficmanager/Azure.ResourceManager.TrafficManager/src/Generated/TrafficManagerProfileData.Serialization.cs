@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.TrafficManager
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerProfileData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,64 +38,64 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndObject();
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProfileStatus.HasValue)
+            if (Optional.IsDefined(ProfileStatus))
             {
                 writer.WritePropertyName("profileStatus"u8);
                 writer.WriteStringValue(ProfileStatus.Value.ToString());
             }
-            if (TrafficRoutingMethod.HasValue)
+            if (Optional.IsDefined(TrafficRoutingMethod))
             {
                 writer.WritePropertyName("trafficRoutingMethod"u8);
                 writer.WriteStringValue(TrafficRoutingMethod.Value.ToString());
             }
-            if (DnsConfig != null)
+            if (Optional.IsDefined(DnsConfig))
             {
                 writer.WritePropertyName("dnsConfig"u8);
-                writer.WriteObjectValue(DnsConfig);
+                writer.WriteObjectValue<TrafficManagerDnsConfig>(DnsConfig, options);
             }
-            if (MonitorConfig != null)
+            if (Optional.IsDefined(MonitorConfig))
             {
                 writer.WritePropertyName("monitorConfig"u8);
-                writer.WriteObjectValue(MonitorConfig);
+                writer.WriteObjectValue<TrafficManagerMonitorConfig>(MonitorConfig, options);
             }
-            if (!(Endpoints is ChangeTrackingList<TrafficManagerEndpointData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrafficManagerEndpointData>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (TrafficViewEnrollmentStatus.HasValue)
+            if (Optional.IsDefined(TrafficViewEnrollmentStatus))
             {
                 writer.WritePropertyName("trafficViewEnrollmentStatus"u8);
                 writer.WriteStringValue(TrafficViewEnrollmentStatus.Value.ToString());
             }
-            if (!(AllowedEndpointRecordTypes is ChangeTrackingList<AllowedEndpointRecordType> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedEndpointRecordTypes))
             {
                 writer.WritePropertyName("allowedEndpointRecordTypes"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 writer.WriteEndArray();
             }
-            if (MaxReturn.HasValue)
+            if (Optional.IsDefined(MaxReturn))
             {
                 if (MaxReturn != null)
                 {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.TrafficManager
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerProfileData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.TrafficManager
             IList<AllowedEndpointRecordType> allowedEndpointRecordTypes = default;
             long? maxReturn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -316,10 +316,10 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TrafficManagerProfileData(
                 id,
                 name,
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerProfileData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.TrafficManager
                         return DeserializeTrafficManagerProfileData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerProfileData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.LabServices
             var format = options.Format == "W" ? ((IPersistableModel<LabData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,64 +56,64 @@ namespace Azure.ResourceManager.LabServices
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AutoShutdownProfile != null)
+            if (Optional.IsDefined(AutoShutdownProfile))
             {
                 writer.WritePropertyName("autoShutdownProfile"u8);
-                writer.WriteObjectValue(AutoShutdownProfile);
+                writer.WriteObjectValue<LabAutoShutdownProfile>(AutoShutdownProfile, options);
             }
-            if (ConnectionProfile != null)
+            if (Optional.IsDefined(ConnectionProfile))
             {
                 writer.WritePropertyName("connectionProfile"u8);
-                writer.WriteObjectValue(ConnectionProfile);
+                writer.WriteObjectValue<LabConnectionProfile>(ConnectionProfile, options);
             }
-            if (VirtualMachineProfile != null)
+            if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
-                writer.WriteObjectValue(VirtualMachineProfile);
+                writer.WriteObjectValue<LabVirtualMachineProfile>(VirtualMachineProfile, options);
             }
-            if (SecurityProfile != null)
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<LabSecurityProfile>(SecurityProfile, options);
             }
-            if (RosterProfile != null)
+            if (Optional.IsDefined(RosterProfile))
             {
                 writer.WritePropertyName("rosterProfile"u8);
-                writer.WriteObjectValue(RosterProfile);
+                writer.WriteObjectValue<LabRosterProfile>(RosterProfile, options);
             }
-            if (LabPlanId != null)
+            if (Optional.IsDefined(LabPlanId))
             {
                 writer.WritePropertyName("labPlanId"u8);
                 writer.WriteStringValue(LabPlanId);
             }
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<LabNetworkProfile>(NetworkProfile, options);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.LabServices
             var format = options.Format == "W" ? ((IPersistableModel<LabData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.LabServices
             LabNetworkProfile networkProfile = default;
             LabState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -326,10 +326,10 @@ namespace Azure.ResourceManager.LabServices
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LabData(
                 id,
                 name,
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.LabServices
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.LabServices
                         return DeserializeLabData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabData)} does not support reading '{options.Format}' format.");
             }
         }
 

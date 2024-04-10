@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceQuotaUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningWorkspaceQuotaUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceQuotaUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && UpdateWorkspaceQuotasType != null)
+            if (options.Format != "W" && Optional.IsDefined(UpdateWorkspaceQuotasType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(UpdateWorkspaceQuotasType);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Unit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceQuotaUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningWorkspaceQuotaUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceQuotaUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningQuotaUnit? unit = default;
             MachineLearningWorkspaceQuotaStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningWorkspaceQuotaUpdate(
                 id,
                 type,
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceQuotaUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceQuotaUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningWorkspaceQuotaUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceQuotaUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceQuotaUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

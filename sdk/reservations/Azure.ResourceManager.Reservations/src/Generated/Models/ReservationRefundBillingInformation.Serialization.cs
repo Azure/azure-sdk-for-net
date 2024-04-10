@@ -22,39 +22,39 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationRefundBillingInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BillingPlan.HasValue)
+            if (Optional.IsDefined(BillingPlan))
             {
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (CompletedTransactions.HasValue)
+            if (Optional.IsDefined(CompletedTransactions))
             {
                 writer.WritePropertyName("completedTransactions"u8);
                 writer.WriteNumberValue(CompletedTransactions.Value);
             }
-            if (TotalTransactions.HasValue)
+            if (Optional.IsDefined(TotalTransactions))
             {
                 writer.WritePropertyName("totalTransactions"u8);
                 writer.WriteNumberValue(TotalTransactions.Value);
             }
-            if (BillingCurrencyTotalPaidAmount != null)
+            if (Optional.IsDefined(BillingCurrencyTotalPaidAmount))
             {
                 writer.WritePropertyName("billingCurrencyTotalPaidAmount"u8);
-                writer.WriteObjectValue(BillingCurrencyTotalPaidAmount);
+                writer.WriteObjectValue<PurchasePrice>(BillingCurrencyTotalPaidAmount, options);
             }
-            if (BillingCurrencyProratedAmount != null)
+            if (Optional.IsDefined(BillingCurrencyProratedAmount))
             {
                 writer.WritePropertyName("billingCurrencyProratedAmount"u8);
-                writer.WriteObjectValue(BillingCurrencyProratedAmount);
+                writer.WriteObjectValue<PurchasePrice>(BillingCurrencyProratedAmount, options);
             }
-            if (BillingCurrencyRemainingCommitmentAmount != null)
+            if (Optional.IsDefined(BillingCurrencyRemainingCommitmentAmount))
             {
                 writer.WritePropertyName("billingCurrencyRemainingCommitmentAmount"u8);
-                writer.WriteObjectValue(BillingCurrencyRemainingCommitmentAmount);
+                writer.WriteObjectValue<PurchasePrice>(BillingCurrencyRemainingCommitmentAmount, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationRefundBillingInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
             PurchasePrice billingCurrencyProratedAmount = default;
             PurchasePrice billingCurrencyRemainingCommitmentAmount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingPlan"u8))
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReservationRefundBillingInformation(
                 billingPlan,
                 completedTransactions,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationRefundBillingInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationRefundBillingInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

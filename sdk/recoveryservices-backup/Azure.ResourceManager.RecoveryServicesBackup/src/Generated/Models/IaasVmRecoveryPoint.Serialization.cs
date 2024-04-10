@@ -23,81 +23,81 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointType != null)
+            if (Optional.IsDefined(RecoveryPointType))
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
-            if (RecoveryPointOn.HasValue)
+            if (Optional.IsDefined(RecoveryPointOn))
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
-            if (RecoveryPointAdditionalInfo != null)
+            if (Optional.IsDefined(RecoveryPointAdditionalInfo))
             {
                 writer.WritePropertyName("recoveryPointAdditionalInfo"u8);
                 writer.WriteStringValue(RecoveryPointAdditionalInfo);
             }
-            if (SourceVmStorageType != null)
+            if (Optional.IsDefined(SourceVmStorageType))
             {
                 writer.WritePropertyName("sourceVMStorageType"u8);
                 writer.WriteStringValue(SourceVmStorageType);
             }
-            if (IsSourceVmEncrypted.HasValue)
+            if (Optional.IsDefined(IsSourceVmEncrypted))
             {
                 writer.WritePropertyName("isSourceVMEncrypted"u8);
                 writer.WriteBooleanValue(IsSourceVmEncrypted.Value);
             }
-            if (KeyAndSecret != null)
+            if (Optional.IsDefined(KeyAndSecret))
             {
                 writer.WritePropertyName("keyAndSecret"u8);
-                writer.WriteObjectValue(KeyAndSecret);
+                writer.WriteObjectValue<KeyAndSecretDetails>(KeyAndSecret, options);
             }
-            if (IsInstantIlrSessionActive.HasValue)
+            if (Optional.IsDefined(IsInstantIlrSessionActive))
             {
                 writer.WritePropertyName("isInstantIlrSessionActive"u8);
                 writer.WriteBooleanValue(IsInstantIlrSessionActive.Value);
             }
-            if (!(RecoveryPointTierDetails is ChangeTrackingList<RecoveryPointTierInformationV2> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
             {
                 writer.WritePropertyName("recoveryPointTierDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in RecoveryPointTierDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecoveryPointTierInformationV2>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (IsManagedVirtualMachine.HasValue)
+            if (Optional.IsDefined(IsManagedVirtualMachine))
             {
                 writer.WritePropertyName("isManagedVirtualMachine"u8);
                 writer.WriteBooleanValue(IsManagedVirtualMachine.Value);
             }
-            if (VirtualMachineSize != null)
+            if (Optional.IsDefined(VirtualMachineSize))
             {
                 writer.WritePropertyName("virtualMachineSize"u8);
                 writer.WriteStringValue(VirtualMachineSize);
             }
-            if (OriginalStorageAccountOption.HasValue)
+            if (Optional.IsDefined(OriginalStorageAccountOption))
             {
                 writer.WritePropertyName("originalStorageAccountOption"u8);
                 writer.WriteBooleanValue(OriginalStorageAccountOption.Value);
             }
-            if (OSType != null)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (RecoveryPointDiskConfiguration != null)
+            if (Optional.IsDefined(RecoveryPointDiskConfiguration))
             {
                 writer.WritePropertyName("recoveryPointDiskConfiguration"u8);
-                writer.WriteObjectValue(RecoveryPointDiskConfiguration);
+                writer.WriteObjectValue<RecoveryPointDiskConfiguration>(RecoveryPointDiskConfiguration, options);
             }
-            if (!(Zones is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -107,33 +107,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(RecoveryPointMoveReadinessInfo is ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(RecoveryPointMoveReadinessInfo))
             {
                 writer.WritePropertyName("recoveryPointMoveReadinessInfo"u8);
                 writer.WriteStartObject();
                 foreach (var item in RecoveryPointMoveReadinessInfo)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<RecoveryPointMoveReadinessInfo>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (SecurityType != null)
+            if (Optional.IsDefined(SecurityType))
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType);
             }
-            if (RecoveryPointProperties != null)
+            if (Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
-                writer.WriteObjectValue(RecoveryPointProperties);
+                writer.WriteObjectValue<RecoveryPointProperties>(RecoveryPointProperties, options);
             }
-            if (IsPrivateAccessEnabledOnAnyDisk.HasValue)
+            if (Optional.IsDefined(IsPrivateAccessEnabledOnAnyDisk))
             {
                 writer.WritePropertyName("isPrivateAccessEnabledOnAnyDisk"u8);
                 writer.WriteBooleanValue(IsPrivateAccessEnabledOnAnyDisk.Value);
             }
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ExtendedLocation extendedLocation = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointType"u8))
@@ -371,10 +371,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IaasVmRecoveryPoint(
                 objectType,
                 serializedAdditionalRawData,
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeIaasVmRecoveryPoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support reading '{options.Format}' format.");
             }
         }
 

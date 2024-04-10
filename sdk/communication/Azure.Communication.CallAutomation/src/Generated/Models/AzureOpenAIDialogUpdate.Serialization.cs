@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (!(Context is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStartObject();
@@ -29,11 +29,19 @@ namespace Azure.Communication.CallAutomation
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureOpenAIDialogUpdate>(this);
+            return content;
         }
     }
 }

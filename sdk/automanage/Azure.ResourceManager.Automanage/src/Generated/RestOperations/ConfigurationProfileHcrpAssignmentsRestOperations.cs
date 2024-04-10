@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Automanage
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<AutomanageConfigurationProfileAssignmentData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -73,42 +73,11 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AutomanageConfigurationProfileAssignmentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string machineName, string configurationProfileAssignmentName, AutomanageConfigurationProfileAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (machineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
-            }
-            if (configurationProfileAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
-            }
-            if (configurationProfileAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, machineName, configurationProfileAssignmentName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -138,42 +107,11 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AutomanageConfigurationProfileAssignmentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string machineName, string configurationProfileAssignmentName, AutomanageConfigurationProfileAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (machineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
-            }
-            if (configurationProfileAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
-            }
-            if (configurationProfileAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, machineName, configurationProfileAssignmentName, data);
             _pipeline.Send(message, cancellationToken);
@@ -224,38 +162,10 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AutomanageConfigurationProfileAssignmentData>> GetAsync(string subscriptionId, string resourceGroupName, string machineName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (machineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
-            }
-            if (configurationProfileAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
-            }
-            if (configurationProfileAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, machineName, configurationProfileAssignmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -285,38 +195,10 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AutomanageConfigurationProfileAssignmentData> Get(string subscriptionId, string resourceGroupName, string machineName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (machineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
-            }
-            if (configurationProfileAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
-            }
-            if (configurationProfileAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, machineName, configurationProfileAssignmentName);
             _pipeline.Send(message, cancellationToken);
@@ -368,38 +250,10 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string machineName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (machineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
-            }
-            if (configurationProfileAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
-            }
-            if (configurationProfileAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, machineName, configurationProfileAssignmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -423,38 +277,10 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="machineName"/> or <paramref name="configurationProfileAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string machineName, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (machineName == null)
-            {
-                throw new ArgumentNullException(nameof(machineName));
-            }
-            if (machineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
-            }
-            if (configurationProfileAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationProfileAssignmentName));
-            }
-            if (configurationProfileAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationProfileAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            Argument.AssertNotNullOrEmpty(configurationProfileAssignmentName, nameof(configurationProfileAssignmentName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, machineName, configurationProfileAssignmentName);
             _pipeline.Send(message, cancellationToken);

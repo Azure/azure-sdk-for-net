@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,68 +24,68 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<BackendAddressPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackendAddressPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackendAddressPoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(TunnelInterfaces is ChangeTrackingList<GatewayLoadBalancerTunnelInterface> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TunnelInterfaces))
             {
                 writer.WritePropertyName("tunnelInterfaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in TunnelInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GatewayLoadBalancerTunnelInterface>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(LoadBalancerBackendAddresses is ChangeTrackingList<LoadBalancerBackendAddress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(LoadBalancerBackendAddresses))
             {
                 writer.WritePropertyName("loadBalancerBackendAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerBackendAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LoadBalancerBackendAddress>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(BackendIPConfigurations is ChangeTrackingList<NetworkInterfaceIPConfigurationData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(BackendIPConfigurations))
             {
                 writer.WritePropertyName("backendIPConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in BackendIPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkInterfaceIPConfigurationData>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(LoadBalancingRules is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LoadBalancingRules))
             {
                 writer.WritePropertyName("loadBalancingRules"u8);
                 writer.WriteStartArray();
@@ -96,12 +95,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && OutboundRule != null)
+            if (options.Format != "W" && Optional.IsDefined(OutboundRule))
             {
                 writer.WritePropertyName("outboundRule"u8);
                 JsonSerializer.Serialize(writer, OutboundRule);
             }
-            if (options.Format != "W" && !(OutboundRules is ChangeTrackingList<WritableSubResource> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundRules))
             {
                 writer.WritePropertyName("outboundRules"u8);
                 writer.WriteStartArray();
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(InboundNatRules is ChangeTrackingList<WritableSubResource> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(InboundNatRules))
             {
                 writer.WritePropertyName("inboundNatRules"u8);
                 writer.WriteStartArray();
@@ -121,22 +120,22 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (DrainPeriodInSeconds.HasValue)
+            if (Optional.IsDefined(DrainPeriodInSeconds))
             {
                 writer.WritePropertyName("drainPeriodInSeconds"u8);
                 writer.WriteNumberValue(DrainPeriodInSeconds.Value);
             }
-            if (VirtualNetwork != null)
+            if (Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
                 JsonSerializer.Serialize(writer, VirtualNetwork);
             }
-            if (SyncMode.HasValue)
+            if (Optional.IsDefined(SyncMode))
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<BackendAddressPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackendAddressPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackendAddressPoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -197,7 +196,7 @@ namespace Azure.ResourceManager.Network
             WritableSubResource virtualNetwork = default;
             BackendAddressSyncMode? syncMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -384,10 +383,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackendAddressPoolData(
                 id,
                 name,
@@ -417,7 +416,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackendAddressPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackendAddressPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -433,7 +432,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeBackendAddressPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackendAddressPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackendAddressPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 

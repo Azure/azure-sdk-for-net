@@ -22,56 +22,56 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatencyMetric)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LatencyMetric)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTimeUTC"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && AValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AValue))
             {
                 writer.WritePropertyName("aValue"u8);
                 writer.WriteNumberValue(AValue.Value);
             }
-            if (options.Format != "W" && BValue.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BValue))
             {
                 writer.WritePropertyName("bValue"u8);
                 writer.WriteNumberValue(BValue.Value);
             }
-            if (options.Format != "W" && Delta.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Delta))
             {
                 writer.WritePropertyName("delta"u8);
                 writer.WriteNumberValue(Delta.Value);
             }
-            if (options.Format != "W" && DeltaPercent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DeltaPercent))
             {
                 writer.WritePropertyName("deltaPercent"u8);
                 writer.WriteNumberValue(DeltaPercent.Value);
             }
-            if (options.Format != "W" && ACLower95CI.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ACLower95CI))
             {
                 writer.WritePropertyName("aCLower95CI"u8);
                 writer.WriteNumberValue(ACLower95CI.Value);
             }
-            if (options.Format != "W" && AHUpper95CI.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AHUpper95CI))
             {
                 writer.WritePropertyName("aHUpper95CI"u8);
                 writer.WriteNumberValue(AHUpper95CI.Value);
             }
-            if (options.Format != "W" && BCLower95CI.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BCLower95CI))
             {
                 writer.WritePropertyName("bCLower95CI"u8);
                 writer.WriteNumberValue(BCLower95CI.Value);
             }
-            if (options.Format != "W" && BUpper95CI.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BUpper95CI))
             {
                 writer.WritePropertyName("bUpper95CI"u8);
                 writer.WriteNumberValue(BUpper95CI.Value);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatencyMetric)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LatencyMetric)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             float? bcLower95CI = default;
             float? bUpper95CI = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -216,10 +216,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LatencyMetric(
                 name,
                 endDateTimeUtc,
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LatencyMetric)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LatencyMetric)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeLatencyMetric(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LatencyMetric)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LatencyMetric)} does not support reading '{options.Format}' format.");
             }
         }
 

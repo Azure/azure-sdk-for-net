@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtSecurityProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TargetVmSecurityType.HasValue)
+            if (Optional.IsDefined(TargetVmSecurityType))
             {
                 writer.WritePropertyName("targetVmSecurityType"u8);
                 writer.WriteStringValue(TargetVmSecurityType.Value.ToString());
             }
-            if (IsTargetVmSecureBootEnabled != null)
+            if (Optional.IsDefined(IsTargetVmSecureBootEnabled))
             {
                 writer.WritePropertyName("isTargetVmSecureBootEnabled"u8);
                 writer.WriteStringValue(IsTargetVmSecureBootEnabled);
             }
-            if (IsTargetVmTpmEnabled != null)
+            if (Optional.IsDefined(IsTargetVmTpmEnabled))
             {
                 writer.WritePropertyName("isTargetVmTpmEnabled"u8);
                 writer.WriteStringValue(IsTargetVmTpmEnabled);
             }
-            if (IsTargetVmIntegrityMonitoringEnabled != null)
+            if (Optional.IsDefined(IsTargetVmIntegrityMonitoringEnabled))
             {
                 writer.WritePropertyName("isTargetVmIntegrityMonitoringEnabled"u8);
                 writer.WriteStringValue(IsTargetVmIntegrityMonitoringEnabled);
             }
-            if (IsTargetVmConfidentialEncryptionEnabled != null)
+            if (Optional.IsDefined(IsTargetVmConfidentialEncryptionEnabled))
             {
                 writer.WritePropertyName("isTargetVmConfidentialEncryptionEnabled"u8);
                 writer.WriteStringValue(IsTargetVmConfidentialEncryptionEnabled);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtSecurityProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string isTargetVmIntegrityMonitoringEnabled = default;
             string isTargetVmConfidentialEncryptionEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetVmSecurityType"u8))
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VMwareCbtSecurityProfileProperties(
                 targetVmSecurityType,
                 isTargetVmSecureBootEnabled,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVMwareCbtSecurityProfileProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtSecurityProfileProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

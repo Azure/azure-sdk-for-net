@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Limit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<ReservationResourceName>(Name, options);
             }
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && SubRequestId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SubRequestId))
             {
                 writer.WritePropertyName("subRequestId"u8);
                 writer.WriteStringValue(SubRequestId.Value);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Reservations.Models
             string message = default;
             Guid? subRequestId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("limit"u8))
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SubContent(
                 limit,
                 name,
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeSubContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubContent)} does not support reading '{options.Format}' format.");
             }
         }
 

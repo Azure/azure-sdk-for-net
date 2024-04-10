@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2EventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EventType != null)
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Component != null)
+            if (Optional.IsDefined(Component))
             {
                 writer.WritePropertyName("component"u8);
                 writer.WriteStringValue(Component);
             }
-            if (CorrectiveAction != null)
+            if (Optional.IsDefined(CorrectiveAction))
             {
                 writer.WritePropertyName("correctiveAction"u8);
                 writer.WriteStringValue(CorrectiveAction);
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);
             }
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (SiteName != null)
+            if (Optional.IsDefined(SiteName))
             {
                 writer.WritePropertyName("siteName"u8);
                 writer.WriteStringValue(SiteName);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2EventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string siteName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventType"u8))
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new InMageAzureV2EventDetails(
                 instanceType,
                 serializedAdditionalRawData,
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageAzureV2EventDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

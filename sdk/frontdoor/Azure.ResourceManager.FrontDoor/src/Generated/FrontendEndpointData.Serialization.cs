@@ -24,53 +24,53 @@ namespace Azure.ResourceManager.FrontDoor
             var format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (SessionAffinityEnabledState.HasValue)
+            if (Optional.IsDefined(SessionAffinityEnabledState))
             {
                 writer.WritePropertyName("sessionAffinityEnabledState"u8);
                 writer.WriteStringValue(SessionAffinityEnabledState.Value.ToString());
             }
-            if (SessionAffinityTtlInSeconds.HasValue)
+            if (Optional.IsDefined(SessionAffinityTtlInSeconds))
             {
                 writer.WritePropertyName("sessionAffinityTtlSeconds"u8);
                 writer.WriteNumberValue(SessionAffinityTtlInSeconds.Value);
             }
-            if (WebApplicationFirewallPolicyLink != null)
+            if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
                 writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
                 JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (options.Format != "W" && CustomHttpsProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CustomHttpsProvisioningState))
             {
                 if (CustomHttpsProvisioningState != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.FrontDoor
                     writer.WriteNull("customHttpsProvisioningState");
                 }
             }
-            if (options.Format != "W" && CustomHttpsProvisioningSubstate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CustomHttpsProvisioningSubstate))
             {
                 if (CustomHttpsProvisioningSubstate != null)
                 {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.FrontDoor
                     writer.WriteNull("customHttpsProvisioningSubstate");
                 }
             }
-            if (options.Format != "W" && CustomHttpsConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(CustomHttpsConfiguration))
             {
                 if (CustomHttpsConfiguration != null)
                 {
                     writer.WritePropertyName("customHttpsConfiguration"u8);
-                    writer.WriteObjectValue(CustomHttpsConfiguration);
+                    writer.WriteObjectValue<CustomHttpsConfiguration>(CustomHttpsConfiguration, options);
                 }
                 else
                 {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.FrontDoor
             var format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.FrontDoor
             FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate = default;
             CustomHttpsConfiguration customHttpsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -268,10 +268,10 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FrontendEndpointData(
                 id,
                 name,
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.FrontDoor
                         return DeserializeFrontendEndpointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support reading '{options.Format}' format.");
             }
         }
 

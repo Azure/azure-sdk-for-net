@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransferAllDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransferAllDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransferAllDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (TransferAllBlobs.HasValue)
+            if (Optional.IsDefined(TransferAllBlobs))
             {
                 writer.WritePropertyName("transferAllBlobs"u8);
                 writer.WriteBooleanValue(TransferAllBlobs.Value);
             }
-            if (TransferAllFiles.HasValue)
+            if (Optional.IsDefined(TransferAllFiles))
             {
                 writer.WritePropertyName("transferAllFiles"u8);
                 writer.WriteBooleanValue(TransferAllFiles.Value);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransferAllDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransferAllDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransferAllDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Models
             bool? transferAllBlobs = default;
             bool? transferAllFiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataAccountType"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TransferAllDetails(dataAccountType, transferAllBlobs, transferAllFiles, serializedAdditionalRawData);
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TransferAllDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransferAllDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeTransferAllDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TransferAllDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransferAllDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

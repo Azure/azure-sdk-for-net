@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVmEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryVmEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryVmEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EndpointName != null)
+            if (Optional.IsDefined(EndpointName))
             {
                 writer.WritePropertyName("endpointName"u8);
                 writer.WriteStringValue(EndpointName);
             }
-            if (PrivatePort.HasValue)
+            if (Optional.IsDefined(PrivatePort))
             {
                 writer.WritePropertyName("privatePort"u8);
                 writer.WriteNumberValue(PrivatePort.Value);
             }
-            if (PublicPort.HasValue)
+            if (Optional.IsDefined(PublicPort))
             {
                 writer.WritePropertyName("publicPort"u8);
                 writer.WriteNumberValue(PublicPort.Value);
             }
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVmEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryVmEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryVmEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             int? publicPort = default;
             string protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointName"u8))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SiteRecoveryVmEndpoint(endpointName, privatePort, publicPort, protocol, serializedAdditionalRawData);
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryVmEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryVmEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryVmEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryVmEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryVmEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

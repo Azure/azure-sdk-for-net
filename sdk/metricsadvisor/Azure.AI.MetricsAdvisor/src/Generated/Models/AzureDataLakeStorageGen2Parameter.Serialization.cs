@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 if (AccountName != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("accountName");
                 }
             }
-            if (AccountKey != null)
+            if (Optional.IsDefined(AccountKey))
             {
                 if (AccountKey != null)
                 {
@@ -134,6 +134,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
             }
             return new AzureDataLakeStorageGen2Parameter(accountName, accountKey, fileSystemName, directoryTemplate, fileTemplate);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AzureDataLakeStorageGen2Parameter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureDataLakeStorageGen2Parameter(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureDataLakeStorageGen2Parameter>(this);
+            return content;
         }
     }
 }

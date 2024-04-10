@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Monitor.Models;
@@ -100,10 +99,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<MetricBaselinesResponse>> ListAsync(string resourceUri, string metricnames = null, string metricnamespace = null, string timespan = null, TimeSpan? interval = null, string aggregation = null, string sensitivities = null, string filter = null, MonitorResultType? resultType = null, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListRequest(resourceUri, metricnames, metricnamespace, timespan, interval, aggregation, sensitivities, filter, resultType);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -135,10 +131,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<MetricBaselinesResponse> List(string resourceUri, string metricnames = null, string metricnamespace = null, string timespan = null, TimeSpan? interval = null, string aggregation = null, string sensitivities = null, string filter = null, MonitorResultType? resultType = null, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListRequest(resourceUri, metricnames, metricnamespace, timespan, interval, aggregation, sensitivities, filter, resultType);
             _pipeline.Send(message, cancellationToken);

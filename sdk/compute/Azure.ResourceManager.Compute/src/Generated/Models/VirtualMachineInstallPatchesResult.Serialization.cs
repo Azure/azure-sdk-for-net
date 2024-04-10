@@ -22,74 +22,74 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && InstallationActivityId != null)
+            if (options.Format != "W" && Optional.IsDefined(InstallationActivityId))
             {
                 writer.WritePropertyName("installationActivityId"u8);
                 writer.WriteStringValue(InstallationActivityId);
             }
-            if (options.Format != "W" && RebootStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RebootStatus))
             {
                 writer.WritePropertyName("rebootStatus"u8);
                 writer.WriteStringValue(RebootStatus.Value.ToString());
             }
-            if (options.Format != "W" && MaintenanceWindowExceeded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaintenanceWindowExceeded))
             {
                 writer.WritePropertyName("maintenanceWindowExceeded"u8);
                 writer.WriteBooleanValue(MaintenanceWindowExceeded.Value);
             }
-            if (options.Format != "W" && ExcludedPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExcludedPatchCount))
             {
                 writer.WritePropertyName("excludedPatchCount"u8);
                 writer.WriteNumberValue(ExcludedPatchCount.Value);
             }
-            if (options.Format != "W" && NotSelectedPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NotSelectedPatchCount))
             {
                 writer.WritePropertyName("notSelectedPatchCount"u8);
                 writer.WriteNumberValue(NotSelectedPatchCount.Value);
             }
-            if (options.Format != "W" && PendingPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PendingPatchCount))
             {
                 writer.WritePropertyName("pendingPatchCount"u8);
                 writer.WriteNumberValue(PendingPatchCount.Value);
             }
-            if (options.Format != "W" && InstalledPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InstalledPatchCount))
             {
                 writer.WritePropertyName("installedPatchCount"u8);
                 writer.WriteNumberValue(InstalledPatchCount.Value);
             }
-            if (options.Format != "W" && FailedPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedPatchCount))
             {
                 writer.WritePropertyName("failedPatchCount"u8);
                 writer.WriteNumberValue(FailedPatchCount.Value);
             }
-            if (options.Format != "W" && !(Patches is ChangeTrackingList<PatchInstallationDetail> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Patches))
             {
                 writer.WritePropertyName("patches"u8);
                 writer.WriteStartArray();
                 foreach (var item in Patches)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PatchInstallationDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<ComputeApiError>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
             DateTimeOffset? startDateTime = default;
             ComputeApiError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -256,10 +256,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineInstallPatchesResult(
                 status,
                 installationActivityId,
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineInstallPatchesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesResult)} does not support reading '{options.Format}' format.");
             }
         }
 

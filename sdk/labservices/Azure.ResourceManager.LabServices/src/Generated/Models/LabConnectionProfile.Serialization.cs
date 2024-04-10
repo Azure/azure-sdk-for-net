@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabConnectionProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (WebSshAccess.HasValue)
+            if (Optional.IsDefined(WebSshAccess))
             {
                 writer.WritePropertyName("webSshAccess"u8);
                 writer.WriteStringValue(WebSshAccess.Value.ToSerialString());
             }
-            if (WebRdpAccess.HasValue)
+            if (Optional.IsDefined(WebRdpAccess))
             {
                 writer.WritePropertyName("webRdpAccess"u8);
                 writer.WriteStringValue(WebRdpAccess.Value.ToSerialString());
             }
-            if (ClientSshAccess.HasValue)
+            if (Optional.IsDefined(ClientSshAccess))
             {
                 writer.WritePropertyName("clientSshAccess"u8);
                 writer.WriteStringValue(ClientSshAccess.Value.ToSerialString());
             }
-            if (ClientRdpAccess.HasValue)
+            if (Optional.IsDefined(ClientRdpAccess))
             {
                 writer.WritePropertyName("clientRdpAccess"u8);
                 writer.WriteStringValue(ClientRdpAccess.Value.ToSerialString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabConnectionProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.LabServices.Models
             LabVirtualMachineConnectionType? clientSshAccess = default;
             LabVirtualMachineConnectionType? clientRdpAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("webSshAccess"u8))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LabConnectionProfile(webSshAccess, webRdpAccess, clientSshAccess, clientRdpAccess, serializedAdditionalRawData);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabConnectionProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabConnectionProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             var format = options.Format == "W" ? ((IPersistableModel<SystemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SystemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SystemData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CreatedBy != null)
+            if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (CreatedByType.HasValue)
+            if (Optional.IsDefined(CreatedByType))
             {
                 writer.WritePropertyName("createdByType"u8);
                 writer.WriteStringValue(CreatedByType.Value.ToString());
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (LastModifiedBy != null)
+            if (Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (LastModifiedByType.HasValue)
+            if (Optional.IsDefined(LastModifiedByType))
             {
                 writer.WritePropertyName("lastModifiedByType"u8);
                 writer.WriteStringValue(LastModifiedByType.Value.ToString());
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedAt"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             var format = options.Format == "W" ? ((IPersistableModel<SystemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SystemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SystemData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             IdentityType? lastModifiedByType = default;
             DateTimeOffset? lastModifiedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdBy"u8))
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SystemData(
                 createdBy,
                 createdByType,
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SystemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SystemData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                         return DeserializeSystemData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SystemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SystemData)} does not support reading '{options.Format}' format.");
             }
         }
 

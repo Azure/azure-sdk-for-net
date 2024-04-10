@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Tier != null)
+            if (options.Format != "W" && Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (options.Format != "W" && Size != null)
+            if (options.Format != "W" && Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (options.Format != "W" && Family != null)
+            if (options.Format != "W" && Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Capacity != null)
+            if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<ResourceSkuCapacity>(Capacity, options);
             }
-            if (options.Format != "W" && !(Locations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ApiVersions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ApiVersions))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -81,33 +81,33 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Costs is ChangeTrackingList<ResourceSkuCosts> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Costs))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceSkuCosts>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<ResourceSkuCapabilities> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceSkuCapabilities>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Restrictions is ChangeTrackingList<ResourceSkuRestrictions> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Restrictions))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceSkuRestrictions>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             IReadOnlyList<ResourceSkuCapabilities> capabilities = default;
             IReadOnlyList<ResourceSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -276,10 +276,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceSku(
                 resourceType,
                 name,
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeResourceSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceSku)} does not support reading '{options.Format}' format.");
             }
         }
 

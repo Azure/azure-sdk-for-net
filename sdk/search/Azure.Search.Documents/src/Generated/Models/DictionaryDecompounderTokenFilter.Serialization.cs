@@ -23,22 +23,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (MinWordSize.HasValue)
+            if (Optional.IsDefined(MinWordSize))
             {
                 writer.WritePropertyName("minWordSize"u8);
                 writer.WriteNumberValue(MinWordSize.Value);
             }
-            if (MinSubwordSize.HasValue)
+            if (Optional.IsDefined(MinSubwordSize))
             {
                 writer.WritePropertyName("minSubwordSize"u8);
                 writer.WriteNumberValue(MinSubwordSize.Value);
             }
-            if (MaxSubwordSize.HasValue)
+            if (Optional.IsDefined(MaxSubwordSize))
             {
                 writer.WritePropertyName("maxSubwordSize"u8);
                 writer.WriteNumberValue(MaxSubwordSize.Value);
             }
-            if (OnlyLongestMatch.HasValue)
+            if (Optional.IsDefined(OnlyLongestMatch))
             {
                 writer.WritePropertyName("onlyLongestMatch"u8);
                 writer.WriteBooleanValue(OnlyLongestMatch.Value);
@@ -130,6 +130,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 minSubwordSize,
                 maxSubwordSize,
                 onlyLongestMatch);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DictionaryDecompounderTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDictionaryDecompounderTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DictionaryDecompounderTokenFilter>(this);
+            return content;
         }
     }
 }

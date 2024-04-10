@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverCommitContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverCommitContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverCommitContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ValidateOnly.HasValue)
+            if (Optional.IsDefined(ValidateOnly))
             {
                 writer.WritePropertyName("validateOnly"u8);
                 writer.WriteBooleanValue(ValidateOnly.Value);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (MoverResourceInputType.HasValue)
+            if (Optional.IsDefined(MoverResourceInputType))
             {
                 writer.WritePropertyName("moveResourceInputType"u8);
                 writer.WriteStringValue(MoverResourceInputType.Value.ToString());
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverCommitContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverCommitContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverCommitContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             IList<ResourceIdentifier> moveResources = default;
             MoverResourceInputType? moveResourceInputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validateOnly"u8))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MoverCommitContent(validateOnly, moveResources, moveResourceInputType, serializedAdditionalRawData);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverCommitContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverCommitContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverCommitContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverCommitContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverCommitContent)} does not support reading '{options.Format}' format.");
             }
         }
 

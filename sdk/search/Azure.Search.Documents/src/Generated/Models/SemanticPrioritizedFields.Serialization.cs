@@ -16,28 +16,28 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TitleField != null)
+            if (Optional.IsDefined(TitleField))
             {
                 writer.WritePropertyName("titleField"u8);
-                writer.WriteObjectValue(TitleField);
+                writer.WriteObjectValue<SemanticField>(TitleField);
             }
-            if (!(ContentFields is ChangeTrackingList<SemanticField> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ContentFields))
             {
                 writer.WritePropertyName("prioritizedContentFields"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContentFields)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SemanticField>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(KeywordsFields is ChangeTrackingList<SemanticField> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(KeywordsFields))
             {
                 writer.WritePropertyName("prioritizedKeywordsFields"u8);
                 writer.WriteStartArray();
                 foreach (var item in KeywordsFields)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SemanticField>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -94,6 +94,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new SemanticPrioritizedFields(titleField, prioritizedContentFields ?? new ChangeTrackingList<SemanticField>(), prioritizedKeywordsFields ?? new ChangeTrackingList<SemanticField>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SemanticPrioritizedFields FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSemanticPrioritizedFields(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SemanticPrioritizedFields>(this);
+            return content;
         }
     }
 }

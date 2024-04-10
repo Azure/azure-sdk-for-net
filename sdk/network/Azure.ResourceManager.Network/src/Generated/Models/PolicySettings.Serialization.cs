@@ -22,64 +22,64 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (RequestBodyCheck.HasValue)
+            if (Optional.IsDefined(RequestBodyCheck))
             {
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteBooleanValue(RequestBodyCheck.Value);
             }
-            if (RequestBodyInspectLimitInKB.HasValue)
+            if (Optional.IsDefined(RequestBodyInspectLimitInKB))
             {
                 writer.WritePropertyName("requestBodyInspectLimitInKB"u8);
                 writer.WriteNumberValue(RequestBodyInspectLimitInKB.Value);
             }
-            if (RequestBodyEnforcement.HasValue)
+            if (Optional.IsDefined(RequestBodyEnforcement))
             {
                 writer.WritePropertyName("requestBodyEnforcement"u8);
                 writer.WriteBooleanValue(RequestBodyEnforcement.Value);
             }
-            if (MaxRequestBodySizeInKb.HasValue)
+            if (Optional.IsDefined(MaxRequestBodySizeInKb))
             {
                 writer.WritePropertyName("maxRequestBodySizeInKb"u8);
                 writer.WriteNumberValue(MaxRequestBodySizeInKb.Value);
             }
-            if (FileUploadEnforcement.HasValue)
+            if (Optional.IsDefined(FileUploadEnforcement))
             {
                 writer.WritePropertyName("fileUploadEnforcement"u8);
                 writer.WriteBooleanValue(FileUploadEnforcement.Value);
             }
-            if (FileUploadLimitInMb.HasValue)
+            if (Optional.IsDefined(FileUploadLimitInMb))
             {
                 writer.WritePropertyName("fileUploadLimitInMb"u8);
                 writer.WriteNumberValue(FileUploadLimitInMb.Value);
             }
-            if (CustomBlockResponseStatusCode.HasValue)
+            if (Optional.IsDefined(CustomBlockResponseStatusCode))
             {
                 writer.WritePropertyName("customBlockResponseStatusCode"u8);
                 writer.WriteNumberValue(CustomBlockResponseStatusCode.Value);
             }
-            if (CustomBlockResponseBody != null)
+            if (Optional.IsDefined(CustomBlockResponseBody))
             {
                 writer.WritePropertyName("customBlockResponseBody"u8);
                 writer.WriteStringValue(CustomBlockResponseBody);
             }
-            if (LogScrubbing != null)
+            if (Optional.IsDefined(LogScrubbing))
             {
                 writer.WritePropertyName("logScrubbing"u8);
-                writer.WriteObjectValue(LogScrubbing);
+                writer.WriteObjectValue<PolicySettingsLogScrubbing>(LogScrubbing, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicySettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
             string customBlockResponseBody = default;
             PolicySettingsLogScrubbing logScrubbing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -231,10 +231,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PolicySettings(
                 state,
                 mode,
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePolicySettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicySettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySettings)} does not support reading '{options.Format}' format.");
             }
         }
 

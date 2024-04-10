@@ -22,56 +22,56 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareVirtualDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareVirtualDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareVirtualDisk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Label != null)
+            if (options.Format != "W" && Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (options.Format != "W" && DiskObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskObjectId))
             {
                 writer.WritePropertyName("diskObjectId"u8);
                 writer.WriteStringValue(DiskObjectId);
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (DeviceKey.HasValue)
+            if (Optional.IsDefined(DeviceKey))
             {
                 writer.WritePropertyName("deviceKey"u8);
                 writer.WriteNumberValue(DeviceKey.Value);
             }
-            if (DiskMode.HasValue)
+            if (Optional.IsDefined(DiskMode))
             {
                 writer.WritePropertyName("diskMode"u8);
                 writer.WriteStringValue(DiskMode.Value.ToString());
             }
-            if (ControllerKey.HasValue)
+            if (Optional.IsDefined(ControllerKey))
             {
                 writer.WritePropertyName("controllerKey"u8);
                 writer.WriteNumberValue(ControllerKey.Value);
             }
-            if (UnitNumber.HasValue)
+            if (Optional.IsDefined(UnitNumber))
             {
                 writer.WritePropertyName("unitNumber"u8);
                 writer.WriteNumberValue(UnitNumber.Value);
             }
-            if (DeviceName != null)
+            if (Optional.IsDefined(DeviceName))
             {
                 writer.WritePropertyName("deviceName"u8);
                 writer.WriteStringValue(DeviceName);
             }
-            if (DiskType.HasValue)
+            if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareVirtualDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareVirtualDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareVirtualDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             string deviceName = default;
             VMwareDiskType? diskType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -204,10 +204,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VMwareVirtualDisk(
                 name,
                 label,
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareVirtualDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareVirtualDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializeVMwareVirtualDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareVirtualDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareVirtualDisk)} does not support reading '{options.Format}' format.");
             }
         }
 

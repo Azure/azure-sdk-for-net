@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupListenerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilityGroupListenerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailabilityGroupListenerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,57 +43,57 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (AvailabilityGroupName != null)
+            if (Optional.IsDefined(AvailabilityGroupName))
             {
                 writer.WritePropertyName("availabilityGroupName"u8);
                 writer.WriteStringValue(AvailabilityGroupName);
             }
-            if (!(LoadBalancerConfigurations is ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LoadBalancerConfigurations))
             {
                 writer.WritePropertyName("loadBalancerConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailabilityGroupListenerLoadBalancerConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(MultiSubnetIPConfigurations is ChangeTrackingList<MultiSubnetIPConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MultiSubnetIPConfigurations))
             {
                 writer.WritePropertyName("multiSubnetIpConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in MultiSubnetIPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MultiSubnetIPConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (CreateDefaultAvailabilityGroupIfNotExist.HasValue)
+            if (Optional.IsDefined(CreateDefaultAvailabilityGroupIfNotExist))
             {
                 writer.WritePropertyName("createDefaultAvailabilityGroupIfNotExist"u8);
                 writer.WriteBooleanValue(CreateDefaultAvailabilityGroupIfNotExist.Value);
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (AvailabilityGroupConfiguration != null)
+            if (Optional.IsDefined(AvailabilityGroupConfiguration))
             {
                 writer.WritePropertyName("availabilityGroupConfiguration"u8);
-                writer.WriteObjectValue(AvailabilityGroupConfiguration);
+                writer.WriteObjectValue<AvailabilityGroupConfiguration>(AvailabilityGroupConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupListenerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilityGroupListenerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailabilityGroupListenerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             int? port = default;
             AvailabilityGroupConfiguration availabilityGroupConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -252,10 +252,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AvailabilityGroupListenerData(
                 id,
                 name,
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilityGroupListenerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilityGroupListenerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         return DeserializeAvailabilityGroupListenerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilityGroupListenerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilityGroupListenerData)} does not support reading '{options.Format}' format.");
             }
         }
 

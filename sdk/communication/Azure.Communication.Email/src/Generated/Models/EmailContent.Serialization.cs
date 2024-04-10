@@ -17,17 +17,25 @@ namespace Azure.Communication.Email
             writer.WriteStartObject();
             writer.WritePropertyName("subject"u8);
             writer.WriteStringValue(Subject);
-            if (PlainText != null)
+            if (Optional.IsDefined(PlainText))
             {
                 writer.WritePropertyName("plainText"u8);
                 writer.WriteStringValue(PlainText);
             }
-            if (Html != null)
+            if (Optional.IsDefined(Html))
             {
                 writer.WritePropertyName("html"u8);
                 writer.WriteStringValue(Html);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<EmailContent>(this);
+            return content;
         }
     }
 }

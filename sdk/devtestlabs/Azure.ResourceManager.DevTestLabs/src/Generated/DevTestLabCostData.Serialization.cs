@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.DevTestLabs
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,69 +56,69 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TargetCost != null)
+            if (Optional.IsDefined(TargetCost))
             {
                 writer.WritePropertyName("targetCost"u8);
-                writer.WriteObjectValue(TargetCost);
+                writer.WriteObjectValue<DevTestLabTargetCost>(TargetCost, options);
             }
-            if (options.Format != "W" && LabCostSummary != null)
+            if (options.Format != "W" && Optional.IsDefined(LabCostSummary))
             {
                 writer.WritePropertyName("labCostSummary"u8);
-                writer.WriteObjectValue(LabCostSummary);
+                writer.WriteObjectValue<LabCostSummaryProperties>(LabCostSummary, options);
             }
-            if (options.Format != "W" && !(LabCostDetails is ChangeTrackingList<DevTestLabCostDetails> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LabCostDetails))
             {
                 writer.WritePropertyName("labCostDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in LabCostDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabCostDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ResourceCosts is ChangeTrackingList<DevTestLabResourceCost> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceCosts))
             {
                 writer.WritePropertyName("resourceCosts"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceCosts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabResourceCost>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (CurrencyCode != null)
+            if (Optional.IsDefined(CurrencyCode))
             {
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && UniqueIdentifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DevTestLabs
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCostData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DevTestLabs
             string provisioningState = default;
             Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -331,10 +331,10 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevTestLabCostData(
                 id,
                 name,
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.DevTestLabs
                         return DeserializeDevTestLabCostData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabCostData)} does not support reading '{options.Format}' format.");
             }
         }
 

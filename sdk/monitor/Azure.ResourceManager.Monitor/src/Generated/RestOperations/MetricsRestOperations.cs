@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Monitor.Models;
@@ -126,18 +126,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SubscriptionScopeMetricResponse>> ListAtSubscriptionScopeAsync(string subscriptionId, string region, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MonitorMetricResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(region, nameof(region));
 
             using var message = CreateListAtSubscriptionScopeRequest(subscriptionId, region, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -182,18 +172,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SubscriptionScopeMetricResponse> ListAtSubscriptionScope(string subscriptionId, string region, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MonitorMetricResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(region, nameof(region));
 
             using var message = CreateListAtSubscriptionScopeRequest(subscriptionId, region, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions);
             _pipeline.Send(message, cancellationToken);
@@ -273,7 +253,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue<SubscriptionResourceGetMonitorMetricsWithPostContent>(content, new ModelReaderWriterOptions("W"));
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -308,18 +288,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SubscriptionScopeMetricResponse>> ListAtSubscriptionScopePostAsync(string subscriptionId, string region, SubscriptionResourceGetMonitorMetricsWithPostContent content = null, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MonitorMetricResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(region, nameof(region));
 
             using var message = CreateListAtSubscriptionScopePostRequest(subscriptionId, region, content, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -365,18 +335,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SubscriptionScopeMetricResponse> ListAtSubscriptionScopePost(string subscriptionId, string region, SubscriptionResourceGetMonitorMetricsWithPostContent content = null, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MonitorMetricResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(region, nameof(region));
 
             using var message = CreateListAtSubscriptionScopePostRequest(subscriptionId, region, content, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions);
             _pipeline.Send(message, cancellationToken);
@@ -480,10 +440,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<MonitorResponse>> ListAsync(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MonitorResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListRequest(resourceUri, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -526,10 +483,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<MonitorResponse> List(string resourceUri, string timespan = null, TimeSpan? interval = null, string metricnames = null, string aggregation = null, int? top = null, string orderby = null, string filter = null, MonitorResultType? resultType = null, string metricnamespace = null, bool? autoAdjustTimegrain = null, bool? validateDimensions = null, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListRequest(resourceUri, timespan, interval, metricnames, aggregation, top, orderby, filter, resultType, metricnamespace, autoAdjustTimegrain, validateDimensions);
             _pipeline.Send(message, cancellationToken);

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecurityOperatorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityOperatorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityOperatorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecurityOperatorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityOperatorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityOperatorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceType type = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityOperatorData(
                 id,
                 name,
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityOperatorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityOperatorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeSecurityOperatorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityOperatorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityOperatorData)} does not support reading '{options.Format}' format.");
             }
         }
 

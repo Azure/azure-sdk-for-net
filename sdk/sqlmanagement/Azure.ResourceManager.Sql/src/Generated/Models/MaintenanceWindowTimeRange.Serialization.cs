@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,21 +23,21 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowTimeRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindowTimeRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceWindowTimeRange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToString());
             }
-            if (StartTime != null)
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowTimeRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindowTimeRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceWindowTimeRange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Models
             string startTime = default;
             TimeSpan? duration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dayOfWeek"u8))
@@ -111,11 +112,77 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MaintenanceWindowTimeRange(dayOfWeek, startTime, duration, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DayOfWeek), out propertyOverride);
+            if (Optional.IsDefined(DayOfWeek) || hasPropertyOverride)
+            {
+                builder.Append("  dayOfWeek: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DayOfWeek.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTime), out propertyOverride);
+            if (Optional.IsDefined(StartTime) || hasPropertyOverride)
+            {
+                builder.Append("  startTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (StartTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StartTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StartTime}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Duration), out propertyOverride);
+            if (Optional.IsDefined(Duration) || hasPropertyOverride)
+            {
+                builder.Append("  duration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedTimeSpan = TypeFormatters.ToString(Duration.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MaintenanceWindowTimeRange>.Write(ModelReaderWriterOptions options)
@@ -126,8 +193,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowTimeRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceWindowTimeRange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +212,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeMaintenanceWindowTimeRange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowTimeRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceWindowTimeRange)} does not support reading '{options.Format}' format.");
             }
         }
 

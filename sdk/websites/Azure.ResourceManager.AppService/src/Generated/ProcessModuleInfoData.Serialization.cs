@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -23,11 +24,11 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<ProcessModuleInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProcessModuleInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProcessModuleInfoData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,64 +48,64 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BaseAddress != null)
+            if (Optional.IsDefined(BaseAddress))
             {
                 writer.WritePropertyName("base_address"u8);
                 writer.WriteStringValue(BaseAddress);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("file_name"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Href != null)
+            if (Optional.IsDefined(Href))
             {
                 writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("file_path"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (ModuleMemorySize.HasValue)
+            if (Optional.IsDefined(ModuleMemorySize))
             {
                 writer.WritePropertyName("module_memory_size"u8);
                 writer.WriteNumberValue(ModuleMemorySize.Value);
             }
-            if (FileVersion != null)
+            if (Optional.IsDefined(FileVersion))
             {
                 writer.WritePropertyName("file_version"u8);
                 writer.WriteStringValue(FileVersion);
             }
-            if (FileDescription != null)
+            if (Optional.IsDefined(FileDescription))
             {
                 writer.WritePropertyName("file_description"u8);
                 writer.WriteStringValue(FileDescription);
             }
-            if (Product != null)
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (ProductVersion != null)
+            if (Optional.IsDefined(ProductVersion))
             {
                 writer.WritePropertyName("product_version"u8);
                 writer.WriteStringValue(ProductVersion);
             }
-            if (IsDebug.HasValue)
+            if (Optional.IsDefined(IsDebug))
             {
                 writer.WritePropertyName("is_debug"u8);
                 writer.WriteBooleanValue(IsDebug.Value);
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<ProcessModuleInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProcessModuleInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProcessModuleInfoData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.AppService
             bool? isDebug = default;
             string language = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -274,10 +275,10 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProcessModuleInfoData(
                 id,
                 name,
@@ -298,6 +299,323 @@ namespace Azure.ResourceManager.AppService
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BaseAddress), out propertyOverride);
+            if (Optional.IsDefined(BaseAddress) || hasPropertyOverride)
+            {
+                builder.Append("    base_address: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (BaseAddress.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BaseAddress}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BaseAddress}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileName), out propertyOverride);
+            if (Optional.IsDefined(FileName) || hasPropertyOverride)
+            {
+                builder.Append("    file_name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (FileName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FileName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FileName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Href), out propertyOverride);
+            if (Optional.IsDefined(Href) || hasPropertyOverride)
+            {
+                builder.Append("    href: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Href.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Href}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Href}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FilePath), out propertyOverride);
+            if (Optional.IsDefined(FilePath) || hasPropertyOverride)
+            {
+                builder.Append("    file_path: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (FilePath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FilePath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FilePath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModuleMemorySize), out propertyOverride);
+            if (Optional.IsDefined(ModuleMemorySize) || hasPropertyOverride)
+            {
+                builder.Append("    module_memory_size: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ModuleMemorySize.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileVersion), out propertyOverride);
+            if (Optional.IsDefined(FileVersion) || hasPropertyOverride)
+            {
+                builder.Append("    file_version: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (FileVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FileVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FileVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileDescription), out propertyOverride);
+            if (Optional.IsDefined(FileDescription) || hasPropertyOverride)
+            {
+                builder.Append("    file_description: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (FileDescription.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FileDescription}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FileDescription}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Product), out propertyOverride);
+            if (Optional.IsDefined(Product) || hasPropertyOverride)
+            {
+                builder.Append("    product: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Product.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Product}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Product}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductVersion), out propertyOverride);
+            if (Optional.IsDefined(ProductVersion) || hasPropertyOverride)
+            {
+                builder.Append("    product_version: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ProductVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProductVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProductVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDebug), out propertyOverride);
+            if (Optional.IsDefined(IsDebug) || hasPropertyOverride)
+            {
+                builder.Append("    is_debug: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsDebug.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Language), out propertyOverride);
+            if (Optional.IsDefined(Language) || hasPropertyOverride)
+            {
+                builder.Append("    language: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Language.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Language}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Language}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ProcessModuleInfoData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProcessModuleInfoData>)this).GetFormatFromOptions(options) : options.Format;
@@ -306,8 +624,10 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ProcessModuleInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProcessModuleInfoData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -323,7 +643,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeProcessModuleInfoData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProcessModuleInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProcessModuleInfoData)} does not support reading '{options.Format}' format.");
             }
         }
 

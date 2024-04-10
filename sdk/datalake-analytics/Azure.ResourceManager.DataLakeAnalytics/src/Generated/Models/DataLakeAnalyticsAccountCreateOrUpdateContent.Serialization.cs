@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -47,75 +47,75 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in DataLakeStoreAccounts)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent>(item, options);
             }
             writer.WriteEndArray();
-            if (!(StorageAccounts is ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ComputePolicies is ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ComputePolicies))
             {
                 writer.WritePropertyName("computePolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in ComputePolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(FirewallRules is ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(FirewallRules))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (FirewallState.HasValue)
+            if (Optional.IsDefined(FirewallState))
             {
                 writer.WritePropertyName("firewallState"u8);
                 writer.WriteStringValue(FirewallState.Value.ToSerialString());
             }
-            if (FirewallAllowAzureIPs.HasValue)
+            if (Optional.IsDefined(FirewallAllowAzureIPs))
             {
                 writer.WritePropertyName("firewallAllowAzureIps"u8);
                 writer.WriteStringValue(FirewallAllowAzureIPs.Value.ToSerialString());
             }
-            if (NewTier.HasValue)
+            if (Optional.IsDefined(NewTier))
             {
                 writer.WritePropertyName("newTier"u8);
                 writer.WriteStringValue(NewTier.Value.ToSerialString());
             }
-            if (MaxJobCount.HasValue)
+            if (Optional.IsDefined(MaxJobCount))
             {
                 writer.WritePropertyName("maxJobCount"u8);
                 writer.WriteNumberValue(MaxJobCount.Value);
             }
-            if (MaxDegreeOfParallelism.HasValue)
+            if (Optional.IsDefined(MaxDegreeOfParallelism))
             {
                 writer.WritePropertyName("maxDegreeOfParallelism"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelism.Value);
             }
-            if (MaxDegreeOfParallelismPerJob.HasValue)
+            if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
             {
                 writer.WritePropertyName("maxDegreeOfParallelismPerJob"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelismPerJob.Value);
             }
-            if (MinPriorityPerJob.HasValue)
+            if (Optional.IsDefined(MinPriorityPerJob))
             {
                 writer.WritePropertyName("minPriorityPerJob"u8);
                 writer.WriteNumberValue(MinPriorityPerJob.Value);
             }
-            if (QueryStoreRetention.HasValue)
+            if (Optional.IsDefined(QueryStoreRetention))
             {
                 writer.WritePropertyName("queryStoreRetention"u8);
                 writer.WriteNumberValue(QueryStoreRetention.Value);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             int? minPriorityPerJob = default;
             int? queryStoreRetention = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -340,10 +340,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataLakeAnalyticsAccountCreateOrUpdateContent(
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         return DeserializeDataLakeAnalyticsAccountCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

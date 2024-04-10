@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Orbital.Models;
@@ -25,16 +24,16 @@ namespace Azure.ResourceManager.Orbital
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalSpacecraftData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrbitalSpacecraftData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrbitalSpacecraftData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,45 +61,45 @@ namespace Azure.ResourceManager.Orbital
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (NoradId != null)
+            if (Optional.IsDefined(NoradId))
             {
                 writer.WritePropertyName("noradId"u8);
                 writer.WriteStringValue(NoradId);
             }
-            if (TitleLine != null)
+            if (Optional.IsDefined(TitleLine))
             {
                 writer.WritePropertyName("titleLine"u8);
                 writer.WriteStringValue(TitleLine);
             }
-            if (TleLine1 != null)
+            if (Optional.IsDefined(TleLine1))
             {
                 writer.WritePropertyName("tleLine1"u8);
                 writer.WriteStringValue(TleLine1);
             }
-            if (TleLine2 != null)
+            if (Optional.IsDefined(TleLine2))
             {
                 writer.WritePropertyName("tleLine2"u8);
                 writer.WriteStringValue(TleLine2);
             }
-            if (!(Links is ChangeTrackingList<OrbitalSpacecraftLink> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OrbitalSpacecraftLink>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.Orbital
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalSpacecraftData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrbitalSpacecraftData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrbitalSpacecraftData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.Orbital
             string tleLine2 = default;
             IList<OrbitalSpacecraftLink> links = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -269,10 +268,10 @@ namespace Azure.ResourceManager.Orbital
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OrbitalSpacecraftData(
                 id,
                 name,
@@ -299,7 +298,7 @@ namespace Azure.ResourceManager.Orbital
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OrbitalSpacecraftData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrbitalSpacecraftData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -315,7 +314,7 @@ namespace Azure.ResourceManager.Orbital
                         return DeserializeOrbitalSpacecraftData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrbitalSpacecraftData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrbitalSpacecraftData)} does not support reading '{options.Format}' format.");
             }
         }
 

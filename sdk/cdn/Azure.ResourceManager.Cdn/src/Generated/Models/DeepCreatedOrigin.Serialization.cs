@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeepCreatedOrigin>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeepCreatedOrigin)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeepCreatedOrigin)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (HttpPort.HasValue)
+            if (Optional.IsDefined(HttpPort))
             {
                 if (HttpPort != null)
                 {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("httpPort");
                 }
             }
-            if (HttpsPort.HasValue)
+            if (Optional.IsDefined(HttpsPort))
             {
                 if (HttpsPort != null)
                 {
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("httpsPort");
                 }
             }
-            if (OriginHostHeader != null)
+            if (Optional.IsDefined(OriginHostHeader))
             {
                 writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 if (Priority != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("priority");
                 }
             }
-            if (Weight.HasValue)
+            if (Optional.IsDefined(Weight))
             {
                 if (Weight != null)
                 {
@@ -88,17 +88,17 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("weight");
                 }
             }
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (PrivateLinkAlias != null)
+            if (Optional.IsDefined(PrivateLinkAlias))
             {
                 writer.WritePropertyName("privateLinkAlias"u8);
                 writer.WriteStringValue(PrivateLinkAlias);
             }
-            if (PrivateLinkResourceId != null)
+            if (Optional.IsDefined(PrivateLinkResourceId))
             {
                 if (PrivateLinkResourceId != null)
                 {
@@ -110,17 +110,17 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("privateLinkResourceId");
                 }
             }
-            if (PrivateLinkLocation != null)
+            if (Optional.IsDefined(PrivateLinkLocation))
             {
                 writer.WritePropertyName("privateLinkLocation"u8);
                 writer.WriteStringValue(PrivateLinkLocation);
             }
-            if (PrivateLinkApprovalMessage != null)
+            if (Optional.IsDefined(PrivateLinkApprovalMessage))
             {
                 writer.WritePropertyName("privateLinkApprovalMessage"u8);
                 writer.WriteStringValue(PrivateLinkApprovalMessage);
             }
-            if (options.Format != "W" && PrivateEndpointStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointStatus))
             {
                 if (PrivateEndpointStatus != null)
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeepCreatedOrigin>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeepCreatedOrigin)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeepCreatedOrigin)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string privateLinkApprovalMessage = default;
             PrivateEndpointStatus? privateEndpointStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -301,10 +301,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DeepCreatedOrigin(
                 name,
                 hostName,
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeepCreatedOrigin)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeepCreatedOrigin)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeDeepCreatedOrigin(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeepCreatedOrigin)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeepCreatedOrigin)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,43 +39,43 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (ExclusionTag != null)
+            if (Optional.IsDefined(ExclusionTag))
             {
                 writer.WritePropertyName("exclusionTag"u8);
                 writer.WriteStringValue(ExclusionTag);
             }
-            if (!(Schedules is ChangeTrackingList<ScalingSchedule> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Schedules))
             {
                 writer.WritePropertyName("schedules"u8);
                 writer.WriteStartArray();
                 foreach (var item in Schedules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScalingSchedule>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(HostPoolReferences is ChangeTrackingList<ScalingHostPoolReference> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(HostPoolReferences))
             {
                 writer.WritePropertyName("hostPoolReferences"u8);
                 writer.WriteStartArray();
                 foreach (var item in HostPoolReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScalingHostPoolReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             IList<ScalingSchedule> schedules = default;
             IList<ScalingHostPoolReference> hostPoolReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ScalingPlanPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 description,
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeScalingPlanPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

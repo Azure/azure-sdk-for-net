@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GcpProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProjectNumber != null)
+            if (Optional.IsDefined(ProjectNumber))
             {
                 writer.WritePropertyName("projectNumber"u8);
                 writer.WriteStringValue(ProjectNumber);
             }
-            if (ProjectId != null)
+            if (Optional.IsDefined(ProjectId))
             {
                 writer.WritePropertyName("projectId"u8);
                 writer.WriteStringValue(ProjectId);
             }
-            if (options.Format != "W" && WorkloadIdentityPoolId != null)
+            if (options.Format != "W" && Optional.IsDefined(WorkloadIdentityPoolId))
             {
                 writer.WritePropertyName("workloadIdentityPoolId"u8);
                 writer.WriteStringValue(WorkloadIdentityPoolId);
             }
-            if (options.Format != "W" && ProjectName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProjectName))
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GcpProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string workloadIdentityPoolId = default;
             string projectName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("projectNumber"u8))
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GcpProjectDetails(projectNumber, projectId, workloadIdentityPoolId, projectName, serializedAdditionalRawData);
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeGcpProjectDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

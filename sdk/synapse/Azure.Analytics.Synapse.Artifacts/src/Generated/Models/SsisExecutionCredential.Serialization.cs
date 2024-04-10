@@ -19,11 +19,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("domain"u8);
-            writer.WriteObjectValue(Domain);
+            writer.WriteObjectValue<object>(Domain);
             writer.WritePropertyName("userName"u8);
-            writer.WriteObjectValue(UserName);
+            writer.WriteObjectValue<object>(UserName);
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password);
+            writer.WriteObjectValue<SecureString>(Password);
             writer.WriteEndObject();
         }
 
@@ -57,12 +57,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SsisExecutionCredential(domain, userName, password);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SsisExecutionCredential FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSsisExecutionCredential(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SsisExecutionCredential>(this);
+            return content;
+        }
+
         internal partial class SsisExecutionCredentialConverter : JsonConverter<SsisExecutionCredential>
         {
             public override void Write(Utf8JsonWriter writer, SsisExecutionCredential model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SsisExecutionCredential>(model);
             }
+
             public override SsisExecutionCredential Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

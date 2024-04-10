@@ -22,34 +22,34 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteTable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteTable)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag != null)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && RouteTableType != null)
+            if (options.Format != "W" && Optional.IsDefined(RouteTableType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RouteTableType);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Routes is ChangeTrackingList<Route> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Route>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteTable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteTable)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Hci.Models
             string type = default;
             IList<Route> routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RouteTable(etag, name, type, routes ?? new ChangeTrackingList<Route>(), serializedAdditionalRawData);
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouteTable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteTable)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeRouteTable(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouteTable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteTable)} does not support reading '{options.Format}' format.");
             }
         }
 

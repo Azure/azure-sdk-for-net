@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MongoDBShardKeyField(string name, MongoDBShardKeyOrder order)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Order = order;

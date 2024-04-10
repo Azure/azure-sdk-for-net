@@ -18,10 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Cmk != null)
+            if (Optional.IsDefined(Cmk))
             {
                 writer.WritePropertyName("cmk"u8);
-                writer.WriteObjectValue(Cmk);
+                writer.WriteObjectValue<CustomerManagedKeyDetails>(Cmk);
             }
             writer.WriteEndObject();
         }
@@ -58,12 +58,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new EncryptionDetails(doubleEncryptionEnabled, cmk);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EncryptionDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEncryptionDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<EncryptionDetails>(this);
+            return content;
+        }
+
         internal partial class EncryptionDetailsConverter : JsonConverter<EncryptionDetails>
         {
             public override void Write(Utf8JsonWriter writer, EncryptionDetails model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<EncryptionDetails>(model);
             }
+
             public override EncryptionDetails Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

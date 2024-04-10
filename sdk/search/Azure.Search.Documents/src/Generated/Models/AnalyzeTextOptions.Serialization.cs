@@ -17,22 +17,22 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (AnalyzerName.HasValue)
+            if (Optional.IsDefined(AnalyzerName))
             {
                 writer.WritePropertyName("analyzer"u8);
                 writer.WriteStringValue(AnalyzerName.Value.ToString());
             }
-            if (TokenizerName.HasValue)
+            if (Optional.IsDefined(TokenizerName))
             {
                 writer.WritePropertyName("tokenizer"u8);
                 writer.WriteStringValue(TokenizerName.Value.ToString());
             }
-            if (NormalizerName.HasValue)
+            if (Optional.IsDefined(NormalizerName))
             {
                 writer.WritePropertyName("normalizer"u8);
                 writer.WriteStringValue(NormalizerName.Value.ToString());
             }
-            if (!(TokenFilters is ChangeTrackingList<TokenFilterName> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(CharFilters is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CharFilters))
             {
                 writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();
@@ -53,6 +53,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AnalyzeTextOptions>(this);
+            return content;
         }
     }
 }

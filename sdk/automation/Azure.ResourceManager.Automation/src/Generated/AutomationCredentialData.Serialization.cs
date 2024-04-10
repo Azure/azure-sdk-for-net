@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<AutomationCredentialData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationCredentialData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationCredentialData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && UserName != null)
+            if (options.Format != "W" && Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<AutomationCredentialData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationCredentialData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationCredentialData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Automation
             DateTimeOffset? lastModifiedTime = default;
             string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.Automation
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutomationCredentialData(
                 id,
                 name,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Automation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationCredentialData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationCredentialData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Automation
                         return DeserializeAutomationCredentialData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationCredentialData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationCredentialData)} does not support reading '{options.Format}' format.");
             }
         }
 

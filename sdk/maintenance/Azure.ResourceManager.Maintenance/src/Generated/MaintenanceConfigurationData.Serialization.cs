@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Maintenance
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Maintenance
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (!(ExtensionProperties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtensionProperties))
             {
                 writer.WritePropertyName("extensionProperties"u8);
                 writer.WriteStartObject();
@@ -79,44 +79,44 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 writer.WriteEndObject();
             }
-            if (MaintenanceScope.HasValue)
+            if (Optional.IsDefined(MaintenanceScope))
             {
                 writer.WritePropertyName("maintenanceScope"u8);
                 writer.WriteStringValue(MaintenanceScope.Value.ToString());
             }
-            if (Visibility.HasValue)
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
             }
-            if (InstallPatches != null)
+            if (Optional.IsDefined(InstallPatches))
             {
                 writer.WritePropertyName("installPatches"u8);
-                writer.WriteObjectValue(InstallPatches);
+                writer.WriteObjectValue<MaintenancePatchConfiguration>(InstallPatches, options);
             }
             writer.WritePropertyName("maintenanceWindow"u8);
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 SerializeStartOn(writer);
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
                 SerializeExpireOn(writer);
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "c");
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (RecurEvery != null)
+            if (Optional.IsDefined(RecurEvery))
             {
                 writer.WritePropertyName("recurEvery"u8);
                 writer.WriteStringValue(RecurEvery);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Maintenance
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Maintenance
             string timeZone = default;
             string recurEvery = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -333,10 +333,10 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MaintenanceConfigurationData(
                 id,
                 name,
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Maintenance
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Maintenance
                         return DeserializeMaintenanceConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

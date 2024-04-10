@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The UnknownAlertsMetaDataProperties. </summary>
+    /// <summary> Unknown version of AlertsMetaDataProperties. </summary>
     internal partial class UnknownAlertsMetaDataProperties : ServiceAlertMetadataProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAlertsMetaDataProperties"/>. </summary>

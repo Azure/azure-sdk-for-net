@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && ReportName != null)
+            if (options.Format != "W" && Optional.IsDefined(ReportName))
             {
                 writer.WritePropertyName("reportName"u8);
                 writer.WriteStringValue(ReportName);
             }
-            if (OfferGuid != null)
+            if (Optional.IsDefined(OfferGuid))
             {
                 writer.WritePropertyName("offerGuid"u8);
                 writer.WriteStringValue(OfferGuid);
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             writer.WriteStringValue(TimeZone);
             writer.WritePropertyName("triggerTime"u8);
             writer.WriteStringValue(TriggerOn, "O");
-            if (options.Format != "W" && NextTriggerOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NextTriggerOn))
             {
                 writer.WritePropertyName("nextTriggerTime"u8);
                 writer.WriteStringValue(NextTriggerOn.Value, "O");
             }
-            if (options.Format != "W" && LastTriggerOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastTriggerOn))
             {
                 writer.WritePropertyName("lastTriggerTime"u8);
                 writer.WriteStringValue(LastTriggerOn.Value, "O");
             }
-            if (options.Format != "W" && !(Subscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             writer.WriteStartArray();
             foreach (var item in Resources)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ResourceMetadata>(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && ComplianceStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
-                writer.WriteObjectValue(ComplianceStatus);
+                writer.WriteObjectValue<ReportComplianceStatus>(ComplianceStatus, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             ReportComplianceStatus complianceStatus = default;
             ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -252,10 +252,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReportProperties(
                 id,
                 status,
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeReportProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

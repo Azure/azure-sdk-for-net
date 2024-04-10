@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<ActivityLogAlertData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Scopes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -73,22 +73,22 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Condition != null)
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
-                writer.WriteObjectValue(Condition);
+                writer.WriteObjectValue<AlertRuleAllOfCondition>(Condition, options);
             }
-            if (Actions != null)
+            if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue(Actions);
+                writer.WriteObjectValue<ActionList>(Actions, options);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<ActivityLogAlertData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Monitor
             bool? enabled = default;
             string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -250,10 +250,10 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ActivityLogAlertData(
                 id,
                 name,
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Monitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Monitor
                         return DeserializeActivityLogAlertData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support reading '{options.Format}' format.");
             }
         }
 

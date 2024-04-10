@@ -56,34 +56,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="title"/>, <paramref name="category"/>, <paramref name="subCategory"/>, <paramref name="risk"/>, <paramref name="tag"/>, <paramref name="technology"/> or <paramref name="standardPorts"/> is null. </exception>
         internal AppSeenInfo(string title, string category, string subCategory, string risk, string tag, string technology, string standardPorts)
         {
-            if (title == null)
-            {
-                throw new ArgumentNullException(nameof(title));
-            }
-            if (category == null)
-            {
-                throw new ArgumentNullException(nameof(category));
-            }
-            if (subCategory == null)
-            {
-                throw new ArgumentNullException(nameof(subCategory));
-            }
-            if (risk == null)
-            {
-                throw new ArgumentNullException(nameof(risk));
-            }
-            if (tag == null)
-            {
-                throw new ArgumentNullException(nameof(tag));
-            }
-            if (technology == null)
-            {
-                throw new ArgumentNullException(nameof(technology));
-            }
-            if (standardPorts == null)
-            {
-                throw new ArgumentNullException(nameof(standardPorts));
-            }
+            Argument.AssertNotNull(title, nameof(title));
+            Argument.AssertNotNull(category, nameof(category));
+            Argument.AssertNotNull(subCategory, nameof(subCategory));
+            Argument.AssertNotNull(risk, nameof(risk));
+            Argument.AssertNotNull(tag, nameof(tag));
+            Argument.AssertNotNull(technology, nameof(technology));
+            Argument.AssertNotNull(standardPorts, nameof(standardPorts));
 
             Title = title;
             Category = category;

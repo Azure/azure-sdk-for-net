@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sphere
             var format = options.Format == "W" ? ((IPersistableModel<SphereImageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SphereImageData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SphereImageData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.Sphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Image != null)
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (ImageId != null)
+            if (Optional.IsDefined(ImageId))
             {
                 writer.WritePropertyName("imageId"u8);
                 writer.WriteStringValue(ImageId);
             }
-            if (options.Format != "W" && ImageName != null)
+            if (options.Format != "W" && Optional.IsDefined(ImageName))
             {
                 writer.WritePropertyName("imageName"u8);
                 writer.WriteStringValue(ImageName);
             }
-            if (RegionalDataBoundary.HasValue)
+            if (Optional.IsDefined(RegionalDataBoundary))
             {
                 writer.WritePropertyName("regionalDataBoundary"u8);
                 writer.WriteStringValue(RegionalDataBoundary.Value.ToString());
             }
-            if (options.Format != "W" && Uri != null)
+            if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ComponentId != null)
+            if (options.Format != "W" && Optional.IsDefined(ComponentId))
             {
                 writer.WritePropertyName("componentId"u8);
                 writer.WriteStringValue(ComponentId);
             }
-            if (options.Format != "W" && ImageType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ImageType))
             {
                 writer.WritePropertyName("imageType"u8);
                 writer.WriteStringValue(ImageType.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sphere
             var format = options.Format == "W" ? ((IPersistableModel<SphereImageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SphereImageData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SphereImageData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sphere
             SphereImageType? imageType = default;
             SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -250,10 +250,10 @@ namespace Azure.ResourceManager.Sphere
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SphereImageData(
                 id,
                 name,
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Sphere
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SphereImageData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SphereImageData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Sphere
                         return DeserializeSphereImageData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SphereImageData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SphereImageData)} does not support reading '{options.Format}' format.");
             }
         }
 

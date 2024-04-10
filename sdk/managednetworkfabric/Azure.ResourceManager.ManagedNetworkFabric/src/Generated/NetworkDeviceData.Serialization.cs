@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkDeviceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkDeviceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,69 +57,69 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (SerialNumber != null)
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (NetworkDeviceSku != null)
+            if (Optional.IsDefined(NetworkDeviceSku))
             {
                 writer.WritePropertyName("networkDeviceSku"u8);
                 writer.WriteStringValue(NetworkDeviceSku);
             }
-            if (options.Format != "W" && NetworkDeviceRole.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NetworkDeviceRole))
             {
                 writer.WritePropertyName("networkDeviceRole"u8);
                 writer.WriteStringValue(NetworkDeviceRole.Value.ToString());
             }
-            if (options.Format != "W" && NetworkRackId != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkRackId))
             {
                 writer.WritePropertyName("networkRackId"u8);
                 writer.WriteStringValue(NetworkRackId);
             }
-            if (options.Format != "W" && ManagementIPv4Address != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagementIPv4Address))
             {
                 writer.WritePropertyName("managementIpv4Address"u8);
                 writer.WriteStringValue(ManagementIPv4Address.ToString());
             }
-            if (options.Format != "W" && ManagementIPv6Address != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagementIPv6Address))
             {
                 writer.WritePropertyName("managementIpv6Address"u8);
                 writer.WriteStringValue(ManagementIPv6Address);
             }
-            if (options.Format != "W" && ConfigurationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AdministrativeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkDeviceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkDeviceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -326,10 +326,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkDeviceData(
                 id,
                 name,
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkDeviceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkDeviceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         return DeserializeNetworkDeviceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkDeviceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkDeviceData)} does not support reading '{options.Format}' format.");
             }
         }
 

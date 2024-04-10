@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -66,30 +66,9 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SynapseWorkspaceAadAdminInfoData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -118,30 +97,9 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SynapseWorkspaceAadAdminInfoData> Get(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName);
             _pipeline.Send(message, cancellationToken);
@@ -180,7 +138,7 @@ namespace Azure.ResourceManager.Synapse
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
+            content.JsonWriter.WriteObjectValue<SynapseWorkspaceAadAdminInfoData>(info, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -196,34 +154,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, SynapseWorkspaceAadAdminInfoData info, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -247,34 +181,10 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, SynapseWorkspaceAadAdminInfoData info, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, info);
             _pipeline.Send(message, cancellationToken);
@@ -318,30 +228,9 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, workspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -365,30 +254,9 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, workspaceName);
             _pipeline.Send(message, cancellationToken);

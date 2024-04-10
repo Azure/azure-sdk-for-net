@@ -15,17 +15,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (UrlSource != null)
+            if (Optional.IsDefined(UrlSource))
             {
                 writer.WritePropertyName("urlSource"u8);
                 writer.WriteStringValue(UrlSource.AbsoluteUri);
             }
-            if (Base64Source != null)
+            if (Optional.IsDefined(Base64Source))
             {
                 writer.WritePropertyName("base64Source"u8);
                 writer.WriteBase64StringValue(Base64Source, "D");
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ClassifyDocumentRequest>(this);
+            return content;
         }
     }
 }

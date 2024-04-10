@@ -21,7 +21,7 @@ trigger:
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
     - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
-    - sdk/arc-scvmm/Azure.ResourceManager.ArcScVmm
+    - sdk/arc-scvmm/Azure.ResourceManager.ScVmm
     - sdk/astronomer/Azure.ResourceManager.Astro
     - sdk/attestation/Azure.ResourceManager.Attestation
     - sdk/authorization/Azure.ResourceManager.Authorization
@@ -66,6 +66,7 @@ trigger:
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/devcenter/Azure.ResourceManager.DevCenter
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
+    - sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
     - sdk/devspaces/Azure.ResourceManager.DevSpaces
     - sdk/devtestlabs/Azure.ResourceManager.DevTestLabs
@@ -74,6 +75,7 @@ trigger:
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
+    - sdk/edgezones/Azure.ResourceManager.EdgeZones
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
     - sdk/eventgrid/Azure.ResourceManager.EventGrid
@@ -116,6 +118,7 @@ trigger:
     - sdk/marketplace/Azure.ResourceManager.Marketplace
     - sdk/marketplaceordering/Azure.ResourceManager.MarketplaceOrdering
     - sdk/mediaservices/Azure.ResourceManager.Media
+    - sdk/migrationdiscoverysap/Azure.ResourceManager.MigrationDiscoverySap
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
     - sdk/monitor/Azure.ResourceManager.Monitor
@@ -171,6 +174,7 @@ trigger:
     - sdk/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
+    - sdk/standbypool/Azure.ResourceManager.StandbyPool
     - sdk/storage/Azure.ResourceManager.Storage
     - sdk/storagecache/Azure.ResourceManager.StorageCache
     - sdk/storagemover/Azure.ResourceManager.StorageMover
@@ -209,7 +213,7 @@ pr:
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
     - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
-    - sdk/arc-scvmm/Azure.ResourceManager.ArcScVmm
+    - sdk/arc-scvmm/Azure.ResourceManager.ScVmm
     - sdk/astronomer/Azure.ResourceManager.Astro
     - sdk/attestation/Azure.ResourceManager.Attestation
     - sdk/authorization/Azure.ResourceManager.Authorization
@@ -254,6 +258,7 @@ pr:
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/devcenter/Azure.ResourceManager.DevCenter
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
+    - sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
     - sdk/devspaces/Azure.ResourceManager.DevSpaces
     - sdk/devtestlabs/Azure.ResourceManager.DevTestLabs
@@ -262,6 +267,7 @@ pr:
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
+    - sdk/edgezones/Azure.ResourceManager.EdgeZones
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
     - sdk/eventgrid/Azure.ResourceManager.EventGrid
@@ -304,6 +310,7 @@ pr:
     - sdk/marketplace/Azure.ResourceManager.Marketplace
     - sdk/marketplaceordering/Azure.ResourceManager.MarketplaceOrdering
     - sdk/mediaservices/Azure.ResourceManager.Media
+    - sdk/migrationdiscoverysap/Azure.ResourceManager.MigrationDiscoverySap
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
     - sdk/monitor/Azure.ResourceManager.Monitor
@@ -359,6 +366,7 @@ pr:
     - sdk/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
+    - sdk/standbypool/Azure.ResourceManager.StandbyPool
     - sdk/storage/Azure.ResourceManager.Storage
     - sdk/storagecache/Azure.ResourceManager.StorageCache
     - sdk/storagemover/Azure.ResourceManager.StorageMover

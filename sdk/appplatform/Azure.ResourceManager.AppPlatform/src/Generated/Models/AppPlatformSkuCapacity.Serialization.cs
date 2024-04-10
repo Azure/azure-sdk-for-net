@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformSkuCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformSkuCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("minimum"u8);
             writer.WriteNumberValue(Minimum);
-            if (Maximum.HasValue)
+            if (Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (Default.HasValue)
+            if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (ScaleType.HasValue)
+            if (Optional.IsDefined(ScaleType))
             {
                 writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType.Value.ToString());
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformSkuCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformSkuCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             int? @default = default;
             AppPlatformSkuScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minimum"u8))
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppPlatformSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData);
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformSkuCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformSkuCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformSkuCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformSkuCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformSkuCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

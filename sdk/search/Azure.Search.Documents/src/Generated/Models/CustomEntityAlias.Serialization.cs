@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (CaseSensitive.HasValue)
+            if (Optional.IsDefined(CaseSensitive))
             {
                 if (CaseSensitive != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("caseSensitive");
                 }
             }
-            if (AccentSensitive.HasValue)
+            if (Optional.IsDefined(AccentSensitive))
             {
                 if (AccentSensitive != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("accentSensitive");
                 }
             }
-            if (FuzzyEditDistance.HasValue)
+            if (Optional.IsDefined(FuzzyEditDistance))
             {
                 if (FuzzyEditDistance != null)
                 {
@@ -105,6 +105,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new CustomEntityAlias(text, caseSensitive, accentSensitive, fuzzyEditDistance);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CustomEntityAlias FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomEntityAlias(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CustomEntityAlias>(this);
+            return content;
         }
     }
 }

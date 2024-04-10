@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.CancerProfiling
@@ -23,24 +22,24 @@ namespace Azure.Health.Insights.CancerProfiling
             var format = options.Format == "W" ? ((IPersistableModel<PatientRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatientRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PatientRecord)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Info != null)
+            if (Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
-                writer.WriteObjectValue(Info);
+                writer.WriteObjectValue<PatientInfo>(Info, options);
             }
-            if (!(Data is ChangeTrackingList<PatientDocument> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PatientDocument>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +66,7 @@ namespace Azure.Health.Insights.CancerProfiling
             var format = options.Format == "W" ? ((IPersistableModel<PatientRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatientRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PatientRecord)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +85,7 @@ namespace Azure.Health.Insights.CancerProfiling
             PatientInfo info = default;
             IList<PatientDocument> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -119,10 +118,10 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PatientRecord(id, info, data ?? new ChangeTrackingList<PatientDocument>(), serializedAdditionalRawData);
         }
 
@@ -135,7 +134,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PatientRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatientRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +150,7 @@ namespace Azure.Health.Insights.CancerProfiling
                         return DeserializePatientRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PatientRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatientRecord)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -169,7 +168,7 @@ namespace Azure.Health.Insights.CancerProfiling
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<PatientRecord>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<HubPublicIPAddresses>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HubPublicIPAddresses)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HubPublicIPAddresses)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Addresses is ChangeTrackingList<AzureFirewallPublicIPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Addresses))
             {
                 writer.WritePropertyName("addresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in Addresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureFirewallPublicIPAddress>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<HubPublicIPAddresses>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HubPublicIPAddresses)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HubPublicIPAddresses)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<AzureFirewallPublicIPAddress> addresses = default;
             int? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addresses"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HubPublicIPAddresses(addresses ?? new ChangeTrackingList<AzureFirewallPublicIPAddress>(), count, serializedAdditionalRawData);
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HubPublicIPAddresses)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HubPublicIPAddresses)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeHubPublicIPAddresses(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HubPublicIPAddresses)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HubPublicIPAddresses)} does not support reading '{options.Format}' format.");
             }
         }
 

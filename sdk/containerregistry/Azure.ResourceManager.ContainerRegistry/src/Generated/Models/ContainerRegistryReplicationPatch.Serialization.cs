@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryReplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryReplicationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryReplicationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsRegionEndpointEnabled.HasValue)
+            if (Optional.IsDefined(IsRegionEndpointEnabled))
             {
                 writer.WritePropertyName("regionEndpointEnabled"u8);
                 writer.WriteBooleanValue(IsRegionEndpointEnabled.Value);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryReplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryReplicationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryReplicationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             IDictionary<string, string> tags = default;
             bool? regionEndpointEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerRegistryReplicationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), regionEndpointEnabled, serializedAdditionalRawData);
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryReplicationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryReplicationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryReplicationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryReplicationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryReplicationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

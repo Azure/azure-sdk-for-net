@@ -28,9 +28,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
             private const int FileAttributesEncodedSize = OneByte + IntSizeInBytes;
             private const int FilePermissionKeyOffsetEncodedSize = IntSizeInBytes;
             private const int FilePermissionKeyLengthEncodedSize = IntSizeInBytes;
-            private const int FileCreatedOnEncodedSize = OneByte + LongSizeInBytes + LongSizeInBytes;
-            private const int FileLastWrittenOnEncodedSize = OneByte + LongSizeInBytes + LongSizeInBytes;
-            private const int FileChangedOnEncodedSize = OneByte + LongSizeInBytes + LongSizeInBytes;
+            private const int FileCreatedOnEncodedSize = OneByte + LongSizeInBytes;
+            private const int FileLastWrittenOnEncodedSize = OneByte + LongSizeInBytes;
+            private const int FileChangedOnEncodedSize = OneByte + LongSizeInBytes;
             private const int ContentTypeOffsetEncodedSize = IntSizeInBytes;
             private const int ContentTypeLengthEncodedSize = IntSizeInBytes;
             private const int ContentEncodingOffsetEncodedSize = IntSizeInBytes;

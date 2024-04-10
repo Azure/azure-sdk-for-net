@@ -15,15 +15,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AzureBlobSource != null)
+            if (Optional.IsDefined(AzureBlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue(AzureBlobSource);
+                writer.WriteObjectValue<BlobContentSource>(AzureBlobSource);
             }
-            if (AzureBlobFileListSource != null)
+            if (Optional.IsDefined(AzureBlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue(AzureBlobFileListSource);
+                writer.WriteObjectValue<BlobFileListContentSource>(AzureBlobFileListSource);
             }
             writer.WriteEndObject();
         }
@@ -58,6 +58,22 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
             }
             return new ClassifierDocumentTypeDetails(azureBlobSource, azureBlobFileListSource);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ClassifierDocumentTypeDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeClassifierDocumentTypeDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ClassifierDocumentTypeDetails>(this);
+            return content;
         }
     }
 }

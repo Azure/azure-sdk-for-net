@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudStorageProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("osDisk"u8);
-            writer.WriteObjectValue(OSDisk);
-            if (!(VolumeAttachments is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            writer.WriteObjectValue<NetworkCloudOSDisk>(OSDisk, options);
+            if (Optional.IsCollectionDefined(VolumeAttachments))
             {
                 writer.WritePropertyName("volumeAttachments"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudStorageProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             NetworkCloudOSDisk osDisk = default;
             IList<ResourceIdentifier> volumeAttachments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDisk"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudStorageProfile(osDisk, volumeAttachments ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudStorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeNetworkCloudStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudStorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,12 +23,12 @@ namespace Azure.AI.TextAnalytics
             writer.WriteStartArray();
             foreach (var item in Matches)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<LinkedEntityMatch>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
-            if (DataSourceEntityId != null)
+            if (Optional.IsDefined(DataSourceEntityId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(DataSourceEntityId);
@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics
             writer.WriteStringValue(Url.AbsoluteUri);
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource);
-            if (BingEntitySearchApiId != null)
+            if (Optional.IsDefined(BingEntitySearchApiId))
             {
                 writer.WritePropertyName("bingId"u8);
                 writer.WriteStringValue(BingEntitySearchApiId);
@@ -105,6 +105,22 @@ namespace Azure.AI.TextAnalytics
                 url,
                 dataSource,
                 bingId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkedEntity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkedEntity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LinkedEntity>(this);
+            return content;
         }
     }
 }

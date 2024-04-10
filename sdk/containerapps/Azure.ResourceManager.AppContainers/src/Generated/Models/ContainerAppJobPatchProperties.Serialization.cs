@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppJobPatchProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppJobPatchProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EnvironmentId != null)
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<ContainerAppJobConfiguration>(Configuration, options);
             }
-            if (Template != null)
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue(Template);
+                writer.WriteObjectValue<ContainerAppJobTemplate>(Template, options);
             }
-            if (!(OutboundIPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutboundIPAddresses))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EventStreamEndpoint != null)
+            if (Optional.IsDefined(EventStreamEndpoint))
             {
                 writer.WritePropertyName("eventStreamEndpoint"u8);
                 writer.WriteStringValue(EventStreamEndpoint);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppJobPatchProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppJobPatchProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             IList<string> outboundIPAddresses = default;
             string eventStreamEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("environmentId"u8))
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppJobPatchProperties(
                 environmentId,
                 configuration,
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppJobPatchProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppJobPatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppJobPatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppJobPatchProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppJobPatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -24,53 +23,53 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<RouteData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ResourceType.HasValue)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (NextHopType.HasValue)
+            if (Optional.IsDefined(NextHopType))
             {
                 writer.WritePropertyName("nextHopType"u8);
                 writer.WriteStringValue(NextHopType.Value.ToString());
             }
-            if (NextHopIPAddress != null)
+            if (Optional.IsDefined(NextHopIPAddress))
             {
                 writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStringValue(NextHopIPAddress);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (HasBgpOverride.HasValue)
+            if (Optional.IsDefined(HasBgpOverride))
             {
                 writer.WritePropertyName("hasBgpOverride"u8);
                 writer.WriteBooleanValue(HasBgpOverride.Value);
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<RouteData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.Network
             NetworkProvisioningState? provisioningState = default;
             bool? hasBgpOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -210,10 +209,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RouteData(
                 id,
                 name,
@@ -236,7 +235,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouteData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +251,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeRouteData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouteData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteData)} does not support reading '{options.Format}' format.");
             }
         }
 

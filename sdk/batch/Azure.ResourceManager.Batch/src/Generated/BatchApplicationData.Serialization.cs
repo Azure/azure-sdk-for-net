@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,11 +23,11 @@ namespace Azure.ResourceManager.Batch
             var format = options.Format == "W" ? ((IPersistableModel<BatchApplicationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchApplicationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchApplicationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,24 +47,24 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (AllowUpdates.HasValue)
+            if (Optional.IsDefined(AllowUpdates))
             {
                 writer.WritePropertyName("allowUpdates"u8);
                 writer.WriteBooleanValue(AllowUpdates.Value);
             }
-            if (DefaultVersion != null)
+            if (Optional.IsDefined(DefaultVersion))
             {
                 writer.WritePropertyName("defaultVersion"u8);
                 writer.WriteStringValue(DefaultVersion);
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.Batch
             var format = options.Format == "W" ? ((IPersistableModel<BatchApplicationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchApplicationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchApplicationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.Batch
             bool? allowUpdates = default;
             string defaultVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -187,10 +186,10 @@ namespace Azure.ResourceManager.Batch
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchApplicationData(
                 id,
                 name,
@@ -212,7 +211,7 @@ namespace Azure.ResourceManager.Batch
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchApplicationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchApplicationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.Batch
                         return DeserializeBatchApplicationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchApplicationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchApplicationData)} does not support reading '{options.Format}' format.");
             }
         }
 

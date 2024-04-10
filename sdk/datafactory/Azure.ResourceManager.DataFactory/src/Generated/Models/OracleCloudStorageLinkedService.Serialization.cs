@@ -23,34 +23,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<OracleCloudStorageLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OracleCloudStorageLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OracleCloudStorageLinkedService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia, options);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<EntityParameterSpecification>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -74,22 +74,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (AccessKeyId != null)
+            if (Optional.IsDefined(AccessKeyId))
             {
                 writer.WritePropertyName("accessKeyId"u8);
                 JsonSerializer.Serialize(writer, AccessKeyId);
             }
-            if (SecretAccessKey != null)
+            if (Optional.IsDefined(SecretAccessKey))
             {
                 writer.WritePropertyName("secretAccessKey"u8);
                 JsonSerializer.Serialize(writer, SecretAccessKey);
             }
-            if (ServiceUri != null)
+            if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
                 JsonSerializer.Serialize(writer, ServiceUri);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<OracleCloudStorageLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OracleCloudStorageLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OracleCloudStorageLinkedService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> accessKeyId = default;
-            DataFactorySecretBaseDefinition secretAccessKey = default;
+            DataFactorySecret secretAccessKey = default;
             DataFactoryElement<string> serviceUrl = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            secretAccessKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            secretAccessKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("serviceUrl"u8))
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OracleCloudStorageLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OracleCloudStorageLinkedService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeOracleCloudStorageLinkedService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OracleCloudStorageLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OracleCloudStorageLinkedService)} does not support reading '{options.Format}' format.");
             }
         }
 

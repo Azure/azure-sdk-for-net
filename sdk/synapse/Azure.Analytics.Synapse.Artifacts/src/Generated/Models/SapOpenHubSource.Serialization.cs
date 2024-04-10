@@ -19,57 +19,57 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ExcludeLastRequest != null)
+            if (Optional.IsDefined(ExcludeLastRequest))
             {
                 writer.WritePropertyName("excludeLastRequest"u8);
-                writer.WriteObjectValue(ExcludeLastRequest);
+                writer.WriteObjectValue<object>(ExcludeLastRequest);
             }
-            if (BaseRequestId != null)
+            if (Optional.IsDefined(BaseRequestId))
             {
                 writer.WritePropertyName("baseRequestId"u8);
-                writer.WriteObjectValue(BaseRequestId);
+                writer.WriteObjectValue<object>(BaseRequestId);
             }
-            if (CustomRfcReadTableFunctionModule != null)
+            if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
-                writer.WriteObjectValue(CustomRfcReadTableFunctionModule);
+                writer.WriteObjectValue<object>(CustomRfcReadTableFunctionModule);
             }
-            if (SapDataColumnDelimiter != null)
+            if (Optional.IsDefined(SapDataColumnDelimiter))
             {
                 writer.WritePropertyName("sapDataColumnDelimiter"u8);
-                writer.WriteObjectValue(SapDataColumnDelimiter);
+                writer.WriteObjectValue<object>(SapDataColumnDelimiter);
             }
-            if (QueryTimeout != null)
+            if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteObjectValue(QueryTimeout);
+                writer.WriteObjectValue<object>(QueryTimeout);
             }
-            if (AdditionalColumns != null)
+            if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
-                writer.WriteObjectValue(AdditionalColumns);
+                writer.WriteObjectValue<object>(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (SourceRetryCount != null)
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-                writer.WriteObjectValue(SourceRetryCount);
+                writer.WriteObjectValue<object>(SourceRetryCount);
             }
-            if (SourceRetryWait != null)
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-                writer.WriteObjectValue(SourceRetryWait);
+                writer.WriteObjectValue<object>(SourceRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -197,12 +197,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 sapDataColumnDelimiter);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SapOpenHubSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSapOpenHubSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SapOpenHubSource>(this);
+            return content;
+        }
+
         internal partial class SapOpenHubSourceConverter : JsonConverter<SapOpenHubSource>
         {
             public override void Write(Utf8JsonWriter writer, SapOpenHubSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SapOpenHubSource>(model);
             }
+
             public override SapOpenHubSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AccountAccess != null)
+            if (Optional.IsDefined(AccountAccess))
             {
                 writer.WritePropertyName("accountAccess"u8);
-                writer.WriteObjectValue(AccountAccess);
+                writer.WriteObjectValue<BatchEndpointAccessProfile>(AccountAccess, options);
             }
-            if (NodeManagementAccess != null)
+            if (Optional.IsDefined(NodeManagementAccess))
             {
                 writer.WritePropertyName("nodeManagementAccess"u8);
-                writer.WriteObjectValue(NodeManagementAccess);
+                writer.WriteObjectValue<BatchEndpointAccessProfile>(NodeManagementAccess, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchEndpointAccessProfile accountAccess = default;
             BatchEndpointAccessProfile nodeManagementAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountAccess"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchNetworkProfile(accountAccess, nodeManagementAccess, serializedAdditionalRawData);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

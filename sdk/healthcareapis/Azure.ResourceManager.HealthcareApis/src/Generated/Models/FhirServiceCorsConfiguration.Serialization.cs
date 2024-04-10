@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<FhirServiceCorsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirServiceCorsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirServiceCorsConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Origins is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Origins))
             {
                 writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Headers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Methods is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Methods))
             {
                 writer.WritePropertyName("methods"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MaxAge.HasValue)
+            if (Optional.IsDefined(MaxAge))
             {
                 writer.WritePropertyName("maxAge"u8);
                 writer.WriteNumberValue(MaxAge.Value);
             }
-            if (AllowCredentials.HasValue)
+            if (Optional.IsDefined(AllowCredentials))
             {
                 writer.WritePropertyName("allowCredentials"u8);
                 writer.WriteBooleanValue(AllowCredentials.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<FhirServiceCorsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirServiceCorsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirServiceCorsConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             int? maxAge = default;
             bool? allowCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("origins"u8))
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FhirServiceCorsConfiguration(
                 origins ?? new ChangeTrackingList<string>(),
                 headers ?? new ChangeTrackingList<string>(),
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FhirServiceCorsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirServiceCorsConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         return DeserializeFhirServiceCorsConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FhirServiceCorsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirServiceCorsConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

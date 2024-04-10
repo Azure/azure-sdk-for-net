@@ -22,42 +22,42 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotServiceProviderProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotServiceProviderProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceProviderProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && ServiceProviderName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceProviderName))
             {
                 writer.WritePropertyName("serviceProviderName"u8);
                 writer.WriteStringValue(ServiceProviderName);
             }
-            if (options.Format != "W" && DevPortalUri != null)
+            if (options.Format != "W" && Optional.IsDefined(DevPortalUri))
             {
                 writer.WritePropertyName("devPortalUrl"u8);
                 writer.WriteStringValue(DevPortalUri.AbsoluteUri);
             }
-            if (IconUri != null)
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("iconUrl"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (!(Parameters is ChangeTrackingList<BotServiceProviderParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BotServiceProviderParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotServiceProviderProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotServiceProviderProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceProviderProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.BotService.Models
             Uri iconUrl = default;
             IReadOnlyList<BotServiceProviderParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BotServiceProviderProperties(
                 id,
                 displayName,
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotServiceProviderProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceProviderProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeBotServiceProviderProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotServiceProviderProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceProviderProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

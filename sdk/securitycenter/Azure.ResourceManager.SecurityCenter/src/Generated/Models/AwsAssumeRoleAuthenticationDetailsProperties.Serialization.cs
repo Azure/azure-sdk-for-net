@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AwsAssumeRoleAuthenticationDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AwsAssumeRoleAuthenticationDetailsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsAssumeRoleAuthenticationDetailsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(AwsAssumeRoleArn);
             writer.WritePropertyName("awsExternalId"u8);
             writer.WriteStringValue(AwsExternalId);
-            if (options.Format != "W" && AuthenticationProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AuthenticationProvisioningState))
             {
                 writer.WritePropertyName("authenticationProvisioningState"u8);
                 writer.WriteStringValue(AuthenticationProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(GrantedPermissions is ChangeTrackingList<SecurityCenterCloudPermission> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(GrantedPermissions))
             {
                 writer.WritePropertyName("grantedPermissions"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AwsAssumeRoleAuthenticationDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AwsAssumeRoleAuthenticationDetailsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsAssumeRoleAuthenticationDetailsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions = default;
             AuthenticationType authenticationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountId"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AwsAssumeRoleAuthenticationDetailsProperties(
                 authenticationProvisioningState,
                 grantedPermissions ?? new ChangeTrackingList<SecurityCenterCloudPermission>(),
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AwsAssumeRoleAuthenticationDetailsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsAssumeRoleAuthenticationDetailsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeAwsAssumeRoleAuthenticationDetailsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AwsAssumeRoleAuthenticationDetailsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsAssumeRoleAuthenticationDetailsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

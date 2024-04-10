@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequestMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WriteStringValue(HttpMethod.ToString());
             writer.WritePropertyName("serializedBody"u8);
             writer.WriteStringValue(SerializedBody);
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequestMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             string serializedBody = default;
             string apiVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("relativePath"u8))
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RequestMetadata(relativePath, httpMethod, serializedBody, apiVersion, serializedAdditionalRawData);
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RequestMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeRequestMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequestMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

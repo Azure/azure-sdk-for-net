@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (Credential != null)
+            if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                writer.WriteObjectValue<DataFactoryCredentialReference>(Credential, options);
             }
             writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryCredentialReference credential = default;
             string authorizationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LinkedIntegrationRuntimeRbacAuthorization(authorizationType, serializedAdditionalRawData, resourceId, credential);
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeLinkedIntegrationRuntimeRbacAuthorization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support reading '{options.Format}' format.");
             }
         }
 

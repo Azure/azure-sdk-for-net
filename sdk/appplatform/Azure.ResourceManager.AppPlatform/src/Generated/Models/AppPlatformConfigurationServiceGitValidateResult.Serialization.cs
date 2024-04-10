@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformConfigurationServiceGitValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceGitValidateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceGitValidateResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsValid.HasValue)
+            if (Optional.IsDefined(IsValid))
             {
                 writer.WritePropertyName("isValid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (!(GitReposValidationResult is ChangeTrackingList<AppPlatformConfigurationServiceGitReposValidationMessages> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GitReposValidationResult))
             {
                 writer.WritePropertyName("gitReposValidationResult"u8);
                 writer.WriteStartArray();
                 foreach (var item in GitReposValidationResult)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformConfigurationServiceGitReposValidationMessages>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformConfigurationServiceGitValidateResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceGitValidateResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceGitValidateResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             bool? isValid = default;
             IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages> gitReposValidationResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isValid"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppPlatformConfigurationServiceGitValidateResult(isValid, gitReposValidationResult ?? new ChangeTrackingList<AppPlatformConfigurationServiceGitReposValidationMessages>(), serializedAdditionalRawData);
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceGitValidateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceGitValidateResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformConfigurationServiceGitValidateResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceGitValidateResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceGitValidateResult)} does not support reading '{options.Format}' format.");
             }
         }
 

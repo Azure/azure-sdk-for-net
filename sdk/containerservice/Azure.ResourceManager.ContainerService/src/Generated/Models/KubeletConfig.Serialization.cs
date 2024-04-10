@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubeletConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubeletConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CpuManagerPolicy != null)
+            if (Optional.IsDefined(CpuManagerPolicy))
             {
                 writer.WritePropertyName("cpuManagerPolicy"u8);
                 writer.WriteStringValue(CpuManagerPolicy);
             }
-            if (IsCpuCfsQuotaEnabled.HasValue)
+            if (Optional.IsDefined(IsCpuCfsQuotaEnabled))
             {
                 writer.WritePropertyName("cpuCfsQuota"u8);
                 writer.WriteBooleanValue(IsCpuCfsQuotaEnabled.Value);
             }
-            if (CpuCfsQuotaPeriod != null)
+            if (Optional.IsDefined(CpuCfsQuotaPeriod))
             {
                 writer.WritePropertyName("cpuCfsQuotaPeriod"u8);
                 writer.WriteStringValue(CpuCfsQuotaPeriod);
             }
-            if (ImageGcHighThreshold.HasValue)
+            if (Optional.IsDefined(ImageGcHighThreshold))
             {
                 writer.WritePropertyName("imageGcHighThreshold"u8);
                 writer.WriteNumberValue(ImageGcHighThreshold.Value);
             }
-            if (ImageGcLowThreshold.HasValue)
+            if (Optional.IsDefined(ImageGcLowThreshold))
             {
                 writer.WritePropertyName("imageGcLowThreshold"u8);
                 writer.WriteNumberValue(ImageGcLowThreshold.Value);
             }
-            if (TopologyManagerPolicy != null)
+            if (Optional.IsDefined(TopologyManagerPolicy))
             {
                 writer.WritePropertyName("topologyManagerPolicy"u8);
                 writer.WriteStringValue(TopologyManagerPolicy);
             }
-            if (!(AllowedUnsafeSysctls is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedUnsafeSysctls))
             {
                 writer.WritePropertyName("allowedUnsafeSysctls"u8);
                 writer.WriteStartArray();
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FailStartWithSwapOn.HasValue)
+            if (Optional.IsDefined(FailStartWithSwapOn))
             {
                 writer.WritePropertyName("failSwapOn"u8);
                 writer.WriteBooleanValue(FailStartWithSwapOn.Value);
             }
-            if (ContainerLogMaxSizeInMB.HasValue)
+            if (Optional.IsDefined(ContainerLogMaxSizeInMB))
             {
                 writer.WritePropertyName("containerLogMaxSizeMB"u8);
                 writer.WriteNumberValue(ContainerLogMaxSizeInMB.Value);
             }
-            if (ContainerLogMaxFiles.HasValue)
+            if (Optional.IsDefined(ContainerLogMaxFiles))
             {
                 writer.WritePropertyName("containerLogMaxFiles"u8);
                 writer.WriteNumberValue(ContainerLogMaxFiles.Value);
             }
-            if (PodMaxPids.HasValue)
+            if (Optional.IsDefined(PodMaxPids))
             {
                 writer.WritePropertyName("podMaxPids"u8);
                 writer.WriteNumberValue(PodMaxPids.Value);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubeletConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubeletConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubeletConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             int? containerLogMaxFiles = default;
             int? podMaxPids = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpuManagerPolicy"u8))
@@ -233,10 +233,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KubeletConfig(
                 cpuManagerPolicy,
                 cpuCfsQuota,
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubeletConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubeletConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeKubeletConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubeletConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubeletConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -17,27 +17,35 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (SourceLocale != null)
+            if (Optional.IsDefined(SourceLocale))
             {
                 writer.WritePropertyName("sourceLocale"u8);
                 writer.WriteStringValue(SourceLocale);
             }
-            if (VoiceKind.HasValue)
+            if (Optional.IsDefined(VoiceKind))
             {
                 writer.WritePropertyName("voiceKind"u8);
                 writer.WriteStringValue(VoiceKind.Value.ToString());
             }
-            if (VoiceName != null)
+            if (Optional.IsDefined(VoiceName))
             {
                 writer.WritePropertyName("voiceName"u8);
                 writer.WriteStringValue(VoiceName);
             }
-            if (CustomVoiceEndpointId != null)
+            if (Optional.IsDefined(CustomVoiceEndpointId))
             {
                 writer.WritePropertyName("customVoiceEndpointId"u8);
                 writer.WriteStringValue(CustomVoiceEndpointId);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TextSourceInternal>(this);
+            return content;
         }
     }
 }

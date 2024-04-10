@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxTokenCount.HasValue)
+            if (Optional.IsDefined(MaxTokenCount))
             {
                 writer.WritePropertyName("maxTokenCount"u8);
                 writer.WriteNumberValue(MaxTokenCount.Value);
             }
-            if (ConsumeAllTokens.HasValue)
+            if (Optional.IsDefined(ConsumeAllTokens))
             {
                 writer.WritePropertyName("consumeAllTokens"u8);
                 writer.WriteBooleanValue(ConsumeAllTokens.Value);
@@ -74,6 +74,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new LimitTokenFilter(odataType, name, maxTokenCount, consumeAllTokens);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new LimitTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLimitTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LimitTokenFilter>(this);
+            return content;
         }
     }
 }

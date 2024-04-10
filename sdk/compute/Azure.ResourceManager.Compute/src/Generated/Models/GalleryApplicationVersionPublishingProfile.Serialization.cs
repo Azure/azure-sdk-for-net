@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
-            if (ManageActions != null)
+            writer.WriteObjectValue<UserArtifactSource>(Source, options);
+            if (Optional.IsDefined(ManageActions))
             {
                 writer.WritePropertyName("manageActions"u8);
-                writer.WriteObjectValue(ManageActions);
+                writer.WriteObjectValue<UserArtifactManagement>(ManageActions, options);
             }
-            if (Settings != null)
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                writer.WriteObjectValue<UserArtifactSettings>(Settings, options);
             }
-            if (!(AdvancedSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdvancedSettings))
             {
                 writer.WritePropertyName("advancedSettings"u8);
                 writer.WriteStartObject();
@@ -49,68 +49,68 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (EnableHealthCheck.HasValue)
+            if (Optional.IsDefined(EnableHealthCheck))
             {
                 writer.WritePropertyName("enableHealthCheck"u8);
                 writer.WriteBooleanValue(EnableHealthCheck.Value);
             }
-            if (!(CustomActions is ChangeTrackingList<GalleryApplicationCustomAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomActions))
             {
                 writer.WritePropertyName("customActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GalleryApplicationCustomAction>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(TargetRegions is ChangeTrackingList<TargetRegion> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetRegions))
             {
                 writer.WritePropertyName("targetRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TargetRegion>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ReplicaCount.HasValue)
+            if (Optional.IsDefined(ReplicaCount))
             {
                 writer.WritePropertyName("replicaCount"u8);
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (IsExcludedFromLatest.HasValue)
+            if (Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
                 writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
-            if (options.Format != "W" && PublishedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PublishedOn))
             {
                 writer.WritePropertyName("publishedDate"u8);
                 writer.WriteStringValue(PublishedOn.Value, "O");
             }
-            if (EndOfLifeOn.HasValue)
+            if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (StorageAccountType.HasValue)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (ReplicationMode.HasValue)
+            if (Optional.IsDefined(ReplicationMode))
             {
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
-            if (!(TargetExtendedLocations is ChangeTrackingList<GalleryTargetExtendedLocation> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetExtendedLocations))
             {
                 writer.WritePropertyName("targetExtendedLocations"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetExtendedLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GalleryTargetExtendedLocation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
             GalleryReplicationMode? replicationMode = default;
             IList<GalleryTargetExtendedLocation> targetExtendedLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -314,10 +314,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GalleryApplicationVersionPublishingProfile(
                 targetRegions ?? new ChangeTrackingList<TargetRegion>(),
                 replicaCount,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryApplicationVersionPublishingProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

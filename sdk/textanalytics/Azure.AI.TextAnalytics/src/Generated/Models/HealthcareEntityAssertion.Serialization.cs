@@ -15,17 +15,17 @@ namespace Azure.AI.TextAnalytics
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Conditionality.HasValue)
+            if (Optional.IsDefined(Conditionality))
             {
                 writer.WritePropertyName("conditionality"u8);
                 writer.WriteStringValue(Conditionality.Value.ToSerialString());
             }
-            if (Certainty.HasValue)
+            if (Optional.IsDefined(Certainty))
             {
                 writer.WritePropertyName("certainty"u8);
                 writer.WriteStringValue(Certainty.Value.ToSerialString());
             }
-            if (Association.HasValue)
+            if (Optional.IsDefined(Association))
             {
                 writer.WritePropertyName("association"u8);
                 writer.WriteStringValue(Association.Value.ToSerialString());
@@ -73,6 +73,22 @@ namespace Azure.AI.TextAnalytics
                 }
             }
             return new HealthcareEntityAssertion(conditionality, certainty, association);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareEntityAssertion FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareEntityAssertion(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HealthcareEntityAssertion>(this);
+            return content;
         }
     }
 }

@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageDeprecationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageDeprecationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageDeprecationStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ImageState.HasValue)
+            if (Optional.IsDefined(ImageState))
             {
                 writer.WritePropertyName("imageState"u8);
                 writer.WriteStringValue(ImageState.Value.ToString());
             }
-            if (ScheduledDeprecationOn.HasValue)
+            if (Optional.IsDefined(ScheduledDeprecationOn))
             {
                 writer.WritePropertyName("scheduledDeprecationTime"u8);
                 writer.WriteStringValue(ScheduledDeprecationOn.Value, "O");
             }
-            if (AlternativeOption != null)
+            if (Optional.IsDefined(AlternativeOption))
             {
                 writer.WritePropertyName("alternativeOption"u8);
-                writer.WriteObjectValue(AlternativeOption);
+                writer.WriteObjectValue<ImageAlternativeOption>(AlternativeOption, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageDeprecationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageDeprecationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageDeprecationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
             DateTimeOffset? scheduledDeprecationTime = default;
             ImageAlternativeOption alternativeOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("imageState"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ImageDeprecationStatus(imageState, scheduledDeprecationTime, alternativeOption, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageDeprecationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageDeprecationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeImageDeprecationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageDeprecationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageDeprecationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

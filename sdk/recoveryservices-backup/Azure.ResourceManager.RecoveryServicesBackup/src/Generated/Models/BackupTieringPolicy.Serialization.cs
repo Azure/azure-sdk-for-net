@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupTieringPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TieringMode.HasValue)
+            if (Optional.IsDefined(TieringMode))
             {
                 writer.WritePropertyName("tieringMode"u8);
                 writer.WriteStringValue(TieringMode.Value.ToString());
             }
-            if (DurationValue.HasValue)
+            if (Optional.IsDefined(DurationValue))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteNumberValue(DurationValue.Value);
             }
-            if (DurationType.HasValue)
+            if (Optional.IsDefined(DurationType))
             {
                 writer.WritePropertyName("durationType"u8);
                 writer.WriteStringValue(DurationType.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupTieringPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             int? duration = default;
             RetentionDurationType? durationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tieringMode"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackupTieringPolicy(tieringMode, duration, durationType, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupTieringPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupTieringPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

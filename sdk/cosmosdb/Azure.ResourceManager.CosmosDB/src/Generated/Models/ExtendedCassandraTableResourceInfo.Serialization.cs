@@ -8,8 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -23,38 +23,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtendedCassandraTableResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtendedCassandraTableResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtendedCassandraTableResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Rid != null)
+            if (options.Format != "W" && Optional.IsDefined(Rid))
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("_ts"u8);
                 writer.WriteNumberValue(Timestamp.Value);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("_etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(TableName);
-            if (DefaultTtl.HasValue)
+            if (Optional.IsDefined(DefaultTtl))
             {
                 writer.WritePropertyName("defaultTtl"u8);
                 writer.WriteNumberValue(DefaultTtl.Value);
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue(Schema);
+                writer.WriteObjectValue<CassandraSchema>(Schema, options);
             }
-            if (AnalyticalStorageTtl.HasValue)
+            if (Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtendedCassandraTableResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtendedCassandraTableResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtendedCassandraTableResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CassandraSchema schema = default;
             int? analyticalStorageTtl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ExtendedCassandraTableResourceInfo(
                 id,
                 defaultTtl,
@@ -180,6 +180,135 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 etag);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rid), out propertyOverride);
+            if (Optional.IsDefined(Rid) || hasPropertyOverride)
+            {
+                builder.Append("  _rid: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Rid.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Rid}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Rid}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
+            if (Optional.IsDefined(Timestamp) || hasPropertyOverride)
+            {
+                builder.Append("  _ts: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Timestamp.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (Optional.IsDefined(ETag) || hasPropertyOverride)
+            {
+                builder.Append("  _etag: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableName), out propertyOverride);
+            if (Optional.IsDefined(TableName) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (TableName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TableName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TableName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultTtl), out propertyOverride);
+            if (Optional.IsDefined(DefaultTtl) || hasPropertyOverride)
+            {
+                builder.Append("  defaultTtl: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{DefaultTtl.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Schema), out propertyOverride);
+            if (Optional.IsDefined(Schema) || hasPropertyOverride)
+            {
+                builder.Append("  schema: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Schema, options, 2, false, "  schema: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AnalyticalStorageTtl), out propertyOverride);
+            if (Optional.IsDefined(AnalyticalStorageTtl) || hasPropertyOverride)
+            {
+                builder.Append("  analyticalStorageTtl: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{AnalyticalStorageTtl.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ExtendedCassandraTableResourceInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExtendedCassandraTableResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -188,8 +317,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ExtendedCassandraTableResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtendedCassandraTableResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +336,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeExtendedCassandraTableResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtendedCassandraTableResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtendedCassandraTableResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

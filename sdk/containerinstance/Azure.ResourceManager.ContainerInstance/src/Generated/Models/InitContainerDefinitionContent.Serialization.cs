@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<InitContainerDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Image != null)
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (!(Command is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -45,35 +45,35 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EnvironmentVariables is ChangeTrackingList<ContainerEnvironmentVariable> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentVariables)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerEnvironmentVariable>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<InitContainerPropertiesDefinitionInstanceView>(InstanceView, options);
             }
-            if (!(VolumeMounts is ChangeTrackingList<ContainerVolumeMount> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(VolumeMounts))
             {
                 writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in VolumeMounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerVolumeMount>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (SecurityContext != null)
+            if (Optional.IsDefined(SecurityContext))
             {
                 writer.WritePropertyName("securityContext"u8);
-                writer.WriteObjectValue(SecurityContext);
+                writer.WriteObjectValue<ContainerSecurityContextDefinition>(SecurityContext, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<InitContainerDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             IList<ContainerVolumeMount> volumeMounts = default;
             ContainerSecurityContextDefinition securityContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -209,10 +209,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new InitContainerDefinitionContent(
                 name,
                 image,
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeInitContainerDefinitionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

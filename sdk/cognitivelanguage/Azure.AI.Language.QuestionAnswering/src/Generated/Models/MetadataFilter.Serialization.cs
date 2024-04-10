@@ -15,22 +15,30 @@ namespace Azure.AI.Language.QuestionAnswering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Metadata is ChangeTrackingList<MetadataRecord> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetadataRecord>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (LogicalOperation.HasValue)
+            if (Optional.IsDefined(LogicalOperation))
             {
                 writer.WritePropertyName("logicalOperation"u8);
                 writer.WriteStringValue(LogicalOperation.Value.ToString());
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MetadataFilter>(this);
+            return content;
         }
     }
 }

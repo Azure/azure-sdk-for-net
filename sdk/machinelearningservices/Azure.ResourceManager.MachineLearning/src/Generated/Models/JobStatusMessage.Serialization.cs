@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobStatusMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobStatusMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobStatusMessage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 if (Code != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("code");
                 }
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 if (CreatedOn != null)
                 {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("createdDateTime");
                 }
             }
-            if (options.Format != "W" && Level.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 if (Message != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobStatusMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobStatusMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobStatusMessage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobStatusMessageLevel? level = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new JobStatusMessage(code, createdDateTime, level, message, serializedAdditionalRawData);
         }
 
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobStatusMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobStatusMessage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeJobStatusMessage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobStatusMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobStatusMessage)} does not support reading '{options.Format}' format.");
             }
         }
 

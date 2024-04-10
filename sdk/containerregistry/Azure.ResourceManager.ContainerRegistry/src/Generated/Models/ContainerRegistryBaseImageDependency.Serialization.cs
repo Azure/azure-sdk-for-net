@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryBaseImageDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryBaseImageDependency)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryBaseImageDependency)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DependencyType.HasValue)
+            if (Optional.IsDefined(DependencyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DependencyType.Value.ToString());
             }
-            if (Registry != null)
+            if (Optional.IsDefined(Registry))
             {
                 writer.WritePropertyName("registry"u8);
                 writer.WriteStringValue(Registry);
             }
-            if (Repository != null)
+            if (Optional.IsDefined(Repository))
             {
                 writer.WritePropertyName("repository"u8);
                 writer.WriteStringValue(Repository);
             }
-            if (Tag != null)
+            if (Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
-            if (Digest != null)
+            if (Optional.IsDefined(Digest))
             {
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryBaseImageDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryBaseImageDependency)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryBaseImageDependency)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string tag = default;
             string digest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerRegistryBaseImageDependency(
                 type,
                 registry,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryBaseImageDependency)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryBaseImageDependency)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryBaseImageDependency(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryBaseImageDependency)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryBaseImageDependency)} does not support reading '{options.Format}' format.");
             }
         }
 

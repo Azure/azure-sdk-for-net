@@ -17,12 +17,20 @@ namespace Azure.Quantum.Jobs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (BlobName != null)
+            if (Optional.IsDefined(BlobName))
             {
                 writer.WritePropertyName("blobName"u8);
                 writer.WriteStringValue(BlobName);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<BlobDetails>(this);
+            return content;
         }
     }
 }

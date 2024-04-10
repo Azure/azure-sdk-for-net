@@ -22,93 +22,93 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceSasContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceSasContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("canonicalizedResource"u8);
             writer.WriteStringValue(CanonicalizedResource);
-            if (Resource.HasValue)
+            if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("signedResource"u8);
                 writer.WriteStringValue(Resource.Value.ToString());
             }
-            if (Permissions.HasValue)
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("signedPermission"u8);
                 writer.WriteStringValue(Permissions.Value.ToString());
             }
-            if (IPAddressOrRange != null)
+            if (Optional.IsDefined(IPAddressOrRange))
             {
                 writer.WritePropertyName("signedIp"u8);
                 writer.WriteStringValue(IPAddressOrRange);
             }
-            if (Protocols.HasValue)
+            if (Optional.IsDefined(Protocols))
             {
                 writer.WritePropertyName("signedProtocol"u8);
                 writer.WriteStringValue(Protocols.Value.ToSerialString());
             }
-            if (SharedAccessStartOn.HasValue)
+            if (Optional.IsDefined(SharedAccessStartOn))
             {
                 writer.WritePropertyName("signedStart"u8);
                 writer.WriteStringValue(SharedAccessStartOn.Value, "O");
             }
-            if (SharedAccessExpiryOn.HasValue)
+            if (Optional.IsDefined(SharedAccessExpiryOn))
             {
                 writer.WritePropertyName("signedExpiry"u8);
                 writer.WriteStringValue(SharedAccessExpiryOn.Value, "O");
             }
-            if (Identifier != null)
+            if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("signedIdentifier"u8);
                 writer.WriteStringValue(Identifier);
             }
-            if (PartitionKeyStart != null)
+            if (Optional.IsDefined(PartitionKeyStart))
             {
                 writer.WritePropertyName("startPk"u8);
                 writer.WriteStringValue(PartitionKeyStart);
             }
-            if (PartitionKeyEnd != null)
+            if (Optional.IsDefined(PartitionKeyEnd))
             {
                 writer.WritePropertyName("endPk"u8);
                 writer.WriteStringValue(PartitionKeyEnd);
             }
-            if (RowKeyStart != null)
+            if (Optional.IsDefined(RowKeyStart))
             {
                 writer.WritePropertyName("startRk"u8);
                 writer.WriteStringValue(RowKeyStart);
             }
-            if (RowKeyEnd != null)
+            if (Optional.IsDefined(RowKeyEnd))
             {
                 writer.WritePropertyName("endRk"u8);
                 writer.WriteStringValue(RowKeyEnd);
             }
-            if (KeyToSign != null)
+            if (Optional.IsDefined(KeyToSign))
             {
                 writer.WritePropertyName("keyToSign"u8);
                 writer.WriteStringValue(KeyToSign);
             }
-            if (CacheControl != null)
+            if (Optional.IsDefined(CacheControl))
             {
                 writer.WritePropertyName("rscc"u8);
                 writer.WriteStringValue(CacheControl);
             }
-            if (ContentDisposition != null)
+            if (Optional.IsDefined(ContentDisposition))
             {
                 writer.WritePropertyName("rscd"u8);
                 writer.WriteStringValue(ContentDisposition);
             }
-            if (ContentEncoding != null)
+            if (Optional.IsDefined(ContentEncoding))
             {
                 writer.WritePropertyName("rsce"u8);
                 writer.WriteStringValue(ContentEncoding);
             }
-            if (ContentLanguage != null)
+            if (Optional.IsDefined(ContentLanguage))
             {
                 writer.WritePropertyName("rscl"u8);
                 writer.WriteStringValue(ContentLanguage);
             }
-            if (ContentType != null)
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("rsct"u8);
                 writer.WriteStringValue(ContentType);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceSasContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceSasContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Storage.Models
             string rscl = default;
             string rsct = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("canonicalizedResource"u8))
@@ -285,10 +285,10 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceSasContent(
                 canonicalizedResource,
                 signedResource,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceSasContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceSasContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeServiceSasContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceSasContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceSasContent)} does not support reading '{options.Format}' format.");
             }
         }
 

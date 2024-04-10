@@ -67,13 +67,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Predefined action to be taken. </summary>
+        [WirePath("actionType")]
         public AutoHealActionType? ActionType { get; set; }
         /// <summary> Custom action to be taken. </summary>
+        [WirePath("customAction")]
         public AutoHealCustomAction CustomAction { get; set; }
         /// <summary>
         /// Minimum time the process must execute
         /// before taking the action
         /// </summary>
+        [WirePath("minProcessExecutionTime")]
         public string MinProcessExecutionTime { get; set; }
     }
 }

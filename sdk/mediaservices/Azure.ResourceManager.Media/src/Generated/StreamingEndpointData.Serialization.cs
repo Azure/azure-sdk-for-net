@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<StreamingEndpointCurrentSku>(Sku, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,41 +61,41 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ScaleUnits.HasValue)
+            if (Optional.IsDefined(ScaleUnits))
             {
                 writer.WritePropertyName("scaleUnits"u8);
                 writer.WriteNumberValue(ScaleUnits.Value);
             }
-            if (AvailabilitySetName != null)
+            if (Optional.IsDefined(AvailabilitySetName))
             {
                 writer.WritePropertyName("availabilitySetName"u8);
                 writer.WriteStringValue(AvailabilitySetName);
             }
-            if (AccessControl != null)
+            if (Optional.IsDefined(AccessControl))
             {
                 if (AccessControl != null)
                 {
                     writer.WritePropertyName("accessControl"u8);
-                    writer.WriteObjectValue(AccessControl);
+                    writer.WriteObjectValue<StreamingEndpointAccessControl>(AccessControl, options);
                 }
                 else
                 {
                     writer.WriteNull("accessControl");
                 }
             }
-            if (MaxCacheAge.HasValue)
+            if (Optional.IsDefined(MaxCacheAge))
             {
                 if (MaxCacheAge != null)
                 {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("maxCacheAge");
                 }
             }
-            if (!(CustomHostNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomHostNames))
             {
                 writer.WritePropertyName("customHostNames"u8);
                 writer.WriteStartArray();
@@ -117,59 +117,59 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && HostName != null)
+            if (options.Format != "W" && Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (IsCdnEnabled.HasValue)
+            if (Optional.IsDefined(IsCdnEnabled))
             {
                 writer.WritePropertyName("cdnEnabled"u8);
                 writer.WriteBooleanValue(IsCdnEnabled.Value);
             }
-            if (CdnProvider != null)
+            if (Optional.IsDefined(CdnProvider))
             {
                 writer.WritePropertyName("cdnProvider"u8);
                 writer.WriteStringValue(CdnProvider);
             }
-            if (CdnProfile != null)
+            if (Optional.IsDefined(CdnProfile))
             {
                 writer.WritePropertyName("cdnProfile"u8);
                 writer.WriteStringValue(CdnProfile);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (CrossSiteAccessPolicies != null)
+            if (Optional.IsDefined(CrossSiteAccessPolicies))
             {
                 if (CrossSiteAccessPolicies != null)
                 {
                     writer.WritePropertyName("crossSiteAccessPolicies"u8);
-                    writer.WriteObjectValue(CrossSiteAccessPolicies);
+                    writer.WriteObjectValue<CrossSiteAccessPolicies>(CrossSiteAccessPolicies, options);
                 }
                 else
                 {
                     writer.WriteNull("crossSiteAccessPolicies");
                 }
             }
-            if (options.Format != "W" && FreeTrialEndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FreeTrialEndOn))
             {
                 writer.WritePropertyName("freeTrialEndTime"u8);
                 writer.WriteStringValue(FreeTrialEndOn.Value, "O");
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Media
             DateTimeOffset? created = default;
             DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -434,10 +434,10 @@ namespace Azure.ResourceManager.Media
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StreamingEndpointData(
                 id,
                 name,
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Media
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Media
                         return DeserializeStreamingEndpointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support reading '{options.Format}' format.");
             }
         }
 

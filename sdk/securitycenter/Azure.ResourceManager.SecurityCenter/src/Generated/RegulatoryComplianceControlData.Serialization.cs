@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<RegulatoryComplianceControlData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegulatoryComplianceControlData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegulatoryComplianceControlData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && PassedAssessments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PassedAssessments))
             {
                 writer.WritePropertyName("passedAssessments"u8);
                 writer.WriteNumberValue(PassedAssessments.Value);
             }
-            if (options.Format != "W" && FailedAssessments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedAssessments))
             {
                 writer.WritePropertyName("failedAssessments"u8);
                 writer.WriteNumberValue(FailedAssessments.Value);
             }
-            if (options.Format != "W" && SkippedAssessments.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SkippedAssessments))
             {
                 writer.WritePropertyName("skippedAssessments"u8);
                 writer.WriteNumberValue(SkippedAssessments.Value);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<RegulatoryComplianceControlData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegulatoryComplianceControlData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegulatoryComplianceControlData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter
             int? failedAssessments = default;
             int? skippedAssessments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -206,10 +206,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RegulatoryComplianceControlData(
                 id,
                 name,
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegulatoryComplianceControlData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegulatoryComplianceControlData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeRegulatoryComplianceControlData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegulatoryComplianceControlData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegulatoryComplianceControlData)} does not support reading '{options.Format}' format.");
             }
         }
 

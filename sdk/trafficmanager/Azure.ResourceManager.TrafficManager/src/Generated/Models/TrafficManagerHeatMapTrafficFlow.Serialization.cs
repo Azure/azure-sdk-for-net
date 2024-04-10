@@ -23,32 +23,32 @@ namespace Azure.ResourceManager.TrafficManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerHeatMapTrafficFlow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceIP != null)
+            if (Optional.IsDefined(SourceIP))
             {
                 writer.WritePropertyName("sourceIp"u8);
                 writer.WriteStringValue(SourceIP.ToString());
             }
-            if (Latitude.HasValue)
+            if (Optional.IsDefined(Latitude))
             {
                 writer.WritePropertyName("latitude"u8);
                 writer.WriteNumberValue(Latitude.Value);
             }
-            if (Longitude.HasValue)
+            if (Optional.IsDefined(Longitude))
             {
                 writer.WritePropertyName("longitude"u8);
                 writer.WriteNumberValue(Longitude.Value);
             }
-            if (!(QueryExperiences is ChangeTrackingList<TrafficManagerHeatMapQueryExperience> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(QueryExperiences))
             {
                 writer.WritePropertyName("queryExperiences"u8);
                 writer.WriteStartArray();
                 foreach (var item in QueryExperiences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrafficManagerHeatMapQueryExperience>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerHeatMapTrafficFlow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             double? longitude = default;
             IList<TrafficManagerHeatMapQueryExperience> queryExperiences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceIp"u8))
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TrafficManagerHeatMapTrafficFlow(sourceIP, latitude, longitude, queryExperiences ?? new ChangeTrackingList<TrafficManagerHeatMapQueryExperience>(), serializedAdditionalRawData);
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                         return DeserializeTrafficManagerHeatMapTrafficFlow(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerHeatMapTrafficFlow)} does not support reading '{options.Format}' format.");
             }
         }
 

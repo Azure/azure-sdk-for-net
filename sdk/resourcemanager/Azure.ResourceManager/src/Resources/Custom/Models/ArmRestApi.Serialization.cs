@@ -6,7 +6,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -73,12 +72,12 @@ namespace Azure.ResourceManager.Resources.Models
         {
             options ??= new ModelReaderWriterOptions("W");
 
-            Optional<string> origin = default;
-            Optional<string> name = default;
-            Optional<string> operation = default;
-            Optional<string> resource = default;
-            Optional<string> description = default;
-            Optional<string> provider = default;
+            string origin = default;
+            string name = default;
+            string operation = default;
+            string resource = default;
+            string description = default;
+            string provider = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("origin"))
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ArmRestApi(origin.Value, name.Value, operation.Value, resource.Value, description.Value, provider.Value);
+            return new ArmRestApi(origin, name, operation, resource, description, provider);
         }
 
         BinaryData IPersistableModel<ArmRestApi>.Write(ModelReaderWriterOptions options)

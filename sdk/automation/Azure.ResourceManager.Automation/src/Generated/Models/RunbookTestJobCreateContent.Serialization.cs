@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunbookTestJobCreateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunbookTestJobCreateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunbookTestJobCreateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (RunOn != null)
+            if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunbookTestJobCreateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunbookTestJobCreateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunbookTestJobCreateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Automation.Models
             IDictionary<string, string> parameters = default;
             string runOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RunbookTestJobCreateContent(parameters ?? new ChangeTrackingDictionary<string, string>(), runOn, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunbookTestJobCreateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunbookTestJobCreateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeRunbookTestJobCreateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunbookTestJobCreateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunbookTestJobCreateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

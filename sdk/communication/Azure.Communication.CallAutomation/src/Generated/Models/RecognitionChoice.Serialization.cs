@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Tone.HasValue)
+            if (Optional.IsDefined(Tone))
             {
                 writer.WritePropertyName("tone"u8);
                 writer.WriteStringValue(Tone.Value.ToString());
@@ -70,6 +70,22 @@ namespace Azure.Communication.CallAutomation
                 }
             }
             return new RecognitionChoice(label, phrases, tone);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RecognitionChoice FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRecognitionChoice(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RecognitionChoice>(this);
+            return content;
         }
     }
 }

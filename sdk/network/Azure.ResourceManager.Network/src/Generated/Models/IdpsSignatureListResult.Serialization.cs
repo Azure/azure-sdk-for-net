@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdpsSignatureListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdpsSignatureListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdpsSignatureListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MatchingRecordsCount.HasValue)
+            if (Optional.IsDefined(MatchingRecordsCount))
             {
                 writer.WritePropertyName("matchingRecordsCount"u8);
                 writer.WriteNumberValue(MatchingRecordsCount.Value);
             }
-            if (!(Signatures is ChangeTrackingList<IdpsSignatureResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Signatures))
             {
                 writer.WritePropertyName("signatures"u8);
                 writer.WriteStartArray();
                 foreach (var item in Signatures)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IdpsSignatureResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdpsSignatureListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdpsSignatureListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdpsSignatureListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
             long? matchingRecordsCount = default;
             IReadOnlyList<IdpsSignatureResult> signatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("matchingRecordsCount"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IdpsSignatureListResult(matchingRecordsCount, signatures ?? new ChangeTrackingList<IdpsSignatureResult>(), serializedAdditionalRawData);
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IdpsSignatureListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdpsSignatureListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeIdpsSignatureListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdpsSignatureListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdpsSignatureListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<AS2ValidationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(CheckCertificateRevocationListOnReceive);
             writer.WritePropertyName("encryptionAlgorithm"u8);
             writer.WriteStringValue(EncryptionAlgorithm.ToString());
-            if (SigningAlgorithm.HasValue)
+            if (Optional.IsDefined(SigningAlgorithm))
             {
                 writer.WritePropertyName("signingAlgorithm"u8);
                 writer.WriteStringValue(SigningAlgorithm.Value.ToString());
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<AS2ValidationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Logic.Models
             AS2EncryptionAlgorithm encryptionAlgorithm = default;
             AS2SigningAlgorithm? signingAlgorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("overrideMessageProperties"u8))
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AS2ValidationSettings(
                 overrideMessageProperties,
                 encryptMessage,
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeAS2ValidationSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AS2ValidationSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

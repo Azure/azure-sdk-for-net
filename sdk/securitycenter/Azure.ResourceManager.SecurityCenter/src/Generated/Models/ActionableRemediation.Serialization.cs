@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActionableRemediation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionableRemediation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionableRemediation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (!(CategoryConfigurations is ChangeTrackingList<CategoryConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CategoryConfigurations))
             {
                 writer.WritePropertyName("categoryConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in CategoryConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CategoryConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (BranchConfiguration != null)
+            if (Optional.IsDefined(BranchConfiguration))
             {
                 writer.WritePropertyName("branchConfiguration"u8);
-                writer.WriteObjectValue(BranchConfiguration);
+                writer.WriteObjectValue<TargetBranchConfiguration>(BranchConfiguration, options);
             }
-            if (InheritFromParentState.HasValue)
+            if (Optional.IsDefined(InheritFromParentState))
             {
                 writer.WritePropertyName("inheritFromParentState"u8);
                 writer.WriteStringValue(InheritFromParentState.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActionableRemediation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionableRemediation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionableRemediation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             TargetBranchConfiguration branchConfiguration = default;
             InheritFromParentState? inheritFromParentState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ActionableRemediation(state, categoryConfigurations ?? new ChangeTrackingList<CategoryConfiguration>(), branchConfiguration, inheritFromParentState, serializedAdditionalRawData);
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActionableRemediation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionableRemediation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeActionableRemediation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionableRemediation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionableRemediation)} does not support reading '{options.Format}' format.");
             }
         }
 

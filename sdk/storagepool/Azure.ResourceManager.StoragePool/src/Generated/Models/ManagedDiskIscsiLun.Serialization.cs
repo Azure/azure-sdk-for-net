@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskIscsiLun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDiskIscsiLun)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDiskIscsiLun)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("managedDiskAzureResourceId"u8);
             writer.WriteStringValue(ManagedDiskAzureResourceId);
-            if (options.Format != "W" && Lun.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskIscsiLun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDiskIscsiLun)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDiskIscsiLun)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             ResourceIdentifier managedDiskAzureResourceId = default;
             int? lun = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedDiskIscsiLun(name, managedDiskAzureResourceId, lun, serializedAdditionalRawData);
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDiskIscsiLun)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDiskIscsiLun)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                         return DeserializeManagedDiskIscsiLun(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDiskIscsiLun)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDiskIscsiLun)} does not support reading '{options.Format}' format.");
             }
         }
 

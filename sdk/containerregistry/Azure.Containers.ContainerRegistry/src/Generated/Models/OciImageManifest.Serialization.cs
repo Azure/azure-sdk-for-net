@@ -19,27 +19,27 @@ namespace Azure.Containers.ContainerRegistry
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("config"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<OciDescriptor>(Configuration);
             }
-            if (!(Layers is ChangeTrackingList<OciDescriptor> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Layers))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OciDescriptor>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Annotations != null)
+            if (Optional.IsDefined(Annotations))
             {
                 if (Annotations != null)
                 {
                     writer.WritePropertyName("annotations"u8);
-                    writer.WriteObjectValue(Annotations);
+                    writer.WriteObjectValue<OciAnnotations>(Annotations);
                 }
                 else
                 {
@@ -105,12 +105,29 @@ namespace Azure.Containers.ContainerRegistry
             return new OciImageManifest(config, layers ?? new ChangeTrackingList<OciDescriptor>(), annotations, schemaVersion);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OciImageManifest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOciImageManifest(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<OciImageManifest>(this);
+            return content;
+        }
+
         internal partial class OciImageManifestConverter : JsonConverter<OciImageManifest>
         {
             public override void Write(Utf8JsonWriter writer, OciImageManifest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<OciImageManifest>(model);
             }
+
             public override OciImageManifest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -19,67 +19,67 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Recursive != null)
+            if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-                writer.WriteObjectValue(Recursive);
+                writer.WriteObjectValue<object>(Recursive);
             }
-            if (WildcardFolderPath != null)
+            if (Optional.IsDefined(WildcardFolderPath))
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
-                writer.WriteObjectValue(WildcardFolderPath);
+                writer.WriteObjectValue<object>(WildcardFolderPath);
             }
-            if (WildcardFileName != null)
+            if (Optional.IsDefined(WildcardFileName))
             {
                 writer.WritePropertyName("wildcardFileName"u8);
-                writer.WriteObjectValue(WildcardFileName);
+                writer.WriteObjectValue<object>(WildcardFileName);
             }
-            if (Prefix != null)
+            if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
-                writer.WriteObjectValue(Prefix);
+                writer.WriteObjectValue<object>(Prefix);
             }
-            if (FileListPath != null)
+            if (Optional.IsDefined(FileListPath))
             {
                 writer.WritePropertyName("fileListPath"u8);
-                writer.WriteObjectValue(FileListPath);
+                writer.WriteObjectValue<object>(FileListPath);
             }
-            if (EnablePartitionDiscovery != null)
+            if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
-                writer.WriteObjectValue(EnablePartitionDiscovery);
+                writer.WriteObjectValue<object>(EnablePartitionDiscovery);
             }
-            if (PartitionRootPath != null)
+            if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath"u8);
-                writer.WriteObjectValue(PartitionRootPath);
+                writer.WriteObjectValue<object>(PartitionRootPath);
             }
-            if (DeleteFilesAfterCompletion != null)
+            if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
-                writer.WriteObjectValue(DeleteFilesAfterCompletion);
+                writer.WriteObjectValue<object>(DeleteFilesAfterCompletion);
             }
-            if (ModifiedDatetimeStart != null)
+            if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
-                writer.WriteObjectValue(ModifiedDatetimeStart);
+                writer.WriteObjectValue<object>(ModifiedDatetimeStart);
             }
-            if (ModifiedDatetimeEnd != null)
+            if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
-                writer.WriteObjectValue(ModifiedDatetimeEnd);
+                writer.WriteObjectValue<object>(ModifiedDatetimeEnd);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -229,12 +229,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 modifiedDatetimeEnd);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GoogleCloudStorageReadSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGoogleCloudStorageReadSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<GoogleCloudStorageReadSettings>(this);
+            return content;
+        }
+
         internal partial class GoogleCloudStorageReadSettingsConverter : JsonConverter<GoogleCloudStorageReadSettings>
         {
             public override void Write(Utf8JsonWriter writer, GoogleCloudStorageReadSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<GoogleCloudStorageReadSettings>(model);
             }
+
             public override GoogleCloudStorageReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

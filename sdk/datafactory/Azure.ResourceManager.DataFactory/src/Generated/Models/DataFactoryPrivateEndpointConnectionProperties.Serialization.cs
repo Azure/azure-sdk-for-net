@@ -23,24 +23,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryPrivateEndpointConnectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryPrivateEndpointConnectionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (PrivateEndpoint != null)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (PrivateLinkServiceConnectionState != null)
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WriteObjectValue<PrivateLinkConnectionState>(PrivateLinkServiceConnectionState, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryPrivateEndpointConnectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryPrivateEndpointConnectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             SubResource privateEndpoint = default;
             PrivateLinkConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataFactoryPrivateEndpointConnectionProperties(provisioningState, privateEndpoint, privateLinkServiceConnectionState, serializedAdditionalRawData);
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryPrivateEndpointConnectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryPrivateEndpointConnectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryPrivateEndpointConnectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryPrivateEndpointConnectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryPrivateEndpointConnectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

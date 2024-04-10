@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoPoolNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoPoolNameAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoPoolNameAvailabilityResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsNameAvailable.HasValue)
+            if (Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(IsNameAvailable.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Reason.HasValue)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoPoolNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoPoolNameAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoPoolNameAvailabilityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
             string message = default;
             KustoPoolNameUnavailableReason? reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nameAvailable"u8))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KustoPoolNameAvailabilityResult(nameAvailable, name, message, reason, serializedAdditionalRawData);
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoPoolNameAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoPoolNameAvailabilityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeKustoPoolNameAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoPoolNameAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoPoolNameAvailabilityResult)} does not support reading '{options.Format}' format.");
             }
         }
 

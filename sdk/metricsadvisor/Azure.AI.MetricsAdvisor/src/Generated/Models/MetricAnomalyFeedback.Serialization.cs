@@ -22,8 +22,8 @@ namespace Azure.AI.MetricsAdvisor
             writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndsOn, "O");
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(ValueInternal);
-            if (DetectionConfigurationId != null)
+            writer.WriteObjectValue<AnomalyFeedbackValue>(ValueInternal);
+            if (Optional.IsDefined(DetectionConfigurationId))
             {
                 if (DetectionConfigurationId != null)
                 {
@@ -35,12 +35,12 @@ namespace Azure.AI.MetricsAdvisor
                     writer.WriteNull("anomalyDetectionConfigurationId");
                 }
             }
-            if (DetectionConfigurationSnapshot != null)
+            if (Optional.IsDefined(DetectionConfigurationSnapshot))
             {
                 if (DetectionConfigurationSnapshot != null)
                 {
                     writer.WritePropertyName("anomalyDetectionConfigurationSnapshot"u8);
-                    writer.WriteObjectValue(DetectionConfigurationSnapshot);
+                    writer.WriteObjectValue<AnomalyDetectionConfiguration>(DetectionConfigurationSnapshot);
                 }
                 else
                 {
@@ -52,7 +52,7 @@ namespace Azure.AI.MetricsAdvisor
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter"u8);
-            writer.WriteObjectValue(DimensionFilter);
+            writer.WriteObjectValue<FeedbackFilter>(DimensionFilter);
             writer.WriteEndObject();
         }
 
@@ -157,6 +157,22 @@ namespace Azure.AI.MetricsAdvisor
                 value,
                 anomalyDetectionConfigurationId,
                 anomalyDetectionConfigurationSnapshot);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MetricAnomalyFeedback FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricAnomalyFeedback(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MetricAnomalyFeedback>(this);
+            return content;
         }
     }
 }

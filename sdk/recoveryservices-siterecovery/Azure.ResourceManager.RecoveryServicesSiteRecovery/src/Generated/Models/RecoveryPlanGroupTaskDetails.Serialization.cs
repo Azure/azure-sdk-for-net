@@ -22,34 +22,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPlanGroupTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPlanGroupTaskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (RpGroupType != null)
+            if (Optional.IsDefined(RpGroupType))
             {
                 writer.WritePropertyName("rpGroupType"u8);
                 writer.WriteStringValue(RpGroupType);
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (!(ChildTasks is ChangeTrackingList<AsrTask> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ChildTasks))
             {
                 writer.WritePropertyName("childTasks"u8);
                 writer.WriteStartArray();
                 foreach (var item in ChildTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AsrTask>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPlanGroupTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPlanGroupTaskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string instanceType = "RecoveryPlanGroupTaskDetails";
             IReadOnlyList<AsrTask> childTasks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RecoveryPlanGroupTaskDetails(
                 instanceType,
                 childTasks ?? new ChangeTrackingList<AsrTask>(),
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanGroupTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPlanGroupTaskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeRecoveryPlanGroupTaskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanGroupTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPlanGroupTaskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

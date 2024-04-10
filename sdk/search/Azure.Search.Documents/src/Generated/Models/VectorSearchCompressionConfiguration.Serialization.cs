@@ -20,12 +20,12 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (RerankWithOriginalVectors.HasValue)
+            if (Optional.IsDefined(RerankWithOriginalVectors))
             {
                 writer.WritePropertyName("rerankWithOriginalVectors"u8);
                 writer.WriteBooleanValue(RerankWithOriginalVectors.Value);
             }
-            if (DefaultOversampling.HasValue)
+            if (Optional.IsDefined(DefaultOversampling))
             {
                 if (DefaultOversampling != null)
                 {
@@ -54,6 +54,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return UnknownVectorSearchCompressionConfiguration.DeserializeUnknownVectorSearchCompressionConfiguration(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VectorSearchCompressionConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVectorSearchCompressionConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<VectorSearchCompressionConfiguration>(this);
+            return content;
         }
     }
 }

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesStorageProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(DataDisks is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDisks))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
@@ -37,17 +37,17 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ImageReference != null)
+            if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
                 JsonSerializer.Serialize(writer, ImageReference);
             }
-            if (OSDisk != null)
+            if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OSDisk);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesStorageProfileOSDisk>(OSDisk, options);
             }
-            if (VmConfigStoragePathId != null)
+            if (Optional.IsDefined(VmConfigStoragePathId))
             {
                 writer.WritePropertyName("vmConfigStoragePathId"u8);
                 writer.WriteStringValue(VmConfigStoragePathId);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesStorageProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
             VirtualMachineInstancePropertiesStorageProfileOSDisk osDisk = default;
             ResourceIdentifier vmConfigStoragePathId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataDisks"u8))
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineInstancePropertiesStorageProfile(dataDisks ?? new ChangeTrackingList<WritableSubResource>(), imageReference, osDisk, vmConfigStoragePathId, serializedAdditionalRawData);
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesStorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeVirtualMachineInstancePropertiesStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesStorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PostgreSql.FlexibleServers;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
@@ -137,10 +134,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityAsync(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckPostgreSqlFlexibleServerNameAvailability");
             scope.Start();
@@ -178,10 +172,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailability(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = CheckNameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckPostgreSqlFlexibleServerNameAvailability");
             scope.Start();
@@ -220,10 +211,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = CheckNameAvailabilityWithLocationClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation");
             scope.Start();
@@ -262,10 +250,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = CheckNameAvailabilityWithLocationClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation");
             scope.Start();
@@ -364,10 +349,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
         public virtual async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteVirtualNetworkSubnetUsageAsync(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
-            if (postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter == null)
-            {
-                throw new ArgumentNullException(nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
-            }
+            Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
             using var scope = VirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.ExecuteVirtualNetworkSubnetUsage");
             scope.Start();
@@ -406,10 +388,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
         public virtual Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteVirtualNetworkSubnetUsage(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
-            if (postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter == null)
-            {
-                throw new ArgumentNullException(nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
-            }
+            Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
             using var scope = VirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.ExecuteVirtualNetworkSubnetUsage");
             scope.Start();

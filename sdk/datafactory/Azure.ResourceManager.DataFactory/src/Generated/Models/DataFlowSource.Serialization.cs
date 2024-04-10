@@ -23,36 +23,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFlowSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFlowSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFlowSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SchemaLinkedService != null)
+            if (Optional.IsDefined(SchemaLinkedService))
             {
                 writer.WritePropertyName("schemaLinkedService"u8);
                 JsonSerializer.Serialize(writer, SchemaLinkedService);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Dataset != null)
+            if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
-                writer.WriteObjectValue(Dataset);
+                writer.WriteObjectValue<DatasetReference>(Dataset, options);
             }
-            if (LinkedService != null)
+            if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 JsonSerializer.Serialize(writer, LinkedService);
             }
-            if (Flowlet != null)
+            if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
-                writer.WriteObjectValue(Flowlet);
+                writer.WriteObjectValue<DataFlowReference>(Flowlet, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFlowSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFlowSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFlowSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryLinkedServiceReference linkedService = default;
             DataFlowReference flowlet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaLinkedService"u8))
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataFlowSource(
                 name,
                 description,
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFlowSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFlowSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFlowSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFlowSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFlowSource)} does not support reading '{options.Format}' format.");
             }
         }
 

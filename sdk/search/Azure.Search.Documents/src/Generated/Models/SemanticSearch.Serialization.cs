@@ -16,18 +16,18 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DefaultConfigurationName != null)
+            if (Optional.IsDefined(DefaultConfigurationName))
             {
                 writer.WritePropertyName("defaultConfiguration"u8);
                 writer.WriteStringValue(DefaultConfigurationName);
             }
-            if (!(Configurations is ChangeTrackingList<SemanticConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Configurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SemanticConfiguration>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -65,6 +65,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new SemanticSearch(defaultConfiguration, configurations ?? new ChangeTrackingList<SemanticConfiguration>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SemanticSearch FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSemanticSearch(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SemanticSearch>(this);
+            return content;
         }
     }
 }

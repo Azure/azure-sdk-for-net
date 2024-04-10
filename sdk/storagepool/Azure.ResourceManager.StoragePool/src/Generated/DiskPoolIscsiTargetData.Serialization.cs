@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.StoragePool
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ManagedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (options.Format != "W" && !(ManagedByExtended is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ManagedByExtended))
             {
                 writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StoragePool
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -67,23 +67,23 @@ namespace Azure.ResourceManager.StoragePool
             writer.WriteStartObject();
             writer.WritePropertyName("aclMode"u8);
             writer.WriteStringValue(AclMode.ToString());
-            if (!(StaticAcls is ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StaticAcls))
             {
                 writer.WritePropertyName("staticAcls"u8);
                 writer.WriteStartArray();
                 foreach (var item in StaticAcls)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiskPoolIscsiTargetPortalGroupAcl>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Luns is ChangeTrackingList<ManagedDiskIscsiLun> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Luns))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Luns)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedDiskIscsiLun>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StoragePool
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (!(Endpoints is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 writer.WriteEndArray();
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (options.Format != "W" && !(Sessions is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Sessions))
             {
                 writer.WritePropertyName("sessions"u8);
                 writer.WriteStartArray();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.StoragePool
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.StoragePool
             int? port = default;
             IReadOnlyList<string> sessions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -321,10 +321,10 @@ namespace Azure.ResourceManager.StoragePool
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DiskPoolIscsiTargetData(
                 id,
                 name,
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.StoragePool
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.StoragePool
                         return DeserializeDiskPoolIscsiTargetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskPoolIscsiTargetData)} does not support reading '{options.Format}' format.");
             }
         }
 

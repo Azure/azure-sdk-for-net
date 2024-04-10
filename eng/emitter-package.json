@@ -1,15 +1,15 @@
 {
   "main": "dist/src/index.js",
   "dependencies": {
-    "@azure-tools/typespec-csharp": "0.2.0-beta.20240228.3"
+    "@azure-tools/typespec-csharp": "0.2.0-beta.20240408.3"
   },
   "devDependencies": {
-    "@typespec/versioning": "0.53.0",
-    "@typespec/http": "0.53.0",
-    "@typespec/rest": "0.53.0",
-    "@azure-tools/typespec-azure-core": "0.39.1",
-    "@typespec/compiler": "0.53.1",
-    "@azure-tools/typespec-client-generator-core": "0.39.1",
-    "@typespec/openapi": "0.53.0"
+    "@typespec/rest": "0.54.0",
+    "@typespec/compiler": "0.54.0",
+    "@azure-tools/typespec-client-generator-core": "0.40.0",
+    "@typespec/http": "0.54.0",
+    "@typespec/openapi": "0.54.0",
+    "@azure-tools/typespec-azure-core": "0.40.0",
+    "@typespec/versioning": "0.54.0"
   }
 }

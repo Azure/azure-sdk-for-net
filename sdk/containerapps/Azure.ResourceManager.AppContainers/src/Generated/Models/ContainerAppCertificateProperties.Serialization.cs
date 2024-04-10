@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (options.Format != "W" && SubjectName != null)
+            if (options.Format != "W" && Optional.IsDefined(SubjectName))
             {
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);
             }
-            if (options.Format != "W" && !(SubjectAlternativeNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SubjectAlternativeNames))
             {
                 writer.WritePropertyName("subjectAlternativeNames"u8);
                 writer.WriteStartArray();
@@ -51,37 +51,37 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteBase64StringValue(Value, "D");
             }
-            if (options.Format != "W" && Issuer != null)
+            if (options.Format != "W" && Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (options.Format != "W" && IssueOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IssueOn))
             {
                 writer.WritePropertyName("issueDate"u8);
                 writer.WriteStringValue(IssueOn.Value, "O");
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Thumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && IsValid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsValid))
             {
                 writer.WritePropertyName("valid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (options.Format != "W" && PublicKeyHash != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicKeyHash))
             {
                 writer.WritePropertyName("publicKeyHash"u8);
                 writer.WriteStringValue(PublicKeyHash);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             bool? valid = default;
             string publicKeyHash = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppCertificateProperties(
                 provisioningState,
                 password,
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppCertificateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCertificateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

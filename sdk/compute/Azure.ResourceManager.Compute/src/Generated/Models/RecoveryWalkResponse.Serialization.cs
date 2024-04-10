@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryWalkResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && WalkPerformed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WalkPerformed))
             {
                 writer.WritePropertyName("walkPerformed"u8);
                 writer.WriteBooleanValue(WalkPerformed.Value);
             }
-            if (options.Format != "W" && NextPlatformUpdateDomain.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NextPlatformUpdateDomain))
             {
                 writer.WritePropertyName("nextPlatformUpdateDomain"u8);
                 writer.WriteNumberValue(NextPlatformUpdateDomain.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryWalkResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? walkPerformed = default;
             int? nextPlatformUpdateDomain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("walkPerformed"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RecoveryWalkResponse(walkPerformed, nextPlatformUpdateDomain, serializedAdditionalRawData);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRecoveryWalkResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryWalkResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

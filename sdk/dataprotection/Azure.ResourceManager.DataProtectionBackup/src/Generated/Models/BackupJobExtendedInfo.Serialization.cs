@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupJobExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupJobExtendedInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(AdditionalDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalDetails))
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStartObject();
@@ -37,48 +37,48 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && BackupInstanceState != null)
+            if (options.Format != "W" && Optional.IsDefined(BackupInstanceState))
             {
                 writer.WritePropertyName("backupInstanceState"u8);
                 writer.WriteStringValue(BackupInstanceState);
             }
-            if (options.Format != "W" && DataTransferredInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataTransferredInBytes))
             {
                 writer.WritePropertyName("dataTransferredInBytes"u8);
                 writer.WriteNumberValue(DataTransferredInBytes.Value);
             }
-            if (options.Format != "W" && RecoveryDestination != null)
+            if (options.Format != "W" && Optional.IsDefined(RecoveryDestination))
             {
                 writer.WritePropertyName("recoveryDestination"u8);
                 writer.WriteStringValue(RecoveryDestination);
             }
-            if (options.Format != "W" && SourceRecoverPoint != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceRecoverPoint))
             {
                 writer.WritePropertyName("sourceRecoverPoint"u8);
-                writer.WriteObjectValue(SourceRecoverPoint);
+                writer.WriteObjectValue<RestoreJobRecoveryPointDetails>(SourceRecoverPoint, options);
             }
-            if (options.Format != "W" && !(SubTasks is ChangeTrackingList<BackupJobSubTask> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SubTasks))
             {
                 writer.WritePropertyName("subTasks"u8);
                 writer.WriteStartArray();
                 foreach (var item in SubTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BackupJobSubTask>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && TargetRecoverPoint != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetRecoverPoint))
             {
                 writer.WritePropertyName("targetRecoverPoint"u8);
-                writer.WriteObjectValue(TargetRecoverPoint);
+                writer.WriteObjectValue<RestoreJobRecoveryPointDetails>(TargetRecoverPoint, options);
             }
-            if (options.Format != "W" && !(WarningDetails is ChangeTrackingList<UserFacingWarningDetail> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(WarningDetails))
             {
                 writer.WritePropertyName("warningDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in WarningDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserFacingWarningDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupJobExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupJobExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupJobExtendedInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RestoreJobRecoveryPointDetails targetRecoverPoint = default;
             IReadOnlyList<UserFacingWarningDetail> warningDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("additionalDetails"u8))
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackupJobExtendedInfo(
                 additionalDetails ?? new ChangeTrackingDictionary<string, string>(),
                 backupInstanceState,
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupJobExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupJobExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupJobExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupJobExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupJobExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

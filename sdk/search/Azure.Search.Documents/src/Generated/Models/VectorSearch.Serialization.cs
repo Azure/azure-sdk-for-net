@@ -16,43 +16,43 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Profiles is ChangeTrackingList<VectorSearchProfile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Profiles))
             {
                 writer.WritePropertyName("profiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in Profiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VectorSearchProfile>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Algorithms is ChangeTrackingList<VectorSearchAlgorithmConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Algorithms))
             {
                 writer.WritePropertyName("algorithms"u8);
                 writer.WriteStartArray();
                 foreach (var item in Algorithms)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VectorSearchAlgorithmConfiguration>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Vectorizers is ChangeTrackingList<VectorSearchVectorizer> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Vectorizers))
             {
                 writer.WritePropertyName("vectorizers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Vectorizers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VectorSearchVectorizer>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Compressions is ChangeTrackingList<VectorSearchCompressionConfiguration> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Compressions))
             {
                 writer.WritePropertyName("compressions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Compressions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VectorSearchCompressionConfiguration>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -129,6 +129,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new VectorSearch(profiles ?? new ChangeTrackingList<VectorSearchProfile>(), algorithms ?? new ChangeTrackingList<VectorSearchAlgorithmConfiguration>(), vectorizers ?? new ChangeTrackingList<VectorSearchVectorizer>(), compressions ?? new ChangeTrackingList<VectorSearchCompressionConfiguration>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VectorSearch FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVectorSearch(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<VectorSearch>(this);
+            return content;
         }
     }
 }

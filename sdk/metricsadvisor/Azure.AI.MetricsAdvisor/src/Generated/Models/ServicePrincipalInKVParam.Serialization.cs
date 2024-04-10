@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(KeyVaultEndpoint);
             writer.WritePropertyName("keyVaultClientId"u8);
             writer.WriteStringValue(KeyVaultClientId);
-            if (KeyVaultClientSecret != null)
+            if (Optional.IsDefined(KeyVaultClientSecret))
             {
                 writer.WritePropertyName("keyVaultClientSecret"u8);
                 writer.WriteStringValue(KeyVaultClientSecret);
@@ -85,6 +85,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 servicePrincipalIdNameInKV,
                 servicePrincipalSecretNameInKV,
                 tenantId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ServicePrincipalInKVParam FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeServicePrincipalInKVParam(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ServicePrincipalInKVParam>(this);
+            return content;
         }
     }
 }

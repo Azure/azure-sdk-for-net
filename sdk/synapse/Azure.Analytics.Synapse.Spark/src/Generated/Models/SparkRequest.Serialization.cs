@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -187,6 +186,14 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 executorMemory,
                 executorCores,
                 numExecutors);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkRequest(document.RootElement);
         }
     }
 }

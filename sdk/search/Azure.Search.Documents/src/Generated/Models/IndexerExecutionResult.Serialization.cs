@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -136,6 +135,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 itemsFailed,
                 initialTrackingState,
                 finalTrackingState);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IndexerExecutionResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIndexerExecutionResult(document.RootElement);
         }
     }
 }

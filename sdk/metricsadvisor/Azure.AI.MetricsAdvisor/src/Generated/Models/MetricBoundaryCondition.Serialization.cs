@@ -15,29 +15,29 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LowerBound.HasValue)
+            if (Optional.IsDefined(LowerBound))
             {
                 writer.WritePropertyName("lower"u8);
                 writer.WriteNumberValue(LowerBound.Value);
             }
-            if (UpperBound.HasValue)
+            if (Optional.IsDefined(UpperBound))
             {
                 writer.WritePropertyName("upper"u8);
                 writer.WriteNumberValue(UpperBound.Value);
             }
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
-            if (MeasureType.HasValue)
+            if (Optional.IsDefined(MeasureType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(MeasureType.Value.ToString());
             }
-            if (CompanionMetricId != null)
+            if (Optional.IsDefined(CompanionMetricId))
             {
                 writer.WritePropertyName("metricId"u8);
                 writer.WriteStringValue(CompanionMetricId);
             }
-            if (ShouldAlertIfDataPointMissing.HasValue)
+            if (Optional.IsDefined(ShouldAlertIfDataPointMissing))
             {
                 writer.WritePropertyName("triggerForMissing"u8);
                 writer.WriteBooleanValue(ShouldAlertIfDataPointMissing.Value);
@@ -113,6 +113,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 type,
                 metricId,
                 triggerForMissing);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricBoundaryCondition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricBoundaryCondition(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MetricBoundaryCondition>(this);
+            return content;
         }
     }
 }

@@ -15,12 +15,20 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureSQLConnectionStringParamPatch>(this);
+            return content;
         }
     }
 }

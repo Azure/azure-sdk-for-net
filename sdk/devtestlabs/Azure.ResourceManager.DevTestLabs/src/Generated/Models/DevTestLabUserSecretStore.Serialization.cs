@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabUserSecretStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabUserSecretStore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabUserSecretStore)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (KeyVaultUri != null)
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (KeyVaultId != null)
+            if (Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabUserSecretStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabUserSecretStore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabUserSecretStore)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Uri keyVaultUri = default;
             ResourceIdentifier keyVaultId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultUri"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevTestLabUserSecretStore(keyVaultUri, keyVaultId, serializedAdditionalRawData);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabUserSecretStore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabUserSecretStore)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabUserSecretStore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabUserSecretStore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabUserSecretStore)} does not support reading '{options.Format}' format.");
             }
         }
 

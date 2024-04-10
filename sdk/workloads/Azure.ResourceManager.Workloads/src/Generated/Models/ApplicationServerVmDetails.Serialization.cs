@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationServerVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationServerVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationServerVmDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VirtualMachineType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VirtualMachineType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(VirtualMachineType.Value.ToString());
             }
-            if (options.Format != "W" && VirtualMachineId != null)
+            if (options.Format != "W" && Optional.IsDefined(VirtualMachineId))
             {
                 writer.WritePropertyName("virtualMachineId"u8);
                 writer.WriteStringValue(VirtualMachineId);
             }
-            if (options.Format != "W" && !(StorageDetails is ChangeTrackingList<SubResource> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(StorageDetails))
             {
                 writer.WritePropertyName("storageDetails"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationServerVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationServerVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationServerVmDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Workloads.Models
             ResourceIdentifier virtualMachineId = default;
             IReadOnlyList<SubResource> storageDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationServerVmDetails(type, virtualMachineId, storageDetails ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationServerVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationServerVmDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeApplicationServerVmDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationServerVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationServerVmDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

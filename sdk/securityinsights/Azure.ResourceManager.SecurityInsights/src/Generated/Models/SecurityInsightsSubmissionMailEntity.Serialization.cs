@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsSubmissionMailEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsSubmissionMailEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsSubmissionMailEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -75,57 +75,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && NetworkMessageId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NetworkMessageId))
             {
                 writer.WritePropertyName("networkMessageId"u8);
                 writer.WriteStringValue(NetworkMessageId.Value);
             }
-            if (options.Format != "W" && SubmissionId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SubmissionId))
             {
                 writer.WritePropertyName("submissionId"u8);
                 writer.WriteStringValue(SubmissionId.Value);
             }
-            if (options.Format != "W" && Submitter != null)
+            if (options.Format != "W" && Optional.IsDefined(Submitter))
             {
                 writer.WritePropertyName("submitter"u8);
                 writer.WriteStringValue(Submitter);
             }
-            if (options.Format != "W" && SubmitOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SubmitOn))
             {
                 writer.WritePropertyName("submissionDate"u8);
                 writer.WriteStringValue(SubmitOn.Value, "O");
             }
-            if (options.Format != "W" && MessageReceivedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MessageReceivedOn))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(MessageReceivedOn.Value, "O");
             }
-            if (options.Format != "W" && Recipient != null)
+            if (options.Format != "W" && Optional.IsDefined(Recipient))
             {
                 writer.WritePropertyName("recipient"u8);
                 writer.WriteStringValue(Recipient);
             }
-            if (options.Format != "W" && Sender != null)
+            if (options.Format != "W" && Optional.IsDefined(Sender))
             {
                 writer.WritePropertyName("sender"u8);
                 writer.WriteStringValue(Sender);
             }
-            if (options.Format != "W" && SenderIP != null)
+            if (options.Format != "W" && Optional.IsDefined(SenderIP))
             {
                 writer.WritePropertyName("senderIp"u8);
                 writer.WriteStringValue(SenderIP.ToString());
             }
-            if (options.Format != "W" && Subject != null)
+            if (options.Format != "W" && Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && ReportType != null)
+            if (options.Format != "W" && Optional.IsDefined(ReportType))
             {
                 writer.WritePropertyName("reportType"u8);
                 writer.WriteStringValue(ReportType);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsSubmissionMailEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsSubmissionMailEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsSubmissionMailEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string subject = default;
             string reportType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -329,10 +329,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsSubmissionMailEntity(
                 id,
                 name,
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsSubmissionMailEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsSubmissionMailEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsSubmissionMailEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsSubmissionMailEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsSubmissionMailEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

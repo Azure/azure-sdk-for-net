@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeployerVmPackages>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeployerVmPackages)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeployerVmPackages)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PackageUri != null)
+            if (Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
-            if (StorageAccountId != null)
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeployerVmPackages>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeployerVmPackages)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeployerVmPackages)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Uri url = default;
             string storageAccountId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DeployerVmPackages(url, storageAccountId, serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeployerVmPackages)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeployerVmPackages)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeDeployerVmPackages(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeployerVmPackages)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeployerVmPackages)} does not support reading '{options.Format}' format.");
             }
         }
 

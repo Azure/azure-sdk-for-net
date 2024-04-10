@@ -22,48 +22,48 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<H265Video>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(H265Video)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(H265Video)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UseSceneChangeDetection.HasValue)
+            if (Optional.IsDefined(UseSceneChangeDetection))
             {
                 writer.WritePropertyName("sceneChangeDetection"u8);
                 writer.WriteBooleanValue(UseSceneChangeDetection.Value);
             }
-            if (Complexity.HasValue)
+            if (Optional.IsDefined(Complexity))
             {
                 writer.WritePropertyName("complexity"u8);
                 writer.WriteStringValue(Complexity.Value.ToString());
             }
-            if (!(Layers is ChangeTrackingList<H265Layer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Layers))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<H265Layer>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (KeyFrameInterval.HasValue)
+            if (Optional.IsDefined(KeyFrameInterval))
             {
                 writer.WritePropertyName("keyFrameInterval"u8);
                 writer.WriteStringValue(KeyFrameInterval.Value, "P");
             }
-            if (StretchMode.HasValue)
+            if (Optional.IsDefined(StretchMode))
             {
                 writer.WritePropertyName("stretchMode"u8);
                 writer.WriteStringValue(StretchMode.Value.ToString());
             }
-            if (SyncMode.HasValue)
+            if (Optional.IsDefined(SyncMode))
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<H265Video>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(H265Video)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(H265Video)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = default;
             string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sceneChangeDetection"u8))
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new H265Video(
                 odataType,
                 label,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(H265Video)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(H265Video)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeH265Video(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(H265Video)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(H265Video)} does not support reading '{options.Format}' format.");
             }
         }
 

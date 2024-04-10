@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterDiskEncryptionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterDiskEncryptionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterDiskEncryptionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VaultUri != null)
+            if (Optional.IsDefined(VaultUri))
             {
                 writer.WritePropertyName("vaultUri"u8);
                 writer.WriteStringValue(VaultUri.AbsoluteUri);
             }
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterDiskEncryptionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterDiskEncryptionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterDiskEncryptionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             string keyName = default;
             string keyVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vaultUri"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HDInsightClusterDiskEncryptionContent(vaultUri, keyName, keyVersion, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterDiskEncryptionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterDiskEncryptionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightClusterDiskEncryptionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterDiskEncryptionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterDiskEncryptionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,7 +15,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ApiVersion != null)
+            writer.WritePropertyName("methodName"u8);
+            writer.WriteStringValue(MethodName);
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
@@ -45,6 +47,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new PipelineTopologyListRequest(methodName, apiVersion);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PipelineTopologyListRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePipelineTopologyListRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PipelineTopologyListRequest>(this);
+            return content;
         }
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -13,5 +12,12 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class AnomalyAlertingConfigurationPatch : IUtf8JsonSerializable
     {
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AnomalyAlertingConfigurationPatch>(this);
+            return content;
+        }
     }
 }

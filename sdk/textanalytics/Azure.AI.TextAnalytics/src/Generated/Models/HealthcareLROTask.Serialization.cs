@@ -15,14 +15,14 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue<HealthcareTaskParameters>(Parameters);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (TaskName != null)
+            if (Optional.IsDefined(TaskName))
             {
                 writer.WritePropertyName("taskName"u8);
                 writer.WriteStringValue(TaskName);
@@ -62,6 +62,22 @@ namespace Azure.AI.TextAnalytics.Models
                 }
             }
             return new HealthcareLROTask(taskName, kind, parameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HealthcareLROTask FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareLROTask(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HealthcareLROTask>(this);
+            return content;
         }
     }
 }

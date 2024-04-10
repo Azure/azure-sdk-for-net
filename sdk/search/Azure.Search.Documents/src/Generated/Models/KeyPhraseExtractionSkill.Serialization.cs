@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DefaultLanguageCode.HasValue)
+            if (Optional.IsDefined(DefaultLanguageCode))
             {
                 if (DefaultLanguageCode != null)
                 {
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (MaxKeyPhraseCount.HasValue)
+            if (Optional.IsDefined(MaxKeyPhraseCount))
             {
                 if (MaxKeyPhraseCount != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxKeyPhraseCount");
                 }
             }
-            if (ModelVersion != null)
+            if (Optional.IsDefined(ModelVersion))
             {
                 if (ModelVersion != null)
                 {
@@ -54,17 +54,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -73,14 +73,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<InputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -184,6 +184,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 defaultLanguageCode,
                 maxKeyPhraseCount,
                 modelVersion);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new KeyPhraseExtractionSkill FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyPhraseExtractionSkill(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<KeyPhraseExtractionSkill>(this);
+            return content;
         }
     }
 }

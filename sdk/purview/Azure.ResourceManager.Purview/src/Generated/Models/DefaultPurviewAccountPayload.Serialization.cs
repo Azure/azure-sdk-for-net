@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Purview.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefaultPurviewAccountPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (ResourceGroupName != null)
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (ScopeTenantId.HasValue)
+            if (Optional.IsDefined(ScopeTenantId))
             {
                 writer.WritePropertyName("scopeTenantId"u8);
                 writer.WriteStringValue(ScopeTenantId.Value);
             }
-            if (ScopeType.HasValue)
+            if (Optional.IsDefined(ScopeType))
             {
                 writer.WritePropertyName("scopeType"u8);
                 writer.WriteStringValue(ScopeType.Value.ToString());
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Purview.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefaultPurviewAccountPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Purview.Models
             PurviewAccountScopeType? scopeType = default;
             string subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.Purview.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DefaultPurviewAccountPayload(
                 accountName,
                 resourceGroupName,
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Purview.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Purview.Models
                         return DeserializeDefaultPurviewAccountPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support reading '{options.Format}' format.");
             }
         }
 

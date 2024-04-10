@@ -23,23 +23,23 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<Subnet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Subnet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Subnet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (!(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IPAllocationMethod.HasValue)
+            if (Optional.IsDefined(IPAllocationMethod))
             {
                 writer.WritePropertyName("ipAllocationMethod"u8);
                 writer.WriteStringValue(IPAllocationMethod.Value.ToString());
             }
-            if (!(IPConfigurationReferences is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPConfigurationReferences))
             {
                 writer.WritePropertyName("ipConfigurationReferences"u8);
                 writer.WriteStartArray();
@@ -64,22 +64,22 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RouteTable != null)
+            if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable"u8);
-                writer.WriteObjectValue(RouteTable);
+                writer.WriteObjectValue<RouteTable>(RouteTable, options);
             }
-            if (!(IPPools is ChangeTrackingList<IPPool> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IPPools))
             {
                 writer.WritePropertyName("ipPools"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPPools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPPool>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Vlan.HasValue)
+            if (Optional.IsDefined(Vlan))
             {
                 writer.WritePropertyName("vlan"u8);
                 writer.WriteNumberValue(Vlan.Value);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<Subnet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Subnet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Subnet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
             IList<IPPool> ipPools = default;
             int? vlan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -228,10 +228,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new Subnet(
                 name,
                 addressPrefix,
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Subnet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Subnet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeSubnet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Subnet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Subnet)} does not support reading '{options.Format}' format.");
             }
         }
 

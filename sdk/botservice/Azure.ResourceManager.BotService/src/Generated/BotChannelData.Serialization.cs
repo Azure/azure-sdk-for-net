@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.BotService.Models;
 using Azure.ResourceManager.Models;
@@ -25,21 +24,21 @@ namespace Azure.ResourceManager.BotService
             var format = options.Format == "W" ? ((IPersistableModel<BotChannelData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotChannelData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotChannelData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<BotChannelProperties>(Properties, options);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<BotServiceSku>(Sku, options);
             }
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 if (Kind != null)
                 {
@@ -51,12 +50,12 @@ namespace Azure.ResourceManager.BotService
                     writer.WriteNull("kind");
                 }
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && !(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.BotService
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.BotService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.BotService
             var format = options.Format == "W" ? ((IPersistableModel<BotChannelData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotChannelData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotChannelData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.BotService
             ResourceType type = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -248,10 +247,10 @@ namespace Azure.ResourceManager.BotService
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BotChannelData(
                 id,
                 name,
@@ -276,7 +275,7 @@ namespace Azure.ResourceManager.BotService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotChannelData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotChannelData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -292,7 +291,7 @@ namespace Azure.ResourceManager.BotService
                         return DeserializeBotChannelData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotChannelData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotChannelData)} does not support reading '{options.Format}' format.");
             }
         }
 

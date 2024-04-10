@@ -22,61 +22,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupStatusResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProtectionStatus.HasValue)
+            if (Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
                 writer.WriteStringValue(ProtectionStatus.Value.ToString());
             }
-            if (VaultId != null)
+            if (Optional.IsDefined(VaultId))
             {
                 writer.WritePropertyName("vaultId"u8);
                 writer.WriteStringValue(VaultId);
             }
-            if (FabricName.HasValue)
+            if (Optional.IsDefined(FabricName))
             {
                 writer.WritePropertyName("fabricName"u8);
                 writer.WriteStringValue(FabricName.Value.ToString());
             }
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (ProtectedItemName != null)
+            if (Optional.IsDefined(ProtectedItemName))
             {
                 writer.WritePropertyName("protectedItemName"u8);
                 writer.WriteStringValue(ProtectedItemName);
             }
-            if (ErrorCode != null)
+            if (Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (PolicyName != null)
+            if (Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (RegistrationStatus != null)
+            if (Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (ProtectedItemsCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemsCount))
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
-            if (AcquireStorageAccountLock.HasValue)
+            if (Optional.IsDefined(AcquireStorageAccountLock))
             {
                 writer.WritePropertyName("acquireStorageAccountLock"u8);
                 writer.WriteStringValue(AcquireStorageAccountLock.Value.ToString());
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupStatusResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             int? protectedItemsCount = default;
             AcquireStorageAccountLock? acquireStorageAccountLock = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectionStatus"u8))
@@ -211,10 +211,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackupStatusResult(
                 protectionStatus,
                 vaultId,
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 

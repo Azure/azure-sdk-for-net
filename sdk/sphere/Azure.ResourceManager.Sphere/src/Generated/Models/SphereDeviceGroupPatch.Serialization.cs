@@ -22,33 +22,33 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<SphereDeviceGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (OSFeedType.HasValue)
+            if (Optional.IsDefined(OSFeedType))
             {
                 writer.WritePropertyName("osFeedType"u8);
                 writer.WriteStringValue(OSFeedType.Value.ToString());
             }
-            if (UpdatePolicy.HasValue)
+            if (Optional.IsDefined(UpdatePolicy))
             {
                 writer.WritePropertyName("updatePolicy"u8);
                 writer.WriteStringValue(UpdatePolicy.Value.ToString());
             }
-            if (AllowCrashDumpsCollection.HasValue)
+            if (Optional.IsDefined(AllowCrashDumpsCollection))
             {
                 writer.WritePropertyName("allowCrashDumpsCollection"u8);
                 writer.WriteStringValue(AllowCrashDumpsCollection.Value.ToString());
             }
-            if (RegionalDataBoundary.HasValue)
+            if (Optional.IsDefined(RegionalDataBoundary))
             {
                 writer.WritePropertyName("regionalDataBoundary"u8);
                 writer.WriteStringValue(RegionalDataBoundary.Value.ToString());
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<SphereDeviceGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sphere.Models
             SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection = default;
             RegionalDataBoundary? regionalDataBoundary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.Sphere.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SphereDeviceGroupPatch(
                 description,
                 osFeedType,
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Sphere.Models
                         return DeserializeSphereDeviceGroupPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

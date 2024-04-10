@@ -22,81 +22,81 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeExportPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RuleIndex.HasValue)
+            if (Optional.IsDefined(RuleIndex))
             {
                 writer.WritePropertyName("ruleIndex"u8);
                 writer.WriteNumberValue(RuleIndex.Value);
             }
-            if (IsUnixReadOnly.HasValue)
+            if (Optional.IsDefined(IsUnixReadOnly))
             {
                 writer.WritePropertyName("unixReadOnly"u8);
                 writer.WriteBooleanValue(IsUnixReadOnly.Value);
             }
-            if (IsUnixReadWrite.HasValue)
+            if (Optional.IsDefined(IsUnixReadWrite))
             {
                 writer.WritePropertyName("unixReadWrite"u8);
                 writer.WriteBooleanValue(IsUnixReadWrite.Value);
             }
-            if (IsKerberos5ReadOnly.HasValue)
+            if (Optional.IsDefined(IsKerberos5ReadOnly))
             {
                 writer.WritePropertyName("kerberos5ReadOnly"u8);
                 writer.WriteBooleanValue(IsKerberos5ReadOnly.Value);
             }
-            if (IsKerberos5ReadWrite.HasValue)
+            if (Optional.IsDefined(IsKerberos5ReadWrite))
             {
                 writer.WritePropertyName("kerberos5ReadWrite"u8);
                 writer.WriteBooleanValue(IsKerberos5ReadWrite.Value);
             }
-            if (IsKerberos5iReadOnly.HasValue)
+            if (Optional.IsDefined(IsKerberos5iReadOnly))
             {
                 writer.WritePropertyName("kerberos5iReadOnly"u8);
                 writer.WriteBooleanValue(IsKerberos5iReadOnly.Value);
             }
-            if (IsKerberos5iReadWrite.HasValue)
+            if (Optional.IsDefined(IsKerberos5iReadWrite))
             {
                 writer.WritePropertyName("kerberos5iReadWrite"u8);
                 writer.WriteBooleanValue(IsKerberos5iReadWrite.Value);
             }
-            if (IsKerberos5pReadOnly.HasValue)
+            if (Optional.IsDefined(IsKerberos5pReadOnly))
             {
                 writer.WritePropertyName("kerberos5pReadOnly"u8);
                 writer.WriteBooleanValue(IsKerberos5pReadOnly.Value);
             }
-            if (IsKerberos5pReadWrite.HasValue)
+            if (Optional.IsDefined(IsKerberos5pReadWrite))
             {
                 writer.WritePropertyName("kerberos5pReadWrite"u8);
                 writer.WriteBooleanValue(IsKerberos5pReadWrite.Value);
             }
-            if (AllowCifsProtocol.HasValue)
+            if (Optional.IsDefined(AllowCifsProtocol))
             {
                 writer.WritePropertyName("cifs"u8);
                 writer.WriteBooleanValue(AllowCifsProtocol.Value);
             }
-            if (AllowNfsV3Protocol.HasValue)
+            if (Optional.IsDefined(AllowNfsV3Protocol))
             {
                 writer.WritePropertyName("nfsv3"u8);
                 writer.WriteBooleanValue(AllowNfsV3Protocol.Value);
             }
-            if (AllowNfsV41Protocol.HasValue)
+            if (Optional.IsDefined(AllowNfsV41Protocol))
             {
                 writer.WritePropertyName("nfsv41"u8);
                 writer.WriteBooleanValue(AllowNfsV41Protocol.Value);
             }
-            if (AllowedClients != null)
+            if (Optional.IsDefined(AllowedClients))
             {
                 writer.WritePropertyName("allowedClients"u8);
                 writer.WriteStringValue(AllowedClients);
             }
-            if (HasRootAccess.HasValue)
+            if (Optional.IsDefined(HasRootAccess))
             {
                 writer.WritePropertyName("hasRootAccess"u8);
                 writer.WriteBooleanValue(HasRootAccess.Value);
             }
-            if (ChownMode.HasValue)
+            if (Optional.IsDefined(ChownMode))
             {
                 writer.WritePropertyName("chownMode"u8);
                 writer.WriteStringValue(ChownMode.Value.ToString());
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeExportPolicyRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp.Models
             bool? hasRootAccess = default;
             NetAppChownMode? chownMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleIndex"u8))
@@ -291,10 +291,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetAppVolumeExportPolicyRule(
                 ruleIndex,
                 unixReadOnly,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppVolumeExportPolicyRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeExportPolicyRule)} does not support reading '{options.Format}' format.");
             }
         }
 

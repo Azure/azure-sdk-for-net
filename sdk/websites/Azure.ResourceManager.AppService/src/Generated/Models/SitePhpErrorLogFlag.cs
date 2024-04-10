@@ -74,14 +74,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Local log_errors setting. </summary>
+        [WirePath("properties.localLogErrors")]
         public string LocalLogErrors { get; set; }
         /// <summary> Master log_errors setting. </summary>
+        [WirePath("properties.masterLogErrors")]
         public string MasterLogErrors { get; set; }
         /// <summary> Local log_errors_max_len setting. </summary>
+        [WirePath("properties.localLogErrorsMaxLength")]
         public string LocalLogErrorsMaxLength { get; set; }
         /// <summary> Master log_errors_max_len setting. </summary>
+        [WirePath("properties.masterLogErrorsMaxLength")]
         public string MasterLogErrorsMaxLength { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

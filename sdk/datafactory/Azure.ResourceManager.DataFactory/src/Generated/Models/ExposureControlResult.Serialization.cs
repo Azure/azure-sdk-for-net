@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExposureControlResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExposureControlResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExposureControlResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && FeatureName != null)
+            if (options.Format != "W" && Optional.IsDefined(FeatureName))
             {
                 writer.WritePropertyName("featureName"u8);
                 writer.WriteStringValue(FeatureName);
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExposureControlResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExposureControlResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExposureControlResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string featureName = default;
             string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("featureName"u8))
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ExposureControlResult(featureName, value, serializedAdditionalRawData);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExposureControlResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExposureControlResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeExposureControlResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExposureControlResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExposureControlResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -97,12 +96,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 tag);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsSmsDeliveryReportReceivedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsSmsDeliveryReportReceivedEventData(document.RootElement);
+        }
+
         internal partial class AcsSmsDeliveryReportReceivedEventDataConverter : JsonConverter<AcsSmsDeliveryReportReceivedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsSmsDeliveryReportReceivedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AcsSmsDeliveryReportReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

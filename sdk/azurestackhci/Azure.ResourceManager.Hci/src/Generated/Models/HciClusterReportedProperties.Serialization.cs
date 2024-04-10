@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciClusterReportedProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciClusterReportedProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ClusterName != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterName))
             {
                 writer.WritePropertyName("clusterName"u8);
                 writer.WriteStringValue(ClusterName);
             }
-            if (options.Format != "W" && ClusterId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
-            if (options.Format != "W" && ClusterVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterVersion))
             {
                 writer.WritePropertyName("clusterVersion"u8);
                 writer.WriteStringValue(ClusterVersion);
             }
-            if (options.Format != "W" && !(Nodes is ChangeTrackingList<HciClusterNode> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HciClusterNode>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && ImdsAttestation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ImdsAttestation))
             {
                 writer.WritePropertyName("imdsAttestation"u8);
                 writer.WriteStringValue(ImdsAttestation.Value.ToString());
             }
-            if (DiagnosticLevel.HasValue)
+            if (Optional.IsDefined(DiagnosticLevel))
             {
                 writer.WritePropertyName("diagnosticLevel"u8);
                 writer.WriteStringValue(DiagnosticLevel.Value.ToString());
             }
-            if (options.Format != "W" && !(SupportedCapabilities is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterReportedProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciClusterReportedProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciClusterReportedProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Models
             HciClusterDiagnosticLevel? diagnosticLevel = default;
             IReadOnlyList<string> supportedCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterName"u8))
@@ -202,10 +202,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HciClusterReportedProperties(
                 clusterName,
                 clusterId,
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HciClusterReportedProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciClusterReportedProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeHciClusterReportedProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciClusterReportedProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciClusterReportedProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

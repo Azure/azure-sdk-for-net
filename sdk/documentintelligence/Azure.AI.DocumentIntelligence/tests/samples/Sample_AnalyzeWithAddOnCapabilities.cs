@@ -105,8 +105,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
             // DocumentStyle has the following font related attributes:
             var similarFontFamilies = new Dictionary<string, List<DocumentStyle>>(); // e.g., 'Arial, sans-serif
-            var fontStyles = new Dictionary<FontStyle, List<DocumentStyle>>(); // e.g, 'italic'
-            var fontWeights = new Dictionary<FontWeight, List<DocumentStyle>>(); // e.g., 'bold'
+            var fontStyles = new Dictionary<DocumentFontStyle, List<DocumentStyle>>(); // e.g, 'italic'
+            var fontWeights = new Dictionary<DocumentFontWeight, List<DocumentStyle>>(); // e.g., 'bold'
             var fontColors = new Dictionary<string, List<DocumentStyle>>(); // in '#rrggbb' hexadecimal format
             var fontBackgroundColors = new Dictionary<string, List<DocumentStyle>>(); // in '#rrggbb' hexadecimal format
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Hci
             var format = options.Format == "W" ? ((IPersistableModel<HybridIdentityMetadataData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridIdentityMetadataData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridIdentityMetadataData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ResourceUid != null)
+            if (Optional.IsDefined(ResourceUid))
             {
                 writer.WritePropertyName("resourceUid"u8);
                 writer.WriteStringValue(ResourceUid);
             }
-            if (PublicKey != null)
+            if (Optional.IsDefined(PublicKey))
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
-            if (options.Format != "W" && Identity != null)
+            if (options.Format != "W" && Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Hci
             var format = options.Format == "W" ? ((IPersistableModel<HybridIdentityMetadataData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridIdentityMetadataData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridIdentityMetadataData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Hci
             ManagedServiceIdentity identity = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.Hci
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HybridIdentityMetadataData(
                 id,
                 name,
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Hci
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridIdentityMetadataData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridIdentityMetadataData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Hci
                         return DeserializeHybridIdentityMetadataData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridIdentityMetadataData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridIdentityMetadataData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPAddressPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPAddressPool)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPAddressPool)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (AutoAssign.HasValue)
+            if (Optional.IsDefined(AutoAssign))
             {
                 writer.WritePropertyName("autoAssign"u8);
                 writer.WriteStringValue(AutoAssign.Value.ToString());
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (OnlyUseHostIPs.HasValue)
+            if (Optional.IsDefined(OnlyUseHostIPs))
             {
                 writer.WritePropertyName("onlyUseHostIps"u8);
                 writer.WriteStringValue(OnlyUseHostIPs.Value.ToString());
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPAddressPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPAddressPool)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPAddressPool)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             string name = default;
             BfdEnabled? onlyUseHostIPs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addresses"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IPAddressPool(addresses, autoAssign, name, onlyUseHostIPs, serializedAdditionalRawData);
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPAddressPool)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPAddressPool)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeIPAddressPool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPAddressPool)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPAddressPool)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -16,15 +16,23 @@ namespace Azure.AI.TextAnalytics.Legacy
         {
             writer.WriteStartObject();
             writer.WritePropertyName("analysisInput"u8);
-            writer.WriteObjectValue(AnalysisInput);
+            writer.WriteObjectValue<MultiLanguageBatchInput>(AnalysisInput);
             writer.WritePropertyName("tasks"u8);
-            writer.WriteObjectValue(Tasks);
-            if (DisplayName != null)
+            writer.WriteObjectValue<JobManifestTasks>(Tasks);
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AnalyzeBatchInput>(this);
+            return content;
         }
     }
 }

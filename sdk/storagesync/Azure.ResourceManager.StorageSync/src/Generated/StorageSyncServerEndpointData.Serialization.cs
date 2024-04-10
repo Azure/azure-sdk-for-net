@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StorageSync
             var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSyncServerEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSyncServerEndpointData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,109 +43,109 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ServerLocalPath != null)
+            if (Optional.IsDefined(ServerLocalPath))
             {
                 writer.WritePropertyName("serverLocalPath"u8);
                 writer.WriteStringValue(ServerLocalPath);
             }
-            if (CloudTiering.HasValue)
+            if (Optional.IsDefined(CloudTiering))
             {
                 writer.WritePropertyName("cloudTiering"u8);
                 writer.WriteStringValue(CloudTiering.Value.ToString());
             }
-            if (VolumeFreeSpacePercent.HasValue)
+            if (Optional.IsDefined(VolumeFreeSpacePercent))
             {
                 writer.WritePropertyName("volumeFreeSpacePercent"u8);
                 writer.WriteNumberValue(VolumeFreeSpacePercent.Value);
             }
-            if (TierFilesOlderThanDays.HasValue)
+            if (Optional.IsDefined(TierFilesOlderThanDays))
             {
                 writer.WritePropertyName("tierFilesOlderThanDays"u8);
                 writer.WriteNumberValue(TierFilesOlderThanDays.Value);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (ServerResourceId != null)
+            if (Optional.IsDefined(ServerResourceId))
             {
                 writer.WritePropertyName("serverResourceId"u8);
                 writer.WriteStringValue(ServerResourceId);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && LastWorkflowId != null)
+            if (options.Format != "W" && Optional.IsDefined(LastWorkflowId))
             {
                 writer.WritePropertyName("lastWorkflowId"u8);
                 writer.WriteStringValue(LastWorkflowId);
             }
-            if (options.Format != "W" && LastOperationName != null)
+            if (options.Format != "W" && Optional.IsDefined(LastOperationName))
             {
                 writer.WritePropertyName("lastOperationName"u8);
                 writer.WriteStringValue(LastOperationName);
             }
-            if (options.Format != "W" && SyncStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(SyncStatus))
             {
                 writer.WritePropertyName("syncStatus"u8);
-                writer.WriteObjectValue(SyncStatus);
+                writer.WriteObjectValue<ServerEndpointSyncStatus>(SyncStatus, options);
             }
-            if (OfflineDataTransfer.HasValue)
+            if (Optional.IsDefined(OfflineDataTransfer))
             {
                 writer.WritePropertyName("offlineDataTransfer"u8);
                 writer.WriteStringValue(OfflineDataTransfer.Value.ToString());
             }
-            if (options.Format != "W" && OfflineDataTransferStorageAccountResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(OfflineDataTransferStorageAccountResourceId))
             {
                 writer.WritePropertyName("offlineDataTransferStorageAccountResourceId"u8);
                 writer.WriteStringValue(OfflineDataTransferStorageAccountResourceId);
             }
-            if (options.Format != "W" && OfflineDataTransferStorageAccountTenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OfflineDataTransferStorageAccountTenantId))
             {
                 writer.WritePropertyName("offlineDataTransferStorageAccountTenantId"u8);
                 writer.WriteStringValue(OfflineDataTransferStorageAccountTenantId.Value);
             }
-            if (OfflineDataTransferShareName != null)
+            if (Optional.IsDefined(OfflineDataTransferShareName))
             {
                 writer.WritePropertyName("offlineDataTransferShareName"u8);
                 writer.WriteStringValue(OfflineDataTransferShareName);
             }
-            if (options.Format != "W" && CloudTieringStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(CloudTieringStatus))
             {
                 writer.WritePropertyName("cloudTieringStatus"u8);
-                writer.WriteObjectValue(CloudTieringStatus);
+                writer.WriteObjectValue<ServerEndpointCloudTieringStatus>(CloudTieringStatus, options);
             }
-            if (options.Format != "W" && RecallStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(RecallStatus))
             {
                 writer.WritePropertyName("recallStatus"u8);
-                writer.WriteObjectValue(RecallStatus);
+                writer.WriteObjectValue<ServerEndpointRecallStatus>(RecallStatus, options);
             }
-            if (InitialDownloadPolicy.HasValue)
+            if (Optional.IsDefined(InitialDownloadPolicy))
             {
                 writer.WritePropertyName("initialDownloadPolicy"u8);
                 writer.WriteStringValue(InitialDownloadPolicy.Value.ToString());
             }
-            if (LocalCacheMode.HasValue)
+            if (Optional.IsDefined(LocalCacheMode))
             {
                 writer.WritePropertyName("localCacheMode"u8);
                 writer.WriteStringValue(LocalCacheMode.Value.ToString());
             }
-            if (InitialUploadPolicy.HasValue)
+            if (Optional.IsDefined(InitialUploadPolicy))
             {
                 writer.WritePropertyName("initialUploadPolicy"u8);
                 writer.WriteStringValue(InitialUploadPolicy.Value.ToString());
             }
-            if (options.Format != "W" && ServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.StorageSync
             var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSyncServerEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSyncServerEndpointData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.StorageSync
             InitialUploadPolicy? initialUploadPolicy = default;
             string serverName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -407,10 +407,10 @@ namespace Azure.ResourceManager.StorageSync
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageSyncServerEndpointData(
                 id,
                 name,
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.StorageSync
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageSyncServerEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSyncServerEndpointData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.StorageSync
                         return DeserializeStorageSyncServerEndpointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageSyncServerEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSyncServerEndpointData)} does not support reading '{options.Format}' format.");
             }
         }
 

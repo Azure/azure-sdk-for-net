@@ -22,43 +22,43 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterServiceConfigResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterServiceConfigResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterServiceConfigResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ServiceName != null)
+            if (Optional.IsDefined(ServiceName))
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (ComponentName != null)
+            if (Optional.IsDefined(ComponentName))
             {
                 writer.WritePropertyName("componentName"u8);
                 writer.WriteStringValue(ComponentName);
             }
-            if (ServiceConfigListResultPropertiesType != null)
+            if (Optional.IsDefined(ServiceConfigListResultPropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ServiceConfigListResultPropertiesType);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (!(CustomKeys is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomKeys))
             {
                 writer.WritePropertyName("customKeys"u8);
                 writer.WriteStartObject();
@@ -69,14 +69,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(DefaultKeys is ChangeTrackingDictionary<string, ClusterServiceConfigValueEntity> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DefaultKeys))
             {
                 writer.WritePropertyName("defaultKeys"u8);
                 writer.WriteStartObject();
                 foreach (var item in DefaultKeys)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ClusterServiceConfigValueEntity>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterServiceConfigResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterServiceConfigResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterServiceConfigResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             IReadOnlyDictionary<string, string> customKeys = default;
             IReadOnlyDictionary<string, ClusterServiceConfigValueEntity> defaultKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -203,10 +203,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClusterServiceConfigResult(
                 serviceName,
                 fileName,
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterServiceConfigResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterServiceConfigResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeClusterServiceConfigResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterServiceConfigResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterServiceConfigResult)} does not support reading '{options.Format}' format.");
             }
         }
 

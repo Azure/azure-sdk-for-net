@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("ver"u8);
                 writer.WriteNumberValue(Version.Value);
@@ -24,22 +24,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("time"u8);
             writer.WriteStringValue(Time, "O");
-            if (SampleRate.HasValue)
+            if (Optional.IsDefined(SampleRate))
             {
                 writer.WritePropertyName("sampleRate"u8);
                 writer.WriteNumberValue(SampleRate.Value);
             }
-            if (Sequence != null)
+            if (Optional.IsDefined(Sequence))
             {
                 writer.WritePropertyName("seq"u8);
                 writer.WriteStringValue(Sequence);
             }
-            if (InstrumentationKey != null)
+            if (Optional.IsDefined(InstrumentationKey))
             {
                 writer.WritePropertyName("iKey"u8);
                 writer.WriteStringValue(InstrumentationKey);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,12 +50,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Data != null)
+            if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteObjectValue(Data);
+                writer.WriteObjectValue<MonitorBase>(Data);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TelemetryItem>(this);
+            return content;
         }
     }
 }

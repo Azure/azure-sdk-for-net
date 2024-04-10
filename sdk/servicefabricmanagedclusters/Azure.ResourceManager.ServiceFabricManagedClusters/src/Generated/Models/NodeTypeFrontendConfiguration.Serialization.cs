@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<NodeTypeFrontendConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IPAddressType.HasValue)
+            if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType.Value.ToString());
             }
-            if (LoadBalancerBackendAddressPoolId != null)
+            if (Optional.IsDefined(LoadBalancerBackendAddressPoolId))
             {
                 writer.WritePropertyName("loadBalancerBackendAddressPoolId"u8);
                 writer.WriteStringValue(LoadBalancerBackendAddressPoolId);
             }
-            if (LoadBalancerInboundNatPoolId != null)
+            if (Optional.IsDefined(LoadBalancerInboundNatPoolId))
             {
                 writer.WritePropertyName("loadBalancerInboundNatPoolId"u8);
                 writer.WriteStringValue(LoadBalancerInboundNatPoolId);
             }
-            if (ApplicationGatewayBackendAddressPoolId != null)
+            if (Optional.IsDefined(ApplicationGatewayBackendAddressPoolId))
             {
                 writer.WritePropertyName("applicationGatewayBackendAddressPoolId"u8);
                 writer.WriteStringValue(ApplicationGatewayBackendAddressPoolId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<NodeTypeFrontendConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ResourceIdentifier loadBalancerInboundNatPoolId = default;
             ResourceIdentifier applicationGatewayBackendAddressPoolId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddressType"u8))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NodeTypeFrontendConfiguration(ipAddressType, loadBalancerBackendAddressPoolId, loadBalancerInboundNatPoolId, applicationGatewayBackendAddressPoolId, serializedAdditionalRawData);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeNodeTypeFrontendConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

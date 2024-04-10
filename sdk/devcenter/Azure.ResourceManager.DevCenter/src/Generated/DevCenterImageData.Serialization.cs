@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevCenter
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterImageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterImageData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterImageData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Publisher != null)
+            if (options.Format != "W" && Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (options.Format != "W" && Offer != null)
+            if (options.Format != "W" && Optional.IsDefined(Offer))
             {
                 writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);
             }
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (options.Format != "W" && RecommendedMachineConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(RecommendedMachineConfiguration))
             {
                 writer.WritePropertyName("recommendedMachineConfiguration"u8);
-                writer.WriteObjectValue(RecommendedMachineConfiguration);
+                writer.WriteObjectValue<RecommendedMachineConfiguration>(RecommendedMachineConfiguration, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && HibernateSupport.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HibernateSupport))
             {
                 writer.WritePropertyName("hibernateSupport"u8);
                 writer.WriteStringValue(HibernateSupport.Value.ToString());
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DevCenter
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterImageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterImageData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterImageData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevCenter
             DevCenterProvisioningState? provisioningState = default;
             DevCenterHibernateSupport? hibernateSupport = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevCenterImageData(
                 id,
                 name,
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DevCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterImageData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterImageData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DevCenter
                         return DeserializeDevCenterImageData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterImageData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterImageData)} does not support reading '{options.Format}' format.");
             }
         }
 

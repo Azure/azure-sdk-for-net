@@ -15,17 +15,17 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Pattern != null)
+            if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (FlagsInternal != null)
+            if (Optional.IsDefined(FlagsInternal))
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStringValue(FlagsInternal);
             }
-            if (Group.HasValue)
+            if (Optional.IsDefined(Group))
             {
                 writer.WritePropertyName("group"u8);
                 writer.WriteNumberValue(Group.Value);
@@ -81,6 +81,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new PatternTokenizer(odataType, name, pattern, flags, group);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PatternTokenizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePatternTokenizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PatternTokenizer>(this);
+            return content;
         }
     }
 }

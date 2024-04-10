@@ -16,14 +16,14 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tag"u8);
-            writer.WriteObjectValue(Parameters);
+            writer.WriteObjectValue<TagScoringParameters>(Parameters);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("fieldName"u8);
             writer.WriteStringValue(FieldName);
             writer.WritePropertyName("boost"u8);
             writer.WriteNumberValue(Boost);
-            if (Interpolation.HasValue)
+            if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteStringValue(Interpolation.Value.ToSerialString());
@@ -75,6 +75,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new TagScoringFunction(type, fieldName, boost, interpolation, tag);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TagScoringFunction FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTagScoringFunction(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TagScoringFunction>(this);
+            return content;
         }
     }
 }

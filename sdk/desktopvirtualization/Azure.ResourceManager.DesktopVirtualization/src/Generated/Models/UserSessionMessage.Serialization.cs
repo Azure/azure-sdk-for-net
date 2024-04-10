@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserSessionMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserSessionMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserSessionMessage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MessageTitle != null)
+            if (Optional.IsDefined(MessageTitle))
             {
                 writer.WritePropertyName("messageTitle"u8);
                 writer.WriteStringValue(MessageTitle);
             }
-            if (MessageBody != null)
+            if (Optional.IsDefined(MessageBody))
             {
                 writer.WritePropertyName("messageBody"u8);
                 writer.WriteStringValue(MessageBody);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserSessionMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserSessionMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserSessionMessage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string messageTitle = default;
             string messageBody = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageTitle"u8))
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UserSessionMessage(messageTitle, messageBody, serializedAdditionalRawData);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserSessionMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserSessionMessage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeUserSessionMessage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserSessionMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserSessionMessage)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UtilizationInfo != null)
+            if (Optional.IsDefined(UtilizationInfo))
             {
                 writer.WritePropertyName("utilizationInfo"u8);
-                writer.WriteObjectValue(UtilizationInfo);
+                writer.WriteObjectValue<CapacityReservationUtilization>(UtilizationInfo, options);
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InstanceViewStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Compute.Models
             CapacityReservationUtilization utilizationInfo = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("utilizationInfo"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CapacityReservationInstanceView(utilizationInfo, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData);
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCapacityReservationInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

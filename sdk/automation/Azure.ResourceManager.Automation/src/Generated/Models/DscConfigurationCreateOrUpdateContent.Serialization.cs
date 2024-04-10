@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -49,30 +49,30 @@ namespace Azure.ResourceManager.Automation.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsLogVerboseEnabled.HasValue)
+            if (Optional.IsDefined(IsLogVerboseEnabled))
             {
                 writer.WritePropertyName("logVerbose"u8);
                 writer.WriteBooleanValue(IsLogVerboseEnabled.Value);
             }
-            if (IsLogProgressEnabled.HasValue)
+            if (Optional.IsDefined(IsLogProgressEnabled))
             {
                 writer.WritePropertyName("logProgress"u8);
                 writer.WriteBooleanValue(IsLogProgressEnabled.Value);
             }
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
-            if (!(Parameters is ChangeTrackingDictionary<string, DscConfigurationParameterDefinition> collection0 && collection0.IsUndefined))
+            writer.WriteObjectValue<AutomationContentSource>(Source, options);
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DscConfigurationParameterDefinition>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Automation.Models
             IDictionary<string, DscConfigurationParameterDefinition> parameters = default;
             string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DscConfigurationCreateOrUpdateContent(
                 name,
                 location,
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscConfigurationCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscConfigurationCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

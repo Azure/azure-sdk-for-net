@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.Purview
             var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewAccountData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Sku != null)
+            if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<PurviewAccountSku>(Sku, options);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,89 +66,89 @@ namespace Azure.ResourceManager.Purview
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && AccountStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountStatus))
             {
                 writer.WritePropertyName("accountStatus"u8);
-                writer.WriteObjectValue(AccountStatus);
+                writer.WriteObjectValue<PurviewAccountStatus>(AccountStatus, options);
             }
-            if (CloudConnectors != null)
+            if (Optional.IsDefined(CloudConnectors))
             {
                 writer.WritePropertyName("cloudConnectors"u8);
-                writer.WriteObjectValue(CloudConnectors);
+                writer.WriteObjectValue<CloudConnectors>(CloudConnectors, options);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && CreatedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (options.Format != "W" && CreatedByObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(CreatedByObjectId))
             {
                 writer.WritePropertyName("createdByObjectId"u8);
                 writer.WriteStringValue(CreatedByObjectId);
             }
-            if (options.Format != "W" && Endpoints != null)
+            if (options.Format != "W" && Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
-                writer.WriteObjectValue(Endpoints);
+                writer.WriteObjectValue<PurviewAccountEndpoint>(Endpoints, options);
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (IngestionStorage != null)
+            if (Optional.IsDefined(IngestionStorage))
             {
                 writer.WritePropertyName("ingestionStorage"u8);
-                writer.WriteObjectValue(IngestionStorage);
+                writer.WriteObjectValue<PurviewIngestionStorage>(IngestionStorage, options);
             }
-            if (ManagedEventHubState.HasValue)
+            if (Optional.IsDefined(ManagedEventHubState))
             {
                 writer.WritePropertyName("managedEventHubState"u8);
                 writer.WriteStringValue(ManagedEventHubState.Value.ToString());
             }
-            if (ManagedResourceGroupName != null)
+            if (Optional.IsDefined(ManagedResourceGroupName))
             {
                 writer.WritePropertyName("managedResourceGroupName"u8);
                 writer.WriteStringValue(ManagedResourceGroupName);
             }
-            if (options.Format != "W" && ManagedResources != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagedResources))
             {
                 writer.WritePropertyName("managedResources"u8);
-                writer.WriteObjectValue(ManagedResources);
+                writer.WriteObjectValue<PurviewManagedResource>(ManagedResources, options);
             }
-            if (ManagedResourcesPublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(ManagedResourcesPublicNetworkAccess))
             {
                 writer.WritePropertyName("managedResourcesPublicNetworkAccess"u8);
                 writer.WriteStringValue(ManagedResourcesPublicNetworkAccess.Value.ToString());
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<PurviewPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PurviewPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Purview
             var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewAccountData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Purview
             PurviewProvisioningState? provisioningState = default;
             PurviewPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -418,10 +418,10 @@ namespace Azure.ResourceManager.Purview
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PurviewAccountData(
                 id,
                 name,
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Purview
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PurviewAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewAccountData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Purview
                         return DeserializePurviewAccountData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PurviewAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewAccountData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,99 +43,99 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RunId != null)
+            if (Optional.IsDefined(RunId))
             {
                 writer.WritePropertyName("runId"u8);
                 writer.WriteStringValue(RunId);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (RunType.HasValue)
+            if (Optional.IsDefined(RunType))
             {
                 writer.WritePropertyName("runType"u8);
                 writer.WriteStringValue(RunType.Value.ToString());
             }
-            if (AgentPoolName != null)
+            if (Optional.IsDefined(AgentPoolName))
             {
                 writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (FinishOn.HasValue)
+            if (Optional.IsDefined(FinishOn))
             {
                 writer.WritePropertyName("finishTime"u8);
                 writer.WriteStringValue(FinishOn.Value, "O");
             }
-            if (!(OutputImages is ChangeTrackingList<ContainerRegistryImageDescriptor> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutputImages))
             {
                 writer.WritePropertyName("outputImages"u8);
                 writer.WriteStartArray();
                 foreach (var item in OutputImages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerRegistryImageDescriptor>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Task != null)
+            if (Optional.IsDefined(Task))
             {
                 writer.WritePropertyName("task"u8);
                 writer.WriteStringValue(Task);
             }
-            if (ImageUpdateTrigger != null)
+            if (Optional.IsDefined(ImageUpdateTrigger))
             {
                 writer.WritePropertyName("imageUpdateTrigger"u8);
-                writer.WriteObjectValue(ImageUpdateTrigger);
+                writer.WriteObjectValue<ContainerRegistryImageUpdateTrigger>(ImageUpdateTrigger, options);
             }
-            if (SourceTrigger != null)
+            if (Optional.IsDefined(SourceTrigger))
             {
                 writer.WritePropertyName("sourceTrigger"u8);
-                writer.WriteObjectValue(SourceTrigger);
+                writer.WriteObjectValue<ContainerRegistrySourceTriggerDescriptor>(SourceTrigger, options);
             }
-            if (TimerTrigger != null)
+            if (Optional.IsDefined(TimerTrigger))
             {
                 writer.WritePropertyName("timerTrigger"u8);
-                writer.WriteObjectValue(TimerTrigger);
+                writer.WriteObjectValue<ContainerRegistryTimerTriggerDescriptor>(TimerTrigger, options);
             }
-            if (Platform != null)
+            if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform);
+                writer.WriteObjectValue<ContainerRegistryPlatformProperties>(Platform, options);
             }
-            if (AgentConfiguration != null)
+            if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                writer.WriteObjectValue<ContainerRegistryAgentProperties>(AgentConfiguration, options);
             }
-            if (SourceRegistryAuth != null)
+            if (Optional.IsDefined(SourceRegistryAuth))
             {
                 writer.WritePropertyName("sourceRegistryAuth"u8);
                 writer.WriteStringValue(SourceRegistryAuth);
             }
-            if (!(CustomRegistries is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomRegistries))
             {
                 writer.WritePropertyName("customRegistries"u8);
                 writer.WriteStartArray();
@@ -145,27 +145,27 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && RunErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(RunErrorMessage))
             {
                 writer.WritePropertyName("runErrorMessage"u8);
                 writer.WriteStringValue(RunErrorMessage);
             }
-            if (UpdateTriggerToken != null)
+            if (Optional.IsDefined(UpdateTriggerToken))
             {
                 writer.WritePropertyName("updateTriggerToken"u8);
                 writer.WriteStringValue(UpdateTriggerToken);
             }
-            if (options.Format != "W" && LogArtifact != null)
+            if (options.Format != "W" && Optional.IsDefined(LogArtifact))
             {
                 writer.WritePropertyName("logArtifact"u8);
-                writer.WriteObjectValue(LogArtifact);
+                writer.WriteObjectValue<ContainerRegistryImageDescriptor>(LogArtifact, options);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (IsArchiveEnabled.HasValue)
+            if (Optional.IsDefined(IsArchiveEnabled))
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             ContainerRegistryProvisioningState? provisioningState = default;
             bool? isArchiveEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -461,10 +461,10 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerRegistryRunData(
                 id,
                 name,
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                         return DeserializeContainerRegistryRunData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support reading '{options.Format}' format.");
             }
         }
 

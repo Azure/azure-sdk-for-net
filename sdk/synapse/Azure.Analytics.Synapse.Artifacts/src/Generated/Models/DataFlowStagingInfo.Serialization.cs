@@ -18,15 +18,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedService != null)
+            if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService);
+                writer.WriteObjectValue<LinkedServiceReference>(LinkedService);
             }
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-                writer.WriteObjectValue(FolderPath);
+                writer.WriteObjectValue<object>(FolderPath);
             }
             writer.WriteEndObject();
         }
@@ -63,12 +63,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new DataFlowStagingInfo(linkedService, folderPath);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataFlowStagingInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataFlowStagingInfo(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DataFlowStagingInfo>(this);
+            return content;
+        }
+
         internal partial class DataFlowStagingInfoConverter : JsonConverter<DataFlowStagingInfo>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowStagingInfo model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DataFlowStagingInfo>(model);
             }
+
             public override DataFlowStagingInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

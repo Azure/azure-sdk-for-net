@@ -21,28 +21,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -53,97 +53,97 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Server != null)
+            if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-                writer.WriteObjectValue(Server);
+                writer.WriteObjectValue<object>(Server);
             }
-            if (SystemNumber != null)
+            if (Optional.IsDefined(SystemNumber))
             {
                 writer.WritePropertyName("systemNumber"u8);
-                writer.WriteObjectValue(SystemNumber);
+                writer.WriteObjectValue<object>(SystemNumber);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-                writer.WriteObjectValue(ClientId);
+                writer.WriteObjectValue<object>(ClientId);
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
-                writer.WriteObjectValue(Language);
+                writer.WriteObjectValue<object>(Language);
             }
-            if (SystemId != null)
+            if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);
-                writer.WriteObjectValue(SystemId);
+                writer.WriteObjectValue<object>(SystemId);
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName);
+                writer.WriteObjectValue<object>(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                writer.WriteObjectValue<SecretBase>(Password);
             }
-            if (MessageServer != null)
+            if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
-                writer.WriteObjectValue(MessageServer);
+                writer.WriteObjectValue<object>(MessageServer);
             }
-            if (MessageServerService != null)
+            if (Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService"u8);
-                writer.WriteObjectValue(MessageServerService);
+                writer.WriteObjectValue<object>(MessageServerService);
             }
-            if (SncMode != null)
+            if (Optional.IsDefined(SncMode))
             {
                 writer.WritePropertyName("sncMode"u8);
-                writer.WriteObjectValue(SncMode);
+                writer.WriteObjectValue<object>(SncMode);
             }
-            if (SncMyName != null)
+            if (Optional.IsDefined(SncMyName))
             {
                 writer.WritePropertyName("sncMyName"u8);
-                writer.WriteObjectValue(SncMyName);
+                writer.WriteObjectValue<object>(SncMyName);
             }
-            if (SncPartnerName != null)
+            if (Optional.IsDefined(SncPartnerName))
             {
                 writer.WritePropertyName("sncPartnerName"u8);
-                writer.WriteObjectValue(SncPartnerName);
+                writer.WriteObjectValue<object>(SncPartnerName);
             }
-            if (SncLibraryPath != null)
+            if (Optional.IsDefined(SncLibraryPath))
             {
                 writer.WritePropertyName("sncLibraryPath"u8);
-                writer.WriteObjectValue(SncLibraryPath);
+                writer.WriteObjectValue<object>(SncLibraryPath);
             }
-            if (SncQop != null)
+            if (Optional.IsDefined(SncQop))
             {
                 writer.WritePropertyName("sncQop"u8);
-                writer.WriteObjectValue(SncQop);
+                writer.WriteObjectValue<object>(SncQop);
             }
-            if (LogonGroup != null)
+            if (Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup"u8);
-                writer.WriteObjectValue(LogonGroup);
+                writer.WriteObjectValue<object>(LogonGroup);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -417,12 +417,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SapTableLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSapTableLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SapTableLinkedService>(this);
+            return content;
+        }
+
         internal partial class SapTableLinkedServiceConverter : JsonConverter<SapTableLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, SapTableLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SapTableLinkedService>(model);
             }
+
             public override SapTableLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

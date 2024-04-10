@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RandomSamplingAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Logbase != null)
+            if (Optional.IsDefined(Logbase))
             {
                 if (Logbase != null)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("logbase");
                 }
             }
-            if (Rule.HasValue)
+            if (Optional.IsDefined(Rule))
             {
                 writer.WritePropertyName("rule"u8);
                 writer.WriteStringValue(Rule.Value.ToString());
             }
-            if (Seed.HasValue)
+            if (Optional.IsDefined(Seed))
             {
                 if (Seed != null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RandomSamplingAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             int? seed = default;
             SamplingAlgorithmType samplingAlgorithmType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logbase"u8))
@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, logbase, rule, seed);
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeRandomSamplingAlgorithm(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support reading '{options.Format}' format.");
             }
         }
 

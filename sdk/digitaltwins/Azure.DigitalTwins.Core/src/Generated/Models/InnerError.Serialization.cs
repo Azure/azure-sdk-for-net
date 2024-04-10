@@ -15,15 +15,15 @@ namespace Azure.DigitalTwins.Core
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Innererror != null)
+            if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror);
+                writer.WriteObjectValue<InnerError>(Innererror);
             }
             writer.WriteEndObject();
         }
@@ -54,6 +54,22 @@ namespace Azure.DigitalTwins.Core
                 }
             }
             return new InnerError(code, innererror);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static InnerError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeInnerError(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<InnerError>(this);
+            return content;
         }
     }
 }

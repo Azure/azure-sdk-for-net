@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevCenter
             var format = options.Format == "W" ? ((IPersistableModel<ImageVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageVersionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageVersionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && NamePropertiesName != null)
+            if (options.Format != "W" && Optional.IsDefined(NamePropertiesName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesName);
             }
-            if (options.Format != "W" && PublishedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PublishedOn))
             {
                 writer.WritePropertyName("publishedDate"u8);
                 writer.WriteStringValue(PublishedOn.Value, "O");
             }
-            if (options.Format != "W" && IsExcludedFromLatest.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
                 writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
-            if (options.Format != "W" && OSDiskImageSizeInGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OSDiskImageSizeInGB))
             {
                 writer.WritePropertyName("osDiskImageSizeInGb"u8);
                 writer.WriteNumberValue(OSDiskImageSizeInGB.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevCenter
             var format = options.Format == "W" ? ((IPersistableModel<ImageVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageVersionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageVersionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DevCenter
             int? osDiskImageSizeInGb = default;
             DevCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -206,10 +206,10 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ImageVersionData(
                 id,
                 name,
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DevCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageVersionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageVersionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DevCenter
                         return DeserializeImageVersionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageVersionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageVersionData)} does not support reading '{options.Format}' format.");
             }
         }
 

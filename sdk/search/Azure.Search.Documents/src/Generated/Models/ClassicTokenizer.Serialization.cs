@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxTokenLength.HasValue)
+            if (Optional.IsDefined(MaxTokenLength))
             {
                 writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
@@ -59,6 +59,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new ClassicTokenizer(odataType, name, maxTokenLength);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ClassicTokenizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeClassicTokenizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ClassicTokenizer>(this);
+            return content;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSimData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,24 +44,24 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && SimState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SimState))
             {
                 writer.WritePropertyName("simState"u8);
                 writer.WriteStringValue(SimState.Value.ToString());
             }
-            if (options.Format != "W" && !(SiteProvisioningState is ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SiteProvisioningState))
             {
                 writer.WritePropertyName("siteProvisioningState"u8);
                 writer.WriteStartObject();
@@ -74,47 +74,47 @@ namespace Azure.ResourceManager.MobileNetwork
             }
             writer.WritePropertyName("internationalMobileSubscriberIdentity"u8);
             writer.WriteStringValue(InternationalMobileSubscriberIdentity);
-            if (IntegratedCircuitCardIdentifier != null)
+            if (Optional.IsDefined(IntegratedCircuitCardIdentifier))
             {
                 writer.WritePropertyName("integratedCircuitCardIdentifier"u8);
                 writer.WriteStringValue(IntegratedCircuitCardIdentifier);
             }
-            if (DeviceType != null)
+            if (Optional.IsDefined(DeviceType))
             {
                 writer.WritePropertyName("deviceType"u8);
                 writer.WriteStringValue(DeviceType);
             }
-            if (SimPolicy != null)
+            if (Optional.IsDefined(SimPolicy))
             {
                 writer.WritePropertyName("simPolicy"u8);
                 JsonSerializer.Serialize(writer, SimPolicy);
             }
-            if (!(StaticIPConfiguration is ChangeTrackingList<SimStaticIPProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StaticIPConfiguration))
             {
                 writer.WritePropertyName("staticIpConfiguration"u8);
                 writer.WriteStartArray();
                 foreach (var item in StaticIPConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SimStaticIPProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && VendorName != null)
+            if (options.Format != "W" && Optional.IsDefined(VendorName))
             {
                 writer.WritePropertyName("vendorName"u8);
                 writer.WriteStringValue(VendorName);
             }
-            if (options.Format != "W" && VendorKeyFingerprint != null)
+            if (options.Format != "W" && Optional.IsDefined(VendorKeyFingerprint))
             {
                 writer.WritePropertyName("vendorKeyFingerprint"u8);
                 writer.WriteStringValue(VendorKeyFingerprint);
             }
-            if (AuthenticationKey != null)
+            if (Optional.IsDefined(AuthenticationKey))
             {
                 writer.WritePropertyName("authenticationKey"u8);
                 writer.WriteStringValue(AuthenticationKey);
             }
-            if (OperatorKeyCode != null)
+            if (Optional.IsDefined(OperatorKeyCode))
             {
                 writer.WritePropertyName("operatorKeyCode"u8);
                 writer.WriteStringValue(OperatorKeyCode);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkSimData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MobileNetwork
             string authenticationKey = default;
             string operatorKeyCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -306,10 +306,10 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MobileNetworkSimData(
                 id,
                 name,
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         return DeserializeMobileNetworkSimData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkSimData)} does not support reading '{options.Format}' format.");
             }
         }
 

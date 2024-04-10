@@ -22,56 +22,56 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsDimensionRequired.HasValue)
+            if (Optional.IsDefined(IsDimensionRequired))
             {
                 writer.WritePropertyName("isDimensionRequired"u8);
                 writer.WriteBooleanValue(IsDimensionRequired.Value);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<MonitorLocalizableString>(Name, options);
             }
-            if (DisplayDescription != null)
+            if (Optional.IsDefined(DisplayDescription))
             {
                 writer.WritePropertyName("displayDescription"u8);
                 writer.WriteStringValue(DisplayDescription);
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (MetricClass.HasValue)
+            if (Optional.IsDefined(MetricClass))
             {
                 writer.WritePropertyName("metricClass"u8);
                 writer.WriteStringValue(MetricClass.Value.ToString());
             }
-            if (Unit.HasValue)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (PrimaryAggregationType.HasValue)
+            if (Optional.IsDefined(PrimaryAggregationType))
             {
                 writer.WritePropertyName("primaryAggregationType"u8);
                 writer.WriteStringValue(PrimaryAggregationType.Value.ToSerialString());
             }
-            if (!(SupportedAggregationTypes is ChangeTrackingList<MonitorAggregationType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedAggregationTypes))
             {
                 writer.WritePropertyName("supportedAggregationTypes"u8);
                 writer.WriteStartArray();
@@ -81,28 +81,28 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(MetricAvailabilities is ChangeTrackingList<MonitorMetricAvailability> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MetricAvailabilities))
             {
                 writer.WritePropertyName("metricAvailabilities"u8);
                 writer.WriteStartArray();
                 foreach (var item in MetricAvailabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorMetricAvailability>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (!(Dimensions is ChangeTrackingList<MonitorLocalizableString> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorLocalizableString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string id = default;
             IReadOnlyList<MonitorLocalizableString> dimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isDimensionRequired"u8))
@@ -275,10 +275,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MonitorMetricDefinition(
                 isDimensionRequired,
                 resourceId,
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorMetricDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

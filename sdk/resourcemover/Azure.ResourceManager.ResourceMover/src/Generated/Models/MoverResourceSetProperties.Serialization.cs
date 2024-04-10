@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceSetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverResourceSetProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverResourceSetProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceLocation.HasValue)
+            if (Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceRegion"u8);
                 writer.WriteStringValue(SourceLocation.Value);
             }
-            if (TargetLocation.HasValue)
+            if (Optional.IsDefined(TargetLocation))
             {
                 writer.WritePropertyName("targetRegion"u8);
                 writer.WriteStringValue(TargetLocation.Value);
             }
-            if (MoveLocation.HasValue)
+            if (Optional.IsDefined(MoveLocation))
             {
                 writer.WritePropertyName("moveRegion"u8);
                 writer.WriteStringValue(MoveLocation.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (MoveType.HasValue)
+            if (Optional.IsDefined(MoveType))
             {
                 writer.WritePropertyName("moveType"u8);
                 writer.WriteStringValue(MoveType.Value.ToString());
             }
-            if (options.Format != "W" && Errors != null)
+            if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 if (Errors != null)
                 {
                     writer.WritePropertyName("errors"u8);
-                    writer.WriteObjectValue(Errors);
+                    writer.WriteObjectValue<MoveCollectionPropertiesErrors>(Errors, options);
                 }
                 else
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceSetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverResourceSetProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverResourceSetProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             MoveType? moveType = default;
             MoveCollectionPropertiesErrors errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceRegion"u8))
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MoverResourceSetProperties(
                 sourceRegion,
                 targetRegion,
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverResourceSetProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverResourceSetProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverResourceSetProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverResourceSetProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverResourceSetProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

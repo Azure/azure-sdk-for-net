@@ -19,58 +19,58 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<ActivityPolicy>(Policy);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ActivityDependency>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserProperty>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (!(GlobalParameters is ChangeTrackingDictionary<string, object> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(GlobalParameters))
             {
                 writer.WritePropertyName("globalParameters"u8);
                 writer.WriteStartObject();
@@ -82,29 +82,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (!(WebServiceOutputs is ChangeTrackingDictionary<string, AzureMLWebServiceFile> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(WebServiceOutputs))
             {
                 writer.WritePropertyName("webServiceOutputs"u8);
                 writer.WriteStartObject();
                 foreach (var item in WebServiceOutputs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<AzureMLWebServiceFile>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (!(WebServiceInputs is ChangeTrackingDictionary<string, AzureMLWebServiceFile> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(WebServiceInputs))
             {
                 writer.WritePropertyName("webServiceInputs"u8);
                 writer.WriteStartObject();
                 foreach (var item in WebServiceInputs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<AzureMLWebServiceFile>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -298,12 +298,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 webServiceInputs ?? new ChangeTrackingDictionary<string, AzureMLWebServiceFile>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureMLBatchExecutionActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureMLBatchExecutionActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureMLBatchExecutionActivity>(this);
+            return content;
+        }
+
         internal partial class AzureMLBatchExecutionActivityConverter : JsonConverter<AzureMLBatchExecutionActivity>
         {
             public override void Write(Utf8JsonWriter writer, AzureMLBatchExecutionActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AzureMLBatchExecutionActivity>(model);
             }
+
             public override AzureMLBatchExecutionActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

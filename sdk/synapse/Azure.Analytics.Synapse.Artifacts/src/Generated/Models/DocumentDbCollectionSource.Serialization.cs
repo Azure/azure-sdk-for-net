@@ -19,47 +19,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-                writer.WriteObjectValue(Query);
+                writer.WriteObjectValue<object>(Query);
             }
-            if (NestingSeparator != null)
+            if (Optional.IsDefined(NestingSeparator))
             {
                 writer.WritePropertyName("nestingSeparator"u8);
-                writer.WriteObjectValue(NestingSeparator);
+                writer.WriteObjectValue<object>(NestingSeparator);
             }
-            if (QueryTimeout != null)
+            if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteObjectValue(QueryTimeout);
+                writer.WriteObjectValue<object>(QueryTimeout);
             }
-            if (AdditionalColumns != null)
+            if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
-                writer.WriteObjectValue(AdditionalColumns);
+                writer.WriteObjectValue<object>(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (SourceRetryCount != null)
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-                writer.WriteObjectValue(SourceRetryCount);
+                writer.WriteObjectValue<object>(SourceRetryCount);
             }
-            if (SourceRetryWait != null)
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-                writer.WriteObjectValue(SourceRetryWait);
+                writer.WriteObjectValue<object>(SourceRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -165,12 +165,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalColumns);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DocumentDbCollectionSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentDbCollectionSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DocumentDbCollectionSource>(this);
+            return content;
+        }
+
         internal partial class DocumentDbCollectionSourceConverter : JsonConverter<DocumentDbCollectionSource>
         {
             public override void Write(Utf8JsonWriter writer, DocumentDbCollectionSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DocumentDbCollectionSource>(model);
             }
+
             public override DocumentDbCollectionSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

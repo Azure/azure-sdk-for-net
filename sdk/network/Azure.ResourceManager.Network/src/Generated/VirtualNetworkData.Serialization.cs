@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,41 +24,41 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,77 +71,77 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AddressSpace != null)
+            if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
-                writer.WriteObjectValue(AddressSpace);
+                writer.WriteObjectValue<AddressSpace>(AddressSpace, options);
             }
-            if (DhcpOptions != null)
+            if (Optional.IsDefined(DhcpOptions))
             {
                 writer.WritePropertyName("dhcpOptions"u8);
-                writer.WriteObjectValue(DhcpOptions);
+                writer.WriteObjectValue<DhcpOptions>(DhcpOptions, options);
             }
-            if (FlowTimeoutInMinutes.HasValue)
+            if (Optional.IsDefined(FlowTimeoutInMinutes))
             {
                 writer.WritePropertyName("flowTimeoutInMinutes"u8);
                 writer.WriteNumberValue(FlowTimeoutInMinutes.Value);
             }
-            if (!(Subnets is ChangeTrackingList<SubnetData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Subnets))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SubnetData>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(VirtualNetworkPeerings is ChangeTrackingList<VirtualNetworkPeeringData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualNetworkPeerings))
             {
                 writer.WritePropertyName("virtualNetworkPeerings"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkPeerings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualNetworkPeeringData>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (EnableDdosProtection.HasValue)
+            if (Optional.IsDefined(EnableDdosProtection))
             {
                 writer.WritePropertyName("enableDdosProtection"u8);
                 writer.WriteBooleanValue(EnableDdosProtection.Value);
             }
-            if (EnableVmProtection.HasValue)
+            if (Optional.IsDefined(EnableVmProtection))
             {
                 writer.WritePropertyName("enableVmProtection"u8);
                 writer.WriteBooleanValue(EnableVmProtection.Value);
             }
-            if (DdosProtectionPlan != null)
+            if (Optional.IsDefined(DdosProtectionPlan))
             {
                 writer.WritePropertyName("ddosProtectionPlan"u8);
                 JsonSerializer.Serialize(writer, DdosProtectionPlan);
             }
-            if (BgpCommunities != null)
+            if (Optional.IsDefined(BgpCommunities))
             {
                 writer.WritePropertyName("bgpCommunities"u8);
-                writer.WriteObjectValue(BgpCommunities);
+                writer.WriteObjectValue<VirtualNetworkBgpCommunities>(BgpCommunities, options);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<VirtualNetworkEncryption>(Encryption, options);
             }
-            if (!(IPAllocations is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(IPAllocations))
             {
                 writer.WritePropertyName("ipAllocations"u8);
                 writer.WriteStartArray();
@@ -152,13 +151,13 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(FlowLogs is ChangeTrackingList<FlowLogData> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FlowLogs))
             {
                 writer.WritePropertyName("flowLogs"u8);
                 writer.WriteStartArray();
                 foreach (var item in FlowLogs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FlowLogData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -186,7 +185,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -223,7 +222,7 @@ namespace Azure.ResourceManager.Network
             IList<WritableSubResource> ipAllocations = default;
             IReadOnlyList<FlowLogData> flowLogs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -450,10 +449,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualNetworkData(
                 id,
                 name,
@@ -488,7 +487,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -504,7 +503,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeVirtualNetworkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support reading '{options.Format}' format.");
             }
         }
 

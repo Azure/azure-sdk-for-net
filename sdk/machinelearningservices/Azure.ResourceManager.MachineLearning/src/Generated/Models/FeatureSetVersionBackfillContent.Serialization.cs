@@ -22,38 +22,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<FeatureSetVersionBackfillContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (FeatureWindow != null)
+            if (Optional.IsDefined(FeatureWindow))
             {
                 if (FeatureWindow != null)
                 {
                     writer.WritePropertyName("featureWindow"u8);
-                    writer.WriteObjectValue(FeatureWindow);
+                    writer.WriteObjectValue<FeatureWindow>(FeatureWindow, options);
                 }
                 else
                 {
                     writer.WriteNull("featureWindow");
                 }
             }
-            if (Resource != null)
+            if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource);
+                writer.WriteObjectValue<MaterializationComputeResource>(Resource, options);
             }
-            if (!(SparkConfiguration is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SparkConfiguration))
             {
                 writer.WritePropertyName("sparkConfiguration"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<FeatureSetVersionBackfillContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, string> sparkConfiguration = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FeatureSetVersionBackfillContent(
                 description,
                 displayName,
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeFeatureSetVersionBackfillContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FeatureSetVersionBackfillContent)} does not support reading '{options.Format}' format.");
             }
         }
 

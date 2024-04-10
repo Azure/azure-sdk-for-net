@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="table"/> or <paramref name="filters"/> is null. </exception>
         public OperationalInsightsWorkspacePurgeContent(string table, IEnumerable<OperationalInsightsWorkspacePurgeFilter> filters)
         {
-            if (table == null)
-            {
-                throw new ArgumentNullException(nameof(table));
-            }
-            if (filters == null)
-            {
-                throw new ArgumentNullException(nameof(filters));
-            }
+            Argument.AssertNotNull(table, nameof(table));
+            Argument.AssertNotNull(filters, nameof(filters));
 
             Table = table;
             Filters = filters.ToList();
@@ -82,8 +76,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Table from which to purge data. </summary>
+        [WirePath("table")]
         public string Table { get; }
         /// <summary> The set of columns and filters (queries) to run over them to purge the resulting data. </summary>
+        [WirePath("filters")]
         public IList<OperationalInsightsWorkspacePurgeFilter> Filters { get; }
     }
 }

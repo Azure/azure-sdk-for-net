@@ -16,7 +16,7 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(DeviceContent is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DeviceContent))
             {
                 writer.WritePropertyName("deviceContent"u8);
                 writer.WriteStartObject();
@@ -28,11 +28,11 @@ namespace Azure.IoT.Hub.Service.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (!(ModulesContent is ChangeTrackingDictionary<string, IDictionary<string, object>> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ModulesContent))
             {
                 writer.WritePropertyName("modulesContent"u8);
                 writer.WriteStartObject();
@@ -53,13 +53,13 @@ namespace Azure.IoT.Hub.Service.Models
                             writer.WriteNullValue();
                             continue;
                         }
-                        writer.WriteObjectValue(item0.Value);
+                        writer.WriteObjectValue<object>(item0.Value);
                     }
                     writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
             }
-            if (!(ModuleContent is ChangeTrackingDictionary<string, object> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ModuleContent))
             {
                 writer.WritePropertyName("moduleContent"u8);
                 writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.IoT.Hub.Service.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -166,6 +166,22 @@ namespace Azure.IoT.Hub.Service.Models
                 }
             }
             return new ConfigurationContent(deviceContent ?? new ChangeTrackingDictionary<string, object>(), modulesContent ?? new ChangeTrackingDictionary<string, IDictionary<string, object>>(), moduleContent ?? new ChangeTrackingDictionary<string, object>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ConfigurationContent FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeConfigurationContent(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ConfigurationContent>(this);
+            return content;
         }
     }
 }

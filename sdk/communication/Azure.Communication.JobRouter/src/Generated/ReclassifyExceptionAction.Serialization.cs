@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -23,16 +22,16 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<ReclassifyExceptionAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReclassifyExceptionAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReclassifyExceptionAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ClassificationPolicyId != null)
+            if (Optional.IsDefined(ClassificationPolicyId))
             {
                 writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
-            if (!(_labelsToUpsert is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(_labelsToUpsert))
             {
                 writer.WritePropertyName("labelsToUpsert"u8);
                 writer.WriteStartObject();
@@ -55,7 +54,7 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -85,7 +84,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<ReclassifyExceptionAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReclassifyExceptionAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReclassifyExceptionAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +104,7 @@ namespace Azure.Communication.JobRouter
             string id = default;
             ExceptionActionKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classificationPolicyId"u8))
@@ -146,10 +145,10 @@ namespace Azure.Communication.JobRouter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReclassifyExceptionAction(id, kind, serializedAdditionalRawData, classificationPolicyId, labelsToUpsert ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
@@ -162,7 +161,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReclassifyExceptionAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReclassifyExceptionAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +177,7 @@ namespace Azure.Communication.JobRouter
                         return DeserializeReclassifyExceptionAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReclassifyExceptionAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReclassifyExceptionAction)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -196,7 +195,7 @@ namespace Azure.Communication.JobRouter
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ReclassifyExceptionAction>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

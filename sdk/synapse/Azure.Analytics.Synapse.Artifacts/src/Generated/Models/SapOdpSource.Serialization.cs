@@ -19,57 +19,57 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ExtractionMode != null)
+            if (Optional.IsDefined(ExtractionMode))
             {
                 writer.WritePropertyName("extractionMode"u8);
-                writer.WriteObjectValue(ExtractionMode);
+                writer.WriteObjectValue<object>(ExtractionMode);
             }
-            if (SubscriberProcess != null)
+            if (Optional.IsDefined(SubscriberProcess))
             {
                 writer.WritePropertyName("subscriberProcess"u8);
-                writer.WriteObjectValue(SubscriberProcess);
+                writer.WriteObjectValue<object>(SubscriberProcess);
             }
-            if (Selection != null)
+            if (Optional.IsDefined(Selection))
             {
                 writer.WritePropertyName("selection"u8);
-                writer.WriteObjectValue(Selection);
+                writer.WriteObjectValue<object>(Selection);
             }
-            if (Projection != null)
+            if (Optional.IsDefined(Projection))
             {
                 writer.WritePropertyName("projection"u8);
-                writer.WriteObjectValue(Projection);
+                writer.WriteObjectValue<object>(Projection);
             }
-            if (QueryTimeout != null)
+            if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteObjectValue(QueryTimeout);
+                writer.WriteObjectValue<object>(QueryTimeout);
             }
-            if (AdditionalColumns != null)
+            if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
-                writer.WriteObjectValue(AdditionalColumns);
+                writer.WriteObjectValue<object>(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (SourceRetryCount != null)
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-                writer.WriteObjectValue(SourceRetryCount);
+                writer.WriteObjectValue<object>(SourceRetryCount);
             }
-            if (SourceRetryWait != null)
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-                writer.WriteObjectValue(SourceRetryWait);
+                writer.WriteObjectValue<object>(SourceRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -197,12 +197,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 projection);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SapOdpSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSapOdpSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SapOdpSource>(this);
+            return content;
+        }
+
         internal partial class SapOdpSourceConverter : JsonConverter<SapOdpSource>
         {
             public override void Write(Utf8JsonWriter writer, SapOdpSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SapOdpSource>(model);
             }
+
             public override SapOdpSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

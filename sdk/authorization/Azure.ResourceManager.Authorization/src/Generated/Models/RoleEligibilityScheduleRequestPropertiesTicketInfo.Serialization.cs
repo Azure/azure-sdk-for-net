@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,16 +23,16 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TicketNumber != null)
+            if (Optional.IsDefined(TicketNumber))
             {
                 writer.WritePropertyName("ticketNumber"u8);
                 writer.WriteStringValue(TicketNumber);
             }
-            if (TicketSystem != null)
+            if (Optional.IsDefined(TicketSystem))
             {
                 writer.WritePropertyName("ticketSystem"u8);
                 writer.WriteStringValue(TicketSystem);
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Authorization.Models
             string ticketNumber = default;
             string ticketSystem = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ticketNumber"u8))
@@ -92,11 +93,70 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RoleEligibilityScheduleRequestPropertiesTicketInfo(ticketNumber, ticketSystem, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TicketNumber), out propertyOverride);
+            if (Optional.IsDefined(TicketNumber) || hasPropertyOverride)
+            {
+                builder.Append("  ticketNumber: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (TicketNumber.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TicketNumber}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TicketNumber}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TicketSystem), out propertyOverride);
+            if (Optional.IsDefined(TicketSystem) || hasPropertyOverride)
+            {
+                builder.Append("  ticketSystem: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (TicketSystem.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TicketSystem}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TicketSystem}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>.Write(ModelReaderWriterOptions options)
@@ -107,8 +167,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +186,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         return DeserializeRoleEligibilityScheduleRequestPropertiesTicketInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesTicketInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

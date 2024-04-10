@@ -8,10 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -160,7 +158,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="datasource">
         /// Describes the data source that output will be written to. Required on PUT (CreateOrReplace) requests.
         /// Please note <see cref="StreamingJobOutputDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="GatewayMessageBusOutputDataSource"/>, <see cref="FunctionOutputDataSource"/>, <see cref="PostgreSQLOutputDataSource"/>, <see cref="DataLakeStoreOutputDataSource"/>, <see cref="EventHubV2OutputDataSource"/>, <see cref="EventHubOutputDataSource"/>, <see cref="ServiceBusQueueOutputDataSource"/>, <see cref="ServiceBusTopicOutputDataSource"/>, <see cref="SynapseOutputDataSource"/>, <see cref="SqlDatabaseOutputDataSource"/>, <see cref="BlobOutputDataSource"/>, <see cref="DocumentDbOutputDataSource"/>, <see cref="TableOutputDataSource"/>, <see cref="PowerBIOutputDataSource"/> and <see cref="RawOutputDatasource"/>.
+        /// The available derived classes include <see cref="GatewayMessageBusOutputDataSource"/>, <see cref="FunctionOutputDataSource"/>, <see cref="DataLakeStoreOutputDataSource"/>, <see cref="PostgreSQLOutputDataSource"/>, <see cref="EventHubV2OutputDataSource"/>, <see cref="EventHubOutputDataSource"/>, <see cref="ServiceBusQueueOutputDataSource"/>, <see cref="ServiceBusTopicOutputDataSource"/>, <see cref="SqlDatabaseOutputDataSource"/>, <see cref="SynapseOutputDataSource"/>, <see cref="BlobOutputDataSource"/>, <see cref="DocumentDbOutputDataSource"/>, <see cref="TableOutputDataSource"/>, <see cref="PowerBIOutputDataSource"/> and <see cref="RawOutputDatasource"/>.
         /// </param>
         /// <param name="timeFrame"> The time frame for filtering Stream Analytics job outputs. </param>
         /// <param name="sizeWindow"> The size window to constrain a Stream Analytics output to. </param>

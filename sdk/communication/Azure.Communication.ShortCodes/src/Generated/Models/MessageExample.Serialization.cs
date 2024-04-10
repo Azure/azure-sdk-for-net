@@ -15,12 +15,12 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Direction.HasValue)
+            if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (Text != null)
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
@@ -54,6 +54,22 @@ namespace Azure.Communication.ShortCodes.Models
                 }
             }
             return new MessageExample(direction, text);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MessageExample FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMessageExample(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MessageExample>(this);
+            return content;
         }
     }
 }

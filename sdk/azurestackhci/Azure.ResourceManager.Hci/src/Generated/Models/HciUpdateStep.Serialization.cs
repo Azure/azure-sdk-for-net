@@ -22,52 +22,52 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciUpdateStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciUpdateStep)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciUpdateStep)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (StartTimeUtc.HasValue)
+            if (Optional.IsDefined(StartTimeUtc))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartTimeUtc.Value, "O");
             }
-            if (EndTimeUtc.HasValue)
+            if (Optional.IsDefined(EndTimeUtc))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndTimeUtc.Value, "O");
             }
-            if (LastUpdatedTimeUtc.HasValue)
+            if (Optional.IsDefined(LastUpdatedTimeUtc))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
-            if (!(Steps is ChangeTrackingList<HciUpdateStep> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Steps))
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStartArray();
                 foreach (var item in Steps)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HciUpdateStep>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciUpdateStep>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciUpdateStep)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciUpdateStep)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Hci.Models
             DateTimeOffset? lastUpdatedTimeUtc = default;
             IList<HciUpdateStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HciUpdateStep(
                 name,
                 description,
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HciUpdateStep)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciUpdateStep)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeHciUpdateStep(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciUpdateStep)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciUpdateStep)} does not support reading '{options.Format}' format.");
             }
         }
 

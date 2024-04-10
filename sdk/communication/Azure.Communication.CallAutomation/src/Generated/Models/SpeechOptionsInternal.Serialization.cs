@@ -15,12 +15,20 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (EndSilenceTimeoutInMs.HasValue)
+            if (Optional.IsDefined(EndSilenceTimeoutInMs))
             {
                 writer.WritePropertyName("endSilenceTimeoutInMs"u8);
                 writer.WriteNumberValue(EndSilenceTimeoutInMs.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SpeechOptionsInternal>(this);
+            return content;
         }
     }
 }

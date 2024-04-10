@@ -22,34 +22,34 @@ namespace Azure.ResourceManager.Communication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DomainPropertiesVerificationRecords>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("Domain"u8);
-                writer.WriteObjectValue(Domain);
+                writer.WriteObjectValue<VerificationDnsRecord>(Domain, options);
             }
-            if (Spf != null)
+            if (Optional.IsDefined(Spf))
             {
                 writer.WritePropertyName("SPF"u8);
-                writer.WriteObjectValue(Spf);
+                writer.WriteObjectValue<VerificationDnsRecord>(Spf, options);
             }
-            if (Dkim != null)
+            if (Optional.IsDefined(Dkim))
             {
                 writer.WritePropertyName("DKIM"u8);
-                writer.WriteObjectValue(Dkim);
+                writer.WriteObjectValue<VerificationDnsRecord>(Dkim, options);
             }
-            if (Dkim2 != null)
+            if (Optional.IsDefined(Dkim2))
             {
                 writer.WritePropertyName("DKIM2"u8);
-                writer.WriteObjectValue(Dkim2);
+                writer.WriteObjectValue<VerificationDnsRecord>(Dkim2, options);
             }
-            if (Dmarc != null)
+            if (Optional.IsDefined(Dmarc))
             {
                 writer.WritePropertyName("DMARC"u8);
-                writer.WriteObjectValue(Dmarc);
+                writer.WriteObjectValue<VerificationDnsRecord>(Dmarc, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Communication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DomainPropertiesVerificationRecords>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Models
             VerificationDnsRecord dkiM2 = default;
             VerificationDnsRecord dmarc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Domain"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DomainPropertiesVerificationRecords(
                 domain,
                 spf,
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Communication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Communication.Models
                         return DeserializeDomainPropertiesVerificationRecords(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainPropertiesVerificationRecords)} does not support reading '{options.Format}' format.");
             }
         }
 

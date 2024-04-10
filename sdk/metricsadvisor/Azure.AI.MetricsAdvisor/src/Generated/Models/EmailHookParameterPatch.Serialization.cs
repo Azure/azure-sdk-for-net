@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(ToList is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ToList))
             {
                 writer.WritePropertyName("toList"u8);
                 writer.WriteStartArray();
@@ -26,6 +26,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<EmailHookParameterPatch>(this);
+            return content;
         }
     }
 }

@@ -33,12 +33,20 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 writer.WriteNull("text");
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MultiLanguageInput>(this);
+            return content;
         }
     }
 }

@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInstanceUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerInstanceUsageListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerInstanceUsageListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<ContainerInstanceUsage> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerInstanceUsage>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInstanceUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerInstanceUsageListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerInstanceUsageListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             IReadOnlyList<ContainerInstanceUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerInstanceUsageListResult(value ?? new ChangeTrackingList<ContainerInstanceUsage>(), serializedAdditionalRawData);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerInstanceUsageListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerInstanceUsageListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerInstanceUsageListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerInstanceUsageListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerInstanceUsageListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

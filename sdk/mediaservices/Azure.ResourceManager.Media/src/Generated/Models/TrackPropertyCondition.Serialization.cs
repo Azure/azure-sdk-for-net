@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrackPropertyCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(Property.ToString());
             writer.WritePropertyName("operation"u8);
             writer.WriteStringValue(Operation.ToString());
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrackPropertyCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Media.Models
             TrackPropertyCompareOperation operation = default;
             string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property0 in element.EnumerateObject())
             {
                 if (property0.NameEquals("property"u8))
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                    rawDataDictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TrackPropertyCondition(property, operation, value, serializedAdditionalRawData);
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeTrackPropertyCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

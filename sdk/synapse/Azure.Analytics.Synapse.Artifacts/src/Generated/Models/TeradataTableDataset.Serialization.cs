@@ -21,35 +21,35 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Structure != null)
+            if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
-                writer.WriteObjectValue(Structure);
+                writer.WriteObjectValue<object>(Structure);
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue(Schema);
+                writer.WriteObjectValue<object>(Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -60,32 +60,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue<DatasetFolder>(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Database != null)
+            if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
-                writer.WriteObjectValue(Database);
+                writer.WriteObjectValue<object>(Database);
             }
-            if (Table != null)
+            if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
-                writer.WriteObjectValue(Table);
+                writer.WriteObjectValue<object>(Table);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -234,12 +234,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 table);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TeradataTableDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTeradataTableDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TeradataTableDataset>(this);
+            return content;
+        }
+
         internal partial class TeradataTableDatasetConverter : JsonConverter<TeradataTableDataset>
         {
             public override void Write(Utf8JsonWriter writer, TeradataTableDataset model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<TeradataTableDataset>(model);
             }
+
             public override TeradataTableDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

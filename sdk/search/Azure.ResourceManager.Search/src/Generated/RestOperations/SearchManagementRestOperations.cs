@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Search.Models;
@@ -57,32 +56,18 @@ namespace Azure.ResourceManager.Search
             return message;
         }
 
-        /// <summary> Gets the quota usage for a search sku in the given subscription. </summary>
-        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <summary> Gets the quota usage for a search SKU in the given subscription. </summary>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API, command line tools, or the portal. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
-        /// <param name="skuName"> The unique search service sku name supported by Azure Cognitive Search. </param>
+        /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="skuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<QuotaUsageResult>> UsageBySubscriptionSkuAsync(string subscriptionId, AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
-            if (skuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var message = CreateUsageBySubscriptionSkuRequest(subscriptionId, location, skuName, searchManagementRequestOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -100,32 +85,18 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Gets the quota usage for a search sku in the given subscription. </summary>
-        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
+        /// <summary> Gets the quota usage for a search SKU in the given subscription. </summary>
+        /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API, command line tools, or the portal. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
-        /// <param name="skuName"> The unique search service sku name supported by Azure Cognitive Search. </param>
+        /// <param name="skuName"> The unique SKU name that identifies a billable tier. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="skuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<QuotaUsageResult> UsageBySubscriptionSku(string subscriptionId, AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (skuName == null)
-            {
-                throw new ArgumentNullException(nameof(skuName));
-            }
-            if (skuName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(skuName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
 
             using var message = CreateUsageBySubscriptionSkuRequest(subscriptionId, location, skuName, searchManagementRequestOptions);
             _pipeline.Send(message, cancellationToken);

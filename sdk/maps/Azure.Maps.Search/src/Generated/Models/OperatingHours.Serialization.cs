@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -44,6 +44,14 @@ namespace Azure.Maps.Search.Models
                 }
             }
             return new OperatingHours(mode, timeRanges ?? new ChangeTrackingList<OperatingHoursTimeRange>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OperatingHours FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOperatingHours(document.RootElement);
         }
     }
 }

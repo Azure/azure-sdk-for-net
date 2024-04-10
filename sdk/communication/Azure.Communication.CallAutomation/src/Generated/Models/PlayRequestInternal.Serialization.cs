@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -20,35 +19,43 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartArray();
             foreach (var item in PlaySources)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<PlaySourceInternal>(item);
             }
             writer.WriteEndArray();
-            if (!(PlayTo is ChangeTrackingList<CommunicationIdentifierModel> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PlayTo))
             {
                 writer.WritePropertyName("playTo"u8);
                 writer.WriteStartArray();
                 foreach (var item in PlayTo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CommunicationIdentifierModel>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (PlayOptions != null)
+            if (Optional.IsDefined(PlayOptions))
             {
                 writer.WritePropertyName("playOptions"u8);
-                writer.WriteObjectValue(PlayOptions);
+                writer.WriteObjectValue<PlayOptionsInternal>(PlayOptions);
             }
-            if (OperationContext != null)
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (OperationCallbackUri != null)
+            if (Optional.IsDefined(OperationCallbackUri))
             {
                 writer.WritePropertyName("operationCallbackUri"u8);
                 writer.WriteStringValue(OperationCallbackUri);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PlayRequestInternal>(this);
+            return content;
         }
     }
 }

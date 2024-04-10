@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (M.HasValue)
+            if (Optional.IsDefined(M))
             {
                 if (M != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("m");
                 }
             }
-            if (EfConstruction.HasValue)
+            if (Optional.IsDefined(EfConstruction))
             {
                 if (EfConstruction != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("efConstruction");
                 }
             }
-            if (EfSearch.HasValue)
+            if (Optional.IsDefined(EfSearch))
             {
                 if (EfSearch != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("efSearch");
                 }
             }
-            if (Metric.HasValue)
+            if (Optional.IsDefined(Metric))
             {
                 if (Metric != null)
                 {
@@ -120,6 +120,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new HnswParameters(m, efConstruction, efSearch, metric);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HnswParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHnswParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HnswParameters>(this);
+            return content;
         }
     }
 }

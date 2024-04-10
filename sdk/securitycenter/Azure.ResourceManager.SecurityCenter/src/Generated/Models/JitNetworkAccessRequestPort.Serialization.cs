@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestPort>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JitNetworkAccessRequestPort)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JitNetworkAccessRequestPort)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("number"u8);
             writer.WriteNumberValue(Number);
-            if (AllowedSourceAddressPrefix != null)
+            if (Optional.IsDefined(AllowedSourceAddressPrefix))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefix"u8);
                 writer.WriteStringValue(AllowedSourceAddressPrefix);
             }
-            if (!(AllowedSourceAddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedSourceAddressPrefixes))
             {
                 writer.WritePropertyName("allowedSourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("statusReason"u8);
             writer.WriteStringValue(StatusReason.ToString());
-            if (MappedPort.HasValue)
+            if (Optional.IsDefined(MappedPort))
             {
                 writer.WritePropertyName("mappedPort"u8);
                 writer.WriteNumberValue(MappedPort.Value);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestPort>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JitNetworkAccessRequestPort)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JitNetworkAccessRequestPort)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             JitNetworkAccessPortStatusReason statusReason = default;
             int? mappedPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("number"u8))
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new JitNetworkAccessRequestPort(
                 number,
                 allowedSourceAddressPrefix,
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JitNetworkAccessRequestPort)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JitNetworkAccessRequestPort)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeJitNetworkAccessRequestPort(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JitNetworkAccessRequestPort)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JitNetworkAccessRequestPort)} does not support reading '{options.Format}' format.");
             }
         }
 

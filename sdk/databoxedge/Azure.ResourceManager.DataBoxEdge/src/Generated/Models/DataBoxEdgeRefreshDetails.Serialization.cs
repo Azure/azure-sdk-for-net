@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeRefreshDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeRefreshDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeRefreshDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (InProgressRefreshJobId != null)
+            if (Optional.IsDefined(InProgressRefreshJobId))
             {
                 writer.WritePropertyName("inProgressRefreshJobId"u8);
                 writer.WriteStringValue(InProgressRefreshJobId);
             }
-            if (LastCompletedRefreshJobTimeInUtc.HasValue)
+            if (Optional.IsDefined(LastCompletedRefreshJobTimeInUtc))
             {
                 writer.WritePropertyName("lastCompletedRefreshJobTimeInUTC"u8);
                 writer.WriteStringValue(LastCompletedRefreshJobTimeInUtc.Value, "O");
             }
-            if (ErrorManifestFile != null)
+            if (Optional.IsDefined(ErrorManifestFile))
             {
                 writer.WritePropertyName("errorManifestFile"u8);
                 writer.WriteStringValue(ErrorManifestFile);
             }
-            if (LastJob != null)
+            if (Optional.IsDefined(LastJob))
             {
                 writer.WritePropertyName("lastJob"u8);
                 writer.WriteStringValue(LastJob);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeRefreshDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeRefreshDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeRefreshDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string errorManifestFile = default;
             string lastJob = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inProgressRefreshJobId"u8))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxEdgeRefreshDetails(inProgressRefreshJobId, lastCompletedRefreshJobTimeInUtc, errorManifestFile, lastJob, serializedAdditionalRawData);
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeRefreshDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeRefreshDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeRefreshDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeRefreshDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeRefreshDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

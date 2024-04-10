@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,19 +23,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBDatabasePropertiesConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBDatabasePropertiesConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBDatabasePropertiesConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Throughput.HasValue)
+            if (Optional.IsDefined(Throughput))
             {
                 writer.WritePropertyName("throughput"u8);
                 writer.WriteNumberValue(Throughput.Value);
             }
-            if (AutoscaleSettings != null)
+            if (Optional.IsDefined(AutoscaleSettings))
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
-                writer.WriteObjectValue(AutoscaleSettings);
+                writer.WriteObjectValue<AutoscaleSettings>(AutoscaleSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBDatabasePropertiesConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBDatabasePropertiesConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBDatabasePropertiesConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             int? throughput = default;
             AutoscaleSettings autoscaleSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("throughput"u8))
@@ -100,11 +101,54 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MongoDBDatabasePropertiesConfig(throughput, autoscaleSettings, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Throughput), out propertyOverride);
+            if (Optional.IsDefined(Throughput) || hasPropertyOverride)
+            {
+                builder.Append("  throughput: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{Throughput.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoscaleSettings), out propertyOverride);
+            if (Optional.IsDefined(AutoscaleSettings) || hasPropertyOverride)
+            {
+                builder.Append("  autoscaleSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, AutoscaleSettings, options, 2, false, "  autoscaleSettings: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MongoDBDatabasePropertiesConfig>.Write(ModelReaderWriterOptions options)
@@ -115,8 +159,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBDatabasePropertiesConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBDatabasePropertiesConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +178,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeMongoDBDatabasePropertiesConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBDatabasePropertiesConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBDatabasePropertiesConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

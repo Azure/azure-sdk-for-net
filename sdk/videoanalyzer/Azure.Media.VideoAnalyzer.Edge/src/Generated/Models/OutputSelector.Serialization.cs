@@ -15,17 +15,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Property.HasValue)
+            if (Optional.IsDefined(Property))
             {
                 writer.WritePropertyName("property"u8);
                 writer.WriteStringValue(Property.Value.ToString());
             }
-            if (Operator.HasValue)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -69,6 +69,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new OutputSelector(property, @operator, value);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OutputSelector FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOutputSelector(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<OutputSelector>(this);
+            return content;
         }
     }
 }

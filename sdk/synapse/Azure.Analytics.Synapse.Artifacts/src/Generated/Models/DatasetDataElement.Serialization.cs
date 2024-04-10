@@ -18,15 +18,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<object>(Name);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteObjectValue(Type);
+                writer.WriteObjectValue<object>(Type);
             }
             writer.WriteEndObject();
         }
@@ -63,12 +63,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new DatasetDataElement(name, type);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DatasetDataElement FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDatasetDataElement(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DatasetDataElement>(this);
+            return content;
+        }
+
         internal partial class DatasetDataElementConverter : JsonConverter<DatasetDataElement>
         {
             public override void Write(Utf8JsonWriter writer, DatasetDataElement model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DatasetDataElement>(model);
             }
+
             public override DatasetDataElement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

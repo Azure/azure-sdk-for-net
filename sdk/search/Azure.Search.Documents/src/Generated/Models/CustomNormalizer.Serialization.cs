@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(TokenFilters is ChangeTrackingList<TokenFilterName> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(CharFilters is ChangeTrackingList<CharFilterName> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CharFilters))
             {
                 writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();
@@ -95,6 +95,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new CustomNormalizer(odataType, name, tokenFilters ?? new ChangeTrackingList<TokenFilterName>(), charFilters ?? new ChangeTrackingList<CharFilterName>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CustomNormalizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomNormalizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CustomNormalizer>(this);
+            return content;
         }
     }
 }

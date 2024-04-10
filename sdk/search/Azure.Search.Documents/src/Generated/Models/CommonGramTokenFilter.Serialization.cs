@@ -23,12 +23,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (IgnoreCase.HasValue)
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (UseQueryMode.HasValue)
+            if (Optional.IsDefined(UseQueryMode))
             {
                 writer.WritePropertyName("queryMode"u8);
                 writer.WriteBooleanValue(UseQueryMode.Value);
@@ -93,6 +93,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new CommonGramTokenFilter(odataType, name, commonWords, ignoreCase, queryMode);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CommonGramTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCommonGramTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CommonGramTokenFilter>(this);
+            return content;
         }
     }
 }

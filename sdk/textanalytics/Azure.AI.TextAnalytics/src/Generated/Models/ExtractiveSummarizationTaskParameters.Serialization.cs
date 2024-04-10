@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -16,27 +15,27 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SentenceCount.HasValue)
+            if (Optional.IsDefined(SentenceCount))
             {
                 writer.WritePropertyName("sentenceCount"u8);
                 writer.WriteNumberValue(SentenceCount.Value);
             }
-            if (SortBy.HasValue)
+            if (Optional.IsDefined(SortBy))
             {
                 writer.WritePropertyName("sortBy"u8);
                 writer.WriteStringValue(SortBy.Value.ToString());
             }
-            if (StringIndexType.HasValue)
+            if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
-            if (ModelVersion != null)
+            if (Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (LoggingOptOut.HasValue)
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
@@ -100,6 +99,22 @@ namespace Azure.AI.TextAnalytics.Models
                 }
             }
             return new ExtractiveSummarizationTaskParameters(loggingOptOut, modelVersion, sentenceCount, sortBy, stringIndexType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExtractiveSummarizationTaskParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExtractiveSummarizationTaskParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ExtractiveSummarizationTaskParameters>(this);
+            return content;
         }
     }
 }

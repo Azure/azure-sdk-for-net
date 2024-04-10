@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,16 +24,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<GremlinDatabaseRestoreResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (!(GraphNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GraphNames))
             {
                 writer.WritePropertyName("graphNames"u8);
                 writer.WriteStartArray();
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<GremlinDatabaseRestoreResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string databaseName = default;
             IList<string> graphNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -106,11 +108,83 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GremlinDatabaseRestoreResourceInfo(databaseName, graphNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
+            if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
+            {
+                builder.Append("  databaseName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DatabaseName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DatabaseName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DatabaseName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GraphNames), out propertyOverride);
+            if (Optional.IsCollectionDefined(GraphNames) || hasPropertyOverride)
+            {
+                if (GraphNames.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  graphNames: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in GraphNames)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<GremlinDatabaseRestoreResourceInfo>.Write(ModelReaderWriterOptions options)
@@ -121,8 +195,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +214,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeGremlinDatabaseRestoreResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GremlinDatabaseRestoreResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -48,24 +48,24 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Initializes a new instance of <see cref="QuotaDetails"/>. </summary>
         /// <param name="used"> Amount of the resource quota used. </param>
         /// <param name="quota"> Resource quota limit. </param>
-        /// <param name="quotaResetDateTime"> Date/time when the resource quota usage will be reset. </param>
-        internal QuotaDetails(int used, int quota, DateTimeOffset quotaResetDateTime)
+        /// <param name="quotaResetsOn"> Date/time when the resource quota usage will be reset. </param>
+        internal QuotaDetails(int used, int quota, DateTimeOffset quotaResetsOn)
         {
             Used = used;
             Quota = quota;
-            QuotaResetDateTime = quotaResetDateTime;
+            QuotaResetsOn = quotaResetsOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaDetails"/>. </summary>
         /// <param name="used"> Amount of the resource quota used. </param>
         /// <param name="quota"> Resource quota limit. </param>
-        /// <param name="quotaResetDateTime"> Date/time when the resource quota usage will be reset. </param>
+        /// <param name="quotaResetsOn"> Date/time when the resource quota usage will be reset. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaDetails(int used, int quota, DateTimeOffset quotaResetDateTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QuotaDetails(int used, int quota, DateTimeOffset quotaResetsOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Used = used;
             Quota = quota;
-            QuotaResetDateTime = quotaResetDateTime;
+            QuotaResetsOn = quotaResetsOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -79,6 +79,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Resource quota limit. </summary>
         public int Quota { get; }
         /// <summary> Date/time when the resource quota usage will be reset. </summary>
-        public DateTimeOffset QuotaResetDateTime { get; }
+        public DateTimeOffset QuotaResetsOn { get; }
     }
 }

@@ -19,17 +19,25 @@ namespace Azure.Quantum.Jobs.Models
             writer.WriteStringValue(Op.ToString());
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value);
+                writer.WriteObjectValue<object>(Value);
             }
-            if (From != null)
+            if (Optional.IsDefined(From))
             {
                 writer.WritePropertyName("from"u8);
                 writer.WriteStringValue(From);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<JsonPatchDocument>(this);
+            return content;
         }
     }
 }

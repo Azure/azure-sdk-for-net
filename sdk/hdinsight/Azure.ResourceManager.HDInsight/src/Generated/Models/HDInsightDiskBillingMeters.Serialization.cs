@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightDiskBillingMeters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightDiskBillingMeters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightDiskBillingMeters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DiskRpMeter != null)
+            if (Optional.IsDefined(DiskRpMeter))
             {
                 writer.WritePropertyName("diskRpMeter"u8);
                 writer.WriteStringValue(DiskRpMeter);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Tier.HasValue)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightDiskBillingMeters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightDiskBillingMeters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightDiskBillingMeters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             string sku = default;
             HDInsightTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskRpMeter"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HDInsightDiskBillingMeters(diskRpMeter, sku, tier, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightDiskBillingMeters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightDiskBillingMeters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightDiskBillingMeters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightDiskBillingMeters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightDiskBillingMeters)} does not support reading '{options.Format}' format.");
             }
         }
 

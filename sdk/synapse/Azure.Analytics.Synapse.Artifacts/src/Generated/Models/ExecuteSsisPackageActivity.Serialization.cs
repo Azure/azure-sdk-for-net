@@ -19,104 +19,104 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<ActivityPolicy>(Policy);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ActivityDependency>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserProperty>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("packageLocation"u8);
-            writer.WriteObjectValue(PackageLocation);
-            if (Runtime != null)
+            writer.WriteObjectValue<SsisPackageLocation>(PackageLocation);
+            if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
-                writer.WriteObjectValue(Runtime);
+                writer.WriteObjectValue<object>(Runtime);
             }
-            if (LoggingLevel != null)
+            if (Optional.IsDefined(LoggingLevel))
             {
                 writer.WritePropertyName("loggingLevel"u8);
-                writer.WriteObjectValue(LoggingLevel);
+                writer.WriteObjectValue<object>(LoggingLevel);
             }
-            if (EnvironmentPath != null)
+            if (Optional.IsDefined(EnvironmentPath))
             {
                 writer.WritePropertyName("environmentPath"u8);
-                writer.WriteObjectValue(EnvironmentPath);
+                writer.WriteObjectValue<object>(EnvironmentPath);
             }
-            if (ExecutionCredential != null)
+            if (Optional.IsDefined(ExecutionCredential))
             {
                 writer.WritePropertyName("executionCredential"u8);
-                writer.WriteObjectValue(ExecutionCredential);
+                writer.WriteObjectValue<SsisExecutionCredential>(ExecutionCredential);
             }
             writer.WritePropertyName("connectVia"u8);
-            writer.WriteObjectValue(ConnectVia);
-            if (!(ProjectParameters is ChangeTrackingDictionary<string, SsisExecutionParameter> collection1 && collection1.IsUndefined))
+            writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
+            if (Optional.IsCollectionDefined(ProjectParameters))
             {
                 writer.WritePropertyName("projectParameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in ProjectParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SsisExecutionParameter>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (!(PackageParameters is ChangeTrackingDictionary<string, SsisExecutionParameter> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(PackageParameters))
             {
                 writer.WritePropertyName("packageParameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in PackageParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SsisExecutionParameter>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (!(ProjectConnectionManagers is ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ProjectConnectionManagers))
             {
                 writer.WritePropertyName("projectConnectionManagers"u8);
                 writer.WriteStartObject();
@@ -132,13 +132,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
+                        writer.WriteObjectValue<SsisExecutionParameter>(item0.Value);
                     }
                     writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
             }
-            if (!(PackageConnectionManagers is ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(PackageConnectionManagers))
             {
                 writer.WritePropertyName("packageConnectionManagers"u8);
                 writer.WriteStartObject();
@@ -154,33 +154,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
+                        writer.WriteObjectValue<SsisExecutionParameter>(item0.Value);
                     }
                     writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
             }
-            if (!(PropertyOverrides is ChangeTrackingDictionary<string, SsisPropertyOverride> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(PropertyOverrides))
             {
                 writer.WritePropertyName("propertyOverrides"u8);
                 writer.WriteStartObject();
                 foreach (var item in PropertyOverrides)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SsisPropertyOverride>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (LogLocation != null)
+            if (Optional.IsDefined(LogLocation))
             {
                 writer.WritePropertyName("logLocation"u8);
-                writer.WriteObjectValue(LogLocation);
+                writer.WriteObjectValue<SsisLogLocation>(LogLocation);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -484,12 +484,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 logLocation);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExecuteSsisPackageActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExecuteSsisPackageActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ExecuteSsisPackageActivity>(this);
+            return content;
+        }
+
         internal partial class ExecuteSsisPackageActivityConverter : JsonConverter<ExecuteSsisPackageActivity>
         {
             public override void Write(Utf8JsonWriter writer, ExecuteSsisPackageActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ExecuteSsisPackageActivity>(model);
             }
+
             public override ExecuteSsisPackageActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

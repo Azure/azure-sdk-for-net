@@ -19,22 +19,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (DateFormat != null)
+            if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
-                writer.WriteObjectValue(DateFormat);
+                writer.WriteObjectValue<object>(DateFormat);
             }
-            if (TimestampFormat != null)
+            if (Optional.IsDefined(TimestampFormat))
             {
                 writer.WritePropertyName("timestampFormat"u8);
-                writer.WriteObjectValue(TimestampFormat);
+                writer.WriteObjectValue<object>(TimestampFormat);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -81,12 +81,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AzureDatabricksDeltaLakeExportCommand(type, additionalProperties, dateFormat, timestampFormat);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureDatabricksDeltaLakeExportCommand FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureDatabricksDeltaLakeExportCommand(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureDatabricksDeltaLakeExportCommand>(this);
+            return content;
+        }
+
         internal partial class AzureDatabricksDeltaLakeExportCommandConverter : JsonConverter<AzureDatabricksDeltaLakeExportCommand>
         {
             public override void Write(Utf8JsonWriter writer, AzureDatabricksDeltaLakeExportCommand model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AzureDatabricksDeltaLakeExportCommand>(model);
             }
+
             public override AzureDatabricksDeltaLakeExportCommand Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

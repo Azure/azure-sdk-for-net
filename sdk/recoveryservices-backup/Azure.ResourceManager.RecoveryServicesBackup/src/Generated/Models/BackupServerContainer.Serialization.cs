@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupServerContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupServerContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupServerContainer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CanReRegister.HasValue)
+            if (Optional.IsDefined(CanReRegister))
             {
                 writer.WritePropertyName("canReRegister"u8);
                 writer.WriteBooleanValue(CanReRegister.Value);
             }
-            if (ContainerId != null)
+            if (Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (ProtectedItemCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemCount))
             {
                 writer.WritePropertyName("protectedItemCount"u8);
                 writer.WriteNumberValue(ProtectedItemCount.Value);
             }
-            if (DpmAgentVersion != null)
+            if (Optional.IsDefined(DpmAgentVersion))
             {
                 writer.WritePropertyName("dpmAgentVersion"u8);
                 writer.WriteStringValue(DpmAgentVersion);
             }
-            if (!(DpmServers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DpmServers))
             {
                 writer.WritePropertyName("dpmServers"u8);
                 writer.WriteStartArray();
@@ -56,44 +56,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsUpgradeAvailable.HasValue)
+            if (Optional.IsDefined(IsUpgradeAvailable))
             {
                 writer.WritePropertyName("upgradeAvailable"u8);
                 writer.WriteBooleanValue(IsUpgradeAvailable.Value);
             }
-            if (ProtectionStatus != null)
+            if (Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
                 writer.WriteStringValue(ProtectionStatus);
             }
-            if (ExtendedInfo != null)
+            if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue<DpmContainerExtendedInfo>(ExtendedInfo, options);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (BackupManagementType.HasValue)
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (RegistrationStatus != null)
+            if (Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (HealthStatus != null)
+            if (Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("containerType"u8);
             writer.WriteStringValue(ContainerType.ToSerialString());
-            if (ProtectableObjectType != null)
+            if (Optional.IsDefined(ProtectableObjectType))
             {
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupServerContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupServerContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupServerContainer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectableContainerType containerType = default;
             string protectableObjectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("canReRegister"u8))
@@ -255,10 +255,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackupServerContainer(
                 friendlyName,
                 backupManagementType,
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupServerContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupServerContainer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupServerContainer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupServerContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupServerContainer)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,15 +15,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target);
+            writer.WriteObjectValue<RemoteDeviceAdapterTarget>(Target);
             writer.WritePropertyName("iotHubDeviceConnection"u8);
-            writer.WriteObjectValue(IotHubDeviceConnection);
+            writer.WriteObjectValue<IotHubDeviceConnection>(IotHubDeviceConnection);
             writer.WriteEndObject();
         }
 
@@ -55,6 +55,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new RemoteDeviceAdapterProperties(description, target, iotHubDeviceConnection);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RemoteDeviceAdapterProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRemoteDeviceAdapterProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RemoteDeviceAdapterProperties>(this);
+            return content;
         }
     }
 }

@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public FtpServerLinkedService(DataFactoryElement<string> host)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
+            Argument.AssertNotNull(host, nameof(host));
 
             Host = host;
             LinkedServiceType = "FtpServer";
@@ -43,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="enableSsl"> If true, connect to the FTP server over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="enableServerCertificateValidation"> If true, validate the FTP server SSL certificate when connect over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
-        internal FtpServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<int> port, FtpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, string encryptedCredential, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal FtpServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<int> port, FtpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             Port = port;
@@ -70,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Username to logon the FTP server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> Password to logon the FTP server. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
         /// <summary> If true, connect to the FTP server over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean). </summary>

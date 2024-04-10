@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableVerticalLimitSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableVerticalLimitSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableVerticalLimitSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EnableEarlyTermination.HasValue)
+            if (Optional.IsDefined(EnableEarlyTermination))
             {
                 writer.WritePropertyName("enableEarlyTermination"u8);
                 writer.WriteBooleanValue(EnableEarlyTermination.Value);
             }
-            if (ExitScore.HasValue)
+            if (Optional.IsDefined(ExitScore))
             {
                 if (ExitScore != null)
                 {
@@ -43,42 +43,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("exitScore");
                 }
             }
-            if (MaxConcurrentTrials.HasValue)
+            if (Optional.IsDefined(MaxConcurrentTrials))
             {
                 writer.WritePropertyName("maxConcurrentTrials"u8);
                 writer.WriteNumberValue(MaxConcurrentTrials.Value);
             }
-            if (MaxCoresPerTrial.HasValue)
+            if (Optional.IsDefined(MaxCoresPerTrial))
             {
                 writer.WritePropertyName("maxCoresPerTrial"u8);
                 writer.WriteNumberValue(MaxCoresPerTrial.Value);
             }
-            if (MaxNodes.HasValue)
+            if (Optional.IsDefined(MaxNodes))
             {
                 writer.WritePropertyName("maxNodes"u8);
                 writer.WriteNumberValue(MaxNodes.Value);
             }
-            if (MaxTrials.HasValue)
+            if (Optional.IsDefined(MaxTrials))
             {
                 writer.WritePropertyName("maxTrials"u8);
                 writer.WriteNumberValue(MaxTrials.Value);
             }
-            if (SweepConcurrentTrials.HasValue)
+            if (Optional.IsDefined(SweepConcurrentTrials))
             {
                 writer.WritePropertyName("sweepConcurrentTrials"u8);
                 writer.WriteNumberValue(SweepConcurrentTrials.Value);
             }
-            if (SweepTrials.HasValue)
+            if (Optional.IsDefined(SweepTrials))
             {
                 writer.WritePropertyName("sweepTrials"u8);
                 writer.WriteNumberValue(SweepTrials.Value);
             }
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
-            if (TrialTimeout.HasValue)
+            if (Optional.IsDefined(TrialTimeout))
             {
                 writer.WritePropertyName("trialTimeout"u8);
                 writer.WriteStringValue(TrialTimeout.Value, "P");
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableVerticalLimitSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableVerticalLimitSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableVerticalLimitSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TimeSpan? timeout = default;
             TimeSpan? trialTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableEarlyTermination"u8))
@@ -228,10 +228,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TableVerticalLimitSettings(
                 enableEarlyTermination,
                 exitScore,
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TableVerticalLimitSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableVerticalLimitSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeTableVerticalLimitSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TableVerticalLimitSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableVerticalLimitSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

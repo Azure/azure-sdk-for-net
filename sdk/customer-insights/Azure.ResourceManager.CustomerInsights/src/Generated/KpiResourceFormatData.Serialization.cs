@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<KpiResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EntityType.HasValue)
+            if (Optional.IsDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToSerialString());
             }
-            if (EntityTypeName != null)
+            if (Optional.IsDefined(EntityTypeName))
             {
                 writer.WritePropertyName("entityTypeName"u8);
                 writer.WriteStringValue(EntityTypeName);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && KpiName != null)
+            if (options.Format != "W" && Optional.IsDefined(KpiName))
             {
                 writer.WritePropertyName("kpiName"u8);
                 writer.WriteStringValue(KpiName);
             }
-            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -92,37 +92,37 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (CalculationWindow.HasValue)
+            if (Optional.IsDefined(CalculationWindow))
             {
                 writer.WritePropertyName("calculationWindow"u8);
                 writer.WriteStringValue(CalculationWindow.Value.ToSerialString());
             }
-            if (CalculationWindowFieldName != null)
+            if (Optional.IsDefined(CalculationWindowFieldName))
             {
                 writer.WritePropertyName("calculationWindowFieldName"u8);
                 writer.WriteStringValue(CalculationWindowFieldName);
             }
-            if (Function.HasValue)
+            if (Optional.IsDefined(Function))
             {
                 writer.WritePropertyName("function"u8);
                 writer.WriteStringValue(Function.Value.ToSerialString());
             }
-            if (Expression != null)
+            if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (!(GroupBy is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupBy))
             {
                 writer.WritePropertyName("groupBy"u8);
                 writer.WriteStartArray();
@@ -132,53 +132,53 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(GroupByMetadata is ChangeTrackingList<KpiGroupByMetadata> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(GroupByMetadata))
             {
                 writer.WritePropertyName("groupByMetadata"u8);
                 writer.WriteStartArray();
                 foreach (var item in GroupByMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KpiGroupByMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ParticipantProfilesMetadata is ChangeTrackingList<KpiParticipantProfilesMetadata> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ParticipantProfilesMetadata))
             {
                 writer.WritePropertyName("participantProfilesMetadata"u8);
                 writer.WriteStartArray();
                 foreach (var item in ParticipantProfilesMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KpiParticipantProfilesMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ThresHolds != null)
+            if (Optional.IsDefined(ThresHolds))
             {
                 writer.WritePropertyName("thresHolds"u8);
-                writer.WriteObjectValue(ThresHolds);
+                writer.WriteObjectValue<KpiThresholds>(ThresHolds, options);
             }
-            if (!(Aliases is ChangeTrackingList<KpiAlias> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Aliases))
             {
                 writer.WritePropertyName("aliases"u8);
                 writer.WriteStartArray();
                 foreach (var item in Aliases)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KpiAlias>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Extracts is ChangeTrackingList<KpiExtract> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Extracts))
             {
                 writer.WritePropertyName("extracts"u8);
                 writer.WriteStartArray();
                 foreach (var item in Extracts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KpiExtract>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<KpiResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CustomerInsights
             IList<KpiAlias> aliases = default;
             IList<KpiExtract> extracts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -468,10 +468,10 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KpiResourceFormatData(
                 id,
                 name,
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.CustomerInsights
                         return DeserializeKpiResourceFormatData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiResourceFormatData)} does not support reading '{options.Format}' format.");
             }
         }
 

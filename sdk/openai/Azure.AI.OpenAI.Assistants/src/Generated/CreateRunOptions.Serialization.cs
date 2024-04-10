@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -23,13 +22,13 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<CreateRunOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateRunOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateRunOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("assistant_id"u8);
             writer.WriteStringValue(AssistantId);
-            if (OverrideModelName != null)
+            if (Optional.IsDefined(OverrideModelName))
             {
                 if (OverrideModelName != null)
                 {
@@ -41,7 +40,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("model");
                 }
             }
-            if (OverrideInstructions != null)
+            if (Optional.IsDefined(OverrideInstructions))
             {
                 if (OverrideInstructions != null)
                 {
@@ -53,7 +52,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("instructions");
                 }
             }
-            if (AdditionalInstructions != null)
+            if (Optional.IsDefined(AdditionalInstructions))
             {
                 if (AdditionalInstructions != null)
                 {
@@ -65,7 +64,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("additional_instructions");
                 }
             }
-            if (!(OverrideTools is ChangeTrackingList<ToolDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OverrideTools))
             {
                 if (OverrideTools != null)
                 {
@@ -73,7 +72,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteStartArray();
                     foreach (var item in OverrideTools)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<ToolDefinition>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -82,7 +81,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("tools");
                 }
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 if (Metadata != null)
                 {
@@ -123,7 +122,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<CreateRunOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreateRunOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CreateRunOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +144,7 @@ namespace Azure.AI.OpenAI.Assistants
             IList<ToolDefinition> tools = default;
             IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assistant_id"u8))
@@ -213,10 +212,10 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CreateRunOptions(
                 assistantId,
                 model,
@@ -236,7 +235,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CreateRunOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateRunOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +251,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeCreateRunOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreateRunOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreateRunOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -270,7 +269,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<CreateRunOptions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

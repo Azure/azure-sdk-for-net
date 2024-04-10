@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDB.Models;
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBUserDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBUserDefinitionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBUserDefinitionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,44 +45,44 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (CustomData != null)
+            if (Optional.IsDefined(CustomData))
             {
                 writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
-            if (!(Roles is ChangeTrackingList<MongoDBRole> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
                 foreach (var item in Roles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MongoDBRole>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Mechanisms != null)
+            if (Optional.IsDefined(Mechanisms))
             {
                 writer.WritePropertyName("mechanisms"u8);
                 writer.WriteStringValue(Mechanisms);
@@ -109,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBUserDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBUserDefinitionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBUserDefinitionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB
             IList<MongoDBRole> roles = default;
             string mechanisms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -215,10 +217,10 @@ namespace Azure.ResourceManager.CosmosDB
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MongoDBUserDefinitionData(
                 id,
                 name,
@@ -233,6 +235,206 @@ namespace Azure.ResourceManager.CosmosDB
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserName), out propertyOverride);
+            if (Optional.IsDefined(UserName) || hasPropertyOverride)
+            {
+                builder.Append("    userName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (UserName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Password), out propertyOverride);
+            if (Optional.IsDefined(Password) || hasPropertyOverride)
+            {
+                builder.Append("    password: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Password.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Password}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Password}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
+            if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
+            {
+                builder.Append("    databaseName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DatabaseName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DatabaseName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DatabaseName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomData), out propertyOverride);
+            if (Optional.IsDefined(CustomData) || hasPropertyOverride)
+            {
+                builder.Append("    customData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CustomData.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CustomData}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CustomData}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Roles), out propertyOverride);
+            if (Optional.IsCollectionDefined(Roles) || hasPropertyOverride)
+            {
+                if (Roles.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    roles: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Roles)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    roles: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mechanisms), out propertyOverride);
+            if (Optional.IsDefined(Mechanisms) || hasPropertyOverride)
+            {
+                builder.Append("    mechanisms: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Mechanisms.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Mechanisms}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Mechanisms}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MongoDBUserDefinitionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBUserDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -241,8 +443,10 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBUserDefinitionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBUserDefinitionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -258,7 +462,7 @@ namespace Azure.ResourceManager.CosmosDB
                         return DeserializeMongoDBUserDefinitionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBUserDefinitionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBUserDefinitionData)} does not support reading '{options.Format}' format.");
             }
         }
 

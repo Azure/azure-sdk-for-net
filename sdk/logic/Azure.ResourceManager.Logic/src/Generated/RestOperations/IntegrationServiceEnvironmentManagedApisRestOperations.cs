@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Logic.Models;
@@ -67,30 +67,9 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IntegrationServiceEnvironmentManagedApiListResult>> ListAsync(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (integrationServiceEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
-            }
-            if (integrationServiceEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroup, integrationServiceEnvironmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +96,9 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IntegrationServiceEnvironmentManagedApiListResult> List(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (integrationServiceEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
-            }
-            if (integrationServiceEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroup, integrationServiceEnvironmentName);
             _pipeline.Send(message, cancellationToken);
@@ -190,38 +148,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="integrationServiceEnvironmentName"/> or <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IntegrationServiceEnvironmentManagedApiData>> GetAsync(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, string apiName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (integrationServiceEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
-            }
-            if (integrationServiceEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
-            }
-            if (apiName == null)
-            {
-                throw new ArgumentNullException(nameof(apiName));
-            }
-            if (apiName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroup, integrationServiceEnvironmentName, apiName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -251,38 +181,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="integrationServiceEnvironmentName"/> or <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IntegrationServiceEnvironmentManagedApiData> Get(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, string apiName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (integrationServiceEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
-            }
-            if (integrationServiceEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
-            }
-            if (apiName == null)
-            {
-                throw new ArgumentNullException(nameof(apiName));
-            }
-            if (apiName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroup, integrationServiceEnvironmentName, apiName);
             _pipeline.Send(message, cancellationToken);
@@ -322,7 +224,7 @@ namespace Azure.ResourceManager.Logic
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<IntegrationServiceEnvironmentManagedApiData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -339,42 +241,11 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="integrationServiceEnvironmentName"/> or <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> PutAsync(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, string apiName, IntegrationServiceEnvironmentManagedApiData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (integrationServiceEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
-            }
-            if (integrationServiceEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
-            }
-            if (apiName == null)
-            {
-                throw new ArgumentNullException(nameof(apiName));
-            }
-            if (apiName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreatePutRequest(subscriptionId, resourceGroup, integrationServiceEnvironmentName, apiName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -399,42 +270,11 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="integrationServiceEnvironmentName"/> or <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Put(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, string apiName, IntegrationServiceEnvironmentManagedApiData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (integrationServiceEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
-            }
-            if (integrationServiceEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
-            }
-            if (apiName == null)
-            {
-                throw new ArgumentNullException(nameof(apiName));
-            }
-            if (apiName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreatePutRequest(subscriptionId, resourceGroup, integrationServiceEnvironmentName, apiName, data);
             _pipeline.Send(message, cancellationToken);
@@ -480,38 +320,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="integrationServiceEnvironmentName"/> or <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, string apiName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (integrationServiceEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
-            }
-            if (integrationServiceEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
-            }
-            if (apiName == null)
-            {
-                throw new ArgumentNullException(nameof(apiName));
-            }
-            if (apiName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroup, integrationServiceEnvironmentName, apiName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -535,38 +347,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/>, <paramref name="integrationServiceEnvironmentName"/> or <paramref name="apiName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, string apiName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (integrationServiceEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
-            }
-            if (integrationServiceEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
-            }
-            if (apiName == null)
-            {
-                throw new ArgumentNullException(nameof(apiName));
-            }
-            if (apiName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(apiName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
+            Argument.AssertNotNullOrEmpty(apiName, nameof(apiName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroup, integrationServiceEnvironmentName, apiName);
             _pipeline.Send(message, cancellationToken);
@@ -604,34 +388,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IntegrationServiceEnvironmentManagedApiListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (integrationServiceEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
-            }
-            if (integrationServiceEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroup, integrationServiceEnvironmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -659,34 +419,10 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroup"/> or <paramref name="integrationServiceEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IntegrationServiceEnvironmentManagedApiListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
-            if (resourceGroup.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroup));
-            }
-            if (integrationServiceEnvironmentName == null)
-            {
-                throw new ArgumentNullException(nameof(integrationServiceEnvironmentName));
-            }
-            if (integrationServiceEnvironmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(integrationServiceEnvironmentName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroup, nameof(resourceGroup));
+            Argument.AssertNotNullOrEmpty(integrationServiceEnvironmentName, nameof(integrationServiceEnvironmentName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroup, integrationServiceEnvironmentName);
             _pipeline.Send(message, cancellationToken);

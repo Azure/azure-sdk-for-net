@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,16 +23,16 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LeaseShareResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LeaseId != null)
+            if (Optional.IsDefined(LeaseId))
             {
                 writer.WritePropertyName("leaseId"u8);
                 writer.WriteStringValue(LeaseId);
             }
-            if (LeaseTimeSeconds != null)
+            if (Optional.IsDefined(LeaseTimeSeconds))
             {
                 writer.WritePropertyName("leaseTimeSeconds"u8);
                 writer.WriteStringValue(LeaseTimeSeconds);
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LeaseShareResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Storage.Models
             string leaseId = default;
             string leaseTimeSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("leaseId"u8))
@@ -92,11 +93,70 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LeaseShareResponse(leaseId, leaseTimeSeconds, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseId), out propertyOverride);
+            if (Optional.IsDefined(LeaseId) || hasPropertyOverride)
+            {
+                builder.Append("  leaseId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (LeaseId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LeaseId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LeaseId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseTimeSeconds), out propertyOverride);
+            if (Optional.IsDefined(LeaseTimeSeconds) || hasPropertyOverride)
+            {
+                builder.Append("  leaseTimeSeconds: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (LeaseTimeSeconds.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LeaseTimeSeconds}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LeaseTimeSeconds}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<LeaseShareResponse>.Write(ModelReaderWriterOptions options)
@@ -107,8 +167,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +186,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeLeaseShareResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

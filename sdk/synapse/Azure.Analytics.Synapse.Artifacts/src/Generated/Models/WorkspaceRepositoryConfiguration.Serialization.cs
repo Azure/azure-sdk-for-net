@@ -18,60 +18,60 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (ProjectName != null)
+            if (Optional.IsDefined(ProjectName))
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
-            if (RepositoryName != null)
+            if (Optional.IsDefined(RepositoryName))
             {
                 writer.WritePropertyName("repositoryName"u8);
                 writer.WriteStringValue(RepositoryName);
             }
-            if (CollaborationBranch != null)
+            if (Optional.IsDefined(CollaborationBranch))
             {
                 writer.WritePropertyName("collaborationBranch"u8);
                 writer.WriteStringValue(CollaborationBranch);
             }
-            if (RootFolder != null)
+            if (Optional.IsDefined(RootFolder))
             {
                 writer.WritePropertyName("rootFolder"u8);
                 writer.WriteStringValue(RootFolder);
             }
-            if (LastCommitId != null)
+            if (Optional.IsDefined(LastCommitId))
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                writer.WriteObjectValue(ClientSecret);
+                writer.WriteObjectValue<GitHubClientSecret>(ClientSecret);
             }
             writer.WriteEndObject();
         }
@@ -173,12 +173,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 clientSecret);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WorkspaceRepositoryConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWorkspaceRepositoryConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<WorkspaceRepositoryConfiguration>(this);
+            return content;
+        }
+
         internal partial class WorkspaceRepositoryConfigurationConverter : JsonConverter<WorkspaceRepositoryConfiguration>
         {
             public override void Write(Utf8JsonWriter writer, WorkspaceRepositoryConfiguration model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<WorkspaceRepositoryConfiguration>(model);
             }
+
             public override WorkspaceRepositoryConfiguration Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

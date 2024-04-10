@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmProtectedItemExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmProtectedItemExtendedInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OldestRecoverOn.HasValue)
+            if (Optional.IsDefined(OldestRecoverOn))
             {
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (OldestRecoveryPointInVault.HasValue)
+            if (Optional.IsDefined(OldestRecoveryPointInVault))
             {
                 writer.WritePropertyName("oldestRecoveryPointInVault"u8);
                 writer.WriteStringValue(OldestRecoveryPointInVault.Value, "O");
             }
-            if (OldestRecoveryPointInArchive.HasValue)
+            if (Optional.IsDefined(OldestRecoveryPointInArchive))
             {
                 writer.WritePropertyName("oldestRecoveryPointInArchive"u8);
                 writer.WriteStringValue(OldestRecoveryPointInArchive.Value, "O");
             }
-            if (NewestRecoveryPointInArchive.HasValue)
+            if (Optional.IsDefined(NewestRecoveryPointInArchive))
             {
                 writer.WritePropertyName("newestRecoveryPointInArchive"u8);
                 writer.WriteStringValue(NewestRecoveryPointInArchive.Value, "O");
             }
-            if (RecoveryPointCount.HasValue)
+            if (Optional.IsDefined(RecoveryPointCount))
             {
                 writer.WritePropertyName("recoveryPointCount"u8);
                 writer.WriteNumberValue(RecoveryPointCount.Value);
             }
-            if (IsPolicyInconsistent.HasValue)
+            if (Optional.IsDefined(IsPolicyInconsistent))
             {
                 writer.WritePropertyName("policyInconsistent"u8);
                 writer.WriteBooleanValue(IsPolicyInconsistent.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmProtectedItemExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmProtectedItemExtendedInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             int? recoveryPointCount = default;
             bool? policyInconsistent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("oldestRecoveryPoint"u8))
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IaasVmProtectedItemExtendedInfo(
                 oldestRecoveryPoint,
                 oldestRecoveryPointInVault,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmProtectedItemExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeIaasVmProtectedItemExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmProtectedItemExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmProtectedItemExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

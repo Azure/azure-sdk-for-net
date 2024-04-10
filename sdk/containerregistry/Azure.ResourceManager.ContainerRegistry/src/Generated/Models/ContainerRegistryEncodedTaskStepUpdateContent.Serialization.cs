@@ -22,38 +22,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEncodedTaskStepUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStepUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStepUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EncodedTaskContent != null)
+            if (Optional.IsDefined(EncodedTaskContent))
             {
                 writer.WritePropertyName("encodedTaskContent"u8);
                 writer.WriteStringValue(EncodedTaskContent);
             }
-            if (EncodedValuesContent != null)
+            if (Optional.IsDefined(EncodedValuesContent))
             {
                 writer.WritePropertyName("encodedValuesContent"u8);
                 writer.WriteStringValue(EncodedValuesContent);
             }
-            if (!(Values is ChangeTrackingList<ContainerRegistryTaskOverridableValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerRegistryTaskOverridableValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StepType.ToString());
-            if (ContextPath != null)
+            if (Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (ContextAccessToken != null)
+            if (Optional.IsDefined(ContextAccessToken))
             {
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryEncodedTaskStepUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStepUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStepUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string contextPath = default;
             string contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encodedTaskContent"u8))
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerRegistryEncodedTaskStepUpdateContent(
                 type,
                 contextPath,
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStepUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStepUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryEncodedTaskStepUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStepUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryEncodedTaskStepUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

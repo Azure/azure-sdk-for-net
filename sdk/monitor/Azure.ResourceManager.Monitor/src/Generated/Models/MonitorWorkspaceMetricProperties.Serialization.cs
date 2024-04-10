@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceMetricProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrometheusQueryEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(PrometheusQueryEndpoint))
             {
                 writer.WritePropertyName("prometheusQueryEndpoint"u8);
                 writer.WriteStringValue(PrometheusQueryEndpoint);
             }
-            if (options.Format != "W" && InternalId != null)
+            if (options.Format != "W" && Optional.IsDefined(InternalId))
             {
                 writer.WritePropertyName("internalId"u8);
                 writer.WriteStringValue(InternalId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceMetricProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string prometheusQueryEndpoint = default;
             string internalId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prometheusQueryEndpoint"u8))
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MonitorWorkspaceMetricProperties(prometheusQueryEndpoint, internalId, serializedAdditionalRawData);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorWorkspaceMetricProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorWorkspaceMetricProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

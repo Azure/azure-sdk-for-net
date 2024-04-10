@@ -23,12 +23,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (IgnoreCase.HasValue)
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Expand.HasValue)
+            if (Optional.IsDefined(Expand))
             {
                 writer.WritePropertyName("expand"u8);
                 writer.WriteBooleanValue(Expand.Value);
@@ -93,6 +93,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new SynonymTokenFilter(odataType, name, synonyms, ignoreCase, expand);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SynonymTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSynonymTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SynonymTokenFilter>(this);
+            return content;
         }
     }
 }

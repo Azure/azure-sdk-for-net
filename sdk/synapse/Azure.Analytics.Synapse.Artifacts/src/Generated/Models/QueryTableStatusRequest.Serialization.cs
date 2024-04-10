@@ -18,25 +18,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxSegmentCount.HasValue)
+            if (Optional.IsDefined(MaxSegmentCount))
             {
                 writer.WritePropertyName("maxSegmentCount"u8);
                 writer.WriteNumberValue(MaxSegmentCount.Value);
             }
-            if (ContinuationToken != null)
+            if (Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("continuationToken"u8);
-                writer.WriteObjectValue(ContinuationToken);
+                writer.WriteObjectValue<object>(ContinuationToken);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<QueryTableStatusRequest>(this);
+            return content;
         }
 
         internal partial class QueryTableStatusRequestConverter : JsonConverter<QueryTableStatusRequest>
         {
             public override void Write(Utf8JsonWriter writer, QueryTableStatusRequest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<QueryTableStatusRequest>(model);
             }
+
             public override QueryTableStatusRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();

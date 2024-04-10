@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<StatelessServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StatelessServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StatelessServiceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("instanceCount"u8);
             writer.WriteNumberValue(InstanceCount);
-            if (MinInstanceCount.HasValue)
+            if (Optional.IsDefined(MinInstanceCount))
             {
                 writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
-            if (MinInstancePercentage.HasValue)
+            if (Optional.IsDefined(MinInstancePercentage))
             {
                 writer.WritePropertyName("minInstancePercentage"u8);
                 writer.WriteNumberValue(MinInstancePercentage.Value);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -48,64 +48,64 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WritePropertyName("serviceTypeName"u8);
             writer.WriteStringValue(ServiceTypeName);
             writer.WritePropertyName("partitionDescription"u8);
-            writer.WriteObjectValue(PartitionDescription);
-            if (ServicePackageActivationMode.HasValue)
+            writer.WriteObjectValue<ManagedServicePartitionScheme>(PartitionDescription, options);
+            if (Optional.IsDefined(ServicePackageActivationMode))
             {
                 writer.WritePropertyName("servicePackageActivationMode"u8);
                 writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
             }
-            if (ServiceDnsName != null)
+            if (Optional.IsDefined(ServiceDnsName))
             {
                 writer.WritePropertyName("serviceDnsName"u8);
                 writer.WriteStringValue(ServiceDnsName);
             }
-            if (PlacementConstraints != null)
+            if (Optional.IsDefined(PlacementConstraints))
             {
                 writer.WritePropertyName("placementConstraints"u8);
                 writer.WriteStringValue(PlacementConstraints);
             }
-            if (!(CorrelationScheme is ChangeTrackingList<ManagedServiceCorrelation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CorrelationScheme))
             {
                 writer.WritePropertyName("correlationScheme"u8);
                 writer.WriteStartArray();
                 foreach (var item in CorrelationScheme)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedServiceCorrelation>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceLoadMetrics is ChangeTrackingList<ManagedServiceLoadMetric> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
             {
                 writer.WritePropertyName("serviceLoadMetrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceLoadMetrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedServiceLoadMetric>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServicePlacementPolicies is ChangeTrackingList<ManagedServicePlacementPolicy> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
             {
                 writer.WritePropertyName("servicePlacementPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServicePlacementPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedServicePlacementPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultMoveCost.HasValue)
+            if (Optional.IsDefined(DefaultMoveCost))
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
-            if (!(ScalingPolicies is ChangeTrackingList<ManagedServiceScalingPolicy> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ScalingPolicies))
             {
                 writer.WritePropertyName("scalingPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScalingPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedServiceScalingPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<StatelessServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StatelessServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StatelessServiceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ServiceFabricManagedServiceMoveCost? defaultMoveCost = default;
             IList<ManagedServiceScalingPolicy> scalingPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceCount"u8))
@@ -295,10 +295,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StatelessServiceProperties(
                 placementConstraints,
                 correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(),
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StatelessServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StatelessServiceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeStatelessServiceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StatelessServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StatelessServiceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

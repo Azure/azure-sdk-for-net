@@ -21,28 +21,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -53,51 +53,51 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("mlEndpoint"u8);
-            writer.WriteObjectValue(MlEndpoint);
+            writer.WriteObjectValue<object>(MlEndpoint);
             writer.WritePropertyName("apiKey"u8);
-            writer.WriteObjectValue(ApiKey);
-            if (UpdateResourceEndpoint != null)
+            writer.WriteObjectValue<SecretBase>(ApiKey);
+            if (Optional.IsDefined(UpdateResourceEndpoint))
             {
                 writer.WritePropertyName("updateResourceEndpoint"u8);
-                writer.WriteObjectValue(UpdateResourceEndpoint);
+                writer.WriteObjectValue<object>(UpdateResourceEndpoint);
             }
-            if (ServicePrincipalId != null)
+            if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId);
+                writer.WriteObjectValue<object>(ServicePrincipalId);
             }
-            if (ServicePrincipalKey != null)
+            if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue(ServicePrincipalKey);
+                writer.WriteObjectValue<SecretBase>(ServicePrincipalKey);
             }
-            if (Tenant != null)
+            if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-                writer.WriteObjectValue(Tenant);
+                writer.WriteObjectValue<object>(Tenant);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<object>(Authentication);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -275,12 +275,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 authentication);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureMLLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureMLLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureMLLinkedService>(this);
+            return content;
+        }
+
         internal partial class AzureMLLinkedServiceConverter : JsonConverter<AzureMLLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, AzureMLLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AzureMLLinkedService>(model);
             }
+
             public override AzureMLLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

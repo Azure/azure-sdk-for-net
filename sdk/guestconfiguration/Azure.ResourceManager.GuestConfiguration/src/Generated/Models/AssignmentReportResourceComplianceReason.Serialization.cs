@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentReportResourceComplianceReason>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Phrase != null)
+            if (options.Format != "W" && Optional.IsDefined(Phrase))
             {
                 writer.WritePropertyName("phrase"u8);
                 writer.WriteStringValue(Phrase);
             }
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentReportResourceComplianceReason>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             string phrase = default;
             string code = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("phrase"u8))
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AssignmentReportResourceComplianceReason(phrase, code, serializedAdditionalRawData);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         return DeserializeAssignmentReportResourceComplianceReason(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support reading '{options.Format}' format.");
             }
         }
 

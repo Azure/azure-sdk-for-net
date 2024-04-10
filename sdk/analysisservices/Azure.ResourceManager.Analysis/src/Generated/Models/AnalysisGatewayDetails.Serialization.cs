@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Analysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisGatewayDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisGatewayDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisGatewayDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (GatewayResourceId != null)
+            if (Optional.IsDefined(GatewayResourceId))
             {
                 writer.WritePropertyName("gatewayResourceId"u8);
                 writer.WriteStringValue(GatewayResourceId);
             }
-            if (options.Format != "W" && GatewayObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(GatewayObjectId))
             {
                 writer.WritePropertyName("gatewayObjectId"u8);
                 writer.WriteStringValue(GatewayObjectId);
             }
-            if (options.Format != "W" && DmtsClusterUri != null)
+            if (options.Format != "W" && Optional.IsDefined(DmtsClusterUri))
             {
                 writer.WritePropertyName("dmtsClusterUri"u8);
                 writer.WriteStringValue(DmtsClusterUri.AbsoluteUri);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Analysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisGatewayDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisGatewayDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisGatewayDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Analysis.Models
             string gatewayObjectId = default;
             Uri dmtsClusterUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("gatewayResourceId"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AnalysisGatewayDetails(gatewayResourceId, gatewayObjectId, dmtsClusterUri, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisGatewayDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisGatewayDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Analysis.Models
                         return DeserializeAnalysisGatewayDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisGatewayDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisGatewayDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

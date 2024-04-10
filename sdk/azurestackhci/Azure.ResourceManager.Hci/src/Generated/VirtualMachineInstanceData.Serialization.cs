@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Hci
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstanceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WriteObjectValue<ArcVmExtendedLocation>(ExtendedLocation, options);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
@@ -53,69 +53,69 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (HardwareProfile != null)
+            if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesHardwareProfile>(HardwareProfile, options);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesNetworkProfile>(NetworkProfile, options);
             }
-            if (OSProfile != null)
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesOSProfile>(OSProfile, options);
             }
-            if (SecurityProfile != null)
+            if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesSecurityProfile>(SecurityProfile, options);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesStorageProfile>(StorageProfile, options);
             }
-            if (HttpProxyConfig != null)
+            if (Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
-                writer.WriteObjectValue(HttpProxyConfig);
+                writer.WriteObjectValue<HttpProxyConfiguration>(HttpProxyConfig, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<VirtualMachineInstanceView>(InstanceView, options);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<VirtualMachineInstanceStatus>(Status, options);
             }
-            if (GuestAgentInstallStatus != null)
+            if (Optional.IsDefined(GuestAgentInstallStatus))
             {
                 writer.WritePropertyName("guestAgentInstallStatus"u8);
-                writer.WriteObjectValue(GuestAgentInstallStatus);
+                writer.WriteObjectValue<GuestAgentInstallStatus>(GuestAgentInstallStatus, options);
             }
-            if (options.Format != "W" && VmId != null)
+            if (options.Format != "W" && Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (ResourceUid != null)
+            if (Optional.IsDefined(ResourceUid))
             {
                 writer.WritePropertyName("resourceUid"u8);
                 writer.WriteStringValue(ResourceUid);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Hci
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstanceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Hci
             string vmId = default;
             string resourceUid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -337,10 +337,10 @@ namespace Azure.ResourceManager.Hci
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineInstanceData(
                 id,
                 name,
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Hci
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstanceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Hci
                         return DeserializeVirtualMachineInstanceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstanceData)} does not support reading '{options.Format}' format.");
             }
         }
 

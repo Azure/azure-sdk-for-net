@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitoringDataSegment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Feature != null)
+            if (Optional.IsDefined(Feature))
             {
                 if (Feature != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("feature");
                 }
             }
-            if (!(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 if (Values != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitoringDataSegment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string feature = default;
             IList<string> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("feature"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MonitoringDataSegment(feature, values ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMonitoringDataSegment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Sphere
             var format = options.Format == "W" ? ((IPersistableModel<SphereCatalogData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SphereCatalogData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SphereCatalogData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,14 +56,19 @@ namespace Azure.ResourceManager.Sphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -92,7 +97,7 @@ namespace Azure.ResourceManager.Sphere
             var format = options.Format == "W" ? ((IPersistableModel<SphereCatalogData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SphereCatalogData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SphereCatalogData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,9 +118,10 @@ namespace Azure.ResourceManager.Sphere
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            Guid? tenantId = default;
             SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -170,6 +176,15 @@ namespace Azure.ResourceManager.Sphere
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("tenantId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            tenantId = property0.Value.GetGuid();
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -184,10 +199,10 @@ namespace Azure.ResourceManager.Sphere
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SphereCatalogData(
                 id,
                 name,
@@ -195,6 +210,7 @@ namespace Azure.ResourceManager.Sphere
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                tenantId,
                 provisioningState,
                 serializedAdditionalRawData);
         }
@@ -208,7 +224,7 @@ namespace Azure.ResourceManager.Sphere
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SphereCatalogData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SphereCatalogData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +240,7 @@ namespace Azure.ResourceManager.Sphere
                         return DeserializeSphereCatalogData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SphereCatalogData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SphereCatalogData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -88,6 +87,14 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 ename,
                 evalue,
                 traceback ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkStatementOutput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkStatementOutput(document.RootElement);
         }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,13 +22,13 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<ModelInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource.AbsoluteUri);
-            if (DataSchema.HasValue)
+            if (Optional.IsDefined(DataSchema))
             {
                 writer.WritePropertyName("dataSchema"u8);
                 writer.WriteStringValue(DataSchema.Value.ToString());
@@ -38,40 +37,40 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndTime, "O");
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (SlidingWindow.HasValue)
+            if (Optional.IsDefined(SlidingWindow))
             {
                 writer.WritePropertyName("slidingWindow"u8);
                 writer.WriteNumberValue(SlidingWindow.Value);
             }
-            if (AlignPolicy != null)
+            if (Optional.IsDefined(AlignPolicy))
             {
                 writer.WritePropertyName("alignPolicy"u8);
-                writer.WriteObjectValue(AlignPolicy);
+                writer.WriteObjectValue<AlignPolicy>(AlignPolicy, options);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && !(Errors is ChangeTrackingList<ErrorResponse> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ErrorResponse>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DiagnosticsInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(DiagnosticsInfo))
             {
                 writer.WritePropertyName("diagnosticsInfo"u8);
-                writer.WriteObjectValue(DiagnosticsInfo);
+                writer.WriteObjectValue<DiagnosticsInfo>(DiagnosticsInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -96,7 +95,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<ModelInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +121,7 @@ namespace Azure.AI.AnomalyDetector
             IReadOnlyList<ErrorResponse> errors = default;
             DiagnosticsInfo diagnosticsInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSource"u8))
@@ -206,10 +205,10 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ModelInfo(
                 dataSource,
                 dataSchema,
@@ -233,7 +232,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ModelInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -249,7 +248,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeModelInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ModelInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -267,7 +266,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ModelInfo>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppendVariableActivity(string name) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             ActivityType = "AppendVariable";
         }

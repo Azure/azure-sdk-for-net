@@ -19,12 +19,12 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("algorithm"u8);
             writer.WriteStringValue(AlgorithmConfigurationName);
-            if (Vectorizer != null)
+            if (Optional.IsDefined(Vectorizer))
             {
                 writer.WritePropertyName("vectorizer"u8);
                 writer.WriteStringValue(Vectorizer);
             }
-            if (CompressionConfigurationName != null)
+            if (Optional.IsDefined(CompressionConfigurationName))
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteStringValue(CompressionConfigurationName);
@@ -66,6 +66,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new VectorSearchProfile(name, algorithm, vectorizer, compression);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VectorSearchProfile FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVectorSearchProfile(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<VectorSearchProfile>(this);
+            return content;
         }
     }
 }

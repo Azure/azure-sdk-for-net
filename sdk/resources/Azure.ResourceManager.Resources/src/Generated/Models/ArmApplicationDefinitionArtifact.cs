@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public ArmApplicationDefinitionArtifact(ArmApplicationDefinitionArtifactName name, Uri uri, ArmApplicationArtifactType artifactType)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Name = name;
             Uri = uri;
@@ -81,10 +78,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The managed application definition artifact name. </summary>
+        [WirePath("name")]
         public ArmApplicationDefinitionArtifactName Name { get; set; }
         /// <summary> The managed application definition artifact blob uri. </summary>
+        [WirePath("uri")]
         public Uri Uri { get; set; }
         /// <summary> The managed application definition artifact type. </summary>
+        [WirePath("type")]
         public ArmApplicationArtifactType ArtifactType { get; set; }
     }
 }

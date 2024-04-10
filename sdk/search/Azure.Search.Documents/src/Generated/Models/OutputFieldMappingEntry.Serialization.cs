@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (TargetName != null)
+            if (Optional.IsDefined(TargetName))
             {
                 writer.WritePropertyName("targetName"u8);
                 writer.WriteStringValue(TargetName);
@@ -47,6 +47,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new OutputFieldMappingEntry(name, targetName);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OutputFieldMappingEntry FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOutputFieldMappingEntry(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<OutputFieldMappingEntry>(this);
+            return content;
         }
     }
 }

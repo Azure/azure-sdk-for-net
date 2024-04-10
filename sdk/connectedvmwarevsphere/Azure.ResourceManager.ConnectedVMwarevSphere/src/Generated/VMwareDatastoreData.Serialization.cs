@@ -25,21 +25,21 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var format = options.Format == "W" ? ((IPersistableModel<VMwareDatastoreData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareDatastoreData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareDatastoreData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,64 +67,64 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Uuid != null)
+            if (options.Format != "W" && Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (VCenterId != null)
+            if (Optional.IsDefined(VCenterId))
             {
                 writer.WritePropertyName("vCenterId"u8);
                 writer.WriteStringValue(VCenterId);
             }
-            if (MoRefId != null)
+            if (Optional.IsDefined(MoRefId))
             {
                 writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
-            if (InventoryItemId != null)
+            if (Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (options.Format != "W" && MoName != null)
+            if (options.Format != "W" && Optional.IsDefined(MoName))
             {
                 writer.WritePropertyName("moName"u8);
                 writer.WriteStringValue(MoName);
             }
-            if (options.Format != "W" && !(Statuses is ChangeTrackingList<VMwareResourceStatus> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareResourceStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CustomResourceName != null)
+            if (options.Format != "W" && Optional.IsDefined(CustomResourceName))
             {
                 writer.WritePropertyName("customResourceName"u8);
                 writer.WriteStringValue(CustomResourceName);
             }
-            if (options.Format != "W" && CapacityGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityGB))
             {
                 writer.WritePropertyName("capacityGB"u8);
                 writer.WriteNumberValue(CapacityGB.Value);
             }
-            if (options.Format != "W" && FreeSpaceGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FreeSpaceGB))
             {
                 writer.WritePropertyName("freeSpaceGB"u8);
                 writer.WriteNumberValue(FreeSpaceGB.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var format = options.Format == "W" ? ((IPersistableModel<VMwareDatastoreData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareDatastoreData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareDatastoreData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             long? freeSpaceGB = default;
             VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -332,10 +332,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VMwareDatastoreData(
                 id,
                 name,
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareDatastoreData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareDatastoreData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return DeserializeVMwareDatastoreData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareDatastoreData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareDatastoreData)} does not support reading '{options.Format}' format.");
             }
         }
 

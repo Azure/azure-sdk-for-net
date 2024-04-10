@@ -7,8 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -97,6 +95,14 @@ namespace Azure.Communication.CallingServer
                 subject,
                 callbackUri,
                 mediaSubscriptionId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CallConnectionPropertiesInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCallConnectionPropertiesInternal(document.RootElement);
         }
     }
 }

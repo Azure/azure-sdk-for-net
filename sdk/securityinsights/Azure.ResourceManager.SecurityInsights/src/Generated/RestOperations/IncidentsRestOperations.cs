@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -87,30 +87,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IncidentList>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, filter, orderBy, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -141,30 +120,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IncidentList> List(string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, filter, orderBy, top, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -214,38 +172,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityInsightsIncidentData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, incidentId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -275,38 +205,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityInsightsIncidentData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, workspaceName, incidentId);
             _pipeline.Send(message, cancellationToken);
@@ -346,7 +248,7 @@ namespace Azure.ResourceManager.SecurityInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<SecurityInsightsIncidentData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -363,42 +265,11 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityInsightsIncidentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, SecurityInsightsIncidentData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, incidentId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -428,42 +299,11 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityInsightsIncidentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, SecurityInsightsIncidentData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, workspaceName, incidentId, data);
             _pipeline.Send(message, cancellationToken);
@@ -514,38 +354,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, workspaceName, incidentId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -569,38 +381,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, workspaceName, incidentId);
             _pipeline.Send(message, cancellationToken);
@@ -647,38 +431,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IncidentAlertList>> ListAlertsAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var message = CreateListAlertsRequest(subscriptionId, resourceGroupName, workspaceName, incidentId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -706,38 +462,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IncidentAlertList> ListAlerts(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var message = CreateListAlertsRequest(subscriptionId, resourceGroupName, workspaceName, incidentId);
             _pipeline.Send(message, cancellationToken);
@@ -788,38 +516,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IncidentBookmarkList>> ListBookmarksAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var message = CreateListBookmarksRequest(subscriptionId, resourceGroupName, workspaceName, incidentId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -847,38 +547,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IncidentBookmarkList> ListBookmarks(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var message = CreateListBookmarksRequest(subscriptionId, resourceGroupName, workspaceName, incidentId);
             _pipeline.Send(message, cancellationToken);
@@ -929,38 +601,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecurityInsightsIncidentEntitiesResult>> ListEntitiesAsync(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var message = CreateListEntitiesRequest(subscriptionId, resourceGroupName, workspaceName, incidentId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -988,38 +632,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecurityInsightsIncidentEntitiesResult> ListEntities(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
-            if (incidentId == null)
-            {
-                throw new ArgumentNullException(nameof(incidentId));
-            }
-            if (incidentId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(incidentId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
 
             using var message = CreateListEntitiesRequest(subscriptionId, resourceGroupName, workspaceName, incidentId);
             _pipeline.Send(message, cancellationToken);
@@ -1065,34 +681,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IncidentList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, filter, orderBy, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1124,34 +716,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IncidentList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (workspaceName == null)
-            {
-                throw new ArgumentNullException(nameof(workspaceName));
-            }
-            if (workspaceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(workspaceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, filter, orderBy, top, skipToken);
             _pipeline.Send(message, cancellationToken);

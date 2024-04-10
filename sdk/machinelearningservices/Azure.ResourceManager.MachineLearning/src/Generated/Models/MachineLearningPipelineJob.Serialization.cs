@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningPipelineJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningPipelineJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningPipelineJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Inputs is ChangeTrackingDictionary<string, MachineLearningJobInput> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 if (Inputs != null)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Inputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<MachineLearningJobInput>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputs");
                 }
             }
-            if (!(Jobs is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Jobs))
             {
                 if (Jobs != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobs");
                 }
             }
-            if (!(Outputs is ChangeTrackingDictionary<string, MachineLearningJobOutput> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 if (Outputs != null)
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Outputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<MachineLearningJobOutput>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("outputs");
                 }
             }
-            if (Settings != null)
+            if (Optional.IsDefined(Settings))
             {
                 if (Settings != null)
                 {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("settings");
                 }
             }
-            if (SourceJobId != null)
+            if (Optional.IsDefined(SourceJobId))
             {
                 if (SourceJobId != null)
                 {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sourceJobId");
                 }
             }
-            if (ComponentId != null)
+            if (Optional.IsDefined(ComponentId))
             {
                 if (ComponentId != null)
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("componentId");
                 }
             }
-            if (ComputeId != null)
+            if (Optional.IsDefined(ComputeId))
             {
                 if (ComputeId != null)
                 {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("computeId");
                 }
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -159,43 +159,43 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (ExperimentName != null)
+            if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
                 writer.WriteStringValue(ExperimentName);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    writer.WriteObjectValue<MachineLearningIdentityConfiguration>(Identity, options);
                 }
                 else
                 {
                     writer.WriteNull("identity");
                 }
             }
-            if (IsArchived.HasValue)
+            if (Optional.IsDefined(IsArchived))
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
-            if (NotificationSetting != null)
+            if (Optional.IsDefined(NotificationSetting))
             {
                 if (NotificationSetting != null)
                 {
                     writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue(NotificationSetting);
+                    writer.WriteObjectValue<NotificationSetting>(NotificationSetting, options);
                 }
                 else
                 {
                     writer.WriteNull("notificationSetting");
                 }
             }
-            if (!(SecretsConfiguration is ChangeTrackingDictionary<string, SecretConfiguration> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(SecretsConfiguration))
             {
                 if (SecretsConfiguration != null)
                 {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in SecretsConfiguration)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<SecretConfiguration>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("secretsConfiguration");
                 }
             }
-            if (!(Services is ChangeTrackingDictionary<string, MachineLearningJobService> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
                 {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Services)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<MachineLearningJobService>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -231,12 +231,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("services");
                 }
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningPipelineJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningPipelineJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningPipelineJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputs"u8))
@@ -567,10 +567,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningPipelineJob(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningPipelineJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningPipelineJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningPipelineJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningPipelineJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningPipelineJob)} does not support reading '{options.Format}' format.");
             }
         }
 

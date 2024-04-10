@@ -15,7 +15,7 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -23,7 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue<TimeSeriesHierarchySource>(Source);
             writer.WriteEndObject();
         }
 
@@ -55,6 +55,22 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
             }
             return new TimeSeriesHierarchy(id, name, source);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TimeSeriesHierarchy FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTimeSeriesHierarchy(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TimeSeriesHierarchy>(this);
+            return content;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataShare
             var format = options.Format == "W" ? ((IPersistableModel<DataShareConsumerInvitationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataShareConsumerInvitationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataShareConsumerInvitationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,81 +43,81 @@ namespace Azure.ResourceManager.DataShare
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DataSetCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataSetCount))
             {
                 writer.WritePropertyName("dataSetCount"u8);
                 writer.WriteNumberValue(DataSetCount.Value);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WritePropertyName("invitationId"u8);
             writer.WriteStringValue(InvitationId);
-            if (options.Format != "W" && InvitationStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InvitationStatus))
             {
                 writer.WritePropertyName("invitationStatus"u8);
                 writer.WriteStringValue(InvitationStatus.Value.ToString());
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && ProviderEmail != null)
+            if (options.Format != "W" && Optional.IsDefined(ProviderEmail))
             {
                 writer.WritePropertyName("providerEmail"u8);
                 writer.WriteStringValue(ProviderEmail);
             }
-            if (options.Format != "W" && ProviderName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProviderName))
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (options.Format != "W" && ProviderTenantName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProviderTenantName))
             {
                 writer.WritePropertyName("providerTenantName"u8);
                 writer.WriteStringValue(ProviderTenantName);
             }
-            if (options.Format != "W" && RespondedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RespondedOn))
             {
                 writer.WritePropertyName("respondedAt"u8);
                 writer.WriteStringValue(RespondedOn.Value, "O");
             }
-            if (options.Format != "W" && SentOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SentOn))
             {
                 writer.WritePropertyName("sentAt"u8);
                 writer.WriteStringValue(SentOn.Value, "O");
             }
-            if (options.Format != "W" && ShareName != null)
+            if (options.Format != "W" && Optional.IsDefined(ShareName))
             {
                 writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);
             }
-            if (options.Format != "W" && TermsOfUse != null)
+            if (options.Format != "W" && Optional.IsDefined(TermsOfUse))
             {
                 writer.WritePropertyName("termsOfUse"u8);
                 writer.WriteStringValue(TermsOfUse);
             }
-            if (options.Format != "W" && UserEmail != null)
+            if (options.Format != "W" && Optional.IsDefined(UserEmail))
             {
                 writer.WritePropertyName("userEmail"u8);
                 writer.WriteStringValue(UserEmail);
             }
-            if (options.Format != "W" && UserName != null)
+            if (options.Format != "W" && Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataShare
             var format = options.Format == "W" ? ((IPersistableModel<DataShareConsumerInvitationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataShareConsumerInvitationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataShareConsumerInvitationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataShare
             string userEmail = default;
             string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -321,10 +321,10 @@ namespace Azure.ResourceManager.DataShare
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataShareConsumerInvitationData(
                 id,
                 name,
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DataShare
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataShareConsumerInvitationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataShareConsumerInvitationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.DataShare
                         return DeserializeDataShareConsumerInvitationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataShareConsumerInvitationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataShareConsumerInvitationData)} does not support reading '{options.Format}' format.");
             }
         }
 

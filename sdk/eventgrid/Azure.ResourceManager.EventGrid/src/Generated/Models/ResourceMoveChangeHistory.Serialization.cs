@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceMoveChangeHistory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AzureSubscriptionId != null)
+            if (Optional.IsDefined(AzureSubscriptionId))
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId);
             }
-            if (ResourceGroupName != null)
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (ChangedTimeUtc.HasValue)
+            if (Optional.IsDefined(ChangedTimeUtc))
             {
                 writer.WritePropertyName("changedTimeUtc"u8);
                 writer.WriteStringValue(ChangedTimeUtc.Value, "O");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceMoveChangeHistory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             string resourceGroupName = default;
             DateTimeOffset? changedTimeUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureSubscriptionId"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceMoveChangeHistory(azureSubscriptionId, resourceGroupName, changedTimeUtc, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeResourceMoveChangeHistory(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support reading '{options.Format}' format.");
             }
         }
 

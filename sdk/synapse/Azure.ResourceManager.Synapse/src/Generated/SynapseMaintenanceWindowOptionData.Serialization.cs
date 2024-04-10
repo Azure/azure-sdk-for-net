@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseMaintenanceWindowOptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseMaintenanceWindowOptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseMaintenanceWindowOptionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (!(MaintenanceWindowCycles is ChangeTrackingList<SynapseMaintenanceWindowTimeRange> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MaintenanceWindowCycles))
             {
                 writer.WritePropertyName("maintenanceWindowCycles"u8);
                 writer.WriteStartArray();
                 foreach (var item in MaintenanceWindowCycles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SynapseMaintenanceWindowTimeRange>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (MinDurationInMinutes.HasValue)
+            if (Optional.IsDefined(MinDurationInMinutes))
             {
                 writer.WritePropertyName("minDurationInMinutes"u8);
                 writer.WriteNumberValue(MinDurationInMinutes.Value);
             }
-            if (DefaultDurationInMinutes.HasValue)
+            if (Optional.IsDefined(DefaultDurationInMinutes))
             {
                 writer.WritePropertyName("defaultDurationInMinutes"u8);
                 writer.WriteNumberValue(DefaultDurationInMinutes.Value);
             }
-            if (MinCycles.HasValue)
+            if (Optional.IsDefined(MinCycles))
             {
                 writer.WritePropertyName("minCycles"u8);
                 writer.WriteNumberValue(MinCycles.Value);
             }
-            if (TimeGranularityInMinutes.HasValue)
+            if (Optional.IsDefined(TimeGranularityInMinutes))
             {
                 writer.WritePropertyName("timeGranularityInMinutes"u8);
                 writer.WriteNumberValue(TimeGranularityInMinutes.Value);
             }
-            if (AllowMultipleMaintenanceWindowsPerCycle.HasValue)
+            if (Optional.IsDefined(AllowMultipleMaintenanceWindowsPerCycle))
             {
                 writer.WritePropertyName("allowMultipleMaintenanceWindowsPerCycle"u8);
                 writer.WriteBooleanValue(AllowMultipleMaintenanceWindowsPerCycle.Value);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseMaintenanceWindowOptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseMaintenanceWindowOptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseMaintenanceWindowOptionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Synapse
             int? timeGranularityInMinutes = default;
             bool? allowMultipleMaintenanceWindowsPerCycle = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -250,10 +250,10 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SynapseMaintenanceWindowOptionData(
                 id,
                 name,
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Synapse
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseMaintenanceWindowOptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseMaintenanceWindowOptionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Synapse
                         return DeserializeSynapseMaintenanceWindowOptionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseMaintenanceWindowOptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseMaintenanceWindowOptionData)} does not support reading '{options.Format}' format.");
             }
         }
 

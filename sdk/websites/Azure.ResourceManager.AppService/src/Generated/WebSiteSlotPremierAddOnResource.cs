@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
@@ -282,10 +280,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
         public virtual async Task<Response<WebSiteSlotPremierAddOnResource>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
-            if (premierAddOn == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOn));
-            }
+            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
 
             using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnResource.Update");
             scope.Start();
@@ -327,10 +322,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
         public virtual Response<WebSiteSlotPremierAddOnResource> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
-            if (premierAddOn == null)
-            {
-                throw new ArgumentNullException(nameof(premierAddOn));
-            }
+            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
 
             using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnResource.Update");
             scope.Start();

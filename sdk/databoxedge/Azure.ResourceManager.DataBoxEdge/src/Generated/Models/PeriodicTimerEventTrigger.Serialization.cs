@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeriodicTimerEventTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeriodicTimerEventTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeriodicTimerEventTrigger)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("sourceInfo"u8);
-            writer.WriteObjectValue(SourceInfo);
+            writer.WriteObjectValue<PeriodicTimerSourceInfo>(SourceInfo, options);
             writer.WritePropertyName("sinkInfo"u8);
-            writer.WriteObjectValue(SinkInfo);
-            if (CustomContextTag != null)
+            writer.WriteObjectValue<DataBoxEdgeRoleSinkInfo>(SinkInfo, options);
+            if (Optional.IsDefined(CustomContextTag))
             {
                 writer.WritePropertyName("customContextTag"u8);
                 writer.WriteStringValue(CustomContextTag);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeriodicTimerEventTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeriodicTimerEventTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeriodicTimerEventTrigger)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             DataBoxEdgeRoleSinkInfo sinkInfo = default;
             string customContextTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PeriodicTimerEventTrigger(
                 id,
                 name,
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeriodicTimerEventTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeriodicTimerEventTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializePeriodicTimerEventTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeriodicTimerEventTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeriodicTimerEventTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (MaxEventsPerBatch.HasValue)
+            if (Optional.IsDefined(MaxEventsPerBatch))
             {
                 writer.WritePropertyName("maxEventsPerBatch"u8);
                 writer.WriteNumberValue(MaxEventsPerBatch.Value);
             }
-            if (PreferredBatchSizeInKilobytes.HasValue)
+            if (Optional.IsDefined(PreferredBatchSizeInKilobytes))
             {
                 writer.WritePropertyName("preferredBatchSizeInKilobytes"u8);
                 writer.WriteNumberValue(PreferredBatchSizeInKilobytes.Value);
             }
-            if (!(DeliveryAttributeMappings is ChangeTrackingList<DeliveryAttributeMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
             {
                 writer.WritePropertyName("deliveryAttributeMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in DeliveryAttributeMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeliveryAttributeMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             int? preferredBatchSizeInKilobytes = default;
             IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureFunctionEventSubscriptionDestination(
                 endpointType,
                 serializedAdditionalRawData,
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeAzureFunctionEventSubscriptionDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

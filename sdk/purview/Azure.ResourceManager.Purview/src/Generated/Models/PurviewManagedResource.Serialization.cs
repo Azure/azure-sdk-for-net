@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Purview.Models
             var format = options.Format == "W" ? ((IPersistableModel<PurviewManagedResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && EventHubNamespace != null)
+            if (options.Format != "W" && Optional.IsDefined(EventHubNamespace))
             {
                 writer.WritePropertyName("eventHubNamespace"u8);
                 writer.WriteStringValue(EventHubNamespace);
             }
-            if (options.Format != "W" && ResourceGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && StorageAccount != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStringValue(StorageAccount);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Purview.Models
             var format = options.Format == "W" ? ((IPersistableModel<PurviewManagedResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Purview.Models
             ResourceIdentifier resourceGroup = default;
             ResourceIdentifier storageAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventHubNamespace"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Purview.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PurviewManagedResource(eventHubNamespace, resourceGroup, storageAccount, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Purview.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Purview.Models
                         return DeserializePurviewManagedResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewManagedResource)} does not support reading '{options.Format}' format.");
             }
         }
 

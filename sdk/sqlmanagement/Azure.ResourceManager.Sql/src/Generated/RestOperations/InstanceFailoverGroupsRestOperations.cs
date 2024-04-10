@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Sql.Models;
@@ -67,22 +67,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<InstanceFailoverGroupListResult>> ListByLocationAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByLocationRequest(subscriptionId, resourceGroupName, locationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -109,22 +95,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<InstanceFailoverGroupListResult> ListByLocation(string subscriptionId, string resourceGroupName, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByLocationRequest(subscriptionId, resourceGroupName, locationName);
             _pipeline.Send(message, cancellationToken);
@@ -174,30 +146,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<InstanceFailoverGroupData>> GetAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, locationName, failoverGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -227,30 +178,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<InstanceFailoverGroupData> Get(string subscriptionId, string resourceGroupName, AzureLocation locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, locationName, failoverGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -290,7 +220,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<InstanceFailoverGroupData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -307,34 +237,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, string failoverGroupName, InstanceFailoverGroupData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, locationName, failoverGroupName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -360,34 +266,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, AzureLocation locationName, string failoverGroupName, InstanceFailoverGroupData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, locationName, failoverGroupName, data);
             _pipeline.Send(message, cancellationToken);
@@ -433,30 +315,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, locationName, failoverGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -481,30 +342,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, AzureLocation locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, locationName, failoverGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -552,30 +392,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> FailoverAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var message = CreateFailoverRequest(subscriptionId, resourceGroupName, locationName, failoverGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -599,30 +418,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Failover(string subscriptionId, string resourceGroupName, AzureLocation locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var message = CreateFailoverRequest(subscriptionId, resourceGroupName, locationName, failoverGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -669,30 +467,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ForceFailoverAllowDataLossAsync(string subscriptionId, string resourceGroupName, AzureLocation locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var message = CreateForceFailoverAllowDataLossRequest(subscriptionId, resourceGroupName, locationName, failoverGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -716,30 +493,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="failoverGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ForceFailoverAllowDataLoss(string subscriptionId, string resourceGroupName, AzureLocation locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var message = CreateForceFailoverAllowDataLossRequest(subscriptionId, resourceGroupName, locationName, failoverGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -777,26 +533,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<InstanceFailoverGroupListResult>> ListByLocationNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByLocationNextPageRequest(nextLink, subscriptionId, resourceGroupName, locationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -824,26 +563,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<InstanceFailoverGroupListResult> ListByLocationNextPage(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListByLocationNextPageRequest(nextLink, subscriptionId, resourceGroupName, locationName);
             _pipeline.Send(message, cancellationToken);

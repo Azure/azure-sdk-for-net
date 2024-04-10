@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataShareEmailRegistration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataShareEmailRegistration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataShareEmailRegistration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ActivationCode != null)
+            if (Optional.IsDefined(ActivationCode))
             {
                 writer.WritePropertyName("activationCode"u8);
                 writer.WriteStringValue(ActivationCode);
             }
-            if (options.Format != "W" && ActivationExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActivationExpireOn))
             {
                 writer.WritePropertyName("activationExpirationDate"u8);
                 writer.WriteStringValue(ActivationExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Email != null)
+            if (options.Format != "W" && Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (options.Format != "W" && RegistrationStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus.Value.ToString());
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataShareEmailRegistration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataShareEmailRegistration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataShareEmailRegistration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataShare.Models
             DataShareEmailRegistrationStatus? registrationStatus = default;
             Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activationCode"u8))
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataShareEmailRegistration(
                 activationCode,
                 activationExpirationDate,
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataShareEmailRegistration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataShareEmailRegistration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeDataShareEmailRegistration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataShareEmailRegistration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataShareEmailRegistration)} does not support reading '{options.Format}' format.");
             }
         }
 

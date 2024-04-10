@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkProfileOutboundIPs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkProfileOutboundIPs)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkProfileOutboundIPs)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(PublicIPs is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIPs))
             {
                 writer.WritePropertyName("publicIPs"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkProfileOutboundIPs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkProfileOutboundIPs)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkProfileOutboundIPs)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             IReadOnlyList<IPAddress> publicIPs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIPs"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkProfileOutboundIPs(publicIPs ?? new ChangeTrackingList<IPAddress>(), serializedAdditionalRawData);
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkProfileOutboundIPs)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkProfileOutboundIPs)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeNetworkProfileOutboundIPs(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkProfileOutboundIPs)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkProfileOutboundIPs)} does not support reading '{options.Format}' format.");
             }
         }
 

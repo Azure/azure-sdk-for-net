@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ArtifactId != null)
+            if (Optional.IsDefined(ArtifactId))
             {
                 writer.WritePropertyName("artifactId"u8);
                 writer.WriteStringValue(ArtifactId);
@@ -35,12 +35,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("file"u8);
             writer.WriteStringValue(File);
-            if (ClassName != null)
+            if (Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className"u8);
                 writer.WriteStringValue(ClassName);
             }
-            if (!(Arguments is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Jars is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Jars))
             {
                 writer.WritePropertyName("jars"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PythonFiles is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(PythonFiles))
             {
                 writer.WritePropertyName("pyFiles"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Files is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Archives is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Archives))
             {
                 writer.WritePropertyName("archives"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Configuration is ChangeTrackingDictionary<string, string> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Configuration))
             {
                 writer.WritePropertyName("conf"u8);
                 writer.WriteStartObject();
@@ -101,32 +101,40 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 }
                 writer.WriteEndObject();
             }
-            if (DriverMemory != null)
+            if (Optional.IsDefined(DriverMemory))
             {
                 writer.WritePropertyName("driverMemory"u8);
                 writer.WriteStringValue(DriverMemory);
             }
-            if (DriverCores.HasValue)
+            if (Optional.IsDefined(DriverCores))
             {
                 writer.WritePropertyName("driverCores"u8);
                 writer.WriteNumberValue(DriverCores.Value);
             }
-            if (ExecutorMemory != null)
+            if (Optional.IsDefined(ExecutorMemory))
             {
                 writer.WritePropertyName("executorMemory"u8);
                 writer.WriteStringValue(ExecutorMemory);
             }
-            if (ExecutorCores.HasValue)
+            if (Optional.IsDefined(ExecutorCores))
             {
                 writer.WritePropertyName("executorCores"u8);
                 writer.WriteNumberValue(ExecutorCores.Value);
             }
-            if (ExecutorCount.HasValue)
+            if (Optional.IsDefined(ExecutorCount))
             {
                 writer.WritePropertyName("numExecutors"u8);
                 writer.WriteNumberValue(ExecutorCount.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SparkBatchJobOptions>(this);
+            return content;
         }
     }
 }

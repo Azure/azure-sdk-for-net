@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomLocationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<CustomLocationAuthentication>(Authentication, options);
             }
-            if (!(ClusterExtensionIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ClusterExtensionIds))
             {
                 writer.WritePropertyName("clusterExtensionIds"u8);
                 writer.WriteStartArray();
@@ -65,27 +65,27 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (HostResourceId != null)
+            if (Optional.IsDefined(HostResourceId))
             {
                 writer.WritePropertyName("hostResourceId"u8);
                 writer.WriteStringValue(HostResourceId);
             }
-            if (HostType.HasValue)
+            if (Optional.IsDefined(HostType))
             {
                 writer.WritePropertyName("hostType"u8);
                 writer.WriteStringValue(HostType.Value.ToString());
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomLocationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             string @namespace = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -242,10 +242,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CustomLocationPatch(
                 identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                         return DeserializeCustomLocationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomLocationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

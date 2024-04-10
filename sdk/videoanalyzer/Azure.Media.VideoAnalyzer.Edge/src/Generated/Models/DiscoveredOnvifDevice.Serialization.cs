@@ -16,17 +16,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ServiceIdentifier != null)
+            if (Optional.IsDefined(ServiceIdentifier))
             {
                 writer.WritePropertyName("serviceIdentifier"u8);
                 writer.WriteStringValue(ServiceIdentifier);
             }
-            if (RemoteIPAddress != null)
+            if (Optional.IsDefined(RemoteIPAddress))
             {
                 writer.WritePropertyName("remoteIPAddress"u8);
                 writer.WriteStringValue(RemoteIPAddress);
             }
-            if (!(Scopes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Endpoints is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
@@ -101,6 +101,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new DiscoveredOnvifDevice(serviceIdentifier, remoteIPAddress, scopes ?? new ChangeTrackingList<string>(), endpoints ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DiscoveredOnvifDevice FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDiscoveredOnvifDevice(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DiscoveredOnvifDevice>(this);
+            return content;
         }
     }
 }

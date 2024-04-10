@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupResourceConfigProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupResourceConfigProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (StorageModelType.HasValue)
+            if (Optional.IsDefined(StorageModelType))
             {
                 writer.WritePropertyName("storageModelType"u8);
                 writer.WriteStringValue(StorageModelType.Value.ToString());
             }
-            if (StorageType.HasValue)
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (StorageTypeState.HasValue)
+            if (Optional.IsDefined(StorageTypeState))
             {
                 writer.WritePropertyName("storageTypeState"u8);
                 writer.WriteStringValue(StorageTypeState.Value.ToString());
             }
-            if (EnableCrossRegionRestore.HasValue)
+            if (Optional.IsDefined(EnableCrossRegionRestore))
             {
                 writer.WritePropertyName("crossRegionRestoreFlag"u8);
                 writer.WriteBooleanValue(EnableCrossRegionRestore.Value);
             }
-            if (DedupState.HasValue)
+            if (Optional.IsDefined(DedupState))
             {
                 writer.WritePropertyName("dedupState"u8);
                 writer.WriteStringValue(DedupState.Value.ToString());
             }
-            if (XcoolState.HasValue)
+            if (Optional.IsDefined(XcoolState))
             {
                 writer.WritePropertyName("xcoolState"u8);
                 writer.WriteStringValue(XcoolState.Value.ToString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupResourceConfigProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupResourceConfigProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             VaultDedupState? dedupState = default;
             VaultXcoolState? xcoolState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageModelType"u8))
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackupResourceConfigProperties(
                 storageModelType,
                 storageType,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupResourceConfigProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupResourceConfigProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupResourceConfigProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupResourceConfigProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupResourceConfigProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

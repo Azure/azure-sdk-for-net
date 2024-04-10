@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabric.Models;
@@ -25,16 +24,16 @@ namespace Azure.ResourceManager.ServiceFabric
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,79 +61,79 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PlacementConstraints != null)
+            if (Optional.IsDefined(PlacementConstraints))
             {
                 writer.WritePropertyName("placementConstraints"u8);
                 writer.WriteStringValue(PlacementConstraints);
             }
-            if (!(CorrelationScheme is ChangeTrackingList<ServiceCorrelationDescription> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CorrelationScheme))
             {
                 writer.WritePropertyName("correlationScheme"u8);
                 writer.WriteStartArray();
                 foreach (var item in CorrelationScheme)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceCorrelationDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceLoadMetrics is ChangeTrackingList<ServiceLoadMetricDescription> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
             {
                 writer.WritePropertyName("serviceLoadMetrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceLoadMetrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceLoadMetricDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServicePlacementPolicies is ChangeTrackingList<ServicePlacementPolicyDescription> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
             {
                 writer.WritePropertyName("servicePlacementPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServicePlacementPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServicePlacementPolicyDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultMoveCost.HasValue)
+            if (Optional.IsDefined(DefaultMoveCost))
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (ServiceKind.HasValue)
+            if (Optional.IsDefined(ServiceKind))
             {
                 writer.WritePropertyName("serviceKind"u8);
                 writer.WriteStringValue(ServiceKind.Value.ToString());
             }
-            if (ServiceTypeName != null)
+            if (Optional.IsDefined(ServiceTypeName))
             {
                 writer.WritePropertyName("serviceTypeName"u8);
                 writer.WriteStringValue(ServiceTypeName);
             }
-            if (PartitionDescription != null)
+            if (Optional.IsDefined(PartitionDescription))
             {
                 writer.WritePropertyName("partitionDescription"u8);
-                writer.WriteObjectValue(PartitionDescription);
+                writer.WriteObjectValue<PartitionSchemeDescription>(PartitionDescription, options);
             }
-            if (ServicePackageActivationMode.HasValue)
+            if (Optional.IsDefined(ServicePackageActivationMode))
             {
                 writer.WritePropertyName("servicePackageActivationMode"u8);
                 writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
             }
-            if (ServiceDnsName != null)
+            if (Optional.IsDefined(ServiceDnsName))
             {
                 writer.WritePropertyName("serviceDnsName"u8);
                 writer.WriteStringValue(ServiceDnsName);
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.ServiceFabric
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -197,7 +196,7 @@ namespace Azure.ResourceManager.ServiceFabric
             ArmServicePackageActivationMode? servicePackageActivationMode = default;
             string serviceDnsName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -364,10 +363,10 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceFabricServiceData(
                 id,
                 name,
@@ -399,7 +398,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -415,7 +414,7 @@ namespace Azure.ResourceManager.ServiceFabric
                         return DeserializeServiceFabricServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 

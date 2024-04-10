@@ -18,20 +18,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Serializer != null)
+            if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
-                writer.WriteObjectValue(Serializer);
+                writer.WriteObjectValue<object>(Serializer);
             }
-            if (Deserializer != null)
+            if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
-                writer.WriteObjectValue(Deserializer);
+                writer.WriteObjectValue<object>(Deserializer);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -76,6 +76,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new UnknownDatasetStorageFormat(type, serializer, deserializer, additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownDatasetStorageFormat FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownDatasetStorageFormat(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<UnknownDatasetStorageFormat>(this);
+            return content;
         }
     }
 }

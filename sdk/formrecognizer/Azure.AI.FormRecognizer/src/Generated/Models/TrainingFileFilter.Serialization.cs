@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Training
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Prefix != null)
+            if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
@@ -23,6 +23,14 @@ namespace Azure.AI.FormRecognizer.Training
             writer.WritePropertyName("includeSubFolders"u8);
             writer.WriteBooleanValue(IncludeSubfolders);
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TrainingFileFilter>(this);
+            return content;
         }
     }
 }

@@ -22,44 +22,44 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateTopicSpacesConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (RouteTopicResourceId != null)
+            if (Optional.IsDefined(RouteTopicResourceId))
             {
                 writer.WritePropertyName("routeTopicResourceId"u8);
                 writer.WriteStringValue(RouteTopicResourceId);
             }
-            if (RoutingEnrichments != null)
+            if (Optional.IsDefined(RoutingEnrichments))
             {
                 writer.WritePropertyName("routingEnrichments"u8);
-                writer.WriteObjectValue(RoutingEnrichments);
+                writer.WriteObjectValue<RoutingEnrichments>(RoutingEnrichments, options);
             }
-            if (ClientAuthentication != null)
+            if (Optional.IsDefined(ClientAuthentication))
             {
                 writer.WritePropertyName("clientAuthentication"u8);
-                writer.WriteObjectValue(ClientAuthentication);
+                writer.WriteObjectValue<ClientAuthenticationSettings>(ClientAuthentication, options);
             }
-            if (MaximumSessionExpiryInHours.HasValue)
+            if (Optional.IsDefined(MaximumSessionExpiryInHours))
             {
                 writer.WritePropertyName("maximumSessionExpiryInHours"u8);
                 writer.WriteNumberValue(MaximumSessionExpiryInHours.Value);
             }
-            if (MaximumClientSessionsPerAuthenticationName.HasValue)
+            if (Optional.IsDefined(MaximumClientSessionsPerAuthenticationName))
             {
                 writer.WritePropertyName("maximumClientSessionsPerAuthenticationName"u8);
                 writer.WriteNumberValue(MaximumClientSessionsPerAuthenticationName.Value);
             }
-            if (RoutingIdentityInfo != null)
+            if (Optional.IsDefined(RoutingIdentityInfo))
             {
                 writer.WritePropertyName("routingIdentityInfo"u8);
-                writer.WriteObjectValue(RoutingIdentityInfo);
+                writer.WriteObjectValue<RoutingIdentityInfo>(RoutingIdentityInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateTopicSpacesConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             int? maximumClientSessionsPerAuthenticationName = default;
             RoutingIdentityInfo routingIdentityInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UpdateTopicSpacesConfigurationInfo(
                 state,
                 routeTopicResourceId,
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeUpdateTopicSpacesConfigurationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateTopicSpacesConfigurationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

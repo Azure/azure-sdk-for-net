@@ -15,12 +15,20 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CognitiveServicesEndpoint != null)
+            if (Optional.IsDefined(CognitiveServicesEndpoint))
             {
                 writer.WritePropertyName("cognitiveServicesEndpoint"u8);
                 writer.WriteStringValue(CognitiveServicesEndpoint);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CallIntelligenceOptionsInternal>(this);
+            return content;
         }
     }
 }

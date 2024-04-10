@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,38 +23,38 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobTarget)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobTarget)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MembershipType.HasValue)
+            if (Optional.IsDefined(MembershipType))
             {
                 writer.WritePropertyName("membershipType"u8);
                 writer.WriteStringValue(MembershipType.Value.ToSerialString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TargetType.ToString());
-            if (ServerName != null)
+            if (Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (ElasticPoolName != null)
+            if (Optional.IsDefined(ElasticPoolName))
             {
                 writer.WritePropertyName("elasticPoolName"u8);
                 writer.WriteStringValue(ElasticPoolName);
             }
-            if (ShardMapName != null)
+            if (Optional.IsDefined(ShardMapName))
             {
                 writer.WritePropertyName("shardMapName"u8);
                 writer.WriteStringValue(ShardMapName);
             }
-            if (RefreshCredential != null)
+            if (Optional.IsDefined(RefreshCredential))
             {
                 writer.WritePropertyName("refreshCredential"u8);
                 writer.WriteStringValue(RefreshCredential);
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobTarget)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobTarget)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Models
             string shardMapName = default;
             string refreshCredential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("membershipType"u8))
@@ -148,10 +149,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new JobTarget(
                 membershipType,
                 type,
@@ -163,6 +164,156 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MembershipType), out propertyOverride);
+            if (Optional.IsDefined(MembershipType) || hasPropertyOverride)
+            {
+                builder.Append("  membershipType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MembershipType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetType), out propertyOverride);
+            builder.Append("  type: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{TargetType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerName), out propertyOverride);
+            if (Optional.IsDefined(ServerName) || hasPropertyOverride)
+            {
+                builder.Append("  serverName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ServerName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServerName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServerName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
+            if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
+            {
+                builder.Append("  databaseName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DatabaseName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DatabaseName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DatabaseName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ElasticPoolName), out propertyOverride);
+            if (Optional.IsDefined(ElasticPoolName) || hasPropertyOverride)
+            {
+                builder.Append("  elasticPoolName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ElasticPoolName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ElasticPoolName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ElasticPoolName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShardMapName), out propertyOverride);
+            if (Optional.IsDefined(ShardMapName) || hasPropertyOverride)
+            {
+                builder.Append("  shardMapName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ShardMapName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ShardMapName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ShardMapName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RefreshCredential), out propertyOverride);
+            if (Optional.IsDefined(RefreshCredential) || hasPropertyOverride)
+            {
+                builder.Append("  refreshCredential: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RefreshCredential.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RefreshCredential}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RefreshCredential}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<JobTarget>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JobTarget>)this).GetFormatFromOptions(options) : options.Format;
@@ -171,8 +322,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(JobTarget)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobTarget)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +341,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeJobTarget(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobTarget)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobTarget)} does not support reading '{options.Format}' format.");
             }
         }
 

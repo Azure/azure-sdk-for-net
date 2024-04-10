@@ -16,55 +16,55 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ModuleId != null)
+            if (Optional.IsDefined(ModuleId))
             {
                 writer.WritePropertyName("moduleId"u8);
                 writer.WriteStringValue(ModuleId);
             }
-            if (ManagedBy != null)
+            if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (DeviceId != null)
+            if (Optional.IsDefined(DeviceId))
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
-            if (GenerationId != null)
+            if (Optional.IsDefined(GenerationId))
             {
                 writer.WritePropertyName("generationId"u8);
                 writer.WriteStringValue(GenerationId);
             }
-            if (Etag != null)
+            if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(Etag);
             }
-            if (ConnectionState.HasValue)
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
-            if (ConnectionStateUpdatedTime.HasValue)
+            if (Optional.IsDefined(ConnectionStateUpdatedTime))
             {
                 writer.WritePropertyName("connectionStateUpdatedTime"u8);
                 writer.WriteStringValue(ConnectionStateUpdatedTime.Value, "O");
             }
-            if (LastActivityTime.HasValue)
+            if (Optional.IsDefined(LastActivityTime))
             {
                 writer.WritePropertyName("lastActivityTime"u8);
                 writer.WriteStringValue(LastActivityTime.Value, "O");
             }
-            if (CloudToDeviceMessageCount.HasValue)
+            if (Optional.IsDefined(CloudToDeviceMessageCount))
             {
                 writer.WritePropertyName("cloudToDeviceMessageCount"u8);
                 writer.WriteNumberValue(CloudToDeviceMessageCount.Value);
             }
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<AuthenticationMechanism>(Authentication);
             }
             writer.WriteEndObject();
         }
@@ -169,6 +169,22 @@ namespace Azure.IoT.Hub.Service.Models
                 lastActivityTime,
                 cloudToDeviceMessageCount,
                 authentication);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ModuleIdentity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeModuleIdentity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ModuleIdentity>(this);
+            return content;
         }
     }
 }

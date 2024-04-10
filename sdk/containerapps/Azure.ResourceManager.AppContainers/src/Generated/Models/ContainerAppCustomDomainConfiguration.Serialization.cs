@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CustomDomainVerificationId != null)
+            if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationId))
             {
                 writer.WritePropertyName("customDomainVerificationId"u8);
                 writer.WriteStringValue(CustomDomainVerificationId);
             }
-            if (DnsSuffix != null)
+            if (Optional.IsDefined(DnsSuffix))
             {
                 writer.WritePropertyName("dnsSuffix"u8);
                 writer.WriteStringValue(DnsSuffix);
             }
-            if (CertificateValue != null)
+            if (Optional.IsDefined(CertificateValue))
             {
                 writer.WritePropertyName("certificateValue"u8);
                 writer.WriteBase64StringValue(CertificateValue, "D");
             }
-            if (CertificatePassword != null)
+            if (Optional.IsDefined(CertificatePassword))
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Thumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && SubjectName != null)
+            if (options.Format != "W" && Optional.IsDefined(SubjectName))
             {
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string thumbprint = default;
             string subjectName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDomainVerificationId"u8))
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppCustomDomainConfiguration(
                 customDomainVerificationId,
                 dnsSuffix,
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppCustomDomainConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

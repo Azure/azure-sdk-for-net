@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("tokenizer"u8);
             writer.WriteStringValue(TokenizerName.ToString());
-            if (!(TokenFilters is ChangeTrackingList<TokenFilterName> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters"u8);
                 writer.WriteStartArray();
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(CharFilters is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CharFilters))
             {
                 writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();
@@ -103,6 +103,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new CustomAnalyzer(odataType, name, tokenizer, tokenFilters ?? new ChangeTrackingList<TokenFilterName>(), charFilters ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CustomAnalyzer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomAnalyzer(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CustomAnalyzer>(this);
+            return content;
         }
     }
 }

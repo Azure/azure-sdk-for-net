@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricAccessControlListPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,42 +39,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ConfigurationType.HasValue)
+            if (Optional.IsDefined(ConfigurationType))
             {
                 writer.WritePropertyName("configurationType"u8);
                 writer.WriteStringValue(ConfigurationType.Value.ToString());
             }
-            if (AclsUri != null)
+            if (Optional.IsDefined(AclsUri))
             {
                 writer.WritePropertyName("aclsUrl"u8);
                 writer.WriteStringValue(AclsUri.AbsoluteUri);
             }
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (!(MatchConfigurations is ChangeTrackingList<AccessControlListMatchConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchConfigurations))
             {
                 writer.WritePropertyName("matchConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in MatchConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AccessControlListMatchConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(DynamicMatchConfigurations is ChangeTrackingList<CommonDynamicMatchConfiguration> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DynamicMatchConfigurations))
             {
                 writer.WritePropertyName("dynamicMatchConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in DynamicMatchConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CommonDynamicMatchConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricAccessControlListPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
             string annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -217,10 +217,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkFabricAccessControlListPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNetworkFabricAccessControlListPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricAccessControlListPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

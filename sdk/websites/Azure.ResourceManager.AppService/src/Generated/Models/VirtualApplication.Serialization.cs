@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,32 +24,32 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualApplication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualApplication)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VirtualPath != null)
+            if (Optional.IsDefined(VirtualPath))
             {
                 writer.WritePropertyName("virtualPath"u8);
                 writer.WriteStringValue(VirtualPath);
             }
-            if (PhysicalPath != null)
+            if (Optional.IsDefined(PhysicalPath))
             {
                 writer.WritePropertyName("physicalPath"u8);
                 writer.WriteStringValue(PhysicalPath);
             }
-            if (IsPreloadEnabled.HasValue)
+            if (Optional.IsDefined(IsPreloadEnabled))
             {
                 writer.WritePropertyName("preloadEnabled"u8);
                 writer.WriteBooleanValue(IsPreloadEnabled.Value);
             }
-            if (!(VirtualDirectories is ChangeTrackingList<VirtualDirectory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualDirectories))
             {
                 writer.WritePropertyName("virtualDirectories"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualDirectories)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualDirectory>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualApplication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualApplication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualApplication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
             bool? preloadEnabled = default;
             IList<VirtualDirectory> virtualDirectories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualPath"u8))
@@ -132,11 +134,107 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualApplication(virtualPath, physicalPath, preloadEnabled, virtualDirectories ?? new ChangeTrackingList<VirtualDirectory>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualPath), out propertyOverride);
+            if (Optional.IsDefined(VirtualPath) || hasPropertyOverride)
+            {
+                builder.Append("  virtualPath: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (VirtualPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{VirtualPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{VirtualPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalPath), out propertyOverride);
+            if (Optional.IsDefined(PhysicalPath) || hasPropertyOverride)
+            {
+                builder.Append("  physicalPath: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PhysicalPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PhysicalPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PhysicalPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPreloadEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsPreloadEnabled) || hasPropertyOverride)
+            {
+                builder.Append("  preloadEnabled: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsPreloadEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualDirectories), out propertyOverride);
+            if (Optional.IsCollectionDefined(VirtualDirectories) || hasPropertyOverride)
+            {
+                if (VirtualDirectories.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  virtualDirectories: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in VirtualDirectories)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  virtualDirectories: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<VirtualApplication>.Write(ModelReaderWriterOptions options)
@@ -147,8 +245,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualApplication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualApplication)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +264,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeVirtualApplication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualApplication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualApplication)} does not support reading '{options.Format}' format.");
             }
         }
 

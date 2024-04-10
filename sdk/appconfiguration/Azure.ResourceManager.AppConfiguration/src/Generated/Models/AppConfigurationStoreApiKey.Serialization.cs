@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,36 +23,36 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationStoreApiKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppConfigurationStoreApiKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationStoreApiKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && ConnectionString != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && IsReadOnly.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationStoreApiKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppConfigurationStoreApiKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationStoreApiKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             DateTimeOffset? lastModified = default;
             bool? readOnly = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -144,10 +145,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppConfigurationStoreApiKey(
                 id,
                 name,
@@ -158,6 +159,139 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (Optional.IsDefined(Value) || hasPropertyOverride)
+            {
+                builder.Append("  value: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Value.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Value}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Value}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionString), out propertyOverride);
+            if (Optional.IsDefined(ConnectionString) || hasPropertyOverride)
+            {
+                builder.Append("  connectionString: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ConnectionString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConnectionString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConnectionString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedOn), out propertyOverride);
+            if (Optional.IsDefined(LastModifiedOn) || hasPropertyOverride)
+            {
+                builder.Append("  lastModified: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsReadOnly), out propertyOverride);
+            if (Optional.IsDefined(IsReadOnly) || hasPropertyOverride)
+            {
+                builder.Append("  readOnly: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsReadOnly.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AppConfigurationStoreApiKey>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationStoreApiKey>)this).GetFormatFromOptions(options) : options.Format;
@@ -166,8 +300,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppConfigurationStoreApiKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationStoreApiKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +319,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         return DeserializeAppConfigurationStoreApiKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppConfigurationStoreApiKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationStoreApiKey)} does not support reading '{options.Format}' format.");
             }
         }
 

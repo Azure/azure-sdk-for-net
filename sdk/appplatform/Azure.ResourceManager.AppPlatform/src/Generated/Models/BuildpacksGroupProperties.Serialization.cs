@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<BuildpacksGroupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(Buildpacks is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Buildpacks))
             {
                 writer.WritePropertyName("buildpacks"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<BuildpacksGroupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             string name = default;
             IList<WritableSubResource> buildpacks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BuildpacksGroupProperties(name, buildpacks ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeBuildpacksGroupProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BuildpacksGroupProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
