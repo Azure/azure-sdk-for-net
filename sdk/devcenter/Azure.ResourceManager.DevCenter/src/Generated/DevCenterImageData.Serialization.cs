@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevCenter
             if (options.Format != "W" && Optional.IsDefined(RecommendedMachineConfiguration))
             {
                 writer.WritePropertyName("recommendedMachineConfiguration"u8);
-                writer.WriteObjectValue<RecommendedMachineConfiguration>(RecommendedMachineConfiguration, options);
+                writer.WriteObjectValue(RecommendedMachineConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

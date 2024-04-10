@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("deleteAfter"u8);
-            writer.WriteObjectValue<DataProtectionBackupDeleteSetting>(DeleteAfter, options);
+            writer.WriteObjectValue(DeleteAfter, options);
             writer.WritePropertyName("sourceDataStore"u8);
-            writer.WriteObjectValue<DataStoreInfoBase>(SourceDataStore, options);
+            writer.WriteObjectValue(SourceDataStore, options);
             if (Optional.IsCollectionDefined(TargetDataStoreCopySettings))
             {
                 writer.WritePropertyName("targetDataStoreCopySettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetDataStoreCopySettings)
                 {
-                    writer.WriteObjectValue<TargetCopySetting>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

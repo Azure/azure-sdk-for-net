@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceResult))
             {
                 writer.WritePropertyName("sourceResult"u8);
-                writer.WriteObjectValue<ExecutionStatistics>(SourceResult, options);
+                writer.WriteObjectValue(SourceResult, options);
             }
             if (Optional.IsDefined(TargetResult))
             {
                 writer.WritePropertyName("targetResult"u8);
-                writer.WriteObjectValue<ExecutionStatistics>(TargetResult, options);
+                writer.WriteObjectValue(TargetResult, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

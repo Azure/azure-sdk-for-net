@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 foreach (var item in InlineEventTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<InlineEventProperties>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

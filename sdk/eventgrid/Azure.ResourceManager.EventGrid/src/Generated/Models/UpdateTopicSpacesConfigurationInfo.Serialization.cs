@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(RoutingEnrichments))
             {
                 writer.WritePropertyName("routingEnrichments"u8);
-                writer.WriteObjectValue<RoutingEnrichments>(RoutingEnrichments, options);
+                writer.WriteObjectValue(RoutingEnrichments, options);
             }
             if (Optional.IsDefined(ClientAuthentication))
             {
                 writer.WritePropertyName("clientAuthentication"u8);
-                writer.WriteObjectValue<ClientAuthenticationSettings>(ClientAuthentication, options);
+                writer.WriteObjectValue(ClientAuthentication, options);
             }
             if (Optional.IsDefined(MaximumSessionExpiryInHours))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(RoutingIdentityInfo))
             {
                 writer.WritePropertyName("routingIdentityInfo"u8);
-                writer.WriteObjectValue<RoutingIdentityInfo>(RoutingIdentityInfo, options);
+                writer.WriteObjectValue(RoutingIdentityInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

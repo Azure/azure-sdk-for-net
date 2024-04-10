@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SchemaSetting))
             {
                 writer.WritePropertyName("schemaSetting"u8);
-                writer.WriteObjectValue<SchemaMigrationSetting>(SchemaSetting, options);
+                writer.WriteObjectValue(SchemaSetting, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

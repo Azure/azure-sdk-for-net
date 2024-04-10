@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(FileShare))
             {
                 writer.WritePropertyName("fileShare"u8);
-                writer.WriteObjectValue<SqlFileShare>(FileShare, options);
+                writer.WriteObjectValue(FileShare, options);
             }
             if (Optional.IsDefined(AzureBlob))
             {
                 writer.WritePropertyName("azureBlob"u8);
-                writer.WriteObjectValue<AzureBlob>(AzureBlob, options);
+                writer.WriteObjectValue(AzureBlob, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FileStorageType))
             {
