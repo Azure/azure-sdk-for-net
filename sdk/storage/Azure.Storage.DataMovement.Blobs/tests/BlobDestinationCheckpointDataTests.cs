@@ -64,24 +64,16 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.2.bin");
             using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
-                /*
-            using (FileStream fileStream = File.Create(samplePath))
+            using (FileStream fileStream = File.OpenRead(samplePath))
             {
                 data.Serialize(dataStream);
-                dataStream.Position = 0;
-                dataStream.CopyTo(fileStream);
-                fileStream.Flush();
-            }*/
-        using (FileStream fileStream = File.OpenRead(samplePath))
-        {
-            data.Serialize(dataStream);
 
-            BinaryReader reader = new(fileStream);
-            byte[] expected = reader.ReadBytes((int)fileStream.Length);
-            byte[] actual = dataStream.ToArray();
+                BinaryReader reader = new(fileStream);
+                byte[] expected = reader.ReadBytes((int)fileStream.Length);
+                byte[] actual = dataStream.ToArray();
 
-            CollectionAssert.AreEqual(expected, actual);
-        }
+                CollectionAssert.AreEqual(expected, actual);
+            }
         }
 
         [Test]

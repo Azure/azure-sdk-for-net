@@ -101,7 +101,17 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         private async Task UploadAppendBlocksAsync(AppendBlobClient blobClient, Stream contents)
         {
-            await blobClient.CreateIfNotExistsAsync();
+            await blobClient.CreateIfNotExistsAsync(new AppendBlobCreateOptions()
+            {
+                Metadata = _defaultMetadata,
+                HttpHeaders = new BlobHttpHeaders()
+                {
+                    ContentType = _defaultContentType,
+                    ContentLanguage = _defaultContentLanguage,
+                    ContentDisposition = _defaultContentDisposition,
+                    CacheControl = _defaultCacheControl,
+                }
+            });
             long offset = 0;
             long size = contents.Length;
             long blockSize = Math.Min(DefaultBufferSize, size);

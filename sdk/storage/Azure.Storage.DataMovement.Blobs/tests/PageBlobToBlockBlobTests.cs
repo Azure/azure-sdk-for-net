@@ -104,7 +104,17 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             long size = contents.Length;
             Assert.IsTrue(size % (KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
-            await blobClient.CreateIfNotExistsAsync(size).ConfigureAwait(false);
+            await blobClient.CreateIfNotExistsAsync(size, new PageBlobCreateOptions()
+            {
+                Metadata = _defaultMetadata,
+                HttpHeaders = new BlobHttpHeaders()
+                {
+                    ContentType = _defaultContentType,
+                    ContentLanguage = _defaultContentLanguage,
+                    ContentDisposition = _defaultContentDisposition,
+                    CacheControl = _defaultCacheControl,
+                }
+            });
             long offset = 0;
             long blockSize = Math.Min(DefaultBufferSize, size);
             while (offset < size)
