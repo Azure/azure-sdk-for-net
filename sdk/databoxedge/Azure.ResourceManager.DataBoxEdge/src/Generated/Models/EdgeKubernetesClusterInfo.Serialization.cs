@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(EtcdInfo))
             {
                 writer.WritePropertyName("etcdInfo"u8);
-                writer.WriteObjectValue<DataBoxEdgeEtcdInfo>(EtcdInfo, options);
+                writer.WriteObjectValue(EtcdInfo, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue<EdgeKubernetesNodeInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

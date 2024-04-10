@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue<SsisAccessCredential>(AccessCredential, options);
+                writer.WriteObjectValue(AccessCredential, options);
             }
             if (Optional.IsDefined(ConfigurationPath))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
                 writer.WritePropertyName("configurationAccessCredential"u8);
-                writer.WriteObjectValue<SsisAccessCredential>(ConfigurationAccessCredential, options);
+                writer.WriteObjectValue(ConfigurationAccessCredential, options);
             }
             if (Optional.IsDefined(PackageName))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildPackages)
                 {
-                    writer.WriteObjectValue<SsisChildPackage>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

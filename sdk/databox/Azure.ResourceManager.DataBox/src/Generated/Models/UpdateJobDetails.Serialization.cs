@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue<DataBoxContactDetails>(ContactDetails, options);
+                writer.WriteObjectValue(ContactDetails, options);
             }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue<DataBoxShippingAddress>(ShippingAddress, options);
+                writer.WriteObjectValue(ShippingAddress, options);
             }
             if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue<ReverseShippingDetails>(ReverseShippingDetails, options);
+                writer.WriteObjectValue(ReverseShippingDetails, options);
             }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue<DataBoxOrderPreferences>(Preferences, options);
+                writer.WriteObjectValue(Preferences, options);
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue<DataBoxKeyEncryptionKey>(KeyEncryptionKey, options);
+                writer.WriteObjectValue(KeyEncryptionKey, options);
             }
             if (Optional.IsDefined(ReturnToCustomerPackageDetails))
             {
                 writer.WritePropertyName("returnToCustomerPackageDetails"u8);
-                writer.WriteObjectValue<PackageCarrierDetails>(ReturnToCustomerPackageDetails, options);
+                writer.WriteObjectValue(ReturnToCustomerPackageDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

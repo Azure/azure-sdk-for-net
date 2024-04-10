@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in TransportAvailabilityDetails)
                 {
-                    writer.WriteObjectValue<TransportAvailabilityDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

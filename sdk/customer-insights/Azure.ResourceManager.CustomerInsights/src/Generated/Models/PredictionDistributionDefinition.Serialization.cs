@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Distributions)
                 {
-                    writer.WriteObjectValue<PredictionDistributionDefinitionDistributionsItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

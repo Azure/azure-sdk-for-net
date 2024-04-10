@@ -34,12 +34,12 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(ContactInformation))
             {
                 writer.WritePropertyName("contactInformation"u8);
-                writer.WriteObjectValue<ContactInformation>(ContactInformation);
+                writer.WriteObjectValue(ContactInformation);
             }
             if (Optional.IsDefined(CustomerCareInformation))
             {
                 writer.WritePropertyName("customerCareInformation"u8);
-                writer.WriteObjectValue<CustomerCareInformation>(CustomerCareInformation);
+                writer.WriteObjectValue(CustomerCareInformation);
             }
             writer.WriteEndObject();
         }
@@ -110,7 +110,7 @@ namespace Azure.Communication.ShortCodes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CompanyInformation>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

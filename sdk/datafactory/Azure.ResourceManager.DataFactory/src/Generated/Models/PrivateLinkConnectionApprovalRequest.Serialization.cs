@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue<PrivateLinkConnectionState>(PrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
             }
             if (Optional.IsDefined(PrivateEndpoint))
             {

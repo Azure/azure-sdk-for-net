@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue<Authentication>(Authentication, options);
+                writer.WriteObjectValue(Authentication, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

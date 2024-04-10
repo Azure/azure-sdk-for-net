@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in CabinetPodSecrets)
                 {
-                    writer.WriteObjectValue<DataBoxHeavySecret>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
-                writer.WriteObjectValue<DataCenterAccessSecurityCode>(DataCenterAccessSecurityCode, options);
+                writer.WriteObjectValue(DataCenterAccessSecurityCode, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in VmPlacementResults)
                 {
-                    writer.WriteObjectValue<VmPlacementRequestResult>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

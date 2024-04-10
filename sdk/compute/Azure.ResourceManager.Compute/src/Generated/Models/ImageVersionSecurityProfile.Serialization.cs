@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
-                writer.WriteObjectValue<GalleryImageVersionUefiSettings>(UefiSettings, options);
+                writer.WriteObjectValue(UefiSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

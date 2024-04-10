@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue<ContainerRegistryImportSource>(Source, options);
+            writer.WriteObjectValue(Source, options);
             if (Optional.IsCollectionDefined(TargetTags))
             {
                 writer.WritePropertyName("targetTags"u8);

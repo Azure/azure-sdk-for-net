@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(KeyWrapMetadata))
             {
                 writer.WritePropertyName("keyWrapMetadata"u8);
-                writer.WriteObjectValue<CosmosDBKeyWrapMetadata>(KeyWrapMetadata, options);
+                writer.WriteObjectValue(KeyWrapMetadata, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

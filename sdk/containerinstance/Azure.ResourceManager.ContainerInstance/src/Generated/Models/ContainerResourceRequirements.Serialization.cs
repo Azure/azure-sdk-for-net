@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("requests"u8);
-            writer.WriteObjectValue<ContainerResourceRequestsContent>(Requests, options);
+            writer.WriteObjectValue(Requests, options);
             if (Optional.IsDefined(Limits))
             {
                 writer.WritePropertyName("limits"u8);
-                writer.WriteObjectValue<ContainerResourceLimits>(Limits, options);
+                writer.WriteObjectValue(Limits, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

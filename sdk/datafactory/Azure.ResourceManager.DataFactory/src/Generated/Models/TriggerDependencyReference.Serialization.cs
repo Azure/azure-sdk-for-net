@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("referenceTrigger"u8);
-            writer.WriteObjectValue<DataFactoryTriggerReference>(ReferenceTrigger, options);
+            writer.WriteObjectValue(ReferenceTrigger, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DependencyReferenceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

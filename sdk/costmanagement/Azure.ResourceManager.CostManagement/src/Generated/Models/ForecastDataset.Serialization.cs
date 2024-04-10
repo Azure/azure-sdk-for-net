@@ -34,20 +34,20 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue<ForecastDatasetConfiguration>(Configuration, options);
+                writer.WriteObjectValue(Configuration, options);
             }
             writer.WritePropertyName("aggregation"u8);
             writer.WriteStartObject();
             foreach (var item in Aggregation)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<ForecastAggregation>(item.Value, options);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue<ForecastFilter>(Filter, options);
+                writer.WriteObjectValue(Filter, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

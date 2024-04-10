@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue<NetezzaPartitionSettings>(PartitionSettings, options);
+                writer.WriteObjectValue(PartitionSettings, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {

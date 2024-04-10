@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(AzureQueue))
             {
                 writer.WritePropertyName("azureQueue"u8);
-                writer.WriteObjectValue<ContainerAppQueueScaleRule>(AzureQueue, options);
+                writer.WriteObjectValue(AzureQueue, options);
             }
             if (Optional.IsDefined(Custom))
             {
                 writer.WritePropertyName("custom"u8);
-                writer.WriteObjectValue<ContainerAppCustomScaleRule>(Custom, options);
+                writer.WriteObjectValue(Custom, options);
             }
             if (Optional.IsDefined(Http))
             {
                 writer.WritePropertyName("http"u8);
-                writer.WriteObjectValue<ContainerAppHttpScaleRule>(Http, options);
+                writer.WriteObjectValue(Http, options);
             }
             if (Optional.IsDefined(Tcp))
             {
                 writer.WritePropertyName("tcp"u8);
-                writer.WriteObjectValue<ContainerAppTcpScaleRule>(Tcp, options);
+                writer.WriteObjectValue(Tcp, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(RefreshDetails))
             {
                 writer.WritePropertyName("refreshDetails"u8);
-                writer.WriteObjectValue<DataBoxEdgeRefreshDetails>(RefreshDetails, options);
+                writer.WriteObjectValue(RefreshDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {

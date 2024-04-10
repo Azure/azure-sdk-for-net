@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(VnetConfiguration))
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
-                writer.WriteObjectValue<ContainerAppVnetConfiguration>(VnetConfiguration, options);
+                writer.WriteObjectValue(VnetConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(AppLogsConfiguration))
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
-                writer.WriteObjectValue<ContainerAppLogsConfiguration>(AppLogsConfiguration, options);
+                writer.WriteObjectValue(AppLogsConfiguration, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(CustomDomainConfiguration))
             {
                 writer.WritePropertyName("customDomainConfiguration"u8);
-                writer.WriteObjectValue<ContainerAppCustomDomainConfiguration>(CustomDomainConfiguration, options);
+                writer.WriteObjectValue(CustomDomainConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EventStreamEndpoint))
             {
@@ -130,19 +130,19 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WriteStartArray();
                 foreach (var item in WorkloadProfiles)
                 {
-                    writer.WriteObjectValue<ContainerAppWorkloadProfile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(KedaConfiguration))
             {
                 writer.WritePropertyName("kedaConfiguration"u8);
-                writer.WriteObjectValue<KedaConfiguration>(KedaConfiguration, options);
+                writer.WriteObjectValue(KedaConfiguration, options);
             }
             if (Optional.IsDefined(DaprConfiguration))
             {
                 writer.WritePropertyName("daprConfiguration"u8);
-                writer.WriteObjectValue<DaprConfiguration>(DaprConfiguration, options);
+                writer.WriteObjectValue(DaprConfiguration, options);
             }
             if (Optional.IsDefined(InfrastructureResourceGroup))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(PeerAuthentication))
             {
                 writer.WritePropertyName("peerAuthentication"u8);
-                writer.WriteObjectValue<ManagedEnvironmentPropertiesPeerAuthentication>(PeerAuthentication, options);
+                writer.WriteObjectValue(PeerAuthentication, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(SecurityMonitoring))
             {
                 writer.WritePropertyName("securityMonitoring"u8);
-                writer.WriteObjectValue<ManagedClusterSecurityProfileDefenderSecurityMonitoring>(SecurityMonitoring, options);
+                writer.WriteObjectValue(SecurityMonitoring, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

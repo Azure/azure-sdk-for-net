@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             if (Optional.IsDefined(IPSettings))
             {
                 writer.WritePropertyName("ipSettings"u8);
-                writer.WriteObjectValue<NicIPSettings>(IPSettings, options);
+                writer.WriteObjectValue(IPSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

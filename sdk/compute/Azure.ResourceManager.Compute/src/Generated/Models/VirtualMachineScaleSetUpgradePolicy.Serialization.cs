@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(RollingUpgradePolicy))
             {
                 writer.WritePropertyName("rollingUpgradePolicy"u8);
-                writer.WriteObjectValue<RollingUpgradePolicy>(RollingUpgradePolicy, options);
+                writer.WriteObjectValue(RollingUpgradePolicy, options);
             }
             if (Optional.IsDefined(AutomaticOSUpgradePolicy))
             {
                 writer.WritePropertyName("automaticOSUpgradePolicy"u8);
-                writer.WriteObjectValue<AutomaticOSUpgradePolicy>(AutomaticOSUpgradePolicy, options);
+                writer.WriteObjectValue(AutomaticOSUpgradePolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue<BenefitUtilizationSummariesContent>(Input, options);
+                writer.WriteObjectValue(Input, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<AsyncOperationStatusProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
