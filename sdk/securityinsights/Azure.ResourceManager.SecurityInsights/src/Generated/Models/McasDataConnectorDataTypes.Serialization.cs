@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(DiscoveryLogs))
             {
                 writer.WritePropertyName("discoveryLogs"u8);
-                writer.WriteObjectValue<DataConnectorDataTypeCommon>(DiscoveryLogs, options);
+                writer.WriteObjectValue(DiscoveryLogs, options);
             }
             if (Optional.IsDefined(Alerts))
             {
                 writer.WritePropertyName("alerts"u8);
-                writer.WriteObjectValue<DataConnectorDataTypeCommon>(Alerts, options);
+                writer.WriteObjectValue(Alerts, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

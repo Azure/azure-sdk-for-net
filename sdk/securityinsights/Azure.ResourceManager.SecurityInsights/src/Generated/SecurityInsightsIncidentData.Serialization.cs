@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (options.Format != "W" && Optional.IsDefined(AdditionalInfo))
             {
                 writer.WritePropertyName("additionalData"u8);
-                writer.WriteObjectValue<SecurityInsightsIncidentAdditionalInfo>(AdditionalInfo, options);
+                writer.WriteObjectValue(AdditionalInfo, options);
             }
             if (Optional.IsDefined(Classification))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue<SecurityInsightsIncidentLabel>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue<SecurityInsightsIncidentOwnerInfo>(Owner, options);
+                writer.WriteObjectValue(Owner, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RelatedAnalyticRuleIds))
             {

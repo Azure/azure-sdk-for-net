@@ -21,7 +21,7 @@ namespace Azure.Search.Documents
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue<T>(item);
+                content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -63,7 +63,7 @@ namespace Azure.Search.Documents
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue<TValue>(item.Value);
+                content.JsonWriter.WriteObjectValue(item.Value);
             }
             content.JsonWriter.WriteEndObject();
 

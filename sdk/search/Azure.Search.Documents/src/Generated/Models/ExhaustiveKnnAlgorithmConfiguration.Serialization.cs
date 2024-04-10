@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("exhaustiveKnnParameters"u8);
-                writer.WriteObjectValue<ExhaustiveKnnParameters>(Parameters);
+                writer.WriteObjectValue(Parameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ExhaustiveKnnAlgorithmConfiguration>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(WhatIfSettings))
             {
                 writer.WritePropertyName("whatIfSettings"u8);
-                writer.WriteObjectValue<ArmDeploymentWhatIfSettings>(WhatIfSettings, options);
+                writer.WriteObjectValue(WhatIfSettings, options);
             }
             if (Optional.IsDefined(Template))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
-                writer.WriteObjectValue<ArmDeploymentTemplateLink>(TemplateLink, options);
+                writer.WriteObjectValue(TemplateLink, options);
             }
             if (Optional.IsDefined(Parameters))
             {
@@ -63,24 +63,24 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink"u8);
-                writer.WriteObjectValue<ArmDeploymentParametersLink>(ParametersLink, options);
+                writer.WriteObjectValue(ParametersLink, options);
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToSerialString());
             if (Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting"u8);
-                writer.WriteObjectValue<DebugSetting>(DebugSetting, options);
+                writer.WriteObjectValue(DebugSetting, options);
             }
             if (Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
-                writer.WriteObjectValue<ErrorDeployment>(ErrorDeployment, options);
+                writer.WriteObjectValue(ErrorDeployment, options);
             }
             if (Optional.IsDefined(ExpressionEvaluation))
             {
                 writer.WritePropertyName("expressionEvaluationOptions"u8);
-                writer.WriteObjectValue<ExpressionEvaluationOptions>(ExpressionEvaluation, options);
+                writer.WriteObjectValue(ExpressionEvaluation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

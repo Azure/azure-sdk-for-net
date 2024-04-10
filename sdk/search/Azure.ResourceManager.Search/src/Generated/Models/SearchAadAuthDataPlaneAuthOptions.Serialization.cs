@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(AadOrApiKey))
             {
                 writer.WritePropertyName("aadOrApiKey"u8);
-                writer.WriteObjectValue<DataPlaneAadOrApiKeyAuthOption>(AadOrApiKey, options);
+                writer.WriteObjectValue(AadOrApiKey, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

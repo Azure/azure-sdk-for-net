@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue<SqlVmAssessmentSchedule>(Schedule, options);
+                writer.WriteObjectValue(Schedule, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

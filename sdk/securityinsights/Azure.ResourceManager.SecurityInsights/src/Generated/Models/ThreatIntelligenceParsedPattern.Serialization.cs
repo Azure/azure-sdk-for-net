@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PatternTypeValues)
                 {
-                    writer.WriteObjectValue<ThreatIntelligenceParsedPatternTypeValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

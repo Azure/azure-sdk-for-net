@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(ApplicationHealthPolicy))
             {
                 writer.WritePropertyName("applicationHealthPolicy"u8);
-                writer.WriteObjectValue<ApplicationHealthPolicy>(ApplicationHealthPolicy, options);
+                writer.WriteObjectValue(ApplicationHealthPolicy, options);
             }
             if (Optional.IsDefined(ForceRestart))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(RollingUpgradeMonitoringPolicy))
             {
                 writer.WritePropertyName("rollingUpgradeMonitoringPolicy"u8);
-                writer.WriteObjectValue<RollingUpgradeMonitoringPolicy>(RollingUpgradeMonitoringPolicy, options);
+                writer.WriteObjectValue(RollingUpgradeMonitoringPolicy, options);
             }
             if (Optional.IsDefined(InstanceCloseDelayDurationInSeconds))
             {

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(UserDefinedResources))
             {
                 writer.WritePropertyName("userDefinedResources"u8);
-                writer.WriteObjectValue<UserDefinedResourcesProperties>(UserDefinedResources, options);
+                writer.WriteObjectValue(UserDefinedResources, options);
             }
             if (Optional.IsCollectionDefined(RecommendationsConfiguration))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in RecommendationsConfiguration)
                 {
-                    writer.WriteObjectValue<RecommendationConfigurationProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

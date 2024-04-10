@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(GroupingConfiguration))
             {
                 writer.WritePropertyName("groupingConfiguration"u8);
-                writer.WriteObjectValue<SecurityInsightsGroupingConfiguration>(GroupingConfiguration, options);
+                writer.WriteObjectValue(GroupingConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

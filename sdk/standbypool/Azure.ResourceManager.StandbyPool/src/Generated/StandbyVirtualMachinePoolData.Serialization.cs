@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.StandbyPool
             if (Optional.IsDefined(ElasticityProfile))
             {
                 writer.WritePropertyName("elasticityProfile"u8);
-                writer.WriteObjectValue<StandbyVirtualMachinePoolElasticityProfile>(ElasticityProfile, options);
+                writer.WriteObjectValue(ElasticityProfile, options);
             }
             if (Optional.IsDefined(VirtualMachineState))
             {

@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ThreatIntelligence)
                 {
-                    writer.WriteObjectValue<SecurityInsightsThreatIntelligence>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

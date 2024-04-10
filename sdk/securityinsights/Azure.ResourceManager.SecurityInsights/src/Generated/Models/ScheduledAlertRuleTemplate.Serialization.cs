@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredDataConnectors)
                 {
-                    writer.WriteObjectValue<AlertRuleTemplateDataSource>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(EventGroupingSettings))
             {
                 writer.WritePropertyName("eventGroupingSettings"u8);
-                writer.WriteObjectValue<EventGroupingSettings>(EventGroupingSettings, options);
+                writer.WriteObjectValue(EventGroupingSettings, options);
             }
             if (Optional.IsCollectionDefined(CustomDetails))
             {
@@ -168,14 +168,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in EntityMappings)
                 {
-                    writer.WriteObjectValue<SecurityInsightsAlertRuleEntityMapping>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AlertDetailsOverride))
             {
                 writer.WritePropertyName("alertDetailsOverride"u8);
-                writer.WriteObjectValue<SecurityInsightsAlertDetailsOverride>(AlertDetailsOverride, options);
+                writer.WriteObjectValue(AlertDetailsOverride, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Baseline))
             {
                 writer.WritePropertyName("baseline"u8);
-                writer.WriteObjectValue<SqlVulnerabilityAssessmentBaseline>(Baseline, options);
+                writer.WriteObjectValue(Baseline, options);
             }
             if (Optional.IsDefined(Status))
             {
