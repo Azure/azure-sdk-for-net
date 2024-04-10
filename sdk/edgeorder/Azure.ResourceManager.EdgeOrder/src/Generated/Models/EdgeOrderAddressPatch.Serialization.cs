@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue<EdgeOrderShippingAddress>(ShippingAddress, options);
+                writer.WriteObjectValue(ShippingAddress, options);
             }
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue<EdgeOrderAddressContactDetails>(ContactDetails, options);
+                writer.WriteObjectValue(ContactDetails, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(ElasticProperties))
             {
                 writer.WritePropertyName("elasticProperties"u8);
-                writer.WriteObjectValue<ElasticProperties>(ElasticProperties, options);
+                writer.WriteObjectValue(ElasticProperties, options);
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue<UserInfo>(UserInfo, options);
+                writer.WriteObjectValue(UserInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue<PostgreSqlConnectionInfo>(TargetConnectionInfo, options);
+            writer.WriteObjectValue(TargetConnectionInfo, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

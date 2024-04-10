@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RestorableTimeRanges)
                 {
-                    writer.WriteObjectValue<RestorableTimeRange>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

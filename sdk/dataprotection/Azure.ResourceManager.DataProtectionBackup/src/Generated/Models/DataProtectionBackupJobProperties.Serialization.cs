@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue<BackupJobExtendedInfo>(ExtendedInfo, options);
+                writer.WriteObjectValue(ExtendedInfo, options);
             }
             writer.WritePropertyName("isUserTriggered"u8);
             writer.WriteBooleanValue(IsUserTriggered);

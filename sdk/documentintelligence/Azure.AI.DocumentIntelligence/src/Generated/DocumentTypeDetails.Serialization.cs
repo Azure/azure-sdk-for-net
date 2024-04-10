@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence
             foreach (var item in FieldSchema)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<DocumentFieldSchema>(item.Value, options);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             if (Optional.IsCollectionDefined(FieldConfidence))
@@ -191,7 +191,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DocumentTypeDetails>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

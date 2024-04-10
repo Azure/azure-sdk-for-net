@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<DeviceUpdatePrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<DeviceUpdateEncryption>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue<DeviceUpdateAccountLocationDetail>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

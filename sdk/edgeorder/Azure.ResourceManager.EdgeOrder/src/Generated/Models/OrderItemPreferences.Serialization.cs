@@ -32,24 +32,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in NotificationPreferences)
                 {
-                    writer.WriteObjectValue<NotificationPreference>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue<TransportPreferences>(TransportPreferences, options);
+                writer.WriteObjectValue(TransportPreferences, options);
             }
             if (Optional.IsDefined(EncryptionPreferences))
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
-                writer.WriteObjectValue<EncryptionPreferences>(EncryptionPreferences, options);
+                writer.WriteObjectValue(EncryptionPreferences, options);
             }
             if (Optional.IsDefined(ManagementResourcePreferences))
             {
                 writer.WritePropertyName("managementResourcePreferences"u8);
-                writer.WriteObjectValue<ManagementResourcePreferences>(ManagementResourcePreferences, options);
+                writer.WriteObjectValue(ManagementResourcePreferences, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

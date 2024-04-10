@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue<MigrateSyncCompleteCommandInput>(Input, options);
+                writer.WriteObjectValue(Input, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue<MigrateSyncCompleteCommandOutput>(Output, options);
+                writer.WriteObjectValue(Output, options);
             }
             if (Optional.IsDefined(CommandId))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue<ODataError>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

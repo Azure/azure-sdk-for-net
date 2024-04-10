@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<DatabaseMigrationProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W")
             {

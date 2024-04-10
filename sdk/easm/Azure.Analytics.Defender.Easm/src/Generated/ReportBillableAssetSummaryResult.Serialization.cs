@@ -32,7 +32,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in AssetSummaries)
                 {
-                    writer.WriteObjectValue<ReportBillableAssetSnapshotResult>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -145,7 +145,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ReportBillableAssetSummaryResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

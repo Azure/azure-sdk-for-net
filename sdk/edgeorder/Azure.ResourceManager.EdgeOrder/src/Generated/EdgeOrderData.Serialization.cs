@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EdgeOrder
             if (options.Format != "W" && Optional.IsDefined(CurrentStage))
             {
                 writer.WritePropertyName("currentStage"u8);
-                writer.WriteObjectValue<EdgeOrderStageDetails>(CurrentStage, options);
+                writer.WriteObjectValue(CurrentStage, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OrderStageHistory))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 writer.WriteStartArray();
                 foreach (var item in OrderStageHistory)
                 {
-                    writer.WriteObjectValue<EdgeOrderStageDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -33,7 +33,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue<DevBoxAction>(Action, options);
+                writer.WriteObjectValue(Action, options);
             }
             if (Optional.IsDefined(Error))
             {
@@ -166,7 +166,7 @@ namespace Azure.Developer.DevCenter.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DevBoxActionDelayResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

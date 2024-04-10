@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
-                writer.WriteObjectValue<SharedPublicIPAddressConfiguration>(SharedPublicIPAddressConfiguration, options);
+                writer.WriteObjectValue(SharedPublicIPAddressConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -37,7 +37,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Names)
                 {
-                    writer.WriteObjectValue<ObservedString>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Organizations)
                 {
-                    writer.WriteObjectValue<ObservedString>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue<SourceDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -259,7 +259,7 @@ namespace Azure.Analytics.Defender.Easm
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ContactAsset>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

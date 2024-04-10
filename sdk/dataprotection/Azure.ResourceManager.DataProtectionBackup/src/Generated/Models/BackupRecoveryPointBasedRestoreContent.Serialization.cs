@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("restoreTargetInfo"u8);
-            writer.WriteObjectValue<RestoreTargetInfoBase>(RestoreTargetInfo, options);
+            writer.WriteObjectValue(RestoreTargetInfo, options);
             writer.WritePropertyName("sourceDataStoreType"u8);
             writer.WriteStringValue(SourceDataStoreType.ToString());
             if (Optional.IsDefined(SourceResourceId))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(IdentityDetails))
             {
                 writer.WritePropertyName("identityDetails"u8);
-                writer.WriteObjectValue<DataProtectionIdentityDetails>(IdentityDetails, options);
+                writer.WriteObjectValue(IdentityDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

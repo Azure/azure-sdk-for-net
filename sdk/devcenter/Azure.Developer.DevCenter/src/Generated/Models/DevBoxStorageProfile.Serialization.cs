@@ -29,7 +29,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue<OSDisk>(OSDisk, options);
+                writer.WriteObjectValue(OSDisk, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -135,7 +135,7 @@ namespace Azure.Developer.DevCenter.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DevBoxStorageProfile>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

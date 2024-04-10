@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in DeliveryAttributeMappings)
                 {
-                    writer.WriteObjectValue<DeliveryAttributeMapping>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

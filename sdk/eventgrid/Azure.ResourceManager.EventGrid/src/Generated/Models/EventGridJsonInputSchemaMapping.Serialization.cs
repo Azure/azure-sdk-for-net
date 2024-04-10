@@ -33,32 +33,32 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteObjectValue<JsonField>(Id, options);
+                writer.WriteObjectValue(Id, options);
             }
             if (Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic"u8);
-                writer.WriteObjectValue<JsonField>(Topic, options);
+                writer.WriteObjectValue(Topic, options);
             }
             if (Optional.IsDefined(EventTime))
             {
                 writer.WritePropertyName("eventTime"u8);
-                writer.WriteObjectValue<JsonField>(EventTime, options);
+                writer.WriteObjectValue(EventTime, options);
             }
             if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
-                writer.WriteObjectValue<JsonFieldWithDefault>(EventType, options);
+                writer.WriteObjectValue(EventType, options);
             }
             if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
-                writer.WriteObjectValue<JsonFieldWithDefault>(Subject, options);
+                writer.WriteObjectValue(Subject, options);
             }
             if (Optional.IsDefined(DataVersion))
             {
                 writer.WritePropertyName("dataVersion"u8);
-                writer.WriteObjectValue<JsonFieldWithDefault>(DataVersion, options);
+                writer.WriteObjectValue(DataVersion, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

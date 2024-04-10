@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue<DevCenterImageReference>(ImageReference, options);
+                writer.WriteObjectValue(ImageReference, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<DevCenterSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(OSStorageType))
             {

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(StopOnDisconnect))
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
-                writer.WriteObjectValue<StopOnDisconnectConfiguration>(StopOnDisconnect, options);
+                writer.WriteObjectValue(StopOnDisconnect, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

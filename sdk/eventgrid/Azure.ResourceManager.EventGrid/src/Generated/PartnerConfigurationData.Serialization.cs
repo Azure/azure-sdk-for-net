@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(PartnerAuthorization))
             {
                 writer.WritePropertyName("partnerAuthorization"u8);
-                writer.WriteObjectValue<PartnerAuthorization>(PartnerAuthorization, options);
+                writer.WriteObjectValue(PartnerAuthorization, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {

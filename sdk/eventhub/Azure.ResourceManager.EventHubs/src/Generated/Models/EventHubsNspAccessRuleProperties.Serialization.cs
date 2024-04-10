@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityPerimeters)
                 {
-                    writer.WriteObjectValue<EventHubsNetworkSecurityPerimeter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

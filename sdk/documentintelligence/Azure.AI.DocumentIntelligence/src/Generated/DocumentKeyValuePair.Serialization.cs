@@ -27,11 +27,11 @@ namespace Azure.AI.DocumentIntelligence
 
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
-            writer.WriteObjectValue<DocumentKeyValueElement>(Key, options);
+            writer.WriteObjectValue(Key, options);
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue<DocumentKeyValueElement>(Value, options);
+                writer.WriteObjectValue(Value, options);
             }
             writer.WritePropertyName("confidence"u8);
             writer.WriteNumberValue(Confidence);
@@ -151,7 +151,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DocumentKeyValuePair>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }
