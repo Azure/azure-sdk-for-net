@@ -924,11 +924,11 @@
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
 
-# ServiceLabel: %Network - CDN %Mgmt
-# ServiceOwners:                                                   @cdnfdsuppgithub
-
 # PRLabel: %Network - CDN
 /sdk/cdn/                                                          @ptnan7
+
+# ServiceLabel: %Network - CDN %Mgmt
+# ServiceOwners:                                                   @cdnfdsuppgithub
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
