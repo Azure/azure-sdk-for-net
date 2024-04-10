@@ -2343,14 +2343,13 @@ namespace Azure.Storage.Files.DataLake
                 {
                     // report progress in terms of caller bytes, not encoded bytes
                     structuredContentLength = contentLength;
-                    contentLength = (content?.Length - content?.Position) ?? 0;
                     structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
                     content = content.WithNoDispose().WithProgress(progressHandler);
                     content = new StructuredMessageEncodingStream(
                         content,
                         Constants.StructuredMessage.DefaultSegmentContentLength,
                         StructuredMessage.Flags.StorageCrc64);
-                    contentLength = (content?.Length - content?.Position) ?? 0;
+                    contentLength = content.Length - content.Position;
                 }
                 else
                 {
