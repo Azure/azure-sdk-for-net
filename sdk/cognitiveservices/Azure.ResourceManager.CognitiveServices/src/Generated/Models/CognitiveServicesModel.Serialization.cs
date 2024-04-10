@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteObjectValue<CognitiveServicesAccountModel>(Model, options);
+                writer.WriteObjectValue(Model, options);
             }
             if (Optional.IsDefined(Kind))
             {

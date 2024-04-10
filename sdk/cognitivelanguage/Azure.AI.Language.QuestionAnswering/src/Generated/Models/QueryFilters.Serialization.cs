@@ -18,7 +18,7 @@ namespace Azure.AI.Language.QuestionAnswering
             if (Optional.IsDefined(MetadataFilter))
             {
                 writer.WritePropertyName("metadataFilter"u8);
-                writer.WriteObjectValue<MetadataFilter>(MetadataFilter);
+                writer.WriteObjectValue(MetadataFilter);
             }
             if (Optional.IsCollectionDefined(SourceFilter))
             {
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.QuestionAnswering
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<QueryFilters>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

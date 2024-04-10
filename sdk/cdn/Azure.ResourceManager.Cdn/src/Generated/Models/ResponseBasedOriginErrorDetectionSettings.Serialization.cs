@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in HttpErrorRanges)
                 {
-                    writer.WriteObjectValue<HttpErrorRange>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

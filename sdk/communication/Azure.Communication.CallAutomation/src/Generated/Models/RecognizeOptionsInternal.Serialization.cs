@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteNumberValue(InitialSilenceTimeoutInSeconds.Value);
             }
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue<CommunicationIdentifierModel>(TargetParticipant);
+            writer.WriteObjectValue(TargetParticipant);
             if (Optional.IsDefined(SpeechLanguage))
             {
                 writer.WritePropertyName("speechLanguage"u8);
@@ -40,7 +40,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(DtmfOptions))
             {
                 writer.WritePropertyName("dtmfOptions"u8);
-                writer.WriteObjectValue<DtmfOptionsInternal>(DtmfOptions);
+                writer.WriteObjectValue(DtmfOptions);
             }
             if (Optional.IsCollectionDefined(Choices))
             {
@@ -48,14 +48,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStartArray();
                 foreach (var item in Choices)
                 {
-                    writer.WriteObjectValue<RecognitionChoice>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SpeechOptions))
             {
                 writer.WritePropertyName("speechOptions"u8);
-                writer.WriteObjectValue<SpeechOptionsInternal>(SpeechOptions);
+                writer.WriteObjectValue(SpeechOptions);
             }
             writer.WriteEndObject();
         }
@@ -64,7 +64,7 @@ namespace Azure.Communication.CallAutomation
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RecognizeOptionsInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

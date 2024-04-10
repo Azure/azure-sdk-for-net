@@ -21,7 +21,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
-                writer.WriteObjectValue<InputPosition>(Position);
+                writer.WriteObjectValue(Position);
             }
             if (Optional.IsDefined(Width))
             {
@@ -120,7 +120,7 @@ namespace Azure.Communication.MediaComposition
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnknownInputGroup>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

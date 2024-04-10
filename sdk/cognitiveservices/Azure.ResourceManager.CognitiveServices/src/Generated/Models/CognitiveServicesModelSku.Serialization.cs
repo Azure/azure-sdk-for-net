@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue<CognitiveServicesCapacityConfig>(Capacity, options);
+                writer.WriteObjectValue(Capacity, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RateLimits))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in RateLimits)
                 {
-                    writer.WriteObjectValue<ServiceAccountCallRateLimit>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn
                 if (HealthProbeSettings != null)
                 {
                     writer.WritePropertyName("healthProbeSettings"u8);
-                    writer.WriteObjectValue<HealthProbeSettings>(HealthProbeSettings, options);
+                    writer.WriteObjectValue(HealthProbeSettings, options);
                 }
                 else
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {
                     writer.WritePropertyName("responseBasedOriginErrorDetectionSettings"u8);
-                    writer.WriteObjectValue<ResponseBasedOriginErrorDetectionSettings>(ResponseBasedOriginErrorDetectionSettings, options);
+                    writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings, options);
                 }
                 else
                 {

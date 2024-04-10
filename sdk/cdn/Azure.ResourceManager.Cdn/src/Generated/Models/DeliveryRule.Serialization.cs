@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue<DeliveryRuleCondition>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartArray();
             foreach (var item in Actions)
             {
-                writer.WriteObjectValue<DeliveryRuleAction>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

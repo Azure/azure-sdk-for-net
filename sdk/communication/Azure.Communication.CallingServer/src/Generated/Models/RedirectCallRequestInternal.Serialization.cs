@@ -18,7 +18,7 @@ namespace Azure.Communication.CallingServer
             writer.WritePropertyName("incomingCallContext"u8);
             writer.WriteStringValue(IncomingCallContext);
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue<CommunicationIdentifierModel>(Target);
+            writer.WriteObjectValue(Target);
             writer.WriteEndObject();
         }
 
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallingServer
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RedirectCallRequestInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

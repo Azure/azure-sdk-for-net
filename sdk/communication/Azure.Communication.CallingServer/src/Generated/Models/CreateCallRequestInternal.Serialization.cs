@@ -19,11 +19,11 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
-                writer.WriteObjectValue<CommunicationIdentifierModel>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue<CallSourceInternal>(Source);
+            writer.WriteObjectValue(Source);
             if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
-                writer.WriteObjectValue<MediaStreamingOptionsInternal>(MediaStreamingConfiguration);
+                writer.WriteObjectValue(MediaStreamingConfiguration);
             }
             writer.WriteEndObject();
         }
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallingServer
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CreateCallRequestInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

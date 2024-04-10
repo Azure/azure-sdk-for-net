@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in MatchPatterns)
                 {
-                    writer.WriteObjectValue<ServiceAccountThrottlingMatchPattern>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

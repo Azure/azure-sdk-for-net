@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<PublishedBlueprintData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

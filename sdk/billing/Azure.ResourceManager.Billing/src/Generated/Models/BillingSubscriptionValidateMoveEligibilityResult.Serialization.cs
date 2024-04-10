@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Billing.Models
             if (Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue<BillingSubscriptionValidateMoveEligibilityError>(ErrorDetails, options);
+                writer.WriteObjectValue(ErrorDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
