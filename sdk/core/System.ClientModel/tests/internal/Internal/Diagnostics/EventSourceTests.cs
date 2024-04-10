@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Diagnostics;
-using System.ClientModel.Pipeline;
+using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -38,8 +37,8 @@ namespace System.ClientModel.Tests.Internal.Diagnostics
 
         private TestEventListener _listener;
 
-        private static string[] s_allowedHeaders = new[] { "Date", "Custom-Header", "Custom-Response-Header" };
-        private static string[] s_allowedQueryParameters = new[] { "api-version" };
+        private static List<string> s_allowedHeaders = new List<string> (new[] { "Date", "Custom-Header", "Custom-Response-Header" });
+        private static List<string> s_allowedQueryParameters = new List<string>(new[] { "api-version" });
         private static PipelineMessageSanitizer _sanitizer = new PipelineMessageSanitizer(s_allowedQueryParameters, s_allowedHeaders);
 
         public EventSourceTests(bool isAsync) : base(isAsync)

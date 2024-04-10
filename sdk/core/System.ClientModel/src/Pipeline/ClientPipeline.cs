@@ -147,7 +147,12 @@ public sealed partial class ClientPipeline
 
         int perTryIndex = index;
 
-        policies[index++] = options.LoggingPolicy ?? ClientLoggingPolicy.Default;
+        var loggingPolicy = options.LoggingPolicy ?? ClientLoggingPolicy.Default;
+        if (loggingPolicy is ClientLoggingPolicy clientLoggingPolicy)
+        {
+            clientLoggingPolicy.Sanitizer = new PipelineMessageSanitizer(clientLoggingPolicy.LoggedQueryParameters, clientLoggingPolicy.LoggedHeaderNames);
+        }
+        policies[index++] = loggingPolicy;
 
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
