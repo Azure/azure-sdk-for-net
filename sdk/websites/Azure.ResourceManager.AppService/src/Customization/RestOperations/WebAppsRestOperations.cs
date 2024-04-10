@@ -86,7 +86,6 @@ namespace Azure.ResourceManager.AppService
                     throw new RequestFailedException(message.Response);
             }
         }
-      
         /// <summary> Description for Get function keys for a function in a web site, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
