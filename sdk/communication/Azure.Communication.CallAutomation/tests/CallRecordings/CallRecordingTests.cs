@@ -13,9 +13,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
     public class CallRecordingTests : CallAutomationTestBase
     {
         private const string RecordingId = "sampleRecordingId";
+        private const string TeamsComplianceRecordingId = "teamsComplianceRecordingId";
         private const string DummyRecordingStatusResponse = "{" +
                                         "\"recordingId\": \"dummyRecordingId\"," +
-                                        "\"recordingState\": \"active\"" +
+                                        "\"recordingState\": \"active\"," +
+                                        "\"recordingKind\": \"azurecommunicationservices\"" +
                                         "}";
 
         private static readonly CallLocator _callLocator = new ServerCallLocator(ServerCallId);
@@ -31,6 +33,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             RecordingStateResult result = operation(callRecording);
             Assert.AreEqual("dummyRecordingId", result.RecordingId);
             Assert.AreEqual(RecordingState.Active, result.RecordingState);
+            Assert.AreEqual(RecordingKind.AzureCommunicationServices, result.RecordingKind);
         }
 
         [TestCaseSource(nameof(TestData_OperationsAsyncWithStatus))]
@@ -41,6 +44,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             Response<RecordingStateResult> result = await operation(callRecording);
             Assert.AreEqual("dummyRecordingId", result.Value.RecordingId);
             Assert.AreEqual(RecordingState.Active, result.Value.RecordingState);
+            Assert.AreEqual(RecordingKind.AzureCommunicationServices, result.Value.RecordingKind);
         }
 
         [TestCaseSource(nameof(TestData_OperationsSuccess))]
@@ -148,7 +152,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             {
                 new Func<CallRecording, RecordingStateResult>?[]
                 {
-                   callRecording => callRecording.Start(new StartRecordingOptions(_callLocator) { RecordingStateCallbackUri = _callBackUri, ChannelAffinity = testChannelAffinities})
+                   callRecording => callRecording.Start(new StartRecordingOptions(_callLocator) { RecordingStateCallbackUri = _callBackUri, ChannelAffinity = testChannelAffinities, RecordingStorage = RecordingStorage.CreateAzureBlobContainerRecordingStorage(new Uri("htttp://contosoblob.com"))})
                 },
                 new Func<CallRecording, RecordingStateResult>?[]
                 {
