@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in AvailabilityZoneMappings)
                 {
-                    writer.WriteObjectValue<AvailabilityZoneMapping>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

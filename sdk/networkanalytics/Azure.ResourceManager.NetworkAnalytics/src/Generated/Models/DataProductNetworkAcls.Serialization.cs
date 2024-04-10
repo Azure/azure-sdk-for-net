@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in VirtualNetworkRule)
             {
-                writer.WriteObjectValue<NetworkAnalyticsVirtualNetworkRule>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("ipRules"u8);
             writer.WriteStartArray();
             foreach (var item in IPRules)
             {
-                writer.WriteObjectValue<NetworkAnalyticsIPRules>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("allowedQueryIpRangeList"u8);

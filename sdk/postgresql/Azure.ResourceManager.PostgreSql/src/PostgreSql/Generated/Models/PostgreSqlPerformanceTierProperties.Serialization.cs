@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceLevelObjectives)
                 {
-                    writer.WriteObjectValue<PostgreSqlPerformanceTierServiceLevelObjectives>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

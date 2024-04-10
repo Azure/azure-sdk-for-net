@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<NatGatewaySku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {

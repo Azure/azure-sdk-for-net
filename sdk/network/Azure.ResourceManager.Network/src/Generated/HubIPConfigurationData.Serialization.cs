@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue<SubnetData>(Subnet, options);
+                writer.WriteObjectValue(Subnet, options);
             }
             if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
-                writer.WriteObjectValue<PublicIPAddressData>(PublicIPAddress, options);
+                writer.WriteObjectValue(PublicIPAddress, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

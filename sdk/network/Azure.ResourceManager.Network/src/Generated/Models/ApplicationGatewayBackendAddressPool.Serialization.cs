@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BackendIPConfigurations)
                 {
-                    writer.WriteObjectValue<NetworkInterfaceIPConfigurationData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BackendAddresses)
                 {
-                    writer.WriteObjectValue<ApplicationGatewayBackendAddress>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

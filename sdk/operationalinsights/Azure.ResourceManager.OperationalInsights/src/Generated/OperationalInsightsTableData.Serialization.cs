@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(SearchResults))
             {
                 writer.WritePropertyName("searchResults"u8);
-                writer.WriteObjectValue<OperationalInsightsTableSearchResults>(SearchResults, options);
+                writer.WriteObjectValue(SearchResults, options);
             }
             if (Optional.IsDefined(RestoredLogs))
             {
                 writer.WritePropertyName("restoredLogs"u8);
-                writer.WriteObjectValue<OperationalInsightsTableRestoredLogs>(RestoredLogs, options);
+                writer.WriteObjectValue(RestoredLogs, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResultStatistics))
             {
                 writer.WritePropertyName("resultStatistics"u8);
-                writer.WriteObjectValue<OperationalInsightsTableResultStatistics>(ResultStatistics, options);
+                writer.WriteObjectValue(ResultStatistics, options);
             }
             if (Optional.IsDefined(Plan))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue<OperationalInsightsSchema>(Schema, options);
+                writer.WriteObjectValue(Schema, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

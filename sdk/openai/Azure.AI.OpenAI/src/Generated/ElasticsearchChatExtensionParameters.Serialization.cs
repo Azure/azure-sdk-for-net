@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue<OnYourDataAuthenticationOptions>(Authentication, options);
+                writer.WriteObjectValue(Authentication, options);
             }
             if (Optional.IsDefined(DocumentCount))
             {
@@ -58,7 +58,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(FieldMappingOptions))
             {
                 writer.WritePropertyName("fields_mapping"u8);
-                writer.WriteObjectValue<ElasticsearchIndexFieldMappingOptions>(FieldMappingOptions, options);
+                writer.WriteObjectValue(FieldMappingOptions, options);
             }
             if (Optional.IsDefined(QueryType))
             {
@@ -68,7 +68,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(EmbeddingDependency))
             {
                 writer.WritePropertyName("embedding_dependency"u8);
-                writer.WriteObjectValue<OnYourDataVectorizationSource>(EmbeddingDependency, options);
+                writer.WriteObjectValue(EmbeddingDependency, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -263,7 +263,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ElasticsearchChatExtensionParameters>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -84,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MetricDataPoint>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

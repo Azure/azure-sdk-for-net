@@ -83,7 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<MonitoringDataPoint>(monitoringDataPoint);
+                content.JsonWriter.WriteObjectValue(monitoringDataPoint);
                 request.Content = content;
             }
             return message;
@@ -217,7 +217,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 content.JsonWriter.WriteStartArray();
                 foreach (var item in monitoringDataPoints)
                 {
-                    content.JsonWriter.WriteObjectValue<MonitoringDataPoint>(item);
+                    content.JsonWriter.WriteObjectValue(item);
                 }
                 content.JsonWriter.WriteEndArray();
                 request.Content = content;

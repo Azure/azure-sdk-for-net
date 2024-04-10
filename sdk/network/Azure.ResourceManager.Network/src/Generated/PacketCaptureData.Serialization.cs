@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue<PacketCaptureMachineScope>(Scope, options);
+                writer.WriteObjectValue(Scope, options);
             }
             if (Optional.IsDefined(TargetType))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(StorageLocation))
             {
                 writer.WritePropertyName("storageLocation"u8);
-                writer.WriteObjectValue<PacketCaptureStorageLocation>(StorageLocation, options);
+                writer.WriteObjectValue(StorageLocation, options);
             }
             if (Optional.IsCollectionDefined(Filters))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue<PacketCaptureFilter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

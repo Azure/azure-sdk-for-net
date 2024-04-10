@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ContainerNetworkInterfaceConfiguration))
             {
                 writer.WritePropertyName("containerNetworkInterfaceConfiguration"u8);
-                writer.WriteObjectValue<ContainerNetworkInterfaceConfiguration>(ContainerNetworkInterfaceConfiguration, options);
+                writer.WriteObjectValue(ContainerNetworkInterfaceConfiguration, options);
             }
             if (Optional.IsDefined(Container))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue<ContainerNetworkInterfaceIPConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

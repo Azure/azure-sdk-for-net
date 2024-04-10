@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateIPAddresses)
                 {
-                    writer.WriteObjectValue<NginxPrivateIPAddress>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

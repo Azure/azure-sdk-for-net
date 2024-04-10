@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue<MonitorLocalizableString>(Name, options);
+                writer.WriteObjectValue(Name, options);
             }
             if (Optional.IsDefined(DisplayDescription))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricAvailabilities)
                 {
-                    writer.WriteObjectValue<MonitorMetricAvailability>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue<MonitorLocalizableString>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

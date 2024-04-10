@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PolicyMembers)
                 {
-                    writer.WriteObjectValue<VpnServerConfigurationPolicyGroupMember>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadDistributionTargets)
                 {
-                    writer.WriteObjectValue<ApplicationGatewayLoadDistributionTarget>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
