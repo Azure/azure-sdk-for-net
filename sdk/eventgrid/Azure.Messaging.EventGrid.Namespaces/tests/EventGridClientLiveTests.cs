@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Messaging.EventGrid.Namespaces;
 using NUnit.Framework;
 
@@ -177,12 +178,17 @@ namespace Azure.Messaging.EventGrid.Tests
         public async Task RenewLocks()
         {
             var namespaceTopicHost = TestEnvironment.NamespaceTopicHost;
-            var namespaceKey = TestEnvironment.NamespaceKey;
             var topicName = TestEnvironment.NamespaceTopicName;
             var subscriptionName = TestEnvironment.NamespaceSubscriptionName;
 
-            var client = InstrumentClient(new EventGridClient(new Uri(namespaceTopicHost),
-                new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridClientOptions())));
+            #region Snippet:CreateNamespaceClientAAD
+#if SNIPPET
+            // Construct the client using an Endpoint for a namespace as well as the DefaultAzureCredential
+            var client = new EventGridClient(new Uri(namespaceTopicHost), new DefaultAzureCredential());
+#else
+            var client = InstrumentClient(new EventGridClient(new Uri(namespaceTopicHost), new DefaultAzureCredential(), InstrumentClientOptions(new EventGridClientOptions())));
+#endif
+            #endregion
 
             var evt = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 })
             {

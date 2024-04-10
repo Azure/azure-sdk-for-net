@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary> Properties of an event published to an Azure Messaging EventGrid Namespace topic using the CloudEvent 1.0 Schema. </summary>
-    internal partial class CloudEvent
+    internal partial class CloudEventInternal
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CloudEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEventInternal"/>. </summary>
         /// <param name="id"> An identifier for the event. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="type"> Type of event related to the originating occurrence. </param>
         /// <param name="specversion"> The version of the CloudEvents specification which the event uses. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="source"/>, <paramref name="type"/> or <paramref name="specversion"/> is null. </exception>
-        public CloudEvent(string id, string source, string type, string specversion)
+        public CloudEventInternal(string id, string source, string type, string specversion)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(source, nameof(source));
@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             Specversion = specversion;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEventInternal"/>. </summary>
         /// <param name="id"> An identifier for the event. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="source"> Identifies the context in which an event happened. The combination of id and source must be unique for each distinct event. </param>
         /// <param name="data"> Event data specific to the event type. </param>
@@ -76,7 +76,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="datacontenttype"> Content type of data value. </param>
         /// <param name="subject"> This describes the subject of the event in the context of the event producer (identified by source). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudEvent(string id, string source, BinaryData data, BinaryData dataBase64, string type, DateTimeOffset? time, string specversion, string dataschema, string datacontenttype, string subject, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudEventInternal(string id, string source, BinaryData data, BinaryData dataBase64, string type, DateTimeOffset? time, string specversion, string dataschema, string datacontenttype, string subject, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Source = source;
@@ -91,8 +91,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudEvent"/> for deserialization. </summary>
-        internal CloudEvent()
+        /// <summary> Initializes a new instance of <see cref="CloudEventInternal"/> for deserialization. </summary>
+        internal CloudEventInternal()
         {
         }
 

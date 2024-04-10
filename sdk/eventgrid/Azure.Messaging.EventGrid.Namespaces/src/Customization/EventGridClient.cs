@@ -10,10 +10,10 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    [CodeGenSuppress("PublishCloudEvent", typeof(string), typeof(Azure.Messaging.EventGrid.Namespaces.CloudEvent), typeof(CancellationToken))]
-    [CodeGenSuppress("PublishCloudEventAsync", typeof(string), typeof(Azure.Messaging.EventGrid.Namespaces.CloudEvent), typeof(CancellationToken))]
-    [CodeGenSuppress("PublishCloudEvents", typeof(string), typeof(IEnumerable<Azure.Messaging.EventGrid.Namespaces.CloudEvent>), typeof(CancellationToken))]
-    [CodeGenSuppress("PublishCloudEventsAsync", typeof(string), typeof(IEnumerable<Azure.Messaging.EventGrid.Namespaces.CloudEvent>), typeof(CancellationToken))]
+    [CodeGenSuppress("PublishCloudEvent", typeof(string), typeof(CloudEventInternal), typeof(CancellationToken))]
+    [CodeGenSuppress("PublishCloudEventAsync", typeof(string), typeof(CloudEventInternal), typeof(CancellationToken))]
+    [CodeGenSuppress("PublishCloudEvents", typeof(string), typeof(IEnumerable<CloudEventInternal>), typeof(CancellationToken))]
+    [CodeGenSuppress("PublishCloudEventsAsync", typeof(string), typeof(IEnumerable<CloudEventInternal>), typeof(CancellationToken))]
 #pragma warning disable AZC0007
     public partial class EventGridClient
 #pragma warning restore AZC0007

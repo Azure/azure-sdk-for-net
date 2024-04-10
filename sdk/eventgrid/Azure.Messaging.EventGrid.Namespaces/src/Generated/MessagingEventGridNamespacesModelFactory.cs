@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="brokerProperties"> The Event Broker details. </param>
         /// <param name="event"> Cloud Event details. </param>
         /// <returns> A new <see cref="Namespaces.ReceiveDetails"/> instance for mocking. </returns>
-        public static ReceiveDetails ReceiveDetails(BrokerProperties brokerProperties = null, Messaging.CloudEvent @event = null)
+        public static ReceiveDetails ReceiveDetails(BrokerProperties brokerProperties = null, CloudEvent @event = null)
         {
             return new ReceiveDetails(brokerProperties, @event, serializedAdditionalRawData: null);
         }

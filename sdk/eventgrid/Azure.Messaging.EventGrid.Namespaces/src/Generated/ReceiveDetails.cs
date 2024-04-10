@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="brokerProperties"> The Event Broker details. </param>
         /// <param name="event"> Cloud Event details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="brokerProperties"/> or <paramref name="event"/> is null. </exception>
-        internal ReceiveDetails(BrokerProperties brokerProperties, Messaging.CloudEvent @event)
+        internal ReceiveDetails(BrokerProperties brokerProperties, CloudEvent @event)
         {
             Argument.AssertNotNull(brokerProperties, nameof(brokerProperties));
             Argument.AssertNotNull(@event, nameof(@event));
@@ -62,7 +62,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="brokerProperties"> The Event Broker details. </param>
         /// <param name="event"> Cloud Event details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReceiveDetails(BrokerProperties brokerProperties, Messaging.CloudEvent @event, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReceiveDetails(BrokerProperties brokerProperties, CloudEvent @event, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BrokerProperties = brokerProperties;
             Event = @event;
