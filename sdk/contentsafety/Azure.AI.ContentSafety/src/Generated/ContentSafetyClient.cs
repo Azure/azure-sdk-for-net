@@ -110,8 +110,8 @@ namespace Azure.AI.ContentSafety
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AnalyzeTextAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AnalyzeTextResult.FromResponse(response), response);
         }
@@ -126,8 +126,8 @@ namespace Azure.AI.ContentSafety
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AnalyzeText(content, context);
             return Response.FromValue(AnalyzeTextResult.FromResponse(response), response);
         }
@@ -220,8 +220,8 @@ namespace Azure.AI.ContentSafety
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AnalyzeImageAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AnalyzeImageResult.FromResponse(response), response);
         }
@@ -236,8 +236,8 @@ namespace Azure.AI.ContentSafety
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AnalyzeImage(content, context);
             return Response.FromValue(AnalyzeImageResult.FromResponse(response), response);
         }
