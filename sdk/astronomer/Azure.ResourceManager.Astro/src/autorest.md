@@ -34,7 +34,7 @@ rename-mapping:
   OrganizationResource: AstroOrganization
   OrganizationResourceUpdateProperties: AstroOrganizationUpdateProperties
   SingleSignOnStates: AstroSingleSignOnState
-  ResourceProvisioningState: AstroProvisioningState
+  ResourceProvisioningState: AstroResourceProvisioningState
 
 format-by-name-rules:
   'tenantId': 'uuid'

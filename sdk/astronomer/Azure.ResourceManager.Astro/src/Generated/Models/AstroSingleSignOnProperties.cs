@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Astro.Models
         /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AstroSingleSignOnProperties(AstroSingleSignOnState? singleSignOnState, string enterpriseAppId, Uri singleSignOnUri, IList<string> aadDomains, AstroProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AstroSingleSignOnProperties(AstroSingleSignOnState? singleSignOnState, string enterpriseAppId, Uri singleSignOnUri, IList<string> aadDomains, AstroResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SingleSignOnState = singleSignOnState;
             EnterpriseAppId = enterpriseAppId;
@@ -77,6 +77,6 @@ namespace Azure.ResourceManager.Astro.Models
         /// <summary> List of AAD domains fetched from Microsoft Graph for user. </summary>
         public IList<string> AadDomains { get; }
         /// <summary> Provisioning State of the resource. </summary>
-        public AstroProvisioningState? ProvisioningState { get; }
+        public AstroResourceProvisioningState? ProvisioningState { get; }
     }
 }

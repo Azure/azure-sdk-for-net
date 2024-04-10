@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Astro.Models
             string enterpriseAppId = default;
             Uri singleSignOnUrl = default;
             IList<string> aadDomains = default;
-            AstroProvisioningState? provisioningState = default;
+            AstroResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Astro.Models
                     {
                         continue;
                     }
-                    provisioningState = new AstroProvisioningState(property.Value.GetString());
+                    provisioningState = new AstroResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

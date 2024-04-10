@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Astro.Models
             }
             AstroMarketplaceDetails marketplace = default;
             AstroUserDetails user = default;
-            AstroProvisioningState? provisioningState = default;
+            AstroResourceProvisioningState? provisioningState = default;
             AstroPartnerOrganizationProperties partnerOrganizationProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Astro.Models
                     {
                         continue;
                     }
-                    provisioningState = new AstroProvisioningState(property.Value.GetString());
+                    provisioningState = new AstroResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("partnerOrganizationProperties"u8))

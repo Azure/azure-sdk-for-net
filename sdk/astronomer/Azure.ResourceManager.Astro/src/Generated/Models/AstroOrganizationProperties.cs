@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Astro.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerOrganizationProperties"> Organization properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AstroOrganizationProperties(AstroMarketplaceDetails marketplace, AstroUserDetails user, AstroProvisioningState? provisioningState, AstroPartnerOrganizationProperties partnerOrganizationProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AstroOrganizationProperties(AstroMarketplaceDetails marketplace, AstroUserDetails user, AstroResourceProvisioningState? provisioningState, AstroPartnerOrganizationProperties partnerOrganizationProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Marketplace = marketplace;
             User = user;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Astro.Models
         /// <summary> Details of the user. </summary>
         public AstroUserDetails User { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
-        public AstroProvisioningState? ProvisioningState { get; }
+        public AstroResourceProvisioningState? ProvisioningState { get; }
         /// <summary> Organization properties. </summary>
         public AstroPartnerOrganizationProperties PartnerOrganizationProperties { get; set; }
     }

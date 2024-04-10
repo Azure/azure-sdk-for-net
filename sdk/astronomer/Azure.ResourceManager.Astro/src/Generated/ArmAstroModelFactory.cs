@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Astro.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerOrganizationProperties"> Organization properties. </param>
         /// <returns> A new <see cref="Models.AstroOrganizationProperties"/> instance for mocking. </returns>
-        public static AstroOrganizationProperties AstroOrganizationProperties(AstroMarketplaceDetails marketplace = null, AstroUserDetails user = null, AstroProvisioningState? provisioningState = null, AstroPartnerOrganizationProperties partnerOrganizationProperties = null)
+        public static AstroOrganizationProperties AstroOrganizationProperties(AstroMarketplaceDetails marketplace = null, AstroUserDetails user = null, AstroResourceProvisioningState? provisioningState = null, AstroPartnerOrganizationProperties partnerOrganizationProperties = null)
         {
             return new AstroOrganizationProperties(marketplace, user, provisioningState, partnerOrganizationProperties, serializedAdditionalRawData: null);
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Astro.Models
         /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <returns> A new <see cref="Models.AstroSingleSignOnProperties"/> instance for mocking. </returns>
-        public static AstroSingleSignOnProperties AstroSingleSignOnProperties(AstroSingleSignOnState? singleSignOnState = null, string enterpriseAppId = null, Uri singleSignOnUri = null, IEnumerable<string> aadDomains = null, AstroProvisioningState? provisioningState = null)
+        public static AstroSingleSignOnProperties AstroSingleSignOnProperties(AstroSingleSignOnState? singleSignOnState = null, string enterpriseAppId = null, Uri singleSignOnUri = null, IEnumerable<string> aadDomains = null, AstroResourceProvisioningState? provisioningState = null)
         {
             aadDomains ??= new List<string>();
 

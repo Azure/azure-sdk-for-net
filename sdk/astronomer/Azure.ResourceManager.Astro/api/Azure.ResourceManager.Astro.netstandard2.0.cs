@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Astro.Models
     public static partial class ArmAstroModelFactory
     {
         public static Azure.ResourceManager.Astro.AstroOrganizationData AstroOrganizationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Astro.Models.AstroOrganizationProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.Astro.Models.AstroOrganizationProperties AstroOrganizationProperties(Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails marketplace = null, Azure.ResourceManager.Astro.Models.AstroUserDetails user = null, Azure.ResourceManager.Astro.Models.AstroProvisioningState? provisioningState = default(Azure.ResourceManager.Astro.Models.AstroProvisioningState?), Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties partnerOrganizationProperties = null) { throw null; }
-        public static Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties AstroSingleSignOnProperties(Azure.ResourceManager.Astro.Models.AstroSingleSignOnState? singleSignOnState = default(Azure.ResourceManager.Astro.Models.AstroSingleSignOnState?), string enterpriseAppId = null, System.Uri singleSignOnUri = null, System.Collections.Generic.IEnumerable<string> aadDomains = null, Azure.ResourceManager.Astro.Models.AstroProvisioningState? provisioningState = default(Azure.ResourceManager.Astro.Models.AstroProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Astro.Models.AstroOrganizationProperties AstroOrganizationProperties(Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails marketplace = null, Azure.ResourceManager.Astro.Models.AstroUserDetails user = null, Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState? provisioningState = default(Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState?), Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties partnerOrganizationProperties = null) { throw null; }
+        public static Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties AstroSingleSignOnProperties(Azure.ResourceManager.Astro.Models.AstroSingleSignOnState? singleSignOnState = default(Azure.ResourceManager.Astro.Models.AstroSingleSignOnState?), string enterpriseAppId = null, System.Uri singleSignOnUri = null, System.Collections.Generic.IEnumerable<string> aadDomains = null, Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState? provisioningState = default(Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState?)) { throw null; }
     }
     public partial class AstroMarketplaceDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails>
     {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Astro.Models
         public AstroOrganizationProperties(Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails marketplace, Azure.ResourceManager.Astro.Models.AstroUserDetails user) { }
         public Azure.ResourceManager.Astro.Models.AstroMarketplaceDetails Marketplace { get { throw null; } set { } }
         public Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationProperties PartnerOrganizationProperties { get { throw null; } set { } }
-        public Azure.ResourceManager.Astro.Models.AstroProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Astro.Models.AstroUserDetails User { get { throw null; } set { } }
         Azure.ResourceManager.Astro.Models.AstroOrganizationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroOrganizationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroOrganizationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -179,22 +179,22 @@ namespace Azure.ResourceManager.Astro.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroPartnerOrganizationUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AstroProvisioningState : System.IEquatable<Azure.ResourceManager.Astro.Models.AstroProvisioningState>
+    public readonly partial struct AstroResourceProvisioningState : System.IEquatable<Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public AstroProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.Astro.Models.AstroProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.Astro.Models.AstroProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.Astro.Models.AstroProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Astro.Models.AstroProvisioningState other) { throw null; }
+        public AstroResourceProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Astro.Models.AstroProvisioningState left, Azure.ResourceManager.Astro.Models.AstroProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Astro.Models.AstroProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Astro.Models.AstroProvisioningState left, Azure.ResourceManager.Astro.Models.AstroProvisioningState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState left, Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState left, Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class AstroSingleSignOnProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Astro.Models
         public AstroSingleSignOnProperties() { }
         public System.Collections.Generic.IList<string> AadDomains { get { throw null; } }
         public string EnterpriseAppId { get { throw null; } set { } }
-        public Azure.ResourceManager.Astro.Models.AstroProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Astro.Models.AstroResourceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Astro.Models.AstroSingleSignOnState? SingleSignOnState { get { throw null; } set { } }
         public System.Uri SingleSignOnUri { get { throw null; } set { } }
         Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.Models.AstroSingleSignOnProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
