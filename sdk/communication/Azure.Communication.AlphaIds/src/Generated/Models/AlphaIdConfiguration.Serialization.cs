@@ -50,7 +50,7 @@ namespace Azure.Communication.AlphaIds.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AlphaIdConfiguration>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Chaos
             if (Optional.IsDefined(RuntimeProperties))
             {
                 writer.WritePropertyName("runtimeProperties"u8);
-                writer.WriteObjectValue<ChaosCapabilityTypeRuntimeProperties>(RuntimeProperties, options);
+                writer.WriteObjectValue(RuntimeProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

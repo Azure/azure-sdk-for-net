@@ -101,7 +101,7 @@ namespace Azure.Communication.CallAutomation
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PowerVirtualAgentsDialog>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

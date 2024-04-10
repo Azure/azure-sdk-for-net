@@ -40,7 +40,7 @@ namespace Azure.Communication.CallAutomation
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DialogUpdateBase>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

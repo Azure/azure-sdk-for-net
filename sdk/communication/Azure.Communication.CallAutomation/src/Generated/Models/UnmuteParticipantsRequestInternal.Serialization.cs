@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartArray();
             foreach (var item in TargetParticipants)
             {
-                writer.WriteObjectValue<CommunicationIdentifierModel>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(OperationContext))
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallAutomation
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnmuteParticipantsRequestInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -20,7 +20,7 @@ namespace Azure.Communication.MediaComposition.Models
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue<LayoutResolution>(Resolution);
+                writer.WriteObjectValue(Resolution);
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
@@ -67,7 +67,7 @@ namespace Azure.Communication.MediaComposition.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MediaCompositionLayout>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

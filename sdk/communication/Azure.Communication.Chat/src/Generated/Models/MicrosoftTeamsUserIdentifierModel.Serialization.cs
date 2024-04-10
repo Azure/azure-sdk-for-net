@@ -81,7 +81,7 @@ namespace Azure.Communication
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Chat.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MicrosoftTeamsUserIdentifierModel>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

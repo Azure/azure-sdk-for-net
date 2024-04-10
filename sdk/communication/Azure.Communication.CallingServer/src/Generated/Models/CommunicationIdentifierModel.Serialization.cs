@@ -29,17 +29,17 @@ namespace Azure.Communication
             if (CallingServer.Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser"u8);
-                writer.WriteObjectValue<CommunicationUserIdentifierModel>(CommunicationUser);
+                writer.WriteObjectValue(CommunicationUser);
             }
             if (CallingServer.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
-                writer.WriteObjectValue<PhoneNumberIdentifierModel>(PhoneNumber);
+                writer.WriteObjectValue(PhoneNumber);
             }
             if (CallingServer.Optional.IsDefined(MicrosoftTeamsUser))
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
-                writer.WriteObjectValue<MicrosoftTeamsUserIdentifierModel>(MicrosoftTeamsUser);
+                writer.WriteObjectValue(MicrosoftTeamsUser);
             }
             writer.WriteEndObject();
         }
@@ -114,7 +114,7 @@ namespace Azure.Communication
         internal virtual RequestContent ToRequestContent()
         {
             var content = new CallingServer.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CommunicationIdentifierModel>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

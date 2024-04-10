@@ -88,7 +88,7 @@ namespace Azure.Communication.NetworkTraversal
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CommunicationIceServer>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Communication.NetworkTraversal
         {
             public override void Write(Utf8JsonWriter writer, CommunicationIceServer model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<CommunicationIceServer>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override CommunicationIceServer Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WriteStartArray();
                 foreach (var item in Benefits)
                 {
-                    writer.WriteObjectValue<SavingsPlanValidateResult>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
