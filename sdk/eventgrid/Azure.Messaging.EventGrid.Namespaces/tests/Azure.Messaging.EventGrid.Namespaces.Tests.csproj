@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="SessionRecords\" />
+    <Folder Include="SessionRecords\EventGridClientLiveTests\" />
   </ItemGroup>
 
   <ItemGroup>
