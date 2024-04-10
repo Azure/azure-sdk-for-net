@@ -1,6 +1,13 @@
 # Microsoft Azure TrustedSigning management client library for .NET
 
-**[Describe the service briefly first.]**
+# Trusted Signing (formerly Azure Code Signing) is a Microsoft fully managed end-to-end signing solution that simplifies the process and empowers 3rd party developers to easily build and distribute applications.
+# This is part of Microsoft’s commitment to an open, inclusive, and secure ecosystem.
+# Simplifies the signing process with an intuitive experience in Azure
+# Zero-touch certificate lifecycle management that is FIPS 140-2 Level 3 compliant.
+# Integrations into leading developer toolsets.
+# Supports Public Trust, Test, Private Trust, and CI policy signing scenarios.
+# Timestamping service.
+# Content confidential signing – meaning digest signing that is fast and reliable – your file never leaves your endpoint.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
