@@ -461,12 +461,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 defines ?? new ChangeTrackingDictionary<string, object>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HDInsightStreamingActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHDInsightStreamingActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HDInsightStreamingActivity>(this);
+            return content;
+        }
+
         internal partial class HDInsightStreamingActivityConverter : JsonConverter<HDInsightStreamingActivity>
         {
             public override void Write(Utf8JsonWriter writer, HDInsightStreamingActivity model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<HDInsightStreamingActivity>(model);
             }
+
             public override HDInsightStreamingActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

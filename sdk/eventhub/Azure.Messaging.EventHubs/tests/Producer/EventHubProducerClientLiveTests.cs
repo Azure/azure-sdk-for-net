@@ -14,6 +14,7 @@ using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
+using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -704,6 +705,28 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(batch.Count, Is.EqualTo(3), "The batch should contain all 3 events.");
                     Assert.That(async () => await producer.SendAsync(batch), Throws.Nothing);
                 }
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProducerCanSendWithBinaryApplicationProperties()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                await using var producer = new EventHubProducerClient(connectionString);
+
+                var eventData = new EventData(Encoding.UTF8.GetBytes("AWord"));
+                eventData.Properties["TestByteArray"] = new byte[] { 0x12, 0x34, 0x56, 0x78 };
+                eventData.Properties["TestArraySegment"] = new ArraySegment<byte>(new byte[] { 0x23, 0x45, 0x67, 0x89 });
+
+                Assert.That(async () => await producer.SendAsync(new[] { eventData }), Throws.Nothing);
             }
         }
 

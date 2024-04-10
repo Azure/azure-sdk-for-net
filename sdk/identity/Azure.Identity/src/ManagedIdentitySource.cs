@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,16 +38,17 @@ namespace Azure.Identity
                 Pipeline.HttpPipeline.Send(message, cancellationToken);
             }
 
-            return await HandleResponseAsync(async, context, message.Response, cancellationToken).ConfigureAwait(false);
+            return await HandleResponseAsync(async, context, message, cancellationToken).ConfigureAwait(false);
         }
 
         protected virtual async ValueTask<AccessToken> HandleResponseAsync(
             bool async,
             TokenRequestContext context,
-            Response response,
+            HttpMessage message,
             CancellationToken cancellationToken)
         {
             Exception exception = null;
+            Response response = message.Response;
             try
             {
                 if (response.Status == 200)
@@ -82,10 +84,10 @@ namespace Azure.Identity
             // rather than just timing out, as expected.
             if (response.Status == 403)
             {
-                string message = response.Content.ToString();
-                if (message.Contains("unreachable"))
+                string content = response.Content.ToString();
+                if (content.Contains("unreachable"))
                 {
-                    throw new CredentialUnavailableException(UnexpectedResponse, new Exception(message));
+                    throw new CredentialUnavailableException(UnexpectedResponse, new Exception(content));
                 }
             }
 

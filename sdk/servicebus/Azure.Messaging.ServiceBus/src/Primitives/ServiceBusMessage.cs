@@ -458,6 +458,15 @@ namespace Azure.Messaging.ServiceBus
         /// <exception cref="System.Runtime.Serialization.SerializationException">
         ///   Occurs when the <see cref="ServiceBusMessage" /> is serialized for transport when an unsupported type is used as a property.
         /// </exception>
+        /// <exception cref="ServiceBusException">
+        ///   <para>Occurs when the <see cref="ServiceBusMessage" /> is serialized for transport when a value of type <see cref="T:byte[]"/> or
+        ///   <see cref="T:ArraySegment{byte}"/> is used as a property.  The <see cref="ServiceBusException.Reason" /> will be set to
+        ///   <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.</para>
+        ///
+        ///   <para>This is due to a known bug in the Service Bus service, where an application property encoded as binary cannot be
+        ///   handled by the service and is incorrectly rejected for being too large.  A fix is planned, but the time line is
+        ///   currently unknown.  The recommended workaround is to encode the binary data as a Base64 string.</para>
+        /// </exception>
         public IDictionary<string, object> ApplicationProperties
         {
             get

@@ -72,8 +72,8 @@ namespace Azure.Analytics.Defender.Easm
             Argument.AssertNotNull(filter, nameof(filter));
             Argument.AssertNotNull(assetUpdatePayload, nameof(assetUpdatePayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = assetUpdatePayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateAssetsAsync(filter, content, context).ConfigureAwait(false);
             return Response.FromValue(TaskResource.FromResponse(response), response);
         }
@@ -89,8 +89,8 @@ namespace Azure.Analytics.Defender.Easm
             Argument.AssertNotNull(filter, nameof(filter));
             Argument.AssertNotNull(assetUpdatePayload, nameof(assetUpdatePayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = assetUpdatePayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateAssets(filter, content, context);
             return Response.FromValue(TaskResource.FromResponse(response), response);
         }
@@ -296,8 +296,8 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNull(dataConnectionPayload, nameof(dataConnectionPayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = dataConnectionPayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ValidateDataConnectionAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(ValidateResult.FromResponse(response), response);
         }
@@ -311,8 +311,8 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNull(dataConnectionPayload, nameof(dataConnectionPayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = dataConnectionPayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ValidateDataConnection(content, context);
             return Response.FromValue(ValidateResult.FromResponse(response), response);
         }
@@ -517,8 +517,8 @@ namespace Azure.Analytics.Defender.Easm
             Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
             Argument.AssertNotNull(dataConnectionPayload, nameof(dataConnectionPayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = dataConnectionPayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateOrReplaceDataConnectionAsync(dataConnectionName, content, context).ConfigureAwait(false);
             return Response.FromValue(DataConnection.FromResponse(response), response);
         }
@@ -535,8 +535,8 @@ namespace Azure.Analytics.Defender.Easm
             Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
             Argument.AssertNotNull(dataConnectionPayload, nameof(dataConnectionPayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = dataConnectionPayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateOrReplaceDataConnection(dataConnectionName, content, context);
             return Response.FromValue(DataConnection.FromResponse(response), response);
         }
@@ -706,8 +706,8 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNull(discoveryGroupPayload, nameof(discoveryGroupPayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = discoveryGroupPayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ValidateDiscoveryGroupAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(ValidateResult.FromResponse(response), response);
         }
@@ -721,8 +721,8 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNull(discoveryGroupPayload, nameof(discoveryGroupPayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = discoveryGroupPayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ValidateDiscoveryGroup(content, context);
             return Response.FromValue(ValidateResult.FromResponse(response), response);
         }
@@ -927,8 +927,8 @@ namespace Azure.Analytics.Defender.Easm
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNull(discoveryGroupPayload, nameof(discoveryGroupPayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = discoveryGroupPayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateOrReplaceDiscoveryGroupAsync(groupName, content, context).ConfigureAwait(false);
             return Response.FromValue(DiscoveryGroup.FromResponse(response), response);
         }
@@ -945,8 +945,8 @@ namespace Azure.Analytics.Defender.Easm
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
             Argument.AssertNotNull(discoveryGroupPayload, nameof(discoveryGroupPayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = discoveryGroupPayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateOrReplaceDiscoveryGroup(groupName, content, context);
             return Response.FromValue(DiscoveryGroup.FromResponse(response), response);
         }
@@ -1316,8 +1316,8 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNull(reportAssetSnapshotPayload, nameof(reportAssetSnapshotPayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = reportAssetSnapshotPayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetSnapshotAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(ReportAssetSnapshotResult.FromResponse(response), response);
         }
@@ -1331,8 +1331,8 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNull(reportAssetSnapshotPayload, nameof(reportAssetSnapshotPayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = reportAssetSnapshotPayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetSnapshot(content, context);
             return Response.FromValue(ReportAssetSnapshotResult.FromResponse(response), response);
         }
@@ -1424,8 +1424,8 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNull(reportAssetSummaryPayload, nameof(reportAssetSummaryPayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = reportAssetSummaryPayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetSummaryAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(ReportAssetSummaryResult.FromResponse(response), response);
         }
@@ -1439,8 +1439,8 @@ namespace Azure.Analytics.Defender.Easm
         {
             Argument.AssertNotNull(reportAssetSummaryPayload, nameof(reportAssetSummaryPayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = reportAssetSummaryPayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetSummary(content, context);
             return Response.FromValue(ReportAssetSummaryResult.FromResponse(response), response);
         }
@@ -1645,8 +1645,8 @@ namespace Azure.Analytics.Defender.Easm
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
             Argument.AssertNotNull(savedFilterPayload, nameof(savedFilterPayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = savedFilterPayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateOrReplaceSavedFilterAsync(filterName, content, context).ConfigureAwait(false);
             return Response.FromValue(SavedFilter.FromResponse(response), response);
         }
@@ -1663,8 +1663,8 @@ namespace Azure.Analytics.Defender.Easm
             Argument.AssertNotNullOrEmpty(filterName, nameof(filterName));
             Argument.AssertNotNull(savedFilterPayload, nameof(savedFilterPayload));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = savedFilterPayload.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateOrReplaceSavedFilter(filterName, content, context);
             return Response.FromValue(SavedFilter.FromResponse(response), response);
         }

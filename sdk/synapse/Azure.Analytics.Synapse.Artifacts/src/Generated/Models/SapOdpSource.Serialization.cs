@@ -197,12 +197,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 projection);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SapOdpSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSapOdpSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SapOdpSource>(this);
+            return content;
+        }
+
         internal partial class SapOdpSourceConverter : JsonConverter<SapOdpSource>
         {
             public override void Write(Utf8JsonWriter writer, SapOdpSource model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<SapOdpSource>(model);
             }
+
             public override SapOdpSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
