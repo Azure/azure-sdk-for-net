@@ -61,8 +61,8 @@ namespace Azure.SameBoundary.RoundTrip
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RoundTripNestedModel(RoundTripDummy requiredModel, RoundTripDummy optionalModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RequiredModel = requiredModel;
-            OptionalModel = optionalModel;
+            _requiredModel = requiredModel;
+            _optionalModel = optionalModel;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,9 +71,31 @@ namespace Azure.SameBoundary.RoundTrip
         {
         }
 
-        /// <summary> Gets or sets the required model. </summary>
-        public RoundTripDummy RequiredModel { get; set; }
+        private RoundTripDummy _requiredModel;
+        private bool _requiredModelChanged = false;
+
+        /// <summary> Gets the required model. </summary>
+        public RoundTripDummy RequiredModel
+        {
+            get => _requiredModel;
+            set
+            {
+                _requiredModel = value;
+                _requiredModelChanged = true;
+            }
+        }
+
+        private RoundTripDummy _optionalModel;
+        private bool _optionalModelChanged = false;
         /// <summary> Gets or sets the optional model. </summary>
-        public RoundTripDummy OptionalModel { get; set; }
+        public RoundTripDummy OptionalModel
+        {
+            get => _optionalModel;
+            set
+            {
+                _optionalModel = value;
+                _optionalModelChanged = true;
+            }
+        }
     }
 }

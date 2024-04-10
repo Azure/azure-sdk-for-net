@@ -60,15 +60,15 @@ namespace Azure.SameBoundary.RoundTrip
     }
     public partial class RoundTripDictionaryModel : System.ClientModel.Primitives.IJsonModel<Azure.SameBoundary.RoundTrip.RoundTripDictionaryModel>, System.ClientModel.Primitives.IPersistableModel<Azure.SameBoundary.RoundTrip.RoundTripDictionaryModel>
     {
-        public RoundTripDictionaryModel(System.Collections.Generic.IDictionary<string, string> requiredStringDictionary, System.Collections.Generic.IDictionary<string, int> requiredIntDictionary, System.Collections.Generic.IDictionary<string, Azure.SameBoundary.RoundTrip.RoundTripDummy> requiredModelDictionary, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, Azure.SameBoundary.RoundTrip.RoundTripDummy>> requiredDictionaryDictionary, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.SameBoundary.RoundTrip.RoundTripDummy>> requiredArrayDictionary) { }
+        public RoundTripDictionaryModel(System.Collections.Generic.IDictionary<string, string> requiredStringDictionary, System.Collections.Generic.IDictionary<string, int?> requiredIntDictionary, System.Collections.Generic.IDictionary<string, Azure.SameBoundary.RoundTrip.RoundTripDummy> requiredModelDictionary, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, Azure.SameBoundary.RoundTrip.RoundTripDummy>> requiredDictionaryDictionary, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.SameBoundary.RoundTrip.RoundTripDummy>> requiredArrayDictionary) { }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.SameBoundary.RoundTrip.RoundTripDummy>> OptionalArrayDictionary { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, Azure.SameBoundary.RoundTrip.RoundTripDummy>> OptionalDictionaryDictionary { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, int> OptionalIntDictionary { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, int?> OptionalIntDictionary { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.SameBoundary.RoundTrip.RoundTripDummy> OptionalModelDictionary { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> OptionalStringDictionary { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.SameBoundary.RoundTrip.RoundTripDummy>> RequiredArrayDictionary { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, Azure.SameBoundary.RoundTrip.RoundTripDummy>> RequiredDictionaryDictionary { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, int> RequiredIntDictionary { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, int?> RequiredIntDictionary { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.SameBoundary.RoundTrip.RoundTripDummy> RequiredModelDictionary { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> RequiredStringDictionary { get { throw null; } }
         Azure.SameBoundary.RoundTrip.RoundTripDictionaryModel System.ClientModel.Primitives.IJsonModel<Azure.SameBoundary.RoundTrip.RoundTripDictionaryModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

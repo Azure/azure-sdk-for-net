@@ -19,12 +19,122 @@ namespace Azure.SameBoundary.RoundTrip
 
         void IJsonModel<RoundTripAddAnotherLevelToInheritanceModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoundTripAddAnotherLevelToInheritanceModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" || options.Format == "JMP" ? ((IPersistableModel<RoundTripAddAnotherLevelToInheritanceModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoundTripAddAnotherLevelToInheritanceModel)} does not support writing '{format}' format.");
             }
 
+            if (options.Format == "W")
+            {
+                WriteJson(writer, options);
+            }
+            else if (options.Format == "JMP")
+            {
+                WritePatch(writer);
+            }
+        }
+
+        private void WritePatch(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (_anotherLevelPropertyChanged)
+            {
+                writer.WritePropertyName("anotherLevelProperty"u8);
+                if (AnotherLevelProperty == null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    writer.WriteStringValue(AnotherLevelProperty);
+                }
+            }
+            if (IsChanged(nameof(ExtendedProperty)))
+            {
+                writer.WritePropertyName("extendedProperty"u8);
+                if (ExtendedProperty == null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    writer.WriteStringValue(ExtendedProperty);
+                }
+            }
+            if (IsChanged(nameof(BaseProperty1)))
+            {
+                writer.WritePropertyName("baseProperty1"u8);
+                if (BaseProperty1 == null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    writer.WriteStringValue(BaseProperty1);
+                }
+            }
+            if (IsChanged(nameof(BaseProperty2)))
+            {
+                writer.WritePropertyName("baseProperty2"u8);
+                writer.WriteNumberValue(BaseProperty2);
+            }
+            // [Patch] Dictionary serialization is discussed in `InputDictionaryModel`
+            if (((ChangeTrackingDictionary<string, string>)BaseProperty3).WasCleared())
+            {
+                writer.WritePropertyName("baseProperty3"u8);
+                writer.WriteNullValue();
+            }
+            else
+            {
+                bool baseProperty3 = false;
+                foreach (var item in BaseProperty3)
+                {
+                    if (((ChangeTrackingDictionary<string, string>)BaseProperty3).IsChanged(item.Key))
+                    {
+                        if (!baseProperty3)
+                        {
+                            writer.WritePropertyName("baseProperty3"u8);
+                            writer.WriteStartObject();
+                            baseProperty3 = true;
+                        }
+
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value != null)
+                        {
+                            writer.WriteStringValue(item.Value);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
+                    }
+                }
+                foreach (var key in ((ChangeTrackingDictionary<string, string>)BaseProperty3).ChangedKeys ?? new List<string>())
+                {
+                    if (!BaseProperty3.ContainsKey(key))
+                    {
+                        if (!baseProperty3)
+                        {
+                            writer.WritePropertyName("baseProperty3"u8);
+                            writer.WriteStartObject();
+                            baseProperty3 = true;
+                        }
+
+                        writer.WritePropertyName(key);
+                        writer.WriteNullValue();
+                    }
+                }
+                if (baseProperty3)
+                {
+                    writer.WriteEndObject();
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        private void WriteJson(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             writer.WriteStartObject();
             if (Optional.IsDefined(AnotherLevelProperty))
             {

@@ -19,12 +19,48 @@ namespace Azure.SameBoundary.RoundTrip
 
         void IJsonModel<RoundTripBaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoundTripBaseModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" || options.Format == "JMP" ? ((IPersistableModel<RoundTripBaseModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoundTripBaseModel)} does not support writing '{format}' format.");
             }
 
+            if (options.Format == "W")
+            {
+                WriteJson(writer, options);
+            }
+            else if (options.Format == "JMP")
+            {
+                WritePatch(writer);
+            }
+        }
+
+        private void WritePatch(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (_baseProperty1Changed)
+            {
+                writer.WritePropertyName("baseProperty1"u8);
+                if (BaseProperty1 == null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    writer.WriteStringValue(BaseProperty1);
+                }
+            }
+            if (_baseProperty2Changed)
+            {
+                writer.WritePropertyName("baseProperty2"u8);
+                writer.WriteNumberValue(BaseProperty2);
+            }
+            // BaseProperty3 serialization
+            writer.WriteEndObject();
+        }
+
+        private void WriteJson(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             writer.WriteStartObject();
             if (Optional.IsDefined(BaseProperty1))
             {

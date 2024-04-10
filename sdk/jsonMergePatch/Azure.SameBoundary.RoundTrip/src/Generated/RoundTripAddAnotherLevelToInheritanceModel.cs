@@ -36,7 +36,35 @@ namespace Azure.SameBoundary.RoundTrip
         {
         }
 
+        private string _anotherLevelProperty;
+        private bool _anotherLevelPropertyChanged = false;
         /// <summary> Gets or sets the another level property. </summary>
-        public string AnotherLevelProperty { get; set; }
+        public string AnotherLevelProperty
+        {
+            get => _anotherLevelProperty;
+            set
+            {
+                _anotherLevelProperty = value;
+                _anotherLevelPropertyChanged = true;
+                _isChanged = true;
+            }
+        }
+
+        private bool _isChanged = false;
+        internal override bool IsChanged(string name = null)
+        {
+            if (name == null)
+            {
+                return _isChanged || base.IsChanged();
+            }
+
+            switch (name)
+            {
+                case "AnotherLevelProperty":
+                    return _anotherLevelPropertyChanged;
+                default:
+                    return base.IsChanged(name);
+            }
+        }
     }
 }

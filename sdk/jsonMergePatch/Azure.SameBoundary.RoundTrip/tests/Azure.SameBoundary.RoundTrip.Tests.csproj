@@ -17,4 +17,16 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestData\Case1_ReceivedDataShouldBeRegardedAsNotChanged.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Case2_ExplicitSetPropertyShouldBeSerializedOtherwiseNot.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripPrimitive_AllPropertiesReceived.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

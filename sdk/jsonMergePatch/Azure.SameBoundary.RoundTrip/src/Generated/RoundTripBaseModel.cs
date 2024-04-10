@@ -50,7 +50,7 @@ namespace Azure.SameBoundary.RoundTrip
         public RoundTripBaseModel(int baseProperty2)
         {
             BaseProperty2 = baseProperty2;
-            BaseProperty3 = new ChangeTrackingDictionary<string, string>();
+            _baseProperty3 = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoundTripBaseModel"/>. </summary>
@@ -60,9 +60,9 @@ namespace Azure.SameBoundary.RoundTrip
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RoundTripBaseModel(string baseProperty1, int baseProperty2, IDictionary<string, string> baseProperty3, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            BaseProperty1 = baseProperty1;
-            BaseProperty2 = baseProperty2;
-            BaseProperty3 = baseProperty3;
+            _baseProperty1 = baseProperty1;
+            _baseProperty2 = baseProperty2;
+            _baseProperty3 = new ChangeTrackingDictionary<string, string>(baseProperty3);
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,11 +71,59 @@ namespace Azure.SameBoundary.RoundTrip
         {
         }
 
+        private string _baseProperty1;
+        private bool _baseProperty1Changed = false;
         /// <summary> Gets or sets the base property 1. </summary>
-        public string BaseProperty1 { get; set; }
-        /// <summary> Gets or sets the base property 2. </summary>
-        public int BaseProperty2 { get; set; }
+        public string BaseProperty1
+        {
+            get => _baseProperty1;
+            set
+            {
+                _baseProperty1 = value;
+                _baseProperty1Changed = true;
+                _isChanged = true;
+            }
+        }
+
+        private int _baseProperty2;
+        private bool _baseProperty2Changed = false;
+        /// <summary> Gets the base property 2. </summary>
+        public int BaseProperty2
+        {
+            get => _baseProperty2;
+            set
+            {
+                _baseProperty2 = value;
+                _baseProperty2Changed = true;
+                _isChanged = true;
+            }
+        }
+
+        private ChangeTrackingDictionary<string, string> _baseProperty3;
         /// <summary> Gets the base property 3. </summary>
-        public IDictionary<string, string> BaseProperty3 { get; }
+        public IDictionary<string, string> BaseProperty3 => _baseProperty3;
+
+        // [Patch] This is to ensure "reading whether the model is changed" is an atomic operation.
+        private bool _isChanged = false;
+        // [Patch] `virtual`: so that we can override this method in the derived class.
+        internal virtual bool IsChanged(string name = null)
+        {
+            if (name == null)
+            {
+                return _isChanged;
+            }
+
+            switch (name)
+            {
+                case nameof(BaseProperty1):
+                    return _baseProperty1Changed;
+                case nameof(BaseProperty2):
+                    return _baseProperty2Changed;
+                case nameof(BaseProperty3):
+                    return false;
+                default:
+                    return false;
+            }
+        }
     }
 }

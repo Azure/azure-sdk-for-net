@@ -27,7 +27,7 @@ namespace Azure.SameBoundary.RoundTrip
         /// <param name="extendedProperty"></param>
         internal RoundTripInheritanceModel(string baseProperty1, int baseProperty2, IDictionary<string, string> baseProperty3, IDictionary<string, BinaryData> serializedAdditionalRawData, string extendedProperty) : base(baseProperty1, baseProperty2, baseProperty3, serializedAdditionalRawData)
         {
-            ExtendedProperty = extendedProperty;
+            _extendedProperty = extendedProperty;
         }
 
         /// <summary> Initializes a new instance of <see cref="RoundTripInheritanceModel"/> for deserialization. </summary>
@@ -35,7 +35,35 @@ namespace Azure.SameBoundary.RoundTrip
         {
         }
 
+        private string _extendedProperty;
+        private bool _extendedPrpertyChanged = false;
         /// <summary> Gets or sets the extended property. </summary>
-        public string ExtendedProperty { get; set; }
+        public string ExtendedProperty
+        {
+            get => _extendedProperty;
+            set
+            {
+                _extendedProperty = value;
+                _extendedPrpertyChanged = true;
+                _isChanged = true;
+            }
+        }
+
+        private bool _isChanged = false;
+        internal override bool IsChanged(string name = null)
+        {
+            if (name == null)
+            {
+                return _isChanged || base.IsChanged();
+            }
+
+            switch (name)
+            {
+                case "ExtendedProperty":
+                    return _extendedPrpertyChanged;
+                default:
+                    return base.IsChanged(name);
+            }
+        }
     }
 }

@@ -15,24 +15,39 @@ namespace Azure.SameBoundary.RoundTrip
     internal class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {
         private IList<T> _innerList;
+        private bool _isChanged;
+        private bool _wasCleared;
+
+        public bool IsChanged() => _isChanged;
+        public bool WasCleared() => _wasCleared;
 
         public ChangeTrackingList()
         {
         }
 
-        public ChangeTrackingList(IList<T> innerList)
+        public ChangeTrackingList(IList<T> innerList, bool asChanged = false)
         {
             if (innerList != null)
             {
                 _innerList = innerList;
             }
+
+            if (asChanged)
+            {
+                _isChanged = true;
+            }
         }
 
-        public ChangeTrackingList(IReadOnlyList<T> innerList)
+        public ChangeTrackingList(IReadOnlyList<T> innerList, bool asChanged = false)
         {
             if (innerList != null)
             {
                 _innerList = innerList.ToList();
+            }
+
+            if (asChanged)
+            {
+                _isChanged = true;
             }
         }
 
@@ -58,6 +73,7 @@ namespace Azure.SameBoundary.RoundTrip
                 {
                     throw new ArgumentOutOfRangeException(nameof(index));
                 }
+                _isChanged = true;
                 EnsureList()[index] = value;
             }
         }
@@ -65,6 +81,7 @@ namespace Azure.SameBoundary.RoundTrip
         public void Reset()
         {
             _innerList = null;
+            _isChanged = true;
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -88,11 +105,13 @@ namespace Azure.SameBoundary.RoundTrip
         public void Add(T item)
         {
             EnsureList().Add(item);
+            _isChanged = true;
         }
 
         public void Clear()
         {
             EnsureList().Clear();
+            _wasCleared = true;
         }
 
         public bool Contains(T item)
@@ -119,7 +138,12 @@ namespace Azure.SameBoundary.RoundTrip
             {
                 return false;
             }
-            return EnsureList().Remove(item);
+            if (EnsureList().Remove(item))
+            {
+                _isChanged = true;
+                return true;
+            }
+            return false;
         }
 
         public int IndexOf(T item)
@@ -133,6 +157,7 @@ namespace Azure.SameBoundary.RoundTrip
 
         public void Insert(int index, T item)
         {
+            _isChanged = true;
             EnsureList().Insert(index, item);
         }
 
@@ -142,6 +167,7 @@ namespace Azure.SameBoundary.RoundTrip
             {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
+            _isChanged = true;
             EnsureList().RemoveAt(index);
         }
 

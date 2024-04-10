@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Azure.SameBoundary.Input
@@ -67,9 +68,11 @@ namespace Azure.SameBoundary.Input
             _optionalIntArray = new ChangeTrackingList<int>();
             _requiredModelArray = new ChangeTrackingList<InputDummy>(requiredModelArray.ToList() as IList<InputDummy>, true);
             _optionalModelArray = new ChangeTrackingList<InputDummy>();
-            _requiredArrayArray = new ChangeTrackingList<IList<InputDummy>>(requiredArrayArray.ToList() as IList<IList<InputDummy>>, true);
+            // [Patch] The array item in the array should be a ChangeTrackingList.
+            _requiredArrayArray = new ChangeTrackingList<IList<InputDummy>>(requiredArrayArray.Select(item => new ChangeTrackingList<InputDummy>(item, true) as IList<InputDummy>).ToList() as IList<IList<InputDummy>>, true);
             _optionalArrayArray = new ChangeTrackingList<IList<InputDummy>>();
-            _requiredDictionaryArray = new ChangeTrackingList<IDictionary<string, InputDummy>>(requiredDictionaryArray.ToList() as IList<IDictionary<string, InputDummy>>, true);
+            // [Patch] The dictionary item in the array should be a ChangeTrackingDictionary.
+            _requiredDictionaryArray = new ChangeTrackingList<IDictionary<string, InputDummy>>(requiredDictionaryArray.Select(item => new ChangeTrackingDictionary<string, InputDummy>(item, true) as IDictionary<string, InputDummy>).ToList() as IList<IDictionary<string, InputDummy>>, true);
             _optionalDictionaryArray = new ChangeTrackingList<IDictionary<string, InputDummy>>();
         }
 
@@ -93,10 +96,12 @@ namespace Azure.SameBoundary.Input
             _optionalIntArray = new ChangeTrackingList<int>(optionalIntArray);
             _requiredModelArray = new ChangeTrackingList<InputDummy>(requiredModelArray);
             _optionalModelArray = new ChangeTrackingList<InputDummy>(optionalModelArray);
-            _requiredArrayArray = new ChangeTrackingList<IList<InputDummy>>(requiredArrayArray);
-            _optionalArrayArray = new ChangeTrackingList<IList<InputDummy>>(optionalArrayArray);
-            _requiredDictionaryArray = new ChangeTrackingList<IDictionary<string, InputDummy>>(requiredDictionaryArray);
-            _optionalDictionaryArray = new ChangeTrackingList<IDictionary<string, InputDummy>>(optionalDictionaryArray);
+            // [Patch] The array item in the array should be a ChangeTrackingList.
+            _requiredArrayArray = new ChangeTrackingList<IList<InputDummy>>(requiredArrayArray.Select(item => new ChangeTrackingList<InputDummy>(item) as IList<InputDummy>).ToList() as IList<IList<InputDummy>>);
+            _optionalArrayArray = new ChangeTrackingList<IList<InputDummy>>(optionalArrayArray.Select(item => new ChangeTrackingList<InputDummy>(item) as IList<InputDummy>).ToList() as IList<IList<InputDummy>>);
+            // [Patch] The dictionary item in the array should be a ChangeTrackingDictionary.
+            _requiredDictionaryArray = new ChangeTrackingList<IDictionary<string, InputDummy>>(requiredDictionaryArray.Select(item => new ChangeTrackingDictionary<string, InputDummy>(item) as IDictionary<string, InputDummy>).ToList() as IList<IDictionary<string, InputDummy>>);
+            _optionalDictionaryArray = new ChangeTrackingList<IDictionary<string, InputDummy>>(optionalDictionaryArray.Select(item => new ChangeTrackingDictionary<string, InputDummy>(item) as IDictionary<string, InputDummy>).ToList() as IList<IDictionary<string, InputDummy>>);
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

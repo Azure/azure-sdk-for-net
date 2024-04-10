@@ -19,12 +19,65 @@ namespace Azure.SameBoundary.RoundTrip
 
         void IJsonModel<RoundTripPrimitiveModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoundTripPrimitiveModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" || options.Format == "JMP" ? ((IPersistableModel<RoundTripPrimitiveModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoundTripPrimitiveModel)} does not support writing '{format}' format.");
             }
 
+            if (options.Format == "W")
+            {
+                WriteJson(writer, options);
+            }
+            else if (options.Format == "JMP")
+            {
+                WritePatch(writer);
+            }
+        }
+
+        private void WritePatch(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            // [Patch] For input model, required property cannot be set `null`, so we don't check `null`
+            if (_requiredStringChanged)
+            {
+                writer.WritePropertyName("requiredString"u8);
+                writer.WriteStringValue(RequiredString);
+            }
+            if (_optionalStringChanged)
+            {
+                writer.WritePropertyName("optionalString"u8);
+                if (OptionalString == null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    writer.WriteStringValue(OptionalString);
+                }
+            }
+            if (_requiredIntChanged)
+            {
+                writer.WritePropertyName("requiredInt"u8);
+                writer.WriteNumberValue(RequiredInt);
+            }
+            if (_optionalIntChanged)
+            {
+                writer.WritePropertyName("optionalInt"u8);
+                if (OptionalInt == null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    writer.WriteNumberValue(OptionalInt.Value);
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        private void WriteJson(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             writer.WriteStartObject();
             writer.WritePropertyName("requiredString"u8);
             writer.WriteStringValue(RequiredString);

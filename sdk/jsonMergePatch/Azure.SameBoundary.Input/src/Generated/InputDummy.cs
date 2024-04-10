@@ -55,7 +55,7 @@ namespace Azure.SameBoundary.Input
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InputDummy(string property, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Property = property;
+            _property = property;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,7 +83,7 @@ namespace Azure.SameBoundary.Input
 
             switch (name)
             {
-                case "Property":
+                case nameof(Property):
                     return _propertyChanged;
                 default:
                     return false;

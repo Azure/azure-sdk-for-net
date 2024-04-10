@@ -36,7 +36,7 @@ namespace Azure.SameBoundary.Input.Tests
         [Test]
         public void Case2_IWantToChangeOnlyOneRequiredProperty()
         {
-            // This test is an oen question for the scenario when user only wants to change the `requiredString`.
+            // This test is an open question for the scenario when user only wants to change the `requiredString`.
             // The payload they expect might be {"requiredString": "required"}
             // But we don't have a parameterless pulic constructor.
             // Do we need to add a new API for this scenario?

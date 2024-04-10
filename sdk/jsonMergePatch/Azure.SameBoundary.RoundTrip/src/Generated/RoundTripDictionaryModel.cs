@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.SameBoundary.RoundTrip
 {
@@ -52,7 +53,7 @@ namespace Azure.SameBoundary.RoundTrip
         /// <param name="requiredDictionaryDictionary"></param>
         /// <param name="requiredArrayDictionary"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="requiredStringDictionary"/>, <paramref name="requiredIntDictionary"/>, <paramref name="requiredModelDictionary"/>, <paramref name="requiredDictionaryDictionary"/> or <paramref name="requiredArrayDictionary"/> is null. </exception>
-        public RoundTripDictionaryModel(IDictionary<string, string> requiredStringDictionary, IDictionary<string, int> requiredIntDictionary, IDictionary<string, RoundTripDummy> requiredModelDictionary, IDictionary<string, IDictionary<string, RoundTripDummy>> requiredDictionaryDictionary, IDictionary<string, IList<RoundTripDummy>> requiredArrayDictionary)
+        public RoundTripDictionaryModel(IDictionary<string, string> requiredStringDictionary, IDictionary<string, int?> requiredIntDictionary, IDictionary<string, RoundTripDummy> requiredModelDictionary, IDictionary<string, IDictionary<string, RoundTripDummy>> requiredDictionaryDictionary, IDictionary<string, IList<RoundTripDummy>> requiredArrayDictionary)
         {
             Argument.AssertNotNull(requiredStringDictionary, nameof(requiredStringDictionary));
             Argument.AssertNotNull(requiredIntDictionary, nameof(requiredIntDictionary));
@@ -60,16 +61,22 @@ namespace Azure.SameBoundary.RoundTrip
             Argument.AssertNotNull(requiredDictionaryDictionary, nameof(requiredDictionaryDictionary));
             Argument.AssertNotNull(requiredArrayDictionary, nameof(requiredArrayDictionary));
 
-            RequiredStringDictionary = requiredStringDictionary;
-            OptionalStringDictionary = new ChangeTrackingDictionary<string, string>();
-            RequiredIntDictionary = requiredIntDictionary;
-            OptionalIntDictionary = new ChangeTrackingDictionary<string, int>();
-            RequiredModelDictionary = requiredModelDictionary;
-            OptionalModelDictionary = new ChangeTrackingDictionary<string, RoundTripDummy>();
-            RequiredDictionaryDictionary = requiredDictionaryDictionary;
-            OptionalDictionaryDictionary = new ChangeTrackingDictionary<string, IDictionary<string, RoundTripDummy>>();
-            RequiredArrayDictionary = requiredArrayDictionary;
-            OptionalArrayDictionary = new ChangeTrackingDictionary<string, IList<RoundTripDummy>>();
+            _requiredStringDictionary = new ChangeTrackingDictionary<string, string>(requiredStringDictionary, true);
+            _optionalStringDictionary = new ChangeTrackingDictionary<string, string>();
+            _requiredIntDictionary = new ChangeTrackingDictionary<string, int?>(requiredIntDictionary, true);
+            _optionalIntDictionary = new ChangeTrackingDictionary<string, int?>();
+            _requiredModelDictionary = new ChangeTrackingDictionary<string, RoundTripDummy>(requiredModelDictionary, true);
+            _optionalModelDictionary = new ChangeTrackingDictionary<string, RoundTripDummy>();
+            // [Patch] The dictionary item in the dictionary should be a ChangeTrackingDictionary.
+            _requiredDictionaryDictionary = new ChangeTrackingDictionary<string, IDictionary<string, RoundTripDummy>>(
+                requiredDictionaryDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingDictionary<string, RoundTripDummy>(item.Value, true) as IDictionary<string, RoundTripDummy>) as IDictionary<string, IDictionary<string, RoundTripDummy>>,
+                true);
+            _optionalDictionaryDictionary = new ChangeTrackingDictionary<string, IDictionary<string, RoundTripDummy>>();
+            // [Patch] The array item in the dictionary should be a ChangeTrackingList.
+            _requiredArrayDictionary = new ChangeTrackingDictionary<string, IList<RoundTripDummy>>(
+                requiredArrayDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingList<RoundTripDummy>(item.Value, true) as IList<RoundTripDummy>) as IDictionary<string, IList<RoundTripDummy>>,
+                true);
+            _optionalArrayDictionary = new ChangeTrackingDictionary<string, IList<RoundTripDummy>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoundTripDictionaryModel"/>. </summary>
@@ -84,18 +91,23 @@ namespace Azure.SameBoundary.RoundTrip
         /// <param name="requiredArrayDictionary"></param>
         /// <param name="optionalArrayDictionary"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoundTripDictionaryModel(IDictionary<string, string> requiredStringDictionary, IDictionary<string, string> optionalStringDictionary, IDictionary<string, int> requiredIntDictionary, IDictionary<string, int> optionalIntDictionary, IDictionary<string, RoundTripDummy> requiredModelDictionary, IDictionary<string, RoundTripDummy> optionalModelDictionary, IDictionary<string, IDictionary<string, RoundTripDummy>> requiredDictionaryDictionary, IDictionary<string, IDictionary<string, RoundTripDummy>> optionalDictionaryDictionary, IDictionary<string, IList<RoundTripDummy>> requiredArrayDictionary, IDictionary<string, IList<RoundTripDummy>> optionalArrayDictionary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RoundTripDictionaryModel(IDictionary<string, string> requiredStringDictionary, IDictionary<string, string> optionalStringDictionary, IDictionary<string, int?> requiredIntDictionary, IDictionary<string, int?> optionalIntDictionary, IDictionary<string, RoundTripDummy> requiredModelDictionary, IDictionary<string, RoundTripDummy> optionalModelDictionary, IDictionary<string, IDictionary<string, RoundTripDummy>> requiredDictionaryDictionary, IDictionary<string, IDictionary<string, RoundTripDummy>> optionalDictionaryDictionary, IDictionary<string, IList<RoundTripDummy>> requiredArrayDictionary, IDictionary<string, IList<RoundTripDummy>> optionalArrayDictionary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RequiredStringDictionary = requiredStringDictionary;
-            OptionalStringDictionary = optionalStringDictionary;
-            RequiredIntDictionary = requiredIntDictionary;
-            OptionalIntDictionary = optionalIntDictionary;
-            RequiredModelDictionary = requiredModelDictionary;
-            OptionalModelDictionary = optionalModelDictionary;
-            RequiredDictionaryDictionary = requiredDictionaryDictionary;
-            OptionalDictionaryDictionary = optionalDictionaryDictionary;
-            RequiredArrayDictionary = requiredArrayDictionary;
-            OptionalArrayDictionary = optionalArrayDictionary;
+            _requiredStringDictionary = new ChangeTrackingDictionary<string, string>(requiredStringDictionary);
+            _optionalStringDictionary = new ChangeTrackingDictionary<string, string>(optionalStringDictionary);
+            _requiredIntDictionary = new ChangeTrackingDictionary<string, int?>(requiredIntDictionary);
+            _optionalIntDictionary = new ChangeTrackingDictionary<string, int?>(optionalIntDictionary);
+            _requiredModelDictionary = new ChangeTrackingDictionary<string, RoundTripDummy>(requiredModelDictionary);
+            _optionalModelDictionary = new ChangeTrackingDictionary<string, RoundTripDummy>(optionalModelDictionary);
+            // [Patch] Another solution is we put this into deserialization code
+            _requiredDictionaryDictionary = new ChangeTrackingDictionary<string, IDictionary<string, RoundTripDummy>>(
+                requiredDictionaryDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingDictionary<string, RoundTripDummy>(item.Value) as IDictionary<string, RoundTripDummy>) as IDictionary<string, IDictionary<string, RoundTripDummy>>);
+            _optionalDictionaryDictionary = new ChangeTrackingDictionary<string, IDictionary<string, RoundTripDummy>>(
+                optionalDictionaryDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingDictionary<string, RoundTripDummy>(item.Value) as IDictionary<string, RoundTripDummy>) as IDictionary<string, IDictionary<string, RoundTripDummy>>);
+            _requiredArrayDictionary = new ChangeTrackingDictionary<string, IList<RoundTripDummy>>(
+                requiredArrayDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingList<RoundTripDummy>(item.Value, true) as IList<RoundTripDummy>) as IDictionary<string, IList<RoundTripDummy>>);
+            _optionalArrayDictionary = new ChangeTrackingDictionary<string, IList<RoundTripDummy>>(
+                optionalArrayDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingList<RoundTripDummy>(item.Value, true) as IList<RoundTripDummy>) as IDictionary<string, IList<RoundTripDummy>>);
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -104,25 +116,46 @@ namespace Azure.SameBoundary.RoundTrip
         {
         }
 
+        private ChangeTrackingDictionary<string, string> _requiredStringDictionary;
         /// <summary> Gets the required string dictionary. </summary>
-        public IDictionary<string, string> RequiredStringDictionary { get; }
+        public IDictionary<string, string> RequiredStringDictionary => _requiredStringDictionary;
+
+        private ChangeTrackingDictionary<string, string> _optionalStringDictionary;
         /// <summary> Gets the optional string dictionary. </summary>
-        public IDictionary<string, string> OptionalStringDictionary { get; }
+        public IDictionary<string, string> OptionalStringDictionary => _optionalStringDictionary;
+
+        // [Patch] The spec of this property is `Record<int>`. For a normal model, we will generate type `IDictionary<string, int>`.
+        // However, here the type is `IDictionary<string, int?>`, because we should allow user to delete a key.
+        private ChangeTrackingDictionary<string, int?> _requiredIntDictionary;
         /// <summary> Gets the required int dictionary. </summary>
-        public IDictionary<string, int> RequiredIntDictionary { get; }
+        public IDictionary<string, int?> RequiredIntDictionary => _requiredIntDictionary;
+
+        private ChangeTrackingDictionary<string, int?> _optionalIntDictionary;
         /// <summary> Gets the optional int dictionary. </summary>
-        public IDictionary<string, int> OptionalIntDictionary { get; }
+        public IDictionary<string, int?> OptionalIntDictionary => _optionalIntDictionary;
+
+        private ChangeTrackingDictionary<string, RoundTripDummy> _requiredModelDictionary;
         /// <summary> Gets the required model dictionary. </summary>
-        public IDictionary<string, RoundTripDummy> RequiredModelDictionary { get; }
+        public IDictionary<string, RoundTripDummy> RequiredModelDictionary => _requiredModelDictionary;
+
+        private ChangeTrackingDictionary<string, RoundTripDummy> _optionalModelDictionary;
         /// <summary> Gets the optional model dictionary. </summary>
-        public IDictionary<string, RoundTripDummy> OptionalModelDictionary { get; }
+        public IDictionary<string, RoundTripDummy> OptionalModelDictionary => _optionalModelDictionary;
+
+        private ChangeTrackingDictionary<string, IDictionary<string, RoundTripDummy>> _requiredDictionaryDictionary;
         /// <summary> Gets the required dictionary dictionary. </summary>
-        public IDictionary<string, IDictionary<string, RoundTripDummy>> RequiredDictionaryDictionary { get; }
+        public IDictionary<string, IDictionary<string, RoundTripDummy>> RequiredDictionaryDictionary => _requiredDictionaryDictionary;
+
+        private ChangeTrackingDictionary<string, IDictionary<string, RoundTripDummy>> _optionalDictionaryDictionary;
         /// <summary> Gets the optional dictionary dictionary. </summary>
-        public IDictionary<string, IDictionary<string, RoundTripDummy>> OptionalDictionaryDictionary { get; }
+        public IDictionary<string, IDictionary<string, RoundTripDummy>> OptionalDictionaryDictionary => _optionalDictionaryDictionary;
+
+        private ChangeTrackingDictionary<string, IList<RoundTripDummy>> _requiredArrayDictionary;
         /// <summary> Gets the required array dictionary. </summary>
-        public IDictionary<string, IList<RoundTripDummy>> RequiredArrayDictionary { get; }
+        public IDictionary<string, IList<RoundTripDummy>> RequiredArrayDictionary => _requiredArrayDictionary;
+
+        private ChangeTrackingDictionary<string, IList<RoundTripDummy>> _optionalArrayDictionary;
         /// <summary> Gets the optional array dictionary. </summary>
-        public IDictionary<string, IList<RoundTripDummy>> OptionalArrayDictionary { get; }
+        public IDictionary<string, IList<RoundTripDummy>> OptionalArrayDictionary => _optionalArrayDictionary;
     }
 }

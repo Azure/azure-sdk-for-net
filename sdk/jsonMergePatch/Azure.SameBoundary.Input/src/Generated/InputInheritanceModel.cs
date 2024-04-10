@@ -27,7 +27,7 @@ namespace Azure.SameBoundary.Input
         /// <param name="extendedProperty"></param>
         internal InputInheritanceModel(string baseProperty1, int baseProperty2, IDictionary<string, string> baseProperty3, IDictionary<string, BinaryData> serializedAdditionalRawData, string extendedProperty) : base(baseProperty1, baseProperty2, baseProperty3, serializedAdditionalRawData)
         {
-            ExtendedProperty = extendedProperty;
+            _extendedProperty = extendedProperty;
         }
 
         /// <summary> Initializes a new instance of <see cref="InputInheritanceModel"/> for deserialization. </summary>

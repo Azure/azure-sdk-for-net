@@ -61,16 +61,18 @@ namespace Azure.SameBoundary.RoundTrip
             Argument.AssertNotNull(requiredArrayArray, nameof(requiredArrayArray));
             Argument.AssertNotNull(requiredDictionaryArray, nameof(requiredDictionaryArray));
 
-            RequiredStringArray = requiredStringArray.ToList();
-            OptionalStringArray = new ChangeTrackingList<string>();
-            RequiredIntArray = requiredIntArray.ToList();
-            OptionalIntArray = new ChangeTrackingList<int>();
-            RequiredModelArray = requiredModelArray.ToList();
-            OptionalModelArray = new ChangeTrackingList<RoundTripDummy>();
-            RequiredArrayArray = requiredArrayArray.ToList();
-            OptionalArrayArray = new ChangeTrackingList<IList<RoundTripDummy>>();
-            RequiredDictionaryArray = requiredDictionaryArray.ToList();
-            OptionalDictionaryArray = new ChangeTrackingList<IDictionary<string, RoundTripDummy>>();
+            _requiredStringArray = new ChangeTrackingList<string>(requiredStringArray.ToList() as IList<string>, true);
+            _optionalStringArray = new ChangeTrackingList<string>();
+            _requiredIntArray = new ChangeTrackingList<int>(requiredIntArray.ToList() as IList<int>, true);
+            _optionalIntArray = new ChangeTrackingList<int>();
+            _requiredModelArray = new ChangeTrackingList<RoundTripDummy>(requiredModelArray.ToList() as IList<RoundTripDummy>, true);
+            _optionalModelArray = new ChangeTrackingList<RoundTripDummy>();
+            // [Patch] The array item in the array should be a ChangeTrackingList.
+            _requiredArrayArray = new ChangeTrackingList<IList<RoundTripDummy>>(requiredArrayArray.Select(item => new ChangeTrackingList<RoundTripDummy>(item, true) as IList<RoundTripDummy>).ToList() as IList<IList<RoundTripDummy>>, true);
+            _optionalArrayArray = new ChangeTrackingList<IList<RoundTripDummy>>();
+            // [Patch] The dictionary item in the array should be a ChangeTrackingDictionary.
+            _requiredDictionaryArray = new ChangeTrackingList<IDictionary<string, RoundTripDummy>>(requiredDictionaryArray.Select(item => new ChangeTrackingDictionary<string, RoundTripDummy>(item, true) as IDictionary<string, RoundTripDummy>).ToList() as IList<IDictionary<string, RoundTripDummy>>, true);
+            _optionalDictionaryArray = new ChangeTrackingList<IDictionary<string, RoundTripDummy>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoundTripArrayModel"/>. </summary>
@@ -87,16 +89,18 @@ namespace Azure.SameBoundary.RoundTrip
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RoundTripArrayModel(IList<string> requiredStringArray, IList<string> optionalStringArray, IList<int> requiredIntArray, IList<int> optionalIntArray, IList<RoundTripDummy> requiredModelArray, IList<RoundTripDummy> optionalModelArray, IList<IList<RoundTripDummy>> requiredArrayArray, IList<IList<RoundTripDummy>> optionalArrayArray, IList<IDictionary<string, RoundTripDummy>> requiredDictionaryArray, IList<IDictionary<string, RoundTripDummy>> optionalDictionaryArray, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RequiredStringArray = requiredStringArray;
-            OptionalStringArray = optionalStringArray;
-            RequiredIntArray = requiredIntArray;
-            OptionalIntArray = optionalIntArray;
-            RequiredModelArray = requiredModelArray;
-            OptionalModelArray = optionalModelArray;
-            RequiredArrayArray = requiredArrayArray;
-            OptionalArrayArray = optionalArrayArray;
-            RequiredDictionaryArray = requiredDictionaryArray;
-            OptionalDictionaryArray = optionalDictionaryArray;
+            _requiredStringArray = new ChangeTrackingList<string>(requiredStringArray);
+            _optionalStringArray = new ChangeTrackingList<string>(optionalStringArray);
+            _requiredIntArray = new ChangeTrackingList<int>(requiredIntArray);
+            _optionalIntArray = new ChangeTrackingList<int>(optionalIntArray);
+            _requiredModelArray = new ChangeTrackingList<RoundTripDummy>(requiredModelArray);
+            _optionalModelArray = new ChangeTrackingList<RoundTripDummy>(optionalModelArray);
+            // [Patch] The array item in the array should be a ChangeTrackingList.
+            _requiredArrayArray = new ChangeTrackingList<IList<RoundTripDummy>>(requiredArrayArray.Select(item => new ChangeTrackingList<RoundTripDummy>(item) as IList<RoundTripDummy>).ToList() as IList<IList<RoundTripDummy>>);
+            _optionalArrayArray = new ChangeTrackingList<IList<RoundTripDummy>>(optionalArrayArray.Select(item => new ChangeTrackingList<RoundTripDummy>(item) as IList<RoundTripDummy>).ToList() as IList<IList<RoundTripDummy>>);
+            // [Patch] The dictionary item in the array should be a ChangeTrackingDictionary.
+            _requiredDictionaryArray = new ChangeTrackingList<IDictionary<string, RoundTripDummy>>(requiredDictionaryArray.Select(item => new ChangeTrackingDictionary<string, RoundTripDummy>(item) as IDictionary<string, RoundTripDummy>).ToList() as IList<IDictionary<string, RoundTripDummy>>);
+            _optionalDictionaryArray = new ChangeTrackingList<IDictionary<string, RoundTripDummy>>(optionalDictionaryArray.Select(item => new ChangeTrackingDictionary<string, RoundTripDummy>(item) as IDictionary<string, RoundTripDummy>).ToList() as IList<IDictionary<string, RoundTripDummy>>);
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -105,25 +109,44 @@ namespace Azure.SameBoundary.RoundTrip
         {
         }
 
+        private ChangeTrackingList<string> _requiredStringArray;
         /// <summary> Gets the required string array. </summary>
-        public IList<string> RequiredStringArray { get; }
+        public IList<string> RequiredStringArray => _requiredStringArray;
+
+        private ChangeTrackingList<string> _optionalStringArray;
         /// <summary> Gets the optional string array. </summary>
-        public IList<string> OptionalStringArray { get; }
+        public IList<string> OptionalStringArray => _optionalStringArray;
+
+        private ChangeTrackingList<int> _requiredIntArray;
         /// <summary> Gets the required int array. </summary>
-        public IList<int> RequiredIntArray { get; }
+        public IList<int> RequiredIntArray => _requiredIntArray;
+
+        private ChangeTrackingList<int> _optionalIntArray;
         /// <summary> Gets the optional int array. </summary>
-        public IList<int> OptionalIntArray { get; }
+        public IList<int> OptionalIntArray => _optionalIntArray;
+
+        private ChangeTrackingList<RoundTripDummy> _requiredModelArray;
         /// <summary> Gets the required model array. </summary>
-        public IList<RoundTripDummy> RequiredModelArray { get; }
+        public IList<RoundTripDummy> RequiredModelArray => _requiredModelArray;
+
+        private ChangeTrackingList<RoundTripDummy> _optionalModelArray;
         /// <summary> Gets the optional model array. </summary>
-        public IList<RoundTripDummy> OptionalModelArray { get; }
+        public IList<RoundTripDummy> OptionalModelArray => _optionalModelArray;
+
+        private ChangeTrackingList<IList<RoundTripDummy>> _requiredArrayArray;
         /// <summary> Gets the required array array. </summary>
-        public IList<IList<RoundTripDummy>> RequiredArrayArray { get; }
+        public IList<IList<RoundTripDummy>> RequiredArrayArray => _requiredArrayArray;
+
+        private ChangeTrackingList<IList<RoundTripDummy>> _optionalArrayArray;
         /// <summary> Gets the optional array array. </summary>
-        public IList<IList<RoundTripDummy>> OptionalArrayArray { get; }
+        public IList<IList<RoundTripDummy>> OptionalArrayArray => _optionalArrayArray;
+
+        private ChangeTrackingList<IDictionary<string, RoundTripDummy>> _requiredDictionaryArray;
         /// <summary> Gets the required dictionary array. </summary>
-        public IList<IDictionary<string, RoundTripDummy>> RequiredDictionaryArray { get; }
+        public IList<IDictionary<string, RoundTripDummy>> RequiredDictionaryArray => _requiredDictionaryArray;
+
+        private ChangeTrackingList<IDictionary<string, RoundTripDummy>> _optionalDictionaryArray;
         /// <summary> Gets the optional dictionary array. </summary>
-        public IList<IDictionary<string, RoundTripDummy>> OptionalDictionaryArray { get; }
+        public IList<IDictionary<string, RoundTripDummy>> OptionalDictionaryArray => _optionalDictionaryArray;
     }
 }

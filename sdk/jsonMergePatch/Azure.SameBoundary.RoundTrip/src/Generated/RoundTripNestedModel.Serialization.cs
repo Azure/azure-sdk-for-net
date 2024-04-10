@@ -19,12 +19,47 @@ namespace Azure.SameBoundary.RoundTrip
 
         void IJsonModel<RoundTripNestedModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoundTripNestedModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" || options.Format == "JMP" ? ((IPersistableModel<RoundTripNestedModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoundTripNestedModel)} does not support writing '{format}' format.");
             }
 
+            if (options.Format == "W")
+            {
+                WriteJson(writer, options);
+            }
+            else if (options.Format == "JMP")
+            {
+                WritePatch(writer, options);
+            }
+        }
+
+        private void WritePatch(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            if (_requiredModelChanged || RequiredModel.IsChanged())
+            {
+                writer.WritePropertyName("requiredModel"u8);
+                ((IJsonModel<RoundTripDummy>)RequiredModel).Write(writer, options);
+            }
+            if (_optionalModelChanged || OptionalModel.IsChanged())
+            {
+                writer.WritePropertyName("optionalModel"u8);
+                if (OptionalModel == null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IJsonModel<RoundTripDummy>)OptionalModel).Write(writer, options);
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        private void WriteJson(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             writer.WriteStartObject();
             writer.WritePropertyName("requiredModel"u8);
             writer.WriteObjectValue<RoundTripDummy>(RequiredModel, options);

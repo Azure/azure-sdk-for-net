@@ -19,12 +19,42 @@ namespace Azure.SameBoundary.RoundTrip
 
         void IJsonModel<RoundTripDummy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoundTripDummy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" || options.Format == "JMP" ? ((IPersistableModel<RoundTripDummy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoundTripDummy)} does not support writing '{format}' format.");
             }
 
+            if (options.Format == "W")
+            {
+                WriteJson(writer, options);
+            }
+            else if (options.Format == "JMP")
+            {
+                WritePatch(writer);
+            }
+        }
+
+        private void WritePatch(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (_propertyChanged)
+            {
+                writer.WritePropertyName("property"u8);
+                if (Property == null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    writer.WriteStringValue(Property);
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        private void WriteJson(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             writer.WriteStartObject();
             if (Optional.IsDefined(Property))
             {

@@ -65,10 +65,10 @@ namespace Azure.SameBoundary.RoundTrip
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RoundTripPrimitiveModel(string requiredString, string optionalString, int requiredInt, int? optionalInt, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RequiredString = requiredString;
-            OptionalString = optionalString;
-            RequiredInt = requiredInt;
-            OptionalInt = optionalInt;
+            _requiredString = requiredString;
+            _optionalString = optionalString;
+            _requiredInt = requiredInt;
+            _optionalInt = optionalInt;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,13 +77,56 @@ namespace Azure.SameBoundary.RoundTrip
         {
         }
 
-        /// <summary> Gets or sets the required string. </summary>
-        public string RequiredString { get; set; }
+        private string _requiredString;
+        private bool _requiredStringChanged = false;
+        /// <summary> Gets the required string. </summary>
+        public string RequiredString
+        {
+            get => _requiredString;
+            set
+            {
+                _requiredString = value;
+                _requiredStringChanged = true;
+            }
+        }
+
+        private string _optionalString;
+        private bool _optionalStringChanged = false;
         /// <summary> Gets or sets the optional string. </summary>
-        public string OptionalString { get; set; }
-        /// <summary> Gets or sets the required int. </summary>
-        public int RequiredInt { get; set; }
+        public string OptionalString
+        {
+            get => _optionalString;
+            set
+            {
+                _optionalString = value;
+                _optionalStringChanged = true;
+            }
+        }
+
+        private int _requiredInt;
+        private bool _requiredIntChanged = false;
+        /// <summary> Gets the required int. </summary>
+        public int RequiredInt
+        {
+            get => _requiredInt;
+            set
+            {
+                _requiredInt = value;
+                _requiredIntChanged = true;
+            }
+        }
+
+        private int? _optionalInt;
+        private bool _optionalIntChanged = false;
         /// <summary> Gets or sets the optional int. </summary>
-        public int? OptionalInt { get; set; }
+        public int? OptionalInt
+        {
+            get => _optionalInt;
+            set
+            {
+                _optionalInt = value;
+                _optionalIntChanged = true;
+            }
+        }
     }
 }

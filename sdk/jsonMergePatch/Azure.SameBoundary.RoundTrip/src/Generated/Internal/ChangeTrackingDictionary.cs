@@ -14,21 +14,29 @@ namespace Azure.SameBoundary.RoundTrip
     internal class ChangeTrackingDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue> where TKey : notnull
     {
         private IDictionary<TKey, TValue> _innerDictionary;
+        private List<TKey> _changedKeys;
+        // [Patch] If we choose `_dictionary.Clear()` as delete operation, we need this flag, otherwise we don't need it.
+        private bool _wasCleared = false;
 
         public ChangeTrackingDictionary()
         {
         }
 
-        public ChangeTrackingDictionary(IDictionary<TKey, TValue> dictionary)
+        public ChangeTrackingDictionary(IDictionary<TKey, TValue> dictionary, bool asChanged = false)
         {
             if (dictionary == null)
             {
                 return;
             }
             _innerDictionary = new Dictionary<TKey, TValue>(dictionary);
+
+            if (asChanged)
+            {
+                EnsureChangedKeys().AddRange(dictionary.Keys);
+            }
         }
 
-        public ChangeTrackingDictionary(IReadOnlyDictionary<TKey, TValue> dictionary)
+        public ChangeTrackingDictionary(IReadOnlyDictionary<TKey, TValue> dictionary, bool asChanged = false)
         {
             if (dictionary == null)
             {
@@ -39,6 +47,29 @@ namespace Azure.SameBoundary.RoundTrip
             {
                 _innerDictionary.Add(pair);
             }
+
+            if (asChanged)
+            {
+                EnsureChangedKeys().AddRange(dictionary.Keys);
+            }
+        }
+
+        public IReadOnlyList<TKey> ChangedKeys => _changedKeys;
+
+        // [Patch] These two methods are consistent with `IsChanged(TKey key = null)`
+        public bool IsChanged(TKey key)
+        {
+            return EnsureChangedKeys().Contains(key);
+        }
+        public bool IsChanged()
+        {
+            return _changedKeys?.Count > 0;
+        }
+
+        // [Patch] If we choose `_dictionary.Clear()` as delete operation, we need this method, otherwise we don't need it.
+        public bool WasCleared()
+        {
+            return _wasCleared && Count == 0; // Consider this case: call `Clear()` first and then call `Add()`
         }
 
         public bool IsUndefined => _innerDictionary == null;
@@ -64,6 +95,7 @@ namespace Azure.SameBoundary.RoundTrip
             set
             {
                 EnsureDictionary()[key] = value;
+                AddChangedKey(key);
             }
         }
 
@@ -92,11 +124,14 @@ namespace Azure.SameBoundary.RoundTrip
         public void Add(KeyValuePair<TKey, TValue> item)
         {
             EnsureDictionary().Add(item);
+            AddChangedKey(item.Key);
         }
 
         public void Clear()
         {
             EnsureDictionary().Clear();
+            _wasCleared = true;
+            _changedKeys = null;
         }
 
         public bool Contains(KeyValuePair<TKey, TValue> item)
@@ -123,12 +158,18 @@ namespace Azure.SameBoundary.RoundTrip
             {
                 return false;
             }
-            return EnsureDictionary().Remove(item);
+            if (EnsureDictionary().Remove(item))
+            {
+                AddChangedKey(item.Key);
+                return true;
+            }
+            return false;
         }
 
         public void Add(TKey key, TValue value)
         {
             EnsureDictionary().Add(key, value);
+            AddChangedKey(key);
         }
 
         public bool ContainsKey(TKey key)
@@ -146,7 +187,12 @@ namespace Azure.SameBoundary.RoundTrip
             {
                 return false;
             }
-            return EnsureDictionary().Remove(key);
+            if (EnsureDictionary().Remove(key))
+            {
+                AddChangedKey(key);
+                return true;
+            }
+            return false;
         }
 
         public bool TryGetValue(TKey key, out TValue value)
@@ -162,6 +208,19 @@ namespace Azure.SameBoundary.RoundTrip
         public IDictionary<TKey, TValue> EnsureDictionary()
         {
             return _innerDictionary ??= new Dictionary<TKey, TValue>();
+        }
+
+        private List<TKey> EnsureChangedKeys()
+        {
+            return _changedKeys ??= new List<TKey>();
+        }
+
+        private void AddChangedKey(TKey key)
+        {
+            if (!EnsureChangedKeys().Contains(key))
+            {
+                EnsureChangedKeys().Add(key);
+            }
         }
     }
 }
