@@ -333,7 +333,7 @@ namespace Azure.Analytics.Defender.Easm
             return DeserializeCvss3Summary(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
