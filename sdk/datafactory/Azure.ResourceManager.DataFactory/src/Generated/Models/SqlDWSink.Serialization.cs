@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PolyBaseSettings))
             {
                 writer.WritePropertyName("polyBaseSettings"u8);
-                writer.WriteObjectValue<PolybaseSettings>(PolyBaseSettings, options);
+                writer.WriteObjectValue(PolyBaseSettings, options);
             }
             if (Optional.IsDefined(AllowCopyCommand))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CopyCommandSettings))
             {
                 writer.WritePropertyName("copyCommandSettings"u8);
-                writer.WriteObjectValue<DWCopyCommandSettings>(CopyCommandSettings, options);
+                writer.WriteObjectValue(CopyCommandSettings, options);
             }
             if (Optional.IsDefined(TableOption))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UpsertSettings))
             {
                 writer.WritePropertyName("upsertSettings"u8);
-                writer.WriteObjectValue<SqlDWUpsertSettings>(UpsertSettings, options);
+                writer.WriteObjectValue(UpsertSettings, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);

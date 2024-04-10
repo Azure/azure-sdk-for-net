@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(QuarantinePolicy))
             {
                 writer.WritePropertyName("quarantinePolicy"u8);
-                writer.WriteObjectValue<ContainerRegistryQuarantinePolicy>(QuarantinePolicy, options);
+                writer.WriteObjectValue(QuarantinePolicy, options);
             }
             if (Optional.IsDefined(TrustPolicy))
             {
                 writer.WritePropertyName("trustPolicy"u8);
-                writer.WriteObjectValue<ContainerRegistryTrustPolicy>(TrustPolicy, options);
+                writer.WriteObjectValue(TrustPolicy, options);
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue<ContainerRegistryRetentionPolicy>(RetentionPolicy, options);
+                writer.WriteObjectValue(RetentionPolicy, options);
             }
             if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue<ContainerRegistryExportPolicy>(ExportPolicy, options);
+                writer.WriteObjectValue(ExportPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue<PhysicalPartitionThroughputInfoResultPropertiesResource>(Resource, options);
+                writer.WriteObjectValue(Resource, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

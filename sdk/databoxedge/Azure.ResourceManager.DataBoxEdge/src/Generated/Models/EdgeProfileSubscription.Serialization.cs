@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in RegisteredFeatures)
                 {
-                    writer.WriteObjectValue<SubscriptionRegisteredFeatures>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
-                writer.WriteObjectValue<ContainerRegistryWebhookEventContent>(Content, options);
+                writer.WriteObjectValue(Content, options);
             }
             if (Optional.IsCollectionDefined(Headers))
             {

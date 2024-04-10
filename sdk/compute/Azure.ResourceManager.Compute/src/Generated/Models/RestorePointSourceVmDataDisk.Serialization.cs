@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue<VirtualMachineManagedDisk>(ManagedDisk, options);
+                writer.WriteObjectValue(ManagedDisk, options);
             }
             if (Optional.IsDefined(DiskRestorePoint))
             {
                 writer.WritePropertyName("diskRestorePoint"u8);
-                writer.WriteObjectValue<DiskRestorePointAttributes>(DiskRestorePoint, options);
+                writer.WriteObjectValue(DiskRestorePoint, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WriteAcceleratorEnabled))
             {

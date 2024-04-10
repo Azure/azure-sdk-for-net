@@ -42,20 +42,20 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteBooleanValue(HasHeader.Value);
             }
             writer.WritePropertyName("errorManagement"u8);
-            writer.WriteObjectValue<ConnectorMappingErrorManagement>(ErrorManagement, options);
+            writer.WriteObjectValue(ErrorManagement, options);
             writer.WritePropertyName("format"u8);
-            writer.WriteObjectValue<ConnectorMappingFormat>(Format, options);
+            writer.WriteObjectValue(Format, options);
             writer.WritePropertyName("availability"u8);
-            writer.WriteObjectValue<ConnectorMappingAvailability>(Availability, options);
+            writer.WriteObjectValue(Availability, options);
             writer.WritePropertyName("structure"u8);
             writer.WriteStartArray();
             foreach (var item in Structure)
             {
-                writer.WriteObjectValue<ConnectorMappingStructure>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("completeOperation"u8);
-            writer.WriteObjectValue<ConnectorMappingCompleteOperation>(CompleteOperation, options);
+            writer.WriteObjectValue(CompleteOperation, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

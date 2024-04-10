@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue<ContainerSecurityContextCapabilitiesDefinition>(Capabilities, options);
+                writer.WriteObjectValue(Capabilities, options);
             }
             if (Optional.IsDefined(RunAsGroup))
             {

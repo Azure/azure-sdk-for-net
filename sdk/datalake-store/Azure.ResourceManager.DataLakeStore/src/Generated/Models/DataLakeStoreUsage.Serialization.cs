@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue<DataLakeStoreUsageName>(Name, options);
+                writer.WriteObjectValue(Name, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

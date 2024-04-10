@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in TimerTriggers)
                 {
-                    writer.WriteObjectValue<ContainerRegistryTimerTriggerUpdateContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceTriggers)
                 {
-                    writer.WriteObjectValue<ContainerRegistrySourceTriggerUpdateContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BaseImageTrigger))
             {
                 writer.WritePropertyName("baseImageTrigger"u8);
-                writer.WriteObjectValue<ContainerRegistryBaseImageTriggerUpdateContent>(BaseImageTrigger, options);
+                writer.WriteObjectValue(BaseImageTrigger, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

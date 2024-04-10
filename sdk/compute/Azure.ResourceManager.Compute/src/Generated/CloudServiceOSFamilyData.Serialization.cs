@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in Versions)
                 {
-                    writer.WriteObjectValue<OSVersionPropertiesBase>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomActions)
                 {
-                    writer.WriteObjectValue<GalleryApplicationCustomAction>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

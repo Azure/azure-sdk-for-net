@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue<QueryColumn>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

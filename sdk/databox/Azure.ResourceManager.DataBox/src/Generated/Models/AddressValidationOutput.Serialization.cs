@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in AlternateAddresses)
                 {
-                    writer.WriteObjectValue<DataBoxShippingAddress>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

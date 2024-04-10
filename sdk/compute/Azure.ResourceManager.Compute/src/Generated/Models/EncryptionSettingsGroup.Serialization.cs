@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in EncryptionSettings)
                 {
-                    writer.WriteObjectValue<EncryptionSettingsElement>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

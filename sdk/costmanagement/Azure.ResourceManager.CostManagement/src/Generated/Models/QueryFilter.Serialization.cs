@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in And)
                 {
-                    writer.WriteObjectValue<QueryFilter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Or)
                 {
-                    writer.WriteObjectValue<QueryFilter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue<QueryComparisonExpression>(Dimensions, options);
+                writer.WriteObjectValue(Dimensions, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue<QueryComparisonExpression>(Tags, options);
+                writer.WriteObjectValue(Tags, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

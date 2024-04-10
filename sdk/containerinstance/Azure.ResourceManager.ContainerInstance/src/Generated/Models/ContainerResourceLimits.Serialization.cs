@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(Gpu))
             {
                 writer.WritePropertyName("gpu"u8);
-                writer.WriteObjectValue<ContainerGpuResourceInfo>(Gpu, options);
+                writer.WriteObjectValue(Gpu, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

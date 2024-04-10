@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue<AlertPropertiesDefinition>(Definition, options);
+                writer.WriteObjectValue(Definition, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue<AlertPropertiesDetails>(Details, options);
+                writer.WriteObjectValue(Details, options);
             }
             if (Optional.IsDefined(CostEntityId))
             {

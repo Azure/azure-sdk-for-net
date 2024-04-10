@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<ConnectorResourceFormatData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

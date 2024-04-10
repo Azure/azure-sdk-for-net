@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue<CassandraViewGetPropertiesResource>(Resource, options);
+                writer.WriteObjectValue(Resource, options);
             }
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue<CassandraViewGetPropertiesOptions>(Options, options);
+                writer.WriteObjectValue(Options, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

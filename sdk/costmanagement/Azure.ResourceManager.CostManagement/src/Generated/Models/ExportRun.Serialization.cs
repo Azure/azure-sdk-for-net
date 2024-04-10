@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RunSettings))
             {
                 writer.WritePropertyName("runSettings"u8);
-                writer.WriteObjectValue<CommonExportProperties>(RunSettings, options);
+                writer.WriteObjectValue(RunSettings, options);
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<ExportRunErrorDetails>(Error, options);
+                writer.WriteObjectValue(Error, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetRegions)
                 {
-                    writer.WriteObjectValue<TargetRegion>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetExtendedLocations)
                 {
-                    writer.WriteObjectValue<GalleryTargetExtendedLocation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue<DataTransferRegionalService>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

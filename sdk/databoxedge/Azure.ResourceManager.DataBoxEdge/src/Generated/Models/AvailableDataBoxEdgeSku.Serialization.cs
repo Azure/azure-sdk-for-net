@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue<DataBoxEdgeSkuLocationInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue<DataBoxEdgeSkuCost>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue<DataBoxEdgeSkuCapability>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

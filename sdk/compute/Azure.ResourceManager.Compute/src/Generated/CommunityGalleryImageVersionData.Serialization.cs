@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue<SharedGalleryImageVersionStorageProfile>(StorageProfile, options);
+                writer.WriteObjectValue(StorageProfile, options);
             }
             if (Optional.IsDefined(Disclaimer))
             {

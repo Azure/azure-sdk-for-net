@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in UniqueKeys)
                 {
-                    writer.WriteObjectValue<CosmosDBUniqueKey>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

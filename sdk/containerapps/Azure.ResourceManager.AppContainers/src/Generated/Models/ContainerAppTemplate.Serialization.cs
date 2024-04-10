@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in InitContainers)
                 {
-                    writer.WriteObjectValue<ContainerAppInitContainer>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Containers)
                 {
-                    writer.WriteObjectValue<ContainerAppContainer>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Scale))
             {
                 writer.WritePropertyName("scale"u8);
-                writer.WriteObjectValue<ContainerAppScale>(Scale, options);
+                writer.WriteObjectValue(Scale, options);
             }
             if (Optional.IsCollectionDefined(Volumes))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue<ContainerAppVolume>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceBinds)
                 {
-                    writer.WriteObjectValue<ContainerAppServiceBind>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

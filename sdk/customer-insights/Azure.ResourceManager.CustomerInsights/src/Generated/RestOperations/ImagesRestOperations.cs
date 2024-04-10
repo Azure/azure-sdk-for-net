@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CustomerInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GetImageUploadUrlInput>(input, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(input, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CustomerInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GetImageUploadUrlInput>(input, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(input, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;

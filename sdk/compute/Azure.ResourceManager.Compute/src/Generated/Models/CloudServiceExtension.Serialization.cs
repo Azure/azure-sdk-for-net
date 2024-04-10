@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ProtectedSettingsFromKeyVault))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
-                writer.WriteObjectValue<CloudServiceVaultAndSecretReference>(ProtectedSettingsFromKeyVault, options);
+                writer.WriteObjectValue(ProtectedSettingsFromKeyVault, options);
             }
             if (Optional.IsDefined(ForceUpdateTag))
             {

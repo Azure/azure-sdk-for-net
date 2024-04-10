@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue<CassandraClusterDataCenterNodeItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

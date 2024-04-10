@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
-                writer.WriteObjectValue<DatasetReference>(Dataset, options);
+                writer.WriteObjectValue(Dataset, options);
             }
             if (Optional.IsDefined(LinkedService))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
-                writer.WriteObjectValue<DataFlowReference>(Flowlet, options);
+                writer.WriteObjectValue(Flowlet, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

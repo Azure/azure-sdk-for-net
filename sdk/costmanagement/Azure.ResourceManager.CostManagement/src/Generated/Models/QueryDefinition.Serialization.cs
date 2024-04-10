@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue<QueryTimePeriod>(TimePeriod, options);
+                writer.WriteObjectValue(TimePeriod, options);
             }
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue<QueryDataset>(Dataset, options);
+            writer.WriteObjectValue(Dataset, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

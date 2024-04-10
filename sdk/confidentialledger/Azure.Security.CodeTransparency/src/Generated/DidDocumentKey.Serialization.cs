@@ -33,7 +33,7 @@ namespace Azure.Security.CodeTransparency
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("publicKeyJwk"u8);
-            writer.WriteObjectValue<JsonWebKey>(PublicKeyJwk, options);
+            writer.WriteObjectValue(PublicKeyJwk, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -152,7 +152,7 @@ namespace Azure.Security.CodeTransparency
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DidDocumentKey>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

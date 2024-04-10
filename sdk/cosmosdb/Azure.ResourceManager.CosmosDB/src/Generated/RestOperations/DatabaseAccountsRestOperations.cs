@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CosmosDB
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CosmosDBAccountPatch>(patch, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(patch, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.CosmosDB
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<CosmosDBAccountCreateOrUpdateContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CosmosDBFailoverPolicies>(failoverParameters, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(failoverParameters, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.CosmosDB
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RegionForOnlineOffline>(regionParameterForOffline, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(regionParameterForOffline, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.CosmosDB
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RegionForOnlineOffline>(regionParameterForOnline, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(regionParameterForOnline, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<CosmosDBAccountRegenerateKeyContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;

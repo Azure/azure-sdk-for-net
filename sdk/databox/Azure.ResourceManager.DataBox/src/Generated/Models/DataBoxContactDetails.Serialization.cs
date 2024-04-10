@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in NotificationPreference)
                 {
-                    writer.WriteObjectValue<NotificationPreference>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

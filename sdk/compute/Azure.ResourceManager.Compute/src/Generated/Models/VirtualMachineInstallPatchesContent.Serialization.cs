@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
-                writer.WriteObjectValue<WindowsParameters>(WindowsParameters, options);
+                writer.WriteObjectValue(WindowsParameters, options);
             }
             if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
-                writer.WriteObjectValue<LinuxParameters>(LinuxParameters, options);
+                writer.WriteObjectValue(LinuxParameters, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

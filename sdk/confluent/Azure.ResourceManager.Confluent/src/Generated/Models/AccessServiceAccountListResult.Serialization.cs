@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<ConfluentListMetadata>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             if (Optional.IsCollectionDefined(Data))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue<AccessServiceAccountRecord>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
