@@ -8,6 +8,7 @@ csharp: true
 library-name: Astro
 namespace: Azure.ResourceManager.Astro
 require: https://github.com/Azure/azure-rest-api-specs/blob/ceb1849d35534ccb6c2dfc3772bb2426dd37df6a/specification/liftrastronomer/resource-manager/readme.md
+#tag: package-2023-08-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,7 +22,19 @@ use-model-reader-writer: true
 #mgmt-debug:
 #  show-serialized-names: true
 
- 
+rename-mapping:
+  LiftrBaseDataOrganizationProperties: AstroOrganizationProperties
+  LiftrBaseDataPartnerOrganizationProperties: AstroPartnerOrganizationProperties
+  LiftrBaseDataPartnerOrganizationPropertiesUpdate: AstroPartnerOrganizationUpdateProperties
+  LiftrBaseMarketplaceDetails: AstroMarketplaceDetails
+  LiftrBaseOfferDetails: AstroOfferDetails
+  LiftrBaseSingleSignOnProperties: AstroSingleSignOnProperties
+  LiftrBaseUserDetails: AstroUserDetails
+  LiftrBaseUserDetailsUpdate: AstroUserUpdateDetails
+  OrganizationResource: AstroOrganization
+  OrganizationResourceUpdateProperties: AstroOrganizationUpdateProperties
+  SingleSignOnStates: AstroSingleSignOnState
+  ResourceProvisioningState: AstroProvisioningState
 
 format-by-name-rules:
   'tenantId': 'uuid'

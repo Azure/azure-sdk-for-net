@@ -7,19 +7,16 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Astro;
 
 namespace Azure.ResourceManager.Astro.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableAstroSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _organizationResourceOrganizationsClientDiagnostics;
-        private OrganizationsRestOperations _organizationResourceOrganizationsRestClient;
+        private ClientDiagnostics _astroOrganizationOrganizationsClientDiagnostics;
+        private OrganizationsRestOperations _astroOrganizationOrganizationsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableAstroSubscriptionResource"/> class for mocking. </summary>
         protected MockableAstroSubscriptionResource()
@@ -33,8 +30,8 @@ namespace Azure.ResourceManager.Astro.Mocking
         {
         }
 
-        private ClientDiagnostics OrganizationResourceOrganizationsClientDiagnostics => _organizationResourceOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Astro", OrganizationResource.ResourceType.Namespace, Diagnostics);
-        private OrganizationsRestOperations OrganizationResourceOrganizationsRestClient => _organizationResourceOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(OrganizationResource.ResourceType));
+        private ClientDiagnostics AstroOrganizationOrganizationsClientDiagnostics => _astroOrganizationOrganizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Astro", AstroOrganizationResource.ResourceType.Namespace, Diagnostics);
+        private OrganizationsRestOperations AstroOrganizationOrganizationsRestClient => _astroOrganizationOrganizationsRestClient ??= new OrganizationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AstroOrganizationResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -59,17 +56,17 @@ namespace Azure.ResourceManager.Astro.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="AstroOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OrganizationResource> GetOrganizationResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AstroOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AstroOrganizationResource> GetAstroOrganizationsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OrganizationResource(Client, OrganizationResourceData.DeserializeOrganizationResourceData(e)), OrganizationResourceOrganizationsClientDiagnostics, Pipeline, "MockableAstroSubscriptionResource.GetOrganizationResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AstroOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AstroOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AstroOrganizationResource(Client, AstroOrganizationData.DeserializeAstroOrganizationData(e)), AstroOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableAstroSubscriptionResource.GetAstroOrganizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -89,17 +86,17 @@ namespace Azure.ResourceManager.Astro.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="AstroOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OrganizationResource> GetOrganizationResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AstroOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AstroOrganizationResource> GetAstroOrganizations(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationResourceOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OrganizationResource(Client, OrganizationResourceData.DeserializeOrganizationResourceData(e)), OrganizationResourceOrganizationsClientDiagnostics, Pipeline, "MockableAstroSubscriptionResource.GetOrganizationResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AstroOrganizationOrganizationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AstroOrganizationOrganizationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AstroOrganizationResource(Client, AstroOrganizationData.DeserializeAstroOrganizationData(e)), AstroOrganizationOrganizationsClientDiagnostics, Pipeline, "MockableAstroSubscriptionResource.GetAstroOrganizations", "value", "nextLink", cancellationToken);
         }
     }
 }

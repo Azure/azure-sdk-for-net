@@ -10,13 +10,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/astronomer.astro/ci.mgmt.yml
-    - sdk/astronomer.astro/Azure.ResourceManager.Astro/
+    - sdk/astronomer/ci.mgmt.yml
+    - sdk/astronomer/Azure.ResourceManager.Astro/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: astronomer.astro
+    ServiceDirectory: astronomer
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Astro

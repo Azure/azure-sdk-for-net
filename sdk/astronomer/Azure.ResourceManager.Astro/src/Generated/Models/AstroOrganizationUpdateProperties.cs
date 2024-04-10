@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.Astro.Models
 {
-    /// <summary> The response of a OrganizationResource list operation. </summary>
-    internal partial class OrganizationResourceListResult
+    /// <summary> The updatable properties of the OrganizationResource. </summary>
+    public partial class AstroOrganizationUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,25 @@ namespace Azure.ResourceManager.Astro.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourceListResult"/>. </summary>
-        /// <param name="value"> The OrganizationResource items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal OrganizationResourceListResult(IEnumerable<AstroOrganizationData> value)
+        /// <summary> Initializes a new instance of <see cref="AstroOrganizationUpdateProperties"/>. </summary>
+        public AstroOrganizationUpdateProperties()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourceListResult"/>. </summary>
-        /// <param name="value"> The OrganizationResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="AstroOrganizationUpdateProperties"/>. </summary>
+        /// <param name="user"> Details of the user. </param>
+        /// <param name="partnerOrganizationProperties"> Organization properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrganizationResourceListResult(IReadOnlyList<AstroOrganizationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AstroOrganizationUpdateProperties(AstroUserUpdateDetails user, AstroPartnerOrganizationUpdateProperties partnerOrganizationProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            User = user;
+            PartnerOrganizationProperties = partnerOrganizationProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourceListResult"/> for deserialization. </summary>
-        internal OrganizationResourceListResult()
-        {
-        }
-
-        /// <summary> The OrganizationResource items on this page. </summary>
-        public IReadOnlyList<AstroOrganizationData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Details of the user. </summary>
+        public AstroUserUpdateDetails User { get; set; }
+        /// <summary> Organization properties. </summary>
+        public AstroPartnerOrganizationUpdateProperties PartnerOrganizationProperties { get; set; }
     }
 }

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Astro;
 
 namespace Azure.ResourceManager.Astro.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Astro.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrganizationResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrganizationResourceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrganizationResourceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.Astro.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AstroOrganizationData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.Astro.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrganizationResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrganizationResourceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrganizationResourceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,18 +76,18 @@ namespace Azure.ResourceManager.Astro.Models
             {
                 return null;
             }
-            IReadOnlyList<OrganizationResourceData> value = default;
-            Optional<Uri> nextLink = default;
+            IReadOnlyList<AstroOrganizationData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<OrganizationResourceData> array = new List<OrganizationResourceData>();
+                    List<AstroOrganizationData> array = new List<AstroOrganizationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrganizationResourceData.DeserializeOrganizationResourceData(item));
+                        array.Add(AstroOrganizationData.DeserializeAstroOrganizationData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,11 +103,11 @@ namespace Azure.ResourceManager.Astro.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrganizationResourceListResult(value, nextLink.Value, serializedAdditionalRawData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OrganizationResourceListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrganizationResourceListResult>.Write(ModelReaderWriterOptions options)
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.Astro.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OrganizationResourceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrganizationResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Astro.Models
                         return DeserializeOrganizationResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrganizationResourceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrganizationResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

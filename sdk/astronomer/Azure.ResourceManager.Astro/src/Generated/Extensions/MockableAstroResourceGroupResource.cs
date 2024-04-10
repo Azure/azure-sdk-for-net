@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Astro;
 
 namespace Azure.ResourceManager.Astro.Mocking
 {
@@ -36,11 +33,11 @@ namespace Azure.ResourceManager.Astro.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of OrganizationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of OrganizationResources and their operations over a OrganizationResource. </returns>
-        public virtual OrganizationResourceCollection GetOrganizationResources()
+        /// <summary> Gets a collection of AstroOrganizationResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of AstroOrganizationResources and their operations over a AstroOrganizationResource. </returns>
+        public virtual AstroOrganizationCollection GetAstroOrganizations()
         {
-            return GetCachedClient(client => new OrganizationResourceCollection(client, Id));
+            return GetCachedClient(client => new AstroOrganizationCollection(client, Id));
         }
 
         /// <summary>
@@ -60,7 +57,7 @@ namespace Azure.ResourceManager.Astro.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="AstroOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -69,9 +66,9 @@ namespace Azure.ResourceManager.Astro.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OrganizationResource>> GetOrganizationResourceAsync(string organizationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AstroOrganizationResource>> GetAstroOrganizationAsync(string organizationName, CancellationToken cancellationToken = default)
         {
-            return await GetOrganizationResources().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
+            return await GetAstroOrganizations().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -91,7 +88,7 @@ namespace Azure.ResourceManager.Astro.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="OrganizationResource"/></description>
+        /// <description><see cref="AstroOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -100,9 +97,9 @@ namespace Azure.ResourceManager.Astro.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OrganizationResource> GetOrganizationResource(string organizationName, CancellationToken cancellationToken = default)
+        public virtual Response<AstroOrganizationResource> GetAstroOrganization(string organizationName, CancellationToken cancellationToken = default)
         {
-            return GetOrganizationResources().Get(organizationName, cancellationToken);
+            return GetAstroOrganizations().Get(organizationName, cancellationToken);
         }
     }
 }

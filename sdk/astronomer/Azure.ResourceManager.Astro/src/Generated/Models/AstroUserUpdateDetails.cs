@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.Astro.Models
 {
-    /// <summary> The response of a OrganizationResource list operation. </summary>
-    internal partial class OrganizationResourceListResult
+    /// <summary> User details for an organization. </summary>
+    public partial class AstroUserUpdateDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,37 @@ namespace Azure.ResourceManager.Astro.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourceListResult"/>. </summary>
-        /// <param name="value"> The OrganizationResource items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal OrganizationResourceListResult(IEnumerable<AstroOrganizationData> value)
+        /// <summary> Initializes a new instance of <see cref="AstroUserUpdateDetails"/>. </summary>
+        public AstroUserUpdateDetails()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourceListResult"/>. </summary>
-        /// <param name="value"> The OrganizationResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="AstroUserUpdateDetails"/>. </summary>
+        /// <param name="firstName"> First name of the user. </param>
+        /// <param name="lastName"> Last name of the user. </param>
+        /// <param name="emailAddress"> Email address of the user. </param>
+        /// <param name="upn"> User's principal name. </param>
+        /// <param name="phoneNumber"> User's phone number. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrganizationResourceListResult(IReadOnlyList<AstroOrganizationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AstroUserUpdateDetails(string firstName, string lastName, string emailAddress, string upn, string phoneNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            FirstName = firstName;
+            LastName = lastName;
+            EmailAddress = emailAddress;
+            Upn = upn;
+            PhoneNumber = phoneNumber;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OrganizationResourceListResult"/> for deserialization. </summary>
-        internal OrganizationResourceListResult()
-        {
-        }
-
-        /// <summary> The OrganizationResource items on this page. </summary>
-        public IReadOnlyList<AstroOrganizationData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> First name of the user. </summary>
+        public string FirstName { get; set; }
+        /// <summary> Last name of the user. </summary>
+        public string LastName { get; set; }
+        /// <summary> Email address of the user. </summary>
+        public string EmailAddress { get; set; }
+        /// <summary> User's principal name. </summary>
+        public string Upn { get; set; }
+        /// <summary> User's phone number. </summary>
+        public string PhoneNumber { get; set; }
     }
 }

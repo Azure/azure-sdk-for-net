@@ -6,8 +6,6 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Astro;
 
 namespace Azure.ResourceManager.Astro.Mocking
 {
@@ -37,15 +35,15 @@ namespace Azure.ResourceManager.Astro.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OrganizationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OrganizationResource.CreateResourceIdentifier" /> to create an <see cref="OrganizationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AstroOrganizationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AstroOrganizationResource.CreateResourceIdentifier" /> to create an <see cref="AstroOrganizationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OrganizationResource"/> object. </returns>
-        public virtual OrganizationResource GetOrganizationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AstroOrganizationResource"/> object. </returns>
+        public virtual AstroOrganizationResource GetAstroOrganizationResource(ResourceIdentifier id)
         {
-            OrganizationResource.ValidateResourceId(id);
-            return new OrganizationResource(Client, id);
+            AstroOrganizationResource.ValidateResourceId(id);
+            return new AstroOrganizationResource(Client, id);
         }
     }
 }

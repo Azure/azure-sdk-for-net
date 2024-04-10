@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.Astro;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Astro.Models
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.Astro.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAstroModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Astro.OrganizationResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Astro.AstroOrganizationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -26,37 +25,52 @@ namespace Azure.ResourceManager.Astro.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Astro.OrganizationResourceData"/> instance for mocking. </returns>
-        public static OrganizationResourceData OrganizationResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, LiftrBaseDataOrganizationProperties properties = null, ManagedServiceIdentity identity = null)
+        /// <returns> A new <see cref="Astro.AstroOrganizationData"/> instance for mocking. </returns>
+        public static AstroOrganizationData AstroOrganizationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AstroOrganizationProperties properties = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new OrganizationResourceData(id, name, resourceType, systemData, tags, location, properties, identity, serializedAdditionalRawData: null);
+            return new AstroOrganizationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LiftrBaseDataOrganizationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AstroOrganizationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerOrganizationProperties"> Organization properties. </param>
-        /// <returns> A new <see cref="Models.LiftrBaseDataOrganizationProperties"/> instance for mocking. </returns>
-        public static LiftrBaseDataOrganizationProperties LiftrBaseDataOrganizationProperties(LiftrBaseMarketplaceDetails marketplace = null, LiftrBaseUserDetails user = null, ResourceProvisioningState? provisioningState = null, LiftrBaseDataPartnerOrganizationProperties partnerOrganizationProperties = null)
+        /// <returns> A new <see cref="Models.AstroOrganizationProperties"/> instance for mocking. </returns>
+        public static AstroOrganizationProperties AstroOrganizationProperties(AstroMarketplaceDetails marketplace = null, AstroUserDetails user = null, AstroProvisioningState? provisioningState = null, AstroPartnerOrganizationProperties partnerOrganizationProperties = null)
         {
-            return new LiftrBaseDataOrganizationProperties(marketplace, user, provisioningState, partnerOrganizationProperties, serializedAdditionalRawData: null);
+            return new AstroOrganizationProperties(marketplace, user, provisioningState, partnerOrganizationProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LiftrBaseSingleSignOnProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AstroSingleSignOnProperties"/>. </summary>
         /// <param name="singleSignOnState"> State of the Single Sign On for the organization. </param>
         /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
         /// <param name="singleSignOnUri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
         /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <returns> A new <see cref="Models.LiftrBaseSingleSignOnProperties"/> instance for mocking. </returns>
-        public static LiftrBaseSingleSignOnProperties LiftrBaseSingleSignOnProperties(SingleSignOnState? singleSignOnState = null, string enterpriseAppId = null, Uri singleSignOnUri = null, IEnumerable<string> aadDomains = null, ResourceProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.AstroSingleSignOnProperties"/> instance for mocking. </returns>
+        public static AstroSingleSignOnProperties AstroSingleSignOnProperties(AstroSingleSignOnState? singleSignOnState = null, string enterpriseAppId = null, Uri singleSignOnUri = null, IEnumerable<string> aadDomains = null, AstroProvisioningState? provisioningState = null)
         {
             aadDomains ??= new List<string>();
 
-            return new LiftrBaseSingleSignOnProperties(singleSignOnState, enterpriseAppId, singleSignOnUri, aadDomains?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new AstroSingleSignOnProperties(
+                singleSignOnState,
+                enterpriseAppId,
+                singleSignOnUri,
+                aadDomains?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
     }
 }
