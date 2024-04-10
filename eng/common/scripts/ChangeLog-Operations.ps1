@@ -139,19 +139,15 @@ function Confirm-ChangeLogEntry {
     [String]$VersionString,
     [boolean]$ForRelease = $false,
     [Switch]$SantizeEntry,
-    [PSCustomObject]$ChangeLogStatus = $null
+    [PSCustomObject]$ChangeLogStatus = $null,
+    [boolean]$SuppressErrors = $false
   )
 
-  $suppressErrors = $false
   if (!$ChangeLogStatus) {
     $ChangeLogStatus = [PSCustomObject]@{
       IsValid = $false
       Message = ""
     }
-  }
-  else {
-    # Do not stop the script on error when status object is passed as param
-    $suppressErrors = $true
   }
   $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $ChangeLogLocation
   $changeLogEntry = $changeLogEntries[$VersionString]
@@ -159,7 +155,7 @@ function Confirm-ChangeLogEntry {
   if (!$changeLogEntry) {
     $ChangeLogStatus.Message = "ChangeLog[${ChangeLogLocation}] does not have an entry for version ${VersionString}."
     $ChangeLogStatus.IsValid = $false
-    if (!$suppressErrors) {
+    if (!$SuppressErrors) {
       LogError "$($ChangeLogStatus.Message)"
     }
     return $false
@@ -179,7 +175,7 @@ function Confirm-ChangeLogEntry {
   if ([System.String]::IsNullOrEmpty($changeLogEntry.ReleaseStatus)) {
     $ChangeLogStatus.Message = "Entry does not have a release status. Please ensure the status is set to a date '($CHANGELOG_DATE_FORMAT)' or '$CHANGELOG_UNRELEASED_STATUS' if not yet released. See https://aka.ms/azsdk/guideline/changelogs for more info."
     $ChangeLogStatus.IsValid = $false
-    if (!$suppressErrors) {
+    if (!$SuppressErrors) {
       LogError "$($ChangeLogStatus.Message)"
     }
     return $false
@@ -188,7 +184,7 @@ function Confirm-ChangeLogEntry {
   if ($ForRelease -eq $True)
   {
     LogDebug "Verifying as a release build because ForRelease parameter is set to true"
-    return Confirm-ChangeLogForRelease -changeLogEntry $changeLogEntry -changeLogEntries $changeLogEntries -ChangeLogStatus $ChangeLogStatus -SuppressErrors $suppressErrors
+    return Confirm-ChangeLogForRelease -changeLogEntry $changeLogEntry -changeLogEntries $changeLogEntries -ChangeLogStatus $ChangeLogStatus -SuppressErrors $SuppressErrors
   }
 
   # If the release status is a valid date then verify like its about to be released
@@ -196,7 +192,7 @@ function Confirm-ChangeLogEntry {
   if ($status -as [DateTime])
   {
     LogDebug "Verifying as a release build because the changelog entry has a valid date."
-    return Confirm-ChangeLogForRelease -changeLogEntry $changeLogEntry -changeLogEntries $changeLogEntries -ChangeLogStatus $ChangeLogStatus -SuppressErrors $suppressErrors
+    return Confirm-ChangeLogForRelease -changeLogEntry $changeLogEntry -changeLogEntries $changeLogEntries -ChangeLogStatus $ChangeLogStatus -SuppressErrors $SuppressErrors
   }
 
   $ChangeLogStatus.Message = "ChangeLog[${ChangeLogLocation}] has an entry for version ${VersionString}."
