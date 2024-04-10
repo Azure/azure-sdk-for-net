@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PolyBaseSettings))
             {
                 writer.WritePropertyName("polyBaseSettings"u8);
-                writer.WriteObjectValue<PolybaseSettings>(PolyBaseSettings);
+                writer.WriteObjectValue(PolyBaseSettings);
             }
             if (Optional.IsDefined(AllowCopyCommand))
             {
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CopyCommandSettings))
             {
                 writer.WritePropertyName("copyCommandSettings"u8);
-                writer.WriteObjectValue<DWCopyCommandSettings>(CopyCommandSettings);
+                writer.WriteObjectValue(CopyCommandSettings);
             }
             if (Optional.IsDefined(TableOption))
             {
@@ -241,7 +241,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SqlDWSink>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -249,7 +249,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SqlDWSink model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SqlDWSink>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SqlDWSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

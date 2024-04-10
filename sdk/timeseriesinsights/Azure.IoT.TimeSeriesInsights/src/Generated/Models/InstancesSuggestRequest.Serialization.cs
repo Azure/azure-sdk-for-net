@@ -29,7 +29,7 @@ namespace Azure.IoT.TimeSeriesInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<InstancesSuggestRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.StorageMover
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<JobRunError>(Error, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

@@ -119,7 +119,7 @@ namespace Azure.AI.TextAnalytics
         internal RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<LinkedEntity>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

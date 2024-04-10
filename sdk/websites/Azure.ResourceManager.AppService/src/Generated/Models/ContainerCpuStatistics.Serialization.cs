@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CpuUsage))
             {
                 writer.WritePropertyName("cpuUsage"u8);
-                writer.WriteObjectValue<ContainerCpuUsage>(CpuUsage, options);
+                writer.WriteObjectValue(CpuUsage, options);
             }
             if (Optional.IsDefined(SystemCpuUsage))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ThrottlingData))
             {
                 writer.WritePropertyName("throttlingData"u8);
-                writer.WriteObjectValue<ContainerThrottlingInfo>(ThrottlingData, options);
+                writer.WriteObjectValue(ThrottlingData, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

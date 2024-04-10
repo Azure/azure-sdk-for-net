@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item in AppSettings)
                     {
-                        writer.WriteObjectValue<AppServiceNameValuePair>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item in ConnectionStrings)
                     {
-                        writer.WriteObjectValue<ConnStringInfo>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (MachineKey != null)
                 {
                     writer.WritePropertyName("machineKey"u8);
-                    writer.WriteObjectValue<SiteMachineKey>(MachineKey, options);
+                    writer.WriteObjectValue(MachineKey, options);
                 }
                 else
                 {
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item in HandlerMappings)
                     {
-                        writer.WriteObjectValue<HttpRequestHandlerMapping>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item in VirtualApplications)
                     {
-                        writer.WriteObjectValue<VirtualApplication>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (Experiments != null)
                 {
                     writer.WritePropertyName("experiments"u8);
-                    writer.WriteObjectValue<RoutingRuleExperiments>(Experiments, options);
+                    writer.WriteObjectValue(Experiments, options);
                 }
                 else
                 {
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (Limits != null)
                 {
                     writer.WritePropertyName("limits"u8);
-                    writer.WriteObjectValue<SiteLimits>(Limits, options);
+                    writer.WriteObjectValue(Limits, options);
                 }
                 else
                 {
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (AutoHealRules != null)
                 {
                     writer.WritePropertyName("autoHealRules"u8);
-                    writer.WriteObjectValue<AutoHealRules>(AutoHealRules, options);
+                    writer.WriteObjectValue(AutoHealRules, options);
                 }
                 else
                 {
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (Cors != null)
                 {
                     writer.WritePropertyName("cors"u8);
-                    writer.WriteObjectValue<AppServiceCorsSettings>(Cors, options);
+                    writer.WriteObjectValue(Cors, options);
                 }
                 else
                 {
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (Push != null)
                 {
                     writer.WritePropertyName("push"u8);
-                    writer.WriteObjectValue<WebAppPushSettings>(Push, options);
+                    writer.WriteObjectValue(Push, options);
                 }
                 else
                 {
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (ApiDefinition != null)
                 {
                     writer.WritePropertyName("apiDefinition"u8);
-                    writer.WriteObjectValue<AppServiceApiDefinitionInfo>(ApiDefinition, options);
+                    writer.WriteObjectValue(ApiDefinition, options);
                 }
                 else
                 {
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.AppService.Models
                 if (ApiManagementConfig != null)
                 {
                     writer.WritePropertyName("apiManagementConfig"u8);
-                    writer.WriteObjectValue<ApiManagementConfig>(ApiManagementConfig, options);
+                    writer.WriteObjectValue(ApiManagementConfig, options);
                 }
                 else
                 {
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item in IPSecurityRestrictions)
                     {
-                        writer.WriteObjectValue<AppServiceIPSecurityRestriction>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item in ScmIPSecurityRestrictions)
                     {
-                        writer.WriteObjectValue<AppServiceIPSecurityRestriction>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.AppService.Models
                     foreach (var item in AzureStorageAccounts)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue<AppServiceStorageAccessInfo>(item.Value, options);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }

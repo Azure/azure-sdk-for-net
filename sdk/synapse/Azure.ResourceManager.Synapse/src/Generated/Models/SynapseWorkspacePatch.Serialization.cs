@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(ManagedVirtualNetworkSettings))
             {
                 writer.WritePropertyName("managedVirtualNetworkSettings"u8);
-                writer.WriteObjectValue<SynapseManagedVirtualNetworkSettings>(ManagedVirtualNetworkSettings, options);
+                writer.WriteObjectValue(ManagedVirtualNetworkSettings, options);
             }
             if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
             {
                 writer.WritePropertyName("workspaceRepositoryConfiguration"u8);
-                writer.WriteObjectValue<SynapseWorkspaceRepositoryConfiguration>(WorkspaceRepositoryConfiguration, options);
+                writer.WriteObjectValue(WorkspaceRepositoryConfiguration, options);
             }
             if (Optional.IsDefined(PurviewConfiguration))
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
-                writer.WriteObjectValue<PurviewConfiguration>(PurviewConfiguration, options);
+                writer.WriteObjectValue(PurviewConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<SynapseEncryptionDetails>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {

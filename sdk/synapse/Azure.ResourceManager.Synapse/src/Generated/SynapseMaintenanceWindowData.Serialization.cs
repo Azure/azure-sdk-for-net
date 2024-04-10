@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStartArray();
                 foreach (var item in TimeRanges)
                 {
-                    writer.WriteObjectValue<SynapseMaintenanceWindowTimeRange>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

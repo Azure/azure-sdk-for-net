@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(AllowedPrincipals))
             {
                 writer.WritePropertyName("allowedPrincipals"u8);
-                writer.WriteObjectValue<AppServiceAadAllowedPrincipals>(AllowedPrincipals, options);
+                writer.WriteObjectValue(AllowedPrincipals, options);
             }
             if (Optional.IsCollectionDefined(AllowedApplications))
             {

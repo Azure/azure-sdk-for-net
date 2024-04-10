@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(DataFlowProperties))
             {
                 writer.WritePropertyName("dataFlowProperties"u8);
-                writer.WriteObjectValue<SynapseIntegrationRuntimeDataFlowProperties>(DataFlowProperties, options);
+                writer.WriteObjectValue(DataFlowProperties, options);
             }
             if (Optional.IsDefined(VnetProperties))
             {
                 writer.WritePropertyName("vNetProperties"u8);
-                writer.WriteObjectValue<SynapseIntegrationRuntimeVnetProperties>(VnetProperties, options);
+                writer.WriteObjectValue(VnetProperties, options);
             }
             foreach (var item in AdditionalProperties)
             {

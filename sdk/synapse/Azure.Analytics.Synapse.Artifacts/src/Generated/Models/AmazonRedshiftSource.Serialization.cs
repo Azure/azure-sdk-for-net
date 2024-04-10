@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(RedshiftUnloadSettings))
             {
                 writer.WritePropertyName("redshiftUnloadSettings"u8);
-                writer.WriteObjectValue<RedshiftUnloadSettings>(RedshiftUnloadSettings);
+                writer.WriteObjectValue(RedshiftUnloadSettings);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AmazonRedshiftSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -185,7 +185,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AmazonRedshiftSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AmazonRedshiftSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override AmazonRedshiftSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

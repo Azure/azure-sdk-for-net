@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeTextTask>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

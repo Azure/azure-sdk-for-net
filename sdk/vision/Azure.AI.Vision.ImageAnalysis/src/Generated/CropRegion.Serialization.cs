@@ -29,7 +29,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WritePropertyName("aspectRatio"u8);
             writer.WriteNumberValue(AspectRatio);
             writer.WritePropertyName("boundingBox"u8);
-            writer.WriteObjectValue<ImageBoundingBox>(BoundingBox, options);
+            writer.WriteObjectValue(BoundingBox, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -136,7 +136,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CropRegion>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

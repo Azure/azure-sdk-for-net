@@ -18,19 +18,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(TrustedCertificates))
             {
                 writer.WritePropertyName("trustedCertificates"u8);
-                writer.WriteObjectValue<CertificateSource>(TrustedCertificates);
+                writer.WriteObjectValue(TrustedCertificates);
             }
             if (Optional.IsDefined(ValidationOptions))
             {
                 writer.WritePropertyName("validationOptions"u8);
-                writer.WriteObjectValue<TlsValidationOptions>(ValidationOptions);
+                writer.WriteObjectValue(ValidationOptions);
             }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue<CredentialsBase>(Credentials);
+                writer.WriteObjectValue(Credentials);
             }
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url);
@@ -103,7 +103,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TlsEndpoint>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

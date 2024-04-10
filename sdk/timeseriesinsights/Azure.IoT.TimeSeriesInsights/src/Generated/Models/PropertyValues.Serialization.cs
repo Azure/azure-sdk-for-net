@@ -79,7 +79,7 @@ namespace Azure.IoT.TimeSeriesInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PropertyValues>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CommandPayload))
             {
                 writer.WritePropertyName("commandPayload"u8);
-                writer.WriteObjectValue<DataFlowDebugCommandPayload>(CommandPayload);
+                writer.WriteObjectValue(CommandPayload);
             }
             writer.WriteEndObject();
         }
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DataFlowDebugCommandRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, DataFlowDebugCommandRequest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<DataFlowDebugCommandRequest>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override DataFlowDebugCommandRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

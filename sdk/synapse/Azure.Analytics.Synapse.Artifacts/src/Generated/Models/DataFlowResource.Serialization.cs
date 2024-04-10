@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<DataFlow>(Properties);
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
 
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DataFlowResource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -85,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, DataFlowResource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<DataFlowResource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override DataFlowResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

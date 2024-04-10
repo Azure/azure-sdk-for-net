@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue<TrafficManagerHeatMapEndpoint>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in TrafficFlows)
                 {
-                    writer.WriteObjectValue<TrafficManagerHeatMapTrafficFlow>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

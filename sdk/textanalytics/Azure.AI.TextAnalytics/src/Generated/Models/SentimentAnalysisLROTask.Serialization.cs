@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue<SentimentAnalysisTaskParameters>(Parameters);
+                writer.WriteObjectValue(Parameters);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -76,7 +76,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SentimentAnalysisLROTask>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

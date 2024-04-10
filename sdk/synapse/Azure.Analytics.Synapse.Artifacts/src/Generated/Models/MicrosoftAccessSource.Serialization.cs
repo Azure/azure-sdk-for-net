@@ -145,7 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MicrosoftAccessSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -153,7 +153,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, MicrosoftAccessSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<MicrosoftAccessSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override MicrosoftAccessSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

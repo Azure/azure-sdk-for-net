@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue<UserAssignedServiceIdentity>(Identity, options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Workloads
             writer.WritePropertyName("sapProduct"u8);
             writer.WriteStringValue(SapProduct.ToString());
             writer.WritePropertyName("configuration"u8);
-            writer.WriteObjectValue<SapConfiguration>(Configuration, options);
+            writer.WriteObjectValue(Configuration, options);
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue<ManagedRGConfiguration>(ManagedResourceGroupConfiguration, options);
+                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue<SapVirtualInstanceError>(Errors, options);
+                writer.WriteObjectValue(Errors, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

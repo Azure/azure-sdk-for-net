@@ -93,7 +93,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzureDatabricksDeltaLakeImportCommand>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AzureDatabricksDeltaLakeImportCommand model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AzureDatabricksDeltaLakeImportCommand>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override AzureDatabricksDeltaLakeImportCommand Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

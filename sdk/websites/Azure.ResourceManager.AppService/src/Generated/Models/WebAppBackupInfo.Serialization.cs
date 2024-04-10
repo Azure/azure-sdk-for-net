@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(BackupSchedule))
             {
                 writer.WritePropertyName("backupSchedule"u8);
-                writer.WriteObjectValue<WebAppBackupSchedule>(BackupSchedule, options);
+                writer.WriteObjectValue(BackupSchedule, options);
             }
             if (Optional.IsCollectionDefined(Databases))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Databases)
                 {
-                    writer.WriteObjectValue<AppServiceDatabaseBackupSetting>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

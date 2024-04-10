@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue<ScriptActivityParameter>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ScriptActivityScriptBlock>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -95,7 +95,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, ScriptActivityScriptBlock model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<ScriptActivityScriptBlock>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override ScriptActivityScriptBlock Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

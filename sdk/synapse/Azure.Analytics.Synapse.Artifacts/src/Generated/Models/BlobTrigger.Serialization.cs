@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
-                    writer.WriteObjectValue<TriggerPipelineReference>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
             writer.WritePropertyName("linkedService"u8);
-            writer.WriteObjectValue<LinkedServiceReference>(LinkedService);
+            writer.WriteObjectValue(LinkedService);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -194,7 +194,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BlobTrigger>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -202,7 +202,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, BlobTrigger model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<BlobTrigger>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override BlobTrigger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
