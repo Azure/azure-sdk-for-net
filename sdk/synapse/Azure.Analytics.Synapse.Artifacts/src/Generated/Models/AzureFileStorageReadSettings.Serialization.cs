@@ -229,12 +229,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 modifiedDatetimeEnd);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureFileStorageReadSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureFileStorageReadSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureFileStorageReadSettings>(this);
+            return content;
+        }
+
         internal partial class AzureFileStorageReadSettingsConverter : JsonConverter<AzureFileStorageReadSettings>
         {
             public override void Write(Utf8JsonWriter writer, AzureFileStorageReadSettings model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<AzureFileStorageReadSettings>(model);
             }
+
             public override AzureFileStorageReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

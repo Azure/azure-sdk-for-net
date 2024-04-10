@@ -26,9 +26,29 @@ namespace Azure.Identity
             Diagnostics = diagnostics;
         }
 
-        public static CredentialPipeline GetInstance(TokenCredentialOptions options)
+        public static CredentialPipeline GetInstance(TokenCredentialOptions options, bool IsManagedIdentityCredential = false)
         {
-            return options is null ? s_singleton.Value : new CredentialPipeline(options);
+            return options switch
+            {
+                _ when IsManagedIdentityCredential => configureOptionsForManagedIdentity(options),
+                not null => new CredentialPipeline(options),
+                _ => s_singleton.Value,
+
+            };
+        }
+
+        private static CredentialPipeline configureOptionsForManagedIdentity(TokenCredentialOptions options)
+        {
+            var clonedOptions = options switch
+            {
+                DefaultAzureCredentialOptions dac => dac.Clone<DefaultAzureCredentialOptions>(),
+                _ => options?.Clone<TokenCredentialOptions>() ?? new TokenCredentialOptions(),
+            };
+            // Set the custom retry policy
+            clonedOptions.Retry.MaxRetries = 5;
+            clonedOptions.RetryPolicy ??= new DefaultAzureCredentialImdsRetryPolicy(clonedOptions.Retry);
+            clonedOptions.IsChainedCredential = clonedOptions is DefaultAzureCredentialOptions;
+            return new CredentialPipeline(clonedOptions);
         }
 
         public HttpPipeline HttpPipeline { get; }

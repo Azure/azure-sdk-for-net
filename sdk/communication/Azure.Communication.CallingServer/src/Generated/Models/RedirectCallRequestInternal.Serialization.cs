@@ -21,5 +21,13 @@ namespace Azure.Communication.CallingServer
             writer.WriteObjectValue<CommunicationIdentifierModel>(Target);
             writer.WriteEndObject();
         }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RedirectCallRequestInternal>(this);
+            return content;
+        }
     }
 }

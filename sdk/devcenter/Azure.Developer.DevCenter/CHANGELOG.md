@@ -1,6 +1,16 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2024-04-03)
 This Azure DevCenter library release uses the 2023-04-01 GA API.
 
 ### Features Added
@@ -11,10 +21,6 @@ This Azure DevCenter library release uses the 2023-04-01 GA API.
 ### Breaking Changes
 
 - Renamed `AzureDeveloperDevCenterClientOptions` back to `DevCenterClientOptions` 
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.3 (2023-10-31)
 This release updates the Azure DevCenter library to use the 2023-04-01 GA API.

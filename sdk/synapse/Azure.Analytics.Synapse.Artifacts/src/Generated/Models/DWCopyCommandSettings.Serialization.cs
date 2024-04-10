@@ -85,12 +85,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new DWCopyCommandSettings(defaultValues ?? new ChangeTrackingList<DWCopyCommandDefaultValue>(), additionalOptions ?? new ChangeTrackingDictionary<string, string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DWCopyCommandSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDWCopyCommandSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DWCopyCommandSettings>(this);
+            return content;
+        }
+
         internal partial class DWCopyCommandSettingsConverter : JsonConverter<DWCopyCommandSettings>
         {
             public override void Write(Utf8JsonWriter writer, DWCopyCommandSettings model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<DWCopyCommandSettings>(model);
             }
+
             public override DWCopyCommandSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

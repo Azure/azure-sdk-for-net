@@ -234,12 +234,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 table);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SapHanaTableDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSapHanaTableDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SapHanaTableDataset>(this);
+            return content;
+        }
+
         internal partial class SapHanaTableDatasetConverter : JsonConverter<SapHanaTableDataset>
         {
             public override void Write(Utf8JsonWriter writer, SapHanaTableDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<SapHanaTableDataset>(model);
             }
+
             public override SapHanaTableDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

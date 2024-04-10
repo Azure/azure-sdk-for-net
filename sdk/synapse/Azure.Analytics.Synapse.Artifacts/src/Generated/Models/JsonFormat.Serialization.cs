@@ -165,12 +165,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 jsonPathDefinition);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new JsonFormat FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeJsonFormat(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<JsonFormat>(this);
+            return content;
+        }
+
         internal partial class JsonFormatConverter : JsonConverter<JsonFormat>
         {
             public override void Write(Utf8JsonWriter writer, JsonFormat model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<JsonFormat>(model);
             }
+
             public override JsonFormat Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

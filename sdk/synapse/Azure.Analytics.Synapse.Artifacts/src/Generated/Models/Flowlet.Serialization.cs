@@ -240,12 +240,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 scriptLines ?? new ChangeTrackingList<string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new Flowlet FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFlowlet(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<Flowlet>(this);
+            return content;
+        }
+
         internal partial class FlowletConverter : JsonConverter<Flowlet>
         {
             public override void Write(Utf8JsonWriter writer, Flowlet model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<Flowlet>(model);
             }
+
             public override Flowlet Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

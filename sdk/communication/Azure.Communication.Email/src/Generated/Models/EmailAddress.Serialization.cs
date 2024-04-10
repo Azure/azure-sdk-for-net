@@ -24,5 +24,13 @@ namespace Azure.Communication.Email
             }
             writer.WriteEndObject();
         }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<EmailAddress>(this);
+            return content;
+        }
     }
 }
