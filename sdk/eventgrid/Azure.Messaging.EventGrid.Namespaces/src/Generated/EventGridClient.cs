@@ -103,8 +103,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(acknowledgeOptions, nameof(acknowledgeOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = acknowledgeOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AcknowledgeCloudEventsAsync(topicName, eventSubscriptionName, content, context).ConfigureAwait(false);
             return Response.FromValue(AcknowledgeResult.FromResponse(response), response);
         }
@@ -122,8 +122,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(acknowledgeOptions, nameof(acknowledgeOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = acknowledgeOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AcknowledgeCloudEvents(topicName, eventSubscriptionName, content, context);
             return Response.FromValue(AcknowledgeResult.FromResponse(response), response);
         }
@@ -228,8 +228,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(releaseOptions, nameof(releaseOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = releaseOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ReleaseCloudEventsAsync(topicName, eventSubscriptionName, content, releaseDelayInSeconds?.ToSerialInt32(), context).ConfigureAwait(false);
             return Response.FromValue(ReleaseResult.FromResponse(response), response);
         }
@@ -248,8 +248,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(releaseOptions, nameof(releaseOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = releaseOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ReleaseCloudEvents(topicName, eventSubscriptionName, content, releaseDelayInSeconds?.ToSerialInt32(), context);
             return Response.FromValue(ReleaseResult.FromResponse(response), response);
         }
@@ -355,8 +355,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(rejectOptions, nameof(rejectOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = rejectOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await RejectCloudEventsAsync(topicName, eventSubscriptionName, content, context).ConfigureAwait(false);
             return Response.FromValue(RejectResult.FromResponse(response), response);
         }
@@ -374,8 +374,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(rejectOptions, nameof(rejectOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = rejectOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = RejectCloudEvents(topicName, eventSubscriptionName, content, context);
             return Response.FromValue(RejectResult.FromResponse(response), response);
         }
@@ -479,8 +479,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(renewLockOptions, nameof(renewLockOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = renewLockOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await RenewCloudEventLocksAsync(topicName, eventSubscriptionName, content, context).ConfigureAwait(false);
             return Response.FromValue(RenewCloudEventLocksResult.FromResponse(response), response);
         }
@@ -498,8 +498,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
             Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
             Argument.AssertNotNull(renewLockOptions, nameof(renewLockOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = renewLockOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = RenewCloudEventLocks(topicName, eventSubscriptionName, content, context);
             return Response.FromValue(RenewCloudEventLocksResult.FromResponse(response), response);
         }
