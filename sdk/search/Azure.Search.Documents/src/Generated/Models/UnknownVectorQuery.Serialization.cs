@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Models
             return DeserializeUnknownVectorQuery(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
