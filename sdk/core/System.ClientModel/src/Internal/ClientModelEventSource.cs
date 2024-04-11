@@ -9,11 +9,9 @@ using System.Text;
 
 namespace System.ClientModel.Internal;
 
-[EventSource(Name = EventSourceName)]
+[EventSource]
 internal sealed class ClientModelEventSource : ClientEventSource
 {
-    private const string EventSourceName = "System.ClientModel";
-
     private const int RequestEvent = 1;
     private const int RequestContentEvent = 2;
     private const int ResponseEvent = 5;
@@ -36,9 +34,9 @@ internal sealed class ClientModelEventSource : ClientEventSource
     private const int RequestRedirectCountExceededEvent = 22;
     private const int PipelineTransportOptionsNotAppliedEvent = 23;
 
-    private ClientModelEventSource() : base(EventSourceName) { }
+    private ClientModelEventSource(string eventSourceName) : base(eventSourceName) { }
 
-    public static ClientModelEventSource Singleton { get; } = new ClientModelEventSource();
+    public static ClientModelEventSource GetSingleton(string eventSourceName) => new ClientModelEventSource(eventSourceName);
 
     [Event(BackgroundRefreshFailedEvent, Level = EventLevel.Informational, Message = "Background token refresh [{0}] failed with exception {1}")]
     public void BackgroundRefreshFailed(string requestId, string exception)

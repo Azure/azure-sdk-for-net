@@ -323,4 +323,14 @@ public class ClientPipelineTests : SyncAsyncTestBase
         Assert.AreEqual("Response:RetryPolicy", observations[index++]);
         Assert.AreEqual("Response:A", observations[index++]);
     }
+
+    [Test]
+    public void CanCreateWithLoggingPolicy()
+    {
+        ClientPipelineOptions options = new ClientPipelineOptions();
+        options.LoggingPolicy = new ClientLoggingPolicy();
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        // TODO: check sanitizer (internal) is set
+    }
 }

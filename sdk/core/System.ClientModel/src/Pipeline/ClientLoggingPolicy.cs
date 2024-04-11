@@ -18,7 +18,7 @@ namespace System.ClientModel.Primitives;
 public class ClientLoggingPolicy : PipelinePolicy
 {
     private const double RequestTooLongTime = 3.0; // sec
-    private static readonly ClientModelEventSource s_eventSource = ClientModelEventSource.Singleton;
+    private static readonly ClientModelEventSource s_eventSource = ClientModelEventSource.GetSingleton("System.ClientModel");
 
     private readonly bool _logContent;
     private readonly int _maxLength;
@@ -117,7 +117,7 @@ public class ClientLoggingPolicy : PipelinePolicy
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
         PipelineRequest request = message.Request;
-        string requestId = GetRequestIdFromHeaders(request.Headers);
+        string requestId = string.IsNullOrEmpty(_clientRequestIdHeaderName) ? string.Empty : GetRequestIdFromHeaders(request.Headers, _clientRequestIdHeaderName!);
 
         s_eventSource.Request(request, requestId, _assemblyName, Sanitizer!);
 
@@ -197,9 +197,9 @@ public class ClientLoggingPolicy : PipelinePolicy
         return clientRequestId ?? string.Empty;
     }
 
-    private string GetRequestIdFromHeaders(PipelineRequestHeaders keyValuePairs)
+    private string GetRequestIdFromHeaders(PipelineRequestHeaders keyValuePairs, string clientRequestIdHeaderName)
     {
-        keyValuePairs.TryGetValue(_clientRequestIdHeaderName!, out var clientRequestId);
+        keyValuePairs.TryGetValue(clientRequestIdHeaderName, out var clientRequestId);
         return clientRequestId ?? string.Empty;
     }
 

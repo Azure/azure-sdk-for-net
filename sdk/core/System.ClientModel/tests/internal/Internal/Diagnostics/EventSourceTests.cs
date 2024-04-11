@@ -44,7 +44,7 @@ namespace System.ClientModel.Tests.Internal.Diagnostics
         public EventSourceTests(bool isAsync) : base(isAsync)
         {
             _listener = new TestEventListener();
-            _listener.EnableEvents(ClientModelEventSource.Singleton, EventLevel.Verbose);
+            _listener.EnableEvents(ClientModelEventSource.GetSingleton("System.ClientModel"), EventLevel.Verbose);
         }
 
         [TearDown]
@@ -59,8 +59,8 @@ namespace System.ClientModel.Tests.Internal.Diagnostics
             Type eventSourceType = typeof(ClientModelEventSource);
 
             Assert.NotNull(eventSourceType);
-            Assert.AreEqual("System-ClientModel", EventSource.GetName(eventSourceType));
-            Assert.AreEqual(Guid.Parse("842b4f87-415e-57bf-4ed4-434dce4701d4"), EventSource.GetGuid(eventSourceType));
+            Assert.AreEqual("System.ClientModel", EventSource.GetName(eventSourceType));
+            Assert.AreEqual(Guid.Parse("6bae9388-4dba-5782-d2eb-c55b96c4b1db"), EventSource.GetGuid(eventSourceType));
             Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
         }
 
