@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<FreshnessScoringParameters>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

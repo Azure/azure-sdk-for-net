@@ -224,7 +224,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<EntityRecognitionSkillV3>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

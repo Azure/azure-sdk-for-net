@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue<ResourceQueryRequestOptions>(Options, options);
+                writer.WriteObjectValue(Options, options);
             }
             if (Optional.IsCollectionDefined(Facets))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 writer.WriteStartArray();
                 foreach (var item in Facets)
                 {
-                    writer.WriteObjectValue<FacetRequest>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

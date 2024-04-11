@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ThirdPartyProviderConsent))
             {
                 writer.WritePropertyName("thirdPartyProviderConsent"u8);
-                writer.WriteObjectValue<ProviderConsentDefinition>(ThirdPartyProviderConsent, options);
+                writer.WriteObjectValue(ThirdPartyProviderConsent, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

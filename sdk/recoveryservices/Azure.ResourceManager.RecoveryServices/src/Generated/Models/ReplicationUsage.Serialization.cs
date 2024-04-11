@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(MonitoringSummary))
             {
                 writer.WritePropertyName("monitoringSummary"u8);
-                writer.WriteObjectValue<VaultMonitoringSummary>(MonitoringSummary, options);
+                writer.WriteObjectValue(MonitoringSummary, options);
             }
             if (Optional.IsDefined(JobsSummary))
             {
                 writer.WritePropertyName("jobsSummary"u8);
-                writer.WriteObjectValue<ReplicationJobSummary>(JobsSummary, options);
+                writer.WriteObjectValue(JobsSummary, options);
             }
             if (Optional.IsDefined(ProtectedItemCount))
             {

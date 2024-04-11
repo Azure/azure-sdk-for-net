@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(EncryptionDetails))
             {
                 writer.WritePropertyName("encryptionDetails"u8);
-                writer.WriteObjectValue<SiteRecoveryEncryptionDetails>(EncryptionDetails, options);
+                writer.WriteObjectValue(EncryptionDetails, options);
             }
             if (Optional.IsDefined(RolloverEncryptionDetails))
             {
                 writer.WritePropertyName("rolloverEncryptionDetails"u8);
-                writer.WriteObjectValue<SiteRecoveryEncryptionDetails>(RolloverEncryptionDetails, options);
+                writer.WriteObjectValue(RolloverEncryptionDetails, options);
             }
             if (Optional.IsDefined(InternalIdentifier))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
-                writer.WriteObjectValue<FabricSpecificDetails>(CustomDetails, options);
+                writer.WriteObjectValue(CustomDetails, options);
             }
             if (Optional.IsCollectionDefined(HealthErrorDetails))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrorDetails)
                 {
-                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

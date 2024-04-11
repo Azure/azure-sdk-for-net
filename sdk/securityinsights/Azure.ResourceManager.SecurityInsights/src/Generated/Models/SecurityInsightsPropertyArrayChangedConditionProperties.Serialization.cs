@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(ConditionProperties))
             {
                 writer.WritePropertyName("conditionProperties"u8);
-                writer.WriteObjectValue<AutomationRulePropertyArrayChangedValuesCondition>(ConditionProperties, options);
+                writer.WriteObjectValue(ConditionProperties, options);
             }
             writer.WritePropertyName("conditionType"u8);
             writer.WriteStringValue(ConditionType.ToString());

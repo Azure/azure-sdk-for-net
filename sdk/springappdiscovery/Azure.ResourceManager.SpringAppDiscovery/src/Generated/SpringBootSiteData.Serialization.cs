@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<SpringBootSiteProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue<SpringBootSiteModelExtendedLocation>(ExtendedLocation, options);
+                writer.WriteObjectValue(ExtendedLocation, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

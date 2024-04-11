@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WriteStartArray();
                 foreach (var item in Children)
                 {
-                    writer.WriteObjectValue<ManagementGroupChildOptions>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

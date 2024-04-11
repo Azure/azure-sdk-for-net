@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(RollingUpgradeMonitoringPolicy))
             {
                 writer.WritePropertyName("rollingUpgradeMonitoringPolicy"u8);
-                writer.WriteObjectValue<ArmRollingUpgradeMonitoringPolicy>(RollingUpgradeMonitoringPolicy, options);
+                writer.WriteObjectValue(RollingUpgradeMonitoringPolicy, options);
             }
             if (Optional.IsDefined(ApplicationHealthPolicy))
             {
                 writer.WritePropertyName("applicationHealthPolicy"u8);
-                writer.WriteObjectValue<ArmApplicationHealthPolicy>(ApplicationHealthPolicy, options);
+                writer.WriteObjectValue(ApplicationHealthPolicy, options);
             }
             if (Optional.IsDefined(UpgradeMode))
             {

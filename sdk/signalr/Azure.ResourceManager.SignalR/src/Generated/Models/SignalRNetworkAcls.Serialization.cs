@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(PublicNetwork))
             {
                 writer.WritePropertyName("publicNetwork"u8);
-                writer.WriteObjectValue<SignalRNetworkAcl>(PublicNetwork, options);
+                writer.WriteObjectValue(PublicNetwork, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpoints))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpoints)
                 {
-                    writer.WriteObjectValue<SignalRPrivateEndpointAcl>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

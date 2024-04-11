@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(CustomWebApiParameters))
             {
                 writer.WritePropertyName("customWebApiParameters"u8);
-                writer.WriteObjectValue<CustomWebApiParameters>(CustomWebApiParameters);
+                writer.WriteObjectValue(CustomWebApiParameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CustomVectorizer>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

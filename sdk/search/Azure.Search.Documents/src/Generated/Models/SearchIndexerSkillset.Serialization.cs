@@ -33,17 +33,17 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(CognitiveServicesAccount))
             {
                 writer.WritePropertyName("cognitiveServices"u8);
-                writer.WriteObjectValue<CognitiveServicesAccount>(CognitiveServicesAccount);
+                writer.WriteObjectValue(CognitiveServicesAccount);
             }
             if (Optional.IsDefined(KnowledgeStore))
             {
                 writer.WritePropertyName("knowledgeStore"u8);
-                writer.WriteObjectValue<KnowledgeStore>(KnowledgeStore);
+                writer.WriteObjectValue(KnowledgeStore);
             }
             if (Optional.IsDefined(IndexProjections))
             {
                 writer.WritePropertyName("indexProjections"u8);
-                writer.WriteObjectValue<SearchIndexerIndexProjections>(IndexProjections);
+                writer.WriteObjectValue(IndexProjections);
             }
             if (Optional.IsDefined(_etag))
             {
@@ -55,7 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
+                    writer.WriteObjectValue(EncryptionKey);
                 }
                 else
                 {
@@ -167,7 +167,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndexerSkillset>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

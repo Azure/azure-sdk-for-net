@@ -59,7 +59,7 @@ namespace Azure.Search.Documents.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnknownVectorSearchVectorizer>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

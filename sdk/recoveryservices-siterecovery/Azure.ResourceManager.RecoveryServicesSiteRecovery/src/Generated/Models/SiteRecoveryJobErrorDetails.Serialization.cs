@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ServiceErrorDetails))
             {
                 writer.WritePropertyName("serviceErrorDetails"u8);
-                writer.WriteObjectValue<SiteRecoveryServiceError>(ServiceErrorDetails, options);
+                writer.WriteObjectValue(ServiceErrorDetails, options);
             }
             if (Optional.IsDefined(ProviderErrorDetails))
             {
                 writer.WritePropertyName("providerErrorDetails"u8);
-                writer.WriteObjectValue<SiteRecoveryJobProviderError>(ProviderErrorDetails, options);
+                writer.WriteObjectValue(ProviderErrorDetails, options);
             }
             if (Optional.IsDefined(ErrorLevel))
             {

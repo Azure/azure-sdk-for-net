@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<ApplianceSupportedVersionMetadata>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {

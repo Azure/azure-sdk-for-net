@@ -26,7 +26,7 @@ namespace Azure.MixedReality.RemoteRendering
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RenderingSessionOptions>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

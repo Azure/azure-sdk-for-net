@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
                 foreach (var item in Options)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<AutomaticTuningServerOptions>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

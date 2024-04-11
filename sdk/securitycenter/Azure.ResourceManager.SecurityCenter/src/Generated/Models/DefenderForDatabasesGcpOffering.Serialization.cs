@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
-                writer.WriteObjectValue<DefenderForDatabasesGcpOfferingArcAutoProvisioning>(ArcAutoProvisioning, options);
+                writer.WriteObjectValue(ArcAutoProvisioning, options);
             }
             if (Optional.IsDefined(DefenderForDatabasesArcAutoProvisioning))
             {
                 writer.WritePropertyName("defenderForDatabasesArcAutoProvisioning"u8);
-                writer.WriteObjectValue<GcpDefenderForDatabasesArcAutoProvisioning>(DefenderForDatabasesArcAutoProvisioning, options);
+                writer.WriteObjectValue(DefenderForDatabasesArcAutoProvisioning, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());

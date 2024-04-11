@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteObjectValue<RecommendedActionStateInfo>(State, options);
+                writer.WriteObjectValue(State, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsExecutableAction))
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Sql
             if (options.Format != "W" && Optional.IsDefined(ImplementationDetails))
             {
                 writer.WritePropertyName("implementationDetails"u8);
-                writer.WriteObjectValue<RecommendedActionImplementationInfo>(ImplementationDetails, options);
+                writer.WriteObjectValue(ImplementationDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue<RecommendedActionErrorInfo>(ErrorDetails, options);
+                writer.WriteObjectValue(ErrorDetails, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(EstimatedImpact))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in EstimatedImpact)
                 {
-                    writer.WriteObjectValue<RecommendedActionImpactRecord>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in ObservedImpact)
                 {
-                    writer.WriteObjectValue<RecommendedActionImpactRecord>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in TimeSeries)
                 {
-                    writer.WriteObjectValue<RecommendedActionMetricInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

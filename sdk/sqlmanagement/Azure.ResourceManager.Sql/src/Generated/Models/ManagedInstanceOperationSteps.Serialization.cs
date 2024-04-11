@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in StepsList)
                 {
-                    writer.WriteObjectValue<UpsertManagedServerOperationStep>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

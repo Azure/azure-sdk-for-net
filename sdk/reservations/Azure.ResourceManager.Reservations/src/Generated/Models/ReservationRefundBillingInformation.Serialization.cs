@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(BillingCurrencyTotalPaidAmount))
             {
                 writer.WritePropertyName("billingCurrencyTotalPaidAmount"u8);
-                writer.WriteObjectValue<PurchasePrice>(BillingCurrencyTotalPaidAmount, options);
+                writer.WriteObjectValue(BillingCurrencyTotalPaidAmount, options);
             }
             if (Optional.IsDefined(BillingCurrencyProratedAmount))
             {
                 writer.WritePropertyName("billingCurrencyProratedAmount"u8);
-                writer.WriteObjectValue<PurchasePrice>(BillingCurrencyProratedAmount, options);
+                writer.WriteObjectValue(BillingCurrencyProratedAmount, options);
             }
             if (Optional.IsDefined(BillingCurrencyRemainingCommitmentAmount))
             {
                 writer.WritePropertyName("billingCurrencyRemainingCommitmentAmount"u8);
-                writer.WriteObjectValue<PurchasePrice>(BillingCurrencyRemainingCommitmentAmount, options);
+                writer.WriteObjectValue(BillingCurrencyRemainingCommitmentAmount, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
