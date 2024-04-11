@@ -82,7 +82,7 @@ namespace Azure.Communication.CallAutomation
             AzureCommunicationServicesRestClient = new AzureCommunicationServicesRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);// options.ApiVersion);
+            CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             EventProcessor = new CallAutomationEventProcessor();
             Source = options.Source;
         }
