@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.16 (Unreleased)
+## 1.0.0-beta.16 (2024-04-11)
 
 ### Features Added
 
@@ -40,8 +40,6 @@
 
 - [AOAI] An issue that sometimes caused `StreamingChatCompletionUpdates` from Azure OpenAI to inappropriately exclude
   top-level information like `Id` and `CreatedAt` has been addressed
-
-### Other Changes
 
 ## 1.0.0-beta.15 (2024-03-20)
 
