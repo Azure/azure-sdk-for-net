@@ -62,7 +62,7 @@ namespace Azure.Communication.MediaComposition.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MediaInput>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

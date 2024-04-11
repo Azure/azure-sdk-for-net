@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue<PipelineActivityPolicy>(Policy, options);
+                writer.WriteObjectValue(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("sparkJob"u8);
-            writer.WriteObjectValue<SynapseSparkJobReference>(SparkJob, options);
+            writer.WriteObjectValue(SparkJob, options);
             if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("args"u8);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TargetBigDataPool))
             {
                 writer.WritePropertyName("targetBigDataPool"u8);
-                writer.WriteObjectValue<BigDataPoolParametrizationReference>(TargetBigDataPool, options);
+                writer.WriteObjectValue(TargetBigDataPool, options);
             }
             if (Optional.IsDefined(ExecutorSize))
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
-                writer.WriteObjectValue<SparkConfigurationParametrizationReference>(TargetSparkConfiguration, options);
+                writer.WriteObjectValue(TargetSparkConfiguration, options);
             }
             if (Optional.IsCollectionDefined(SparkConfig))
             {

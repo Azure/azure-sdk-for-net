@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             foreach (var item in Databases)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<MongoDBDatabaseSettings>(item.Value, options);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(Replication))
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(Replication.Value.ToString());
             }
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue<MongoDBConnectionInfo>(Source, options);
+            writer.WriteObjectValue(Source, options);
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue<MongoDBConnectionInfo>(Target, options);
+            writer.WriteObjectValue(Target, options);
             if (Optional.IsDefined(Throttling))
             {
                 writer.WritePropertyName("throttling"u8);
-                writer.WriteObjectValue<MongoDBThrottlingSettings>(Throttling, options);
+                writer.WriteObjectValue(Throttling, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

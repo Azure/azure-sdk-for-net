@@ -542,7 +542,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<RepositoryWriteableProperties>(value);
+                content.JsonWriter.WriteObjectValue(value);
                 request.Content = content;
             }
             return message;
@@ -799,7 +799,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<TagWriteableProperties>(value);
+                content.JsonWriter.WriteObjectValue(value);
                 request.Content = content;
             }
             return message;
@@ -1133,7 +1133,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<ManifestWriteableProperties>(value);
+                content.JsonWriter.WriteObjectValue(value);
                 request.Content = content;
             }
             return message;

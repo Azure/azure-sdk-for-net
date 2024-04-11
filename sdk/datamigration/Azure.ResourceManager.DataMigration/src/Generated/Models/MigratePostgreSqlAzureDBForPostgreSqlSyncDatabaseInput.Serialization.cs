@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in SelectedTables)
                 {
-                    writer.WriteObjectValue<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

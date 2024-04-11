@@ -56,7 +56,7 @@ namespace Azure.Communication.NetworkTraversal
                 Ttl = ttl
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CommunicationRelayConfigurationRequest>(model);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }

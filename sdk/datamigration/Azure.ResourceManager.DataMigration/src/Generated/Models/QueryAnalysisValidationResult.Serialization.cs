@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(QueryResults))
             {
                 writer.WritePropertyName("queryResults"u8);
-                writer.WriteObjectValue<QueryExecutionResult>(QueryResults, options);
+                writer.WriteObjectValue(QueryResults, options);
             }
             if (Optional.IsDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
-                writer.WriteObjectValue<ValidationError>(ValidationErrors, options);
+                writer.WriteObjectValue(ValidationErrors, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

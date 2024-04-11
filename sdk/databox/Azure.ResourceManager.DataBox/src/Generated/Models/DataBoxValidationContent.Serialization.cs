@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartArray();
             foreach (var item in IndividualRequestDetails)
             {
-                writer.WriteObjectValue<DataBoxValidationInputContent>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -92,7 +92,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in AttachedWorkerSelectors)
                 {
-                    writer.WriteObjectValue<RouterWorkerSelector>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.Communication.JobRouter
                 foreach (var item in Assignments)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<RouterJobAssignment>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

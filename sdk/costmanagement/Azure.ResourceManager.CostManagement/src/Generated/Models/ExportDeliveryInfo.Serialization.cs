@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue<ExportDeliveryDestination>(Destination, options);
+            writer.WriteObjectValue(Destination, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -67,7 +67,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in UseCases)
                 {
-                    writer.WriteObjectValue<UseCase>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -187,7 +187,7 @@ namespace Azure.Communication.ShortCodes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MessageDetails>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue<ForecastTimePeriod>(TimePeriod, options);
+                writer.WriteObjectValue(TimePeriod, options);
             }
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue<ForecastDataset>(Dataset, options);
+            writer.WriteObjectValue(Dataset, options);
             if (Optional.IsDefined(IncludeActualCost))
             {
                 writer.WritePropertyName("includeActualCost"u8);

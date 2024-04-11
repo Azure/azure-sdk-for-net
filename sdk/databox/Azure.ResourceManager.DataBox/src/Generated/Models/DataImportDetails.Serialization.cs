@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("accountDetails"u8);
-            writer.WriteObjectValue<DataAccountDetails>(AccountDetails, options);
+            writer.WriteObjectValue(AccountDetails, options);
             if (Optional.IsDefined(LogCollectionLevel))
             {
                 writer.WritePropertyName("logCollectionLevel"u8);

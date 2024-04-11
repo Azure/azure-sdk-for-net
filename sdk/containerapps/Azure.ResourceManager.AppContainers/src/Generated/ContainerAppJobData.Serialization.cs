@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue<ContainerAppJobConfiguration>(Configuration, options);
+                writer.WriteObjectValue(Configuration, options);
             }
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue<ContainerAppJobTemplate>(Template, options);
+                writer.WriteObjectValue(Template, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OutboundIPAddresses))
             {

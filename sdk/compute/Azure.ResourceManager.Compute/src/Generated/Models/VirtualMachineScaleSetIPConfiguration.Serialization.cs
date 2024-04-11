@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
-                writer.WriteObjectValue<VirtualMachineScaleSetPublicIPAddressConfiguration>(PublicIPAddressConfiguration, options);
+                writer.WriteObjectValue(PublicIPAddressConfiguration, options);
             }
             if (Optional.IsDefined(PrivateIPAddressVersion))
             {

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteStartArray();
                 foreach (var item in TimesInWeek)
                 {
-                    writer.WriteObjectValue<ContainerServiceTimeInWeek>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteStartArray();
                 foreach (var item in NotAllowedTimes)
                 {
-                    writer.WriteObjectValue<ContainerServiceTimeSpan>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue<ContainerServiceMaintenanceWindow>(MaintenanceWindow, options);
+                writer.WriteObjectValue(MaintenanceWindow, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

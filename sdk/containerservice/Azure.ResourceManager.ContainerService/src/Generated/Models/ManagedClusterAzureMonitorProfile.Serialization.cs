@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue<ManagedClusterMonitorProfileMetrics>(Metrics, options);
+                writer.WriteObjectValue(Metrics, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

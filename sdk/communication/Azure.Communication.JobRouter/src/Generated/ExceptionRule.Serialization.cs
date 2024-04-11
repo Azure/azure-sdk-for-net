@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue<ExceptionTrigger>(Trigger, options);
+            writer.WriteObjectValue(Trigger, options);
             writer.WritePropertyName("actions"u8);
             writer.WriteStartArray();
             foreach (var item in Actions)
@@ -154,7 +154,7 @@ namespace Azure.Communication.JobRouter
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ExceptionRule>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

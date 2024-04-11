@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Scale))
             {
                 writer.WritePropertyName("scale"u8);
-                writer.WriteObjectValue<ContainerAppJobScale>(Scale, options);
+                writer.WriteObjectValue(Scale, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

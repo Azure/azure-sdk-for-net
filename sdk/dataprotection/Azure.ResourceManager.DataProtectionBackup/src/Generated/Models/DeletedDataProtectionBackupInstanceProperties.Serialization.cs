@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(DeletionInfo))
             {
                 writer.WritePropertyName("deletionInfo"u8);
-                writer.WriteObjectValue<BackupInstanceDeletionInfo>(DeletionInfo, options);
+                writer.WriteObjectValue(DeletionInfo, options);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -37,18 +37,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WritePropertyName("dataSourceInfo"u8);
-            writer.WriteObjectValue<DataSourceInfo>(DataSourceInfo, options);
+            writer.WriteObjectValue(DataSourceInfo, options);
             if (Optional.IsDefined(DataSourceSetInfo))
             {
                 writer.WritePropertyName("dataSourceSetInfo"u8);
-                writer.WriteObjectValue<DataSourceSetInfo>(DataSourceSetInfo, options);
+                writer.WriteObjectValue(DataSourceSetInfo, options);
             }
             writer.WritePropertyName("policyInfo"u8);
-            writer.WriteObjectValue<BackupInstancePolicyInfo>(PolicyInfo, options);
+            writer.WriteObjectValue(PolicyInfo, options);
             if (options.Format != "W" && Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
-                writer.WriteObjectValue<BackupInstanceProtectionStatusDetails>(ProtectionStatus, options);
+                writer.WriteObjectValue(ProtectionStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentProtectionState))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(DataSourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue<DataProtectionBackupAuthCredentials>(DataSourceAuthCredentials, options);
+                writer.WriteObjectValue(DataSourceAuthCredentials, options);
             }
             if (Optional.IsDefined(ValidationType))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(IdentityDetails))
             {
                 writer.WritePropertyName("identityDetails"u8);
-                writer.WriteObjectValue<DataProtectionIdentityDetails>(IdentityDetails, options);
+                writer.WriteObjectValue(IdentityDetails, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);

@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue<ComputeApiErrorBase>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue<InnerError>(Innererror, options);
+                writer.WriteObjectValue(Innererror, options);
             }
             if (Optional.IsDefined(Code))
             {

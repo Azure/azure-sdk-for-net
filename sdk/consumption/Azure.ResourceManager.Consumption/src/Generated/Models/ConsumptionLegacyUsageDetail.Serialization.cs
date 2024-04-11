@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(MeterDetails))
             {
                 writer.WritePropertyName("meterDetails"u8);
-                writer.WriteObjectValue<ConsumptionMeterDetailsInfo>(MeterDetails, options);
+                writer.WriteObjectValue(MeterDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Quantity))
             {

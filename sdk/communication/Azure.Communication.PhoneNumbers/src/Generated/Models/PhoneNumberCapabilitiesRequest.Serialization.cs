@@ -32,7 +32,7 @@ namespace Azure.Communication.PhoneNumbers
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PhoneNumberCapabilitiesRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }
