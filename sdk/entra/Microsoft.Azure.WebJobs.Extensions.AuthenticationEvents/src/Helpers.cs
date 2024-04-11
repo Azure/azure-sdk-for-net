@@ -61,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             };
 
             // Set the metrics on header
-            EventTriggerMetrics.Instance.SetMetricHeaders(response);
+            WebJobsEventTriggerMetrics.Instance.SetMetricHeaders(response);
 
             return response;
         }
