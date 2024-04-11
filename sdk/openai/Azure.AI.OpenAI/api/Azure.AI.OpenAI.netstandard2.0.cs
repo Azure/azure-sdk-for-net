@@ -395,7 +395,7 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.OnYourDataModelIdVectorizationSource OnYourDataModelIdVectorizationSource(string modelId = null) { throw null; }
         public static Azure.AI.OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions OnYourDataUserAssignedManagedIdentityAuthenticationOptions(string managedIdentityResourceId = null) { throw null; }
         public static Azure.AI.OpenAI.StopFinishDetails StopFinishDetails(string stop = null) { throw null; }
-        public static Azure.AI.OpenAI.StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id, System.DateTimeOffset created, string systemFingerprint, int? choiceIndex = default(int?), Azure.AI.OpenAI.ChatRole? role = default(Azure.AI.OpenAI.ChatRole?), string authorName = null, string contentUpdate = null, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?), string functionName = null, string functionArgumentsUpdate = null, Azure.AI.OpenAI.StreamingToolCallUpdate toolCallUpdate = null, Azure.AI.OpenAI.AzureChatExtensionsMessageContext azureExtensionsContext = null) { throw null; }
+        public static Azure.AI.OpenAI.StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id, string model, System.DateTimeOffset created, string systemFingerprint, int? choiceIndex = default(int?), Azure.AI.OpenAI.ChatRole? role = default(Azure.AI.OpenAI.ChatRole?), string authorName = null, string contentUpdate = null, Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo logProbabilityInfo = null, Azure.AI.OpenAI.CompletionsFinishReason? finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason?), string functionName = null, string functionArgumentsUpdate = null, Azure.AI.OpenAI.StreamingToolCallUpdate toolCallUpdate = null, Azure.AI.OpenAI.AzureChatExtensionsMessageContext azureExtensionsContext = null) { throw null; }
         public static Azure.AI.OpenAI.StreamingFunctionToolCallUpdate StreamingFunctionToolCallUpdate(string id, int toolCallIndex, string functionName, string functionArgumentsUpdate) { throw null; }
     }
     public partial class AzureSearchChatExtensionConfiguration : Azure.AI.OpenAI.AzureChatExtensionConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AzureSearchChatExtensionConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AzureSearchChatExtensionConfiguration>
@@ -1554,6 +1554,8 @@ namespace Azure.AI.OpenAI
         public string FunctionArgumentsUpdate { get { throw null; } }
         public string FunctionName { get { throw null; } }
         public string Id { get { throw null; } }
+        public Azure.AI.OpenAI.ChatChoiceLogProbabilityInfo LogProbabilityInfo { get { throw null; } }
+        public string Model { get { throw null; } }
         public Azure.AI.OpenAI.ChatRole? Role { get { throw null; } }
         public string SystemFingerprint { get { throw null; } }
         public Azure.AI.OpenAI.StreamingToolCallUpdate ToolCallUpdate { get { throw null; } }

@@ -42,12 +42,14 @@ public static partial class AzureOpenAIModelFactory
 
     public static StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(
         string id,
+        string model,
         DateTimeOffset created,
         string systemFingerprint,
         int? choiceIndex = null,
         ChatRole? role = null,
         string authorName = null,
         string contentUpdate = null,
+        ChatChoiceLogProbabilityInfo logProbabilityInfo = null,
         CompletionsFinishReason? finishReason = null,
         string functionName = null,
         string functionArgumentsUpdate = null,
@@ -56,12 +58,14 @@ public static partial class AzureOpenAIModelFactory
     {
         return new StreamingChatCompletionsUpdate(
             id,
+            model,
             created,
             systemFingerprint,
             choiceIndex,
             role,
             authorName,
             contentUpdate,
+            logProbabilityInfo,
             finishReason,
             functionName,
             functionArgumentsUpdate,
