@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- An experimental overload `Authenticate` method on `InteractiveBrowserCredential` now supports the experimental `PopTokenRequestContext` parameter.
 
 ### Other Changes
 
