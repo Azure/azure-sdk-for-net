@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in MaintenanceWindows)
                 {
-                    writer.WriteObjectValue<MaintenanceWindowPatchProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

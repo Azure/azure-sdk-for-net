@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue"u8);
-                writer.WriteObjectValue<QueueInfo>(Queue, options);
+                writer.WriteObjectValue(Queue, options);
             }
             if (Optional.IsDefined(Push))
             {
                 writer.WritePropertyName("push"u8);
-                writer.WriteObjectValue<PushInfo>(Push, options);
+                writer.WriteObjectValue(Push, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

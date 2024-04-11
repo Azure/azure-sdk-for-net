@@ -27,7 +27,7 @@ namespace Azure.Analytics.Defender.Easm
 
             writer.WriteStartObject();
             writer.WritePropertyName("asset"u8);
-            writer.WriteObjectValue<IpBlockAsset>(Asset, options);
+            writer.WriteObjectValue(Asset, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (options.Format != "W")
@@ -96,7 +96,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in AuditTrail)
                 {
-                    writer.WriteObjectValue<AuditTrailItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -343,7 +343,7 @@ namespace Azure.Analytics.Defender.Easm
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<IpBlockAssetResource>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(LabVmsShutdown))
             {
                 writer.WritePropertyName("labVmsShutdown"u8);
-                writer.WriteObjectValue<DevTestLabScheduleData>(LabVmsShutdown, options);
+                writer.WriteObjectValue(LabVmsShutdown, options);
             }
             if (Optional.IsDefined(LabVmsStartup))
             {
                 writer.WritePropertyName("labVmsStartup"u8);
-                writer.WriteObjectValue<DevTestLabScheduleData>(LabVmsStartup, options);
+                writer.WriteObjectValue(LabVmsStartup, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

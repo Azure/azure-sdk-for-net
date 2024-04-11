@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue<T>(item, new ModelReaderWriterOptions("W"));
+                content.JsonWriter.WriteObjectValue(item, new ModelReaderWriterOptions("W"));
             }
             content.JsonWriter.WriteEndArray();
 
@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue<TValue>(item.Value, new ModelReaderWriterOptions("W"));
+                content.JsonWriter.WriteObjectValue(item.Value, new ModelReaderWriterOptions("W"));
             }
             content.JsonWriter.WriteEndObject();
 

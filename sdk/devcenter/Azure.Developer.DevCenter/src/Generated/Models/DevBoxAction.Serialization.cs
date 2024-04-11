@@ -43,7 +43,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(NextAction))
             {
                 writer.WritePropertyName("next"u8);
-                writer.WriteObjectValue<DevBoxNextAction>(NextAction, options);
+                writer.WriteObjectValue(NextAction, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -183,7 +183,7 @@ namespace Azure.Developer.DevCenter.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DevBoxAction>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

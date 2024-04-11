@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<DeviceProvisioningServicesPrivateLinkResourceProperties>(Properties, options);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);

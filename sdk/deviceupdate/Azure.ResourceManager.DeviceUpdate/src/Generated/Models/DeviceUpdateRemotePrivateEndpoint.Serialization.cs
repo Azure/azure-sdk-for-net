@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in ManualPrivateLinkServiceConnections)
                 {
-                    writer.WriteObjectValue<DeviceUpdatePrivateLinkServiceConnection>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkServiceConnections)
                 {
-                    writer.WriteObjectValue<DeviceUpdatePrivateLinkServiceConnection>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkServiceProxies)
                 {
-                    writer.WriteObjectValue<DeviceUpdatePrivateLinkServiceProxy>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectionDetails)
                 {
-                    writer.WriteObjectValue<DeviceUpdatePrivateEndpointConnectionDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

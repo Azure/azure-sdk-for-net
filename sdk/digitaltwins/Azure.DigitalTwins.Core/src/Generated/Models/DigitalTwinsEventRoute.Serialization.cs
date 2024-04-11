@@ -64,7 +64,7 @@ namespace Azure.DigitalTwins.Core
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DigitalTwinsEventRoute>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

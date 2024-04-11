@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 if (CacheConfiguration != null)
                 {
                     writer.WritePropertyName("cacheConfiguration"u8);
-                    writer.WriteObjectValue<FrontDoorCacheConfiguration>(CacheConfiguration, options);
+                    writer.WriteObjectValue(CacheConfiguration, options);
                 }
                 else
                 {

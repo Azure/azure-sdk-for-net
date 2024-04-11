@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WriteStartArray();
                 foreach (var item in Policies)
                 {
-                    writer.WriteObjectValue<EventHubsApplicationGroupPolicy>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

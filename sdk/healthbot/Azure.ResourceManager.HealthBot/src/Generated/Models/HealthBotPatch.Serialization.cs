@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<HealthBotProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<HealthBotSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {

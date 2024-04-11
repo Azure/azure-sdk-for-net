@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<ReceiveDetails>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -138,7 +138,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ReceiveResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

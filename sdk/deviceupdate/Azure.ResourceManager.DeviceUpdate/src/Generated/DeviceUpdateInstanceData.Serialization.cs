@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WriteStartArray();
                 foreach (var item in IotHubs)
                 {
-                    writer.WriteObjectValue<DeviceUpdateIotHubSettings>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (Optional.IsDefined(DiagnosticStorageProperties))
             {
                 writer.WritePropertyName("diagnosticStorageProperties"u8);
-                writer.WriteObjectValue<DiagnosticStorageProperties>(DiagnosticStorageProperties, options);
+                writer.WriteObjectValue(DiagnosticStorageProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

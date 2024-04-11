@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 writer.WriteStartArray();
                 foreach (var item in TypesMetadata)
                 {
-                    writer.WriteObjectValue<CustomLocationEnabledResourceTypeMetadata>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
