@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2024-05-04". </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2024-08-04". </param>
         /// <param name="fileRequestIntent"> Valid value is backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public ShareRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version, ShareTokenIntent? fileRequestIntent = null)
@@ -77,6 +77,10 @@ namespace Azure.Storage.Files.Shares
             if (rootSquash != null)
             {
                 request.Headers.Add("x-ms-root-squash", rootSquash.Value.ToSerialString());
+            }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -148,6 +152,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -215,6 +223,10 @@ namespace Azure.Storage.Files.Shares
             if (leaseAccessConditions?.LeaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+            }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -288,6 +300,10 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -353,6 +369,10 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("x-ms-lease-action", "release");
             request.Headers.Add("x-ms-lease-id", leaseId);
             request.Headers.Add("x-ms-version", _version);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -432,6 +452,10 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -509,6 +533,10 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("x-ms-lease-action", "renew");
             request.Headers.Add("x-ms-lease-id", leaseId);
             request.Headers.Add("x-ms-version", _version);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -591,6 +619,10 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -654,6 +686,10 @@ namespace Azure.Storage.Files.Shares
                 request.Headers.Add("x-ms-meta-", metadata);
             }
             request.Headers.Add("x-ms-version", _version);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -882,6 +918,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-root-squash", rootSquash.Value.ToSerialString());
             }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -951,6 +991,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1011,6 +1055,10 @@ namespace Azure.Storage.Files.Shares
             if (leaseAccessConditions?.LeaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+            }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -1097,6 +1145,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
             }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/xml");
             if (shareAcl != null)
             {
@@ -1169,6 +1221,10 @@ namespace Azure.Storage.Files.Shares
             if (leaseAccessConditions?.LeaseId != null)
             {
                 request.Headers.Add("x-ms-lease-id", leaseAccessConditions.LeaseId);
+            }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -1248,6 +1304,10 @@ namespace Azure.Storage.Files.Shares
             if (deletedShareVersion != null)
             {
                 request.Headers.Add("x-ms-deleted-share-version", deletedShareVersion);
+            }
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
