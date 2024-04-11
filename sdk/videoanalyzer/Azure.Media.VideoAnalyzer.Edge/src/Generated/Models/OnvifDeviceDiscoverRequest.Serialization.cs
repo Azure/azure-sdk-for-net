@@ -72,7 +72,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<OnvifDeviceDiscoverRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

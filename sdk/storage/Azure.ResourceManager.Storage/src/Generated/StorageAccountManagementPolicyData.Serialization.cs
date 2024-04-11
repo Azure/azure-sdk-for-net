@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue<ManagementPolicySchema>(Policy, options);
+                writer.WriteObjectValue(Policy, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -27,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<JobDescriptor>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

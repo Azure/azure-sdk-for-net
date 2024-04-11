@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(WindowsServerFailoverClusterDomainCredentials))
             {
                 writer.WritePropertyName("wsfcDomainCredentials"u8);
-                writer.WriteObjectValue<WindowsServerFailoverClusterDomainCredentials>(WindowsServerFailoverClusterDomainCredentials, options);
+                writer.WriteObjectValue(WindowsServerFailoverClusterDomainCredentials, options);
             }
             if (Optional.IsDefined(WindowsServerFailoverClusterStaticIP))
             {
@@ -117,32 +117,32 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(AutoPatchingSettings))
             {
                 writer.WritePropertyName("autoPatchingSettings"u8);
-                writer.WriteObjectValue<SqlVmAutoPatchingSettings>(AutoPatchingSettings, options);
+                writer.WriteObjectValue(AutoPatchingSettings, options);
             }
             if (Optional.IsDefined(AutoBackupSettings))
             {
                 writer.WritePropertyName("autoBackupSettings"u8);
-                writer.WriteObjectValue<SqlVmAutoBackupSettings>(AutoBackupSettings, options);
+                writer.WriteObjectValue(AutoBackupSettings, options);
             }
             if (Optional.IsDefined(KeyVaultCredentialSettings))
             {
                 writer.WritePropertyName("keyVaultCredentialSettings"u8);
-                writer.WriteObjectValue<SqlVmKeyVaultCredentialSettings>(KeyVaultCredentialSettings, options);
+                writer.WriteObjectValue(KeyVaultCredentialSettings, options);
             }
             if (Optional.IsDefined(ServerConfigurationsManagementSettings))
             {
                 writer.WritePropertyName("serverConfigurationsManagementSettings"u8);
-                writer.WriteObjectValue<SqlServerConfigurationsManagementSettings>(ServerConfigurationsManagementSettings, options);
+                writer.WriteObjectValue(ServerConfigurationsManagementSettings, options);
             }
             if (Optional.IsDefined(StorageConfigurationSettings))
             {
                 writer.WritePropertyName("storageConfigurationSettings"u8);
-                writer.WriteObjectValue<SqlVmStorageConfigurationSettings>(StorageConfigurationSettings, options);
+                writer.WriteObjectValue(StorageConfigurationSettings, options);
             }
             if (Optional.IsDefined(AssessmentSettings))
             {
                 writer.WritePropertyName("assessmentSettings"u8);
-                writer.WriteObjectValue<SqlVmAssessmentSettings>(AssessmentSettings, options);
+                writer.WriteObjectValue(AssessmentSettings, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

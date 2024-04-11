@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue<EntityLinkingResult>(Results);
+            writer.WriteObjectValue(Results);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(TaskName))
@@ -86,7 +86,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<EntityLinkingLROResult>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

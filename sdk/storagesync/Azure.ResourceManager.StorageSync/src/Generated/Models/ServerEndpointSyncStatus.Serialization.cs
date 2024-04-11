@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(UploadStatus))
             {
                 writer.WritePropertyName("uploadStatus"u8);
-                writer.WriteObjectValue<ServerEndpointSyncSessionStatus>(UploadStatus, options);
+                writer.WriteObjectValue(UploadStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DownloadStatus))
             {
                 writer.WritePropertyName("downloadStatus"u8);
-                writer.WriteObjectValue<ServerEndpointSyncSessionStatus>(DownloadStatus, options);
+                writer.WriteObjectValue(DownloadStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UploadActivity))
             {
                 writer.WritePropertyName("uploadActivity"u8);
-                writer.WriteObjectValue<ServerEndpointSyncActivityStatus>(UploadActivity, options);
+                writer.WriteObjectValue(UploadActivity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DownloadActivity))
             {
                 writer.WritePropertyName("downloadActivity"u8);
-                writer.WriteObjectValue<ServerEndpointSyncActivityStatus>(DownloadActivity, options);
+                writer.WriteObjectValue(DownloadActivity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OfflineDataTransferStatus))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(BackgroundDataDownloadActivity))
             {
                 writer.WritePropertyName("backgroundDataDownloadActivity"u8);
-                writer.WriteObjectValue<ServerEndpointBackgroundDataDownloadActivity>(BackgroundDataDownloadActivity, options);
+                writer.WriteObjectValue(BackgroundDataDownloadActivity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

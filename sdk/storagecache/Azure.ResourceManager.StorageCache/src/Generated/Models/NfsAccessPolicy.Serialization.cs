@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartArray();
             foreach (var item in AccessRules)
             {
-                writer.WriteObjectValue<NfsAccessRule>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

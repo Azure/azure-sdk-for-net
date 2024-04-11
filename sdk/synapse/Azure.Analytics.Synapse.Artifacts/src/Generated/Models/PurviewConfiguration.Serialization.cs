@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PurviewConfiguration>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, PurviewConfiguration model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<PurviewConfiguration>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override PurviewConfiguration Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

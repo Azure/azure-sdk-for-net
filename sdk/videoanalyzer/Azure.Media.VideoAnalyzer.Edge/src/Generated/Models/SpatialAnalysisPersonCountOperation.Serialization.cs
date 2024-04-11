@@ -20,7 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Zones)
             {
-                writer.WriteObjectValue<SpatialAnalysisPersonCountZoneEvents>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Debug))
@@ -155,7 +155,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SpatialAnalysisPersonCountOperation>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

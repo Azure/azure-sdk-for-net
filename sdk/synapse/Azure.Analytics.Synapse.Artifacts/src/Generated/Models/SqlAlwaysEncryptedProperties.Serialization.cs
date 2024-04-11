@@ -28,12 +28,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue<SecretBase>(ServicePrincipalKey);
+                writer.WriteObjectValue(ServicePrincipalKey);
             }
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue<CredentialReference>(Credential);
+                writer.WriteObjectValue(Credential);
             }
             writer.WriteEndObject();
         }
@@ -98,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SqlAlwaysEncryptedProperties>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SqlAlwaysEncryptedProperties model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SqlAlwaysEncryptedProperties>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SqlAlwaysEncryptedProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

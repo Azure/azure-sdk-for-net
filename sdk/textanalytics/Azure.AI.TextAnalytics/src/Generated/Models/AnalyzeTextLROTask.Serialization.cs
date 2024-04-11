@@ -63,7 +63,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeTextLROTask>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

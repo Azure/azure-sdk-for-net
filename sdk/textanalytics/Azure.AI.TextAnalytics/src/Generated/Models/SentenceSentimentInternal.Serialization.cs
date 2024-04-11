@@ -136,7 +136,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SentenceSentimentInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

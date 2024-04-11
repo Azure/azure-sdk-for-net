@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StorageMover
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue<StorageMoverAgentPropertiesErrorDetails>(ErrorDetails, options);
+                writer.WriteObjectValue(ErrorDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

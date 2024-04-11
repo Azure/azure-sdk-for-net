@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(MicrosoftEndpoints))
             {
                 writer.WritePropertyName("microsoftEndpoints"u8);
-                writer.WriteObjectValue<StorageAccountMicrosoftEndpoints>(MicrosoftEndpoints, options);
+                writer.WriteObjectValue(MicrosoftEndpoints, options);
             }
             if (Optional.IsDefined(InternetEndpoints))
             {
                 writer.WritePropertyName("internetEndpoints"u8);
-                writer.WriteObjectValue<StorageAccountInternetEndpoints>(InternetEndpoints, options);
+                writer.WriteObjectValue(InternetEndpoints, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

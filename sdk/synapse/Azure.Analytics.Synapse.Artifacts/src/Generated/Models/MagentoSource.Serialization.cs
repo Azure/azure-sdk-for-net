@@ -161,7 +161,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MagentoSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, MagentoSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<MagentoSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override MagentoSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
-                writer.WriteObjectValue<MultiLanguageInput>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -29,7 +29,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MultiLanguageBatchInput>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

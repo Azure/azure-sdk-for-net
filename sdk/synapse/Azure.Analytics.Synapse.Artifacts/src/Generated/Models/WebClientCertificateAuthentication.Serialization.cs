@@ -19,9 +19,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("pfx"u8);
-            writer.WriteObjectValue<SecretBase>(Pfx);
+            writer.WriteObjectValue(Pfx);
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue<SecretBase>(Password);
+            writer.WriteObjectValue(Password);
             writer.WritePropertyName("url"u8);
             writer.WriteObjectValue<object>(Url);
             writer.WritePropertyName("authenticationType"u8);
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<WebClientCertificateAuthentication>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -85,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, WebClientCertificateAuthentication model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<WebClientCertificateAuthentication>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override WebClientCertificateAuthentication Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

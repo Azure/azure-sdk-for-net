@@ -161,7 +161,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ServiceNowSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, ServiceNowSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<ServiceNowSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override ServiceNowSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

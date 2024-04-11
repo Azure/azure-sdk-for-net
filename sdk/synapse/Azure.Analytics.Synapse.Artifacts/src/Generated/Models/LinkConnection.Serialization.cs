@@ -21,22 +21,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SourceDatabase))
             {
                 writer.WritePropertyName("sourceDatabase"u8);
-                writer.WriteObjectValue<LinkConnectionSourceDatabase>(SourceDatabase);
+                writer.WriteObjectValue(SourceDatabase);
             }
             if (Optional.IsDefined(TargetDatabase))
             {
                 writer.WritePropertyName("targetDatabase"u8);
-                writer.WriteObjectValue<LinkConnectionTargetDatabase>(TargetDatabase);
+                writer.WriteObjectValue(TargetDatabase);
             }
             if (Optional.IsDefined(LandingZone))
             {
                 writer.WritePropertyName("landingZone"u8);
-                writer.WriteObjectValue<LinkConnectionLandingZone>(LandingZone);
+                writer.WriteObjectValue(LandingZone);
             }
             if (Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
-                writer.WriteObjectValue<LinkConnectionCompute>(Compute);
+                writer.WriteObjectValue(Compute);
             }
             writer.WriteEndObject();
         }
@@ -105,7 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<LinkConnection>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, LinkConnection model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<LinkConnection>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override LinkConnection Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

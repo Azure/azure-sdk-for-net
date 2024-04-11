@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<AppServiceStorageAccessInfo>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

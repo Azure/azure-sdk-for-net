@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue<InnerErrorModel>(Innererror);
+                writer.WriteObjectValue(Innererror);
             }
             writer.WriteEndObject();
         }
@@ -111,7 +111,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<InnerErrorModel>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

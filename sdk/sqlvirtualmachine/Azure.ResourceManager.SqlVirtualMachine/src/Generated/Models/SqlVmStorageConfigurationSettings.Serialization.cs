@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(SqlDataSettings))
             {
                 writer.WritePropertyName("sqlDataSettings"u8);
-                writer.WriteObjectValue<SqlStorageSettings>(SqlDataSettings, options);
+                writer.WriteObjectValue(SqlDataSettings, options);
             }
             if (Optional.IsDefined(SqlLogSettings))
             {
                 writer.WritePropertyName("sqlLogSettings"u8);
-                writer.WriteObjectValue<SqlStorageSettings>(SqlLogSettings, options);
+                writer.WriteObjectValue(SqlLogSettings, options);
             }
             if (Optional.IsDefined(SqlTempDBSettings))
             {
                 writer.WritePropertyName("sqlTempDbSettings"u8);
-                writer.WriteObjectValue<SqlTempDBSettings>(SqlTempDBSettings, options);
+                writer.WriteObjectValue(SqlTempDBSettings, options);
             }
             if (Optional.IsDefined(IsSqlSystemDBOnDataDisk))
             {

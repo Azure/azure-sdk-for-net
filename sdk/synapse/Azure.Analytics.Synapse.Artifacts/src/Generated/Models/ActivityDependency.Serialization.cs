@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ActivityDependency>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, ActivityDependency model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<ActivityDependency>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override ActivityDependency Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

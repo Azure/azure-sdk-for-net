@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
-            writer.WriteObjectValue<SecureString>(Key);
+            writer.WriteObjectValue(Key);
             writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
             writer.WriteEndObject();
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<LinkedIntegrationRuntimeKeyAuthorization>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, LinkedIntegrationRuntimeKeyAuthorization model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<LinkedIntegrationRuntimeKeyAuthorization>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override LinkedIntegrationRuntimeKeyAuthorization Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

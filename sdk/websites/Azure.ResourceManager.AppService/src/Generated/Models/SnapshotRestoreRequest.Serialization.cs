@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(RecoverySource))
             {
                 writer.WritePropertyName("recoverySource"u8);
-                writer.WriteObjectValue<SnapshotRecoverySource>(RecoverySource, options);
+                writer.WriteObjectValue(RecoverySource, options);
             }
             if (Optional.IsDefined(CanOverwrite))
             {

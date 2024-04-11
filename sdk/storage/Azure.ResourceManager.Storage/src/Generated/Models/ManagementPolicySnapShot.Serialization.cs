@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(TierToCool))
             {
                 writer.WritePropertyName("tierToCool"u8);
-                writer.WriteObjectValue<DateAfterCreation>(TierToCool, options);
+                writer.WriteObjectValue(TierToCool, options);
             }
             if (Optional.IsDefined(TierToArchive))
             {
                 writer.WritePropertyName("tierToArchive"u8);
-                writer.WriteObjectValue<DateAfterCreation>(TierToArchive, options);
+                writer.WriteObjectValue(TierToArchive, options);
             }
             if (Optional.IsDefined(TierToCold))
             {
                 writer.WritePropertyName("tierToCold"u8);
-                writer.WriteObjectValue<DateAfterCreation>(TierToCold, options);
+                writer.WriteObjectValue(TierToCold, options);
             }
             if (Optional.IsDefined(TierToHot))
             {
                 writer.WritePropertyName("tierToHot"u8);
-                writer.WriteObjectValue<DateAfterCreation>(TierToHot, options);
+                writer.WriteObjectValue(TierToHot, options);
             }
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue<DateAfterCreation>(Delete, options);
+                writer.WriteObjectValue(Delete, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

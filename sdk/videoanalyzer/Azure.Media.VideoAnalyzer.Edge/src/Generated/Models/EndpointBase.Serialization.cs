@@ -20,7 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue<CredentialsBase>(Credentials);
+                writer.WriteObjectValue(Credentials);
             }
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url);
@@ -56,7 +56,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<EndpointBase>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }
