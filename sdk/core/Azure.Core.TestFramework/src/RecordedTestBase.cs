@@ -88,7 +88,7 @@ namespace Azure.Core.TestFramework
                 "$..httpHeader",
                 "$.key",
                 "$..keyVaultClientSecret",
-                "$..password",
+                // "$..password",
                 "$..primaryConnectionString",
                 "$..primaryKey",
                 "$..primaryMasterKey",
