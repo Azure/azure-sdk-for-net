@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
-                writer.WriteObjectValue<AuthorizationInfo>(Authorization, options);
+                writer.WriteObjectValue(Authorization, options);
             }
             if (Optional.IsCollectionDefined(Orgs))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 writer.WriteStartArray();
                 foreach (var item in Orgs)
                 {
-                    writer.WriteObjectValue<AzureDevOpsOrgMetadata>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             AuthorizationInfo authorization = default;
             IList<AzureDevOpsOrgMetadata> orgs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureDevOpsConnectorProperties(provisioningState, authorization, orgs ?? new ChangeTrackingList<AzureDevOpsOrgMetadata>(), serializedAdditionalRawData);
         }
 

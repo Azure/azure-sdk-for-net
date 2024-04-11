@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Distribution != null)
                 {
                     writer.WritePropertyName("distribution"u8);
-                    writer.WriteObjectValue<MachineLearningDistributionConfiguration>(Distribution, options);
+                    writer.WriteObjectValue(Distribution, options);
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue<MachineLearningJobResourceConfiguration>(Resources, options);
+                writer.WriteObjectValue(Resources, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, string> environmentVariables = default;
             MachineLearningJobResourceConfiguration resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("codeId"u8))
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningTrialComponent(
                 codeId,
                 command,

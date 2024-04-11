@@ -31,22 +31,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(PrimaryMasterKey))
             {
                 writer.WritePropertyName("primaryMasterKey"u8);
-                writer.WriteObjectValue<AccountKeyMetadata>(PrimaryMasterKey, options);
+                writer.WriteObjectValue(PrimaryMasterKey, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SecondaryMasterKey))
             {
                 writer.WritePropertyName("secondaryMasterKey"u8);
-                writer.WriteObjectValue<AccountKeyMetadata>(SecondaryMasterKey, options);
+                writer.WriteObjectValue(SecondaryMasterKey, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PrimaryReadonlyMasterKey))
             {
                 writer.WritePropertyName("primaryReadonlyMasterKey"u8);
-                writer.WriteObjectValue<AccountKeyMetadata>(PrimaryReadonlyMasterKey, options);
+                writer.WriteObjectValue(PrimaryReadonlyMasterKey, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SecondaryReadonlyMasterKey))
             {
                 writer.WritePropertyName("secondaryReadonlyMasterKey"u8);
-                writer.WriteObjectValue<AccountKeyMetadata>(SecondaryReadonlyMasterKey, options);
+                writer.WriteObjectValue(SecondaryReadonlyMasterKey, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             AccountKeyMetadata primaryReadonlyMasterKey = default;
             AccountKeyMetadata secondaryReadonlyMasterKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryMasterKey"u8))
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DatabaseAccountKeysMetadata(primaryMasterKey, secondaryMasterKey, primaryReadonlyMasterKey, secondaryReadonlyMasterKey, serializedAdditionalRawData);
         }
 

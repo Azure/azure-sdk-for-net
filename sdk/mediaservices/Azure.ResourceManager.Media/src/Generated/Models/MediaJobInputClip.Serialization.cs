@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
-                writer.WriteObjectValue<ClipTime>(Start, options);
+                writer.WriteObjectValue(Start, options);
             }
             if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
-                writer.WriteObjectValue<ClipTime>(End, options);
+                writer.WriteObjectValue(End, options);
             }
             if (Optional.IsDefined(Label))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in InputDefinitions)
                 {
-                    writer.WriteObjectValue<MediaJobInputDefinition>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
             IList<MediaJobInputDefinition> inputDefinitions = default;
             string odataType = "#Microsoft.Media.JobInputClip";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("files"u8))
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MediaJobInputClip(
                 odataType,
                 serializedAdditionalRawData,

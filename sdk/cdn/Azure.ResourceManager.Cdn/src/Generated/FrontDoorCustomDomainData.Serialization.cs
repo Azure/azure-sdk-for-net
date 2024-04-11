@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(TlsSettings))
             {
                 writer.WritePropertyName("tlsSettings"u8);
-                writer.WriteObjectValue<FrontDoorCustomDomainHttpsContent>(TlsSettings, options);
+                writer.WriteObjectValue(TlsSettings, options);
             }
             if (Optional.IsDefined(DnsZone))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn
                 if (PreValidatedCustomDomainResource != null)
                 {
                     writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                    writer.WriteObjectValue<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId>(PreValidatedCustomDomainResource, options);
+                    writer.WriteObjectValue(PreValidatedCustomDomainResource, options);
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn
             if (options.Format != "W" && Optional.IsDefined(ValidationProperties))
             {
                 writer.WritePropertyName("validationProperties"u8);
-                writer.WriteObjectValue<DomainValidationProperties>(ValidationProperties, options);
+                writer.WriteObjectValue(ValidationProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn
             string hostName = default;
             DomainValidationProperties validationProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -271,10 +271,10 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FrontDoorCustomDomainData(
                 id,
                 name,

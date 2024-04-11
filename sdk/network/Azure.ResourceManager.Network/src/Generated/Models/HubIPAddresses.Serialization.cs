@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PublicIPs))
             {
                 writer.WritePropertyName("publicIPs"u8);
-                writer.WriteObjectValue<HubPublicIPAddresses>(PublicIPs, options);
+                writer.WriteObjectValue(PublicIPs, options);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             HubPublicIPAddresses publicIPs = default;
             string privateIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIPs"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HubIPAddresses(publicIPs, privateIPAddress, serializedAdditionalRawData);
         }
 

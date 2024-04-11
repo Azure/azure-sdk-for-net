@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceLocation"u8);
-                writer.WriteObjectValue<SourceLocation>(SourceLocation, options);
+                writer.WriteObjectValue(SourceLocation, options);
             }
             if (Optional.IsDefined(TargetLocation))
             {
                 writer.WritePropertyName("targetLocation"u8);
-                writer.WriteObjectValue<TargetLocation>(TargetLocation, options);
+                writer.WriteObjectValue(TargetLocation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SourceLocation sourceLocation = default;
             TargetLocation targetLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceLocation"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackupConfiguration(sourceLocation, targetLocation, serializedAdditionalRawData);
         }
 

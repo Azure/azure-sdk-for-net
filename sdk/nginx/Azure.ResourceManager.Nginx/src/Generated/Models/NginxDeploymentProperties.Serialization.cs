@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue<NginxNetworkProfile>(NetworkProfile, options);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Logging))
             {
                 writer.WritePropertyName("logging"u8);
-                writer.WriteObjectValue<NginxLogging>(Logging, options);
+                writer.WriteObjectValue(Logging, options);
             }
             if (Optional.IsDefined(ScalingProperties))
             {
                 writer.WritePropertyName("scalingProperties"u8);
-                writer.WriteObjectValue<NginxDeploymentScalingProperties>(ScalingProperties, options);
+                writer.WriteObjectValue(ScalingProperties, options);
             }
             if (Optional.IsDefined(UserProfile))
             {
                 writer.WritePropertyName("userProfile"u8);
-                writer.WriteObjectValue<NginxDeploymentUserProfile>(UserProfile, options);
+                writer.WriteObjectValue(UserProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Nginx.Models
             NginxDeploymentScalingProperties scalingProperties = default;
             NginxDeploymentUserProfile userProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -193,10 +193,10 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NginxDeploymentProperties(
                 provisioningState,
                 nginxVersion,

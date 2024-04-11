@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue<PurchasePrice>(PricingCurrencyTotal, options);
+                writer.WriteObjectValue(PricingCurrencyTotal, options);
             }
             if (Optional.IsDefined(StartOn))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Transactions)
                 {
-                    writer.WriteObjectValue<PaymentDetail>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Reservations.Models
             DateTimeOffset? nextPaymentDueDate = default;
             IReadOnlyList<PaymentDetail> transactions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pricingCurrencyTotal"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal, startDate, nextPaymentDueDate, transactions ?? new ChangeTrackingList<PaymentDetail>(), serializedAdditionalRawData);
         }
 

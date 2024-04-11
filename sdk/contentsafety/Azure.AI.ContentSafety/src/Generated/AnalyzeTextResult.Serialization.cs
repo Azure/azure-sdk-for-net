@@ -32,7 +32,7 @@ namespace Azure.AI.ContentSafety
                 writer.WriteStartArray();
                 foreach (var item in BlocklistsMatch)
                 {
-                    writer.WriteObjectValue<TextBlocklistMatch>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -40,7 +40,7 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartArray();
             foreach (var item in CategoriesAnalysis)
             {
-                writer.WriteObjectValue<TextCategoriesAnalysis>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -84,7 +84,7 @@ namespace Azure.AI.ContentSafety
             IReadOnlyList<TextBlocklistMatch> blocklistsMatch = default;
             IReadOnlyList<TextCategoriesAnalysis> categoriesAnalysis = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blocklistsMatch"u8))
@@ -113,10 +113,10 @@ namespace Azure.AI.ContentSafety
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AnalyzeTextResult(blocklistsMatch ?? new ChangeTrackingList<TextBlocklistMatch>(), categoriesAnalysis, serializedAdditionalRawData);
         }
 
@@ -163,7 +163,7 @@ namespace Azure.AI.ContentSafety
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeTextResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

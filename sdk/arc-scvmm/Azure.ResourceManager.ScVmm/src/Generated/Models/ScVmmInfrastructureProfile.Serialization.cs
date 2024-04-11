@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             if (options.Format != "W" && Optional.IsDefined(LastRestoredVmCheckpoint))
             {
                 writer.WritePropertyName("lastRestoredVMCheckpoint"u8);
-                writer.WriteObjectValue<ScVmmCheckpoint>(LastRestoredVmCheckpoint, options);
+                writer.WriteObjectValue(LastRestoredVmCheckpoint, options);
             }
             if (Optional.IsCollectionDefined(Checkpoints))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in Checkpoints)
                 {
-                    writer.WriteObjectValue<ScVmmCheckpoint>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             int? generation = default;
             string biosGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inventoryItemId"u8))
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.ScVmm.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ScVmmInfrastructureProfile(
                 inventoryItemId,
                 vmmServerId,

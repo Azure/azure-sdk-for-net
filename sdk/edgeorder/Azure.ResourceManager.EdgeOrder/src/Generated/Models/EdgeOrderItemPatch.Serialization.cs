@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(ForwardAddress))
             {
                 writer.WritePropertyName("forwardAddress"u8);
-                writer.WriteObjectValue<EdgeOrderItemAddressProperties>(ForwardAddress, options);
+                writer.WriteObjectValue(ForwardAddress, options);
             }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue<OrderItemPreferences>(Preferences, options);
+                writer.WriteObjectValue(Preferences, options);
             }
             if (Optional.IsCollectionDefined(NotificationEmailList))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             OrderItemPreferences preferences = default;
             IList<string> notificationEmailList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeOrderItemPatch(tags ?? new ChangeTrackingDictionary<string, string>(), forwardAddress, preferences, notificationEmailList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 

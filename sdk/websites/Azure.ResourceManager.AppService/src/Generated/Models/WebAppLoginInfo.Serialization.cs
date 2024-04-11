@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
-                writer.WriteObjectValue<LoginRoutes>(Routes, options);
+                writer.WriteObjectValue(Routes, options);
             }
             if (Optional.IsDefined(TokenStore))
             {
                 writer.WritePropertyName("tokenStore"u8);
-                writer.WriteObjectValue<AppServiceTokenStore>(TokenStore, options);
+                writer.WriteObjectValue(TokenStore, options);
             }
             if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
             {
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CookieExpiration))
             {
                 writer.WritePropertyName("cookieExpiration"u8);
-                writer.WriteObjectValue<WebAppCookieExpiration>(CookieExpiration, options);
+                writer.WriteObjectValue(CookieExpiration, options);
             }
             if (Optional.IsDefined(Nonce))
             {
                 writer.WritePropertyName("nonce"u8);
-                writer.WriteObjectValue<LoginFlowNonceSettings>(Nonce, options);
+                writer.WriteObjectValue(Nonce, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
             WebAppCookieExpiration cookieExpiration = default;
             LoginFlowNonceSettings nonce = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routes"u8))
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebAppLoginInfo(
                 routes,
                 tokenStore,

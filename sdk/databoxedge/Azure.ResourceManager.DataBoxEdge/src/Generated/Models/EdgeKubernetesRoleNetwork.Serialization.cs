@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(CniConfig))
             {
                 writer.WritePropertyName("cniConfig"u8);
-                writer.WriteObjectValue<CniConfig>(CniConfig, options);
+                writer.WriteObjectValue(CniConfig, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LoadBalancerConfig))
             {
                 writer.WritePropertyName("loadBalancerConfig"u8);
-                writer.WriteObjectValue<DataBoxEdgeLoadBalancerConfig>(LoadBalancerConfig, options);
+                writer.WriteObjectValue(LoadBalancerConfig, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             CniConfig cniConfig = default;
             DataBoxEdgeLoadBalancerConfig loadBalancerConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cniConfig"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeKubernetesRoleNetwork(cniConfig, loadBalancerConfig, serializedAdditionalRawData);
         }
 

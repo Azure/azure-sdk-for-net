@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SchemaDifferences))
             {
                 writer.WritePropertyName("schemaDifferences"u8);
-                writer.WriteObjectValue<SchemaComparisonValidationResultType>(SchemaDifferences, options);
+                writer.WriteObjectValue(SchemaDifferences, options);
             }
             if (Optional.IsDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
-                writer.WriteObjectValue<ValidationError>(ValidationErrors, options);
+                writer.WriteObjectValue(ValidationErrors, options);
             }
             if (Optional.IsCollectionDefined(SourceDatabaseObjectCount))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             IReadOnlyDictionary<string, long> sourceDatabaseObjectCount = default;
             IReadOnlyDictionary<string, long> targetDatabaseObjectCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaDifferences"u8))
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SchemaComparisonValidationResult(schemaDifferences, validationErrors, sourceDatabaseObjectCount ?? new ChangeTrackingDictionary<string, long>(), targetDatabaseObjectCount ?? new ChangeTrackingDictionary<string, long>(), serializedAdditionalRawData);
         }
 

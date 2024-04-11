@@ -40,20 +40,20 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue<FilteringOperations>(Filters, options);
+                writer.WriteObjectValue(Filters, options);
             }
             writer.WritePropertyName("codecs"u8);
             writer.WriteStartArray();
             foreach (var item in Codecs)
             {
-                writer.WriteObjectValue<MediaCodecBase>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("formats"u8);
             writer.WriteStartArray();
             foreach (var item in Formats)
             {
-                writer.WriteObjectValue<MediaFormatBase>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("@odata.type"u8);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Media.Models
             IList<MediaFormatBase> formats = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("experimentalOptions"u8))
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StandardEncoderPreset(
                 odataType,
                 serializedAdditionalRawData,

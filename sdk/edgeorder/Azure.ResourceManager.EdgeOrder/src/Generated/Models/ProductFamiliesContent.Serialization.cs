@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item0 in item.Value)
                 {
-                    writer.WriteObjectValue<FilterableProperty>(item0, options);
+                    writer.WriteObjectValue(item0, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(CustomerSubscriptionDetails))
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
-                writer.WriteObjectValue<CustomerSubscriptionDetails>(CustomerSubscriptionDetails, options);
+                writer.WriteObjectValue(CustomerSubscriptionDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             IDictionary<string, IList<FilterableProperty>> filterableProperties = default;
             CustomerSubscriptionDetails customerSubscriptionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filterableProperties"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProductFamiliesContent(filterableProperties, customerSubscriptionDetails, serializedAdditionalRawData);
         }
 

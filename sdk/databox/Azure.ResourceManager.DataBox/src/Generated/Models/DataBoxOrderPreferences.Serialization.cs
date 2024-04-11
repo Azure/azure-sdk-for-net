@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue<TransportPreferences>(TransportPreferences, options);
+                writer.WriteObjectValue(TransportPreferences, options);
             }
             if (Optional.IsDefined(ReverseTransportPreferences))
             {
                 writer.WritePropertyName("reverseTransportPreferences"u8);
-                writer.WriteObjectValue<TransportPreferences>(ReverseTransportPreferences, options);
+                writer.WriteObjectValue(ReverseTransportPreferences, options);
             }
             if (Optional.IsDefined(EncryptionPreferences))
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
-                writer.WriteObjectValue<DataBoxEncryptionPreferences>(EncryptionPreferences, options);
+                writer.WriteObjectValue(EncryptionPreferences, options);
             }
             if (Optional.IsCollectionDefined(StorageAccountAccessTierPreferences))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataBoxEncryptionPreferences encryptionPreferences = default;
             IList<string> storageAccountAccessTierPreferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preferredDataCenterRegion"u8))
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxOrderPreferences(
                 preferredDataCenterRegion ?? new ChangeTrackingList<string>(),
                 transportPreferences,

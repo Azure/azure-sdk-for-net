@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Association))
             {
                 writer.WritePropertyName("association"u8);
-                writer.WriteObjectValue<EffectiveNetworkSecurityGroupAssociation>(Association, options);
+                writer.WriteObjectValue(Association, options);
             }
             if (Optional.IsCollectionDefined(EffectiveSecurityRules))
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in EffectiveSecurityRules)
                 {
-                    writer.WriteObjectValue<EffectiveNetworkSecurityRule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules = default;
             IReadOnlyDictionary<string, IList<string>> tagMap = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkSecurityGroup"u8))
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EffectiveNetworkSecurityGroup(networkSecurityGroup, association, effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>(), tagMap ?? new ChangeTrackingDictionary<string, IList<string>>(), serializedAdditionalRawData);
         }
 

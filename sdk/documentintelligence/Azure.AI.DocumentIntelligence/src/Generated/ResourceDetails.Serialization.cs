@@ -27,9 +27,9 @@ namespace Azure.AI.DocumentIntelligence
 
             writer.WriteStartObject();
             writer.WritePropertyName("customDocumentModels"u8);
-            writer.WriteObjectValue<CustomDocumentModelsDetails>(CustomDocumentModels, options);
+            writer.WriteObjectValue(CustomDocumentModels, options);
             writer.WritePropertyName("customNeuralDocumentModelBuilds"u8);
-            writer.WriteObjectValue<QuotaDetails>(CustomNeuralDocumentModelBuilds, options);
+            writer.WriteObjectValue(CustomNeuralDocumentModelBuilds, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -71,7 +71,7 @@ namespace Azure.AI.DocumentIntelligence
             CustomDocumentModelsDetails customDocumentModels = default;
             QuotaDetails customNeuralDocumentModelBuilds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDocumentModels"u8))
@@ -86,10 +86,10 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds, serializedAdditionalRawData);
         }
 
@@ -136,7 +136,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ResourceDetails>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

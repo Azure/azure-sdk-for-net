@@ -86,17 +86,17 @@ namespace Azure.Developer.DevCenter.Models
             if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue<DevBoxHardwareProfile>(HardwareProfile, options);
+                writer.WriteObjectValue(HardwareProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue<DevBoxStorageProfile>(StorageProfile, options);
+                writer.WriteObjectValue(StorageProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue<DevBoxImageReference>(ImageReference, options);
+                writer.WriteObjectValue(ImageReference, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedTime))
             {
@@ -164,7 +164,7 @@ namespace Azure.Developer.DevCenter.Models
             DateTimeOffset? createdTime = default;
             LocalAdministratorStatus? localAdministrator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -306,10 +306,10 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevBox(
                 name,
                 projectName,
@@ -374,7 +374,7 @@ namespace Azure.Developer.DevCenter.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DevBox>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

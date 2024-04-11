@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(InfrastructureVpnConfiguration))
             {
                 writer.WritePropertyName("infrastructureVpnConfiguration"u8);
-                writer.WriteObjectValue<VpnConfigurationPatchableProperties>(InfrastructureVpnConfiguration, options);
+                writer.WriteObjectValue(InfrastructureVpnConfiguration, options);
             }
             if (Optional.IsDefined(WorkloadVpnConfiguration))
             {
                 writer.WritePropertyName("workloadVpnConfiguration"u8);
-                writer.WriteObjectValue<VpnConfigurationPatchableProperties>(WorkloadVpnConfiguration, options);
+                writer.WriteObjectValue(WorkloadVpnConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             VpnConfigurationPatchableProperties infrastructureVpnConfiguration = default;
             VpnConfigurationPatchableProperties workloadVpnConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("infrastructureVpnConfiguration"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagementNetworkConfigurationPatchableProperties(infrastructureVpnConfiguration, workloadVpnConfiguration, serializedAdditionalRawData);
         }
 

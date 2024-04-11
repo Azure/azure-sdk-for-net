@@ -30,7 +30,7 @@ namespace Azure.Security.CodeTransparency
             writer.WriteStartArray();
             foreach (var item in Operations)
             {
-                writer.WriteObjectValue<GetOperationResult>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -73,7 +73,7 @@ namespace Azure.Security.CodeTransparency
             }
             IReadOnlyList<GetOperationResult> operations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operations"u8))
@@ -88,10 +88,10 @@ namespace Azure.Security.CodeTransparency
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ListOperationResult(operations, serializedAdditionalRawData);
         }
 
@@ -138,7 +138,7 @@ namespace Azure.Security.CodeTransparency
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ListOperationResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

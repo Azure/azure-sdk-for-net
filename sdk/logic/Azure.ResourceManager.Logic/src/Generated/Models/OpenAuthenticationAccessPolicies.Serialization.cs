@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in AccessPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<OpenAuthenticationAccessPolicy>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             IDictionary<string, OpenAuthenticationAccessPolicy> policies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policies"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OpenAuthenticationAccessPolicies(policies ?? new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>(), serializedAdditionalRawData);
         }
 

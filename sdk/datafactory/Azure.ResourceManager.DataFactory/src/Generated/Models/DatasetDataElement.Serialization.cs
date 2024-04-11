@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> name = default;
             DataFactoryElement<string> type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DatasetDataElement(name, type, serializedAdditionalRawData);
         }
 
@@ -145,8 +145,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             public override void Write(Utf8JsonWriter writer, DatasetDataElement model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<DatasetDataElement>(model, new ModelReaderWriterOptions("W"));
+                writer.WriteObjectValue(model, new ModelReaderWriterOptions("W"));
             }
+
             public override DatasetDataElement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

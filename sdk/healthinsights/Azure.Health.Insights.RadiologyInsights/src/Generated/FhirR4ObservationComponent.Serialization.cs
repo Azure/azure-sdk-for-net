@@ -27,16 +27,16 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             writer.WriteStartObject();
             writer.WritePropertyName("code"u8);
-            writer.WriteObjectValue<FhirR4CodeableConcept>(Code, options);
+            writer.WriteObjectValue(Code, options);
             if (Optional.IsDefined(ValueQuantity))
             {
                 writer.WritePropertyName("valueQuantity"u8);
-                writer.WriteObjectValue<FhirR4Quantity>(ValueQuantity, options);
+                writer.WriteObjectValue(ValueQuantity, options);
             }
             if (Optional.IsDefined(ValueCodeableConcept))
             {
                 writer.WritePropertyName("valueCodeableConcept"u8);
-                writer.WriteObjectValue<FhirR4CodeableConcept>(ValueCodeableConcept, options);
+                writer.WriteObjectValue(ValueCodeableConcept, options);
             }
             if (Optional.IsDefined(ValueString))
             {
@@ -56,17 +56,17 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(ValueRange))
             {
                 writer.WritePropertyName("valueRange"u8);
-                writer.WriteObjectValue<FhirR4Range>(ValueRange, options);
+                writer.WriteObjectValue(ValueRange, options);
             }
             if (Optional.IsDefined(ValueRatio))
             {
                 writer.WritePropertyName("valueRatio"u8);
-                writer.WriteObjectValue<FhirR4Ratio>(ValueRatio, options);
+                writer.WriteObjectValue(ValueRatio, options);
             }
             if (Optional.IsDefined(ValueSampledData))
             {
                 writer.WritePropertyName("valueSampledData"u8);
-                writer.WriteObjectValue<FhirR4SampledData>(ValueSampledData, options);
+                writer.WriteObjectValue(ValueSampledData, options);
             }
             if (Optional.IsDefined(ValueTime))
             {
@@ -81,17 +81,17 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(ValuePeriod))
             {
                 writer.WritePropertyName("valuePeriod"u8);
-                writer.WriteObjectValue<FhirR4Period>(ValuePeriod, options);
+                writer.WriteObjectValue(ValuePeriod, options);
             }
             if (Optional.IsDefined(ValueReference))
             {
                 writer.WritePropertyName("valueReference"u8);
-                writer.WriteObjectValue<FhirR4Reference>(ValueReference, options);
+                writer.WriteObjectValue(ValueReference, options);
             }
             if (Optional.IsDefined(DataAbsentReason))
             {
                 writer.WritePropertyName("dataAbsentReason"u8);
-                writer.WriteObjectValue<FhirR4CodeableConcept>(DataAbsentReason, options);
+                writer.WriteObjectValue(DataAbsentReason, options);
             }
             if (Optional.IsCollectionDefined(Interpretation))
             {
@@ -99,7 +99,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Interpretation)
                 {
-                    writer.WriteObjectValue<FhirR4CodeableConcept>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in ReferenceRange)
                 {
-                    writer.WriteObjectValue<FhirR4ObservationReferenceRange>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue<FhirR4Extension>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -185,7 +185,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             string id = default;
             IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -351,10 +351,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FhirR4ObservationComponent(
                 id,
                 extension ?? new ChangeTrackingList<FhirR4Extension>(),
@@ -420,7 +420,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<FhirR4ObservationComponent>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

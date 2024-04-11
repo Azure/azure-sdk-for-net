@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("scalingMechanism"u8);
-            writer.WriteObjectValue<ManagedServiceScalingMechanism>(ScalingMechanism, options);
+            writer.WriteObjectValue(ScalingMechanism, options);
             writer.WritePropertyName("scalingTrigger"u8);
-            writer.WriteObjectValue<ManagedServiceScalingTrigger>(ScalingTrigger, options);
+            writer.WriteObjectValue(ScalingTrigger, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ManagedServiceScalingMechanism scalingMechanism = default;
             ManagedServiceScalingTrigger scalingTrigger = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scalingMechanism"u8))
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedServiceScalingPolicy(scalingMechanism, scalingTrigger, serializedAdditionalRawData);
         }
 

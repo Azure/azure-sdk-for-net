@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataLakeStore
             if (options.Format != "W" && Optional.IsDefined(EncryptionConfig))
             {
                 writer.WritePropertyName("encryptionConfig"u8);
-                writer.WriteObjectValue<DataLakeStoreAccountEncryptionConfig>(EncryptionConfig, options);
+                writer.WriteObjectValue(EncryptionConfig, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EncryptionState))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue<DataLakeStoreFirewallRuleData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue<DataLakeStoreVirtualNetworkRuleData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WriteStartArray();
                 foreach (var item in TrustedIdProviders)
                 {
-                    writer.WriteObjectValue<DataLakeStoreTrustedIdProviderData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataLakeStore
             DataLakeStoreCommitmentTierType? newTier = default;
             DataLakeStoreCommitmentTierType? currentTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -483,10 +483,10 @@ namespace Azure.ResourceManager.DataLakeStore
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataLakeStoreAccountData(
                 id,
                 name,

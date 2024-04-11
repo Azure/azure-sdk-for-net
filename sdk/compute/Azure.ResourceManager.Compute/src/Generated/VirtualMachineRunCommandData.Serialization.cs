@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue<VirtualMachineRunCommandScriptSource>(Source, options);
+                writer.WriteObjectValue(Source, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue<RunCommandInputParameter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in ProtectedParameters)
                 {
-                    writer.WriteObjectValue<RunCommandInputParameter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(OutputBlobManagedIdentity))
             {
                 writer.WritePropertyName("outputBlobManagedIdentity"u8);
-                writer.WriteObjectValue<RunCommandManagedIdentity>(OutputBlobManagedIdentity, options);
+                writer.WriteObjectValue(OutputBlobManagedIdentity, options);
             }
             if (Optional.IsDefined(ErrorBlobManagedIdentity))
             {
                 writer.WritePropertyName("errorBlobManagedIdentity"u8);
-                writer.WriteObjectValue<RunCommandManagedIdentity>(ErrorBlobManagedIdentity, options);
+                writer.WriteObjectValue(ErrorBlobManagedIdentity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue<VirtualMachineRunCommandInstanceView>(InstanceView, options);
+                writer.WriteObjectValue(InstanceView, options);
             }
             if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
             VirtualMachineRunCommandInstanceView instanceView = default;
             bool? treatFailureAsDeploymentFailure = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -387,10 +387,10 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineRunCommandData(
                 id,
                 name,

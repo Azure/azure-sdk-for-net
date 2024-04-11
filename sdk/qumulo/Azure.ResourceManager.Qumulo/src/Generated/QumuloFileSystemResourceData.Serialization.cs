@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Qumulo
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("marketplaceDetails"u8);
-            writer.WriteObjectValue<MarketplaceDetails>(MarketplaceDetails, options);
+            writer.WriteObjectValue(MarketplaceDetails, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Qumulo
             writer.WritePropertyName("storageSku"u8);
             writer.WriteStringValue(StorageSku.ToSerialString());
             writer.WritePropertyName("userDetails"u8);
-            writer.WriteObjectValue<QumuloUserDetails>(UserDetails, options);
+            writer.WriteObjectValue(UserDetails, options);
             writer.WritePropertyName("delegatedSubnetId"u8);
             writer.WriteStringValue(DelegatedSubnetId);
             if (Optional.IsDefined(ClusterLoginUri))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Qumulo
             int initialCapacity = default;
             string availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -311,10 +311,10 @@ namespace Azure.ResourceManager.Qumulo
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new QumuloFileSystemResourceData(
                 id,
                 name,

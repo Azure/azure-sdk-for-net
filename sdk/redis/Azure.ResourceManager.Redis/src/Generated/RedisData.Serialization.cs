@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Redis
             if (Optional.IsDefined(RedisConfiguration))
             {
                 writer.WritePropertyName("redisConfiguration"u8);
-                writer.WriteObjectValue<RedisCommonConfiguration>(RedisConfiguration, options);
+                writer.WriteObjectValue(RedisConfiguration, options);
             }
             if (Optional.IsDefined(RedisVersion))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Redis
                 writer.WriteStringValue(UpdateChannel.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<RedisSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Redis
                 if (AccessKeys != null)
                 {
                     writer.WritePropertyName("accessKeys"u8);
-                    writer.WriteObjectValue<RedisAccessKeys>(AccessKeys, options);
+                    writer.WriteObjectValue(AccessKeys, options);
                 }
                 else
                 {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Redis
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue<RedisInstanceDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Redis
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<RedisPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Redis
             IReadOnlyList<RedisInstanceDetails> instances = default;
             IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -562,10 +562,10 @@ namespace Azure.ResourceManager.Redis
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RedisData(
                 id,
                 name,

@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(AppInsightsSettings))
             {
                 writer.WritePropertyName("appInsightsSettings"u8);
-                writer.WriteObjectValue<AppInsightsWebAppStackSettings>(AppInsightsSettings, options);
+                writer.WriteObjectValue(AppInsightsSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GitHubActionSettings))
             {
                 writer.WritePropertyName("gitHubActionSettings"u8);
-                writer.WriteObjectValue<GitHubActionWebAppStackSettings>(GitHubActionSettings, options);
+                writer.WriteObjectValue(GitHubActionSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsPreview))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService.Models
             bool? isAutoUpdate = default;
             bool? isEarlyAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runtimeVersion"u8))
@@ -217,10 +217,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebAppRuntimeSettings(
                 runtimeVersion,
                 remoteDebuggingSupported,

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in StopSellNotifications)
                 {
-                    writer.WriteObjectValue<StopSellNotifications>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in NewNotifications)
                 {
-                    writer.WriteObjectValue<NewPlanNotification>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in ApprovalRequests)
                 {
-                    writer.WriteObjectValue<RequestApprovalsDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             IReadOnlyList<NewPlanNotification> newNotifications = default;
             IReadOnlyList<RequestApprovalsDetails> approvalRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stopSellNotifications"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PrivateStoreNotificationsState(stopSellNotifications ?? new ChangeTrackingList<StopSellNotifications>(), newNotifications ?? new ChangeTrackingList<NewPlanNotification>(), approvalRequests ?? new ChangeTrackingList<RequestApprovalsDetails>(), serializedAdditionalRawData);
         }
 

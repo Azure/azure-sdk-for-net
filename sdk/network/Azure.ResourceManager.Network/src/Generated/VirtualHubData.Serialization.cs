@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable"u8);
-                writer.WriteObjectValue<VirtualHubRouteTable>(RouteTable, options);
+                writer.WriteObjectValue(RouteTable, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualHubRouteTableV2S)
                 {
-                    writer.WriteObjectValue<VirtualHubRouteTableV2Data>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualRouterAutoScaleConfiguration))
             {
                 writer.WritePropertyName("virtualRouterAutoScaleConfiguration"u8);
-                writer.WriteObjectValue<VirtualRouterAutoScaleConfiguration>(VirtualRouterAutoScaleConfiguration, options);
+                writer.WriteObjectValue(VirtualRouterAutoScaleConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Network
             HubRoutingPreference? hubRoutingPreference = default;
             VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -563,10 +563,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualHubData(
                 id,
                 name,

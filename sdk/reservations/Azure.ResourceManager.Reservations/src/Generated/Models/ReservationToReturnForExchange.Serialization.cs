@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(BillingRefundAmount))
             {
                 writer.WritePropertyName("billingRefundAmount"u8);
-                writer.WriteObjectValue<PurchasePrice>(BillingRefundAmount, options);
+                writer.WriteObjectValue(BillingRefundAmount, options);
             }
             if (Optional.IsDefined(BillingInformation))
             {
                 writer.WritePropertyName("billingInformation"u8);
-                writer.WriteObjectValue<BillingInformation>(BillingInformation, options);
+                writer.WriteObjectValue(BillingInformation, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Reservations.Models
             BillingInformation billingInformation = default;
             ReservationOperationStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reservationId"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReservationToReturnForExchange(
                 reservationId,
                 quantity,

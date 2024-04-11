@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<RestorePointEncryption>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsDefined(SourceDiskRestorePoint))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute.Models
             WritableSubResource sourceDiskRestorePoint = default;
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encryption"u8))
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DiskRestorePointAttributes(id, serializedAdditionalRawData, encryption, sourceDiskRestorePoint);
         }
 

@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue<PurchasePrice>(PricingCurrencyTotal, options);
+                writer.WriteObjectValue(PricingCurrencyTotal, options);
             }
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
-                writer.WriteObjectValue<PurchasePrice>(BillingCurrencyTotal, options);
+                writer.WriteObjectValue(BillingCurrencyTotal, options);
             }
             if (Optional.IsDefined(BillingAccount))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue<ExtendedStatusInfo>(ExtendedStatusInfo, options);
+                writer.WriteObjectValue(ExtendedStatusInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Reservations.Models
             PaymentStatus? status = default;
             ExtendedStatusInfo extendedStatusInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dueDate"u8))
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PaymentDetail(
                 dueDate,
                 paymentDate,

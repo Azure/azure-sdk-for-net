@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (options.Format != "W" && Optional.IsDefined(CurrentStatus))
             {
                 writer.WritePropertyName("currentStatus"u8);
-                writer.WriteObjectValue<PostgreSqlMigrationStatus>(CurrentStatus, options);
+                writer.WriteObjectValue(CurrentStatus, options);
             }
             if (Optional.IsDefined(MigrationMode))
             {
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (options.Format != "W" && Optional.IsDefined(SourceDbServerMetadata))
             {
                 writer.WritePropertyName("sourceDbServerMetadata"u8);
-                writer.WriteObjectValue<PostgreSqlServerMetadata>(SourceDbServerMetadata, options);
+                writer.WriteObjectValue(SourceDbServerMetadata, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TargetDbServerMetadata))
             {
                 writer.WritePropertyName("targetDbServerMetadata"u8);
-                writer.WriteObjectValue<PostgreSqlServerMetadata>(TargetDbServerMetadata, options);
+                writer.WriteObjectValue(TargetDbServerMetadata, options);
             }
             if (Optional.IsDefined(SourceDbServerResourceId))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (Optional.IsDefined(SecretParameters))
             {
                 writer.WritePropertyName("secretParameters"u8);
-                writer.WriteObjectValue<PostgreSqlMigrationSecretParameters>(SecretParameters, options);
+                writer.WriteObjectValue(SecretParameters, options);
             }
             if (Optional.IsCollectionDefined(DbsToMigrate))
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             PostgreSqlMigrationCancel? cancel = default;
             IList<string> dbsToCancelMigrationOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -489,10 +489,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PostgreSqlMigrationData(
                 id,
                 name,

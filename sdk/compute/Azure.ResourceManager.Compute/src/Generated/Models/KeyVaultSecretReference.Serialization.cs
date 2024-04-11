@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             Uri secretUrl = default;
             WritableSubResource sourceVault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretUrl"u8))
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KeyVaultSecretReference(secretUrl, sourceVault, serializedAdditionalRawData);
         }
 
@@ -131,8 +131,9 @@ namespace Azure.ResourceManager.Compute.Models
         {
             public override void Write(Utf8JsonWriter writer, KeyVaultSecretReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<KeyVaultSecretReference>(model, new ModelReaderWriterOptions("W"));
+                writer.WriteObjectValue(model, new ModelReaderWriterOptions("W"));
             }
+
             public override KeyVaultSecretReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

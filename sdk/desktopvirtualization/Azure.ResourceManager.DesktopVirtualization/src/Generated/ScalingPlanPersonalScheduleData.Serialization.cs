@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(RampUpStartTime, options);
+                writer.WriteObjectValue(RampUpStartTime, options);
             }
             if (Optional.IsDefined(RampUpAutoStartHosts))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(PeakStartTime, options);
+                writer.WriteObjectValue(PeakStartTime, options);
             }
             if (Optional.IsDefined(PeakStartVmOnConnect))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(RampDownStartTime, options);
+                writer.WriteObjectValue(RampDownStartTime, options);
             }
             if (Optional.IsDefined(RampDownStartVmOnConnect))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(OffPeakStartTime, options);
+                writer.WriteObjectValue(OffPeakStartTime, options);
             }
             if (Optional.IsDefined(OffPeakStartVmOnConnect))
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             SessionHandlingOperation? offPeakActionOnLogoff = default;
             int? offPeakMinutesToWaitOnLogoff = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -535,10 +535,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ScalingPlanPersonalScheduleData(
                 id,
                 name,

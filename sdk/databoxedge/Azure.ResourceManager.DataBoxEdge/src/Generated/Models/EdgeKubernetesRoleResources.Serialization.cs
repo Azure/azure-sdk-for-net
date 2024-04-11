@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue<EdgeKubernetesRoleStorage>(Storage, options);
+                writer.WriteObjectValue(Storage, options);
             }
             writer.WritePropertyName("compute"u8);
-            writer.WriteObjectValue<EdgeKubernetesRoleCompute>(Compute, options);
+            writer.WriteObjectValue(Compute, options);
             if (options.Format != "W" && Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue<EdgeKubernetesRoleNetwork>(Network, options);
+                writer.WriteObjectValue(Network, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             EdgeKubernetesRoleCompute compute = default;
             EdgeKubernetesRoleNetwork network = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storage"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeKubernetesRoleResources(storage, compute, network, serializedAdditionalRawData);
         }
 

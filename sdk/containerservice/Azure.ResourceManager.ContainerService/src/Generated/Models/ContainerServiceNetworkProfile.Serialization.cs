@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(LoadBalancerProfile))
             {
                 writer.WritePropertyName("loadBalancerProfile"u8);
-                writer.WriteObjectValue<ManagedClusterLoadBalancerProfile>(LoadBalancerProfile, options);
+                writer.WriteObjectValue(LoadBalancerProfile, options);
             }
             if (Optional.IsDefined(NatGatewayProfile))
             {
                 writer.WritePropertyName("natGatewayProfile"u8);
-                writer.WriteObjectValue<ManagedClusterNatGatewayProfile>(NatGatewayProfile, options);
+                writer.WriteObjectValue(NatGatewayProfile, options);
             }
             if (Optional.IsCollectionDefined(PodCidrs))
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IList<string> serviceCidrs = default;
             IList<IPFamily> ipFamilies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkPlugin"u8))
@@ -313,10 +313,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerServiceNetworkProfile(
                 networkPlugin,
                 networkPluginMode,

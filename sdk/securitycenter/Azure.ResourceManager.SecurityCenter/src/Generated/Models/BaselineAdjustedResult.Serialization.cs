@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Baseline))
             {
                 writer.WritePropertyName("baseline"u8);
-                writer.WriteObjectValue<SqlVulnerabilityAssessmentBaseline>(Baseline, options);
+                writer.WriteObjectValue(Baseline, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IList<IList<string>> resultsNotInBaseline = default;
             IList<IList<string>> resultsOnlyInBaseline = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseline"u8))
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BaselineAdjustedResult(baseline, status, resultsNotInBaseline ?? new ChangeTrackingList<IList<string>>(), resultsOnlyInBaseline ?? new ChangeTrackingList<IList<string>>(), serializedAdditionalRawData);
         }
 

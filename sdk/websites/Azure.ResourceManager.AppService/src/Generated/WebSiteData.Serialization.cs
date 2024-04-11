@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in HostNameSslStates)
                 {
-                    writer.WriteObjectValue<HostNameSslState>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(SiteConfig))
             {
                 writer.WritePropertyName("siteConfig"u8);
-                writer.WriteObjectValue<SiteConfigProperties>(SiteConfig, options);
+                writer.WriteObjectValue(SiteConfig, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(TrafficManagerHostNames))
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.AppService
                 if (HostingEnvironmentProfile != null)
                 {
                     writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                    writer.WriteObjectValue<HostingEnvironmentProfile>(HostingEnvironmentProfile, options);
+                    writer.WriteObjectValue(HostingEnvironmentProfile, options);
                 }
                 else
                 {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.AppService
                 if (CloningInfo != null)
                 {
                     writer.WritePropertyName("cloningInfo"u8);
-                    writer.WriteObjectValue<CloningInfo>(CloningInfo, options);
+                    writer.WriteObjectValue(CloningInfo, options);
                 }
                 else
                 {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.AppService
                 if (SlotSwapStatus != null)
                 {
                     writer.WritePropertyName("slotSwapStatus"u8);
-                    writer.WriteObjectValue<SlotSwapStatus>(SlotSwapStatus, options);
+                    writer.WriteObjectValue(SlotSwapStatus, options);
                 }
                 else
                 {
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.AppService
             string keyVaultReferenceIdentity = default;
             ResourceIdentifier virtualNetworkSubnetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -884,10 +884,10 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebSiteData(
                 id,
                 name,

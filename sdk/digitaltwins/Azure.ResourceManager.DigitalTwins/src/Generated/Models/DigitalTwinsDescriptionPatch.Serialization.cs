@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 if (Properties != null)
                 {
                     writer.WritePropertyName("properties"u8);
-                    writer.WriteObjectValue<DigitalTwinsPatchProperties>(Properties, options);
+                    writer.WriteObjectValue(Properties, options);
                 }
                 else
                 {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             ManagedServiceIdentity identity = default;
             DigitalTwinsPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DigitalTwinsDescriptionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, serializedAdditionalRawData);
         }
 

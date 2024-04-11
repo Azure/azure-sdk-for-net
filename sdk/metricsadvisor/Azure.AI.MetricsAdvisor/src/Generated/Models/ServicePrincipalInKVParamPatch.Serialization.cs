@@ -12,5 +12,12 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class ServicePrincipalInKVParamPatch : IUtf8JsonSerializable
     {
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
     }
 }

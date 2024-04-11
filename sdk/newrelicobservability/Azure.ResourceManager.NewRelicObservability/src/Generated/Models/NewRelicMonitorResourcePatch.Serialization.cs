@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(NewRelicAccountProperties))
             {
                 writer.WritePropertyName("newRelicAccountProperties"u8);
-                writer.WriteObjectValue<NewRelicAccountProperties>(NewRelicAccountProperties, options);
+                writer.WriteObjectValue(NewRelicAccountProperties, options);
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue<NewRelicObservabilityUserInfo>(UserInfo, options);
+                writer.WriteObjectValue(UserInfo, options);
             }
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue<NewRelicPlanDetails>(PlanData, options);
+                writer.WriteObjectValue(PlanData, options);
             }
             if (Optional.IsDefined(OrgCreationSource))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             NewRelicObservabilityOrgCreationSource? orgCreationSource = default;
             NewRelicObservabilityAccountCreationSource? accountCreationSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -202,10 +202,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NewRelicMonitorResourcePatch(
                 identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),

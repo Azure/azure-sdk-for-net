@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(Endpoint.AbsoluteUri);
             writer.WritePropertyName("authentication"u8);
-            writer.WriteObjectValue<OnYourDataAuthenticationOptions>(Authentication, options);
+            writer.WriteObjectValue(Authentication, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -74,7 +74,7 @@ namespace Azure.AI.OpenAI
             OnYourDataAuthenticationOptions authentication = default;
             OnYourDataVectorizationSourceType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoint"u8))
@@ -94,10 +94,10 @@ namespace Azure.AI.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OnYourDataEndpointVectorizationSource(type, serializedAdditionalRawData, endpoint, authentication);
         }
 
@@ -144,7 +144,7 @@ namespace Azure.AI.OpenAI
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<OnYourDataEndpointVectorizationSource>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

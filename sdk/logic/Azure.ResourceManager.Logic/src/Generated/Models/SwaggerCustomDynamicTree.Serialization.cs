@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue<SwaggerCustomDynamicTreeSettings>(Settings, options);
+                writer.WriteObjectValue(Settings, options);
             }
             if (Optional.IsDefined(Open))
             {
                 writer.WritePropertyName("open"u8);
-                writer.WriteObjectValue<SwaggerCustomDynamicTreeCommand>(Open, options);
+                writer.WriteObjectValue(Open, options);
             }
             if (Optional.IsDefined(Browse))
             {
                 writer.WritePropertyName("browse"u8);
-                writer.WriteObjectValue<SwaggerCustomDynamicTreeCommand>(Browse, options);
+                writer.WriteObjectValue(Browse, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Logic.Models
             SwaggerCustomDynamicTreeCommand open = default;
             SwaggerCustomDynamicTreeCommand browse = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("settings"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SwaggerCustomDynamicTree(settings, open, browse, serializedAdditionalRawData);
         }
 

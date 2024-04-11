@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("artifact"u8);
-            writer.WriteObjectValue<OneLakeArtifact>(Artifact, options);
+            writer.WriteObjectValue(Artifact, options);
             if (Optional.IsDefined(Endpoint))
             {
                 if (Endpoint != null)
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToString());
             }
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue<MachineLearningDatastoreCredentials>(Credentials, options);
+            writer.WriteObjectValue(Credentials, options);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
             if (Optional.IsDefined(IntellectualProperty))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue<IntellectualProperty>(IntellectualProperty, options);
+                    writer.WriteObjectValue(IntellectualProperty, options);
                 }
                 else
                 {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("artifact"u8))
@@ -269,10 +269,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OneLakeDatastore(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),

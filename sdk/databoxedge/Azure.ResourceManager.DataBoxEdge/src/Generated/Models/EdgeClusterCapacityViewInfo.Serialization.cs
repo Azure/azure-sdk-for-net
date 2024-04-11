@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(GpuCapacity))
             {
                 writer.WritePropertyName("gpuCapacity"u8);
-                writer.WriteObjectValue<EdgeClusterGpuCapacity>(GpuCapacity, options);
+                writer.WriteObjectValue(GpuCapacity, options);
             }
             if (Optional.IsDefined(MemoryCapacity))
             {
                 writer.WritePropertyName("memoryCapacity"u8);
-                writer.WriteObjectValue<EdgeClusterMemoryCapacity>(MemoryCapacity, options);
+                writer.WriteObjectValue(MemoryCapacity, options);
             }
             if (Optional.IsDefined(LastRefreshedOn))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             DateTimeOffset? lastRefreshedTime = default;
             long? totalProvisionedNonHpnCores = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"u8))
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeClusterCapacityViewInfo(
                 fqdn,
                 gpuCapacity,

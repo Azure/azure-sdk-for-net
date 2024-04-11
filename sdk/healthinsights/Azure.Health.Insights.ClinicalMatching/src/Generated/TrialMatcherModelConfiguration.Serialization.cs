@@ -37,7 +37,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteBooleanValue(IncludeEvidence.Value);
             }
             writer.WritePropertyName("clinicalTrials"u8);
-            writer.WriteObjectValue<ClinicalTrials>(ClinicalTrials, options);
+            writer.WriteObjectValue(ClinicalTrials, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -80,7 +80,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             bool? includeEvidence = default;
             ClinicalTrials clinicalTrials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("verbose"u8))
@@ -108,10 +108,10 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TrialMatcherModelConfiguration(verbose, includeEvidence, clinicalTrials, serializedAdditionalRawData);
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TrialMatcherModelConfiguration>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

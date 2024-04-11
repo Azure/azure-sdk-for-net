@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService
                 foreach (var item in Certificates)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<AppServiceCertificateProperties>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(SignedCertificate))
             {
                 writer.WritePropertyName("signedCertificate"u8);
-                writer.WriteObjectValue<AppServiceCertificateDetails>(SignedCertificate, options);
+                writer.WriteObjectValue(SignedCertificate, options);
             }
             if (Optional.IsDefined(Csr))
             {
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(Intermediate))
             {
                 writer.WritePropertyName("intermediate"u8);
-                writer.WriteObjectValue<AppServiceCertificateDetails>(Intermediate, options);
+                writer.WriteObjectValue(Intermediate, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Root))
             {
                 writer.WritePropertyName("root"u8);
-                writer.WriteObjectValue<AppServiceCertificateDetails>(Root, options);
+                writer.WriteObjectValue(Root, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SerialNumber))
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue<CertificateOrderContact>(Contact, options);
+                writer.WriteObjectValue(Contact, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppService
             DateTimeOffset? nextAutoRenewalTimeStamp = default;
             CertificateOrderContact contact = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -487,10 +487,10 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppServiceCertificateOrderData(
                 id,
                 name,

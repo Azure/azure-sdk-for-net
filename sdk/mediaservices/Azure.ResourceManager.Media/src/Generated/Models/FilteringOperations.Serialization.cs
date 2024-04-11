@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Deinterlace))
             {
                 writer.WritePropertyName("deinterlace"u8);
-                writer.WriteObjectValue<DeinterlaceSettings>(Deinterlace, options);
+                writer.WriteObjectValue(Deinterlace, options);
             }
             if (Optional.IsDefined(Rotation))
             {
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Crop))
             {
                 writer.WritePropertyName("crop"u8);
-                writer.WriteObjectValue<RectangularWindow>(Crop, options);
+                writer.WriteObjectValue(Crop, options);
             }
             if (Optional.IsDefined(FadeIn))
             {
                 writer.WritePropertyName("fadeIn"u8);
-                writer.WriteObjectValue<FadeOptions>(FadeIn, options);
+                writer.WriteObjectValue(FadeIn, options);
             }
             if (Optional.IsDefined(FadeOut))
             {
                 writer.WritePropertyName("fadeOut"u8);
-                writer.WriteObjectValue<FadeOptions>(FadeOut, options);
+                writer.WriteObjectValue(FadeOut, options);
             }
             if (Optional.IsCollectionDefined(Overlays))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Overlays)
                 {
-                    writer.WriteObjectValue<MediaOverlayBase>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Media.Models
             FadeOptions fadeOut = default;
             IList<MediaOverlayBase> overlays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deinterlace"u8))
@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FilteringOperations(
                 deinterlace,
                 rotation,

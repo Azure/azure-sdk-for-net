@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MySql.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue<MySqlStorageProfile>(StorageProfile, options);
+                writer.WriteObjectValue(StorageProfile, options);
             }
             writer.WritePropertyName("createMode"u8);
             writer.WriteStringValue(CreateMode.ToString());

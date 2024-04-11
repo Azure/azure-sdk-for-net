@@ -36,14 +36,14 @@ namespace Azure.Communication.Messages
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue<MessageTemplateValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Bindings))
             {
                 writer.WritePropertyName("bindings"u8);
-                writer.WriteObjectValue<MessageTemplateBindings>(Bindings, options);
+                writer.WriteObjectValue(Bindings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.Communication.Messages
             IList<MessageTemplateValue> values = default;
             MessageTemplateBindings bindings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -126,10 +126,10 @@ namespace Azure.Communication.Messages
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MessageTemplate(name, language, values ?? new ChangeTrackingList<MessageTemplateValue>(), bindings, serializedAdditionalRawData);
         }
 
@@ -176,7 +176,7 @@ namespace Azure.Communication.Messages
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MessageTemplate>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

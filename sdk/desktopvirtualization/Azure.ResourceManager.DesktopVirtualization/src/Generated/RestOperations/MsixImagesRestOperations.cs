@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MsixImageUri>(msixImageUri, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(msixImageUri, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;

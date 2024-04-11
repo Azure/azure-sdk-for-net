@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers
             if (options.Format != "W" && Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue<ContainerAppTemplate>(Template, options);
+                writer.WriteObjectValue(Template, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsActive))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppContainers
             ContainerAppRevisionProvisioningState? provisioningState = default;
             RevisionRunningState? runningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppRevisionData(
                 id,
                 name,

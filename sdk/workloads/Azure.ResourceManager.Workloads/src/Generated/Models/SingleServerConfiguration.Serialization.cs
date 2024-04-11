@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue<NetworkConfiguration>(NetworkConfiguration, options);
+                writer.WriteObjectValue(NetworkConfiguration, options);
             }
             if (Optional.IsDefined(DatabaseType))
             {
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
             writer.WritePropertyName("virtualMachineConfiguration"u8);
-            writer.WriteObjectValue<SapVirtualMachineConfiguration>(VirtualMachineConfiguration, options);
+            writer.WriteObjectValue(VirtualMachineConfiguration, options);
             if (Optional.IsDefined(DBDiskConfiguration))
             {
                 writer.WritePropertyName("dbDiskConfiguration"u8);
-                writer.WriteObjectValue<DiskConfiguration>(DBDiskConfiguration, options);
+                writer.WriteObjectValue(DBDiskConfiguration, options);
             }
             if (Optional.IsDefined(CustomResourceNames))
             {
                 writer.WritePropertyName("customResourceNames"u8);
-                writer.WriteObjectValue<SingleServerCustomResourceNames>(CustomResourceNames, options);
+                writer.WriteObjectValue(CustomResourceNames, options);
             }
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Workloads.Models
             SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkConfiguration"u8))
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SingleServerConfiguration(
                 deploymentType,
                 appResourceGroup,

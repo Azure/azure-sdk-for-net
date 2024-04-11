@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(CustomProperties))
             {
                 writer.WritePropertyName("customProperties"u8);
-                writer.WriteObjectValue<TaskModelCustomProperties>(CustomProperties, options);
+                writer.WriteObjectValue(CustomProperties, options);
             }
             if (Optional.IsCollectionDefined(ChildrenWorkflows))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildrenWorkflows)
                 {
-                    writer.WriteObjectValue<DataReplicationWorkflowData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             TaskModelCustomProperties customProperties = default;
             IReadOnlyList<DataReplicationWorkflowData> childrenWorkflows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("taskName"u8))
@@ -166,10 +166,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataReplicationTask(
                 taskName,
                 state,

@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(ImmutabilityPolicy))
             {
                 writer.WritePropertyName("immutabilityPolicy"u8);
-                writer.WriteObjectValue<BlobContainerImmutabilityPolicy>(ImmutabilityPolicy, options);
+                writer.WriteObjectValue(ImmutabilityPolicy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LegalHold))
             {
                 writer.WritePropertyName("legalHold"u8);
-                writer.WriteObjectValue<LegalHoldProperties>(LegalHold, options);
+                writer.WriteObjectValue(LegalHold, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HasLegalHold))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(ImmutableStorageWithVersioning))
             {
                 writer.WritePropertyName("immutableStorageWithVersioning"u8);
-                writer.WriteObjectValue<ImmutableStorageWithVersioning>(ImmutableStorageWithVersioning, options);
+                writer.WriteObjectValue(ImmutableStorageWithVersioning, options);
             }
             if (Optional.IsDefined(EnableNfsV3RootSquash))
             {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Storage
             bool? enableNfsV3RootSquash = default;
             bool? enableNfsV3AllSquash = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -440,10 +440,10 @@ namespace Azure.ResourceManager.Storage
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BlobContainerData(
                 id,
                 name,

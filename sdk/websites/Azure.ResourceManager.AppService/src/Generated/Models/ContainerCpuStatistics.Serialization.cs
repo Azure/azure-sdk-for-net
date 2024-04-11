@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CpuUsage))
             {
                 writer.WritePropertyName("cpuUsage"u8);
-                writer.WriteObjectValue<ContainerCpuUsage>(CpuUsage, options);
+                writer.WriteObjectValue(CpuUsage, options);
             }
             if (Optional.IsDefined(SystemCpuUsage))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ThrottlingData))
             {
                 writer.WritePropertyName("throttlingData"u8);
-                writer.WriteObjectValue<ContainerThrottlingInfo>(ThrottlingData, options);
+                writer.WriteObjectValue(ThrottlingData, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
             int? onlineCpuCount = default;
             ContainerThrottlingInfo throttlingData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpuUsage"u8))
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerCpuStatistics(cpuUsage, systemCpuUsage, onlineCpuCount, throttlingData, serializedAdditionalRawData);
         }
 

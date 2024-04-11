@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue<ComputePlan>(Plan, options);
+                writer.WriteObjectValue(Plan, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue<VirtualMachineExtensionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,37 +112,37 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue<VirtualMachineHardwareProfile>(HardwareProfile, options);
+                writer.WriteObjectValue(HardwareProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue<VirtualMachineStorageProfile>(StorageProfile, options);
+                writer.WriteObjectValue(StorageProfile, options);
             }
             if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue<AdditionalCapabilities>(AdditionalCapabilities, options);
+                writer.WriteObjectValue(AdditionalCapabilities, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue<VirtualMachineOSProfile>(OSProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue<VirtualMachineNetworkProfile>(NetworkProfile, options);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue<SecurityProfile>(SecurityProfile, options);
+                writer.WriteObjectValue(SecurityProfile, options);
             }
             if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
-                writer.WriteObjectValue<DiagnosticsProfile>(DiagnosticsProfile, options);
+                writer.WriteObjectValue(DiagnosticsProfile, options);
             }
             if (Optional.IsDefined(AvailabilitySet))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(BillingProfile))
             {
                 writer.WritePropertyName("billingProfile"u8);
-                writer.WriteObjectValue<BillingProfile>(BillingProfile, options);
+                writer.WriteObjectValue(BillingProfile, options);
             }
             if (Optional.IsDefined(Host))
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue<VirtualMachineInstanceView>(InstanceView, options);
+                writer.WriteObjectValue(InstanceView, options);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ScheduledEventsProfile))
             {
                 writer.WritePropertyName("scheduledEventsProfile"u8);
-                writer.WriteObjectValue<ComputeScheduledEventsProfile>(ScheduledEventsProfile, options);
+                writer.WriteObjectValue(ScheduledEventsProfile, options);
             }
             if (Optional.IsDefined(UserData))
             {
@@ -227,12 +227,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(CapacityReservation))
             {
                 writer.WritePropertyName("capacityReservation"u8);
-                writer.WriteObjectValue<CapacityReservationProfile>(CapacityReservation, options);
+                writer.WriteObjectValue(CapacityReservation, options);
             }
             if (Optional.IsDefined(ApplicationProfile))
             {
                 writer.WritePropertyName("applicationProfile"u8);
-                writer.WriteObjectValue<ApplicationProfile>(ApplicationProfile, options);
+                writer.WriteObjectValue(ApplicationProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Compute
             ApplicationProfile applicationProfile = default;
             DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("plan"u8))
@@ -657,10 +657,10 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineData(
                 id,
                 name,

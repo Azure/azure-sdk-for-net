@@ -64,12 +64,12 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(AzureBlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue<AzureBlobContentSource>(AzureBlobSource, options);
+                writer.WriteObjectValue(AzureBlobSource, options);
             }
             if (Optional.IsDefined(AzureBlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue<AzureBlobFileListContentSource>(AzureBlobFileListSource, options);
+                writer.WriteObjectValue(AzureBlobFileListSource, options);
             }
             if (Optional.IsCollectionDefined(DocTypes))
             {
@@ -78,7 +78,7 @@ namespace Azure.AI.DocumentIntelligence
                 foreach (var item in DocTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<DocumentTypeDetails>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -88,7 +88,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Warnings)
                 {
-                    writer.WriteObjectValue<DocumentIntelligenceWarning>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +142,7 @@ namespace Azure.AI.DocumentIntelligence
             IReadOnlyDictionary<string, DocumentTypeDetails> docTypes = default;
             IReadOnlyList<DocumentIntelligenceWarning> warnings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"u8))
@@ -245,10 +245,10 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DocumentModelDetails(
                 modelId,
                 description,
@@ -307,7 +307,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DocumentModelDetails>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

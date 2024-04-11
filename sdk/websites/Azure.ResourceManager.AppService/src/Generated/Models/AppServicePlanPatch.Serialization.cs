@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
                 writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                writer.WriteObjectValue<HostingEnvironmentProfile>(HostingEnvironmentProfile, options);
+                writer.WriteObjectValue(HostingEnvironmentProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MaximumNumberOfWorkers))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(KubeEnvironmentProfile))
             {
                 writer.WritePropertyName("kubeEnvironmentProfile"u8);
-                writer.WriteObjectValue<KubeEnvironmentProfile>(KubeEnvironmentProfile, options);
+                writer.WriteObjectValue(KubeEnvironmentProfile, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppService.Models
             KubeEnvironmentProfile kubeEnvironmentProfile = default;
             bool? zoneRedundant = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -460,10 +460,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppServicePlanPatch(
                 id,
                 name,

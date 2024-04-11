@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(RoleDefinition))
             {
                 writer.WritePropertyName("roleDefinition"u8);
-                writer.WriteObjectValue<AzureRoleDefinition>(RoleDefinition, options);
+                writer.WriteObjectValue(RoleDefinition, options);
             }
             if (Optional.IsDefined(ManagedByRoleDefinition))
             {
                 writer.WritePropertyName("managedByRoleDefinition"u8);
-                writer.WriteObjectValue<AzureRoleDefinition>(ManagedByRoleDefinition, options);
+                writer.WriteObjectValue(ManagedByRoleDefinition, options);
             }
             if (Optional.IsDefined(ProviderAuthorizationConsentState))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources.Models
             AzureRoleDefinition managedByRoleDefinition = default;
             ProviderAuthorizationConsentState? providerAuthorizationConsentState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProviderPermission(applicationId, roleDefinition, managedByRoleDefinition, providerAuthorizationConsentState, serializedAdditionalRawData);
         }
 

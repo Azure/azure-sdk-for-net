@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(LinuxRuntimeSettings))
             {
                 writer.WritePropertyName("linuxRuntimeSettings"u8);
-                writer.WriteObjectValue<WebAppRuntimeSettings>(LinuxRuntimeSettings, options);
+                writer.WriteObjectValue(LinuxRuntimeSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WindowsRuntimeSettings))
             {
                 writer.WritePropertyName("windowsRuntimeSettings"u8);
-                writer.WriteObjectValue<WebAppRuntimeSettings>(WindowsRuntimeSettings, options);
+                writer.WriteObjectValue(WindowsRuntimeSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LinuxContainerSettings))
             {
                 writer.WritePropertyName("linuxContainerSettings"u8);
-                writer.WriteObjectValue<LinuxJavaContainerSettings>(LinuxContainerSettings, options);
+                writer.WriteObjectValue(LinuxContainerSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WindowsContainerSettings))
             {
                 writer.WritePropertyName("windowsContainerSettings"u8);
-                writer.WriteObjectValue<WindowsJavaContainerSettings>(WindowsContainerSettings, options);
+                writer.WriteObjectValue(WindowsContainerSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
             LinuxJavaContainerSettings linuxContainerSettings = default;
             WindowsJavaContainerSettings windowsContainerSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linuxRuntimeSettings"u8))
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings, linuxContainerSettings, windowsContainerSettings, serializedAdditionalRawData);
         }
 

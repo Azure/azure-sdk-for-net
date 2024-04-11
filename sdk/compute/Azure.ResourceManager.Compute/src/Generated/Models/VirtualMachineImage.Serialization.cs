@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue<PurchasePlan>(Plan, options);
+                writer.WriteObjectValue(Plan, options);
             }
             if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
-                writer.WriteObjectValue<OSDiskImage>(OSDiskImage, options);
+                writer.WriteObjectValue(OSDiskImage, options);
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {
@@ -70,14 +70,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskImages)
                 {
-                    writer.WriteObjectValue<DataDiskImage>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AutomaticOSUpgradeProperties))
             {
                 writer.WritePropertyName("automaticOSUpgradeProperties"u8);
-                writer.WriteObjectValue<AutomaticOSUpgradeProperties>(AutomaticOSUpgradeProperties, options);
+                writer.WriteObjectValue(AutomaticOSUpgradeProperties, options);
             }
             if (Optional.IsDefined(HyperVGeneration))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
-                writer.WriteObjectValue<DisallowedConfiguration>(Disallowed, options);
+                writer.WriteObjectValue(Disallowed, options);
             }
             if (Optional.IsCollectionDefined(Features))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue<VirtualMachineImageFeature>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ImageDeprecationStatus))
             {
                 writer.WritePropertyName("imageDeprecationStatus"u8);
-                writer.WriteObjectValue<ImageDeprecationStatus>(ImageDeprecationStatus, options);
+                writer.WriteObjectValue(ImageDeprecationStatus, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Models
             ArchitectureType? architecture = default;
             ImageDeprecationStatus imageDeprecationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -313,10 +313,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineImage(
                 id,
                 serializedAdditionalRawData,

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue<PacketCaptureMachineScope>(Scope, options);
+                writer.WriteObjectValue(Scope, options);
             }
             if (Optional.IsDefined(TargetType))
             {
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteNumberValue(TimeLimitInSeconds.Value);
             }
             writer.WritePropertyName("storageLocation"u8);
-            writer.WriteObjectValue<PacketCaptureStorageLocation>(StorageLocation, options);
+            writer.WriteObjectValue(StorageLocation, options);
             if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue<PacketCaptureFilter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
             PacketCaptureStorageLocation storageLocation = default;
             IList<PacketCaptureFilter> filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -201,10 +201,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PacketCaptureCreateOrUpdateContent(
                 target,
                 scope,

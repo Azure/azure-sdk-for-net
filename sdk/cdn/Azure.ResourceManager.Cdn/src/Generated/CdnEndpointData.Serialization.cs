@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
-                    writer.WriteObjectValue<GeoFilter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Cdn
                 if (DefaultOriginGroup != null)
                 {
                     writer.WritePropertyName("defaultOriginGroup"u8);
-                    writer.WriteObjectValue<EndpointPropertiesUpdateParametersDefaultOriginGroup>(DefaultOriginGroup, options);
+                    writer.WriteObjectValue(DefaultOriginGroup, options);
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteStartArray();
                     foreach (var item in UriSigningKeys)
                     {
-                        writer.WriteObjectValue<UriSigningKey>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn
                 if (DeliveryPolicy != null)
                 {
                     writer.WritePropertyName("deliveryPolicy"u8);
-                    writer.WriteObjectValue<EndpointDeliveryPolicy>(DeliveryPolicy, options);
+                    writer.WriteObjectValue(DeliveryPolicy, options);
                 }
                 else
                 {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Cdn
                 if (WebApplicationFirewallPolicyLink != null)
                 {
                     writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                    writer.WriteObjectValue<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink>(WebApplicationFirewallPolicyLink, options);
+                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink, options);
                 }
                 else
                 {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in Origins)
                 {
-                    writer.WriteObjectValue<DeepCreatedOrigin>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in OriginGroups)
                 {
-                    writer.WriteObjectValue<DeepCreatedOriginGroup>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue<CdnCustomDomainData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Cdn
             EndpointResourceState? resourceState = default;
             CdnEndpointProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -553,10 +553,10 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CdnEndpointData(
                 id,
                 name,

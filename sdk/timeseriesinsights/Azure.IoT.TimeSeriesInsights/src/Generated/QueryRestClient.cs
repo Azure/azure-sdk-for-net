@@ -126,7 +126,7 @@ namespace Azure.IoT.TimeSeriesInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GetEventSchemaRequest>(parameters);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
@@ -215,7 +215,7 @@ namespace Azure.IoT.TimeSeriesInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<QueryRequest>(parameters);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }

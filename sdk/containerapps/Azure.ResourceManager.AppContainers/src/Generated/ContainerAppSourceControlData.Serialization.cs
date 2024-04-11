@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(GitHubActionConfiguration))
             {
                 writer.WritePropertyName("githubActionConfiguration"u8);
-                writer.WriteObjectValue<ContainerAppGitHubActionConfiguration>(GitHubActionConfiguration, options);
+                writer.WriteObjectValue(GitHubActionConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppContainers
             string branch = default;
             ContainerAppGitHubActionConfiguration gitHubActionConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppSourceControlData(
                 id,
                 name,

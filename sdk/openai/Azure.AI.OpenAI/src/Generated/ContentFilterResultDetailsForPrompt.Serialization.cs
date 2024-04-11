@@ -29,32 +29,32 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Sexual))
             {
                 writer.WritePropertyName("sexual"u8);
-                writer.WriteObjectValue<ContentFilterResult>(Sexual, options);
+                writer.WriteObjectValue(Sexual, options);
             }
             if (Optional.IsDefined(Violence))
             {
                 writer.WritePropertyName("violence"u8);
-                writer.WriteObjectValue<ContentFilterResult>(Violence, options);
+                writer.WriteObjectValue(Violence, options);
             }
             if (Optional.IsDefined(Hate))
             {
                 writer.WritePropertyName("hate"u8);
-                writer.WriteObjectValue<ContentFilterResult>(Hate, options);
+                writer.WriteObjectValue(Hate, options);
             }
             if (Optional.IsDefined(SelfHarm))
             {
                 writer.WritePropertyName("self_harm"u8);
-                writer.WriteObjectValue<ContentFilterResult>(SelfHarm, options);
+                writer.WriteObjectValue(SelfHarm, options);
             }
             if (Optional.IsDefined(Profanity))
             {
                 writer.WritePropertyName("profanity"u8);
-                writer.WriteObjectValue<ContentFilterDetectionResult>(Profanity, options);
+                writer.WriteObjectValue(Profanity, options);
             }
             if (Optional.IsDefined(CustomBlocklists))
             {
                 writer.WritePropertyName("custom_blocklists"u8);
-                writer.WriteObjectValue<ContentFilterDetailedResults>(CustomBlocklists, options);
+                writer.WriteObjectValue(CustomBlocklists, options);
             }
             if (Optional.IsDefined(Error))
             {
@@ -64,12 +64,12 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Jailbreak))
             {
                 writer.WritePropertyName("jailbreak"u8);
-                writer.WriteObjectValue<ContentFilterDetectionResult>(Jailbreak, options);
+                writer.WriteObjectValue(Jailbreak, options);
             }
             if (Optional.IsDefined(IndirectAttack))
             {
                 writer.WritePropertyName("indirect_attack"u8);
-                writer.WriteObjectValue<ContentFilterDetectionResult>(IndirectAttack, options);
+                writer.WriteObjectValue(IndirectAttack, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -119,7 +119,7 @@ namespace Azure.AI.OpenAI
             ContentFilterDetectionResult jailbreak = default;
             ContentFilterDetectionResult indirectAttack = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sexual"u8))
@@ -205,10 +205,10 @@ namespace Azure.AI.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContentFilterResultDetailsForPrompt(
                 sexual,
                 violence,
@@ -265,7 +265,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ContentFilterResultDetailsForPrompt>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

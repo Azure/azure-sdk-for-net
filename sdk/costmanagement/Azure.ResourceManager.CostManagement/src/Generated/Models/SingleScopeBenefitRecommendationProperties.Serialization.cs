@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue<RecommendationUsageDetails>(Usage, options);
+                writer.WriteObjectValue(Usage, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RecommendationDetails))
             {
                 writer.WritePropertyName("recommendationDetails"u8);
-                writer.WriteObjectValue<AllSavingsBenefitDetails>(RecommendationDetails, options);
+                writer.WriteObjectValue(RecommendationDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AllRecommendationDetails))
             {
                 writer.WritePropertyName("allRecommendationDetails"u8);
-                writer.WriteObjectValue<AllSavingsList>(AllRecommendationDetails, options);
+                writer.WriteObjectValue(AllRecommendationDetails, options);
             }
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             AllSavingsList allRecommendationDetails = default;
             BenefitRecommendationScope scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))
@@ -272,10 +272,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SingleScopeBenefitRecommendationProperties(
                 firstConsumptionDate,
                 lastConsumptionDate,

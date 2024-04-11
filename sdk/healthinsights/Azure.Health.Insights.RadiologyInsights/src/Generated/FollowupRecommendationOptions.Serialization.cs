@@ -83,7 +83,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             bool? includeRecommendationsInReferences = default;
             bool? provideFocusedSentenceEvidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("includeRecommendationsWithNoSpecifiedModality"u8))
@@ -115,10 +115,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FollowupRecommendationOptions(includeRecommendationsWithNoSpecifiedModality, includeRecommendationsInReferences, provideFocusedSentenceEvidence, serializedAdditionalRawData);
         }
 
@@ -165,7 +165,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<FollowupRecommendationOptions>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

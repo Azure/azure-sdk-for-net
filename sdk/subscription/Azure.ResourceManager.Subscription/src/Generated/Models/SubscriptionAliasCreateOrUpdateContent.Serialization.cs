@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Subscription.Models
             if (Optional.IsDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties"u8);
-                writer.WriteObjectValue<SubscriptionAliasAdditionalProperties>(AdditionalProperties, options);
+                writer.WriteObjectValue(AdditionalProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Subscription.Models
             string resellerId = default;
             SubscriptionAliasAdditionalProperties additionalProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SubscriptionAliasCreateOrUpdateContent(
                 displayName,
                 workload,

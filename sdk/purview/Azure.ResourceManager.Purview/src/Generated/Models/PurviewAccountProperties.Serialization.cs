@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Purview.Models
             if (options.Format != "W" && Optional.IsDefined(AccountStatus))
             {
                 writer.WritePropertyName("accountStatus"u8);
-                writer.WriteObjectValue<PurviewAccountStatus>(AccountStatus, options);
+                writer.WriteObjectValue(AccountStatus, options);
             }
             if (Optional.IsDefined(CloudConnectors))
             {
                 writer.WritePropertyName("cloudConnectors"u8);
-                writer.WriteObjectValue<CloudConnectors>(CloudConnectors, options);
+                writer.WriteObjectValue(CloudConnectors, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Purview.Models
             if (options.Format != "W" && Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
-                writer.WriteObjectValue<PurviewAccountEndpoint>(Endpoints, options);
+                writer.WriteObjectValue(Endpoints, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Purview.Models
             if (Optional.IsDefined(IngestionStorage))
             {
                 writer.WritePropertyName("ingestionStorage"u8);
-                writer.WriteObjectValue<PurviewIngestionStorage>(IngestionStorage, options);
+                writer.WriteObjectValue(IngestionStorage, options);
             }
             if (Optional.IsDefined(ManagedEventHubState))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Purview.Models
             if (options.Format != "W" && Optional.IsDefined(ManagedResources))
             {
                 writer.WritePropertyName("managedResources"u8);
-                writer.WriteObjectValue<PurviewManagedResource>(ManagedResources, options);
+                writer.WriteObjectValue(ManagedResources, options);
             }
             if (Optional.IsDefined(ManagedResourcesPublicNetworkAccess))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<PurviewPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Purview.Models
             PurviewProvisioningState? provisioningState = default;
             PurviewPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountStatus"u8))
@@ -289,10 +289,10 @@ namespace Azure.ResourceManager.Purview.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PurviewAccountProperties(
                 accountStatus,
                 cloudConnectors,

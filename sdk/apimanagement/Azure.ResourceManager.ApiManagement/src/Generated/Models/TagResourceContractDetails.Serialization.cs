@@ -27,21 +27,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("tag"u8);
-            writer.WriteObjectValue<AssociatedTagProperties>(Tag, options);
+            writer.WriteObjectValue(Tag, options);
             if (Optional.IsDefined(Api))
             {
                 writer.WritePropertyName("api"u8);
-                writer.WriteObjectValue<AssociatedApiProperties>(Api, options);
+                writer.WriteObjectValue(Api, options);
             }
             if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
-                writer.WriteObjectValue<AssociatedOperationProperties>(Operation, options);
+                writer.WriteObjectValue(Operation, options);
             }
             if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
-                writer.WriteObjectValue<AssociatedProductProperties>(Product, options);
+                writer.WriteObjectValue(Product, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             AssociatedOperationProperties operation = default;
             AssociatedProductProperties product = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tag"u8))
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TagResourceContractDetails(tag, api, operation, product, serializedAdditionalRawData);
         }
 
