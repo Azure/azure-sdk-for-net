@@ -161,7 +161,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PrestoSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, PrestoSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<PrestoSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override PrestoSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(MappingProperties))
             {
                 writer.WritePropertyName("mappingProperties"u8);
-                writer.WriteObjectValue<ConnectorMappingProperties>(MappingProperties, options);
+                writer.WriteObjectValue(MappingProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NextRunOn))
             {

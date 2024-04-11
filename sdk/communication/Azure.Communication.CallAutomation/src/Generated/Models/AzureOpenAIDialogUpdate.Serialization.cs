@@ -40,7 +40,7 @@ namespace Azure.Communication.CallAutomation
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzureOpenAIDialogUpdate>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DataSegment != null)
                 {
                     writer.WritePropertyName("dataSegment"u8);
-                    writer.WriteObjectValue<MonitoringDataSegment>(DataSegment, options);
+                    writer.WriteObjectValue(DataSegment, options);
                 }
                 else
                 {
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("metricThreshold"u8);
-            writer.WriteObjectValue<ModelPerformanceMetricThresholdBase>(MetricThreshold, options);
+            writer.WriteObjectValue(MetricThreshold, options);
             writer.WritePropertyName("productionData"u8);
             writer.WriteStartArray();
             foreach (var item in ProductionData)
             {
-                writer.WriteObjectValue<MonitoringInputDataBase>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue<MonitoringInputDataBase>(ReferenceData, options);
+            writer.WriteObjectValue(ReferenceData, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);

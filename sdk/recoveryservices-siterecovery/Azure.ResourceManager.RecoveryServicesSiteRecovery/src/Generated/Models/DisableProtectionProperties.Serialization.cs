@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ReplicationProviderContent))
             {
                 writer.WritePropertyName("replicationProviderInput"u8);
-                writer.WriteObjectValue<DisableProtectionProviderSpecificContent>(ReplicationProviderContent, options);
+                writer.WriteObjectValue(ReplicationProviderContent, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

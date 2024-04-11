@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<StorageCacheSkuInfo>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StorageCache
             if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
-                writer.WriteObjectValue<StorageCacheHealth>(Health, options);
+                writer.WriteObjectValue(Health, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(MountAddresses))
             {
@@ -112,32 +112,32 @@ namespace Azure.ResourceManager.StorageCache
             if (options.Format != "W" && Optional.IsDefined(UpgradeStatus))
             {
                 writer.WritePropertyName("upgradeStatus"u8);
-                writer.WriteObjectValue<StorageCacheUpgradeStatus>(UpgradeStatus, options);
+                writer.WriteObjectValue(UpgradeStatus, options);
             }
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue<StorageCacheUpgradeSettings>(UpgradeSettings, options);
+                writer.WriteObjectValue(UpgradeSettings, options);
             }
             if (Optional.IsDefined(NetworkSettings))
             {
                 writer.WritePropertyName("networkSettings"u8);
-                writer.WriteObjectValue<StorageCacheNetworkSettings>(NetworkSettings, options);
+                writer.WriteObjectValue(NetworkSettings, options);
             }
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue<StorageCacheEncryptionSettings>(EncryptionSettings, options);
+                writer.WriteObjectValue(EncryptionSettings, options);
             }
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue<StorageCacheSecuritySettings>(SecuritySettings, options);
+                writer.WriteObjectValue(SecuritySettings, options);
             }
             if (Optional.IsDefined(DirectoryServicesSettings))
             {
                 writer.WritePropertyName("directoryServicesSettings"u8);
-                writer.WriteObjectValue<StorageCacheDirectorySettings>(DirectoryServicesSettings, options);
+                writer.WriteObjectValue(DirectoryServicesSettings, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WriteStartArray();
                 foreach (var item in PrimingJobs)
                 {
-                    writer.WriteObjectValue<PrimingJob>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WriteStartArray();
                 foreach (var item in SpaceAllocation)
                 {
-                    writer.WriteObjectValue<StorageTargetSpaceAllocation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

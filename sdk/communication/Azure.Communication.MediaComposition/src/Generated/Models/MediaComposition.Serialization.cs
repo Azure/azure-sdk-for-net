@@ -25,7 +25,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Layout))
             {
                 writer.WritePropertyName("layout"u8);
-                writer.WriteObjectValue<MediaCompositionLayout>(Layout);
+                writer.WriteObjectValue(Layout);
             }
             if (Optional.IsCollectionDefined(Inputs))
             {
@@ -34,7 +34,7 @@ namespace Azure.Communication.MediaComposition
                 foreach (var item in Inputs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<MediaInput>(item.Value);
+                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -45,14 +45,14 @@ namespace Azure.Communication.MediaComposition
                 foreach (var item in Outputs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<MediaOutput>(item.Value);
+                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(StreamState))
             {
                 writer.WritePropertyName("streamState"u8);
-                writer.WriteObjectValue<CompositionStreamState>(StreamState);
+                writer.WriteObjectValue(StreamState);
             }
             writer.WriteEndObject();
         }
@@ -137,7 +137,7 @@ namespace Azure.Communication.MediaComposition
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MediaComposition>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

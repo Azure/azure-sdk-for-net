@@ -46,7 +46,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<TwinProperties>(Properties);
+                writer.WriteObjectValue(Properties);
             }
             if (Optional.IsDefined(Etag))
             {
@@ -101,12 +101,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(X509Thumbprint))
             {
                 writer.WritePropertyName("x509Thumbprint"u8);
-                writer.WriteObjectValue<X509Thumbprint>(X509Thumbprint);
+                writer.WriteObjectValue(X509Thumbprint);
             }
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue<DeviceCapabilities>(Capabilities);
+                writer.WriteObjectValue(Capabilities);
             }
             if (Optional.IsDefined(DeviceScope))
             {
@@ -315,7 +315,7 @@ namespace Azure.IoT.Hub.Service.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TwinData>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

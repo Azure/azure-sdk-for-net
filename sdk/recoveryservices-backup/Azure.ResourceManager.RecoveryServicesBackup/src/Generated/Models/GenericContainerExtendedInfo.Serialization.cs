@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ContainerIdentityInfo))
             {
                 writer.WritePropertyName("containerIdentityInfo"u8);
-                writer.WriteObjectValue<ContainerIdentityInfo>(ContainerIdentityInfo, options);
+                writer.WriteObjectValue(ContainerIdentityInfo, options);
             }
             if (Optional.IsCollectionDefined(ServiceEndpoints))
             {

@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue<WebTestGeolocation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("Configuration"u8);
-                writer.WriteObjectValue<WebTestPropertiesConfiguration>(Configuration, options);
+                writer.WriteObjectValue(Configuration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("Request"u8);
-                writer.WriteObjectValue<WebTestPropertiesRequest>(Request, options);
+                writer.WriteObjectValue(Request, options);
             }
             if (Optional.IsDefined(ValidationRules))
             {
                 writer.WritePropertyName("ValidationRules"u8);
-                writer.WriteObjectValue<WebTestPropertiesValidationRules>(ValidationRules, options);
+                writer.WriteObjectValue(ValidationRules, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

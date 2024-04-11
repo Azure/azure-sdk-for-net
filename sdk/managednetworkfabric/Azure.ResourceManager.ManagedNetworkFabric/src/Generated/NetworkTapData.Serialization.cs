@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteStartArray();
             foreach (var item in Destinations)
             {
-                writer.WriteObjectValue<NetworkTapPropertiesDestinationsItem>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(PollingType))

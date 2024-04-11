@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue<ScheduleAssociationProperty>(Schedule, options);
+                writer.WriteObjectValue(Schedule, options);
             }
             if (Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
-                writer.WriteObjectValue<RunbookAssociationProperty>(Runbook, options);
+                writer.WriteObjectValue(Runbook, options);
             }
             if (Optional.IsDefined(RunOn))
             {

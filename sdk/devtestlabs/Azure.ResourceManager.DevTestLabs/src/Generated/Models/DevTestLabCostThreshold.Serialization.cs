@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(PercentageThreshold))
             {
                 writer.WritePropertyName("percentageThreshold"u8);
-                writer.WriteObjectValue<PercentageCostThresholdProperties>(PercentageThreshold, options);
+                writer.WriteObjectValue(PercentageThreshold, options);
             }
             if (Optional.IsDefined(DisplayOnChart))
             {

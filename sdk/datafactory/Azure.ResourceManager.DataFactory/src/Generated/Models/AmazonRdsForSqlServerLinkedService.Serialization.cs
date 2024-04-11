@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia, options);
+                writer.WriteObjectValue(ConnectVia, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<EntityParameterSpecification>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AlwaysEncryptedSettings))
             {
                 writer.WritePropertyName("alwaysEncryptedSettings"u8);
-                writer.WriteObjectValue<SqlAlwaysEncryptedProperties>(AlwaysEncryptedSettings, options);
+                writer.WriteObjectValue(AlwaysEncryptedSettings, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)

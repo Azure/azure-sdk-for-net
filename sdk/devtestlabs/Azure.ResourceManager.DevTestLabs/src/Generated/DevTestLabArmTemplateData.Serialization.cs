@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in ParametersValueFilesInfo)
                 {
-                    writer.WriteObjectValue<DevTestLabParametersValueFileInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

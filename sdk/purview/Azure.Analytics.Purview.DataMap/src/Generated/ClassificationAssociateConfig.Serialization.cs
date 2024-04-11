@@ -29,7 +29,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Classification))
             {
                 writer.WritePropertyName("classification"u8);
-                writer.WriteObjectValue<AtlasClassification>(Classification, options);
+                writer.WriteObjectValue(Classification, options);
             }
             if (Optional.IsCollectionDefined(EntityGuids))
             {
@@ -160,7 +160,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ClassificationAssociateConfig>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

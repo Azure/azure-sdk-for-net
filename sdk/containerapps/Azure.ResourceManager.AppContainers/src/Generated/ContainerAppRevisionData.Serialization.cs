@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers
             if (options.Format != "W" && Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue<ContainerAppTemplate>(Template, options);
+                writer.WriteObjectValue(Template, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsActive))
             {

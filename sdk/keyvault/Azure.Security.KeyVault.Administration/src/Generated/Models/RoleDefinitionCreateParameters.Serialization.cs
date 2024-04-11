@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<RoleDefinitionProperties>(Properties);
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
 
@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RoleDefinitionCreateParameters>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

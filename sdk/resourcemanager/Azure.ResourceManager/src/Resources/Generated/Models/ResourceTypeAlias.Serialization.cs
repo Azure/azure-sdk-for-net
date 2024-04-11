@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Paths)
                 {
-                    writer.WriteObjectValue<ResourceTypeAliasPath>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(DefaultPattern))
             {
                 writer.WritePropertyName("defaultPattern"u8);
-                writer.WriteObjectValue<ResourceTypeAliasPattern>(DefaultPattern, options);
+                writer.WriteObjectValue(DefaultPattern, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DefaultMetadata))
             {
                 writer.WritePropertyName("defaultMetadata"u8);
-                writer.WriteObjectValue<ResourceTypeAliasPathMetadata>(DefaultMetadata, options);
+                writer.WriteObjectValue(DefaultMetadata, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

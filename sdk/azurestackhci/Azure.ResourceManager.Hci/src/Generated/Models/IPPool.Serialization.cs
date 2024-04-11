@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
-                writer.WriteObjectValue<IPPoolInfo>(Info, options);
+                writer.WriteObjectValue(Info, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

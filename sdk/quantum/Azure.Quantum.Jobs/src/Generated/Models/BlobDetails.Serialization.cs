@@ -29,7 +29,7 @@ namespace Azure.Quantum.Jobs.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BlobDetails>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

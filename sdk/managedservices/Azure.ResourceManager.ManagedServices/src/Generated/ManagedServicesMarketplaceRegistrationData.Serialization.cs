@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.ManagedServices
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<ManagedServicesMarketplaceRegistrationProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue<ManagedServicesPlan>(Plan, options);
+                writer.WriteObjectValue(Plan, options);
             }
             if (options.Format != "W")
             {

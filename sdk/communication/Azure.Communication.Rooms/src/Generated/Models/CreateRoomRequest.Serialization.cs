@@ -37,7 +37,7 @@ namespace Azure.Communication.Rooms
                 foreach (var item in Participants)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ParticipantProperties>(item.Value);
+                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -48,7 +48,7 @@ namespace Azure.Communication.Rooms
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CreateRoomRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

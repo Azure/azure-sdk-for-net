@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Reservations
                 writer.WriteStartArray();
                 foreach (var item in QuotaRequestValue)
                 {
-                    writer.WriteObjectValue<SubContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

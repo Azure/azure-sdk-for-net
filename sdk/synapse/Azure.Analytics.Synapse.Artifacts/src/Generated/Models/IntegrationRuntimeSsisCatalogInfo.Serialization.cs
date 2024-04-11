@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CatalogAdminPassword))
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
-                writer.WriteObjectValue<SecureString>(CatalogAdminPassword);
+                writer.WriteObjectValue(CatalogAdminPassword);
             }
             if (Optional.IsDefined(CatalogPricingTier))
             {
@@ -107,7 +107,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<IntegrationRuntimeSsisCatalogInfo>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -115,7 +115,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, IntegrationRuntimeSsisCatalogInfo model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IntegrationRuntimeSsisCatalogInfo>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override IntegrationRuntimeSsisCatalogInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue<LogicWorkflowTriggerRecurrence>(Recurrence, options);
+                writer.WriteObjectValue(Recurrence, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
-                writer.WriteObjectValue<LogicResourceReference>(Workflow, options);
+                writer.WriteObjectValue(Workflow, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

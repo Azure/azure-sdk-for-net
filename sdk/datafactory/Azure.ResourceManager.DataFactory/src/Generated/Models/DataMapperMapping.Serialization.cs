@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SourceConnectionReference))
             {
                 writer.WritePropertyName("sourceConnectionReference"u8);
-                writer.WriteObjectValue<MapperConnectionReference>(SourceConnectionReference, options);
+                writer.WriteObjectValue(SourceConnectionReference, options);
             }
             if (Optional.IsDefined(AttributeMappingInfo))
             {
                 writer.WritePropertyName("attributeMappingInfo"u8);
-                writer.WriteObjectValue<MapperAttributeMappings>(AttributeMappingInfo, options);
+                writer.WriteObjectValue(AttributeMappingInfo, options);
             }
             if (Optional.IsDefined(SourceDenormalizeInfo))
             {

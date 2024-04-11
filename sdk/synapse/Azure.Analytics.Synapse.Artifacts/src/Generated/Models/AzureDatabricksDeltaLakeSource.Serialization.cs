@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ExportSettings))
             {
                 writer.WritePropertyName("exportSettings"u8);
-                writer.WriteObjectValue<AzureDatabricksDeltaLakeExportCommand>(ExportSettings);
+                writer.WriteObjectValue(ExportSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -145,7 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzureDatabricksDeltaLakeSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -153,7 +153,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AzureDatabricksDeltaLakeSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AzureDatabricksDeltaLakeSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override AzureDatabricksDeltaLakeSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -37,7 +37,7 @@ namespace Azure.Communication.NetworkTraversal
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CommunicationRelayConfigurationRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

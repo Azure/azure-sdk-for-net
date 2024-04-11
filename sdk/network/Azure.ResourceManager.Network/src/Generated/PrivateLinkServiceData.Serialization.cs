@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerFrontendIPConfigurations)
                 {
-                    writer.WriteObjectValue<FrontendIPConfigurationData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue<PrivateLinkServiceIPConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue<NetworkInterfaceData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,19 +112,19 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<NetworkPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
-                writer.WriteObjectValue<PrivateLinkServicePropertiesVisibility>(Visibility, options);
+                writer.WriteObjectValue(Visibility, options);
             }
             if (Optional.IsDefined(AutoApproval))
             {
                 writer.WritePropertyName("autoApproval"u8);
-                writer.WriteObjectValue<PrivateLinkServicePropertiesAutoApproval>(AutoApproval, options);
+                writer.WriteObjectValue(AutoApproval, options);
             }
             if (Optional.IsCollectionDefined(Fqdns))
             {

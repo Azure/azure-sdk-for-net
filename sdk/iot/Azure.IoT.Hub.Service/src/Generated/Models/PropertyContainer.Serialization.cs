@@ -54,7 +54,7 @@ namespace Azure.IoT.Hub.Service.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PropertyContainer>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

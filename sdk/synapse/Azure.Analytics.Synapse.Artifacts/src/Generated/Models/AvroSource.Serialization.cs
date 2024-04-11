@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue<StoreReadSettings>(StoreSettings);
+                writer.WriteObjectValue(StoreSettings);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -145,7 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AvroSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -153,7 +153,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AvroSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AvroSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override AvroSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

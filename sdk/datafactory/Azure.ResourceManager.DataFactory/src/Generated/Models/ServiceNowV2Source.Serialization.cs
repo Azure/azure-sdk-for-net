@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
-                writer.WriteObjectValue<DataFactoryExpressionV2>(Expression, options);
+                writer.WriteObjectValue(Expression, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {

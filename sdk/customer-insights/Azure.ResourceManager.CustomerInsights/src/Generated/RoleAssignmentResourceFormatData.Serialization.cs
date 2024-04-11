@@ -98,74 +98,74 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Principals)
                 {
-                    writer.WriteObjectValue<AssignmentPrincipal>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Profiles))
             {
                 writer.WritePropertyName("profiles"u8);
-                writer.WriteObjectValue<ResourceSetDescription>(Profiles, options);
+                writer.WriteObjectValue(Profiles, options);
             }
             if (Optional.IsDefined(Interactions))
             {
                 writer.WritePropertyName("interactions"u8);
-                writer.WriteObjectValue<ResourceSetDescription>(Interactions, options);
+                writer.WriteObjectValue(Interactions, options);
             }
             if (Optional.IsDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
-                writer.WriteObjectValue<ResourceSetDescription>(Links, options);
+                writer.WriteObjectValue(Links, options);
             }
             if (Optional.IsDefined(Kpis))
             {
                 writer.WritePropertyName("kpis"u8);
-                writer.WriteObjectValue<ResourceSetDescription>(Kpis, options);
+                writer.WriteObjectValue(Kpis, options);
             }
             if (Optional.IsDefined(SasPolicies))
             {
                 writer.WritePropertyName("sasPolicies"u8);
-                writer.WriteObjectValue<ResourceSetDescription>(SasPolicies, options);
+                writer.WriteObjectValue(SasPolicies, options);
             }
             if (Optional.IsDefined(Connectors))
             {
                 writer.WritePropertyName("connectors"u8);
-                writer.WriteObjectValue<ResourceSetDescription>(Connectors, options);
+                writer.WriteObjectValue(Connectors, options);
             }
             if (Optional.IsDefined(Views))
             {
                 writer.WritePropertyName("views"u8);
-                writer.WriteObjectValue<ResourceSetDescription>(Views, options);
+                writer.WriteObjectValue(Views, options);
             }
             if (Optional.IsDefined(RelationshipLinks))
             {
                 writer.WritePropertyName("relationshipLinks"u8);
-                writer.WriteObjectValue<ResourceSetDescription>(RelationshipLinks, options);
+                writer.WriteObjectValue(RelationshipLinks, options);
             }
             if (Optional.IsDefined(Relationships))
             {
                 writer.WritePropertyName("relationships"u8);
-                writer.WriteObjectValue<ResourceSetDescription>(Relationships, options);
+                writer.WriteObjectValue(Relationships, options);
             }
             if (Optional.IsDefined(WidgetTypes))
             {
                 writer.WritePropertyName("widgetTypes"u8);
-                writer.WriteObjectValue<ResourceSetDescription>(WidgetTypes, options);
+                writer.WriteObjectValue(WidgetTypes, options);
             }
             if (Optional.IsDefined(RoleAssignments))
             {
                 writer.WritePropertyName("roleAssignments"u8);
-                writer.WriteObjectValue<ResourceSetDescription>(RoleAssignments, options);
+                writer.WriteObjectValue(RoleAssignments, options);
             }
             if (Optional.IsDefined(ConflationPolicies))
             {
                 writer.WritePropertyName("conflationPolicies"u8);
-                writer.WriteObjectValue<ResourceSetDescription>(ConflationPolicies, options);
+                writer.WriteObjectValue(ConflationPolicies, options);
             }
             if (Optional.IsDefined(Segments))
             {
                 writer.WritePropertyName("segments"u8);
-                writer.WriteObjectValue<ResourceSetDescription>(Segments, options);
+                writer.WriteObjectValue(Segments, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

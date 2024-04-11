@@ -105,7 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SapTablePartitionSettings>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SapTablePartitionSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SapTablePartitionSettings>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SapTablePartitionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

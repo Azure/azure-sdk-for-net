@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Pfx))
             {
                 writer.WritePropertyName("pfx"u8);
-                writer.WriteObjectValue<SecretBase>(Pfx);
+                writer.WriteObjectValue(Pfx);
             }
             if (Optional.IsDefined(Username))
             {
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue<SecretBase>(Password);
+                writer.WriteObjectValue(Password);
             }
             if (Optional.IsDefined(Resource))
             {
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue<CredentialReference>(Credential);
+                writer.WriteObjectValue(Credential);
             }
             writer.WriteEndObject();
         }
@@ -150,7 +150,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<WebActivityAuthentication>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, WebActivityAuthentication model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<WebActivityAuthentication>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override WebActivityAuthentication Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

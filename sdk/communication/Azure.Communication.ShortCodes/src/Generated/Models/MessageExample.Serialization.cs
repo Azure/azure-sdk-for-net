@@ -68,7 +68,7 @@ namespace Azure.Communication.ShortCodes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MessageExample>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

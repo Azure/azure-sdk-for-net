@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(DiskExclusionProperties))
             {
                 writer.WritePropertyName("diskExclusionProperties"u8);
-                writer.WriteObjectValue<DiskExclusionProperties>(DiskExclusionProperties, options);
+                writer.WriteObjectValue(DiskExclusionProperties, options);
             }
             if (Optional.IsDefined(LinuxVmApplicationName))
             {

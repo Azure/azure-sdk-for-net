@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ProcessCpuData>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

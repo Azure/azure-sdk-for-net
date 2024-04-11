@@ -101,27 +101,27 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
-                writer.WriteObjectValue<FlowEndpointsConfiguration>(EndpointsConfiguration, options);
+                writer.WriteObjectValue(EndpointsConfiguration, options);
             }
             if (Optional.IsDefined(AccessControl))
             {
                 writer.WritePropertyName("accessControl"u8);
-                writer.WriteObjectValue<FlowAccessControlConfiguration>(AccessControl, options);
+                writer.WriteObjectValue(AccessControl, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<LogicSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(IntegrationAccount))
             {
                 writer.WritePropertyName("integrationAccount"u8);
-                writer.WriteObjectValue<LogicResourceReference>(IntegrationAccount, options);
+                writer.WriteObjectValue(IntegrationAccount, options);
             }
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue<LogicResourceReference>(IntegrationServiceEnvironment, options);
+                writer.WriteObjectValue(IntegrationServiceEnvironment, options);
             }
             if (Optional.IsDefined(Definition))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Logic
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<LogicWorkflowParameterInfo>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

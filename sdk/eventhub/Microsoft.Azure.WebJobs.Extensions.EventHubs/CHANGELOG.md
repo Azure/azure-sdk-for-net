@@ -1,16 +1,20 @@
 # Release History
 
-## 6.3.0-beta.1 (Unreleased)
+## 6.4.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Added a new setting to `EventHubOptions` to allow checkpointing to be disabled for applications that always want to use their `initialOffsetOptions` when starting to process a new partition.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 6.3.0 (2024-04-10)
+
+### Features Added
+
+- Added a new setting to `EventHubOptions` to allow checkpointing to be disabled for applications that always want to use their `initialOffsetOptions` when starting to process a new partition.
 
 ## 6.2.0 (2024-03-05)
 

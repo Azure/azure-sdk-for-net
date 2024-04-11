@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (GitRepository != null)
                 {
                     writer.WritePropertyName("gitRepository"u8);
-                    writer.WriteObjectValue<KubernetesGitRepository>(GitRepository, options);
+                    writer.WriteObjectValue(GitRepository, options);
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (Bucket != null)
                 {
                     writer.WritePropertyName("bucket"u8);
-                    writer.WriteObjectValue<KubernetesBucket>(Bucket, options);
+                    writer.WriteObjectValue(Bucket, options);
                 }
                 else
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (AzureBlob != null)
                 {
                     writer.WritePropertyName("azureBlob"u8);
-                    writer.WriteObjectValue<KubernetesAzureBlob>(AzureBlob, options);
+                    writer.WriteObjectValue(AzureBlob, options);
                 }
                 else
                 {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     foreach (var item in Kustomizations)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue<Kustomization>(item.Value, options);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteStartArray();
                     foreach (var item in Statuses)
                     {
-                        writer.WriteObjectValue<KubernetesObjectStatus>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }

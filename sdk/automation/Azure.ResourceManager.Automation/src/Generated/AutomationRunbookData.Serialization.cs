@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(PublishContentLink))
             {
                 writer.WritePropertyName("publishContentLink"u8);
-                writer.WriteObjectValue<AutomationContentLink>(PublishContentLink, options);
+                writer.WriteObjectValue(PublishContentLink, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<RunbookParameterDefinition>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Draft))
             {
                 writer.WritePropertyName("draft"u8);
-                writer.WriteObjectValue<AutomationRunbookDraft>(Draft, options);
+                writer.WriteObjectValue(Draft, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {

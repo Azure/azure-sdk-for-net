@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             public override void Write(Utf8JsonWriter writer, DatasetSchemaDataElement model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<DatasetSchemaDataElement>(model, new ModelReaderWriterOptions("W"));
+                writer.WriteObjectValue(model, new ModelReaderWriterOptions("W"));
             }
 
             public override DatasetSchemaDataElement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

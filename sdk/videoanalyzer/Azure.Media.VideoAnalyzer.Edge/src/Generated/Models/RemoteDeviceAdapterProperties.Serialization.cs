@@ -21,9 +21,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue<RemoteDeviceAdapterTarget>(Target);
+            writer.WriteObjectValue(Target);
             writer.WritePropertyName("iotHubDeviceConnection"u8);
-            writer.WriteObjectValue<IotHubDeviceConnection>(IotHubDeviceConnection);
+            writer.WriteObjectValue(IotHubDeviceConnection);
             writer.WriteEndObject();
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RemoteDeviceAdapterProperties>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

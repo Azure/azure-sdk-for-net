@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnknownSearchIndexerDataIdentity>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

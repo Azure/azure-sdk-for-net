@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue<OperationalInsightsMetricName>(Name, options);
+                writer.WriteObjectValue(Name, options);
             }
             if (Optional.IsDefined(Unit))
             {

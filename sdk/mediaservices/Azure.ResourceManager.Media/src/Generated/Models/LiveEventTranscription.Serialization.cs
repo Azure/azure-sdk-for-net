@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in InputTrackSelection)
                 {
-                    writer.WriteObjectValue<LiveEventInputTrackSelection>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OutputTranscriptionTrack))
             {
                 writer.WritePropertyName("outputTranscriptionTrack"u8);
-                writer.WriteObjectValue<LiveEventOutputTranscriptionTrack>(OutputTranscriptionTrack, options);
+                writer.WriteObjectValue(OutputTranscriptionTrack, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

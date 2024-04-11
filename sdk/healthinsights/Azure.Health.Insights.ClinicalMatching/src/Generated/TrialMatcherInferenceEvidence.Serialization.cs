@@ -34,12 +34,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(PatientDataEvidence))
             {
                 writer.WritePropertyName("patientDataEvidence"u8);
-                writer.WriteObjectValue<ClinicalNoteEvidence>(PatientDataEvidence, options);
+                writer.WriteObjectValue(PatientDataEvidence, options);
             }
             if (Optional.IsDefined(PatientInfoEvidence))
             {
                 writer.WritePropertyName("patientInfoEvidence"u8);
-                writer.WriteObjectValue<ClinicalCodedElement>(PatientInfoEvidence, options);
+                writer.WriteObjectValue(PatientInfoEvidence, options);
             }
             if (Optional.IsDefined(Importance))
             {
@@ -176,7 +176,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TrialMatcherInferenceEvidence>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WriteStartArray();
             foreach (var item in ComponentModels)
             {
-                writer.WriteObjectValue<ComponentDocumentModelDetails>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Tags))
@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ComposeDocumentModelRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("remoteDeviceAdapter"u8);
-            writer.WriteObjectValue<RemoteDeviceAdapter>(RemoteDeviceAdapter);
+            writer.WriteObjectValue(RemoteDeviceAdapter);
             writer.WritePropertyName("methodName"u8);
             writer.WriteStringValue(MethodName);
             if (Optional.IsDefined(ApiVersion))
@@ -69,7 +69,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RemoteDeviceAdapterSetRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

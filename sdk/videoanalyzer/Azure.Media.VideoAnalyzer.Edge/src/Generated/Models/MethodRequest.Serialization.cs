@@ -72,7 +72,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MethodRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

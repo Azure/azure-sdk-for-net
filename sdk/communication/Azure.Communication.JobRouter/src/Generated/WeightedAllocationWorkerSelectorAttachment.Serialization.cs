@@ -30,7 +30,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartArray();
             foreach (var item in Allocations)
             {
-                writer.WriteObjectValue<WorkerWeightedAllocation>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
@@ -146,7 +146,7 @@ namespace Azure.Communication.JobRouter
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<WeightedAllocationWorkerSelectorAttachment>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

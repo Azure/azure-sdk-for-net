@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (Errors != null)
                 {
                     writer.WritePropertyName("errors"u8);
-                    writer.WriteObjectValue<MoveCollectionPropertiesErrors>(Errors, options);
+                    writer.WriteObjectValue(Errors, options);
                 }
                 else
                 {

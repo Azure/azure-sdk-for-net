@@ -22,7 +22,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue<DetectionIncidentFilterCondition>(Filter);
+                writer.WriteObjectValue(Filter);
             }
             writer.WriteEndObject();
         }
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DetectionIncidentResultQuery>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

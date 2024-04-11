@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificContent))
             {
                 writer.WritePropertyName("providerSpecificInput"u8);
-                writer.WriteObjectValue<ReplicationProviderContainerUnmappingContent>(ProviderSpecificContent, options);
+                writer.WriteObjectValue(ProviderSpecificContent, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

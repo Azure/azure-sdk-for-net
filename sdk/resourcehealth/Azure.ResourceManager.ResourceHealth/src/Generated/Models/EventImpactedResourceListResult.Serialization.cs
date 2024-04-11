@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<ResourceHealthEventImpactedResourceData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))

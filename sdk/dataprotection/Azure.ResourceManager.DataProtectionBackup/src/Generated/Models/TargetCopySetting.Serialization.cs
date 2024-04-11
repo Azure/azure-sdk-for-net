@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("copyAfter"u8);
-            writer.WriteObjectValue<DataProtectionBackupCopySetting>(CopyAfter, options);
+            writer.WriteObjectValue(CopyAfter, options);
             writer.WritePropertyName("dataStore"u8);
-            writer.WriteObjectValue<DataStoreInfoBase>(DataStore, options);
+            writer.WriteObjectValue(DataStore, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

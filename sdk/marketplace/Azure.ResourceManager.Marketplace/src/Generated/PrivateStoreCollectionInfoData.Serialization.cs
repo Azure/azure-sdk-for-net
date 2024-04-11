@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WriteStartArray();
                 foreach (var item in AppliedRules)
                 {
-                    writer.WriteObjectValue<MarketplaceRule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

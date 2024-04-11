@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WriteStartArray();
                 foreach (var item in MemberIdentityCertificates)
                 {
-                    writer.WriteObjectValue<ConfidentialLedgerMemberIdentityCertificate>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("deploymentType"u8);
-                writer.WriteObjectValue<ConfidentialLedgerDeploymentType>(DeploymentType, options);
+                writer.WriteObjectValue(DeploymentType, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

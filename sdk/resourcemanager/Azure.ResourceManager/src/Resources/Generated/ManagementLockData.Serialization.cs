@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Owners)
                 {
-                    writer.WriteObjectValue<ManagementLockOwner>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

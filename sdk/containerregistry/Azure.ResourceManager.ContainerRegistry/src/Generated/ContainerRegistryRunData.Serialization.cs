@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WriteStartArray();
                 foreach (var item in OutputImages)
                 {
-                    writer.WriteObjectValue<ContainerRegistryImageDescriptor>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,27 +108,27 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(ImageUpdateTrigger))
             {
                 writer.WritePropertyName("imageUpdateTrigger"u8);
-                writer.WriteObjectValue<ContainerRegistryImageUpdateTrigger>(ImageUpdateTrigger, options);
+                writer.WriteObjectValue(ImageUpdateTrigger, options);
             }
             if (Optional.IsDefined(SourceTrigger))
             {
                 writer.WritePropertyName("sourceTrigger"u8);
-                writer.WriteObjectValue<ContainerRegistrySourceTriggerDescriptor>(SourceTrigger, options);
+                writer.WriteObjectValue(SourceTrigger, options);
             }
             if (Optional.IsDefined(TimerTrigger))
             {
                 writer.WritePropertyName("timerTrigger"u8);
-                writer.WriteObjectValue<ContainerRegistryTimerTriggerDescriptor>(TimerTrigger, options);
+                writer.WriteObjectValue(TimerTrigger, options);
             }
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue<ContainerRegistryPlatformProperties>(Platform, options);
+                writer.WriteObjectValue(Platform, options);
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue<ContainerRegistryAgentProperties>(AgentConfiguration, options);
+                writer.WriteObjectValue(AgentConfiguration, options);
             }
             if (Optional.IsDefined(SourceRegistryAuth))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (options.Format != "W" && Optional.IsDefined(LogArtifact))
             {
                 writer.WritePropertyName("logArtifact"u8);
-                writer.WriteObjectValue<ContainerRegistryImageDescriptor>(LogArtifact, options);
+                writer.WriteObjectValue(LogArtifact, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {

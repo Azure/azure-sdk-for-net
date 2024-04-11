@@ -90,7 +90,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PageViewPerfData>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

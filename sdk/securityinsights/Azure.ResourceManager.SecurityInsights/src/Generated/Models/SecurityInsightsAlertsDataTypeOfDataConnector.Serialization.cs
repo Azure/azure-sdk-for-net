@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Alerts))
             {
                 writer.WritePropertyName("alerts"u8);
-                writer.WriteObjectValue<DataConnectorDataTypeCommon>(Alerts, options);
+                writer.WriteObjectValue(Alerts, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue<StoreReadSettings>(StoreSettings);
+                writer.WriteObjectValue(StoreSettings);
             }
             if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue<BinaryReadSettings>(FormatSettings);
+                writer.WriteObjectValue(FormatSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -145,7 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BinarySource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -153,7 +153,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, BinarySource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<BinarySource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override BinarySource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (options.Format != "W" && Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
-                writer.WriteObjectValue<LogicContentHash>(ContentHash, options);
+                writer.WriteObjectValue(ContentHash, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {

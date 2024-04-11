@@ -17,7 +17,7 @@ namespace Azure.Maps.Search.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue<GeoJsonGeometry>(Geometry);
+            writer.WriteObjectValue(Geometry);
             if (Common.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -88,7 +88,7 @@ namespace Azure.Maps.Search.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GeoJsonFeatureData>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(OSConfiguration))
             {
                 writer.WritePropertyName("osConfiguration"u8);
-                writer.WriteObjectValue<SapOSConfiguration>(OSConfiguration, options);
+                writer.WriteObjectValue(OSConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
-                writer.WriteObjectValue<LinuxSshConfiguration>(Ssh, options);
+                writer.WriteObjectValue(Ssh, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

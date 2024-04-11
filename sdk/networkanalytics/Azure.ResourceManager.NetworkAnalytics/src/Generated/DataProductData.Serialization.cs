@@ -136,17 +136,17 @@ namespace Azure.ResourceManager.NetworkAnalytics
             if (Optional.IsDefined(CustomerEncryptionKey))
             {
                 writer.WritePropertyName("customerEncryptionKey"u8);
-                writer.WriteObjectValue<EncryptionKeyDetails>(CustomerEncryptionKey, options);
+                writer.WriteObjectValue(CustomerEncryptionKey, options);
             }
             if (Optional.IsDefined(Networkacls))
             {
                 writer.WritePropertyName("networkacls"u8);
-                writer.WriteObjectValue<DataProductNetworkAcls>(Networkacls, options);
+                writer.WriteObjectValue(Networkacls, options);
             }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue<NetworkAnalyticsManagedResourceGroupConfiguration>(ManagedResourceGroupConfiguration, options);
+                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AvailableMinorVersions))
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             if (options.Format != "W" && Optional.IsDefined(ConsumptionEndpoints))
             {
                 writer.WritePropertyName("consumptionEndpoints"u8);
-                writer.WriteObjectValue<ConsumptionEndpointsProperties>(ConsumptionEndpoints, options);
+                writer.WriteObjectValue(ConsumptionEndpoints, options);
             }
             if (options.Format != "W" && Optional.IsDefined(KeyVaultUri))
             {

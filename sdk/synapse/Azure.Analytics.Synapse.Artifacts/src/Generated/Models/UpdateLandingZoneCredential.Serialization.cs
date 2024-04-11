@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue<SecureString>(SasToken);
+                writer.WriteObjectValue(SasToken);
             }
             writer.WriteEndObject();
         }
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UpdateLandingZoneCredential>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, UpdateLandingZoneCredential model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<UpdateLandingZoneCredential>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override UpdateLandingZoneCredential Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

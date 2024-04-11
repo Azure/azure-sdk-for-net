@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(TitleField))
             {
                 writer.WritePropertyName("titleField"u8);
-                writer.WriteObjectValue<SemanticField>(TitleField);
+                writer.WriteObjectValue(TitleField);
             }
             if (Optional.IsCollectionDefined(ContentFields))
             {
@@ -108,7 +108,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SemanticPrioritizedFields>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

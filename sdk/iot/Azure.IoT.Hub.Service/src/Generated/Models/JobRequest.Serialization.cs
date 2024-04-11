@@ -28,12 +28,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(CloudToDeviceMethod))
             {
                 writer.WritePropertyName("cloudToDeviceMethod"u8);
-                writer.WriteObjectValue<CloudToDeviceMethodRequest>(CloudToDeviceMethod);
+                writer.WriteObjectValue(CloudToDeviceMethod);
             }
             if (Optional.IsDefined(UpdateTwin))
             {
                 writer.WritePropertyName("updateTwin"u8);
-                writer.WriteObjectValue<TwinData>(UpdateTwin);
+                writer.WriteObjectValue(UpdateTwin);
             }
             if (Optional.IsDefined(QueryCondition))
             {
@@ -57,7 +57,7 @@ namespace Azure.IoT.Hub.Service.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<JobRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

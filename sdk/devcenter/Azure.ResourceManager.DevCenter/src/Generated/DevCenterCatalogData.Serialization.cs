@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue<DevCenterGitCatalog>(GitHub, options);
+                writer.WriteObjectValue(GitHub, options);
             }
             if (Optional.IsDefined(AdoGit))
             {
                 writer.WritePropertyName("adoGit"u8);
-                writer.WriteObjectValue<DevCenterGitCatalog>(AdoGit, options);
+                writer.WriteObjectValue(AdoGit, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

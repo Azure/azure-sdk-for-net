@@ -61,7 +61,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<WebAnonymousAuthentication>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, WebAnonymousAuthentication model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<WebAnonymousAuthentication>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override WebAnonymousAuthentication Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

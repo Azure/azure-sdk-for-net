@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ElasticSan
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue<ElasticSanPrivateLinkServiceConnectionState>(ConnectionState, options);
+            writer.WriteObjectValue(ConnectionState, options);
             if (Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(GmsaProfile))
             {
                 writer.WritePropertyName("gmsaProfile"u8);
-                writer.WriteObjectValue<WindowsGmsaProfile>(GmsaProfile, options);
+                writer.WriteObjectValue(GmsaProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

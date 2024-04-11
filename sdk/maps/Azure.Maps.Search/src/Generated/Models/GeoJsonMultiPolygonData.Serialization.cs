@@ -128,7 +128,7 @@ namespace Azure.Maps.Search.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GeoJsonMultiPolygonData>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

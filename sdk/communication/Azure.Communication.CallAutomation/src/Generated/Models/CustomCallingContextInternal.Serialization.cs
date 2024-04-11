@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CustomCallingContextInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

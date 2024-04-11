@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(AssignedLicense))
             {
                 writer.WritePropertyName("assignedLicense"u8);
-                writer.WriteObjectValue<HybridComputeLicense>(AssignedLicense, options);
+                writer.WriteObjectValue(AssignedLicense, options);
             }
             if (Optional.IsDefined(LicenseAssignmentState))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in EsuKeys)
                 {
-                    writer.WriteObjectValue<EsuKey>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

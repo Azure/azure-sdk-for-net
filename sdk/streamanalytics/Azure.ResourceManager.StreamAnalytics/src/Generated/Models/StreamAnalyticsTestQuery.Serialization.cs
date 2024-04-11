@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("streamingJob"u8);
-            writer.WriteObjectValue<StreamingJobData>(StreamingJob, options);
+            writer.WriteObjectValue(StreamingJob, options);
             writer.WritePropertyName("diagnostics"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(WriteUri))

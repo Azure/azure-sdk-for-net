@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 foreach (var item in Details)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<CollectionsSubscriptionsMappingDetails>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
