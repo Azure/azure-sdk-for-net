@@ -50,7 +50,7 @@ namespace Azure.AI.Translation.Text
         ///     https://api.cognitive.microsofttranslator.com).
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        protected TextTranslationClient(Uri endpoint) : this(endpoint, new TextTranslationClientOptions())
+        public TextTranslationClient(Uri endpoint) : this(endpoint, new TextTranslationClientOptions())
         {
         }
 
@@ -61,7 +61,7 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        protected TextTranslationClient(Uri endpoint, TextTranslationClientOptions options)
+        public TextTranslationClient(Uri endpoint, TextTranslationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new TextTranslationClientOptions();
