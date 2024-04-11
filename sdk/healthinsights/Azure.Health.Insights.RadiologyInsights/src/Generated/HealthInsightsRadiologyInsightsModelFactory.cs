@@ -525,7 +525,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="imagingProcedures"> Imaging procedures. </param>
         /// <param name="orderedProcedure"> Ordered procedure information from the document information or text. </param>
         /// <returns> A new <see cref="RadiologyInsights.RadiologyProcedureInference"/> instance for mocking. </returns>
-        public static RadiologyProcedureInference RadiologyProcedureInference(IEnumerable<FhirR4Extension> extension = null, IEnumerable<FhirR4CodeableConcept> procedureCodes = null, IEnumerable<ImagingProcedure> imagingProcedures = null, FhirR4Extendible orderedProcedure = null)
+        public static RadiologyProcedureInference RadiologyProcedureInference(IEnumerable<FhirR4Extension> extension = null, IEnumerable<FhirR4CodeableConcept> procedureCodes = null, IEnumerable<ImagingProcedure> imagingProcedures = null, OrderedProcedure orderedProcedure = null)
         {
             extension ??= new List<FhirR4Extension>();
             procedureCodes ??= new List<FhirR4CodeableConcept>();
@@ -584,10 +584,10 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// The available derived classes include <see cref="RadiologyInsights.GenericProcedureRecommendation"/> and <see cref="RadiologyInsights.ImagingProcedureRecommendation"/>.
         /// </param>
         /// <returns> A new <see cref="RadiologyInsights.FollowupRecommendationInference"/> instance for mocking. </returns>
-        public static FollowupRecommendationInference FollowupRecommendationInference(IEnumerable<FhirR4Extension> extension = null, string effectiveDateTime = null, FhirR4Period effectivePeriod = null, IEnumerable<FhirR4Extendible> findings = null, bool isConditional = default, bool isOption = default, bool isGuideline = default, bool isHedging = default, ProcedureRecommendation recommendedProcedure = null)
+        public static FollowupRecommendationInference FollowupRecommendationInference(IEnumerable<FhirR4Extension> extension = null, string effectiveDateTime = null, FhirR4Period effectivePeriod = null, IEnumerable<RecommendationFinding> findings = null, bool isConditional = default, bool isOption = default, bool isGuideline = default, bool isHedging = default, ProcedureRecommendation recommendedProcedure = null)
         {
             extension ??= new List<FhirR4Extension>();
-            findings ??= new List<FhirR4Extendible>();
+            findings ??= new List<RecommendationFinding>();
 
             return new FollowupRecommendationInference(
                 "followupRecommendation",
@@ -601,6 +601,19 @@ namespace Azure.Health.Insights.RadiologyInsights
                 isGuideline,
                 isHedging,
                 recommendedProcedure);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.RecommendationFinding"/>. </summary>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="finding"> Finding linked to a recommendation. </param>
+        /// <param name="criticalFinding"> Critical result linked to a recommendation. </param>
+        /// <param name="recommendationFindingStatus"> Recommendation finding status. </param>
+        /// <returns> A new <see cref="RadiologyInsights.RecommendationFinding"/> instance for mocking. </returns>
+        public static RecommendationFinding RecommendationFinding(IEnumerable<FhirR4Extension> extension = null, FhirR4Observation finding = null, CriticalResult criticalFinding = null, RecommendationFindingStatusType recommendationFindingStatus = default)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new RecommendationFinding(extension?.ToList(), finding, criticalFinding, recommendationFindingStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RadiologyInsights.GenericProcedureRecommendation"/>. </summary>
