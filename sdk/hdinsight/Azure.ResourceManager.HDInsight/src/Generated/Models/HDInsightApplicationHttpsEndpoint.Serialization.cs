@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             string subDomainSuffix = default;
             bool? disableGatewayAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accessModes"u8))
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HDInsightApplicationHttpsEndpoint(
                 accessModes ?? new ChangeTrackingList<string>(),
                 location,
