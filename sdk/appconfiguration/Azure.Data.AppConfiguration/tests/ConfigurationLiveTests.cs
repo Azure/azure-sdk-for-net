@@ -169,6 +169,7 @@ namespace Azure.Data.AppConfiguration.Tests
         [RecordedTest]
         public async Task DeleteSettingWithLabel()
         {
+            var troubleshootingLink = "https://aka.ms/azsdk/net/appconfiguration/troubleshoot";
             ConfigurationClient service = GetClient();
             ConfigurationSetting testSetting = CreateSetting();
 
@@ -190,6 +191,8 @@ namespace Azure.Data.AppConfiguration.Tests
                 });
 
                 Assert.AreEqual(404, e.Status);
+                Assert.IsNotEmpty(e.Message);
+                Assert.IsFalse(e.Message.Contains(troubleshootingLink));
             }
             finally
             {
