@@ -552,7 +552,7 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
             Argument.AssertNotNull(fileId, nameof(fileId));
 
-            CreateAssistantFileRequest createAssistantFileRequest = new CreateAssistantFileRequest(fileId);
+            CreateAssistantFileRequest createAssistantFileRequest = new CreateAssistantFileRequest(fileId, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await LinkAssistantFileAsync(assistantId, createAssistantFileRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(AssistantFile.FromResponse(response), response);
@@ -569,7 +569,7 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
             Argument.AssertNotNull(fileId, nameof(fileId));
 
-            CreateAssistantFileRequest createAssistantFileRequest = new CreateAssistantFileRequest(fileId);
+            CreateAssistantFileRequest createAssistantFileRequest = new CreateAssistantFileRequest(fileId, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = LinkAssistantFile(assistantId, createAssistantFileRequest.ToRequestContent(), context);
             return Response.FromValue(AssistantFile.FromResponse(response), response);
@@ -1195,10 +1195,7 @@ namespace Azure.AI.OpenAI.Assistants
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            UpdateThreadRequest updateThreadRequest = new UpdateThreadRequest()
-            {
-                Metadata = metadata
-            };
+            UpdateThreadRequest updateThreadRequest = new UpdateThreadRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateThreadAsync(threadId, updateThreadRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(AssistantThread.FromResponse(response), response);
@@ -1214,10 +1211,7 @@ namespace Azure.AI.OpenAI.Assistants
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            UpdateThreadRequest updateThreadRequest = new UpdateThreadRequest()
-            {
-                Metadata = metadata
-            };
+            UpdateThreadRequest updateThreadRequest = new UpdateThreadRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateThread(threadId, updateThreadRequest.ToRequestContent(), context);
             return Response.FromValue(AssistantThread.FromResponse(response), response);
@@ -1415,20 +1409,9 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content)
-            {
-                Metadata = metadata
-            };
-            if (fileIds != null)
-            {
-                foreach (var value in fileIds)
-                {
-                    createMessageRequest.FileIds.Add(value);
-                }
-            }
-            CreateMessageRequest createMessageRequest0 = createMessageRequest;
+            CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateMessageAsync(threadId, createMessageRequest0.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await CreateMessageAsync(threadId, createMessageRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(ThreadMessage.FromResponse(response), response);
         }
 
@@ -1446,20 +1429,9 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content)
-            {
-                Metadata = metadata
-            };
-            if (fileIds != null)
-            {
-                foreach (var value in fileIds)
-                {
-                    createMessageRequest.FileIds.Add(value);
-                }
-            }
-            CreateMessageRequest createMessageRequest0 = createMessageRequest;
+            CreateMessageRequest createMessageRequest = new CreateMessageRequest(role, content, fileIds?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CreateMessage(threadId, createMessageRequest0.ToRequestContent(), context);
+            Response response = CreateMessage(threadId, createMessageRequest.ToRequestContent(), context);
             return Response.FromValue(ThreadMessage.FromResponse(response), response);
         }
 
@@ -1773,10 +1745,7 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
-            UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest()
-            {
-                Metadata = metadata
-            };
+            UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateMessageAsync(threadId, messageId, updateMessageRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(ThreadMessage.FromResponse(response), response);
@@ -1794,10 +1763,7 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
-            UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest()
-            {
-                Metadata = metadata
-            };
+            UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateMessage(threadId, messageId, updateMessageRequest.ToRequestContent(), context);
             return Response.FromValue(ThreadMessage.FromResponse(response), response);
@@ -2465,10 +2431,7 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            UpdateRunRequest updateRunRequest = new UpdateRunRequest()
-            {
-                Metadata = metadata
-            };
+            UpdateRunRequest updateRunRequest = new UpdateRunRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateRunAsync(threadId, runId, updateRunRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
@@ -2486,10 +2449,7 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            UpdateRunRequest updateRunRequest = new UpdateRunRequest()
-            {
-                Metadata = metadata
-            };
+            UpdateRunRequest updateRunRequest = new UpdateRunRequest(metadata ?? new ChangeTrackingDictionary<string, string>(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateRun(threadId, runId, updateRunRequest.ToRequestContent(), context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
@@ -2584,7 +2544,7 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList());
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await SubmitToolOutputsToRunAsync(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
@@ -2603,7 +2563,7 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList());
+            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = SubmitToolOutputsToRun(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
@@ -3225,10 +3185,7 @@ namespace Azure.AI.OpenAI.Assistants
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose)
-            {
-                Filename = filename
-            };
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UploadFileAsync(uploadFileRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(OpenAIFile.FromResponse(response), response);
@@ -3244,10 +3201,7 @@ namespace Azure.AI.OpenAI.Assistants
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose)
-            {
-                Filename = filename
-            };
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UploadFile(uploadFileRequest.ToRequestContent(), context);
             return Response.FromValue(OpenAIFile.FromResponse(response), response);
