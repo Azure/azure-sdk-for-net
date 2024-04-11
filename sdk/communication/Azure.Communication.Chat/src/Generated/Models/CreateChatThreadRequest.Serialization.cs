@@ -23,7 +23,7 @@ namespace Azure.Communication.Chat
                 writer.WriteStartArray();
                 foreach (var item in Participants)
                 {
-                    writer.WriteObjectValue<ChatParticipantInternal>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -34,7 +34,7 @@ namespace Azure.Communication.Chat
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CreateChatThreadRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

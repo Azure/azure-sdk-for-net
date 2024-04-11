@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             writer.WriteStartArray();
             foreach (var item in Resources)
             {
-                writer.WriteObjectValue<ResourceMetadata>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
-                writer.WriteObjectValue<ReportComplianceStatus>(ComplianceStatus, options);
+                writer.WriteObjectValue(ComplianceStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

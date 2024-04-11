@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(OAuth2))
             {
                 writer.WritePropertyName("oAuth2"u8);
-                writer.WriteObjectValue<OAuth2AuthenticationSettingsContract>(OAuth2, options);
+                writer.WriteObjectValue(OAuth2, options);
             }
             if (Optional.IsDefined(OpenId))
             {
                 writer.WritePropertyName("openid"u8);
-                writer.WriteObjectValue<OpenIdAuthenticationSettingsContract>(OpenId, options);
+                writer.WriteObjectValue(OpenId, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

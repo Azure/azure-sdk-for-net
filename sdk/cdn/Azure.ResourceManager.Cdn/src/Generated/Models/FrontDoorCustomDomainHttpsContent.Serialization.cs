@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (Secret != null)
                 {
                     writer.WritePropertyName("secret"u8);
-                    writer.WriteObjectValue<FrontDoorCustomDomainHttpsContentSecret>(Secret, options);
+                    writer.WriteObjectValue(Secret, options);
                 }
                 else
                 {

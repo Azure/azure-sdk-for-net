@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<BillingBenefitsSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue<BillingBenefitsAppliedScopeProperties>(AppliedScopeProperties, options);
+                writer.WriteObjectValue(AppliedScopeProperties, options);
             }
             if (Optional.IsDefined(Quantity))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(ReservedResourceProperties))
             {
                 writer.WritePropertyName("reservedResourceProperties"u8);
-                writer.WriteObjectValue<ReservationOrderAliasRequestPropertiesReservedResourceProperties>(ReservedResourceProperties, options);
+                writer.WriteObjectValue(ReservedResourceProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

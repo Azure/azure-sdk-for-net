@@ -41,7 +41,7 @@ namespace Azure.AI.Language.QuestionAnswering
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnswersFromTextOptions>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

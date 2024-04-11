@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Avs
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<AvsSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue<AutomationContentSource>(Source, options);
+                writer.WriteObjectValue(Source, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Automation.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<DscConfigurationParameterDefinition>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

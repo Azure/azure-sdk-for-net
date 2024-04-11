@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartArray();
             foreach (var item in InboundNatPools)
             {
-                writer.WriteObjectValue<BatchInboundNatPool>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dialog"u8);
-            writer.WriteObjectValue<DialogUpdateBase>(Dialog);
+            writer.WriteObjectValue(Dialog);
             if (Optional.IsDefined(OperationCallbackUri))
             {
                 writer.WritePropertyName("operationCallbackUri"u8);
@@ -34,7 +34,7 @@ namespace Azure.Communication.CallAutomation
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UpdateDialogRequestInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

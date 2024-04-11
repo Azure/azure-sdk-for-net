@@ -17,7 +17,7 @@ namespace Azure.Communication.Chat
         {
             writer.WriteStartObject();
             writer.WritePropertyName("communicationIdentifier"u8);
-            writer.WriteObjectValue<CommunicationIdentifierModel>(CommunicationIdentifier);
+            writer.WriteObjectValue(CommunicationIdentifier);
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -77,7 +77,7 @@ namespace Azure.Communication.Chat
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ChatParticipantInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

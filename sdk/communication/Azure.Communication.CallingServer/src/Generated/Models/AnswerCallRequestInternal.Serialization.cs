@@ -22,7 +22,7 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
-                writer.WriteObjectValue<MediaStreamingOptionsInternal>(MediaStreamingConfiguration);
+                writer.WriteObjectValue(MediaStreamingConfiguration);
             }
             writer.WriteEndObject();
         }
@@ -31,7 +31,7 @@ namespace Azure.Communication.CallingServer
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnswerCallRequestInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

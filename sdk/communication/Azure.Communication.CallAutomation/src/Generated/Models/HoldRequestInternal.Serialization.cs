@@ -16,11 +16,11 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue<CommunicationIdentifierModel>(TargetParticipant);
+            writer.WriteObjectValue(TargetParticipant);
             if (Optional.IsDefined(PlaySourceInfo))
             {
                 writer.WritePropertyName("playSourceInfo"u8);
-                writer.WriteObjectValue<PlaySourceInternal>(PlaySourceInfo);
+                writer.WriteObjectValue(PlaySourceInfo);
             }
             if (Optional.IsDefined(OperationContext))
             {
@@ -39,7 +39,7 @@ namespace Azure.Communication.CallAutomation
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<HoldRequestInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }
