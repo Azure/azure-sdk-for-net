@@ -285,6 +285,34 @@ builder.Services.ConfigureOpenTelemetryMeterProvider(metrics =>
 
 Refer to [Drop an instrument](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/metrics/customizing-the-sdk#drop-an-instrument) for more examples.
 
+#### Disable Azure SDK Logs
+
+By default, the Azure Monitor Distro collects [client library requests and responses to Azure services](https://learn.microsoft.com/dotnet/azure/sdk/logging#logging-using-azuremonitoropentelemetryaspnetcore).
+These are visible in your application's console output as well as in the Application Insights Traces.
+
+This can be configured or disabled in the appsettings.json.
+
+- You can control the log level of individual sources
+    ```json
+    {
+      "Logging": {
+        "LogLevel": {
+          "Azure.Core": "Debug"
+        }
+      }
+    }
+    ```
+- or you can disable entirely
+    ```json
+    {
+      "Logging": {
+        "LogLevel": {
+          "Azure": "None"
+        }
+      }
+    }
+    ```
+
 ## Key concepts
 
 The Azure Monitor Distro is a distribution package that facilitates users in sending telemetry data to Azure Monitor. It encompasses the .NET OpenTelemetry SDK and instrumentation libraries for ASP.NET Core, HttpClient, and SQLClient, ensuring seamless integration and data collection.
