@@ -297,7 +297,7 @@ This can be configured or disabled in the appsettings.json.
     {
       "Logging": {
         "LogLevel": {
-          "Azure.Core": "Debug"
+          "Azure.Core": "Warning"
         }
       }
     }
