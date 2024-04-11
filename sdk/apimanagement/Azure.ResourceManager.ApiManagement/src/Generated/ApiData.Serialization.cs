@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
-            if (Optional.IsDefined(TermsOfServiceUri))
+            if (Optional.IsDefined(TermsOfServiceLink))
             {
                 writer.WritePropertyName("termsOfServiceUrl"u8);
-                writer.WriteStringValue(TermsOfServiceUri.AbsoluteUri);
+                writer.WriteStringValue(TermsOfServiceLink);
             }
             if (Optional.IsDefined(Contact))
             {
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ServiceUri))
+            if (Optional.IsDefined(ServiceUriLink))
             {
                 writer.WritePropertyName("serviceUrl"u8);
-                writer.WriteStringValue(ServiceUri.AbsoluteUri);
+                writer.WriteStringValue(ServiceUriLink);
             }
             if (Optional.IsDefined(Path))
             {
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.ApiManagement
             string apiVersionDescription = default;
             ResourceIdentifier apiVersionSetId = default;
             bool? subscriptionRequired = default;
-            Uri termsOfServiceUri = default;
+            string termsOfServiceUri = default;
             ApiContactInformation contact = default;
             ApiLicenseInformation license = default;
             ResourceIdentifier sourceApiId = default;
             string displayName = default;
-            Uri serviceUri = default;
+            string serviceUri = default;
             string path = default;
             IList<ApiOperationInvokableProtocol> protocols = default;
             ApiVersionSetContractDetails apiVersionSet = default;
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ApiManagement
                         }
                         if (property0.NameEquals("termsOfServiceUrl"u8))
                         {
-                            DeserializetermsOfServiceUrlValue(property0, ref termsOfServiceUri);
+                            termsOfServiceUri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("contact"u8))
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ApiManagement
                         }
                         if (property0.NameEquals("serviceUrl"u8))
                         {
-                            DeserializeServiceUriValue(property0, ref serviceUri);
+                            serviceUri = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("path"u8))

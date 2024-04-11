@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                     Query = "query3037",
                 },
                 DisplayName = "apiname1463",
-                ServiceUri = new Uri("http://newechoapi.cloudapp.net/api"),
+                ServiceUriLink = "http://newechoapi.cloudapp.net/api",
                 Path = "newapiPath",
                 Protocols =
 {
@@ -363,7 +363,7 @@ ApiOperationInvokableProtocol.Https,ApiOperationInvokableProtocol.Http
                 IsSubscriptionRequired = true,
                 SourceApiId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/58a4aeac497000007d040001"),
                 DisplayName = "Echo API2",
-                ServiceUri = new Uri("http://echoapi.cloudapp.net/api"),
+                ServiceUriLink = "http://echoapi.cloudapp.net/api",
                 Path = "echo2",
                 Protocols =
 {
@@ -415,7 +415,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
                 IsSubscriptionRequired = true,
                 SourceApiId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/echoPath"),
                 DisplayName = "Echo API2",
-                ServiceUri = new Uri("http://echoapi.cloudapp.net/api"),
+                ServiceUriLink = "http://echoapi.cloudapp.net/api",
                 Path = "echo2",
                 Protocols =
 {
@@ -462,7 +462,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
             {
                 ApiRevisionDescription = "Creating a Revision of an existing API",
                 SourceApiId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/echo-api"),
-                ServiceUri = new Uri("http://echoapi.cloudapp.net/apiv3"),
+                ServiceUriLink = "http://echoapi.cloudapp.net/apiv3",
                 Path = "echo",
             };
             ArmOperation<ApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
@@ -503,7 +503,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
             string apiId = "apidocs";
             ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
-                ServiceUri = new Uri("http://petstore.swagger.wordnik.com/api"),
+                ServiceUriLink = "http://petstore.swagger.wordnik.com/api",
                 Path = "petstoreapi123",
                 Value = "http://apimpimportviaurl.azurewebsites.net/api/apidocs/",
                 Format = new ContentFormat("swagger-link"),
@@ -690,7 +690,7 @@ BearerTokenSendingMethod.AuthorizationHeader
                     Query = "subscription-key",
                 },
                 DisplayName = "Swagger Petstore",
-                ServiceUri = new Uri("http://petstore.swagger.io/v2"),
+                ServiceUriLink = "http://petstore.swagger.io/v2",
                 Path = "petstore",
                 Protocols =
 {
@@ -738,7 +738,7 @@ ApiOperationInvokableProtocol.Https
                 Description = "apidescription5200",
                 ApiType = ApiType.GraphQL,
                 DisplayName = "apiname1463",
-                ServiceUri = new Uri("https://api.spacex.land/graphql"),
+                ServiceUriLink = "https://api.spacex.land/graphql",
                 Path = "graphql-api",
                 Protocols =
 {
@@ -881,7 +881,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
                 Description = "apidescription5200",
                 ApiType = ApiType.WebSocket,
                 DisplayName = "apiname1463",
-                ServiceUri = new Uri("wss://echo.websocket.org"),
+                ServiceUriLink = "wss://echo.websocket.org",
                 Path = "newapiPath",
                 Protocols =
 {
