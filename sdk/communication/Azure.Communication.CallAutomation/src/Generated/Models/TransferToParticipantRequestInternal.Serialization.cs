@@ -16,11 +16,11 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue<CommunicationIdentifierModel>(TargetParticipant);
+            writer.WriteObjectValue(TargetParticipant);
             if (Optional.IsDefined(CustomCallingContext))
             {
                 writer.WritePropertyName("customCallingContext"u8);
-                writer.WriteObjectValue<CustomCallingContextInternal>(CustomCallingContext);
+                writer.WriteObjectValue(CustomCallingContext);
             }
             if (Optional.IsDefined(OperationContext))
             {
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(Transferee))
             {
                 writer.WritePropertyName("transferee"u8);
-                writer.WriteObjectValue<CommunicationIdentifierModel>(Transferee);
+                writer.WriteObjectValue(Transferee);
             }
             if (Optional.IsDefined(OperationCallbackUri))
             {
@@ -40,7 +40,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(SourceCallerIdNumber))
             {
                 writer.WritePropertyName("sourceCallerIdNumber"u8);
-                writer.WriteObjectValue<PhoneNumberIdentifierModel>(SourceCallerIdNumber);
+                writer.WriteObjectValue(SourceCallerIdNumber);
             }
             writer.WriteEndObject();
         }
@@ -49,7 +49,7 @@ namespace Azure.Communication.CallAutomation
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TransferToParticipantRequestInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

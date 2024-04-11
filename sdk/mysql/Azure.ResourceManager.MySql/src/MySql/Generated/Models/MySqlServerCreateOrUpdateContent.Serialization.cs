@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.MySql.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<MySqlSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<MySqlServerPropertiesForCreate>(Properties, options);
+            writer.WriteObjectValue(Properties, options);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (Optional.IsCollectionDefined(Tags))

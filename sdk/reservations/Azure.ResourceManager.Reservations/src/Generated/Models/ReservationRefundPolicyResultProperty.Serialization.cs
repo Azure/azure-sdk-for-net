@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ConsumedRefundsTotal))
             {
                 writer.WritePropertyName("consumedRefundsTotal"u8);
-                writer.WriteObjectValue<PurchasePrice>(ConsumedRefundsTotal, options);
+                writer.WriteObjectValue(ConsumedRefundsTotal, options);
             }
             if (Optional.IsDefined(MaxRefundLimit))
             {
                 writer.WritePropertyName("maxRefundLimit"u8);
-                writer.WriteObjectValue<PurchasePrice>(MaxRefundLimit, options);
+                writer.WriteObjectValue(MaxRefundLimit, options);
             }
             if (Optional.IsCollectionDefined(PolicyErrors))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyErrors)
                 {
-                    writer.WriteObjectValue<ReservationRefundPolicyError>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

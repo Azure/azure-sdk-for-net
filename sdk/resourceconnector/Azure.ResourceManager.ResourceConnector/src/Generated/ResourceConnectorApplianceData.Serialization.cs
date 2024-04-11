@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ResourceConnector
             if (Optional.IsDefined(InfrastructureConfig))
             {
                 writer.WritePropertyName("infrastructureConfig"u8);
-                writer.WriteObjectValue<AppliancePropertiesInfrastructureConfig>(InfrastructureConfig, options);
+                writer.WriteObjectValue(InfrastructureConfig, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

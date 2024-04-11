@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(HourlySchedule))
             {
                 writer.WritePropertyName("hourlySchedule"u8);
-                writer.WriteObjectValue<BackupHourlySchedule>(HourlySchedule, options);
+                writer.WriteObjectValue(HourlySchedule, options);
             }
             if (Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
-                writer.WriteObjectValue<BackupDailySchedule>(DailySchedule, options);
+                writer.WriteObjectValue(DailySchedule, options);
             }
             if (Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
-                writer.WriteObjectValue<BackupWeeklySchedule>(WeeklySchedule, options);
+                writer.WriteObjectValue(WeeklySchedule, options);
             }
             writer.WritePropertyName("schedulePolicyType"u8);
             writer.WriteStringValue(SchedulePolicyType);

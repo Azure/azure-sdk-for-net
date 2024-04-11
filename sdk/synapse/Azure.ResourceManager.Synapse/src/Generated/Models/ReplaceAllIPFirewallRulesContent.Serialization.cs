@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 foreach (var item in IPFirewallRules)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<SynapseIPFirewallRuleProperties>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

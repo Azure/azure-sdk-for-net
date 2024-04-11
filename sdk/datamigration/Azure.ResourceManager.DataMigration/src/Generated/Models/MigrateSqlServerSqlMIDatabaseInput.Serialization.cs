@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
-                writer.WriteObjectValue<FileShare>(BackupFileShare, options);
+                writer.WriteObjectValue(BackupFileShare, options);
             }
             if (Optional.IsCollectionDefined(BackupFilePaths))
             {

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in Info)
                 {
-                    writer.WriteObjectValue<ResourceHealthKeyValueItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

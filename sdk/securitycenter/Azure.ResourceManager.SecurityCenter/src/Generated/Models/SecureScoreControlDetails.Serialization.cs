@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue<SecureScoreControlDefinitionItem>(Definition, options);
+                writer.WriteObjectValue(Definition, options);
             }
             writer.WritePropertyName("score"u8);
             writer.WriteStartObject();

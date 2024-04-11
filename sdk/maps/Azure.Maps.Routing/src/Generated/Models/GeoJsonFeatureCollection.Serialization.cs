@@ -20,7 +20,7 @@ namespace Azure.Maps.Routing.Models
             writer.WriteStartArray();
             foreach (var item in Features)
             {
-                writer.WriteObjectValue<GeoJsonFeature>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);
@@ -32,7 +32,7 @@ namespace Azure.Maps.Routing.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GeoJsonFeatureCollection>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

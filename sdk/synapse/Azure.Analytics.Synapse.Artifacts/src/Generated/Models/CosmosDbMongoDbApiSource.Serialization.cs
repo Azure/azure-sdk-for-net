@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CursorMethods))
             {
                 writer.WritePropertyName("cursorMethods"u8);
-                writer.WriteObjectValue<MongoDbCursorMethodsProperties>(CursorMethods);
+                writer.WriteObjectValue(CursorMethods);
             }
             if (Optional.IsDefined(BatchSize))
             {
@@ -193,7 +193,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CosmosDbMongoDbApiSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -201,7 +201,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, CosmosDbMongoDbApiSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<CosmosDbMongoDbApiSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override CosmosDbMongoDbApiSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

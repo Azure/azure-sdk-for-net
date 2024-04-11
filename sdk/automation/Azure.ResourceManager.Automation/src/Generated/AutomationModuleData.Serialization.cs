@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue<AutomationContentLink>(ContentLink, options);
+                writer.WriteObjectValue(ContentLink, options);
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<AutomationModuleErrorInfo>(Error, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (Optional.IsDefined(CreatedOn))
             {

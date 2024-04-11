@@ -33,7 +33,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Choices)
             {
-                writer.WriteObjectValue<ChatChoice>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(PromptFilterResults))
@@ -42,7 +42,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in PromptFilterResults)
                 {
-                    writer.WriteObjectValue<ContentFilterResultsForPrompt>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(SystemFingerprint);
             }
             writer.WritePropertyName("usage"u8);
-            writer.WriteObjectValue<CompletionsUsage>(Usage, options);
+            writer.WriteObjectValue(Usage, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -126,7 +126,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ChatCompletions>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

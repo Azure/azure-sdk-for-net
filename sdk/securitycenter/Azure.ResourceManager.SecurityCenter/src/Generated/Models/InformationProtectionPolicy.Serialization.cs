@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 foreach (var item in Labels)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<SensitivityLabel>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 foreach (var item in InformationTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<SecurityInformationTypeInfo>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

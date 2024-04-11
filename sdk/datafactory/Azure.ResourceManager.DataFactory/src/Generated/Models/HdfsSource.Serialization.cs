@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DistcpSettings))
             {
                 writer.WritePropertyName("distcpSettings"u8);
-                writer.WriteObjectValue<DistcpSettings>(DistcpSettings, options);
+                writer.WriteObjectValue(DistcpSettings, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);

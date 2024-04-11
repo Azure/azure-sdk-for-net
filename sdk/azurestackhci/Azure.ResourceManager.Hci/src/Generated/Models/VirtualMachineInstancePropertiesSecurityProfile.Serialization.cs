@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
-                writer.WriteObjectValue<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>(UefiSettings, options);
+                writer.WriteObjectValue(UefiSettings, options);
             }
             if (Optional.IsDefined(SecurityType))
             {

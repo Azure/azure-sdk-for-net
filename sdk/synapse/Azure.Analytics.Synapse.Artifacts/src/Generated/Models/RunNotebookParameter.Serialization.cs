@@ -71,7 +71,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RunNotebookParameter>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, RunNotebookParameter model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<RunNotebookParameter>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override RunNotebookParameter Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

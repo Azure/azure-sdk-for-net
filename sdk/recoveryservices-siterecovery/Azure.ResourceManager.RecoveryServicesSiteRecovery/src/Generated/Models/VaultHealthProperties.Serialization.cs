@@ -32,24 +32,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VaultErrors)
                 {
-                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProtectedItemsHealth))
             {
                 writer.WritePropertyName("protectedItemsHealth"u8);
-                writer.WriteObjectValue<ResourceHealthSummary>(ProtectedItemsHealth, options);
+                writer.WriteObjectValue(ProtectedItemsHealth, options);
             }
             if (Optional.IsDefined(FabricsHealth))
             {
                 writer.WritePropertyName("fabricsHealth"u8);
-                writer.WriteObjectValue<ResourceHealthSummary>(FabricsHealth, options);
+                writer.WriteObjectValue(FabricsHealth, options);
             }
             if (Optional.IsDefined(ContainersHealth))
             {
                 writer.WritePropertyName("containersHealth"u8);
-                writer.WriteObjectValue<ResourceHealthSummary>(ContainersHealth, options);
+                writer.WriteObjectValue(ContainersHealth, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

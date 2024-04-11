@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(ReplacementMaps))
             {
                 writer.WritePropertyName("replacementMaps"u8);
-                writer.WriteObjectValue<ReplacementMaps>(ReplacementMaps, options);
+                writer.WriteObjectValue(ReplacementMaps, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

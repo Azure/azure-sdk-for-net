@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(SecurityToken))
             {
                 writer.WritePropertyName("securityToken"u8);
-                writer.WriteObjectValue<SourceControlSecurityTokenProperties>(SecurityToken, options);
+                writer.WriteObjectValue(SecurityToken, options);
             }
             if (Optional.IsDefined(Description))
             {

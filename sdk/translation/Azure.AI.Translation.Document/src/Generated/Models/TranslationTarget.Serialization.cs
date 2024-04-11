@@ -30,7 +30,7 @@ namespace Azure.AI.Translation.Document
                 writer.WriteStartArray();
                 foreach (var item in Glossaries)
                 {
-                    writer.WriteObjectValue<TranslationGlossary>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -46,7 +46,7 @@ namespace Azure.AI.Translation.Document
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TranslationTarget>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

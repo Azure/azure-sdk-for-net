@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             if (Optional.IsDefined(StorageQosPolicy))
             {
                 writer.WritePropertyName("storageQoSPolicy"u8);
-                writer.WriteObjectValue<ScVmmStorageQosPolicyDetails>(StorageQosPolicy, options);
+                writer.WriteObjectValue(StorageQosPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

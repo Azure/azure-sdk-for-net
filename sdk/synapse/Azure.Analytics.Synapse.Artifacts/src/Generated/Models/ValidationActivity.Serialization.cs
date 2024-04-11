@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<ActivityDependency>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue<UserProperty>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue<object>(ChildItems);
             }
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue<DatasetReference>(Dataset);
+            writer.WriteObjectValue(Dataset);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -258,7 +258,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ValidationActivity>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -266,7 +266,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, ValidationActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<ValidationActivity>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override ValidationActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

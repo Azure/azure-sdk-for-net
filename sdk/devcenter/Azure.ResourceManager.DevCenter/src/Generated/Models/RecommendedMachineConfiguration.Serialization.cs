@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (options.Format != "W" && Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
-                writer.WriteObjectValue<DevCenterResourceRange>(Memory, options);
+                writer.WriteObjectValue(Memory, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VCpus))
             {
                 writer.WritePropertyName("vCPUs"u8);
-                writer.WriteObjectValue<DevCenterResourceRange>(VCpus, options);
+                writer.WriteObjectValue(VCpus, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

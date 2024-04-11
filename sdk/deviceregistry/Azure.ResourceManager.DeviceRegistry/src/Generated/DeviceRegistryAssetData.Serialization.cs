@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DeviceRegistry
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue<DeviceRegistryExtendedLocation>(ExtendedLocation, options);
+            writer.WriteObjectValue(ExtendedLocation, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 writer.WriteStartArray();
                 foreach (var item in DataPoints)
                 {
-                    writer.WriteObjectValue<DataPoint>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -194,14 +194,14 @@ namespace Azure.ResourceManager.DeviceRegistry
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue<AssetEvent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<AssetStatus>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

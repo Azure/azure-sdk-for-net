@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Claims))
             {
                 writer.WritePropertyName("claims"u8);
-                writer.WriteObjectValue<RuleManagementEventClaimsDataSource>(Claims, options);
+                writer.WriteObjectValue(Claims, options);
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);

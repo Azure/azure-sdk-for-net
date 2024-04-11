@@ -100,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<LinkedServiceReference>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, LinkedServiceReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<LinkedServiceReference>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override LinkedServiceReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

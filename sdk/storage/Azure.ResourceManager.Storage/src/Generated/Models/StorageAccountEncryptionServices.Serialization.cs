@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Blob))
             {
                 writer.WritePropertyName("blob"u8);
-                writer.WriteObjectValue<StorageEncryptionService>(Blob, options);
+                writer.WriteObjectValue(Blob, options);
             }
             if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
-                writer.WriteObjectValue<StorageEncryptionService>(File, options);
+                writer.WriteObjectValue(File, options);
             }
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
-                writer.WriteObjectValue<StorageEncryptionService>(Table, options);
+                writer.WriteObjectValue(Table, options);
             }
             if (Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue"u8);
-                writer.WriteObjectValue<StorageEncryptionService>(Queue, options);
+                writer.WriteObjectValue(Queue, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

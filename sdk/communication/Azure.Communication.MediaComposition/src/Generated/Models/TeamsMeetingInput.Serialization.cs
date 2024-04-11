@@ -69,7 +69,7 @@ namespace Azure.Communication.MediaComposition
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TeamsMeetingInput>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

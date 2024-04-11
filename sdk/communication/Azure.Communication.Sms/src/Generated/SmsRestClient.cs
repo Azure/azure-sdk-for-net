@@ -57,7 +57,7 @@ namespace Azure.Communication.Sms
                 SmsSendOptions = smsSendOptions
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SendMessageRequest>(model);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message0;
         }

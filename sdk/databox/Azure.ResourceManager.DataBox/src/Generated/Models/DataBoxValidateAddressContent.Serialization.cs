@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.DataBox.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("shippingAddress"u8);
-            writer.WriteObjectValue<DataBoxShippingAddress>(ShippingAddress, options);
+            writer.WriteObjectValue(ShippingAddress, options);
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue<TransportPreferences>(TransportPreferences, options);
+                writer.WriteObjectValue(TransportPreferences, options);
             }
             writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());

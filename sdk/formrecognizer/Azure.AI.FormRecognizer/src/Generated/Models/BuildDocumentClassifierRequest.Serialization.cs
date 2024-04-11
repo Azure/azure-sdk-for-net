@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             foreach (var item in DocTypes)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<ClassifierDocumentTypeDetails>(item.Value);
+                writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -37,7 +37,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BuildDocumentClassifierRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

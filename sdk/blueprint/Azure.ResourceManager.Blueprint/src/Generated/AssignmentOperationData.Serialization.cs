@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WriteStartArray();
                 foreach (var item in Deployments)
                 {
-                    writer.WriteObjectValue<AssignmentDeploymentJob>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

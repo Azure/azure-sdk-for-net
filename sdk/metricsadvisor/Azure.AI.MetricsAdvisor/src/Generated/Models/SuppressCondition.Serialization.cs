@@ -58,7 +58,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SuppressCondition>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

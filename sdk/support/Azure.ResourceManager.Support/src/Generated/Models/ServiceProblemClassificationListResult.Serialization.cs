@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WriteStartArray();
                 foreach (var item in ProblemClassificationResults)
                 {
-                    writer.WriteObjectValue<ServiceProblemClassificationResult>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

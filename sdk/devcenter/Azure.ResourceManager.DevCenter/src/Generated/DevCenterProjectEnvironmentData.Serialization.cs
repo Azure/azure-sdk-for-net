@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(CreatorRoleAssignment))
             {
                 writer.WritePropertyName("creatorRoleAssignment"u8);
-                writer.WriteObjectValue<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment>(CreatorRoleAssignment, options);
+                writer.WriteObjectValue(CreatorRoleAssignment, options);
             }
             if (Optional.IsCollectionDefined(UserRoleAssignments))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DevCenter
                 foreach (var item in UserRoleAssignments)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<DevCenterUserRoleAssignments>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

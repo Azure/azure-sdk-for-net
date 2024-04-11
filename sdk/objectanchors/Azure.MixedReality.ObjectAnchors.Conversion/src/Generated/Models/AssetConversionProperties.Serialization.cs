@@ -167,7 +167,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AssetConversionProperties>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

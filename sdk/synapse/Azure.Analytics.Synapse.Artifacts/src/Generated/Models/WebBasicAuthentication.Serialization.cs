@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("username"u8);
             writer.WriteObjectValue<object>(Username);
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue<SecretBase>(Password);
+            writer.WriteObjectValue(Password);
             writer.WritePropertyName("url"u8);
             writer.WriteObjectValue<object>(Url);
             writer.WritePropertyName("authenticationType"u8);
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<WebBasicAuthentication>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -85,7 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, WebBasicAuthentication model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<WebBasicAuthentication>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override WebBasicAuthentication Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

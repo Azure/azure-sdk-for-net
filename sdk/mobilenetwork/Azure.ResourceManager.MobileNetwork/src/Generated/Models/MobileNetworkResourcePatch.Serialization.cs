@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue<MobileNetworkManagedServiceIdentity>(UserAssignedIdentity, options);
+                writer.WriteObjectValue(UserAssignedIdentity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

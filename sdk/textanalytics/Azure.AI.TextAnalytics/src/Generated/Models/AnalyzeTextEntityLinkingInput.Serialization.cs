@@ -18,12 +18,12 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(AnalysisInput))
             {
                 writer.WritePropertyName("analysisInput"u8);
-                writer.WriteObjectValue<MultiLanguageAnalysisInput>(AnalysisInput);
+                writer.WriteObjectValue(AnalysisInput);
             }
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue<EntityLinkingTaskParameters>(Parameters);
+                writer.WriteObjectValue(Parameters);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeTextEntityLinkingInput>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

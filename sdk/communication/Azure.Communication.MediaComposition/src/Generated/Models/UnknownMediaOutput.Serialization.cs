@@ -50,7 +50,7 @@ namespace Azure.Communication.MediaComposition
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnknownMediaOutput>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

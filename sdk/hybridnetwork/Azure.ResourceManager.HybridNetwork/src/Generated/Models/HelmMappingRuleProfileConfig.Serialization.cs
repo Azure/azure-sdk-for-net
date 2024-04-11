@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(InstallOptions))
             {
                 writer.WritePropertyName("installOptions"u8);
-                writer.WriteObjectValue<HelmInstallConfig>(InstallOptions, options);
+                writer.WriteObjectValue(InstallOptions, options);
             }
             if (Optional.IsDefined(UpgradeOptions))
             {
                 writer.WritePropertyName("upgradeOptions"u8);
-                writer.WriteObjectValue<HelmUpgradeConfig>(UpgradeOptions, options);
+                writer.WriteObjectValue(UpgradeOptions, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

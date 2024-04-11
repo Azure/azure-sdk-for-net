@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
-                writer.WriteObjectValue<IntegrationRuntimeDebugResource>(IntegrationRuntime);
+                writer.WriteObjectValue(IntegrationRuntime);
             }
             writer.WriteEndObject();
         }
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CreateDataFlowDebugSessionRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -109,7 +109,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, CreateDataFlowDebugSessionRequest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<CreateDataFlowDebugSessionRequest>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override CreateDataFlowDebugSessionRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

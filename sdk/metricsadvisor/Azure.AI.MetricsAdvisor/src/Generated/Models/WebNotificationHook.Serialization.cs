@@ -128,7 +128,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<WebNotificationHook>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

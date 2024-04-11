@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(SensitivityLabel))
             {
                 writer.WritePropertyName("sensitivityLabel"u8);
-                writer.WriteObjectValue<SynapseSensitivityLabelData>(SensitivityLabel, options);
+                writer.WriteObjectValue(SensitivityLabel, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

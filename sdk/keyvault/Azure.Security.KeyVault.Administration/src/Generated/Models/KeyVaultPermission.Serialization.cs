@@ -143,7 +143,7 @@ namespace Azure.Security.KeyVault.Administration
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<KeyVaultPermission>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

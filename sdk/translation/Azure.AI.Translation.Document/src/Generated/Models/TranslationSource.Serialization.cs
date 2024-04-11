@@ -40,7 +40,7 @@ namespace Azure.AI.Translation.Document
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TranslationSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

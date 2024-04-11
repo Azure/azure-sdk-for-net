@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue<LiveEventInput>(Input, options);
+                writer.WriteObjectValue(Input, options);
             }
             if (Optional.IsDefined(Preview))
             {
                 writer.WritePropertyName("preview"u8);
-                writer.WriteObjectValue<LiveEventPreview>(Preview, options);
+                writer.WriteObjectValue(Preview, options);
             }
             if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
-                writer.WriteObjectValue<LiveEventEncoding>(Encoding, options);
+                writer.WriteObjectValue(Encoding, options);
             }
             if (Optional.IsCollectionDefined(Transcriptions))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Transcriptions)
                 {
-                    writer.WriteObjectValue<LiveEventTranscription>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(CrossSiteAccessPolicies))
             {
                 writer.WritePropertyName("crossSiteAccessPolicies"u8);
-                writer.WriteObjectValue<CrossSiteAccessPolicies>(CrossSiteAccessPolicies, options);
+                writer.WriteObjectValue(CrossSiteAccessPolicies, options);
             }
             if (Optional.IsDefined(UseStaticHostname))
             {

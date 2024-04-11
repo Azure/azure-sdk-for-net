@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in NfvisFromSite)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<NfviDetails>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceElementTemplates)
                 {
-                    writer.WriteObjectValue<ResourceElementTemplate>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

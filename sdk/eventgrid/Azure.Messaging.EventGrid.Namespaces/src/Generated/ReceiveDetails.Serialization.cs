@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
             writer.WriteStartObject();
             writer.WritePropertyName("brokerProperties"u8);
-            writer.WriteObjectValue<BrokerProperties>(BrokerProperties, options);
+            writer.WriteObjectValue(BrokerProperties, options);
             writer.WritePropertyName("event"u8);
             WriteEvent(writer);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -136,7 +136,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ReceiveDetails>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -20,13 +20,13 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue<DocumentError>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue<TextDocumentBatchStatistics>(Statistics);
+                writer.WriteObjectValue(Statistics);
             }
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
@@ -92,7 +92,7 @@ namespace Azure.AI.TextAnalytics.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CustomResult>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Keywords)
                 {
-                    writer.WriteObjectValue<InformationProtectionKeyword>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

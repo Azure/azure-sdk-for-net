@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Peering
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue<PeeringServicePrefixEvent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

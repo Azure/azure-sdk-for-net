@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("vmSize"u8);
             writer.WriteStringValue(VmSize);
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue<SapImageReference>(ImageReference, options);
+            writer.WriteObjectValue(ImageReference, options);
             writer.WritePropertyName("osProfile"u8);
-            writer.WriteObjectValue<SapOSProfile>(OSProfile, options);
+            writer.WriteObjectValue(OSProfile, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

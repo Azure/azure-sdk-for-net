@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (TextWeights != null)
                 {
                     writer.WritePropertyName("text"u8);
-                    writer.WriteObjectValue<TextWeights>(TextWeights);
+                    writer.WriteObjectValue(TextWeights);
                 }
                 else
                 {
@@ -122,7 +122,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ScoringProfile>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

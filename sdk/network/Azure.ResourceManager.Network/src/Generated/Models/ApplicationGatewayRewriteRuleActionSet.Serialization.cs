@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaderConfigurations)
                 {
-                    writer.WriteObjectValue<ApplicationGatewayHeaderConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in ResponseHeaderConfigurations)
                 {
-                    writer.WriteObjectValue<ApplicationGatewayHeaderConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(UrlConfiguration))
             {
                 writer.WritePropertyName("urlConfiguration"u8);
-                writer.WriteObjectValue<ApplicationGatewayUrlConfiguration>(UrlConfiguration, options);
+                writer.WriteObjectValue(UrlConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

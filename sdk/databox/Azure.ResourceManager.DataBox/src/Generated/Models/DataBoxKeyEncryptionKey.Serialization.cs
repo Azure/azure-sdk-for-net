@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("identityProperties"u8);
-                writer.WriteObjectValue<DataBoxManagedIdentity>(ManagedIdentity, options);
+                writer.WriteObjectValue(ManagedIdentity, options);
             }
             if (Optional.IsDefined(KekUri))
             {

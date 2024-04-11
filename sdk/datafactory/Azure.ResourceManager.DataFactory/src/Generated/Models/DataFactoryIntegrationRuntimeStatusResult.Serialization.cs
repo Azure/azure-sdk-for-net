@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<IntegrationRuntimeStatus>(Properties, options);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

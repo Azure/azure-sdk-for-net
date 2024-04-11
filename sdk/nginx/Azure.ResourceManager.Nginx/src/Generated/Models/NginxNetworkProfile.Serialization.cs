@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(FrontEndIPConfiguration))
             {
                 writer.WritePropertyName("frontEndIPConfiguration"u8);
-                writer.WriteObjectValue<NginxFrontendIPConfiguration>(FrontEndIPConfiguration, options);
+                writer.WriteObjectValue(FrontEndIPConfiguration, options);
             }
             if (Optional.IsDefined(NetworkInterfaceConfiguration))
             {
                 writer.WritePropertyName("networkInterfaceConfiguration"u8);
-                writer.WriteObjectValue<NginxNetworkInterfaceConfiguration>(NetworkInterfaceConfiguration, options);
+                writer.WriteObjectValue(NetworkInterfaceConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

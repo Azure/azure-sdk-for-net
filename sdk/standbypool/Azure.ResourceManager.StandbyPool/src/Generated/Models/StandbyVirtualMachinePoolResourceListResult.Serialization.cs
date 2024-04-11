@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<StandbyVirtualMachinePoolData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))

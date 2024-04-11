@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Runs)
                 {
-                    writer.WriteObjectValue<TriggeredJobRun>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

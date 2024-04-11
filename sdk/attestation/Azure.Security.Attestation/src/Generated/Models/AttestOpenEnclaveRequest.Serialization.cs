@@ -23,12 +23,12 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(RuntimeData))
             {
                 writer.WritePropertyName("runtimeData"u8);
-                writer.WriteObjectValue<RuntimeData>(RuntimeData);
+                writer.WriteObjectValue(RuntimeData);
             }
             if (Optional.IsDefined(InitTimeData))
             {
                 writer.WritePropertyName("initTimeData"u8);
-                writer.WriteObjectValue<InitTimeData>(InitTimeData);
+                writer.WriteObjectValue(InitTimeData);
             }
             if (Optional.IsDefined(DraftPolicyForAttestation))
             {
@@ -42,7 +42,7 @@ namespace Azure.Security.Attestation
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AttestOpenEnclaveRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

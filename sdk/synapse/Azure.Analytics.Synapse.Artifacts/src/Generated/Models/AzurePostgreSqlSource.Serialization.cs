@@ -161,7 +161,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzurePostgreSqlSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AzurePostgreSqlSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AzurePostgreSqlSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override AzurePostgreSqlSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

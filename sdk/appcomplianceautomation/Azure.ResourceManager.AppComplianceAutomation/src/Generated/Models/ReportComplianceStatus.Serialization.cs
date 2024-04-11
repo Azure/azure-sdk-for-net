@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (Optional.IsDefined(M365))
             {
                 writer.WritePropertyName("m365"u8);
-                writer.WriteObjectValue<OverviewStatus>(M365, options);
+                writer.WriteObjectValue(M365, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

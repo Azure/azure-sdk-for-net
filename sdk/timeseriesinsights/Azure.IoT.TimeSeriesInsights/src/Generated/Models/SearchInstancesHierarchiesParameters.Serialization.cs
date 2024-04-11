@@ -18,12 +18,12 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(Expand))
             {
                 writer.WritePropertyName("expand"u8);
-                writer.WriteObjectValue<HierarchiesExpandParameter>(Expand);
+                writer.WriteObjectValue(Expand);
             }
             if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
-                writer.WriteObjectValue<HierarchiesSortParameter>(Sort);
+                writer.WriteObjectValue(Sort);
             }
             if (Optional.IsDefined(PageSize))
             {
@@ -37,7 +37,7 @@ namespace Azure.IoT.TimeSeriesInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchInstancesHierarchiesParameters>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

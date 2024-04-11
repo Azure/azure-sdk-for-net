@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FeatureWindow != null)
                 {
                     writer.WritePropertyName("featureWindow"u8);
-                    writer.WriteObjectValue<FeatureWindow>(FeatureWindow, options);
+                    writer.WriteObjectValue(FeatureWindow, options);
                 }
                 else
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue<MaterializationComputeResource>(Resource, options);
+                writer.WriteObjectValue(Resource, options);
             }
             if (Optional.IsCollectionDefined(SparkConfiguration))
             {

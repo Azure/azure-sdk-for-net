@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(TemplateMappingRuleProfile))
             {
                 writer.WritePropertyName("templateMappingRuleProfile"u8);
-                writer.WriteObjectValue<ArmTemplateMappingRuleProfile>(TemplateMappingRuleProfile, options);
+                writer.WriteObjectValue(TemplateMappingRuleProfile, options);
             }
             if (Optional.IsDefined(ApplicationEnablement))
             {

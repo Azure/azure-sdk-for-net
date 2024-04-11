@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue<L3ExportRoutePolicy>(ExportRoutePolicy, options);
+                writer.WriteObjectValue(ExportRoutePolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

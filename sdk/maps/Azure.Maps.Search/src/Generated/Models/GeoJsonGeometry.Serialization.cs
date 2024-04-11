@@ -64,7 +64,7 @@ namespace Azure.Maps.Search.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GeoJsonGeometry>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

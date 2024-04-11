@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(BlobStorage))
             {
                 writer.WritePropertyName("blobStorage"u8);
-                writer.WriteObjectValue<BlobStorageInternal>(BlobStorage);
+                writer.WriteObjectValue(BlobStorage);
             }
             writer.WriteEndObject();
         }
@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ExternalStorageInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

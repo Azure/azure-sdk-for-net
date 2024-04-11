@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(AutoUser))
             {
                 writer.WritePropertyName("autoUser"u8);
-                writer.WriteObjectValue<BatchAutoUserSpecification>(AutoUser, options);
+                writer.WriteObjectValue(AutoUser, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

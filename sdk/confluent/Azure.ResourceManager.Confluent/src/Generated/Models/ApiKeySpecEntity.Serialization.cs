@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue<ApiKeyResourceEntity>(Resource, options);
+                writer.WriteObjectValue(Resource, options);
             }
             if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue<ApiKeyOwnerEntity>(Owner, options);
+                writer.WriteObjectValue(Owner, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

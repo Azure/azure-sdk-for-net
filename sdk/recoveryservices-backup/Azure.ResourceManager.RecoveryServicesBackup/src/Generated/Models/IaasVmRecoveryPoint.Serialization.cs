@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(KeyAndSecret))
             {
                 writer.WritePropertyName("keyAndSecret"u8);
-                writer.WriteObjectValue<KeyAndSecretDetails>(KeyAndSecret, options);
+                writer.WriteObjectValue(KeyAndSecret, options);
             }
             if (Optional.IsDefined(IsInstantIlrSessionActive))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RecoveryPointTierDetails)
                 {
-                    writer.WriteObjectValue<RecoveryPointTierInformationV2>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryPointDiskConfiguration))
             {
                 writer.WritePropertyName("recoveryPointDiskConfiguration"u8);
-                writer.WriteObjectValue<RecoveryPointDiskConfiguration>(RecoveryPointDiskConfiguration, options);
+                writer.WriteObjectValue(RecoveryPointDiskConfiguration, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in RecoveryPointMoveReadinessInfo)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<RecoveryPointMoveReadinessInfo>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
-                writer.WriteObjectValue<RecoveryPointProperties>(RecoveryPointProperties, options);
+                writer.WriteObjectValue(RecoveryPointProperties, options);
             }
             if (Optional.IsDefined(IsPrivateAccessEnabledOnAnyDisk))
             {

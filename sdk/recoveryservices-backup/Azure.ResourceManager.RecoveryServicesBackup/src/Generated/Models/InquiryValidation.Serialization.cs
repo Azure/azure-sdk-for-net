@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("errorDetail"u8);
-                writer.WriteObjectValue<BackupErrorDetail>(ErrorDetail, options);
+                writer.WriteObjectValue(ErrorDetail, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AdditionalDetail))
             {

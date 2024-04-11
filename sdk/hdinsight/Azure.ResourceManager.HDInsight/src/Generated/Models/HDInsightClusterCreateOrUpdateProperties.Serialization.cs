@@ -44,37 +44,37 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(ClusterDefinition))
             {
                 writer.WritePropertyName("clusterDefinition"u8);
-                writer.WriteObjectValue<HDInsightClusterDefinition>(ClusterDefinition, options);
+                writer.WriteObjectValue(ClusterDefinition, options);
             }
             if (Optional.IsDefined(KafkaRestProperties))
             {
                 writer.WritePropertyName("kafkaRestProperties"u8);
-                writer.WriteObjectValue<KafkaRestProperties>(KafkaRestProperties, options);
+                writer.WriteObjectValue(KafkaRestProperties, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue<HDInsightSecurityProfile>(SecurityProfile, options);
+                writer.WriteObjectValue(SecurityProfile, options);
             }
             if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue<ComputeProfile>(ComputeProfile, options);
+                writer.WriteObjectValue(ComputeProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue<StorageProfile>(StorageProfile, options);
+                writer.WriteObjectValue(StorageProfile, options);
             }
             if (Optional.IsDefined(DiskEncryptionProperties))
             {
                 writer.WritePropertyName("diskEncryptionProperties"u8);
-                writer.WriteObjectValue<HDInsightDiskEncryptionProperties>(DiskEncryptionProperties, options);
+                writer.WriteObjectValue(DiskEncryptionProperties, options);
             }
             if (Optional.IsDefined(EncryptionInTransitProperties))
             {
                 writer.WritePropertyName("encryptionInTransitProperties"u8);
-                writer.WriteObjectValue<EncryptionInTransitProperties>(EncryptionInTransitProperties, options);
+                writer.WriteObjectValue(EncryptionInTransitProperties, options);
             }
             if (Optional.IsDefined(MinSupportedTlsVersion))
             {
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(NetworkProperties))
             {
                 writer.WritePropertyName("networkProperties"u8);
-                writer.WriteObjectValue<HDInsightClusterNetworkProperties>(NetworkProperties, options);
+                writer.WriteObjectValue(NetworkProperties, options);
             }
             if (Optional.IsDefined(ComputeIsolationProperties))
             {
                 writer.WritePropertyName("computeIsolationProperties"u8);
-                writer.WriteObjectValue<HDInsightComputeIsolationProperties>(ComputeIsolationProperties, options);
+                writer.WriteObjectValue(ComputeIsolationProperties, options);
             }
             if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkConfigurations)
                 {
-                    writer.WriteObjectValue<HDInsightPrivateLinkConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -28,7 +28,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(VideoEncoderConfiguration))
             {
                 writer.WritePropertyName("videoEncoderConfiguration"u8);
-                writer.WriteObjectValue<VideoEncoderConfiguration>(VideoEncoderConfiguration);
+                writer.WriteObjectValue(VideoEncoderConfiguration);
             }
             writer.WriteEndObject();
         }
@@ -83,7 +83,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MediaProfile>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

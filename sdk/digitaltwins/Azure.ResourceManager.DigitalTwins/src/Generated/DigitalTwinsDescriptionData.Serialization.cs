@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DigitalTwins
                     writer.WriteStartArray();
                     foreach (var item in PrivateEndpointConnections)
                     {
-                        writer.WriteObjectValue<DigitalTwinsPrivateEndpointConnectionData>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }

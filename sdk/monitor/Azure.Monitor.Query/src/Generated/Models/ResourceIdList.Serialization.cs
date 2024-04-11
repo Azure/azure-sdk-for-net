@@ -37,7 +37,7 @@ namespace Azure.Monitor.Query.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ResourceIdList>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue<ContainerServiceMaintenanceSchedule>(Schedule, options);
+            writer.WriteObjectValue(Schedule, options);
             writer.WritePropertyName("durationHours"u8);
             writer.WriteNumberValue(DurationHours);
             if (Optional.IsDefined(UtcOffset))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in NotAllowedDates)
                 {
-                    writer.WriteObjectValue<ContainerServiceDateSpan>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

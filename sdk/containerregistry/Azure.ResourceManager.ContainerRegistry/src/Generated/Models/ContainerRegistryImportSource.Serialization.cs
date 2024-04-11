@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue<ContainerRegistryImportSourceCredentials>(Credentials, options);
+                writer.WriteObjectValue(Credentials, options);
             }
             writer.WritePropertyName("sourceImage"u8);
             writer.WriteStringValue(SourceImage);

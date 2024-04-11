@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartArray();
             foreach (var item in DisksToInclude)
             {
-                writer.WriteObjectValue<VMwareCbtDiskContent>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(LicenseType))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(TargetVmSecurityProfile))
             {
                 writer.WritePropertyName("targetVmSecurityProfile"u8);
-                writer.WriteObjectValue<VMwareCbtSecurityProfileProperties>(TargetVmSecurityProfile, options);
+                writer.WriteObjectValue(TargetVmSecurityProfile, options);
             }
             if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
             {

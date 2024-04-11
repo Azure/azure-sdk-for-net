@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(LocalNetworkAddressSpace))
             {
                 writer.WritePropertyName("localNetworkAddressSpace"u8);
-                writer.WriteObjectValue<AddressSpace>(LocalNetworkAddressSpace, options);
+                writer.WriteObjectValue(LocalNetworkAddressSpace, options);
             }
             if (Optional.IsDefined(GatewayIPAddress))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(BgpSettings))
             {
                 writer.WritePropertyName("bgpSettings"u8);
-                writer.WriteObjectValue<BgpSettings>(BgpSettings, options);
+                writer.WriteObjectValue(BgpSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {

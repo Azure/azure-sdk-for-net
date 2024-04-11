@@ -161,7 +161,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SalesforceMarketingCloudSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SalesforceMarketingCloudSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SalesforceMarketingCloudSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SalesforceMarketingCloudSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

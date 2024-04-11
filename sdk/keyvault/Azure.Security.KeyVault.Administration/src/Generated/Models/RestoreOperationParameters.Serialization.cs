@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sasTokenParameters"u8);
-            writer.WriteObjectValue<SASTokenParameter>(SasTokenParameters);
+            writer.WriteObjectValue(SasTokenParameters);
             writer.WritePropertyName("folderToRestore"u8);
             writer.WriteStringValue(FolderToRestore);
             writer.WriteEndObject();
@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RestoreOperationParameters>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

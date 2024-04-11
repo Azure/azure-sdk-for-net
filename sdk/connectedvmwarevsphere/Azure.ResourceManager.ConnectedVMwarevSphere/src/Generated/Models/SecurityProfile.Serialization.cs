@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
-                writer.WriteObjectValue<UefiSettings>(UefiSettings, options);
+                writer.WriteObjectValue(UefiSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

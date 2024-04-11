@@ -34,7 +34,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(ClientCredential))
             {
                 writer.WritePropertyName("clientCredential"u8);
-                writer.WriteObjectValue<OAuth2WebhookClientCredential>(ClientCredential, options);
+                writer.WriteObjectValue(ClientCredential, options);
             }
             if (Optional.IsDefined(WebhookUri))
             {
@@ -173,7 +173,7 @@ namespace Azure.Communication.JobRouter
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<WebhookRouterRule>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(SourceRegistry))
             {
                 writer.WritePropertyName("sourceRegistry"u8);
-                writer.WriteObjectValue<SourceRegistryCredentials>(SourceRegistry, options);
+                writer.WriteObjectValue(SourceRegistry, options);
             }
             if (Optional.IsCollectionDefined(CustomRegistries))
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 foreach (var item in CustomRegistries)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<CustomRegistryCredentials>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

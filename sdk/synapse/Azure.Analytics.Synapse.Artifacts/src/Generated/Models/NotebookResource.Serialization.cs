@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<Notebook>(Properties);
+            writer.WriteObjectValue(Properties);
             writer.WriteEndObject();
         }
 
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<NotebookResource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, NotebookResource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<NotebookResource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override NotebookResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

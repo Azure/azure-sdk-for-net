@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(Essentials))
             {
                 writer.WritePropertyName("essentials"u8);
-                writer.WriteObjectValue<ServiceAlertEssentials>(Essentials, options);
+                writer.WriteObjectValue(Essentials, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Context))
             {

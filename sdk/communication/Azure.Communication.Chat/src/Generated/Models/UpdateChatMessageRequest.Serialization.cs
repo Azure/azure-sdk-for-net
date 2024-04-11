@@ -38,7 +38,7 @@ namespace Azure.Communication.Chat
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UpdateChatMessageRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

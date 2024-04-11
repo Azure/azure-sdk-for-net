@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DeploymentConfiguration != null)
                 {
                     writer.WritePropertyName("deploymentConfiguration"u8);
-                    writer.WriteObjectValue<BatchDeploymentConfiguration>(DeploymentConfiguration, options);
+                    writer.WriteObjectValue(DeploymentConfiguration, options);
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Model != null)
                 {
                     writer.WritePropertyName("model"u8);
-                    writer.WriteObjectValue<MachineLearningAssetReferenceBase>(Model, options);
+                    writer.WriteObjectValue(Model, options);
                 }
                 else
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Resources != null)
                 {
                     writer.WritePropertyName("resources"u8);
-                    writer.WriteObjectValue<MachineLearningDeploymentResourceConfiguration>(Resources, options);
+                    writer.WriteObjectValue(Resources, options);
                 }
                 else
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RetrySettings != null)
                 {
                     writer.WritePropertyName("retrySettings"u8);
-                    writer.WriteObjectValue<MachineLearningBatchRetrySettings>(RetrySettings, options);
+                    writer.WriteObjectValue(RetrySettings, options);
                 }
                 else
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CodeConfiguration != null)
                 {
                     writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue<MachineLearningCodeConfiguration>(CodeConfiguration, options);
+                    writer.WriteObjectValue(CodeConfiguration, options);
                 }
                 else
                 {

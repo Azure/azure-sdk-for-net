@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(OptionBProperties))
             {
                 writer.WritePropertyName("optionBProperties"u8);
-                writer.WriteObjectValue<OptionBProperties>(OptionBProperties, options);
+                writer.WriteObjectValue(OptionBProperties, options);
             }
             if (Optional.IsDefined(OptionAProperties))
             {
                 writer.WritePropertyName("optionAProperties"u8);
-                writer.WriteObjectValue<VpnConfigurationOptionAProperties>(OptionAProperties, options);
+                writer.WriteObjectValue(OptionAProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

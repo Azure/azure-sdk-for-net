@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<MachineLearningSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<EncryptionUpdateProperties>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsDefined(FeatureStoreSettings))
             {
                 writer.WritePropertyName("featureStoreSettings"u8);
-                writer.WriteObjectValue<FeatureStoreSettings>(FeatureStoreSettings, options);
+                writer.WriteObjectValue(FeatureStoreSettings, options);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ManagedNetwork))
             {
                 writer.WritePropertyName("managedNetwork"u8);
-                writer.WriteObjectValue<ManagedNetworkSettings>(ManagedNetwork, options);
+                writer.WriteObjectValue(ManagedNetwork, options);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentity))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ServiceManagedResourcesSettings))
             {
                 writer.WritePropertyName("serviceManagedResourcesSettings"u8);
-                writer.WriteObjectValue<ServiceManagedResourcesSettings>(ServiceManagedResourcesSettings, options);
+                writer.WriteObjectValue(ServiceManagedResourcesSettings, options);
             }
             if (Optional.IsDefined(SoftDeleteRetentionInDays))
             {

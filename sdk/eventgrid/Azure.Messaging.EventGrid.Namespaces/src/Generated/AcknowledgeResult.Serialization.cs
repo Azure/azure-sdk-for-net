@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             writer.WriteStartArray();
             foreach (var item in FailedLockTokens)
             {
-                writer.WriteObjectValue<FailedLockToken>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("succeededLockTokens"u8);
@@ -156,7 +156,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AcknowledgeResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

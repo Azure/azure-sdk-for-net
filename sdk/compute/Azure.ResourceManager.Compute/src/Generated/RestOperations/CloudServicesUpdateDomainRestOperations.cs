@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<UpdateDomainIdentifier>(updateDomainIdentifier, new ModelReaderWriterOptions("W"));
+                content.JsonWriter.WriteObjectValue(updateDomainIdentifier, new ModelReaderWriterOptions("W"));
                 request.Content = content;
             }
             _userAgent.Apply(message);

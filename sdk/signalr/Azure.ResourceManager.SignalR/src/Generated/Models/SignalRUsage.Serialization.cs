@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue<SignalRUsageName>(Name, options);
+                writer.WriteObjectValue(Name, options);
             }
             if (Optional.IsDefined(Unit))
             {

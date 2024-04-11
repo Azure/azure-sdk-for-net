@@ -56,7 +56,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         internal RequestContent ToRequestContent()
         {
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TrajectoryPose>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

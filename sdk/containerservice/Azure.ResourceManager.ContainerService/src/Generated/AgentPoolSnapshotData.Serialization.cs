@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue<ContainerServiceCreationData>(CreationData, options);
+                writer.WriteObjectValue(CreationData, options);
             }
             if (Optional.IsDefined(SnapshotType))
             {

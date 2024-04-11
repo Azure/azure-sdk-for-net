@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue<HelmMappingRuleProfileConfig>(Options, options);
+                writer.WriteObjectValue(Options, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

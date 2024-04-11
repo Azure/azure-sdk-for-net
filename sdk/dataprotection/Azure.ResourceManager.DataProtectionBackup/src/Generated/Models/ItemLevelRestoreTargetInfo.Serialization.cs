@@ -30,20 +30,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartArray();
             foreach (var item in RestoreCriteria)
             {
-                writer.WriteObjectValue<ItemLevelRestoreCriteria>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("datasourceInfo"u8);
-            writer.WriteObjectValue<DataSourceInfo>(DatasourceInfo, options);
+            writer.WriteObjectValue(DatasourceInfo, options);
             if (Optional.IsDefined(DatasourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
-                writer.WriteObjectValue<DataSourceSetInfo>(DatasourceSetInfo, options);
+                writer.WriteObjectValue(DatasourceSetInfo, options);
             }
             if (Optional.IsDefined(DatasourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue<DataProtectionBackupAuthCredentials>(DatasourceAuthCredentials, options);
+                writer.WriteObjectValue(DatasourceAuthCredentials, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);

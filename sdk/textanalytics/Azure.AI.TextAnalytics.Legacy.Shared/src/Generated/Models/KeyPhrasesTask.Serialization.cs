@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue<KeyPhrasesTaskParameters>(Parameters);
+                writer.WriteObjectValue(Parameters);
             }
             if (Optional.IsDefined(TaskName))
             {
@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<KeyPhrasesTask>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

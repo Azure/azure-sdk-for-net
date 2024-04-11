@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
-                writer.WriteObjectValue<ParentManagementGroupInfo>(Parent, options);
+                writer.WriteObjectValue(Parent, options);
             }
             if (Optional.IsCollectionDefined(Path))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteStartArray();
                     foreach (var item in Path)
                     {
-                        writer.WriteObjectValue<ManagementGroupPathElement>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteStartArray();
                     foreach (var item in ManagementGroupAncestorChain)
                     {
-                        writer.WriteObjectValue<ManagementGroupPathElement>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }

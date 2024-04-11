@@ -32,21 +32,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WriteStringValue(NetworkVirtualApplianceId);
             }
             writer.WritePropertyName("vHub"u8);
-            writer.WriteObjectValue<IPAddressSpaceInfo>(Vhub, options);
+            writer.WriteObjectValue(Vhub, options);
             if (Optional.IsDefined(TrustSubnet))
             {
                 writer.WritePropertyName("trustSubnet"u8);
-                writer.WriteObjectValue<IPAddressSpaceInfo>(TrustSubnet, options);
+                writer.WriteObjectValue(TrustSubnet, options);
             }
             if (Optional.IsDefined(UnTrustSubnet))
             {
                 writer.WritePropertyName("unTrustSubnet"u8);
-                writer.WriteObjectValue<IPAddressSpaceInfo>(UnTrustSubnet, options);
+                writer.WriteObjectValue(UnTrustSubnet, options);
             }
             if (Optional.IsDefined(IPOfTrustSubnetForUdr))
             {
                 writer.WritePropertyName("ipOfTrustSubnetForUdr"u8);
-                writer.WriteObjectValue<IPAddressInfo>(IPOfTrustSubnetForUdr, options);
+                writer.WriteObjectValue(IPOfTrustSubnetForUdr, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

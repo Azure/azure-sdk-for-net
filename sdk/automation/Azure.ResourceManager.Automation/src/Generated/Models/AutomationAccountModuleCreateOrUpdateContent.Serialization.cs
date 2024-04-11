@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("contentLink"u8);
-            writer.WriteObjectValue<AutomationContentLink>(ContentLink, options);
+            writer.WriteObjectValue(ContentLink, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

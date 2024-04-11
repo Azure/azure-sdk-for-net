@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(NetworkIsolation))
             {
                 writer.WritePropertyName("networkIsolation"u8);
-                writer.WriteObjectValue<NetworkIsolationSettings>(NetworkIsolation, options);
+                writer.WriteObjectValue(NetworkIsolation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("web"u8);
-                writer.WriteObjectValue<WebConnectivityEndpoint>(Web, options);
+                writer.WriteObjectValue(Web, options);
             }
             if (Optional.IsCollectionDefined(Ssh))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Ssh)
                 {
-                    writer.WriteObjectValue<SshConnectivityEndpoint>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

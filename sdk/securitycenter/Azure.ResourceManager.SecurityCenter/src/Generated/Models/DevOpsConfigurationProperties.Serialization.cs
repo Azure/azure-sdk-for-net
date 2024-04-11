@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
-                writer.WriteObjectValue<DevOpsAuthorization>(Authorization, options);
+                writer.WriteObjectValue(Authorization, options);
             }
             if (Optional.IsDefined(AutoDiscovery))
             {

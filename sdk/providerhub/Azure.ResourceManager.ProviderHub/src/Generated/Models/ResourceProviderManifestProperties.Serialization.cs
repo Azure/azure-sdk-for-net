@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ProviderAuthentication))
             {
                 writer.WritePropertyName("providerAuthentication"u8);
-                writer.WriteObjectValue<ResourceProviderAuthentication>(ProviderAuthentication, options);
+                writer.WriteObjectValue(ProviderAuthentication, options);
             }
             if (Optional.IsCollectionDefined(ProviderAuthorizations))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ProviderAuthorizations)
                 {
-                    writer.WriteObjectValue<ResourceProviderAuthorization>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
-                writer.WriteObjectValue<FeaturesRule>(FeaturesRule, options);
+                writer.WriteObjectValue(FeaturesRule, options);
             }
             if (Optional.IsDefined(RequestHeaderOptions))
             {
                 writer.WritePropertyName("requestHeaderOptions"u8);
-                writer.WriteObjectValue<RequestHeaderOptions>(RequestHeaderOptions, options);
+                writer.WriteObjectValue(RequestHeaderOptions, options);
             }
             if (Optional.IsDefined(Management))
             {
                 writer.WritePropertyName("management"u8);
-                writer.WriteObjectValue<ResourceProviderManagement>(Management, options);
+                writer.WriteObjectValue(Management, options);
             }
             if (Optional.IsCollectionDefined(Capabilities))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue<ResourceProviderCapabilities>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(TemplateDeploymentOptions))
             {
                 writer.WritePropertyName("templateDeploymentOptions"u8);
-                writer.WriteObjectValue<TemplateDeploymentOptions>(TemplateDeploymentOptions, options);
+                writer.WriteObjectValue(TemplateDeploymentOptions, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -51,7 +51,7 @@ namespace Azure.Communication
         internal virtual RequestContent ToRequestContent()
         {
             var content = new CallingServer.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CommunicationUserIdentifierModel>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

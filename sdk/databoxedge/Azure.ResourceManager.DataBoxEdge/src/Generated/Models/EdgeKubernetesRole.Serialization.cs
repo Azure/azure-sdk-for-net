@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(KubernetesClusterInfo))
             {
                 writer.WritePropertyName("kubernetesClusterInfo"u8);
-                writer.WriteObjectValue<EdgeKubernetesClusterInfo>(KubernetesClusterInfo, options);
+                writer.WriteObjectValue(KubernetesClusterInfo, options);
             }
             if (Optional.IsDefined(KubernetesRoleResources))
             {
                 writer.WritePropertyName("kubernetesRoleResources"u8);
-                writer.WriteObjectValue<EdgeKubernetesRoleResources>(KubernetesRoleResources, options);
+                writer.WriteObjectValue(KubernetesRoleResources, options);
             }
             if (Optional.IsDefined(RoleStatus))
             {
