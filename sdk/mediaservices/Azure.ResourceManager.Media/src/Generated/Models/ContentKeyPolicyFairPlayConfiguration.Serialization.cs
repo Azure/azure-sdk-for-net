@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(OfflineRentalConfiguration))
             {
                 writer.WritePropertyName("offlineRentalConfiguration"u8);
-                writer.WriteObjectValue<ContentKeyPolicyFairPlayOfflineRentalConfiguration>(OfflineRentalConfiguration, options);
+                writer.WriteObjectValue(OfflineRentalConfiguration, options);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);

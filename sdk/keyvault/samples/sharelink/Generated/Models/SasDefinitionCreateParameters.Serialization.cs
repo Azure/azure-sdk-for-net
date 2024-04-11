@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             if (Optional.IsDefined(SasDefinitionAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue<SasDefinitionAttributes>(SasDefinitionAttributes);
+                writer.WriteObjectValue(SasDefinitionAttributes);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SasDefinitionCreateParameters>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

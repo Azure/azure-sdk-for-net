@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ForecastingSettings != null)
                 {
                     writer.WritePropertyName("forecastingSettings"u8);
-                    writer.WriteObjectValue<ForecastingSettings>(ForecastingSettings, options);
+                    writer.WriteObjectValue(ForecastingSettings, options);
                 }
                 else
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TrainingSettings != null)
                 {
                     writer.WritePropertyName("trainingSettings"u8);
-                    writer.WriteObjectValue<ForecastingTrainingSettings>(TrainingSettings, options);
+                    writer.WriteObjectValue(TrainingSettings, options);
                 }
                 else
                 {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FeaturizationSettings != null)
                 {
                     writer.WritePropertyName("featurizationSettings"u8);
-                    writer.WriteObjectValue<TableVerticalFeaturizationSettings>(FeaturizationSettings, options);
+                    writer.WriteObjectValue(FeaturizationSettings, options);
                 }
                 else
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FixedParameters != null)
                 {
                     writer.WritePropertyName("fixedParameters"u8);
-                    writer.WriteObjectValue<TableFixedParameters>(FixedParameters, options);
+                    writer.WriteObjectValue(FixedParameters, options);
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LimitSettings != null)
                 {
                     writer.WritePropertyName("limitSettings"u8);
-                    writer.WriteObjectValue<TableVerticalLimitSettings>(LimitSettings, options);
+                    writer.WriteObjectValue(LimitSettings, options);
                 }
                 else
                 {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NCrossValidations != null)
                 {
                     writer.WritePropertyName("nCrossValidations"u8);
-                    writer.WriteObjectValue<NCrossValidations>(NCrossValidations, options);
+                    writer.WriteObjectValue(NCrossValidations, options);
                 }
                 else
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in SearchSpace)
                     {
-                        writer.WriteObjectValue<TableParameterSubspace>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SweepSettings != null)
                 {
                     writer.WritePropertyName("sweepSettings"u8);
-                    writer.WriteObjectValue<TableSweepSettings>(SweepSettings, options);
+                    writer.WriteObjectValue(SweepSettings, options);
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TestData != null)
                 {
                     writer.WritePropertyName("testData"u8);
-                    writer.WriteObjectValue<MachineLearningTableJobInput>(TestData, options);
+                    writer.WriteObjectValue(TestData, options);
                 }
                 else
                 {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ValidationData != null)
                 {
                     writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue<MachineLearningTableJobInput>(ValidationData, options);
+                    writer.WriteObjectValue(ValidationData, options);
                 }
                 else
                 {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue<MachineLearningTableJobInput>(TrainingData, options);
+            writer.WriteObjectValue(TrainingData, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

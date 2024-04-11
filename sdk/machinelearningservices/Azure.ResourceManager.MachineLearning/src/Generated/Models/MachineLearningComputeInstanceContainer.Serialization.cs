@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
-                writer.WriteObjectValue<MachineLearningComputeInstanceEnvironmentInfo>(Environment, options);
+                writer.WriteObjectValue(Environment, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Services))
             {

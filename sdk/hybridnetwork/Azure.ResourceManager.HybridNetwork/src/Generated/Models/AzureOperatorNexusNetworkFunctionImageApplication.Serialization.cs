@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ArtifactProfile))
             {
                 writer.WritePropertyName("artifactProfile"u8);
-                writer.WriteObjectValue<AzureOperatorNexusImageArtifactProfile>(ArtifactProfile, options);
+                writer.WriteObjectValue(ArtifactProfile, options);
             }
             if (Optional.IsDefined(DeployParametersMappingRuleProfile))
             {
                 writer.WritePropertyName("deployParametersMappingRuleProfile"u8);
-                writer.WriteObjectValue<AzureOperatorNexusImageDeployMappingRuleProfile>(DeployParametersMappingRuleProfile, options);
+                writer.WriteObjectValue(DeployParametersMappingRuleProfile, options);
             }
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(DependsOnProfile))
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
-                writer.WriteObjectValue<DependsOnProfile>(DependsOnProfile, options);
+                writer.WriteObjectValue(DependsOnProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

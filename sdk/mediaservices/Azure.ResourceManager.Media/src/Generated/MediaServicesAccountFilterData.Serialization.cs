@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(PresentationTimeRange))
             {
                 writer.WritePropertyName("presentationTimeRange"u8);
-                writer.WriteObjectValue<PresentationTimeRange>(PresentationTimeRange, options);
+                writer.WriteObjectValue(PresentationTimeRange, options);
             }
             if (Optional.IsDefined(FirstQuality))
             {
                 writer.WritePropertyName("firstQuality"u8);
-                writer.WriteObjectValue<FirstQuality>(FirstQuality, options);
+                writer.WriteObjectValue(FirstQuality, options);
             }
             if (Optional.IsCollectionDefined(Tracks))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Tracks)
                 {
-                    writer.WriteObjectValue<FilterTrackSelection>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

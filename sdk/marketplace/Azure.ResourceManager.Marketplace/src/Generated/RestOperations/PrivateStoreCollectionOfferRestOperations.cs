@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<CollectionOffersByAllContextsPayload>(payload, new ModelReaderWriterOptions("W"));
+                content.JsonWriter.WriteObjectValue(payload, new ModelReaderWriterOptions("W"));
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Marketplace
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PrivateStoreOfferData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue<MultiContextAndPlansContent>(content, new ModelReaderWriterOptions("W"));
+                content0.JsonWriter.WriteObjectValue(content, new ModelReaderWriterOptions("W"));
                 request.Content = content0;
             }
             _userAgent.Apply(message);

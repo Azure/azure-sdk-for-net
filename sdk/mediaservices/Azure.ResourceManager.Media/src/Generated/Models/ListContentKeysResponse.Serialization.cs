@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in ContentKeys)
                 {
-                    writer.WriteObjectValue<StreamingLocatorContentKey>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

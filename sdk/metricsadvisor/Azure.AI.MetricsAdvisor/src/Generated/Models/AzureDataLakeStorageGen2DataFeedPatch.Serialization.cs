@@ -16,7 +16,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzureDataLakeStorageGen2DataFeedPatch>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

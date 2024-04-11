@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue<SapDiscoveryExtendedLocation>(ExtendedLocation, options);
+                writer.WriteObjectValue(ExtendedLocation, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue<SapMigrateError>(Errors, options);
+                writer.WriteObjectValue(Errors, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

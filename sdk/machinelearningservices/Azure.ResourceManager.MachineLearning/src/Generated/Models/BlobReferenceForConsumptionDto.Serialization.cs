@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Credential != null)
                 {
                     writer.WritePropertyName("credential"u8);
-                    writer.WriteObjectValue<PendingUploadCredentialDto>(Credential, options);
+                    writer.WriteObjectValue(Credential, options);
                 }
                 else
                 {

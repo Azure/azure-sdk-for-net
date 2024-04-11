@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WriteStartArray();
                 foreach (var item in Plans)
                 {
-                    writer.WriteObjectValue<PlanRequesterDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

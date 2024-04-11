@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(DefaultKey))
             {
                 writer.WritePropertyName("defaultKey"u8);
-                writer.WriteObjectValue<EncryptionSchemeDefaultKey>(DefaultKey, options);
+                writer.WriteObjectValue(DefaultKey, options);
             }
             if (Optional.IsCollectionDefined(KeyToTrackMappings))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyToTrackMappings)
                 {
-                    writer.WriteObjectValue<StreamingPolicyContentKey>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

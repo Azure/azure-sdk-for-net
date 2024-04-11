@@ -34,7 +34,7 @@ namespace Azure.Maps.Routing
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RouteMatrixQuery>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

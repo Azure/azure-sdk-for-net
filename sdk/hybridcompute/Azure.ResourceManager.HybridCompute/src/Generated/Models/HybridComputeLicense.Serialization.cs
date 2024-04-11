@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(LicenseDetails))
             {
                 writer.WritePropertyName("licenseDetails"u8);
-                writer.WriteObjectValue<HybridComputeLicenseDetails>(LicenseDetails, options);
+                writer.WriteObjectValue(LicenseDetails, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(TemplateArtifactProfile))
             {
                 writer.WritePropertyName("templateArtifactProfile"u8);
-                writer.WriteObjectValue<ArmTemplateArtifactProfile>(TemplateArtifactProfile, options);
+                writer.WriteObjectValue(TemplateArtifactProfile, options);
             }
             if (Optional.IsDefined(ArtifactStore))
             {

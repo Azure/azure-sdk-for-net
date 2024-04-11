@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
-                writer.WriteObjectValue<RoutingEndpoints>(Endpoints, options);
+                writer.WriteObjectValue(Endpoints, options);
             }
             if (Optional.IsCollectionDefined(Routes))
             {
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue<RoutingRuleProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(FallbackRoute))
             {
                 writer.WritePropertyName("fallbackRoute"u8);
-                writer.WriteObjectValue<IotHubFallbackRouteProperties>(FallbackRoute, options);
+                writer.WriteObjectValue(FallbackRoute, options);
             }
             if (Optional.IsCollectionDefined(Enrichments))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Enrichments)
                 {
-                    writer.WriteObjectValue<IotHubEnrichmentProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

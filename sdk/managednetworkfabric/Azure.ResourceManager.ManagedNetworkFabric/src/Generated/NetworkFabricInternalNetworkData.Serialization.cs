@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in ConnectedIPv4Subnets)
                 {
-                    writer.WriteObjectValue<ConnectedSubnet>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in ConnectedIPv6Subnets)
                 {
-                    writer.WriteObjectValue<ConnectedSubnet>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
-                writer.WriteObjectValue<ImportRoutePolicy>(ImportRoutePolicy, options);
+                writer.WriteObjectValue(ImportRoutePolicy, options);
             }
             if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue<ExportRoutePolicy>(ExportRoutePolicy, options);
+                writer.WriteObjectValue(ExportRoutePolicy, options);
             }
             if (Optional.IsDefined(IngressAclId))
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (Optional.IsDefined(BgpConfiguration))
             {
                 writer.WritePropertyName("bgpConfiguration"u8);
-                writer.WriteObjectValue<InternalNetworkBgpConfiguration>(BgpConfiguration, options);
+                writer.WriteObjectValue(BgpConfiguration, options);
             }
             if (Optional.IsDefined(StaticRouteConfiguration))
             {
                 writer.WritePropertyName("staticRouteConfiguration"u8);
-                writer.WriteObjectValue<InternalNetworkStaticRouteConfiguration>(StaticRouteConfiguration, options);
+                writer.WriteObjectValue(StaticRouteConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {

@@ -34,7 +34,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(EffectivePeriod))
             {
                 writer.WritePropertyName("effectivePeriod"u8);
-                writer.WriteObjectValue<FhirR4Period>(EffectivePeriod, options);
+                writer.WriteObjectValue(EffectivePeriod, options);
             }
             if (Optional.IsCollectionDefined(Findings))
             {
@@ -42,7 +42,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Findings)
                 {
-                    writer.WriteObjectValue<FhirR4Extendible>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WritePropertyName("isHedging"u8);
             writer.WriteBooleanValue(IsHedging);
             writer.WritePropertyName("recommendedProcedure"u8);
-            writer.WriteObjectValue<ProcedureRecommendation>(RecommendedProcedure, options);
+            writer.WriteObjectValue(RecommendedProcedure, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsCollectionDefined(Extension))
@@ -64,7 +64,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue<FhirR4Extension>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -255,7 +255,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<FollowupRecommendationInference>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue<StreamingEndpointCapacity>(Capacity, options);
+                writer.WriteObjectValue(Capacity, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<StreamingEndpointSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
