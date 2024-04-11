@@ -227,7 +227,16 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
             Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
-            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
+            var testException = testEventsRaised.FailedEvents.First().Exception;
+            Assert.NotNull(testException, "Excepted failure: Overwrite failure was supposed to be raised during the test");
+            if (testException is RequestFailedException rfe)
+            {
+                Assert.That(rfe.ErrorCode, Does.Contain(_expectedOverwriteExceptionMessage));
+            }
+            else
+            {
+                Assert.IsTrue(testException.Message.Contains(_expectedOverwriteExceptionMessage));
+            }
         }
 
         [RecordedTest]
@@ -624,8 +633,16 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             Assert.IsTrue(await ExistsAsync(objectClient));
             await testEventRaised.AssertSingleFailedCheck(1);
-            Assert.NotNull(testEventRaised.FailedEvents.First().Exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
-            Assert.IsTrue(testEventRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
+            var testException = testEventRaised.FailedEvents.First().Exception;
+            Assert.NotNull(testException, "Excepted failure: Overwrite failure was supposed to be raised during the test");
+            if (testException is RequestFailedException rfe)
+            {
+                Assert.That(rfe.ErrorCode, Does.Contain(_expectedOverwriteExceptionMessage));
+            }
+            else
+            {
+                Assert.IsTrue(testException.Message.Contains(_expectedOverwriteExceptionMessage));
+            }
             // Verify Upload - That we skipped over and didn't reupload something new.
             using Stream stream = await OpenReadAsync(objectClient);
             Assert.AreEqual(originalStream, stream);
