@@ -86,14 +86,18 @@ namespace CoreWCF
             var endpointUrlString = endpointUriBuilder.Uri.AbsoluteUri;
 
             AzureQueueStorageBinding azureQueueStorageBinding = new();
+            azureQueueStorageBinding.Security.Transport.ClientCredentialType = Microsoft.WCF.Azure.AzureClientCredentialType.ConnectionString;
+
             var channelFactory = new System.ServiceModel.ChannelFactory<ITestContract_EndToEndTest>(
                 azureQueueStorageBinding,
                 new System.ServiceModel.EndpointAddress(endpointUrlString));
 
-            channelFactory.Credentials.ServiceCertificate.SslCertificateAuthentication = new System.ServiceModel.Security.X509ServiceCertificateAuthentication
+            var azureCredentials = channelFactory.UseAzureCredentials();
+            azureCredentials.ServiceCertificate.SslCertificateAuthentication = new System.ServiceModel.Security.X509ServiceCertificateAuthentication
             {
                 CertificateValidationMode = System.ServiceModel.Security.X509CertificateValidationMode.None
             };
+            azureCredentials.ConnectionString = connectionString;
 
             var channel = channelFactory.CreateChannel();
             ((System.ServiceModel.Channels.IChannel)channel).Open();
