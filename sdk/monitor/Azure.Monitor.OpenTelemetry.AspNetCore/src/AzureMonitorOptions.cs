@@ -59,6 +59,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// </summary>
         public string StorageDirectory { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AzureMonitorOptions"/>.
+        /// </summary>
+        public AzureMonitorOptions()
+        {
+            // users can explicitly change it, but by default we don't want exporter self-diagnostics to be reporter to Azure Monitor.
+            this.Diagnostics.IsDistributedTracingEnabled = false;
+            this.Diagnostics.IsLoggingEnabled = false;
+        }
+
         internal void SetValueToExporterOptions(AzureMonitorExporterOptions exporterOptions)
         {
             exporterOptions.ConnectionString = ConnectionString;
@@ -70,6 +80,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             {
                 exporterOptions.Transport = Transport;
             }
+            exporterOptions.Diagnostics.IsDistributedTracingEnabled = Diagnostics.IsDistributedTracingEnabled;
+            exporterOptions.Diagnostics.IsLoggingEnabled = Diagnostics.IsLoggingEnabled;
         }
 
         internal void SetValueToLiveMetricsExporterOptions(LiveMetricsExporterOptions liveMetricsExporterOptions)
@@ -81,6 +93,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             {
                 liveMetricsExporterOptions.Transport = Transport;
             }
+            liveMetricsExporterOptions.Diagnostics.IsDistributedTracingEnabled = Diagnostics.IsDistributedTracingEnabled;
+            liveMetricsExporterOptions.Diagnostics.IsLoggingEnabled = Diagnostics.IsLoggingEnabled;
         }
     }
 }

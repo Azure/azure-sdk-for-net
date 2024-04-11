@@ -29,4 +29,14 @@ public class LiveMetricsExporterOptions : ClientOptions
     /// Get or sets the value of <see cref="TokenCredential" />.
     /// </summary>
     public TokenCredential Credential { get; set; }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LiveMetricsExporterOptions"/>.
+    /// </summary>
+    public LiveMetricsExporterOptions()
+    {
+        // users can explicitly change it, but by default we don't want live metrics self-diagnostics to be reported to Azure Monitor.
+        this.Diagnostics.IsDistributedTracingEnabled = false;
+        this.Diagnostics.IsLoggingEnabled = false;
+    }
 }
