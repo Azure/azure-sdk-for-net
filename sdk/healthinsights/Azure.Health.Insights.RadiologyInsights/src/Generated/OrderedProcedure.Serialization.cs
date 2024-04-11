@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    public partial class FhirR4Extendible : IUtf8JsonSerializable, IJsonModel<FhirR4Extendible>
+    public partial class OrderedProcedure : IUtf8JsonSerializable, IJsonModel<OrderedProcedure>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4Extendible>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrderedProcedure>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<FhirR4Extendible>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OrderedProcedure>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirR4Extendible>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OrderedProcedure>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4Extendible)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OrderedProcedure)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,19 +64,19 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteEndObject();
         }
 
-        FhirR4Extendible IJsonModel<FhirR4Extendible>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        OrderedProcedure IJsonModel<OrderedProcedure>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirR4Extendible>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OrderedProcedure>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4Extendible)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OrderedProcedure)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFhirR4Extendible(document.RootElement, options);
+            return DeserializeOrderedProcedure(document.RootElement, options);
         }
 
-        internal static FhirR4Extendible DeserializeFhirR4Extendible(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static OrderedProcedure DeserializeOrderedProcedure(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -125,46 +125,46 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FhirR4Extendible(extension ?? new ChangeTrackingList<FhirR4Extension>(), code, description, serializedAdditionalRawData);
+            return new OrderedProcedure(extension ?? new ChangeTrackingList<FhirR4Extension>(), code, description, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FhirR4Extendible>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<OrderedProcedure>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirR4Extendible>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OrderedProcedure>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4Extendible)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrderedProcedure)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FhirR4Extendible IPersistableModel<FhirR4Extendible>.Create(BinaryData data, ModelReaderWriterOptions options)
+        OrderedProcedure IPersistableModel<OrderedProcedure>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirR4Extendible>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OrderedProcedure>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFhirR4Extendible(document.RootElement, options);
+                        return DeserializeOrderedProcedure(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4Extendible)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrderedProcedure)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FhirR4Extendible>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OrderedProcedure>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static FhirR4Extendible FromResponse(Response response)
+        internal static OrderedProcedure FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeFhirR4Extendible(document.RootElement);
+            return DeserializeOrderedProcedure(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
