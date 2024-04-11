@@ -87,10 +87,11 @@ public static partial class AzureOpenAIModelFactory
     /// <param name="language"> Language detected in the source audio file. </param>
     /// <param name="duration"> Duration. </param>
     /// <param name="segments"> Segments. </param>
+    /// <param name="words"> Words. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-    public static AudioTranscription AudioTranscription(string text, string language, TimeSpan duration, IReadOnlyList<AudioTranscriptionSegment> segments)
+    public static AudioTranscription AudioTranscription(string text, string language, TimeSpan duration, IReadOnlyList<AudioTranscriptionSegment> segments, IReadOnlyList<AudioTranscriptionWord> words)
     {
-        return new AudioTranscription(text, default, language, duration, segments, serializedAdditionalRawData: null);
+        return new AudioTranscription(text, default, language, duration, segments, words, serializedAdditionalRawData: null);
     }
 
     // CUSTOM CODE NOTE:

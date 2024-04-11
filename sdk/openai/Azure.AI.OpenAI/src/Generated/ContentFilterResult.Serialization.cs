@@ -26,10 +26,10 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("severity"u8);
-            writer.WriteStringValue(Severity.ToString());
             writer.WritePropertyName("filtered"u8);
             writer.WriteBooleanValue(Filtered);
+            writer.WritePropertyName("severity"u8);
+            writer.WriteStringValue(Severity.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -68,20 +68,20 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            ContentFilterSeverity severity = default;
             bool filtered = default;
+            ContentFilterSeverity severity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("severity"u8))
-                {
-                    severity = new ContentFilterSeverity(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("filtered"u8))
                 {
                     filtered = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("severity"u8))
+                {
+                    severity = new ContentFilterSeverity(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,7 +90,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentFilterResult(severity, filtered, serializedAdditionalRawData);
+            return new ContentFilterResult(filtered, severity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentFilterResult>.Write(ModelReaderWriterOptions options)

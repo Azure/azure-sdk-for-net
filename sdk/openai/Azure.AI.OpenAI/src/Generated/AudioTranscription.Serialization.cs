@@ -53,6 +53,16 @@ namespace Azure.AI.OpenAI
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Words))
+            {
+                writer.WritePropertyName("words"u8);
+                writer.WriteStartArray();
+                foreach (var item in Words)
+                {
+                    writer.WriteObjectValue<AudioTranscriptionWord>(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,6 +106,7 @@ namespace Azure.AI.OpenAI
             string language = default;
             TimeSpan? duration = default;
             IReadOnlyList<AudioTranscriptionSegment> segments = default;
+            IReadOnlyList<AudioTranscriptionWord> words = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,6 +153,20 @@ namespace Azure.AI.OpenAI
                     segments = array;
                     continue;
                 }
+                if (property.NameEquals("words"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AudioTranscriptionWord> array = new List<AudioTranscriptionWord>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AudioTranscriptionWord.DeserializeAudioTranscriptionWord(item, options));
+                    }
+                    words = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -154,6 +179,7 @@ namespace Azure.AI.OpenAI
                 language,
                 duration,
                 segments ?? new ChangeTrackingList<AudioTranscriptionSegment>(),
+                words ?? new ChangeTrackingList<AudioTranscriptionWord>(),
                 serializedAdditionalRawData);
         }
 
