@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    /// <summary> Procedure information. </summary>
-    public partial class FhirR4Extendible
+    /// <summary> Finding reference for recommendation. </summary>
+    public partial class RecommendationFinding
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,30 +45,41 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FhirR4Extendible"/>. </summary>
-        public FhirR4Extendible()
+        /// <summary> Initializes a new instance of <see cref="RecommendationFinding"/>. </summary>
+        /// <param name="recommendationFindingStatus"> Recommendation finding status. </param>
+        internal RecommendationFinding(RecommendationFindingStatusType recommendationFindingStatus)
         {
             Extension = new ChangeTrackingList<FhirR4Extension>();
+            RecommendationFindingStatus = recommendationFindingStatus;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FhirR4Extendible"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecommendationFinding"/>. </summary>
         /// <param name="extension"> Additional Content defined by implementations. </param>
-        /// <param name="code"> Procedure code. </param>
-        /// <param name="description"> Procedure description. </param>
+        /// <param name="finding"> Finding linked to a recommendation. </param>
+        /// <param name="criticalFinding"> Critical result linked to a recommendation. </param>
+        /// <param name="recommendationFindingStatus"> Recommendation finding status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FhirR4Extendible(IList<FhirR4Extension> extension, FhirR4CodeableConcept code, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecommendationFinding(IReadOnlyList<FhirR4Extension> extension, FhirR4Observation finding, CriticalResult criticalFinding, RecommendationFindingStatusType recommendationFindingStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Extension = extension;
-            Code = code;
-            Description = description;
+            Finding = finding;
+            CriticalFinding = criticalFinding;
+            RecommendationFindingStatus = recommendationFindingStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecommendationFinding"/> for deserialization. </summary>
+        internal RecommendationFinding()
+        {
+        }
+
         /// <summary> Additional Content defined by implementations. </summary>
-        public IList<FhirR4Extension> Extension { get; }
-        /// <summary> Procedure code. </summary>
-        public FhirR4CodeableConcept Code { get; set; }
-        /// <summary> Procedure description. </summary>
-        public string Description { get; set; }
+        public IReadOnlyList<FhirR4Extension> Extension { get; }
+        /// <summary> Finding linked to a recommendation. </summary>
+        public FhirR4Observation Finding { get; }
+        /// <summary> Critical result linked to a recommendation. </summary>
+        public CriticalResult CriticalFinding { get; }
+        /// <summary> Recommendation finding status. </summary>
+        public RecommendationFindingStatusType RecommendationFindingStatus { get; }
     }
 }

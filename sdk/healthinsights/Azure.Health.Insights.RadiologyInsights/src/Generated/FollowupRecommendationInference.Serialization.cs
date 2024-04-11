@@ -108,7 +108,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
             string effectiveDateTime = default;
             FhirR4Period effectivePeriod = default;
-            IReadOnlyList<FhirR4Extendible> findings = default;
+            IReadOnlyList<RecommendationFinding> findings = default;
             bool isConditional = default;
             bool isOption = default;
             bool isGuideline = default;
@@ -140,10 +140,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<FhirR4Extendible> array = new List<FhirR4Extendible>();
+                    List<RecommendationFinding> array = new List<RecommendationFinding>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4Extendible.DeserializeFhirR4Extendible(item, options));
+                        array.Add(RecommendationFinding.DeserializeRecommendationFinding(item, options));
                     }
                     findings = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 serializedAdditionalRawData,
                 effectiveDateTime,
                 effectivePeriod,
-                findings ?? new ChangeTrackingList<FhirR4Extendible>(),
+                findings ?? new ChangeTrackingList<RecommendationFinding>(),
                 isConditional,
                 isOption,
                 isGuideline,

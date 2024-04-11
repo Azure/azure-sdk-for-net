@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    /// <summary> Document administrative metadata. </summary>
-    public partial class DocumentAdministrativeMetadata
+    /// <summary> Procedure information. </summary>
+    public partial class OrderedProcedure
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,30 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentAdministrativeMetadata"/>. </summary>
-        public DocumentAdministrativeMetadata()
+        /// <summary> Initializes a new instance of <see cref="OrderedProcedure"/>. </summary>
+        public OrderedProcedure()
         {
-            OrderedProcedures = new ChangeTrackingList<OrderedProcedure>();
+            Extension = new ChangeTrackingList<FhirR4Extension>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentAdministrativeMetadata"/>. </summary>
-        /// <param name="orderedProcedures"> List of procedure information associated with the document. </param>
-        /// <param name="encounterId"> Reference to the encounter associated with the document. </param>
+        /// <summary> Initializes a new instance of <see cref="OrderedProcedure"/>. </summary>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="code"> Procedure code. </param>
+        /// <param name="description"> Procedure description. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentAdministrativeMetadata(IList<OrderedProcedure> orderedProcedures, string encounterId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OrderedProcedure(IList<FhirR4Extension> extension, FhirR4CodeableConcept code, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            OrderedProcedures = orderedProcedures;
-            EncounterId = encounterId;
+            Extension = extension;
+            Code = code;
+            Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of procedure information associated with the document. </summary>
-        public IList<OrderedProcedure> OrderedProcedures { get; }
-        /// <summary> Reference to the encounter associated with the document. </summary>
-        public string EncounterId { get; set; }
+        /// <summary> Additional Content defined by implementations. </summary>
+        public IList<FhirR4Extension> Extension { get; }
+        /// <summary> Procedure code. </summary>
+        public FhirR4CodeableConcept Code { get; set; }
+        /// <summary> Procedure description. </summary>
+        public string Description { get; set; }
     }
 }
