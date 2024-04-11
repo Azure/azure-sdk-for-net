@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -56,6 +58,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
+                //  AzureBlobContainerRecordingStorage blob = options.RecordingStorage as AzureBlobContainerRecordingStorage;
                 StartCallRecordingRequestInternal request = new(CallLocatorSerializer.Serialize(options.CallLocator))
                 {
                     RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
@@ -63,7 +66,21 @@ namespace Azure.Communication.CallAutomation
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
                     PauseOnStart = options.PauseOnStart,
+                  //  ExternalStorage = options.RecordingStorage,
                 };
+
+                if (options.RecordingStorage != null)
+                {
+                    if (options.RecordingStorage is AzureCommunicationsRecordingStorage storage)
+                    {
+                        request.ExternalStorage = null;
+                    }
+
+                    if (options.RecordingStorage is AzureBlobContainerRecordingStorage blobStorage)
+                    {
+                        request.ExternalStorage = new RecordingStorageInternal(blobStorage.RecordingStorageKind, blobStorage.RecordingDestinationContainerUri);
+                    }
+                }
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
                 {
@@ -116,7 +133,21 @@ namespace Azure.Communication.CallAutomation
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
                     PauseOnStart = options.PauseOnStart,
+                    //ExternalStorage = options.RecordingStorage
                 };
+
+                if (options.RecordingStorage != null)
+                {
+                    if (options.RecordingStorage is AzureCommunicationsRecordingStorage storage)
+                    {
+                        request.ExternalStorage = null;
+                    }
+
+                    if (options.RecordingStorage is AzureBlobContainerRecordingStorage blobStorage)
+                    {
+                        request.ExternalStorage = new RecordingStorageInternal(blobStorage.RecordingStorageKind, blobStorage.RecordingDestinationContainerUri);
+                    }
+                }
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
                 {
