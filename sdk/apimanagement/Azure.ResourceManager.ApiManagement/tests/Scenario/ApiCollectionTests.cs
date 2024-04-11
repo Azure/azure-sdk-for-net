@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                     Query = "query3037"
                 },
                 DisplayName = "apiname1463",
-                ServiceUri = new Uri("http://newechoapi.cloudapp.net/api"),
+                ServiceUriLink = "http://newechoapi.cloudapp.net/api",
                 Path = "newapiPath",
                 Protocols = { ApiOperationInvokableProtocol.Https, ApiOperationInvokableProtocol.Http }
             };
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
                     Query = "query3037"
                 },
                 DisplayName = "apiname1463",
-                ServiceUri = new Uri("http://newechoapi.cloudapp.net/api"),
+                ServiceUriLink = "http://newechoapi.cloudapp.net/api",
                 Path = "newapiPath",
                 Protocols = { ApiOperationInvokableProtocol.Https, ApiOperationInvokableProtocol.Http }
             };
