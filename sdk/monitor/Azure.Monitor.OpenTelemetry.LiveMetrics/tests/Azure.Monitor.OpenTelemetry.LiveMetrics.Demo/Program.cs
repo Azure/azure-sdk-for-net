@@ -4,7 +4,8 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using OpenTelemetry;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
@@ -23,10 +24,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 
         public static async Task Main(string[] args)
         {
-            using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
-                            .AddSource(ActivitySourceName)
-                            .AddLiveMetrics(configure => configure.ConnectionString = ConnectionString)
-                            .Build();
+            var host = CreateHostBuilder(args).Build();
+
+            // Start the host in a separate background task to keep it running independently
+            var hostTask = host.RunAsync();
 
             Console.WriteLine("Press any key to stop the loop.");
 
@@ -38,7 +39,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
             }
 
             Console.WriteLine("Key pressed. Exiting the loop.");
+
+            // Stop the host after exiting the loop
+            await host.StopAsync();
+            await hostTask;
         }
+
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureServices((hostContext, services) =>
+                {
+                    // Add OpenTelemetry to the service container.
+                    services.AddOpenTelemetry().WithTracing(t => t.AddSource(ActivitySourceName)).AddLiveMetrics(o => o.ConnectionString = ConnectionString);
+                });
 
         private static bool GetRandomBool(int percent) => percent >= _random.Next(0, 100);
 

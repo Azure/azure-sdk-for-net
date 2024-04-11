@@ -106,6 +106,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
             builder.ConfigureResource(configureResource);
 
+            builder.AddLiveMetrics();
+
             builder.WithTracing(b => b
                             .AddSource("Azure.*")
                             .AddVendorInstrumentationIfPackageNotReferenced()
@@ -125,7 +127,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                                 return true;
                             })
                             .AddProcessor<ProfilingSessionTraceProcessor>()
-                            .AddLiveMetrics()
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
