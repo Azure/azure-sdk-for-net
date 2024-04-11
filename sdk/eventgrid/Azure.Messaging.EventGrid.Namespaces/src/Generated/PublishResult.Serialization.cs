@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    public partial class PublishResult : IUtf8JsonSerializable, IJsonModel<PublishResult>
+    internal partial class PublishResult : IUtf8JsonSerializable, IJsonModel<PublishResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublishResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 

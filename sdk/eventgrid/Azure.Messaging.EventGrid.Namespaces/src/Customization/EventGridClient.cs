@@ -166,70 +166,70 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <summary> Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. </summary>
         /// <param name="topicName"> Topic Name. </param>
-        /// <param name="event"> Single Cloud Event being published. </param>
+        /// <param name="cloudEvent"> Single Cloud Event being published. </param>
         /// <param name="binaryMode"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="event"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="cloudEvent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PublishResult> PublishCloudEvent(string topicName, Azure.Messaging.CloudEvent @event, bool binaryMode = false,
+        public virtual Response PublishCloudEvent(string topicName, CloudEvent cloudEvent, bool binaryMode = false,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNull(@event, nameof(@event));
+            Argument.AssertNotNull(cloudEvent, nameof(cloudEvent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
 
             Response response;
             if (binaryMode)
             {
-                response = PublishBinaryModeCloudEventAsync(topicName, @event, context, false).EnsureCompleted();
+                response = PublishBinaryModeCloudEventAsync(topicName, cloudEvent, context, false).EnsureCompleted();
             }
             else
             {
-                response = PublishCloudEvent(topicName, RequestContent.Create(@event), context);
+                response = PublishCloudEvent(topicName, RequestContent.Create(cloudEvent), context);
             }
 
-            return Response.FromValue<PublishResult>(null, response);
+            return response;
         }
 
         /// <summary> Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. </summary>
         /// <param name="topicName"> Topic Name. </param>
-        /// <param name="event"> Single Cloud Event being published. </param>
+        /// <param name="cloudEvent"> Single Cloud Event being published. </param>
         /// <param name="binaryMode"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="event"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="cloudEvent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PublishResult>> PublishCloudEventAsync(
+        public virtual async Task<Response> PublishCloudEventAsync(
             string topicName,
-            Azure.Messaging.CloudEvent @event,
+            CloudEvent cloudEvent,
             bool binaryMode = false,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNull(@event, nameof(@event));
+            Argument.AssertNotNull(cloudEvent, nameof(cloudEvent));
 
             RequestContext context = FromCancellationToken(cancellationToken);
 
             Response response;
             if (binaryMode)
             {
-                response = await PublishBinaryModeCloudEventAsync(topicName, @event, context, true).ConfigureAwait(false);
+                response = await PublishBinaryModeCloudEventAsync(topicName, cloudEvent, context, true).ConfigureAwait(false);
             }
             else
             {
-                response = await PublishCloudEventAsync(topicName, RequestContent.Create(@event), context).ConfigureAwait(false);
+                response = await PublishCloudEventAsync(topicName, RequestContent.Create(cloudEvent), context).ConfigureAwait(false);
             }
 
-            return Response.FromValue<PublishResult>(null, response);
+            return response;
         }
 
-        private async Task<Response> PublishBinaryModeCloudEventAsync(string topicName, Messaging.CloudEvent @event, RequestContext context, bool async)
+        private async Task<Response> PublishBinaryModeCloudEventAsync(string topicName, CloudEvent cloudEvent, RequestContext context, bool async)
         {
             using var scope = ClientDiagnostics.CreateScope("EventGridClient.PublishCloudEvent");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePublishBinaryModeCloudEventRequest(topicName, @event, context);
+                using HttpMessage message = CreatePublishBinaryModeCloudEventRequest(topicName, cloudEvent, context);
                 if (async)
                 {
                     return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
@@ -246,7 +246,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
-        private HttpMessage CreatePublishBinaryModeCloudEventRequest(string topicName, Messaging.CloudEvent @event,
+        private HttpMessage CreatePublishBinaryModeCloudEventRequest(string topicName, CloudEvent cloudEvent,
             RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -260,27 +260,27 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (@event.DataContentType != null)
+            if (cloudEvent.DataContentType != null)
             {
-                request.Headers.Add("content-type", @event.DataContentType);
+                request.Headers.Add("content-type", cloudEvent.DataContentType);
             }
 
-            request.Headers.Add("ce-id", @event.Id);
+            request.Headers.Add("ce-id", cloudEvent.Id);
             request.Headers.Add("ce-specversion", "1.0");
-            request.Headers.Add("ce-time", @event.Time.Value.ToString("o"));
-            request.Headers.Add("ce-source", @event.Source);
-            if (@event.Subject != null)
+            request.Headers.Add("ce-time", cloudEvent.Time.Value.ToString("o"));
+            request.Headers.Add("ce-source", cloudEvent.Source);
+            if (cloudEvent.Subject != null)
             {
-                request.Headers.Add("ce-subject", @event.Subject);
+                request.Headers.Add("ce-subject", cloudEvent.Subject);
             }
 
-            request.Headers.Add("ce-type", @event.Type);
-            if (@event.DataSchema != null)
+            request.Headers.Add("ce-type", cloudEvent.Type);
+            if (cloudEvent.DataSchema != null)
             {
-                request.Headers.Add("ce-dataschema", @event.DataSchema);
+                request.Headers.Add("ce-dataschema", cloudEvent.DataSchema);
             }
 
-            foreach (KeyValuePair<string, object> kvp in @event.ExtensionAttributes)
+            foreach (KeyValuePair<string, object> kvp in cloudEvent.ExtensionAttributes)
             {
                 // https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#type-system
                 switch (kvp.Value)
@@ -312,7 +312,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 }
             }
 
-            request.Content = @event.Data;
+            request.Content = cloudEvent.Data;
             return message;
         }
 
@@ -322,15 +322,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="events"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PublishResult>> PublishCloudEventsAsync(string topicName, IEnumerable<Azure.Messaging.CloudEvent> events,
+        public virtual async Task<Response> PublishCloudEventsAsync(string topicName, IEnumerable<Azure.Messaging.CloudEvent> events,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNull(events, nameof(events));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await PublishCloudEventsAsync(topicName, RequestContent.Create(events), context).ConfigureAwait(false);
-            return Response.FromValue(PublishResult.FromResponse(response), response);
+            return await PublishCloudEventsAsync(topicName, RequestContent.Create(events), context).ConfigureAwait(false);
         }
 
         /// <summary> Publish Batch Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. </summary>
@@ -339,15 +338,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="events"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PublishResult> PublishCloudEvents(string topicName, IEnumerable<Azure.Messaging.CloudEvent> events,
+        public virtual Response PublishCloudEvents(string topicName, IEnumerable<Azure.Messaging.CloudEvent> events,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNull(events, nameof(events));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = PublishCloudEvents(topicName, RequestContent.Create(events), context);
-            return Response.FromValue(PublishResult.FromResponse(response), response);
+            return PublishCloudEvents(topicName, RequestContent.Create(events), context);
         }
 
         /// <summary> Receive Batch of Cloud Events from the Event Subscription. </summary>
