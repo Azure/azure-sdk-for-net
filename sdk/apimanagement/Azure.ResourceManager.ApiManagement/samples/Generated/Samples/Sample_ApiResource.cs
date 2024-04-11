@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiPatch patch = new ApiPatch()
             {
                 DisplayName = "Echo API New",
-                ServiceUriLink = "http://echoapi.cloudapp.net/api2",
+                ServiceLink = "http://echoapi.cloudapp.net/api2",
                 Path = "newecho",
             };
             ApiResource result = await api.UpdateAsync(ifMatch, patch);

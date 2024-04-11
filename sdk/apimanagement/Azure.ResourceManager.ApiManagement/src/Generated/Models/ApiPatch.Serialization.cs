@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ServiceUriLink))
+            if (Optional.IsDefined(ServiceLink))
             {
                 writer.WritePropertyName("serviceUrl"u8);
-                writer.WriteStringValue(ServiceUriLink);
+                writer.WriteStringValue(ServiceLink);
             }
             if (Optional.IsDefined(Path))
             {

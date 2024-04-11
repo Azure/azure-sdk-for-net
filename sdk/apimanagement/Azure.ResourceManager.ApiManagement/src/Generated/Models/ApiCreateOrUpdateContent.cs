@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="license"> License information for the API. </param>
         /// <param name="sourceApiId"> API identifier of the source API. </param>
         /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
-        /// <param name="serviceUriLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
+        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <param name="apiVersionSet"> Version set details. </param>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         ///  * `graphql` creates GraphQL API.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCreateOrUpdateContent(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceUriLink, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiCreateOrUpdateContent(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             License = license;
             SourceApiId = sourceApiId;
             DisplayName = displayName;
-            ServiceUriLink = serviceUriLink;
+            ServiceLink = serviceLink;
             Path = path;
             Protocols = protocols;
             ApiVersionSet = apiVersionSet;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> API name. Must be 1 to 300 characters long. </summary>
         public string DisplayName { get; set; }
         /// <summary> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </summary>
-        public string ServiceUriLink { get; set; }
+        public string ServiceLink { get; set; }
         /// <summary> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </summary>
         public string Path { get; set; }
         /// <summary> Describes on which protocols the operations in this API can be invoked. </summary>

@@ -274,11 +274,11 @@ rename-mapping:
   SchemaType: ApiSchemaType
   ApiRevisionContract.privateUrl: privateUrlString
   ApiContract.properties.termsOfServiceUrl: termsOfServiceLink
-  ApiContract.properties.serviceUrl: serviceUrlLink
+  ApiContract.properties.serviceUrl: serviceLink
   ApiUpdateContract.properties.termsOfServiceUrl: termsOfServiceLink
-  ApiUpdateContract.properties.serviceUrl: serviceUrlLink
+  ApiUpdateContract.properties.serviceUrl: serviceLink
   ApiCreateOrUpdateParameter.properties.termsOfServiceUrl: termsOfServiceLink
-  ApiCreateOrUpdateParameter.properties.serviceUrl: serviceUrlLink
+  ApiCreateOrUpdateParameter.properties.serviceUrl: serviceLink
   ApiEntityBaseContract.termsOfServiceUrl: termsOfServiceLink
 
 directive:
