@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(NewRelicAccountProperties))
             {
                 writer.WritePropertyName("newRelicAccountProperties"u8);
-                writer.WriteObjectValue<NewRelicAccountProperties>(NewRelicAccountProperties, options);
+                writer.WriteObjectValue(NewRelicAccountProperties, options);
             }
             if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue<NewRelicObservabilityUserInfo>(UserInfo, options);
+                writer.WriteObjectValue(UserInfo, options);
             }
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue<NewRelicPlanDetails>(PlanData, options);
+                writer.WriteObjectValue(PlanData, options);
             }
             if (Optional.IsDefined(OrgCreationSource))
             {

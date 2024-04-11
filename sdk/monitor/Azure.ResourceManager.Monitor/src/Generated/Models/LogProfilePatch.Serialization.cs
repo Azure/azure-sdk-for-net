@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue<RetentionPolicy>(RetentionPolicy, options);
+                writer.WriteObjectValue(RetentionPolicy, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

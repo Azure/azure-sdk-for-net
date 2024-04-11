@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartArray();
             foreach (var item in Endpoints)
             {
-                writer.WriteObjectValue<EndpointDependency>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

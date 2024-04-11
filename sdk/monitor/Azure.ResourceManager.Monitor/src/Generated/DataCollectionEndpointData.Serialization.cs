@@ -91,22 +91,22 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(ConfigurationAccess))
             {
                 writer.WritePropertyName("configurationAccess"u8);
-                writer.WriteObjectValue<DataCollectionEndpointConfigurationAccess>(ConfigurationAccess, options);
+                writer.WriteObjectValue(ConfigurationAccess, options);
             }
             if (Optional.IsDefined(LogsIngestion))
             {
                 writer.WritePropertyName("logsIngestion"u8);
-                writer.WriteObjectValue<DataCollectionEndpointLogsIngestion>(LogsIngestion, options);
+                writer.WriteObjectValue(LogsIngestion, options);
             }
             if (Optional.IsDefined(MetricsIngestion))
             {
                 writer.WritePropertyName("metricsIngestion"u8);
-                writer.WriteObjectValue<DataCollectionEndpointMetricsIngestion>(MetricsIngestion, options);
+                writer.WriteObjectValue(MetricsIngestion, options);
             }
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue<DataCollectionEndpointNetworkAcls>(NetworkAcls, options);
+                writer.WriteObjectValue(NetworkAcls, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -119,19 +119,19 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkScopedResources)
                 {
-                    writer.WriteObjectValue<DataCollectionRulePrivateLinkScopedResourceInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(FailoverConfiguration))
             {
                 writer.WritePropertyName("failoverConfiguration"u8);
-                writer.WriteObjectValue<DataCollectionEndpointFailoverConfiguration>(FailoverConfiguration, options);
+                writer.WriteObjectValue(FailoverConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<DataCollectionEndpointMetadata>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedIopsTiers)
                 {
-                    writer.WriteObjectValue<PostgreSqlFlexibleServerStorageTierCapability>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

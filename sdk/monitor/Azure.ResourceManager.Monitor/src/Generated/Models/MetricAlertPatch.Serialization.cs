@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
-                writer.WriteObjectValue<MetricAlertCriteria>(Criteria, options);
+                writer.WriteObjectValue(Criteria, options);
             }
             if (Optional.IsDefined(IsAutoMitigateEnabled))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue<MetricAlertAction>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

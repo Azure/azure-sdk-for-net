@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
-                writer.WriteObjectValue<VolumeSnapshotProperties>(Snapshot, options);
+                writer.WriteObjectValue(Snapshot, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

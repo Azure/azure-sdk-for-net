@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<OperationalInsightsWorkspaceSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(RetentionInDays))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(WorkspaceCapping))
             {
                 writer.WritePropertyName("workspaceCapping"u8);
-                writer.WriteObjectValue<OperationalInsightsWorkspaceCapping>(WorkspaceCapping, options);
+                writer.WriteObjectValue(WorkspaceCapping, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkScopedResources)
                 {
-                    writer.WriteObjectValue<OperationalInsightsPrivateLinkScopedResourceInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
-                writer.WriteObjectValue<OperationalInsightsWorkspaceFeatures>(Features, options);
+                writer.WriteObjectValue(Features, options);
             }
             if (Optional.IsDefined(DefaultDataCollectionRuleResourceId))
             {

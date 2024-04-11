@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
-                writer.WriteObjectValue<FeaturesRule>(FeaturesRule, options);
+                writer.WriteObjectValue(FeaturesRule, options);
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue<ResourceTypeExtension>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

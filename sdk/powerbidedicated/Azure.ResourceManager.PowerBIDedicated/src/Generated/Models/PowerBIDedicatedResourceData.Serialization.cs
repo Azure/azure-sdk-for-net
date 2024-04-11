@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue<SystemData>(SystemData, options);
+                writer.WriteObjectValue(SystemData, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

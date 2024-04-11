@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(WorkspaceSettings))
             {
                 writer.WritePropertyName("workspaceSettings"u8);
-                writer.WriteObjectValue<ConnectionMonitorWorkspaceSettings>(WorkspaceSettings, options);
+                writer.WriteObjectValue(WorkspaceSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

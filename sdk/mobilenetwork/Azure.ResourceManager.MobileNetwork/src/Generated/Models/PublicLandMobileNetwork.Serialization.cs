@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(HomeNetworkPublicKeys))
             {
                 writer.WritePropertyName("homeNetworkPublicKeys"u8);
-                writer.WriteObjectValue<PublicLandMobileNetworkHomeNetworkPublicKeys>(HomeNetworkPublicKeys, options);
+                writer.WriteObjectValue(HomeNetworkPublicKeys, options);
             }
             writer.WritePropertyName("mcc"u8);
             writer.WriteStringValue(Mcc);

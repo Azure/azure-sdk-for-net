@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(HttpProtocolConfiguration))
             {
                 writer.WritePropertyName("HTTPConfiguration"u8);
-                writer.WriteObjectValue<NetworkHttpConfiguration>(HttpProtocolConfiguration, options);
+                writer.WriteObjectValue(HttpProtocolConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

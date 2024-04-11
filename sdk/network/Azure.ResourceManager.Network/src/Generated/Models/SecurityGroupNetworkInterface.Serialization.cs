@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(SecurityRuleAssociations))
             {
                 writer.WritePropertyName("securityRuleAssociations"u8);
-                writer.WriteObjectValue<SecurityRuleAssociations>(SecurityRuleAssociations, options);
+                writer.WriteObjectValue(SecurityRuleAssociations, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

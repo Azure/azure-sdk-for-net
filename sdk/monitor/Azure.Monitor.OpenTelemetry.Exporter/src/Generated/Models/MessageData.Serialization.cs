@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MessageData>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

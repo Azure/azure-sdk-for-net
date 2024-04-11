@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
-                writer.WriteObjectValue<PolicySettings>(PolicySettings, options);
+                writer.WriteObjectValue(PolicySettings, options);
             }
             if (Optional.IsCollectionDefined(CustomRules))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in CustomRules)
                 {
-                    writer.WriteObjectValue<WebApplicationFirewallCustomRule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationGateways)
                 {
-                    writer.WriteObjectValue<ApplicationGatewayData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
-                writer.WriteObjectValue<ManagedRulesDefinition>(ManagedRules, options);
+                writer.WriteObjectValue(ManagedRules, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(HttpListeners))
             {

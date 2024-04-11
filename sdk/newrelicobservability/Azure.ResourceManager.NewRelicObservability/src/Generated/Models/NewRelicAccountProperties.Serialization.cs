@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(AccountInfo))
             {
                 writer.WritePropertyName("accountInfo"u8);
-                writer.WriteObjectValue<NewRelicObservabilityAccountInfo>(AccountInfo, options);
+                writer.WriteObjectValue(AccountInfo, options);
             }
             if (Optional.IsDefined(OrganizationInfo))
             {
                 writer.WritePropertyName("organizationInfo"u8);
-                writer.WriteObjectValue<NewRelicObservabilityOrganizationInfo>(OrganizationInfo, options);
+                writer.WriteObjectValue(OrganizationInfo, options);
             }
             if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
-                writer.WriteObjectValue<NewRelicSingleSignOnProperties>(SingleSignOnProperties, options);
+                writer.WriteObjectValue(SingleSignOnProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

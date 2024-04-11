@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<DataProductsCatalogData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
