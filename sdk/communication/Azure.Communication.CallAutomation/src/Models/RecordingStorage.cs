@@ -7,15 +7,27 @@ using System;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("ExternalStorage")]
+    /// <summary>
+    /// Recording Storage base
+    /// </summary>
     public abstract partial class RecordingStorage
     {
-        /// <summary> Gets the Uri of a container or a location within a container. </summary>
-        [CodeGenMember("RecordingDestinationContainerUrl")]
-        private Uri RecordingDestinationContainerUri { get; set; }
+        /// <summary>
+        /// Recording storage
+        /// </summary>
+        /// <param name="recordingStorageKind"></param>
+        public RecordingStorage(RecordingStorageKind recordingStorageKind)
+        {
+            this.RecordingStorageKind = recordingStorageKind;
+        }
+
+        /// <summary>
+        /// Recording storage Kind
+        /// </summary>
+        public RecordingStorageKind RecordingStorageKind { get; private set; }
 
         /// <summary> Creates AzureBlobContainer Storage for Recording. </summary>
-        public static RecordingStorage CreateAzureBlobContainerRecordingStorage(Uri recordingDestinationContainerUri)
+        public static RecordingStorage CreateAzureBlobContainerRecordingStorageNew(Uri recordingDestinationContainerUri)
         {
             return new AzureBlobContainerRecordingStorage(recordingDestinationContainerUri);
         }
