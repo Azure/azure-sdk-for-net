@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-
 using System;
 
 namespace Azure.Communication.CallAutomation
@@ -17,7 +15,7 @@ namespace Azure.Communication.CallAutomation
             RecordingDestinationContainerUri = recordingDestinationContainerUri;
         }
 
-        /// <summary> The RecordingDestinationContainerUri. </summary>
+        /// <summary> The Azure blob storage container uri. </summary>
         public Uri RecordingDestinationContainerUri { get; set; }
     }
 }
