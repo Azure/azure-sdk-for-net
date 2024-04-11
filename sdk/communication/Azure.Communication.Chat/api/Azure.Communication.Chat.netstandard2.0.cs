@@ -54,7 +54,8 @@ namespace Azure.Communication.Chat
             V2021_03_07 = 1,
             V2021_09_07 = 2,
             V2023_11_07 = 3,
-            V2024_03_15_preview = 4,
+            V2024_03_07 = 4,
+            V2024_03_15_preview = 5,
         }
     }
     public partial class ChatError
