@@ -67,7 +67,7 @@ namespace Azure.Communication.CallAutomation
 
         #region private constructors
         private CallAutomationClient(ConnectionString connectionString, CallAutomationClientOptions options)
-            : this(new Uri(connectionString.GetRequired("endpoint")), options.CustomBuildHttpPipeline(connectionString), options)
+            : this(new Uri(connectionString.GetRequired("endpoint")), options.BuildHttpPipeline(connectionString), options)
         { }
 
         private CallAutomationClient(string endpoint, TokenCredential tokenCredential, CallAutomationClientOptions options)
@@ -76,9 +76,6 @@ namespace Azure.Communication.CallAutomation
 
         private CallAutomationClient(Uri endpoint, HttpPipeline httpPipeline, CallAutomationClientOptions options)
         {
-            endpoint = new Uri("https://nextpma.plat.skype.com:6448/");
-            //  endpoint = new Uri("https://pma.plat.skype.com/");
-            // options.ApiVersion = "2023-03-06";
             _pipeline = httpPipeline;
             _resourceEndpoint = endpoint.AbsoluteUri;
             _clientDiagnostics = new ClientDiagnostics(options);
