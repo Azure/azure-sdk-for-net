@@ -166,28 +166,25 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             return metrics;
         }
 
-        private Dictionary<string, AccumulatedValues> CreateMetricAccumulators(CollectionConfiguration? collectionConfiguration)
+        private Dictionary<string, AccumulatedValues> CreateMetricAccumulators(CollectionConfiguration collectionConfiguration)
         {
             Dictionary<string, AccumulatedValues> metricAccumulators = new();
 
-            if (collectionConfiguration != null)
+            // prepare the accumulators based on the collection configuration
+            IEnumerable<Tuple<string, Models.AggregationType?>> allMetrics = collectionConfiguration.TelemetryMetadata;
+            foreach (Tuple<string, Models.AggregationType?> metricId in allMetrics)
             {
-                // prepare the accumulators based on the collection configuration
-                IEnumerable<Tuple<string, Models.AggregationType?>> allMetrics = collectionConfiguration.TelemetryMetadata;
-                foreach (Tuple<string, Models.AggregationType?> metricId in allMetrics)
+                var derivedMetricInfoAggregation = metricId.Item2;
+                if (!derivedMetricInfoAggregation.HasValue)
                 {
-                    var derivedMetricInfoAggregation = metricId.Item2;
-                    if (!derivedMetricInfoAggregation.HasValue)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out Filtering.AggregationType aggregationType))
-                    {
-                        var accumulatedValues = new AccumulatedValues(metricId.Item1, aggregationType);
+                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out Filtering.AggregationType aggregationType))
+                {
+                    var accumulatedValues = new AccumulatedValues(metricId.Item1, aggregationType);
 
-                        metricAccumulators.Add(metricId.Item1, accumulatedValues);
-                    }
+                    metricAccumulators.Add(metricId.Item1, accumulatedValues);
                 }
             }
             return metricAccumulators;
