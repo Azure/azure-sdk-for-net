@@ -7,12 +7,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.TrustedSigning;
 using Azure.ResourceManager.TrustedSigning.Models;
 
 namespace Azure.ResourceManager.TrustedSigning.Samples

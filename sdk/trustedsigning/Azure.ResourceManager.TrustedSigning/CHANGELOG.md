@@ -1,6 +1,6 @@
 # Release History
-# Release Date April 27th 2024
-## 1.0.0-beta.1 (Unreleased)
+
+## 1.0.0-beta.1 (2024-04-27)
 
 ### General New Features
 

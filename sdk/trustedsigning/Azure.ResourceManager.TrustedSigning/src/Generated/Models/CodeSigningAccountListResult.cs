@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
