@@ -24,15 +24,17 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
 
         public ProgrammableConnectivityClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
-            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("apc-gateway-id", "**********/resourceGroups") { Regex = @"[A-Za-z0-9-\-]*/resourceGroups" });
+            HeaderRegexSanitizers.Add(
+                new HeaderRegexSanitizer("apc-gateway-id", "**********/resourceGroups")
+                { Regex = @"[A-Za-z0-9-\-]*/resourceGroups" });
             credential = new DefaultAzureCredential();
         }
 
         [RecordedTest]
-        public void SimSwapVerifyTest()
+        public async Task SimSwapVerifyTest()
         {
             #region Snippet:APC_Sample_SimSwapVerifyTest
-            string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+            string apcGatewayId = "/subscriptions/abcdefgh/resourceGroups/.../Microsoft.programmableconnectivity/...";
             Uri endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
             TokenCredential credential = new DefaultAzureCredential();
@@ -43,13 +45,15 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
             SimSwap client = baseClient.GetSimSwapClient();
-            SimSwapVerificationContent content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
+
+            SimSwapVerificationContent content = new SimSwapVerificationContent(
+                new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
                 PhoneNumber = "+50000000000",
                 MaxAgeHours = 120,
             };
 
-            Response<SimSwapVerificationResult> response = client.Verify(ApcGatewayId, content);
+            Response<SimSwapVerificationResult> response = await client.VerifyAsync(apcGatewayId, content);
             Console.WriteLine(response.Value.VerificationResult);
             #endregion Snippet:APC_Sample_SimSwapVerifyTest
 
@@ -57,9 +61,9 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         }
 
         [RecordedTest]
-        public void SimSwapVerifyHeaderRetrievalTest()
+        public async Task SimSwapVerifyHeaderRetrievalTest()
         {
-            string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+            string apcGatewayId = "/subscriptions/abcdefgh/resourceGroups/.../Microsoft.programmableconnectivity/...";
             Uri endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
             TokenCredential credential = new DefaultAzureCredential();
@@ -70,15 +74,19 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
             SimSwap client = baseClient.GetSimSwapClient();
-            SimSwapVerificationContent content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
+
+            SimSwapVerificationContent content = new SimSwapVerificationContent(
+                new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
                 PhoneNumber = "+50000000000",
                 MaxAgeHours = 120,
             };
 
             #region Snippet:SimSwapVerifyHeaderRetrievalTest
-            Response<SimSwapVerificationResult> response = client.Verify(ApcGatewayId, content);
-            string xMsResponseId = response.GetRawResponse().Headers.TryGetValue("x-ms-response-id", out var responseId) ? responseId : "not found";
+            Response<SimSwapVerificationResult> response = await client.VerifyAsync(apcGatewayId, content);
+            string xMsResponseId = response.GetRawResponse().Headers.TryGetValue("x-ms-response-id", out var responseId)
+                ? responseId
+                : "not found";
             Console.WriteLine($"x-ms-response-id: {xMsResponseId}");
             #endregion Snippet:SimSwapVerifyHeaderRetrievalTest
 
@@ -86,9 +94,9 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         }
 
         [RecordedTest]
-        public void SimSwapVerifyBadResponseTest()
+        public async Task SimSwapVerifyBadResponseTest()
         {
-            string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+            string apcGatewayId = "/subscriptions/abcdefgh/resourceGroups/.../Microsoft.programmableconnectivity/...";
             Uri endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
             TokenCredential credential = new DefaultAzureCredential();
@@ -99,7 +107,9 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
             SimSwap client = baseClient.GetSimSwapClient();
-            SimSwapVerificationContent content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
+
+            SimSwapVerificationContent content = new SimSwapVerificationContent(
+                new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
                 PhoneNumber = "+50000000000",
                 MaxAgeHours = -10,
@@ -107,7 +117,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
 
             try
             {
-                Response<SimSwapVerificationResult> response = client.Verify(ApcGatewayId, content);
+                Response<SimSwapVerificationResult> response = await client.VerifyAsync(apcGatewayId, content);
             }
             catch (RequestFailedException ex)
             {
@@ -120,10 +130,10 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         }
 
         [RecordedTest]
-        public void SimSwapRetrieveTest()
+        public async Task SimSwapRetrieveTest()
         {
             #region Snippet:APC_Sample_SimSwapRetrieveTest
-            string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+            string apcGatewayId = "/subscriptions/abcdefgh/resourceGroups/.../Microsoft.programmableconnectivity/...";
             Uri endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
             TokenCredential credential = new DefaultAzureCredential();
@@ -134,24 +144,28 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
             SimSwap client = baseClient.GetSimSwapClient();
-            SimSwapRetrievalContent content = new SimSwapRetrievalContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
+
+            SimSwapRetrievalContent content = new SimSwapRetrievalContent(
+                new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
                 PhoneNumber = "+50000000000",
             };
 
-            Response<SimSwapRetrievalResult> response = client.Retrieve(ApcGatewayId, content);
+            Response<SimSwapRetrievalResult> response = await client.RetrieveAsync(apcGatewayId, content);
             Console.WriteLine(response.Value.Date);
             #endregion Snippet:APC_Sample_SimSwapRetrieveTest
 
-            DateTimeOffset expectedDate = DateTimeOffset.Parse("2023-11-16 14:43:05+00:00", null, System.Globalization.DateTimeStyles.RoundtripKind);
+            DateTimeOffset expectedDate = DateTimeOffset.Parse(
+                "2023-11-16 14:43:05+00:00", null, System.Globalization.DateTimeStyles.RoundtripKind);
+
             Assert.AreEqual(expectedDate, response.Value.Date, "The dates should match.");
         }
 
         [RecordedTest]
-        public void LocationVerifyTest()
+        public async Task LocationVerifyTest()
         {
             #region Snippet:APC_Sample_LocationVerifyTest
-            string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+            string apcGatewayId = "/subscriptions/abcdefgh/resourceGroups/.../Microsoft.programmableconnectivity/...";
             Uri endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
             TokenCredential credential = new DefaultAzureCredential();
@@ -162,12 +176,19 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
             DeviceLocation client = baseClient.GetDeviceLocationClient();
-            DeviceLocationVerificationContent content = new DeviceLocationVerificationContent(new NetworkIdentifier("NetworkCode", "Telefonica_Brazil"), 80.0, 85.1, 50, new LocationDevice
-            {
-                PhoneNumber = "+8000000000000",
-            });
 
-            Response<DeviceLocationVerificationResult> result = client.Verify(ApcGatewayId, content);
+            DeviceLocationVerificationContent content = new DeviceLocationVerificationContent(
+                networkIdentifier: new NetworkIdentifier("NetworkCode", "Telefonica_Brazil"),
+                latitude: 80.0,
+                longitude: 85.1,
+                accuracy: 50,
+                device: new LocationDevice
+                {
+                    PhoneNumber = "+8000000000000"
+                }
+            );
+
+            Response<DeviceLocationVerificationResult> result = await client.VerifyAsync(apcGatewayId, content);
 
             Console.WriteLine(result.Value.VerificationResult);
             #endregion Snippet:APC_Sample_LocationVerifyTest
@@ -176,10 +197,10 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         }
 
         [RecordedTest]
-        public void NetworkRetrievalTest()
+        public async Task NetworkRetrievalTest()
         {
             #region Snippet:APC_Sample_NetworkRetrievalTest
-            string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+            string apcGatewayId = "/subscriptions/abcdefgh/resourceGroups/.../Microsoft.programmableconnectivity/...";
             Uri endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
             TokenCredential credential = new DefaultAzureCredential();
@@ -190,9 +211,10 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
             DeviceNetwork client = baseClient.GetDeviceNetworkClient();
+
             NetworkIdentifier networkIdentifier = new NetworkIdentifier("IPv4", "127.0.0.1");
 
-            Response<NetworkRetrievalResult> response = client.Retrieve(ApcGatewayId, networkIdentifier);
+            Response<NetworkRetrievalResult> response = await client.RetrieveAsync(apcGatewayId, networkIdentifier);
             Console.WriteLine(response.Value.NetworkCode);
             #endregion Snippet:APC_Sample_NetworkRetrievalTest
 
@@ -200,10 +222,10 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
         }
 
         [RecordedTest]
-        public void NetworkRetrievalBadIdentifierTest()
+        public async Task NetworkRetrievalBadIdentifierTest()
         {
             #region Snippet:APC_Sample_NetworkRetrievalBadIdentifierTest
-            string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+            string apcGatewayId = "/subscriptions/abcdefgh/resourceGroups/.../Microsoft.programmableconnectivity/...";
             Uri endpoint = new Uri("https://your-endpoint-here.com");
 #if SNIPPET
             TokenCredential credential = new DefaultAzureCredential();
@@ -214,10 +236,11 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
             DeviceNetwork client = baseClient.GetDeviceNetworkClient();
+
             NetworkIdentifier networkIdentifier = new NetworkIdentifier("IPv5", "127.0.0.1");
             try
             {
-                Response<NetworkRetrievalResult> response = client.Retrieve(ApcGatewayId, networkIdentifier);
+                Response<NetworkRetrievalResult> response = await client.RetrieveAsync(apcGatewayId, networkIdentifier);
             }
             catch (RequestFailedException ex)
             {

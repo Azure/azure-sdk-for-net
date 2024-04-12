@@ -21,15 +21,16 @@ This file contains an example of how to handle errors.
 If you'd like to catch exceptions and log out details, do the following
 
 ```C# Snippet:APC_Sample_NetworkRetrievalBadIdentifierTest
-string ApcGatewayId = "/subscriptions/abcdefgh/resourceGroups/dev-testing-eastus/providers/Microsoft.programmableconnectivity/gateways/apcg-eastus";
+string apcGatewayId = "/subscriptions/abcdefgh/resourceGroups/.../Microsoft.programmableconnectivity/...";
 Uri endpoint = new Uri("https://your-endpoint-here.com");
 TokenCredential credential = new DefaultAzureCredential();
 ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
-var client = baseClient.GetDeviceNetworkClient();
-var networkIdentifier = new NetworkIdentifier("IPv5", "127.0.0.1");
+DeviceNetwork client = baseClient.GetDeviceNetworkClient();
+
+NetworkIdentifier networkIdentifier = new NetworkIdentifier("IPv5", "127.0.0.1");
 try
 {
-    Response<NetworkRetrievalResult> response = client.Retrieve(ApcGatewayId, networkIdentifier);
+    Response<NetworkRetrievalResult> response = await client.RetrieveAsync(apcGatewayId, networkIdentifier);
 }
 catch (RequestFailedException ex)
 {
@@ -44,7 +45,9 @@ catch (RequestFailedException ex)
 To log out a header received from APC, use the following
 
 ```C# Snippet:SimSwapVerifyHeaderRetrievalTest
-Response<SimSwapVerificationResult> response = client.Verify(ApcGatewayId, content);
-var xMsResponseId = response.GetRawResponse().Headers.TryGetValue("x-ms-response-id", out var responseId) ? responseId : "not found";
+Response<SimSwapVerificationResult> response = await client.VerifyAsync(apcGatewayId, content);
+string xMsResponseId = response.GetRawResponse().Headers.TryGetValue("x-ms-response-id", out var responseId)
+    ? responseId
+    : "not found";
 Console.WriteLine($"x-ms-response-id: {xMsResponseId}");
 ```
