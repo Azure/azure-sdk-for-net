@@ -76,6 +76,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         }
 
         [RecordedTest]
+        [LiveOnly]
         public async Task ObserveExistingAssetConversion()
         {
             (
