@@ -64,7 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// </summary>
         public AzureMonitorOptions()
         {
-            // users can explicitly change it, but by default we don't want self-diagnostics to be reported to Azure Monitor.
+            // users can explicitly change it, but by default we don't want internal logs to be reported to Azure Monitor.
             this.Diagnostics.IsDistributedTracingEnabled = false;
             this.Diagnostics.IsLoggingEnabled = false;
         }

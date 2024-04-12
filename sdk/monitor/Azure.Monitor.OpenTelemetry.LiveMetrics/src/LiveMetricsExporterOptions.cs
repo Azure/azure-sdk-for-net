@@ -35,7 +35,7 @@ public class LiveMetricsExporterOptions : ClientOptions
     /// </summary>
     public LiveMetricsExporterOptions()
     {
-        // users can explicitly change it, but by default we don't want live metrics self-diagnostics to be reported to Azure Monitor.
+        // users can explicitly change it, but by default we don't want live metrics internal logs to be reported to Azure Monitor.
         this.Diagnostics.IsDistributedTracingEnabled = false;
         this.Diagnostics.IsLoggingEnabled = false;
     }
