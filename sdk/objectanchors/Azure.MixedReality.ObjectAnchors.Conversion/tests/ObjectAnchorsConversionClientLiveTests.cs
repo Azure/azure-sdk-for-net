@@ -44,6 +44,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         }
 
         [RecordedTest]
+        [LiveOnly]
         public async Task RunAssetConversion()
         {
             (
@@ -111,6 +112,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         }
 
         [RecordedTest]
+        [LiveOnly]
         public async Task RunFailedAssetConversion()
         {
             (
