@@ -42,6 +42,14 @@ namespace Azure.Communication
                       rawId);
             }
 
+            if (kind == CommunicationIdentifierModelKind.MicrosoftTeamsApp)
+            {
+                var user = identifier.MicrosoftTeamsApp;
+                return new MicrosoftTeamsAppIdentifier(
+                    AssertNotNull(user.AppId, nameof(user.AppId), nameof(MicrosoftTeamsAppIdentifier)),
+                    Deserialize(AssertNotNull(user.Cloud, nameof(user.Cloud), nameof(MicrosoftTeamsAppIdentifier))));
+            }
+
             return new UnknownIdentifier(rawId);
 
             static void AssertMaximumOneNestedModel(CommunicationIdentifierModel identifier)
@@ -74,6 +82,11 @@ namespace Azure.Communication
             if (identifier.MicrosoftTeamsUser is not null)
             {
                 return CommunicationIdentifierModelKind.MicrosoftTeamsUser;
+            }
+
+            if (identifier.MicrosoftTeamsApp is not null)
+            {
+                return CommunicationIdentifierModelKind.MicrosoftTeamsApp;
             }
 
             return CommunicationIdentifierModelKind.Unknown;
@@ -110,6 +123,14 @@ namespace Azure.Communication
                     MicrosoftTeamsUser = new MicrosoftTeamsUserIdentifierModel(u.UserId)
                     {
                         IsAnonymous = u.IsAnonymous,
+                        Cloud = Serialize(u.Cloud),
+                    }
+                },
+                MicrosoftTeamsAppIdentifier u => new CommunicationIdentifierModel
+                {
+                    RawId = u.RawId,
+                    MicrosoftTeamsApp = new TeamsAppIdentifier(u.AppId)
+                    {
                         Cloud = Serialize(u.Cloud),
                     }
                 },

@@ -28,7 +28,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         private const string GetParticipantsPayload = "{" +
             "\"value\":[" +
                "{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false}," +
-               "{\"identifier\":{\"rawId\":\"participantId2\",\"kind\":\"phoneNumber\",\"phoneNumber\":{\"value\":\"+11234567\"}},\"isMuted\":true}" +
+               "{\"identifier\":{\"rawId\":\"participantId2\",\"kind\":\"phoneNumber\",\"phoneNumber\":{\"value\":\"+11234567\"}},\"isMuted\":true}," +
+               "{\"identifier\":{\"rawId\":\"28:orgid:teamsappid\",\"kind\":\"microsoftTeamsApp\",\"microsoftTeamsApp\":{\"appId\":\"teamsappid\",\"cloud\":\"public\" }},\"isMuted\":true}" +
                "]" +
             "}";
 
@@ -40,6 +41,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         private const string OperationContext = "someOperationContext";
         private const string ParticipantUserId = "participantId1";
         private const string PhoneNumber = "+11234567";
+        private const string TeamsAppId = "teamsappid";
 
         [Test]
         public async Task GetCallConnectionPropertiesAsync_200OK()
@@ -544,13 +546,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
         private void verifyGetParticipantsResult(IReadOnlyList<CallParticipant> participants)
         {
-            Assert.AreEqual(2, participants.Count);
+            Assert.AreEqual(3, participants.Count);
             var identifier = (CommunicationUserIdentifier)participants[0].Identifier;
             Assert.AreEqual(ParticipantUserId, identifier.Id);
             Assert.IsFalse(participants[0].IsMuted);
             var identifier2 = (PhoneNumberIdentifier)participants[1].Identifier;
             Assert.AreEqual(PhoneNumber, identifier2.PhoneNumber);
             Assert.IsTrue(participants[1].IsMuted);
+            var identifier3 = (MicrosoftTeamsAppIdentifier)participants[2].Identifier;
+            Assert.AreEqual(TeamsAppId, identifier3.AppId);
+            Assert.AreEqual(CommunicationCloudEnvironment.Public, identifier3.Cloud);
         }
     }
 }
