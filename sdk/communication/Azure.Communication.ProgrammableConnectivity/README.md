@@ -2,7 +2,7 @@
 
 This client library allows .NET applications to interact with Azure Programmable Connectivity Gateway, instead of using `curl` requests. For information on APC, see [docs](https://learn.microsoft.com/azure/programmable-connectivity/).
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/programmableconnectivity/Azure.Communication.ProgrammableConnectivity/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Communication.ProgrammableConnectivity) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.ProgrammableConnectivity/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Communication.ProgrammableConnectivity) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
 
@@ -26,9 +26,9 @@ The client library uses [`Azure.Identity`](https://learn.microsoft.com/dotnet/ap
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/programmableconnectivity/Azure.Communication.ProgrammableConnectivity/samples).
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.ProgrammableConnectivity/samples).
 
-### Key concepts for each example
+### Key concepts
 
 For each call that you make to APC with the SDK, you will follow the same pattern:
 * Create a client and sub-client for your use case (sim-swap/location/number-verification/device-network)
@@ -80,6 +80,10 @@ catch (RequestFailedException ex)
 If your call doesn't work, we recommend logging the exception messages, and progressing from there.
 
 Try sending the request with `curl` or with HTTP files, using postman for example. This will narrow down the issue you're facing.
+
+## Next steps
+
+For more information about Microsoft Azure SDK, see [this website](https://azure.github.io/azure-sdk/).
 
 ## Contributing
 
