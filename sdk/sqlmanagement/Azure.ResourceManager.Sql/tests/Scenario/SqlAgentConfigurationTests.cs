@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Sql.Tests
 
         [Test]
         [RecordedTest]
+        [LiveOnly]
         public async Task SqlAgentConfigurationApiTests()
         {
             // Create Managed Instance

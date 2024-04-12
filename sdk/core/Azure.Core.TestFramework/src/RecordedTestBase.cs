@@ -129,10 +129,6 @@ namespace Azure.Core.TestFramework
                 new BodyRegexSanitizer("(client_assertion=)[^&]+", SanitizeValue),
                 new BodyRegexSanitizer("(client_id=)[^&]+", SanitizeValue),
                 new BodyRegexSanitizer("(client_secret=)[^&]+", SanitizeValue),
-                new BodyRegexSanitizer(@"(?:\\?(sv|sig|se|srt|ss|sp)=)(?<secret>.*)", SanitizeValue)
-                {
-                    GroupForReplace = "secret"
-                },
                 new BodyRegexSanitizer(@"access_token=(?<group>.*?)(?=&|$)", SanitizeValue)
                 {
                     GroupForReplace = "group"
