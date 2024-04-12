@@ -67,13 +67,14 @@ namespace System.ClientModel.Tests.Internal.Diagnostics
         [Test]
         public async Task SendingRequestProducesEvents()
         {
-            var response = new MockResponse(200);
+            var headers = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Value" } });
+            var response = new MockPipelineResponse(200, mockHeaders: headers);
             response.SetContent("Hello, world!");
-            response.AddHeader("Custom-Response-Header", "Value");
 
             ClientPipelineOptions options = new()
             {
-                Transport = new MockPipelineTransport("Transport", i => 200),
+                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                LoggingPolicy = new ClientLoggingPolicy(logContent: true, maxLength: int.MaxValue, assemblyName: "Test-SDK")
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
