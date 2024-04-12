@@ -80,7 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 pipeline = HttpPipelineBuilder.Build(options);
             }
 
-            return new LiveMetricsRestAPIsForClientSDKsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.LiveEndpoint);
+            return new LiveMetricsRestAPIsForClientSDKsRestClient(new ClientDiagnostics(options), pipeline, connectionVars: connectionVars);
         }
 
         /// <summary>

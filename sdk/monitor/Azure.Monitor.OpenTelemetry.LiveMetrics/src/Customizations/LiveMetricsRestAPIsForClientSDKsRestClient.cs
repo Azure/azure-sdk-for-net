@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Text.Json;
 using System.Threading;
 using Azure.Core.Pipeline;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
@@ -19,10 +20,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
     {
         private readonly string _host;
 
-        public LiveMetricsRestAPIsForClientSDKsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string host, string apiVersion = "2024-04-01-preview")
-            : this(clientDiagnostics, pipeline, apiVersion)
+        public LiveMetricsRestAPIsForClientSDKsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, ConnectionVars connectionVars)
+            : this(clientDiagnostics, pipeline)
         {
-            _host = host;
+            _host = connectionVars.LiveEndpoint;
         }
 
         /// <summary> SDK ping. </summary>
