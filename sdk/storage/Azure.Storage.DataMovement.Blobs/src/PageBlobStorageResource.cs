@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -136,7 +137,10 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 await BlobClient.CreateAsync(
                     size: completeLength,
-                    options: _options.ToCreateOptions(overwrite),
+                    options: DataMovementBlobsExtensions.GetCreateOptions(
+                        _options,
+                        overwrite,
+                        options?.SourceProperties),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             if (streamLength > 0)
@@ -175,7 +179,10 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             await BlobClient.CreateAsync(
                 size: completeLength,
-                options: _options.ToCreateOptions(overwrite),
+                options: DataMovementBlobsExtensions.GetCreateOptions(
+                    _options,
+                    overwrite,
+                    options?.SourceProperties),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
             // There is no synchronous single-call copy API for Append/Page -> Page Blob
@@ -223,7 +230,10 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 await BlobClient.CreateAsync(
                     size: completeLength,
-                    _options.ToCreateOptions(overwrite),
+                    DataMovementBlobsExtensions.GetCreateOptions(
+                        _options,
+                        overwrite,
+                        options?.SourceProperties),
                     cancellationToken).ConfigureAwait(false);
             }
 
@@ -279,7 +289,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        protected override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected override Task CompleteTransferAsync(
+            bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
+            CancellationToken cancellationToken = default)
         {
             // no-op for now
             return Task.CompletedTask;
@@ -309,11 +322,15 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
-                BlobType.Page,
-                _options?.HttpHeaders,
-                _options?.AccessTier,
-                _options?.Metadata,
-                _options?.Tags);
+                blobType: BlobType.Page,
+                contentType: _options?.ContentType,
+                contentEncoding: _options?.ContentEncoding,
+                contentLanguage: _options?.ContentLanguage,
+                contentDisposition: _options?.ContentDisposition,
+                cacheControl: _options?.CacheControl,
+                accessTier: _options?.AccessTier,
+                metadata: _options?.Metadata,
+                tags: default);
         }
     }
 }

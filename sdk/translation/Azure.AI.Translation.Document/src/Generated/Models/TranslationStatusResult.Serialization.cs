@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.AI.Translation.Document.Models;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
@@ -66,6 +65,14 @@ namespace Azure.AI.Translation.Document
                 status,
                 error,
                 summary);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TranslationStatusResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTranslationStatusResult(document.RootElement);
         }
     }
 }

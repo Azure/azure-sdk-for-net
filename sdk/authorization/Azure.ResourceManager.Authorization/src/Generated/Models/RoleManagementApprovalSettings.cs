@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Determines whether approval is required or not. </summary>
+        [WirePath("isApprovalRequired")]
         public bool? IsApprovalRequired { get; set; }
         /// <summary> Determines whether approval is required for assignment extension. </summary>
+        [WirePath("isApprovalRequiredForExtension")]
         public bool? IsApprovalRequiredForExtension { get; set; }
         /// <summary> Determine whether requestor justification is required. </summary>
+        [WirePath("isRequestorJustificationRequired")]
         public bool? IsRequestorJustificationRequired { get; set; }
         /// <summary> The type of rule. </summary>
+        [WirePath("approvalMode")]
         public RoleManagementApprovalMode? ApprovalMode { get; set; }
         /// <summary> The approval stages of the request. </summary>
+        [WirePath("approvalStages")]
         public IList<RoleManagementApprovalStage> ApprovalStages { get; }
     }
 }

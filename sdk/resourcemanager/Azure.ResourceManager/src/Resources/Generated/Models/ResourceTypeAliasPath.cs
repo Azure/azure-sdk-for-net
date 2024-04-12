@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The path of an alias. </summary>
+        [WirePath("path")]
         public string Path { get; }
         /// <summary> The API versions. </summary>
+        [WirePath("apiVersions")]
         public IReadOnlyList<string> ApiVersions { get; }
         /// <summary> The pattern for an alias path. </summary>
+        [WirePath("pattern")]
         public ResourceTypeAliasPattern Pattern { get; }
         /// <summary> The metadata of the alias path. If missing, fall back to the default metadata of the alias. </summary>
+        [WirePath("metadata")]
         public ResourceTypeAliasPathMetadata Metadata { get; }
     }
 }

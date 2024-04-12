@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("value")]
         public BinaryData Value { get; set; }
     }
 }

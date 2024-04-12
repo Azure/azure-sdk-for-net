@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -74,10 +73,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> represents user assigned identities map. </summary>
+        [WirePath("userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
         /// <summary> the types of identities associated with this resource; currently restricted to 'None and UserAssigned'. </summary>
+        [WirePath("type")]
         public PostgreSqlFlexibleServerIdentityType IdentityType { get; set; }
         /// <summary> Tenant id of the server. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
     }
 }

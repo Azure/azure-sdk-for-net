@@ -26,6 +26,9 @@ public partial class StreamingChatCompletionsUpdate
     /// </remarks>
     public string Id { get; }
 
+    /// <inheritdoc cref="ChatCompletions.Model"/>
+    public string Model { get; }
+
     /// <summary>
     /// Gets the first timestamp associated with generation activity for this completions response,
     /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
@@ -117,6 +120,16 @@ public partial class StreamingChatCompletionsUpdate
     public StreamingToolCallUpdate ToolCallUpdate { get; }
 
     /// <summary>
+    /// Gets the log probability information associated with the content of this update, as requested by providing
+    /// values for <see cref="ChatCompletionsOptions.EnableLogProbabilities"/> and
+    /// <see cref="ChatCompletionsOptions.LogProbabilitiesPerToken"/> in the request.
+    /// </summary>
+    /// <remarks>
+    /// Note that each update will only report log probability information for its corresponding content.
+    /// </remarks>
+    public ChatChoiceLogProbabilityInfo LogProbabilityInfo { get; }
+
+    /// <summary>
     /// Gets an optional name associated with the role of the streamed Chat Completion, typically as previously
     /// specified in a system message.
     /// </summary>
@@ -173,12 +186,14 @@ public partial class StreamingChatCompletionsUpdate
 
     internal StreamingChatCompletionsUpdate(
         string id,
+        string model,
         DateTimeOffset created,
         string systemFingerprint = null,
         int? choiceIndex = null,
         ChatRole? role = null,
         string authorName = null,
         string contentUpdate = null,
+        ChatChoiceLogProbabilityInfo logProbabilityInfo = null,
         CompletionsFinishReason? finishReason = null,
         string functionName = null,
         string functionArgumentsUpdate = null,
@@ -186,12 +201,14 @@ public partial class StreamingChatCompletionsUpdate
         AzureChatExtensionsMessageContext azureExtensionsContext = null)
     {
         Id = id;
+        Model = model;
         Created = created;
         SystemFingerprint = systemFingerprint;
         ChoiceIndex = choiceIndex;
         Role = role;
         AuthorName = authorName;
         ContentUpdate = contentUpdate;
+        LogProbabilityInfo = logProbabilityInfo;
         FinishReason = finishReason;
         FunctionName = functionName;
         FunctionArgumentsUpdate = functionArgumentsUpdate;

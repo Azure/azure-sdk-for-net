@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppliedReservationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppliedReservationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppliedReservationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservationOrderIds))
             {
                 writer.WritePropertyName("reservationOrderIds"u8);
-                writer.WriteObjectValue(ReservationOrderIds);
+                writer.WriteObjectValue(ReservationOrderIds, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppliedReservationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppliedReservationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppliedReservationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Reservations.Models
             SystemData systemData = default;
             AppliedReservationList reservationOrderIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -150,10 +149,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppliedReservationData(
                 id,
                 name,
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppliedReservationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppliedReservationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeAppliedReservationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppliedReservationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppliedReservationData)} does not support reading '{options.Format}' format.");
             }
         }
 

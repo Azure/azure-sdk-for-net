@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(KeySource))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesKeyVaultProperties keyVaultProperties = default;
             ServiceAccountEncryptionKeySource? keySource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultProperties"u8))
@@ -101,11 +101,54 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceAccountEncryptionProperties(keyVaultProperties, keySource, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultProperties), out propertyOverride);
+            if (Optional.IsDefined(KeyVaultProperties) || hasPropertyOverride)
+            {
+                builder.Append("  keyVaultProperties: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, KeyVaultProperties, options, 2, false, "  keyVaultProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeySource), out propertyOverride);
+            if (Optional.IsDefined(KeySource) || hasPropertyOverride)
+            {
+                builder.Append("  keySource: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{KeySource.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ServiceAccountEncryptionProperties>.Write(ModelReaderWriterOptions options)
@@ -116,8 +159,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +178,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeServiceAccountEncryptionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

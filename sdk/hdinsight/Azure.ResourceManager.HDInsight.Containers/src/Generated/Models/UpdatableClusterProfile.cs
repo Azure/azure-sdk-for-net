@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -60,9 +59,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="authorizationProfile"> Authorization profile with details of AAD user Ids and group Ids authorized for data plane access. </param>
         /// <param name="logAnalyticsProfile"> Cluster log analytics profile to enable or disable OMS agent for cluster. </param>
         /// <param name="prometheusProfile"> Cluster Prometheus profile. </param>
+        /// <param name="rangerPluginProfile"> Cluster Ranger plugin profile. </param>
+        /// <param name="rangerProfile"> The ranger cluster profile. </param>
         /// <param name="scriptActionProfiles"> The script action profile list. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdatableClusterProfile(IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ClusterSshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, AuthorizationProfile authorizationProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, IList<ScriptActionProfile> scriptActionProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpdatableClusterProfile(IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ClusterSshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, AuthorizationProfile authorizationProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, ClusterRangerPluginProfile rangerPluginProfile, RangerProfile rangerProfile, IList<ScriptActionProfile> scriptActionProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceConfigsProfiles = serviceConfigsProfiles;
             SshProfile = sshProfile;
@@ -70,6 +71,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             AuthorizationProfile = authorizationProfile;
             LogAnalyticsProfile = logAnalyticsProfile;
             PrometheusProfile = prometheusProfile;
+            RangerPluginProfile = rangerPluginProfile;
+            RangerProfile = rangerProfile;
             ScriptActionProfiles = scriptActionProfiles;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -96,6 +99,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
         }
 
+        /// <summary> Cluster Ranger plugin profile. </summary>
+        internal ClusterRangerPluginProfile RangerPluginProfile { get; set; }
+        /// <summary> Enable Ranger for cluster or not. </summary>
+        public bool? RangerPluginProfileEnabled
+        {
+            get => RangerPluginProfile is null ? default(bool?) : RangerPluginProfile.Enabled;
+            set
+            {
+                RangerPluginProfile = value.HasValue ? new ClusterRangerPluginProfile(value.Value) : null;
+            }
+        }
+
+        /// <summary> The ranger cluster profile. </summary>
+        public RangerProfile RangerProfile { get; set; }
         /// <summary> The script action profile list. </summary>
         public IList<ScriptActionProfile> ScriptActionProfiles { get; }
     }

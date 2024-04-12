@@ -122,6 +122,114 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public void IsEquivalentToComparesByteArrayPropertiesBySequence()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstEvent = new EventData((byte[])body.Clone());
+            var secondEvent = new EventData((byte[])body.Clone());
+
+            firstEvent.Properties["test"] = new byte[] { 0x1, 0x2, 0x3 };
+            secondEvent.Properties["test"] = new byte[] { 0x1, 0x2, 0x3 };
+
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToDetectsDifferentArrayProperties()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstEvent = new EventData((byte[])body.Clone());
+            var secondEvent = new EventData((byte[])body.Clone());
+
+            firstEvent.Properties["test"] = new byte[] { 0x1, 0x2, 0x3 };
+            secondEvent.Properties["test"] = new byte[] { 0x2, 0x3, 0x4 };
+
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToComparesArraySegmentPropertiesBySequence()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstEvent = new EventData((byte[])body.Clone());
+            var secondEvent = new EventData((byte[])body.Clone());
+
+            firstEvent.Properties["test"] = new ArraySegment<byte>(new byte[] { 0x1, 0x2, 0x3 });
+            secondEvent.Properties["test"] = new ArraySegment<byte>(new byte[] { 0x1, 0x2, 0x3 });
+
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToDetectsDifferentArraySegmentProperties()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstEvent = new EventData((byte[])body.Clone());
+            var secondEvent = new EventData((byte[])body.Clone());
+
+            firstEvent.Properties["test"] = new ArraySegment<byte>(new byte[] { 0x1, 0x2, 0x3 });
+            secondEvent.Properties["test"] = new ArraySegment<byte>(new byte[] { 0x2, 0x3, 0x4 });
+
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToComparesMixedBinaryPropertiesBySequence()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstEvent = new EventData((byte[])body.Clone());
+            var secondEvent = new EventData((byte[])body.Clone());
+
+            firstEvent.Properties["test"] = new ArraySegment<byte>(new byte[] { 0x1, 0x2, 0x3 });
+            secondEvent.Properties["test"] = new byte[] { 0x1, 0x2, 0x3 };
+
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.True);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
+        public void IsEquivalentToDetectsMixedBinaryProperties()
+        {
+            var body = new byte[] { 0x22, 0x44, 0x88 };
+            var firstEvent = new EventData((byte[])body.Clone());
+            var secondEvent = new EventData((byte[])body.Clone());
+
+            firstEvent.Properties["test"] = new byte[] { 0x1, 0x2, 0x3 };
+            secondEvent.Properties["test"] = new ArraySegment<byte>(new byte[] { 0x2, 0x3, 0x4 });
+
+            Assert.That(firstEvent.IsEquivalentTo(secondEvent), Is.False);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventDataExtensions.IsEquivalentTo" /> test
+        ///   helper.
+        /// </summary>
+        ///
+        [Test]
         public void IsEquivalentToDetectsWhenOnePropertySetIsNull()
         {
             var body = new byte[] { 0x22, 0x44, 0x88 };

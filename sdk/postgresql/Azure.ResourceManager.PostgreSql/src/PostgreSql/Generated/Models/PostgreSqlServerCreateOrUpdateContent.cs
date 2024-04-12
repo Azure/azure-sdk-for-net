@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -92,18 +91,23 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
+        [WirePath("sku")]
         public PostgreSqlSku Sku { get; set; }
         /// <summary>
         /// Properties of the server.
         /// Please note <see cref="PostgreSqlServerPropertiesForCreate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PostgreSqlServerPropertiesForDefaultCreate"/>, <see cref="PostgreSqlServerPropertiesForGeoRestore"/>, <see cref="PostgreSqlServerPropertiesForRestore"/> and <see cref="PostgreSqlServerPropertiesForReplica"/>.
         /// </summary>
+        [WirePath("properties")]
         public PostgreSqlServerPropertiesForCreate Properties { get; }
         /// <summary> The location the resource resides in. </summary>
+        [WirePath("location")]
         public AzureLocation Location { get; }
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

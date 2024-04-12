@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Peering
             var format = options.Format == "W" ? ((IPersistableModel<PeerAsnData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeerAsnData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeerAsnData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Peering
                 writer.WriteStartArray();
                 foreach (var item in PeerContactDetail)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Peering
             var format = options.Format == "W" ? ((IPersistableModel<PeerAsnData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeerAsnData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeerAsnData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Peering
             PeerAsnValidationState? validationState = default;
             string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.Peering
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PeerAsnData(
                 id,
                 name,
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Peering
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeerAsnData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeerAsnData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Peering
                         return DeserializePeerAsnData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeerAsnData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeerAsnData)} does not support reading '{options.Format}' format.");
             }
         }
 

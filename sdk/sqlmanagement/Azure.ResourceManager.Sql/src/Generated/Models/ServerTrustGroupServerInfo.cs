@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -72,6 +71,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Server Id. </summary>
+        [WirePath("serverId")]
         public ResourceIdentifier ServerId { get; set; }
     }
 }

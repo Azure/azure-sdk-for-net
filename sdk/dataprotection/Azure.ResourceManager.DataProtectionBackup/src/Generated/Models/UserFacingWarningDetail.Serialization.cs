@@ -9,9 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserFacingWarningDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserFacingWarningDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserFacingWarningDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +56,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserFacingWarningDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserFacingWarningDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserFacingWarningDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +74,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string resourceName = default;
             ResponseError warning = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceName"u8))
@@ -91,10 +89,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UserFacingWarningDetail(resourceName, warning, serializedAdditionalRawData);
         }
 
@@ -107,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserFacingWarningDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserFacingWarningDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -123,7 +121,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeUserFacingWarningDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserFacingWarningDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserFacingWarningDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

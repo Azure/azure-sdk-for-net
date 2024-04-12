@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -57,6 +56,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
             }
             return new ServiceError(requestId, responseDateTime, code, message, exception);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ServiceError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeServiceError(document.RootElement);
         }
     }
 }

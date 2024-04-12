@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> A collection of private link resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ServiceBusPrivateLinkResource> Value { get; }
         /// <summary> A link for the next page of private link resources. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

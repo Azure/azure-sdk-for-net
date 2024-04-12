@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Base class for MongoDB migration outputs
     /// Please note <see cref="MongoDBProgress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MongoDBDatabaseProgress"/>, <see cref="MongoDBMigrationProgress"/> and <see cref="MongoDBCollectionProgress"/>.
+    /// The available derived classes include <see cref="MongoDBCollectionProgress"/>, <see cref="MongoDBDatabaseProgress"/> and <see cref="MongoDBMigrationProgress"/>.
     /// </summary>
     public abstract partial class MongoDBProgress
     {

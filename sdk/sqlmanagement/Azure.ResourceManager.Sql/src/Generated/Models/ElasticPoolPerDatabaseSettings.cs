@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The minimum capacity all databases are guaranteed. </summary>
+        [WirePath("minCapacity")]
         public double? MinCapacity { get; set; }
         /// <summary> The maximum capacity any one database can consume. </summary>
+        [WirePath("maxCapacity")]
         public double? MaxCapacity { get; set; }
     }
 }

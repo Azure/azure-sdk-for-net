@@ -24,7 +24,7 @@ namespace Azure.Monitor.Query.Tests
 #else
             string resourceId = TestEnvironment.MetricsResource;
 #endif
-            #region Snippet:CreateMetricsClient
+            #region Snippet:CreateMetricsQueryClient
 #if SNIPPET
             var client = new MetricsQueryClient(new DefaultAzureCredential());
 #else
@@ -193,17 +193,22 @@ namespace Azure.Monitor.Query.Tests
 #if SNIPPET
             string resourceId =
                 "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+            var client = new MetricsClient(
+                new Uri("https://<region>.metrics.monitor.azure.com"),
+                new DefaultAzureCredential());
 #else
             string resourceId = TestEnvironment.StorageAccountId;
+            var client = new MetricsClient(
+                new Uri(TestEnvironment.DataplaneEndpoint),
+                new DefaultAzureCredential());
 #endif
-            MetricsClient client = new MetricsClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
-            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+            Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
                 resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
 
-            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
-            foreach (var value in metricsQueryResults.Values)
+            MetricsQueryResourcesResult metricsQueryResults = result.Value;
+            foreach (MetricsQueryResult value in metricsQueryResults.Values)
             {
                 Console.WriteLine(value.Metrics.Count);
             }
@@ -220,24 +225,56 @@ namespace Azure.Monitor.Query.Tests
 #else
             string resourceId = TestEnvironment.StorageAccountId;
 #endif
-            MetricsClient client = new MetricsClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
-            MetricsQueryResourcesOptions options = new MetricsQueryResourcesOptions()
+            #region Snippet:CreateMetricsClient
+#if SNIPPET
+            var client = new MetricsClient(
+                new Uri("https://<region>.metrics.monitor.azure.com"),
+                new DefaultAzureCredential());
+#else
+            var client = new MetricsClient(
+                new Uri(TestEnvironment.DataplaneEndpoint),
+                new DefaultAzureCredential());
+#endif
+            #endregion Snippet:CreateMetricsClient
+            var options = new MetricsQueryResourcesOptions
             {
                 OrderBy = "sum asc",
-                RollUpBy = { "RollUpBy=City" }
+                Size = 10
             };
 
-            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+            Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
                 resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts",
                 options).ConfigureAwait(false);
 
-            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
-            foreach (var value in metricsQueryResults.Values)
+            MetricsQueryResourcesResult metricsQueryResults = result.Value;
+            foreach (MetricsQueryResult value in metricsQueryResults.Values)
             {
                 Console.WriteLine(value.Metrics.Count);
             }
+            #endregion Snippet:QueryResourcesMetricsWithOptions
+        }
+
+        [Test]
+        public void CreateClientsWithOptions()
+        {
+            #region Snippet:CreateClientsWithOptions
+            var metricsQueryClientOptions = new MetricsQueryClientOptions
+            {
+                Audience = MetricsQueryAudience.AzureGovernment
+            };
+            var metricsQueryClient = new MetricsQueryClient(
+                new DefaultAzureCredential(),
+                metricsQueryClientOptions);
+
+            var logsQueryClientOptions = new LogsQueryClientOptions
+            {
+                Audience = LogsQueryAudience.AzureChina
+            };
+            var logsQueryClient = new LogsQueryClient(
+                new DefaultAzureCredential(),
+                logsQueryClientOptions);
             #endregion
         }
     }

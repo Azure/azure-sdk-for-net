@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,12 +22,12 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue(Properties, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Id))
@@ -109,7 +108,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDataConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +137,7 @@ namespace Azure.Analytics.Defender.Easm
             bool? active = default;
             string inactiveMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -236,10 +235,10 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LogAnalyticsDataConnection(
                 kind,
                 id,
@@ -266,7 +265,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -282,7 +281,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeLogAnalyticsDataConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsDataConnection)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -296,11 +295,11 @@ namespace Azure.Analytics.Defender.Easm
             return DeserializeLogAnalyticsDataConnection(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

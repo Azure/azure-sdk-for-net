@@ -67,15 +67,15 @@ namespace Azure.Monitor.Query
         protected MetricsClient() { }
         public MetricsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Query.MetricsClientOptions options = null) { }
         public System.Uri Endpoint { get { throw null; } }
-        public virtual Azure.Response<Azure.Monitor.Query.Models.MetricsQueryResourcesResult> QueryResources(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds, System.Collections.Generic.List<string> metricNames, string metricNamespace, Azure.Monitor.Query.MetricsQueryResourcesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.MetricsQueryResourcesResult>> QueryResourcesAsync(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds, System.Collections.Generic.List<string> metricNames, string metricNamespace, Azure.Monitor.Query.MetricsQueryResourcesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Monitor.Query.Models.MetricsQueryResourcesResult> QueryResources(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds, System.Collections.Generic.IEnumerable<string> metricNames, string metricNamespace, Azure.Monitor.Query.MetricsQueryResourcesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.MetricsQueryResourcesResult>> QueryResourcesAsync(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds, System.Collections.Generic.IEnumerable<string> metricNames, string metricNamespace, Azure.Monitor.Query.MetricsQueryResourcesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MetricsClientOptions : Azure.Core.ClientOptions
     {
-        public MetricsClientOptions(Azure.Monitor.Query.MetricsClientOptions.ServiceVersion version = Azure.Monitor.Query.MetricsClientOptions.ServiceVersion.V2023_10_01) { }
+        public MetricsClientOptions(Azure.Monitor.Query.MetricsClientOptions.ServiceVersion version = Azure.Monitor.Query.MetricsClientOptions.ServiceVersion.V2024_02_01) { }
         public enum ServiceVersion
         {
-            V2023_10_01 = 1,
+            V2024_02_01 = 1,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -133,8 +133,8 @@ namespace Azure.Monitor.Query
     }
     public partial class MetricsQueryResourcesOptions
     {
-        public System.Collections.Generic.IList<string> Aggregations;
         public MetricsQueryResourcesOptions() { }
+        public System.Collections.Generic.IList<string> Aggregations { get { throw null; } }
         public string Filter { get { throw null; } set { } }
         public System.TimeSpan? Granularity { get { throw null; } set { } }
         public string OrderBy { get { throw null; } set { } }
@@ -437,6 +437,11 @@ namespace Microsoft.Extensions.Azure
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Monitor.Query.LogsQueryClient, Azure.Monitor.Query.LogsQueryClientOptions> AddLogsQueryClient<TBuilder>(this TBuilder builder) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Monitor.Query.LogsQueryClient, Azure.Monitor.Query.LogsQueryClientOptions> AddLogsQueryClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Monitor.Query.LogsQueryClient, Azure.Monitor.Query.LogsQueryClientOptions> AddLogsQueryClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+    }
+    public static partial class MetricsClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Monitor.Query.MetricsClient, Azure.Monitor.Query.MetricsClientOptions> AddMetricsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Monitor.Query.MetricsClient, Azure.Monitor.Query.MetricsClientOptions> AddMetricsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
     public static partial class MetricsQueryClientBuilderExtensions
     {

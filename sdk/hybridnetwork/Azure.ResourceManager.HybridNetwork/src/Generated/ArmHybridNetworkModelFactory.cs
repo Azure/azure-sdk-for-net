@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.HybridNetwork;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -95,7 +93,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// </param>
         /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
         /// <returns> A new <see cref="Models.ConfigurationGroupValuePropertiesFormat"/> instance for mocking. </returns>
-        public static ConfigurationGroupValuePropertiesFormat ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string configurationGroupSchemaName = null, string configurationGroupSchemaOfferingLocation = null, DeploymentResourceIdReference configurationGroupSchemaResourceReference = null, string configurationType = "Unknown")
+        public static ConfigurationGroupValuePropertiesFormat ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string configurationGroupSchemaName = null, string configurationGroupSchemaOfferingLocation = null, DeploymentResourceIdReference configurationGroupSchemaResourceReference = null, string configurationType = null)
         {
             return new UnknownConfigurationGroupValuePropertiesFormat(
                 provisioningState,
@@ -104,7 +102,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 configurationGroupSchemaName,
                 configurationGroupSchemaOfferingLocation,
                 configurationGroupSchemaResourceReference,
-                configurationType,
+                configurationType == null ? default : new ConfigurationGroupValueConfigurationType(configurationType),
                 serializedAdditionalRawData: null);
         }
 
@@ -158,7 +156,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionPropertiesFormat"/> instance for mocking. </returns>
-        public static NetworkFunctionPropertiesFormat NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, ResourceIdentifier nfviId = null, bool? allowSoftwareUpdate = null, string configurationType = "Unknown", IEnumerable<string> roleOverrideValues = null)
+        public static NetworkFunctionPropertiesFormat NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, ResourceIdentifier nfviId = null, bool? allowSoftwareUpdate = null, string configurationType = null, IEnumerable<string> roleOverrideValues = null)
         {
             roleOverrideValues ??= new List<string>();
 
@@ -173,7 +171,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 nfviType,
                 nfviId,
                 allowSoftwareUpdate,
-                configurationType,
+                configurationType == null ? default : new NetworkFunctionConfigurationType(configurationType),
                 roleOverrideValues?.ToList(),
                 serializedAdditionalRawData: null);
         }
@@ -438,14 +436,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
         /// <param name="networkFunctionType"> The network function type. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionDefinitionVersionPropertiesFormat"/> instance for mocking. </returns>
-        public static NetworkFunctionDefinitionVersionPropertiesFormat NetworkFunctionDefinitionVersionPropertiesFormat(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string deployParameters = null, string networkFunctionType = "Unknown")
+        public static NetworkFunctionDefinitionVersionPropertiesFormat NetworkFunctionDefinitionVersionPropertiesFormat(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string deployParameters = null, string networkFunctionType = null)
         {
             return new UnknownNetworkFunctionDefinitionVersionPropertiesFormat(
                 provisioningState,
                 versionState,
                 description,
                 deployParameters,
-                networkFunctionType,
+                networkFunctionType == null ? default : new NetworkFunctionType(networkFunctionType),
                 serializedAdditionalRawData: null);
         }
 

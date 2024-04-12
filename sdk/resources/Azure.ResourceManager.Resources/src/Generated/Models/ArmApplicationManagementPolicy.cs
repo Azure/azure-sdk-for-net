@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The managed application management mode. </summary>
+        [WirePath("mode")]
         public ArmApplicationManagementMode? Mode { get; set; }
     }
 }

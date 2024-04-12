@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Document
@@ -20,7 +21,7 @@ namespace Azure.AI.Translation.Document
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<DocumentFilter>(Filter);
             }
             if (Optional.IsDefined(LanguageCode))
             {
@@ -33,6 +34,14 @@ namespace Azure.AI.Translation.Document
                 writer.WriteStringValue(StorageSource);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

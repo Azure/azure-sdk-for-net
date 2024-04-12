@@ -60,12 +60,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new EventGridMqttClientSessionConnectedEventData(clientAuthenticationName, clientName, namespaceName, clientSessionName, sequenceNumber);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new EventGridMqttClientSessionConnectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEventGridMqttClientSessionConnectedEventData(document.RootElement);
+        }
+
         internal partial class EventGridMqttClientSessionConnectedEventDataConverter : JsonConverter<EventGridMqttClientSessionConnectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, EventGridMqttClientSessionConnectedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override EventGridMqttClientSessionConnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

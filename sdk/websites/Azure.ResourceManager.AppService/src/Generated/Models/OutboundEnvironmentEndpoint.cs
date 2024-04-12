@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The type of service accessed by the App Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </summary>
+        [WirePath("category")]
         public string Category { get; }
         /// <summary> The endpoints that the App Service Environment reaches the service at. </summary>
+        [WirePath("endpoints")]
         public IReadOnlyList<AppServiceEndpointDependency> Endpoints { get; }
     }
 }

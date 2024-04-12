@@ -9,65 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     public partial class SpeechGenerationOptions : IUtf8JsonSerializable, IJsonModel<SpeechGenerationOptions>
     {
-        void IJsonModel<SpeechGenerationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SpeechGenerationOptions>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(SpeechGenerationOptions)} does not support '{format}' format.");
-            }
-
-            writer.WriteStartObject();
-            writer.WritePropertyName("input"u8);
-            writer.WriteStringValue(Input);
-            writer.WritePropertyName("voice"u8);
-            writer.WriteStringValue(Voice.ToString());
-            if (Optional.IsDefined(ResponseFormat))
-            {
-                writer.WritePropertyName("response_format"u8);
-                writer.WriteStringValue(ResponseFormat.Value.ToString());
-            }
-            if (Optional.IsDefined(Speed))
-            {
-                writer.WritePropertyName("speed"u8);
-                writer.WriteNumberValue(Speed.Value);
-            }
-            if (Optional.IsDefined(DeploymentName))
-            {
-                writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(DeploymentName);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpeechGenerationOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
         SpeechGenerationOptions IJsonModel<SpeechGenerationOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SpeechGenerationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpeechGenerationOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpeechGenerationOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +43,7 @@ namespace Azure.AI.OpenAI
             float? speed = default;
             string model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("input"u8))
@@ -126,10 +81,10 @@ namespace Azure.AI.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SpeechGenerationOptions(
                 input,
                 voice,
@@ -148,7 +103,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpeechGenerationOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpeechGenerationOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +119,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeSpeechGenerationOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpeechGenerationOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpeechGenerationOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -178,11 +133,11 @@ namespace Azure.AI.OpenAI
             return DeserializeSpeechGenerationOptions(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

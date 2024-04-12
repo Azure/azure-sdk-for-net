@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -71,20 +70,25 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Id of private endpoint connection. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Properties of the private endpoint object. </summary>
         internal SubResource PrivateEndpoint { get; }
         /// <summary> Gets Id. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint?.Id;
         }
 
         /// <summary> Approval state of the private link connection. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public ManagedHsmPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; }
         /// <summary> Provisioning state of the private endpoint connection. </summary>
+        [WirePath("properties.provisioningState")]
         public ManagedHsmPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }

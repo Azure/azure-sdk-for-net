@@ -21,5 +21,13 @@ namespace Azure.Security.KeyVault.Administration
             writer.WriteStringValue(PrincipalId);
             writer.WriteEndObject();
         }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
     }
 }

@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MySql;
 using Azure.ResourceManager.MySql.FlexibleServers.Mocking;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources;
@@ -77,6 +74,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlFlexibleServersArmClient(client).GetMySqlFlexibleServerBackupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MySqlFlexibleServerBackupV2Resource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlFlexibleServerBackupV2Resource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServerBackupV2Resource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlFlexibleServersArmClient.GetMySqlFlexibleServerBackupV2Resource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MySqlFlexibleServerBackupV2Resource"/> object. </returns>
+        public static MySqlFlexibleServerBackupV2Resource GetMySqlFlexibleServerBackupV2Resource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMySqlFlexibleServersArmClient(client).GetMySqlFlexibleServerBackupV2Resource(id);
         }
 
         /// <summary>
@@ -156,6 +172,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="AdvancedThreatProtectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AdvancedThreatProtectionResource.CreateResourceIdentifier" /> to create an <see cref="AdvancedThreatProtectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlFlexibleServersArmClient.GetAdvancedThreatProtectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AdvancedThreatProtectionResource"/> object. </returns>
+        public static AdvancedThreatProtectionResource GetAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMySqlFlexibleServersArmClient(client).GetAdvancedThreatProtectionResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="MySqlFlexibleServersCapabilityResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MySqlFlexibleServersCapabilityResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServersCapabilityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -172,6 +207,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMySqlFlexibleServersArmClient(client).GetMySqlFlexibleServersCapabilityResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MySqlFlexibleServerMaintenanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlFlexibleServerMaintenanceResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServerMaintenanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlFlexibleServersArmClient.GetMySqlFlexibleServerMaintenanceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MySqlFlexibleServerMaintenanceResource"/> object. </returns>
+        public static MySqlFlexibleServerMaintenanceResource GetMySqlFlexibleServerMaintenanceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMySqlFlexibleServersArmClient(client).GetMySqlFlexibleServerMaintenanceResource(id);
         }
 
         /// <summary>
@@ -204,7 +258,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -242,7 +296,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -298,7 +352,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -337,7 +391,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -376,7 +430,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,7 +466,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -448,7 +502,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -481,7 +535,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -514,7 +568,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -547,7 +601,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -580,7 +634,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -613,7 +667,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -646,7 +700,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -678,7 +732,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -710,7 +764,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -744,7 +798,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -778,7 +832,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -809,7 +863,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// </list>
         /// <item>

@@ -106,46 +106,67 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The time the operation finished (ISO8601 format). </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> The error code if available. </summary>
+        [WirePath("properties.errorCode")]
         public int? ErrorCode { get; }
         /// <summary> The error message if available. </summary>
+        [WirePath("properties.errorMessage")]
         public string ErrorMessage { get; }
         /// <summary> The error severity if available. </summary>
+        [WirePath("properties.errorSeverity")]
         public int? ErrorSeverity { get; }
         /// <summary> The operation name. </summary>
+        [WirePath("properties.operation")]
         public string Operation { get; }
         /// <summary> The unique operation ID. </summary>
+        [WirePath("properties.operationId")]
         public Guid? OperationId { get; }
         /// <summary> The percentage complete if available. </summary>
+        [WirePath("properties.percentComplete")]
         public int? PercentComplete { get; }
         /// <summary> The requested max DTU per database if available. </summary>
+        [WirePath("properties.requestedDatabaseDtuMax")]
         public int? RequestedDatabaseDtuMax { get; }
         /// <summary> The requested min DTU per database if available. </summary>
+        [WirePath("properties.requestedDatabaseDtuMin")]
         public int? RequestedDatabaseDtuMin { get; }
         /// <summary> The requested DTU for the pool if available. </summary>
+        [WirePath("properties.requestedDtu")]
         public int? RequestedDtu { get; }
         /// <summary> The requested name for the elastic pool if available. </summary>
+        [WirePath("properties.requestedElasticPoolName")]
         public string RequestedElasticPoolName { get; }
         /// <summary> The requested storage limit for the pool in GB if available. </summary>
+        [WirePath("properties.requestedStorageLimitInGB")]
         public long? RequestedStorageLimitInGB { get; }
         /// <summary> The name of the elastic pool. </summary>
+        [WirePath("properties.elasticPoolName")]
         public string ElasticPoolName { get; }
         /// <summary> The name of the server the elastic pool is in. </summary>
+        [WirePath("properties.serverName")]
         public string ServerName { get; }
         /// <summary> The time the operation started (ISO8601 format). </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The current state of the operation. </summary>
+        [WirePath("properties.state")]
         public string State { get; }
         /// <summary> The requested storage limit in MB. </summary>
+        [WirePath("properties.requestedStorageLimitInMB")]
         public int? RequestedStorageLimitInMB { get; }
         /// <summary> The requested per database DTU guarantee. </summary>
+        [WirePath("properties.requestedDatabaseDtuGuarantee")]
         public int? RequestedDatabaseDtuGuarantee { get; }
         /// <summary> The requested per database DTU cap. </summary>
+        [WirePath("properties.requestedDatabaseDtuCap")]
         public int? RequestedDatabaseDtuCap { get; }
         /// <summary> The requested DTU guarantee. </summary>
+        [WirePath("properties.requestedDtuGuarantee")]
         public int? RequestedDtuGuarantee { get; }
     }
 }

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Analysis;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Analysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisIPv4FirewallSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisIPv4FirewallSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisIPv4FirewallSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Analysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisIPv4FirewallSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisIPv4FirewallSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisIPv4FirewallSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.Analysis.Models
             IList<AnalysisIPv4FirewallRule> firewallRules = default;
             bool? enablePowerBIService = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firewallRules"u8))
@@ -111,10 +110,10 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AnalysisIPv4FirewallSettings(firewallRules ?? new ChangeTrackingList<AnalysisIPv4FirewallRule>(), enablePowerBIService, serializedAdditionalRawData);
         }
 
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisIPv4FirewallSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisIPv4FirewallSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.Analysis.Models
                         return DeserializeAnalysisIPv4FirewallSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisIPv4FirewallSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisIPv4FirewallSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

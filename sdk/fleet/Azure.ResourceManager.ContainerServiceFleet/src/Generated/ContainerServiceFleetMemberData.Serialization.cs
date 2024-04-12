@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerServiceFleet.Models;
 using Azure.ResourceManager.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetMemberData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceFleetMemberData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetMemberData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetMemberData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceFleetMemberData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetMemberData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             string group = default;
             FleetMemberProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -192,10 +191,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerServiceFleetMemberData(
                 id,
                 name,
@@ -217,7 +216,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetMemberData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetMemberData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                         return DeserializeContainerServiceFleetMemberData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetMemberData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetMemberData)} does not support reading '{options.Format}' format.");
             }
         }
 

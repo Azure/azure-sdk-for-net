@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password"> The password of the AppFigures source. </param>
         /// <param name="clientKey"> The client key for the AppFigures source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/>, <paramref name="password"/> or <paramref name="clientKey"/> is null. </exception>
-        public AppFiguresLinkedService(DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, DataFactorySecretBaseDefinition clientKey)
+        public AppFiguresLinkedService(DataFactoryElement<string> userName, DataFactorySecret password, DataFactorySecret clientKey)
         {
             Argument.AssertNotNull(userName, nameof(userName));
             Argument.AssertNotNull(password, nameof(password));
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userName"> The username of the Appfigures source. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The password of the AppFigures source. </param>
         /// <param name="clientKey"> The client key for the AppFigures source. </param>
-        internal AppFiguresLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password, DataFactorySecretBaseDefinition clientKey) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AppFiguresLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> userName, DataFactorySecret password, DataFactorySecret clientKey) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             UserName = userName;
             Password = password;
@@ -58,8 +57,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The username of the Appfigures source. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> The password of the AppFigures source. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The client key for the AppFigures source. </summary>
-        public DataFactorySecretBaseDefinition ClientKey { get; set; }
+        public DataFactorySecret ClientKey { get; set; }
     }
 }

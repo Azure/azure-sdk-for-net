@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<ThreadDeletionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreadDeletionStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreadDeletionStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +55,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<ThreadDeletionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreadDeletionStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreadDeletionStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.AI.OpenAI.Assistants
             bool deleted = default;
             ThreadDeletionStatusObject @object = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -95,10 +94,10 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ThreadDeletionStatus(id, deleted, @object, serializedAdditionalRawData);
         }
 
@@ -111,7 +110,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThreadDeletionStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreadDeletionStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +126,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeThreadDeletionStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThreadDeletionStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreadDeletionStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -141,11 +140,11 @@ namespace Azure.AI.OpenAI.Assistants
             return DeserializeThreadDeletionStatus(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

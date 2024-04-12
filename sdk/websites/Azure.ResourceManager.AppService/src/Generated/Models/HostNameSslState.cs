@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Hostname. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> SSL type. </summary>
+        [WirePath("sslState")]
         public HostNameBindingSslState? SslState { get; set; }
         /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
+        [WirePath("virtualIP")]
         public string VirtualIP { get; set; }
         /// <summary> SSL certificate thumbprint. </summary>
+        [WirePath("thumbprint")]
         public string ThumbprintString { get; set; }
         /// <summary> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </summary>
+        [WirePath("toUpdate")]
         public bool? ToUpdate { get; set; }
         /// <summary> Indicates whether the hostname is a standard or repository hostname. </summary>
+        [WirePath("hostType")]
         public AppServiceHostType? HostType { get; set; }
     }
 }

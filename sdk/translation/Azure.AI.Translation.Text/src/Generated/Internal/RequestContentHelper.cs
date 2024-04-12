@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -21,7 +22,7 @@ namespace Azure.AI.Translation.Text
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                content.JsonWriter.WriteObjectValue(item, new ModelReaderWriterOptions("W"));
             }
             content.JsonWriter.WriteEndArray();
 
@@ -63,7 +64,7 @@ namespace Azure.AI.Translation.Text
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue(item.Value);
+                content.JsonWriter.WriteObjectValue(item.Value, new ModelReaderWriterOptions("W"));
             }
             content.JsonWriter.WriteEndObject();
 
@@ -101,7 +102,7 @@ namespace Azure.AI.Translation.Text
         public static RequestContent FromObject(object value)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(value);
+            content.JsonWriter.WriteObjectValue<object>(value, new ModelReaderWriterOptions("W"));
             return content;
         }
 

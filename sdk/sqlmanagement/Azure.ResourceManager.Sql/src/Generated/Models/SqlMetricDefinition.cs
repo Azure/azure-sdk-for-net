@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The name information for the metric. </summary>
+        [WirePath("name")]
         public SqlMetricName Name { get; }
         /// <summary> The primary aggregation type defining how metric values are displayed. </summary>
+        [WirePath("primaryAggregationType")]
         public SqlMetricPrimaryAggregationType? PrimaryAggregationType { get; }
         /// <summary> The resource uri of the database. </summary>
+        [WirePath("resourceUri")]
         public string ResourceUriString { get; }
         /// <summary> The unit of the metric. </summary>
+        [WirePath("unit")]
         public SqlMetricDefinitionUnitType? Unit { get; }
         /// <summary> The list of database metric availabilities for the metric. </summary>
+        [WirePath("metricAvailabilities")]
         public IReadOnlyList<SqlMetricAvailability> MetricAvailabilities { get; }
     }
 }

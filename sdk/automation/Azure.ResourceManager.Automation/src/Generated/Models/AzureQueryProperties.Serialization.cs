@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureQueryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureQueryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureQueryProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(TagSettings))
             {
                 writer.WritePropertyName("tagSettings"u8);
-                writer.WriteObjectValue(TagSettings);
+                writer.WriteObjectValue(TagSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureQueryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureQueryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureQueryProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.Automation.Models
             IList<AzureLocation> locations = default;
             QueryTagSettingsProperties tagSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scope"u8))
@@ -136,10 +135,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureQueryProperties(scope ?? new ChangeTrackingList<string>(), locations ?? new ChangeTrackingList<AzureLocation>(), tagSettings, serializedAdditionalRawData);
         }
 
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureQueryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureQueryProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAzureQueryProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureQueryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureQueryProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -307,8 +306,8 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ReclassifyJobAsync(jobId, content, context).ConfigureAwait(false);
             return Response.FromValue(ReclassifyJobResult.FromResponse(response), response);
         }
@@ -323,8 +322,8 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ReclassifyJob(jobId, content, context);
             return Response.FromValue(ReclassifyJobResult.FromResponse(response), response);
         }
@@ -339,8 +338,8 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CancelJobAsync(jobId, content, context).ConfigureAwait(false);
             return Response.FromValue(CancelJobResult.FromResponse(response), response);
         }
@@ -355,8 +354,8 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CancelJob(jobId, content, context);
             return Response.FromValue(CancelJobResult.FromResponse(response), response);
         }
@@ -373,8 +372,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CompleteJobAsync(jobId, assignmentId, content, context).ConfigureAwait(false);
             return Response.FromValue(CompleteJobResult.FromResponse(response), response);
         }
@@ -391,8 +390,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CompleteJob(jobId, assignmentId, content, context);
             return Response.FromValue(CompleteJobResult.FromResponse(response), response);
         }
@@ -409,8 +408,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CloseJobAsync(jobId, assignmentId, content, context).ConfigureAwait(false);
             return Response.FromValue(CloseJobResult.FromResponse(response), response);
         }
@@ -427,8 +426,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CloseJob(jobId, assignmentId, content, context);
             return Response.FromValue(CloseJobResult.FromResponse(response), response);
         }
@@ -551,8 +550,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UnassignJobAsync(jobId, assignmentId, content, context).ConfigureAwait(false);
             return Response.FromValue(UnassignJobResult.FromResponse(response), response);
         }
@@ -569,8 +568,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(assignmentId, nameof(assignmentId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UnassignJob(jobId, assignmentId, content, context);
             return Response.FromValue(UnassignJobResult.FromResponse(response), response);
         }
@@ -701,8 +700,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DeclineJobOfferAsync(workerId, offerId, content, context).ConfigureAwait(false);
             return Response.FromValue(DeclineJobOfferResult.FromResponse(response), response);
         }
@@ -719,8 +718,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(workerId, nameof(workerId));
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DeclineJobOffer(workerId, offerId, content, context);
             return Response.FromValue(DeclineJobOfferResult.FromResponse(response), response);
         }

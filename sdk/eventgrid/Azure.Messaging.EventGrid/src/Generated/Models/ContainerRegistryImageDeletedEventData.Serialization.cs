@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -114,12 +113,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 connectedRegistry);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ContainerRegistryImageDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeContainerRegistryImageDeletedEventData(document.RootElement);
+        }
+
         internal partial class ContainerRegistryImageDeletedEventDataConverter : JsonConverter<ContainerRegistryImageDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerRegistryImageDeletedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override ContainerRegistryImageDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

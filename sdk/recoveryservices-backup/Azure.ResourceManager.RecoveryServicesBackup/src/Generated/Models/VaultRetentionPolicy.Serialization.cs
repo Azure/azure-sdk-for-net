@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultRetentionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultRetentionPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("vaultRetention"u8);
-            writer.WriteObjectValue(VaultRetention);
+            writer.WriteObjectValue(VaultRetention, options);
             writer.WritePropertyName("snapshotRetentionInDays"u8);
             writer.WriteNumberValue(SnapshotRetentionInDays);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultRetentionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultRetentionPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             BackupRetentionPolicy vaultRetention = default;
             int snapshotRetentionInDays = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vaultRetention"u8))
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VaultRetentionPolicy(vaultRetention, snapshotRetentionInDays, serializedAdditionalRawData);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VaultRetentionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultRetentionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeVaultRetentionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VaultRetentionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultRetentionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

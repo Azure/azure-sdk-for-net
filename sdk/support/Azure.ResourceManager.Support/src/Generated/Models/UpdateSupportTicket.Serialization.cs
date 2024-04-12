@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Support;
 
 namespace Azure.ResourceManager.Support.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateSupportTicket>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.Support.Models
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails);
+                writer.WriteObjectValue(ContactDetails, options);
             }
             if (Optional.IsDefined(AdvancedDiagnosticConsent))
             {
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WriteStartArray();
                 foreach (var item in SecondaryConsent)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateSupportTicket>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.Support.Models
             AdvancedDiagnosticConsent? advancedDiagnosticConsent = default;
             IList<SecondaryConsent> secondaryConsent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("severity"u8))
@@ -156,10 +155,10 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UpdateSupportTicket(
                 severity,
                 status,
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.Support.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +193,7 @@ namespace Azure.ResourceManager.Support.Models
                         return DeserializeUpdateSupportTicket(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSupportTicket)} does not support reading '{options.Format}' format.");
             }
         }
 
