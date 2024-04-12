@@ -1,0 +1,2250 @@
+{
+ "$id": "1",
+ "Name": "Microsoft.CodeTransparency",
+ "ApiVersions": [
+  "2024-01-11-preview"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "Kind": "Enum",
+   "Name": "OperationStatus",
+   "EnumValueType": "string",
+   "AllowedValues": [
+    {
+     "$id": "3",
+     "Name": "running",
+     "Value": "running",
+     "Description": "Operation is still running."
+    },
+    {
+     "$id": "4",
+     "Name": "failed",
+     "Value": "failed",
+     "Description": "Operation failed."
+    },
+    {
+     "$id": "5",
+     "Name": "succeeded",
+     "Value": "succeeded",
+     "Description": "Operation succeeded."
+    }
+   ],
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "Possible statuses of the operation.",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "6",
+   "Kind": "Enum",
+   "Name": "DidDocumentKey_type",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "7",
+     "Name": "JsonWebKey2020",
+     "Value": "JsonWebKey2020",
+     "Description": "JsonWebKey2020"
+    }
+   ],
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "The DidDocumentKey_type",
+   "IsExtensible": true,
+   "IsNullable": false,
+   "Usage": "Output"
+  },
+  {
+   "$id": "8",
+   "Kind": "Enum",
+   "Name": "Versions",
+   "EnumValueType": "String",
+   "AllowedValues": [
+    {
+     "$id": "9",
+     "Name": "2024-01-11-preview",
+     "Value": "2024-01-11-preview",
+     "Description": "The 2024-01-11-preview version of the Microsoft.CodeTransparency service."
+    }
+   ],
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "The Microsoft.CodeTransparency service versions.",
+   "IsExtensible": false,
+   "IsNullable": false,
+   "Usage": "None"
+  }
+ ],
+ "Models": [
+  {
+   "$id": "10",
+   "Kind": "Model",
+   "Name": "CreateEntryResult",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "Response of entry submission containing the operationId.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "11",
+     "Name": "operationId",
+     "SerializedName": "operationId",
+     "Description": "String representing the operation id submitted",
+     "Type": {
+      "$id": "12",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "13",
+   "Kind": "Model",
+   "Name": "GetOperationResult",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "The Response body of the GetOperationId API.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "14",
+     "Name": "entryId",
+     "SerializedName": "entryId",
+     "Description": "ID of the transaction. Only if status is Succeeded.",
+     "Type": {
+      "$id": "15",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "16",
+     "Name": "error",
+     "SerializedName": "error",
+     "Description": "Error in json format. Only if Status is Failed.",
+     "Type": {
+      "$id": "17",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "18",
+     "Name": "operationId",
+     "SerializedName": "operationId",
+     "Description": "OperationId",
+     "Type": {
+      "$id": "19",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "20",
+     "Name": "status",
+     "SerializedName": "status",
+     "Description": "Status of the operation.",
+     "Type": {
+      "$ref": "2"
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "21",
+   "Kind": "Model",
+   "Name": "ListOperationResult",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "The Response body of the ListOperations API",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "22",
+     "Name": "operations",
+     "SerializedName": "operations",
+     "Description": "List of operations",
+     "Type": {
+      "$id": "23",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$ref": "13"
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "24",
+   "Kind": "Model",
+   "Name": "EntryIds",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "A List of Entry IDs",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "25",
+     "Name": "transactionIds",
+     "SerializedName": "transactionIds",
+     "Description": "List of entry ids",
+     "Type": {
+      "$id": "26",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "27",
+       "Kind": "Primitive",
+       "Name": "String",
+       "IsNullable": false
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "28",
+     "Name": "nextLink",
+     "SerializedName": "nextLink",
+     "Description": "Path to the next page of results",
+     "Type": {
+      "$id": "29",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "30",
+   "Kind": "Model",
+   "Name": "ServiceUnavailableError",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "Service temporarily unavailable",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "31",
+     "Name": "error",
+     "SerializedName": "error",
+     "Description": "The error object.",
+     "Type": {
+      "$id": "32",
+      "Kind": "Model",
+      "Name": "Error",
+      "Namespace": "Azure.Core.Foundations",
+      "Description": "The error object.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "33",
+        "Name": "code",
+        "SerializedName": "code",
+        "Description": "One of a server-defined set of error codes.",
+        "Type": {
+         "$id": "34",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "35",
+        "Name": "message",
+        "SerializedName": "message",
+        "Description": "A human-readable representation of the error.",
+        "Type": {
+         "$id": "36",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "37",
+        "Name": "target",
+        "SerializedName": "target",
+        "Description": "The target of the error.",
+        "Type": {
+         "$id": "38",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "39",
+        "Name": "details",
+        "SerializedName": "details",
+        "Description": "An array of details about specific errors that led to this reported error.",
+        "Type": {
+         "$id": "40",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$ref": "32"
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "41",
+        "Name": "innererror",
+        "SerializedName": "innererror",
+        "Description": "An object containing more specific information than the current object about the error.",
+        "Type": {
+         "$id": "42",
+         "Kind": "Model",
+         "Name": "InnerError",
+         "Namespace": "Azure.Core.Foundations",
+         "Description": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+         "IsNullable": false,
+         "Usage": "Output",
+         "Properties": [
+          {
+           "$id": "43",
+           "Name": "code",
+           "SerializedName": "code",
+           "Description": "One of a server-defined set of error codes.",
+           "Type": {
+            "$id": "44",
+            "Kind": "Primitive",
+            "Name": "String",
+            "IsNullable": false
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          },
+          {
+           "$id": "45",
+           "Name": "innererror",
+           "SerializedName": "innererror",
+           "Description": "Inner error.",
+           "Type": {
+            "$ref": "42"
+           },
+           "IsRequired": false,
+           "IsReadOnly": false
+          }
+         ]
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "32"
+  },
+  {
+   "$ref": "42"
+  },
+  {
+   "$id": "46",
+   "Kind": "Model",
+   "Name": "ParametersResult",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "The Response body of the service parameters",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "47",
+     "Name": "serviceCertificate",
+     "SerializedName": "serviceCertificate",
+     "Description": "",
+     "Type": {
+      "$id": "48",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "49",
+     "Name": "serviceId",
+     "SerializedName": "serviceId",
+     "Description": "",
+     "Type": {
+      "$id": "50",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "51",
+     "Name": "signatureAlgorithm",
+     "SerializedName": "signatureAlgorithm",
+     "Description": "",
+     "Type": {
+      "$id": "52",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "53",
+     "Name": "treeAlgorithm",
+     "SerializedName": "treeAlgorithm",
+     "Description": "",
+     "Type": {
+      "$id": "54",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "55",
+   "Kind": "Model",
+   "Name": "DidDocument",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "A DID document",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "56",
+     "Name": "id",
+     "SerializedName": "id",
+     "Description": "String representing a DID issuer.",
+     "Type": {
+      "$id": "57",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "58",
+     "Name": "assertionMethod",
+     "SerializedName": "assertionMethod",
+     "Description": "List of public keys used for receipt endorsement verification.",
+     "Type": {
+      "$id": "59",
+      "Kind": "Array",
+      "Name": "Array",
+      "ElementType": {
+       "$id": "60",
+       "Kind": "Model",
+       "Name": "DidDocumentKey",
+       "Namespace": "Microsoft.CodeTransparency",
+       "Description": "A DID document key",
+       "IsNullable": false,
+       "Usage": "Output",
+       "Properties": [
+        {
+         "$id": "61",
+         "Name": "id",
+         "SerializedName": "id",
+         "Description": "Key identifier.",
+         "Type": {
+          "$id": "62",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "63",
+         "Name": "controller",
+         "SerializedName": "controller",
+         "Description": "Key controller - similar to DID issuer.",
+         "Type": {
+          "$id": "64",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "65",
+         "Name": "type",
+         "SerializedName": "type",
+         "Description": "Key type.",
+         "Type": {
+          "$id": "66",
+          "Kind": "Literal",
+          "Name": "Literal",
+          "LiteralValueType": {
+           "$ref": "6"
+          },
+          "Value": "JsonWebKey2020",
+          "IsNullable": false
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        },
+        {
+         "$id": "67",
+         "Name": "publicKeyJwk",
+         "SerializedName": "publicKeyJwk",
+         "Description": "Serialized public key in JWK format.",
+         "Type": {
+          "$id": "68",
+          "Kind": "Model",
+          "Name": "JsonWebKey",
+          "Namespace": "Microsoft.CodeTransparency",
+          "Description": "rfc7517 JSON Web Key representation adapted from a shared swagger definition in the common types",
+          "IsNullable": false,
+          "Usage": "Output",
+          "Properties": [
+           {
+            "$id": "69",
+            "Name": "alg",
+            "SerializedName": "alg",
+            "Description": "The \"alg\" (algorithm) parameter identifies the algorithm intended for\nuse with the key.  The values used should either be registered in the\nIANA \"JSON Web Signature and Encryption Algorithms\" registry\nestablished by [JWA] or be a value that contains a Collision-\nResistant Name.",
+            "Type": {
+             "$id": "70",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "71",
+            "Name": "crv",
+            "SerializedName": "crv",
+            "Description": "The \"crv\" (curve) parameter identifies the curve type",
+            "Type": {
+             "$id": "72",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "73",
+            "Name": "d",
+            "SerializedName": "d",
+            "Description": "RSA private exponent or ECC private key",
+            "Type": {
+             "$id": "74",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "75",
+            "Name": "dp",
+            "SerializedName": "dp",
+            "Description": "RSA Private Key Parameter",
+            "Type": {
+             "$id": "76",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "77",
+            "Name": "dq",
+            "SerializedName": "dq",
+            "Description": "RSA Private Key Parameter",
+            "Type": {
+             "$id": "78",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "79",
+            "Name": "e",
+            "SerializedName": "e",
+            "Description": "RSA public exponent, in Base64",
+            "Type": {
+             "$id": "80",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "81",
+            "Name": "k",
+            "SerializedName": "k",
+            "Description": "Symmetric key",
+            "Type": {
+             "$id": "82",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "83",
+            "Name": "kid",
+            "SerializedName": "kid",
+            "Description": "The \"kid\" (key ID) parameter is used to match a specific key.  This\nis used, for instance, to choose among a set of keys within a JWK Set\nduring key rollover.  The structure of the \"kid\" value is\nunspecified.  When \"kid\" values are used within a JWK Set, different\nkeys within the JWK Set SHOULD use distinct \"kid\" values.  (One\nexample in which different keys might use the same \"kid\" value is if\nthey have different \"kty\" (key type) values but are considered to be\nequivalent alternatives by the application using them.)  The \"kid\"\nvalue is a case-sensitive string.",
+            "Type": {
+             "$id": "84",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "85",
+            "Name": "kty",
+            "SerializedName": "kty",
+            "Description": "The \"kty\" (key type) parameter identifies the cryptographic algorithm\nfamily used with the key, such as \"RSA\" or \"EC\". \"kty\" values should\neither be registered in the IANA \"JSON Web Key Types\" registry\nestablished by [JWA] or be a value that contains a Collision-\nResistant Name.  The \"kty\" value is a case-sensitive string.",
+            "Type": {
+             "$id": "86",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": true,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "87",
+            "Name": "n",
+            "SerializedName": "n",
+            "Description": "RSA modulus, in Base64",
+            "Type": {
+             "$id": "88",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "89",
+            "Name": "p",
+            "SerializedName": "p",
+            "Description": "RSA secret prime",
+            "Type": {
+             "$id": "90",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "91",
+            "Name": "q",
+            "SerializedName": "q",
+            "Description": "RSA secret prime, with p < q",
+            "Type": {
+             "$id": "92",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "93",
+            "Name": "qi",
+            "SerializedName": "qi",
+            "Description": "RSA Private Key Parameter",
+            "Type": {
+             "$id": "94",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "95",
+            "Name": "use",
+            "SerializedName": "use",
+            "Description": "Use (\"public key use\") identifies the intended use of\nthe public key. The \"use\" parameter is employed to indicate whether\na public key is used for encrypting data or verifying the signature\non data. Values are commonly \"sig\" (signature) or \"enc\" (encryption).",
+            "Type": {
+             "$id": "96",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "97",
+            "Name": "x",
+            "SerializedName": "x",
+            "Description": "X coordinate for the Elliptic Curve point",
+            "Type": {
+             "$id": "98",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "99",
+            "Name": "x5c",
+            "SerializedName": "x5c",
+            "Description": "The \"x5c\" (X.509 certificate chain) parameter contains a chain of one\nor more PKIX certificates [RFC5280].  The certificate chain is\nrepresented as a JSON array of certificate value strings.  Each\nstring in the array is a base64-encoded (Section 4 of [RFC4648] --\nnot base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.\nThe PKIX certificate containing the key value MUST be the first\ncertificate.",
+            "Type": {
+             "$id": "100",
+             "Kind": "Array",
+             "Name": "Array",
+             "ElementType": {
+              "$id": "101",
+              "Kind": "Primitive",
+              "Name": "String",
+              "IsNullable": false
+             },
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           },
+           {
+            "$id": "102",
+            "Name": "y",
+            "SerializedName": "y",
+            "Description": "Y coordinate for the Elliptic Curve point",
+            "Type": {
+             "$id": "103",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsRequired": false,
+            "IsReadOnly": false
+           }
+          ]
+         },
+         "IsRequired": true,
+         "IsReadOnly": false
+        }
+       ]
+      },
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "60"
+  },
+  {
+   "$ref": "68"
+  },
+  {
+   "$id": "104",
+   "Kind": "Model",
+   "Name": "CodeTransparencyConfiguration",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "The Response body of the Configuration API.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "105",
+     "Name": "policy",
+     "SerializedName": "policy",
+     "Description": "",
+     "Type": {
+      "$id": "106",
+      "Kind": "Model",
+      "Name": "CodeTransparencyConfigurationPolicy",
+      "Namespace": "Microsoft.CodeTransparency",
+      "Description": "Configuration of CCF Authentication policies.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "107",
+        "Name": "accepted_algorithms",
+        "SerializedName": "accepted_algorithms",
+        "Description": "",
+        "Type": {
+         "$id": "108",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$id": "109",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "110",
+        "Name": "accepted_did_issuers",
+        "SerializedName": "accepted_did_issuers",
+        "Description": "",
+        "Type": {
+         "$id": "111",
+         "Kind": "Array",
+         "Name": "Array",
+         "ElementType": {
+          "$id": "112",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         },
+         "IsNullable": false
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "113",
+     "Name": "authentication",
+     "SerializedName": "authentication",
+     "Description": "",
+     "Type": {
+      "$id": "114",
+      "Kind": "Model",
+      "Name": "CodeTransparencyConfigurationAuthentication",
+      "Namespace": "Microsoft.CodeTransparency",
+      "Description": "Configuration of CCF authentication.",
+      "IsNullable": false,
+      "Usage": "Output",
+      "Properties": [
+       {
+        "$id": "115",
+        "Name": "allow_unauthenticated",
+        "SerializedName": "allow_unauthenticated",
+        "Description": "",
+        "Type": {
+         "$id": "116",
+         "Kind": "Primitive",
+         "Name": "Boolean",
+         "IsNullable": false
+        },
+        "IsRequired": true,
+        "IsReadOnly": false
+       },
+       {
+        "$id": "117",
+        "Name": "jwt",
+        "SerializedName": "jwt",
+        "Description": "",
+        "Type": {
+         "$id": "118",
+         "Kind": "Model",
+         "Name": "CodeTransparencyConfigurationAuthenticationJwt",
+         "Namespace": "Microsoft.CodeTransparency",
+         "Description": "Configuration of JWT claims",
+         "IsNullable": false,
+         "Usage": "Output",
+         "Properties": [
+          {
+           "$id": "119",
+           "Name": "required_claims",
+           "SerializedName": "required_claims",
+           "Description": "",
+           "Type": {
+            "$id": "120",
+            "Kind": "Dictionary",
+            "Name": "Dictionary",
+            "KeyType": {
+             "$id": "121",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "ValueType": {
+             "$id": "122",
+             "Kind": "Primitive",
+             "Name": "String",
+             "IsNullable": false
+            },
+            "IsNullable": false
+           },
+           "IsRequired": true,
+           "IsReadOnly": false
+          }
+         ]
+        },
+        "IsRequired": false,
+        "IsReadOnly": false
+       }
+      ]
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    },
+    {
+     "$id": "123",
+     "Name": "service_identifier",
+     "SerializedName": "service_identifier",
+     "Description": "did:web identifier",
+     "Type": {
+      "$id": "124",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": false,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$ref": "106"
+  },
+  {
+   "$ref": "114"
+  },
+  {
+   "$ref": "118"
+  },
+  {
+   "$id": "125",
+   "Kind": "Model",
+   "Name": "VersionResult",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "The Response body of the Version API.",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "126",
+     "Name": "scitt_version",
+     "SerializedName": "scitt_version",
+     "Description": "Version of the CodeTransparency service",
+     "Type": {
+      "$id": "127",
+      "Kind": "Primitive",
+      "Name": "String",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "128",
+   "Kind": "Model",
+   "Name": "CoseEntry",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "An Entry in Cose format",
+   "IsNullable": false,
+   "Usage": "RoundTrip",
+   "Properties": [
+    {
+     "$id": "129",
+     "Name": "body",
+     "SerializedName": "body",
+     "Description": "A raw CoseSign1 signature",
+     "Type": {
+      "$id": "130",
+      "Kind": "Primitive",
+      "Name": "Bytes",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "131",
+   "Kind": "Model",
+   "Name": "OperationIdParameter",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "The OperationId parameter.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": []
+  },
+  {
+   "$id": "132",
+   "Kind": "Model",
+   "Name": "EmbedReceiptParameter",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "The EmbedReceipt parameter.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": []
+  },
+  {
+   "$id": "133",
+   "Kind": "Model",
+   "Name": "EntryIdParameter",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "The EntryId parameter.",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": []
+  },
+  {
+   "$id": "134",
+   "Kind": "Model",
+   "Name": "RawEntry",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "A Raw Entry in cbor format",
+   "IsNullable": false,
+   "Usage": "Output",
+   "Properties": [
+    {
+     "$id": "135",
+     "Name": "body",
+     "SerializedName": "body",
+     "Description": "A raw CBOR content",
+     "Type": {
+      "$id": "136",
+      "Kind": "Primitive",
+      "Name": "Bytes",
+      "IsNullable": false
+     },
+     "IsRequired": true,
+     "IsReadOnly": false
+    }
+   ]
+  },
+  {
+   "$id": "137",
+   "Kind": "Model",
+   "Name": "TransactionsRange",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "Range of transactions for historical queries",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": []
+  },
+  {
+   "$id": "138",
+   "Kind": "Model",
+   "Name": "DidIssuer",
+   "Namespace": "Microsoft.CodeTransparency",
+   "Description": "A DID issuer",
+   "IsNullable": false,
+   "Usage": "None",
+   "Properties": []
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "139",
+   "Name": "CodeTransparencyClient",
+   "Description": "",
+   "Operations": [
+    {
+     "$id": "140",
+     "Name": "createEntry",
+     "ResourceName": "CodeTransparency",
+     "Description": "Post an entry to be registered on the CodeTransparency instance.",
+     "Parameters": [
+      {
+       "$id": "141",
+       "Name": "endpoint",
+       "NameInRequest": "endpoint",
+       "Type": {
+        "$id": "142",
+        "Kind": "Primitive",
+        "Name": "Uri",
+        "IsNullable": false
+       },
+       "Location": "Uri",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": true,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "143",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "144",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$id": "145",
+        "Type": {
+         "$id": "146",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "Value": "2024-01-11-preview"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "147",
+       "Name": "contentType",
+       "NameInRequest": "content-type",
+       "Description": "The MIME content type a Cose body is application/cose, containing a CoseSign1 signature.",
+       "Type": {
+        "$id": "148",
+        "Kind": "Literal",
+        "Name": "Literal",
+        "LiteralValueType": {
+         "$id": "149",
+         "Kind": "Primitive",
+         "Name": "String",
+         "IsNullable": false
+        },
+        "Value": "application/cose",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "DefaultValue": {
+        "$id": "150",
+        "Type": {
+         "$ref": "148"
+        },
+        "Value": "application/cose"
+       },
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant"
+      },
+      {
+       "$id": "151",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Description": "A raw CoseSign1 signature",
+       "Type": {
+        "$id": "152",
+        "Kind": "Primitive",
+        "Name": "Bytes",
+        "IsNullable": false
+       },
+       "Location": "Body",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "153",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "154",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "155",
+        "Type": {
+         "$ref": "154"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "156",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "10"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Binary",
+     "Uri": "{endpoint}",
+     "Path": "/entries",
+     "RequestMediaTypes": [
+      "application/cose"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "157",
+     "Name": "getEntryStatus",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get the status the entry operation",
+     "Parameters": [
+      {
+       "$ref": "141"
+      },
+      {
+       "$id": "158",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "159",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "145"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "160",
+       "Name": "operationId",
+       "NameInRequest": "operationId",
+       "Description": "ID of the operation to retrieve.",
+       "Type": {
+        "$id": "161",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "162",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "163",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "164",
+        "Type": {
+         "$ref": "163"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "165",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "13"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/operations/{operationId}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "166",
+     "Name": "listEntryStatuses",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get the status of all entries operations",
+     "Parameters": [
+      {
+       "$ref": "141"
+      },
+      {
+       "$id": "167",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "168",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "145"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "169",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "170",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "171",
+        "Type": {
+         "$ref": "170"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "172",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "21"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/operations",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "173",
+     "Name": "getEntry",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get Entry with or without receipt embedded in its unprotected header",
+     "Parameters": [
+      {
+       "$ref": "141"
+      },
+      {
+       "$id": "174",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "175",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "145"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "176",
+       "Name": "embedReceipt",
+       "NameInRequest": "embedReceipt",
+       "Description": "Embed a receipt as part of the response",
+       "Type": {
+        "$id": "177",
+        "Kind": "Primitive",
+        "Name": "Boolean",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "178",
+       "Name": "entryId",
+       "NameInRequest": "entryId",
+       "Description": "ID of the entry to retrieve.",
+       "Type": {
+        "$id": "179",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "180",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "181",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "182",
+        "Type": {
+         "$ref": "181"
+        },
+        "Value": "application/cose"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "183",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$id": "184",
+        "Kind": "Primitive",
+        "Name": "Bytes",
+        "IsNullable": false
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/cose"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/entries/{entryId}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "185",
+     "Name": "getEntryReceipt",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get the receipt of an entry given a specific entry id.",
+     "Parameters": [
+      {
+       "$ref": "141"
+      },
+      {
+       "$id": "186",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "187",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "145"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "188",
+       "Name": "entryId",
+       "NameInRequest": "entryId",
+       "Description": "ID of the entry to retrieve.",
+       "Type": {
+        "$id": "189",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Path",
+       "IsRequired": true,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "190",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "191",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "192",
+        "Type": {
+         "$ref": "191"
+        },
+        "Value": "application/cbor"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "193",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$id": "194",
+        "Kind": "Primitive",
+        "Name": "Bytes",
+        "IsNullable": false
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/cbor"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/entries/{entryId}/receipt",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "195",
+     "Name": "listEntryIds",
+     "ResourceName": "CodeTransparency",
+     "Description": "Historical query to get a list of entries of a given range",
+     "Parameters": [
+      {
+       "$ref": "141"
+      },
+      {
+       "$id": "196",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "197",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "145"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "198",
+       "Name": "from",
+       "NameInRequest": "from",
+       "Description": "Starting Transaction Id",
+       "Type": {
+        "$id": "199",
+        "Kind": "Primitive",
+        "Name": "Int64",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "200",
+       "Name": "to",
+       "NameInRequest": "to",
+       "Description": "Ending Transaction Id",
+       "Type": {
+        "$id": "201",
+        "Kind": "Primitive",
+        "Name": "Int64",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "202",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "203",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "204",
+        "Type": {
+         "$ref": "203"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "205",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "24"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      },
+      {
+       "$id": "206",
+       "StatusCodes": [
+        503
+       ],
+       "BodyType": {
+        "$ref": "30"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "207",
+         "Name": "Retry-After",
+         "NameInResponse": "retryAfter",
+         "Description": "Retry the same request after a suggested number of seconds",
+         "Type": {
+          "$id": "208",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         }
+        },
+        {
+         "$id": "209",
+         "Name": "x-ms-error-code",
+         "NameInResponse": "errorCode",
+         "Description": "String error code indicating what went wrong.",
+         "Type": {
+          "$id": "210",
+          "Kind": "Primitive",
+          "Name": "String",
+          "IsNullable": false
+         }
+        }
+       ],
+       "IsErrorResponse": true,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/entries/txIds",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "211",
+      "NextLinkName": "nextLink",
+      "ItemName": "transactionIds"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "212",
+     "Name": "getParameters",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get service parameters",
+     "Parameters": [
+      {
+       "$ref": "141"
+      },
+      {
+       "$id": "213",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "214",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "145"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "215",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "216",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "217",
+        "Type": {
+         "$ref": "216"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "218",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "46"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/parameters",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "219",
+     "Name": "getDidConfig",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get the DID configuration file.",
+     "Parameters": [
+      {
+       "$ref": "141"
+      },
+      {
+       "$id": "220",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "221",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "145"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "222",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "223",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "224",
+        "Type": {
+         "$ref": "223"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "225",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "55"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/.well-known/did.json",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "226",
+     "Name": "getCodeTransparencyConfig",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get CodeTransparency configuration information.",
+     "Parameters": [
+      {
+       "$ref": "141"
+      },
+      {
+       "$id": "227",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "228",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "145"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "229",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "230",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "231",
+        "Type": {
+         "$ref": "230"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "232",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "104"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/configuration",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    },
+    {
+     "$id": "233",
+     "Name": "getCodeTransparencyVersion",
+     "ResourceName": "CodeTransparency",
+     "Description": "Get CodeTransparency version information.",
+     "Parameters": [
+      {
+       "$ref": "141"
+      },
+      {
+       "$id": "234",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Description": "The API version to use for this operation.",
+       "Type": {
+        "$id": "235",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "DefaultValue": {
+        "$ref": "145"
+       },
+       "IsRequired": true,
+       "IsApiVersion": true,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Client"
+      },
+      {
+       "$id": "236",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "237",
+        "Kind": "Primitive",
+        "Name": "String",
+        "IsNullable": false
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsRequired": true,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Constant",
+       "DefaultValue": {
+        "$id": "238",
+        "Type": {
+         "$ref": "237"
+        },
+        "Value": "application/json"
+       }
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "239",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "125"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/version",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true
+    }
+   ],
+   "Protocol": {
+    "$id": "240"
+   },
+   "Creatable": true
+  }
+ ],
+ "Auth": {
+  "$id": "241",
+  "ApiKey": {
+   "$id": "242",
+   "Name": "Authorization",
+   "Prefix": "Bearer"
+  }
+ }
+}
