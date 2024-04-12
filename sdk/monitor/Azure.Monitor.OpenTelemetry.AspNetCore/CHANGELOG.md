@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+* Turned off internal spans and logs in distro HTTP pipelines
+  ([#43359](https://github.com/Azure/azure-sdk-for-net/pull/43359))
+
 ### Other Changes
 
 * Update OpenTelemetry dependencies
