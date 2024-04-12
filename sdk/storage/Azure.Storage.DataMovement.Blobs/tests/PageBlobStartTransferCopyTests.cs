@@ -34,8 +34,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         BlobClientOptions,
         StorageTestEnvironment>
     {
-        private readonly AccessTier _defaultAccessTier = AccessTier.Cold;
-        private const string _defaultContentType = "text/plain";
+        private readonly AccessTier _defaultAccessTier = AccessTier.Cool;
+        private const string _defaultContentType = "application/octet-stream";
         private const string _defaultContentLanguage = "en-US";
         private const string _defaultContentDisposition = "inline";
         private const string _defaultCacheControl = "no-cache";
@@ -104,7 +104,17 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             long size = contents.Length;
             Assert.IsTrue(size % (KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
-            await blobClient.CreateIfNotExistsAsync(size).ConfigureAwait(false);
+            await blobClient.CreateIfNotExistsAsync(size, new PageBlobCreateOptions()
+            {
+                Metadata = _defaultMetadata,
+                HttpHeaders = new BlobHttpHeaders()
+                {
+                    ContentType = _defaultContentType,
+                    ContentLanguage = _defaultContentLanguage,
+                    ContentDisposition = _defaultContentDisposition,
+                    CacheControl = _defaultCacheControl,
+                }
+            });
             long offset = 0;
             long blockSize = Math.Min(DefaultBufferSize, size);
             while (offset < size)
@@ -163,7 +173,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ContentDisposition = new(_defaultContentDisposition),
                     ContentLanguage = new(_defaultContentLanguage),
                     CacheControl = new(_defaultCacheControl),
-                    ContentType = new(_defaultContentType)
+                    ContentType = new(_defaultContentType),
+                    Metadata = new(_defaultMetadata)
                 };
             }
             else if (type == TransferPropertiesTestType.NoPreserve)
@@ -173,7 +184,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ContentDisposition = new(false),
                     ContentLanguage = new(false),
                     CacheControl = new(false),
-                    ContentType = new(false)
+                    ContentType = new(false),
+                    Metadata = new(false)
                 };
             }
             else if (type == TransferPropertiesTestType.Preserve)
@@ -183,7 +195,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ContentDisposition = new(true),
                     ContentLanguage = new(true),
                     CacheControl = new(true),
-                    ContentType = new(true)
+                    ContentType = new(true),
+                    Metadata = new(true)
                 };
             }
             return new PageBlobStorageResource(objectClient, options);
