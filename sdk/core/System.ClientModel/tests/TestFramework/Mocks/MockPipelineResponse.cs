@@ -21,11 +21,11 @@ public class MockPipelineResponse : PipelineResponse
 
     private bool _disposed;
 
-    public MockPipelineResponse(int status = 0, string reasonPhrase = "")
+    public MockPipelineResponse(int status = 0, string reasonPhrase = "", MockResponseHeaders? mockHeaders = default)
     {
         _status = status;
         _reasonPhrase = reasonPhrase;
-        _headers = new MockResponseHeaders();
+        _headers = mockHeaders ?? new MockResponseHeaders();
     }
 
     public override int Status => _status;

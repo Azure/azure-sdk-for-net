@@ -40,23 +40,19 @@ public class MockPipelineResponseTransport : PipelineTransport
 
     protected override void ProcessCore(PipelineMessage message)
     {
-        try
+        Stamp(message, "Transport");
+        if (message is MockPipelineMessage pipelineMessage)
         {
-            Stamp(message, "Transport");
-        }
-        finally
-        {
+            pipelineMessage.SetResponse(_responseFactory(message));
         }
     }
 
     protected override ValueTask ProcessCoreAsync(PipelineMessage message)
     {
-        try
+        Stamp(message, "Transport");
+        if (message is MockPipelineMessage pipelineMessage)
         {
-            Stamp(message, "Transport");
-        }
-        finally
-        {
+            pipelineMessage.SetResponse(_responseFactory(message));
         }
 
         return new ValueTask();
