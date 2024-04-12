@@ -253,5 +253,65 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             }
             #endregion Snippet:APC_Sample_NetworkRetrievalBadIdentifierTest
         }
+
+        [RecordedTest]
+        public async Task NumberVerificationWithoutCodeTest()
+        {
+            #region Snippet:APC_Sample_NumberVerificationWithoutCodeTest
+            string apcGatewayId = "/subscriptions/abcdefgh/resourceGroups/.../Microsoft.programmableconnectivity/...";
+            Uri endpoint = new Uri("https://your-endpoint-here.com");
+#if SNIPPET
+            TokenCredential credential = new DefaultAzureCredential();
+#endif
+            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
+
+#if !SNIPPET
+            await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { AllowAutoRedirect = false } });
+
+            var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
+            baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
+#endif
+            NumberVerification client = baseClient.GetNumberVerificationClient();
+
+            NumberVerificationWithoutCodeContent content = new NumberVerificationWithoutCodeContent(
+                new NetworkIdentifier("NetworkCode", "Orange_Spain"),
+                new Uri("https://somefakebackend.com"))
+            {
+                PhoneNumber = "+8000000000000",
+            };
+
+            Response response = await client.VerifyWithoutCodeAsync(apcGatewayId, content);
+#if !SNIPPET
+            Assert.AreEqual(response.Status, 302);
+#endif
+            string locationUrl = response.Headers.TryGetValue("location", out var location) ? location : "not found";
+
+            Console.WriteLine(locationUrl);
+
+            #endregion Snippet:APC_Sample_NumberVerificationWithoutCodeTest
+            Assert.AreEqual(locationUrl, "https://test/.../authcallback");
+        }
+
+        [RecordedTest]
+        public async Task NumberVerificationWithCodeTest()
+        {
+            #region Snippet:APC_Sample_NumberVerificationWithCodeTest
+            string apcGatewayId = "/subscriptions/abcdefgh/resourceGroups/.../Microsoft.programmableconnectivity/...";
+            Uri endpoint = new Uri("https://your-endpoint-here.com");
+
+            ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
+#if !SNIPPET
+            var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
+            baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
+#endif
+            NumberVerification client = baseClient.GetNumberVerificationClient();
+
+            NumberVerificationWithCodeContent content = new NumberVerificationWithCodeContent("apc_1231231231232");
+
+            Response<NumberVerificationResult> response = await client.VerifyWithCodeAsync(apcGatewayId, content);
+            Console.WriteLine(response.Value.VerificationResult);
+            #endregion Snippet:APC_Sample_NumberVerificationWithCodeTest
+            Assert.IsTrue(response.Value.VerificationResult);
+        }
     }
 }
