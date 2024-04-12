@@ -102,7 +102,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             FhirR4Quantity low = default;
             FhirR4Quantity high = default;
             FhirR4CodeableConcept type = default;
-            IList<FhirR4CodeableConcept> appliesTo = default;
+            IReadOnlyList<FhirR4CodeableConcept> appliesTo = default;
             FhirR4Range age = default;
             string text = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;

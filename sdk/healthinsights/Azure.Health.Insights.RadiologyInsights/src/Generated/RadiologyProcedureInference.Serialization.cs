@@ -46,7 +46,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WritePropertyName("orderedProcedure"u8);
             writer.WriteObjectValue(OrderedProcedure, options);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsCollectionDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
@@ -98,7 +98,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             IReadOnlyList<FhirR4CodeableConcept> procedureCodes = default;
             IReadOnlyList<ImagingProcedure> imagingProcedures = default;
             OrderedProcedure orderedProcedure = default;
-            string kind = default;
+            RadiologyInsightsInferenceType kind = default;
             IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -135,7 +135,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new RadiologyInsightsInferenceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extension"u8))
