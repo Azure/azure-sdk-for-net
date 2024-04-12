@@ -36,8 +36,11 @@ namespace Azure.Developer.DevCenter.Models
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
-            writer.WritePropertyName("poolName"u8);
-            writer.WriteStringValue(PoolName);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("poolName"u8);
+                writer.WriteStringValue(PoolName);
+            }
             if (options.Format != "W" && Optional.IsDefined(HibernateSupport))
             {
                 writer.WritePropertyName("hibernateSupport"u8);
@@ -103,7 +106,7 @@ namespace Azure.Developer.DevCenter.Models
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedTime.Value, "O");
             }
-            if (Optional.IsDefined(LocalAdministratorStatus))
+            if (options.Format != "W" && Optional.IsDefined(LocalAdministratorStatus))
             {
                 writer.WritePropertyName("localAdministrator"u8);
                 writer.WriteStringValue(LocalAdministratorStatus.Value.ToString());
