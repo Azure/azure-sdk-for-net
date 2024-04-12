@@ -7,12 +7,12 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    [PersistableModelProxy(typeof(UnknownRequiredAction))]
     public partial class RequiredAction : IUtf8JsonSerializable, IJsonModel<RequiredAction>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequiredAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
@@ -66,14 +66,23 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            string type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (property.NameEquals("type"u8))
                 {
-                    case "submit_tool_outputs": return SubmitToolOutputsAction.DeserializeSubmitToolOutputsAction(element, options);
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return UnknownRequiredAction.DeserializeUnknownRequiredAction(element, options);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RequiredAction(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequiredAction>.Write(ModelReaderWriterOptions options)

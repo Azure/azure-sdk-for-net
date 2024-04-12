@@ -20,7 +20,6 @@ namespace Azure.AI.OpenAI.Assistants
         {
             Argument.AssertNotNull(internalDetails, nameof(internalDetails));
 
-            Type = "submit_tool_outputs";
             InternalDetails = internalDetails;
         }
 
