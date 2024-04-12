@@ -190,7 +190,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     }
                 }
             }
-
             return metricAccumulators;
         }
 
