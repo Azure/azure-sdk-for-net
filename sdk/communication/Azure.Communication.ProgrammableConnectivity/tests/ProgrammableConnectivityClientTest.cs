@@ -2,19 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Communication.ProgrammableConnectivity;
 using Azure.Core;
-using Azure.Identity;
-using NUnit.Framework;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.Communication.ProgrammableConnectivity.Tests
 {
@@ -42,8 +42,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
-            var client = baseClient.GetSimSwapClient();
-            var content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
+            SimSwap client = baseClient.GetSimSwapClient();
+            SimSwapVerificationContent content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
                 PhoneNumber = "+50000000000",
                 MaxAgeHours = 120,
@@ -69,8 +69,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
-            var client = baseClient.GetSimSwapClient();
-            var content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
+            SimSwap client = baseClient.GetSimSwapClient();
+            SimSwapVerificationContent content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
                 PhoneNumber = "+50000000000",
                 MaxAgeHours = 120,
@@ -78,7 +78,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
 
             #region Snippet:SimSwapVerifyHeaderRetrievalTest
             Response<SimSwapVerificationResult> response = client.Verify(ApcGatewayId, content);
-            var xMsResponseId = response.GetRawResponse().Headers.TryGetValue("x-ms-response-id", out var responseId) ? responseId : "not found";
+            string xMsResponseId = response.GetRawResponse().Headers.TryGetValue("x-ms-response-id", out var responseId) ? responseId : "not found";
             Console.WriteLine($"x-ms-response-id: {xMsResponseId}");
             #endregion Snippet:SimSwapVerifyHeaderRetrievalTest
 
@@ -98,8 +98,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
-            var client = baseClient.GetSimSwapClient();
-            var content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
+            SimSwap client = baseClient.GetSimSwapClient();
+            SimSwapVerificationContent content = new SimSwapVerificationContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
                 PhoneNumber = "+50000000000",
                 MaxAgeHours = -10,
@@ -113,6 +113,9 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             {
                 Console.WriteLine(ex.ToString());
                 Console.WriteLine($"Caught exception of type: {ex.GetType()}");
+#if !SNIPPET
+                Assert.AreEqual(400, ex.Status);
+#endif
             }
         }
 
@@ -130,8 +133,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
-            var client = baseClient.GetSimSwapClient();
-            var content = new SimSwapRetrievalContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
+            SimSwap client = baseClient.GetSimSwapClient();
+            SimSwapRetrievalContent content = new SimSwapRetrievalContent(new NetworkIdentifier("NetworkCode", "Orange_Spain"))
             {
                 PhoneNumber = "+50000000000",
             };
@@ -158,13 +161,13 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
-            var client = baseClient.GetDeviceLocationClient();
-            var deviceLocationVerificationContent = new DeviceLocationVerificationContent(new NetworkIdentifier("NetworkCode", "Telefonica_Brazil"), 80.0, 85.1, 50, new LocationDevice
+            DeviceLocation client = baseClient.GetDeviceLocationClient();
+            DeviceLocationVerificationContent content = new DeviceLocationVerificationContent(new NetworkIdentifier("NetworkCode", "Telefonica_Brazil"), 80.0, 85.1, 50, new LocationDevice
             {
                 PhoneNumber = "+8000000000000",
             });
 
-            Response<DeviceLocationVerificationResult> result = client.Verify(ApcGatewayId, deviceLocationVerificationContent);
+            Response<DeviceLocationVerificationResult> result = client.Verify(ApcGatewayId, content);
 
             Console.WriteLine(result.Value.VerificationResult);
             #endregion Snippet:APC_Sample_LocationVerifyTest
@@ -186,8 +189,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
-            var client = baseClient.GetDeviceNetworkClient();
-            var networkIdentifier = new NetworkIdentifier("IPv4", "127.0.0.1");
+            DeviceNetwork client = baseClient.GetDeviceNetworkClient();
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier("IPv4", "127.0.0.1");
 
             Response<NetworkRetrievalResult> response = client.Retrieve(ApcGatewayId, networkIdentifier);
             Console.WriteLine(response.Value.NetworkCode);
@@ -210,8 +213,8 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             var clientOptions = InstrumentClientOptions(new ProgrammableConnectivityClientOptions());
             baseClient = InstrumentClient(new ProgrammableConnectivityClient(endpoint, credential, clientOptions));
 #endif
-            var client = baseClient.GetDeviceNetworkClient();
-            var networkIdentifier = new NetworkIdentifier("IPv5", "127.0.0.1");
+            DeviceNetwork client = baseClient.GetDeviceNetworkClient();
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier("IPv5", "127.0.0.1");
             try
             {
                 Response<NetworkRetrievalResult> response = client.Retrieve(ApcGatewayId, networkIdentifier);
