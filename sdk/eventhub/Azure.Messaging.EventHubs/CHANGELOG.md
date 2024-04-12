@@ -4,9 +4,17 @@
 
 ### Features Added
 
-  - It is now possible for processors extending `EventProcessor<T>` to disable the batch-level tracing emitted when processing events.  This is intended to allow derived processors dispatching single events or partial batches to emit their own trace information that more accurately correlates to the set of events being processed.  Previously all events in a batch were tracked under a single span regardless of how they were dispatched for processing.
-
 ### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.11.2 (2024-04-10)
+
+### Features Added
+
+- It is now possible for processors extending `EventProcessor<T>` to disable the batch-level tracing emitted when processing events.  This is intended to allow derived processors dispatching single events or partial batches to emit their own trace information that more accurately correlates to the set of events being processed.  Previously all events in a batch were tracked under a single span regardless of how they were dispatched for processing.
 
 ### Bugs Fixed
 

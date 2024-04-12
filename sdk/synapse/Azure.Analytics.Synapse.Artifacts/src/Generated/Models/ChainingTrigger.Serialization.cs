@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("pipeline"u8);
-            writer.WriteObjectValue<TriggerPipelineReference>(Pipeline);
+            writer.WriteObjectValue(Pipeline);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Description))
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartArray();
             foreach (var item in DependsOn)
             {
-                writer.WriteObjectValue<PipelineReference>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("runDimension"u8);
@@ -174,11 +174,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeChainingTrigger(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ChainingTrigger>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -186,7 +186,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, ChainingTrigger model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<ChainingTrigger>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override ChainingTrigger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

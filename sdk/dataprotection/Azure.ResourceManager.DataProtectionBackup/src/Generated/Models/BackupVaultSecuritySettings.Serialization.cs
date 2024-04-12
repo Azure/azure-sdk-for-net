@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(SoftDeleteSettings))
             {
                 writer.WritePropertyName("softDeleteSettings"u8);
-                writer.WriteObjectValue<BackupVaultSoftDeleteSettings>(SoftDeleteSettings, options);
+                writer.WriteObjectValue(SoftDeleteSettings, options);
             }
             if (Optional.IsDefined(ImmutabilitySettings))
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
-                writer.WriteObjectValue<ImmutabilitySettings>(ImmutabilitySettings, options);
+                writer.WriteObjectValue(ImmutabilitySettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

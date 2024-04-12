@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(TransferFilterDetails))
             {
                 writer.WritePropertyName("transferFilterDetails"u8);
-                writer.WriteObjectValue<TransferConfigurationTransferFilterDetails>(TransferFilterDetails, options);
+                writer.WriteObjectValue(TransferFilterDetails, options);
             }
             if (Optional.IsDefined(TransferAllDetails))
             {
                 writer.WritePropertyName("transferAllDetails"u8);
-                writer.WriteObjectValue<TransferConfigurationTransferAllDetails>(TransferAllDetails, options);
+                writer.WriteObjectValue(TransferAllDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

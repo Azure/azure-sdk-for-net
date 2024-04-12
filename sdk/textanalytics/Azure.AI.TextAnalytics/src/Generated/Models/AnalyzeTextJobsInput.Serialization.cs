@@ -21,22 +21,22 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("analysisInput"u8);
-            writer.WriteObjectValue<MultiLanguageAnalysisInput>(AnalysisInput);
+            writer.WriteObjectValue(AnalysisInput);
             writer.WritePropertyName("tasks"u8);
             writer.WriteStartArray();
             foreach (var item in Tasks)
             {
-                writer.WriteObjectValue<AnalyzeTextLROTask>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeTextJobsInput>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

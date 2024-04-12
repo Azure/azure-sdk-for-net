@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(IsSubscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
-                writer.WriteObjectValue<SubscriptionDelegationSettingProperties>(IsSubscriptions, options);
+                writer.WriteObjectValue(IsSubscriptions, options);
             }
             if (Optional.IsDefined(IsUserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
-                writer.WriteObjectValue<RegistrationDelegationSettingProperties>(IsUserRegistration, options);
+                writer.WriteObjectValue(IsUserRegistration, options);
             }
             if (Optional.IsDefined(IsRedirectEnabled))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(TermsOfService))
             {
                 writer.WritePropertyName("termsOfService"u8);
-                writer.WriteObjectValue<TermsOfServiceProperties>(TermsOfService, options);
+                writer.WriteObjectValue(TermsOfService, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

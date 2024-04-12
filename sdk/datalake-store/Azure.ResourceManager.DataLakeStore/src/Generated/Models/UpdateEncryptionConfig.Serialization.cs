@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             if (Optional.IsDefined(KeyVaultMetaInfo))
             {
                 writer.WritePropertyName("keyVaultMetaInfo"u8);
-                writer.WriteObjectValue<UpdateKeyVaultMetaInfo>(KeyVaultMetaInfo, options);
+                writer.WriteObjectValue(KeyVaultMetaInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

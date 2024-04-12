@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WritePropertyName("biosId"u8);
             writer.WriteStringValue(BiosId);
             writer.WritePropertyName("marsAuthenticationIdentity"u8);
-            writer.WriteObjectValue<DataReplicationIdentity>(MarsAuthenticationIdentity, options);
+            writer.WriteObjectValue(MarsAuthenticationIdentity, options);
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (options.Format != "W" && Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
-                writer.WriteObjectValue<MoveErrorInfo>(Info, options);
+                writer.WriteObjectValue(Info, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue<BillingBenefitsAppliedScopeProperties>(AppliedScopeProperties, options);
+                writer.WriteObjectValue(AppliedScopeProperties, options);
             }
             if (Optional.IsDefined(IsRenewed))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue<RenewProperties>(RenewProperties, options);
+                writer.WriteObjectValue(RenewProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

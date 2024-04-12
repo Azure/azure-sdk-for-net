@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStringValue(Format.Value.ToString());
             }
             writer.WritePropertyName("deliveryInfo"u8);
-            writer.WriteObjectValue<ExportDeliveryInfo>(DeliveryInfo, options);
+            writer.WriteObjectValue(DeliveryInfo, options);
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue<ExportDefinition>(Definition, options);
+            writer.WriteObjectValue(Definition, options);
             if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
-                writer.WriteObjectValue<ExportExecutionListResult>(RunHistory, options);
+                writer.WriteObjectValue(RunHistory, options);
             }
             if (Optional.IsDefined(PartitionData))
             {

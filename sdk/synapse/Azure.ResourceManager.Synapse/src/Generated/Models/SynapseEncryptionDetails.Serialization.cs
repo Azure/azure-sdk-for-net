@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(Cmk))
             {
                 writer.WritePropertyName("cmk"u8);
-                writer.WriteObjectValue<WorkspaceCustomerManagedKeyDetails>(Cmk, options);
+                writer.WriteObjectValue(Cmk, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

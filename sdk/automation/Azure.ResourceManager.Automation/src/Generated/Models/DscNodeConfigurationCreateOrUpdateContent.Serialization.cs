@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue<AutomationContentSource>(Source, options);
+                writer.WriteObjectValue(Source, options);
             }
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue<DscConfigurationAssociationProperty>(Configuration, options);
+                writer.WriteObjectValue(Configuration, options);
             }
             if (Optional.IsDefined(IsIncrementNodeConfigurationBuildRequired))
             {

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue<MongoDBPrivilegeResourceInfo>(Resource, options);
+                writer.WriteObjectValue(Resource, options);
             }
             if (Optional.IsCollectionDefined(Actions))
             {

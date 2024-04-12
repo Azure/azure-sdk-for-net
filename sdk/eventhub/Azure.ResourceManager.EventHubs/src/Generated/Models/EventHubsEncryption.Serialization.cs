@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyVaultProperties)
                 {
-                    writer.WriteObjectValue<EventHubsKeyVaultProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -136,7 +136,7 @@ namespace Azure.Maps.Routing
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RouteMatrixQuery>(routeMatrixQuery);
+            content.JsonWriter.WriteObjectValue(routeMatrixQuery);
             request.Content = content;
             return message;
         }
@@ -601,7 +601,7 @@ namespace Azure.Maps.Routing
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RouteMatrixQuery>(routeMatrixQuery);
+            content.JsonWriter.WriteObjectValue(routeMatrixQuery);
             request.Content = content;
             return message;
         }
@@ -1699,7 +1699,7 @@ namespace Azure.Maps.Routing
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RouteDirectionParameters>(routeDirectionParameters);
+            content.JsonWriter.WriteObjectValue(routeDirectionParameters);
             request.Content = content;
             return message;
         }
@@ -2770,7 +2770,7 @@ namespace Azure.Maps.Routing
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchRequest>(routeDirectionsBatchQueries);
+            content.JsonWriter.WriteObjectValue(routeDirectionsBatchQueries);
             request.Content = content;
             return message;
         }
@@ -3410,7 +3410,7 @@ namespace Azure.Maps.Routing
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchRequest>(routeDirectionsBatchQueries);
+            content.JsonWriter.WriteObjectValue(routeDirectionsBatchQueries);
             request.Content = content;
             return message;
         }

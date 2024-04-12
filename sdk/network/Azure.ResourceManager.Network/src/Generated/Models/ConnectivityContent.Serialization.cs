@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Network.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue<ConnectivitySource>(Source, options);
+            writer.WriteObjectValue(Source, options);
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue<ConnectivityDestination>(Destination, options);
+            writer.WriteObjectValue(Destination, options);
             if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ProtocolConfiguration))
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
-                writer.WriteObjectValue<ProtocolConfiguration>(ProtocolConfiguration, options);
+                writer.WriteObjectValue(ProtocolConfiguration, options);
             }
             if (Optional.IsDefined(PreferredIPVersion))
             {

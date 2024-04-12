@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-                writer.WriteObjectValue<BodyDiagnosticSettings>(Body, options);
+                writer.WriteObjectValue(Body, options);
             }
             if (Optional.IsDefined(DataMasking))
             {
                 writer.WritePropertyName("dataMasking"u8);
-                writer.WriteObjectValue<DataMasking>(DataMasking, options);
+                writer.WriteObjectValue(DataMasking, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

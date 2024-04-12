@@ -49,7 +49,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Default))
             {
                 writer.WritePropertyName("default"u8);
-                writer.WriteObjectValue<AtlasTimeZone>(Default, options);
+                writer.WriteObjectValue(Default, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -215,11 +215,11 @@ namespace Azure.Analytics.Purview.DataMap
             return DeserializeAtlasTimeZone(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AtlasTimeZone>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

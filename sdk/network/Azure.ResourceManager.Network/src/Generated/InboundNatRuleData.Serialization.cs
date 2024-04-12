@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(BackendIPConfiguration))
             {
                 writer.WritePropertyName("backendIPConfiguration"u8);
-                writer.WriteObjectValue<NetworkInterfaceIPConfigurationData>(BackendIPConfiguration, options);
+                writer.WriteObjectValue(BackendIPConfiguration, options);
             }
             if (Optional.IsDefined(Protocol))
             {

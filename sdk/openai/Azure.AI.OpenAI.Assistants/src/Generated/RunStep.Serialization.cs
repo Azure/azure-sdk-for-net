@@ -41,11 +41,11 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("step_details"u8);
-            writer.WriteObjectValue<RunStepDetails>(StepDetails, options);
+            writer.WriteObjectValue(StepDetails, options);
             if (LastError != null)
             {
                 writer.WritePropertyName("last_error"u8);
-                writer.WriteObjectValue<RunStepError>(LastError, options);
+                writer.WriteObjectValue(LastError, options);
             }
             else
             {
@@ -315,11 +315,11 @@ namespace Azure.AI.OpenAI.Assistants
             return DeserializeRunStep(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RunStep>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

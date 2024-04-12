@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartArray();
             foreach (var item in Lifecycles)
             {
-                writer.WriteObjectValue<SourceLifeCycle>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("name"u8);

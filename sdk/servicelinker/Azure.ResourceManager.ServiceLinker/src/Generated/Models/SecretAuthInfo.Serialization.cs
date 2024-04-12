@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 if (SecretInfo != null)
                 {
                     writer.WritePropertyName("secretInfo"u8);
-                    writer.WriteObjectValue<SecretBaseInfo>(SecretInfo, options);
+                    writer.WriteObjectValue(SecretInfo, options);
                 }
                 else
                 {

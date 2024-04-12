@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(PolicyInfo))
             {
                 writer.WritePropertyName("policyInfo"u8);
-                writer.WriteObjectValue<PolicyReference>(PolicyInfo, options);
+                writer.WriteObjectValue(PolicyInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EvaluationResult))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(EvaluationDetails))
             {
                 writer.WritePropertyName("evaluationDetails"u8);
-                writer.WriteObjectValue<PolicyEvaluationDetails>(EvaluationDetails, options);
+                writer.WriteObjectValue(EvaluationDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

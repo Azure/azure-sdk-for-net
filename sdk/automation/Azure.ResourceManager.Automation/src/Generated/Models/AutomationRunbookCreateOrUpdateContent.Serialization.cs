@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Draft))
             {
                 writer.WritePropertyName("draft"u8);
-                writer.WriteObjectValue<AutomationRunbookDraft>(Draft, options);
+                writer.WriteObjectValue(Draft, options);
             }
             if (Optional.IsDefined(PublishContentLink))
             {
                 writer.WritePropertyName("publishContentLink"u8);
-                writer.WriteObjectValue<AutomationContentLink>(PublishContentLink, options);
+                writer.WriteObjectValue(PublishContentLink, options);
             }
             if (Optional.IsDefined(Description))
             {

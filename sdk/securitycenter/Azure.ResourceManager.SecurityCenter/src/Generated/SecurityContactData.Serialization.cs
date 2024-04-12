@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(AlertNotifications))
             {
                 writer.WritePropertyName("alertNotifications"u8);
-                writer.WriteObjectValue<SecurityContactPropertiesAlertNotifications>(AlertNotifications, options);
+                writer.WriteObjectValue(AlertNotifications, options);
             }
             if (Optional.IsDefined(NotificationsByRole))
             {
                 writer.WritePropertyName("notificationsByRole"u8);
-                writer.WriteObjectValue<SecurityContactPropertiesNotificationsByRole>(NotificationsByRole, options);
+                writer.WriteObjectValue(NotificationsByRole, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

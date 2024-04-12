@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(RunRequest))
             {
                 writer.WritePropertyName("runRequest"u8);
-                writer.WriteObjectValue<ContainerRegistryRunContent>(RunRequest, options);
+                writer.WriteObjectValue(RunRequest, options);
             }
             if (Optional.IsDefined(ForceUpdateTag))
             {

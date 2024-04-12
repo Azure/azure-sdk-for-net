@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MySql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MySqlTopQueryStatisticsInput>(input, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(input, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;

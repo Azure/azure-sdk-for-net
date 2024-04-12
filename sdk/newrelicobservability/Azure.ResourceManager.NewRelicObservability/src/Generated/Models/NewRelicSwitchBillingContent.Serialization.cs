@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue<NewRelicPlanDetails>(PlanData, options);
+                writer.WriteObjectValue(PlanData, options);
             }
             writer.WritePropertyName("userEmail"u8);
             writer.WriteStringValue(UserEmail);

@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(Endpoint.AbsoluteUri);
             writer.WritePropertyName("authentication"u8);
-            writer.WriteObjectValue<OnYourDataAuthenticationOptions>(Authentication, options);
+            writer.WriteObjectValue(Authentication, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -140,11 +140,11 @@ namespace Azure.AI.OpenAI
             return DeserializeOnYourDataEndpointVectorizationSource(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<OnYourDataEndpointVectorizationSource>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             writer.WriteStartArray();
             foreach (var item in Filters)
             {
-                writer.WriteObjectValue<OperationalInsightsWorkspacePurgeFilter>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

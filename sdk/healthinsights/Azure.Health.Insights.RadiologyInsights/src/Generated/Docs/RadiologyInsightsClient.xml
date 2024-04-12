@@ -74,7 +74,7 @@ RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new Pati
             SpecialtyType = SpecialtyType.Pathology,
             AdministrativeMetadata = new DocumentAdministrativeMetadata
             {
-                OrderedProcedures = {new FhirR4Extendible
+                OrderedProcedures = {new OrderedProcedure
                 {
                     Extension = {default},
                     Code = default,
@@ -184,7 +184,7 @@ RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(new Pati
             SpecialtyType = SpecialtyType.Pathology,
             AdministrativeMetadata = new DocumentAdministrativeMetadata
             {
-                OrderedProcedures = {new FhirR4Extendible
+                OrderedProcedures = {new OrderedProcedure
                 {
                     Extension = {default},
                     Code = default,

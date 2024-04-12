@@ -16,9 +16,11 @@ public class SpeechGenerationTests : OpenAITestBase
     }
 
     [RecordedTest]
-    [TestCase(Service.Azure)]
-    [TestCase(Service.NonAzure)]
-    public async Task GenerateSpeechFromText(Service serviceTarget)
+    [TestCase(Service.Azure, "mp3")]
+    [TestCase(Service.NonAzure, "mp3")]
+    [TestCase(Service.Azure, "wav")]
+    [TestCase(Service.NonAzure, "wav")]
+    public async Task GenerateSpeechFromText(Service serviceTarget, string responseFormat)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
@@ -28,7 +30,7 @@ public class SpeechGenerationTests : OpenAITestBase
             DeploymentName = deploymentOrModelName,
             Input = "Hello World",
             Voice = SpeechVoice.Alloy,
-            ResponseFormat = SpeechGenerationResponseFormat.Mp3,
+            ResponseFormat = responseFormat,
         };
 
         Response<BinaryData> response = await client.GenerateSpeechFromTextAsync(requestOptions);

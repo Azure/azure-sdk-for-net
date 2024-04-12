@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue<MongoClusterRestoreParameters>(RestoreParameters, options);
+                writer.WriteObjectValue(RestoreParameters, options);
             }
             if (Optional.IsDefined(AdministratorLogin))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in NodeGroupSpecs)
                 {
-                    writer.WriteObjectValue<NodeGroupSpec>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

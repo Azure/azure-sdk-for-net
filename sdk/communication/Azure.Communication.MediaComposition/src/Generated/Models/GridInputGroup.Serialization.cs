@@ -43,7 +43,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
-                writer.WriteObjectValue<InputPosition>(Position);
+                writer.WriteObjectValue(Position);
             }
             if (Optional.IsDefined(Width))
             {
@@ -176,11 +176,11 @@ namespace Azure.Communication.MediaComposition
             return DeserializeGridInputGroup(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GridInputGroup>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

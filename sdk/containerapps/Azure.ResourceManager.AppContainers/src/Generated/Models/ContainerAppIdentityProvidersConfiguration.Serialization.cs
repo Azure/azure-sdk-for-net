@@ -29,37 +29,37 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue<ContainerAppAzureActiveDirectoryConfiguration>(AzureActiveDirectory, options);
+                writer.WriteObjectValue(AzureActiveDirectory, options);
             }
             if (Optional.IsDefined(Facebook))
             {
                 writer.WritePropertyName("facebook"u8);
-                writer.WriteObjectValue<ContainerAppFacebookConfiguration>(Facebook, options);
+                writer.WriteObjectValue(Facebook, options);
             }
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue<ContainerAppGitHubConfiguration>(GitHub, options);
+                writer.WriteObjectValue(GitHub, options);
             }
             if (Optional.IsDefined(Google))
             {
                 writer.WritePropertyName("google"u8);
-                writer.WriteObjectValue<ContainerAppGoogleConfiguration>(Google, options);
+                writer.WriteObjectValue(Google, options);
             }
             if (Optional.IsDefined(Twitter))
             {
                 writer.WritePropertyName("twitter"u8);
-                writer.WriteObjectValue<ContainerAppTwitterConfiguration>(Twitter, options);
+                writer.WriteObjectValue(Twitter, options);
             }
             if (Optional.IsDefined(Apple))
             {
                 writer.WritePropertyName("apple"u8);
-                writer.WriteObjectValue<ContainerAppAppleConfiguration>(Apple, options);
+                writer.WriteObjectValue(Apple, options);
             }
             if (Optional.IsDefined(AzureStaticWebApps))
             {
                 writer.WritePropertyName("azureStaticWebApps"u8);
-                writer.WriteObjectValue<ContainerAppAzureStaticWebAppsConfiguration>(AzureStaticWebApps, options);
+                writer.WriteObjectValue(AzureStaticWebApps, options);
             }
             if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 foreach (var item in CustomOpenIdConnectProviders)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ContainerAppCustomOpenIdConnectProviderConfiguration>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

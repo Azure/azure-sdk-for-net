@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue<LegalHoldTag>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProtectedAppendWritesHistory))
             {
                 writer.WritePropertyName("protectedAppendWritesHistory"u8);
-                writer.WriteObjectValue<ProtectedAppendWritesHistory>(ProtectedAppendWritesHistory, options);
+                writer.WriteObjectValue(ProtectedAppendWritesHistory, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -86,27 +86,27 @@ namespace Azure.ResourceManager.HDInsight.Containers
             if (Optional.IsDefined(ClusterPoolProfile))
             {
                 writer.WritePropertyName("clusterPoolProfile"u8);
-                writer.WriteObjectValue<ClusterPoolProfile>(ClusterPoolProfile, options);
+                writer.WriteObjectValue(ClusterPoolProfile, options);
             }
             if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue<ClusterPoolComputeProfile>(ComputeProfile, options);
+                writer.WriteObjectValue(ComputeProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AksClusterProfile))
             {
                 writer.WritePropertyName("aksClusterProfile"u8);
-                writer.WriteObjectValue<AksClusterProfile>(AksClusterProfile, options);
+                writer.WriteObjectValue(AksClusterProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue<ClusterPoolNetworkProfile>(NetworkProfile, options);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
-                writer.WriteObjectValue<ClusterPoolLogAnalyticsProfile>(LogAnalyticsProfile, options);
+                writer.WriteObjectValue(LogAnalyticsProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {

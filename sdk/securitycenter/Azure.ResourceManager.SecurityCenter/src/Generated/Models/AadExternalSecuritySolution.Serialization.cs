@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<AadSolutionProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Kind != null)
             {

@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.ManagedNetwork
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue<Scope>(Scope, options);
+                writer.WriteObjectValue(Scope, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Connectivity))
             {
                 writer.WritePropertyName("connectivity"u8);
-                writer.WriteObjectValue<ConnectivityCollection>(Connectivity, options);
+                writer.WriteObjectValue(Connectivity, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

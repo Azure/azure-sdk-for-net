@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworks)
                 {
-                    writer.WriteObjectValue<PrivateAccessVirtualNetwork>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

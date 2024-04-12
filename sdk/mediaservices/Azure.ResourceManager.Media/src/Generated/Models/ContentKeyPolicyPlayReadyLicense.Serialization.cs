@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(PlayRight))
             {
                 writer.WritePropertyName("playRight"u8);
-                writer.WriteObjectValue<ContentKeyPolicyPlayReadyPlayRight>(PlayRight, options);
+                writer.WriteObjectValue(PlayRight, options);
             }
             writer.WritePropertyName("licenseType"u8);
             writer.WriteStringValue(LicenseType.ToString());
             writer.WritePropertyName("contentKeyLocation"u8);
-            writer.WriteObjectValue<ContentKeyPolicyPlayReadyContentKeyLocation>(ContentKeyLocation, options);
+            writer.WriteObjectValue(ContentKeyLocation, options);
             writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

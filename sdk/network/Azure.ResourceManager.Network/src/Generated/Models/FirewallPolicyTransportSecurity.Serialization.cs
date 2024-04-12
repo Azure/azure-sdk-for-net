@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(CertificateAuthority))
             {
                 writer.WritePropertyName("certificateAuthority"u8);
-                writer.WriteObjectValue<FirewallPolicyCertificateAuthority>(CertificateAuthority, options);
+                writer.WriteObjectValue(CertificateAuthority, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

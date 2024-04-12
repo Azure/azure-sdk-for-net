@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.ElasticSan
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue<ElasticSanVolumeDataSourceInfo>(CreationData, options);
+                writer.WriteObjectValue(CreationData, options);
             }
             writer.WritePropertyName("sizeGiB"u8);
             writer.WriteNumberValue(SizeGiB);
             if (options.Format != "W" && Optional.IsDefined(StorageTarget))
             {
                 writer.WritePropertyName("storageTarget"u8);
-                writer.WriteObjectValue<IscsiTargetInfo>(StorageTarget, options);
+                writer.WriteObjectValue(StorageTarget, options);
             }
             if (Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
-                writer.WriteObjectValue<ManagedByInfo>(ManagedBy, options);
+                writer.WriteObjectValue(ManagedBy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

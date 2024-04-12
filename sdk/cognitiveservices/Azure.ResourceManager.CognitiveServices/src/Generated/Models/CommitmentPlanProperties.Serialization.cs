@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Current))
             {
                 writer.WritePropertyName("current"u8);
-                writer.WriteObjectValue<CommitmentPeriod>(Current, options);
+                writer.WriteObjectValue(Current, options);
             }
             if (Optional.IsDefined(AutoRenew))
             {
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Next))
             {
                 writer.WritePropertyName("next"u8);
-                writer.WriteObjectValue<CommitmentPeriod>(Next, options);
+                writer.WriteObjectValue(Next, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Last))
             {
                 writer.WritePropertyName("last"u8);
-                writer.WriteObjectValue<CommitmentPeriod>(Last, options);
+                writer.WriteObjectValue(Last, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningIssues))
             {

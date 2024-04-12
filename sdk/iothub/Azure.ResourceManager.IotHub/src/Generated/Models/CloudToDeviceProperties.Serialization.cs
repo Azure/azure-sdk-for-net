@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Feedback))
             {
                 writer.WritePropertyName("feedback"u8);
-                writer.WriteObjectValue<CloudToDeviceFeedbackQueueProperties>(Feedback, options);
+                writer.WriteObjectValue(Feedback, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

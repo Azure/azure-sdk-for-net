@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<AzureResourceManagerError>(Error, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (Optional.IsCollectionDefined(Resources))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue<AssignmentJobCreatedResult>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

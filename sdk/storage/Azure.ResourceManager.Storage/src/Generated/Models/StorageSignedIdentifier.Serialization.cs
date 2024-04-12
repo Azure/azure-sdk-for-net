@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(AccessPolicy))
             {
                 writer.WritePropertyName("accessPolicy"u8);
-                writer.WriteObjectValue<StorageServiceAccessPolicy>(AccessPolicy, options);
+                writer.WriteObjectValue(AccessPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

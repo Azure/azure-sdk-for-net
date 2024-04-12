@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedDatabases)
                 {
-                    writer.WriteObjectValue<RedisEnterpriseLinkedDatabase>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

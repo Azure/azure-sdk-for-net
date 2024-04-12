@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue<InMageRcmFailbackProtectedDiskDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MobilityAgentDetails))
             {
                 writer.WritePropertyName("mobilityAgentDetails"u8);
-                writer.WriteObjectValue<InMageRcmFailbackMobilityAgentDetails>(MobilityAgentDetails, options);
+                writer.WriteObjectValue(MobilityAgentDetails, options);
             }
             if (Optional.IsCollectionDefined(VmNics))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue<InMageRcmFailbackNicDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiscoveredVmDetails))
             {
                 writer.WritePropertyName("discoveredVmDetails"u8);
-                writer.WriteObjectValue<InMageRcmFailbackDiscoveredProtectedVmDetails>(DiscoveredVmDetails, options);
+                writer.WriteObjectValue(DiscoveredVmDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastUsedPolicyId))
             {

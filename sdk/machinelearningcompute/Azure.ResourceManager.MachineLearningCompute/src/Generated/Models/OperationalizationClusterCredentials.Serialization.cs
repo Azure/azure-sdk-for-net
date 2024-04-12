@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
-                writer.WriteObjectValue<StorageAccountCredentials>(StorageAccount, options);
+                writer.WriteObjectValue(StorageAccount, options);
             }
             if (Optional.IsDefined(ContainerRegistry))
             {
                 writer.WritePropertyName("containerRegistry"u8);
-                writer.WriteObjectValue<ContainerRegistryCredentials>(ContainerRegistry, options);
+                writer.WriteObjectValue(ContainerRegistry, options);
             }
             if (Optional.IsDefined(ContainerService))
             {
                 writer.WritePropertyName("containerService"u8);
-                writer.WriteObjectValue<ContainerServiceCredentials>(ContainerService, options);
+                writer.WriteObjectValue(ContainerService, options);
             }
             if (Optional.IsDefined(AppInsights))
             {
                 writer.WritePropertyName("appInsights"u8);
-                writer.WriteObjectValue<AppInsightsCredentials>(AppInsights, options);
+                writer.WriteObjectValue(AppInsights, options);
             }
             if (Optional.IsDefined(ServiceAuthConfiguration))
             {
                 writer.WritePropertyName("serviceAuthConfiguration"u8);
-                writer.WriteObjectValue<ServiceAuthConfiguration>(ServiceAuthConfiguration, options);
+                writer.WriteObjectValue(ServiceAuthConfiguration, options);
             }
             if (Optional.IsDefined(SslConfiguration))
             {
                 writer.WritePropertyName("sslConfiguration"u8);
-                writer.WriteObjectValue<SslConfiguration>(SslConfiguration, options);
+                writer.WriteObjectValue(SslConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

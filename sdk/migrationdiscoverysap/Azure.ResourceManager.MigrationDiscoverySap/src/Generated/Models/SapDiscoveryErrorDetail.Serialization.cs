@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue<SapDiscoveryErrorDetail>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Keys != null)
                 {
                     writer.WritePropertyName("keys"u8);
-                    writer.WriteObjectValue<MachineLearningEndpointAuthKeys>(Keys, options);
+                    writer.WriteObjectValue(Keys, options);
                 }
                 else
                 {

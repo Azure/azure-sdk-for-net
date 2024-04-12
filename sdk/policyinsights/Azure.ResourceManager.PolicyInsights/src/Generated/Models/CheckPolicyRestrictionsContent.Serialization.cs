@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("resourceDetails"u8);
-            writer.WriteObjectValue<CheckRestrictionsResourceDetails>(ResourceDetails, options);
+            writer.WriteObjectValue(ResourceDetails, options);
             if (Optional.IsCollectionDefined(PendingFields))
             {
                 writer.WritePropertyName("pendingFields"u8);
                 writer.WriteStartArray();
                 foreach (var item in PendingFields)
                 {
-                    writer.WriteObjectValue<PendingField>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -55,8 +55,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasRelationship.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }
@@ -70,8 +70,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasRelationship.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Create(content, context);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }
@@ -163,8 +163,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasRelationship.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }
@@ -178,8 +178,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasRelationship, nameof(atlasRelationship));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasRelationship.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Update(content, context);
             return Response.FromValue(AtlasRelationship.FromResponse(response), response);
         }

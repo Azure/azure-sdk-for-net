@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue<StoreReadSettings>(StoreSettings);
+                writer.WriteObjectValue(StoreSettings);
             }
             if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue<DelimitedTextReadSettings>(FormatSettings);
+                writer.WriteObjectValue(FormatSettings);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -157,11 +157,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeDelimitedTextSource(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DelimitedTextSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, DelimitedTextSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<DelimitedTextSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override DelimitedTextSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

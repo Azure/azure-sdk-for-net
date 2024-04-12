@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(Direct))
             {
                 writer.WritePropertyName("direct"u8);
-                writer.WriteObjectValue<DirectPeeringLocationProperties>(Direct, options);
+                writer.WriteObjectValue(Direct, options);
             }
             if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
-                writer.WriteObjectValue<PeeringLocationPropertiesExchange>(Exchange, options);
+                writer.WriteObjectValue(Exchange, options);
             }
             if (Optional.IsDefined(PeeringLocationValue))
             {

@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(PartnerTopicInfo))
             {
                 writer.WritePropertyName("partnerTopicInfo"u8);
-                writer.WriteObjectValue<PartnerTopicInfo>(PartnerTopicInfo, options);
+                writer.WriteObjectValue(PartnerTopicInfo, options);
             }
             if (Optional.IsDefined(PartnerDestinationInfo))
             {
                 writer.WritePropertyName("partnerDestinationInfo"u8);
-                writer.WriteObjectValue<PartnerDestinationInfo>(PartnerDestinationInfo, options);
+                writer.WriteObjectValue(PartnerDestinationInfo, options);
             }
             if (Optional.IsDefined(MessageForActivation))
             {

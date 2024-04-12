@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(IrDetails))
             {
                 writer.WritePropertyName("irDetails"u8);
-                writer.WriteObjectValue<InMageRcmFailbackSyncDetails>(IrDetails, options);
+                writer.WriteObjectValue(IrDetails, options);
             }
             if (Optional.IsDefined(ResyncDetails))
             {
                 writer.WritePropertyName("resyncDetails"u8);
-                writer.WriteObjectValue<InMageRcmFailbackSyncDetails>(ResyncDetails, options);
+                writer.WriteObjectValue(ResyncDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastSyncedOn))
             {

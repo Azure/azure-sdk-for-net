@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AvailablePatchSummary))
             {
                 writer.WritePropertyName("availablePatchSummary"u8);
-                writer.WriteObjectValue<AvailablePatchSummary>(AvailablePatchSummary, options);
+                writer.WriteObjectValue(AvailablePatchSummary, options);
             }
             if (Optional.IsDefined(LastPatchInstallationSummary))
             {
                 writer.WritePropertyName("lastPatchInstallationSummary"u8);
-                writer.WriteObjectValue<LastPatchInstallationSummary>(LastPatchInstallationSummary, options);
+                writer.WriteObjectValue(LastPatchInstallationSummary, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ConfigurationStatuses))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationStatuses)
                 {
-                    writer.WriteObjectValue<InstanceViewStatus>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

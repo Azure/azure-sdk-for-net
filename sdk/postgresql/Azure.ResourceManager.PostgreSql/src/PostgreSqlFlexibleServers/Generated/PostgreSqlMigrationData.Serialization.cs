@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (options.Format != "W" && Optional.IsDefined(CurrentStatus))
             {
                 writer.WritePropertyName("currentStatus"u8);
-                writer.WriteObjectValue<PostgreSqlMigrationStatus>(CurrentStatus, options);
+                writer.WriteObjectValue(CurrentStatus, options);
             }
             if (Optional.IsDefined(MigrationMode))
             {
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (options.Format != "W" && Optional.IsDefined(SourceDbServerMetadata))
             {
                 writer.WritePropertyName("sourceDbServerMetadata"u8);
-                writer.WriteObjectValue<PostgreSqlServerMetadata>(SourceDbServerMetadata, options);
+                writer.WriteObjectValue(SourceDbServerMetadata, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TargetDbServerMetadata))
             {
                 writer.WritePropertyName("targetDbServerMetadata"u8);
-                writer.WriteObjectValue<PostgreSqlServerMetadata>(TargetDbServerMetadata, options);
+                writer.WriteObjectValue(TargetDbServerMetadata, options);
             }
             if (Optional.IsDefined(SourceDbServerResourceId))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (Optional.IsDefined(SecretParameters))
             {
                 writer.WritePropertyName("secretParameters"u8);
-                writer.WriteObjectValue<PostgreSqlMigrationSecretParameters>(SecretParameters, options);
+                writer.WriteObjectValue(SecretParameters, options);
             }
             if (Optional.IsCollectionDefined(DbsToMigrate))
             {

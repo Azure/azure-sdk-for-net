@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Baselines)
             {
-                writer.WriteObjectValue<MonitorTimeSeriesBaseline>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

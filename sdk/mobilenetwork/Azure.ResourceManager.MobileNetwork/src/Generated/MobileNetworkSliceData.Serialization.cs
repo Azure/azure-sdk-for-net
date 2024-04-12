@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("snssai"u8);
-            writer.WriteObjectValue<Snssai>(Snssai, options);
+            writer.WriteObjectValue(Snssai, options);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);

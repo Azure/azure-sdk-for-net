@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Support.Models
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue<SupportContactProfileContent>(ContactDetails, options);
+                writer.WriteObjectValue(ContactDetails, options);
             }
             if (Optional.IsDefined(AdvancedDiagnosticConsent))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WriteStartArray();
                 foreach (var item in SecondaryConsent)
                 {
-                    writer.WriteObjectValue<SecondaryConsent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

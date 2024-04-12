@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
-                writer.WriteObjectValue<ArmServiceTypeHealthPolicy>(DefaultServiceTypeHealthPolicy, options);
+                writer.WriteObjectValue(DefaultServiceTypeHealthPolicy, options);
             }
             if (Optional.IsCollectionDefined(ServiceTypeHealthPolicyMap))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in ServiceTypeHealthPolicyMap)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ArmServiceTypeHealthPolicy>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

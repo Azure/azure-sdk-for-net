@@ -34,7 +34,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(SearchHighlights))
             {
                 writer.WritePropertyName("@search.highlights"u8);
-                writer.WriteObjectValue<SearchHighlights>(SearchHighlights, options);
+                writer.WriteObjectValue(SearchHighlights, options);
             }
             if (Optional.IsDefined(ObjectType))
             {
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Term)
                 {
-                    writer.WriteObjectValue<TermSearchResultValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Contact)
                 {
-                    writer.WriteObjectValue<ContactSearchResultValue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -481,11 +481,11 @@ namespace Azure.Analytics.Purview.DataMap
             return DeserializeSearchResultValue(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchResultValue>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

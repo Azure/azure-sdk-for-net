@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(SourceRepository))
             {
                 writer.WritePropertyName("sourceRepository"u8);
-                writer.WriteObjectValue<SourceCodeRepoUpdateContent>(SourceRepository, options);
+                writer.WriteObjectValue(SourceRepository, options);
             }
             if (Optional.IsCollectionDefined(SourceTriggerEvents))
             {

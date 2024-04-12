@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ApplicationInsightsComponentAnalyticsItem>(itemProperties, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(itemProperties, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;

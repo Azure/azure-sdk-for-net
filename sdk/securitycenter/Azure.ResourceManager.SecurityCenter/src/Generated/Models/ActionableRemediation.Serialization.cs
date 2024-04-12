@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in CategoryConfigurations)
                 {
-                    writer.WriteObjectValue<CategoryConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BranchConfiguration))
             {
                 writer.WritePropertyName("branchConfiguration"u8);
-                writer.WriteObjectValue<TargetBranchConfiguration>(BranchConfiguration, options);
+                writer.WriteObjectValue(BranchConfiguration, options);
             }
             if (Optional.IsDefined(InheritFromParentState))
             {

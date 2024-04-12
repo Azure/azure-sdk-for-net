@@ -205,11 +205,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeBlobSink(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BlobSink>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, BlobSink model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<BlobSink>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override BlobSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

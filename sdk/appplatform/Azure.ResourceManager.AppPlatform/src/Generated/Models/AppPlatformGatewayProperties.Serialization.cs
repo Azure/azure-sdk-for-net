@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(SsoProperties))
             {
                 writer.WritePropertyName("ssoProperties"u8);
-                writer.WriteObjectValue<AppPlatformSsoProperties>(SsoProperties, options);
+                writer.WriteObjectValue(SsoProperties, options);
             }
             if (Optional.IsDefined(ApiMetadataProperties))
             {
                 writer.WritePropertyName("apiMetadataProperties"u8);
-                writer.WriteObjectValue<AppPlatformGatewayApiMetadataProperties>(ApiMetadataProperties, options);
+                writer.WriteObjectValue(ApiMetadataProperties, options);
             }
             if (Optional.IsDefined(CorsProperties))
             {
                 writer.WritePropertyName("corsProperties"u8);
-                writer.WriteObjectValue<AppPlatformGatewayCorsProperties>(CorsProperties, options);
+                writer.WriteObjectValue(CorsProperties, options);
             }
             if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue<AppPlatformGatewayResourceRequirements>(ResourceRequests, options);
+                writer.WriteObjectValue(ResourceRequests, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
             {
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue<AppPlatformGatewayInstance>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(OperatorProperties))
             {
                 writer.WritePropertyName("operatorProperties"u8);
-                writer.WriteObjectValue<AppPlatformGatewayOperatorProperties>(OperatorProperties, options);
+                writer.WriteObjectValue(OperatorProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

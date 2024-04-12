@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("connectionInfo"u8);
-            writer.WriteObjectValue<OracleConnectionInfo>(ConnectionInfo, options);
+            writer.WriteObjectValue(ConnectionInfo, options);
             writer.WritePropertyName("selectedSchemas"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedSchemas)

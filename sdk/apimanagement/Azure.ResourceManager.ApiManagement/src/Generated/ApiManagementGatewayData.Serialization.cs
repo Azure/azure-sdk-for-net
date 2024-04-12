@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
-                writer.WriteObjectValue<ResourceLocationDataContract>(LocationData, options);
+                writer.WriteObjectValue(LocationData, options);
             }
             if (Optional.IsDefined(Description))
             {
