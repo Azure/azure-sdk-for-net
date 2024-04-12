@@ -19,8 +19,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// This is a unique identifier that comes from the LiveMetrics service and identifies our connected session.
         /// </summary>
         private string _etag = string.Empty;
-        private CollectionConfigurationInfo? _collectionConfigurationInfo;
-        private CollectionConfiguration? _collectionConfiguration;
+        private CollectionConfigurationInfo _collectionConfigurationInfo;
+        private CollectionConfiguration _collectionConfiguration;
 
         private DateTimeOffset _lastSuccessfulPing = DateTimeOffset.UtcNow;
         private DateTimeOffset _lastSuccessfulPost = DateTimeOffset.UtcNow;
