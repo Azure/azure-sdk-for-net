@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Buffers;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -15,13 +17,13 @@ namespace Azure.ResourceManager.SelfHelp
 {
     internal class Utf8JsonRequestContent : RequestContent
     {
+        private const int CopyToBufferSize = 81920;
+        private static readonly string s_cancellationMessage = new OperationCanceledException().Message;
         private readonly MemoryStream _stream;
-        private readonly RequestContent _content;
 
         public Utf8JsonRequestContent()
         {
             _stream = new MemoryStream();
-            _content = Create(_stream);
             JsonWriter = new Utf8JsonWriter(_stream);
         }
 
@@ -30,13 +32,35 @@ namespace Azure.ResourceManager.SelfHelp
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
         {
             await JsonWriter.FlushAsync().ConfigureAwait(false);
-            await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+            _stream.Seek(0, SeekOrigin.Begin);
+            await _stream.CopyToAsync(stream, CopyToBufferSize, cancellationToken).ConfigureAwait(false);
         }
 
         public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
         {
             JsonWriter.Flush();
-            _content.WriteTo(stream, cancellationToken);
+            _stream.Seek(0, SeekOrigin.Begin);
+
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(CopyToBufferSize);
+            try
+            {
+                while (true)
+                {
+                    ThrowIfCancellationRequested(cancellationToken);
+                    int read = _stream.Read(buffer, 0, buffer.Length);
+                    if (read == 0)
+                    {
+                        break;
+                    }
+                    ThrowIfCancellationRequested(cancellationToken);
+                    stream.Write(buffer, 0, read);
+                }
+            }
+            finally
+            {
+                stream.Flush();
+                ArrayPool<byte>.Shared.Return(buffer, true);
+            }
         }
 
         public override bool TryComputeLength(out long length)
@@ -48,8 +72,19 @@ namespace Azure.ResourceManager.SelfHelp
         public override void Dispose()
         {
             JsonWriter.Dispose();
-            _content.Dispose();
             _stream.Dispose();
+        }
+
+        private static void ThrowIfCancellationRequested(CancellationToken cancellationToken = default)
+        {
+            if (cancellationToken.IsCancellationRequested)
+            {
+#if NETCOREAPP2_1_OR_GREATER
+				throw new global::System.Threading.Tasks.TaskCanceledException(s_cancellationMessage, null, cancellationToken);
+#else
+                throw new TaskCanceledException(s_cancellationMessage, null);
+#endif
+            }
         }
     }
 }
