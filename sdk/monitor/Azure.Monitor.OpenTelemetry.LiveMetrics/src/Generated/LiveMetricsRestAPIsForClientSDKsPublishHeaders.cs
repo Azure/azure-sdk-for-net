@@ -16,9 +16,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
         {
             _response = response;
         }
-        /// <summary> Tells the client whether the input instrumentation key is subscribed to. </summary>
-        public string XMsQpsSubscribed => _response.Headers.TryGetValue("x-ms-qps-subscribed", out string value) ? value : null;
         /// <summary> An encoded string that indicates whether the collection configuration is changed. </summary>
         public string XMsQpsConfigurationEtag => _response.Headers.TryGetValue("x-ms-qps-configuration-etag", out string value) ? value : null;
+        /// <summary> Tells the client whether the input instrumentation key is subscribed to. </summary>
+        public string XMsQpsSubscribed => _response.Headers.TryGetValue("x-ms-qps-subscribed", out string value) ? value : null;
     }
 }
