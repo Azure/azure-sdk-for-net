@@ -269,7 +269,7 @@ namespace Azure.Identity.Tests
 
             public bool IsProofOfPossessionRequired { get; set; }
 
-            public bool UseOperatingSystemAccount { get; set; }
+            public bool UseDefaultBrokerAccount { get; set; }
 
             Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient { get { return _beforeBuildClient; } }
         }

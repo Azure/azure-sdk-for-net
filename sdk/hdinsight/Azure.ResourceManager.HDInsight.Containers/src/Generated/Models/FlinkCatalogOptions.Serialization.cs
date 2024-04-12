@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlinkCatalogOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlinkCatalogOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlinkCatalogOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Hive))
             {
                 writer.WritePropertyName("hive"u8);
-                writer.WriteObjectValue(Hive);
+                writer.WriteObjectValue(Hive, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlinkCatalogOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlinkCatalogOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlinkCatalogOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             FlinkHiveCatalogOption hive = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hive"u8))
@@ -86,10 +85,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FlinkCatalogOptions(hive, serializedAdditionalRawData);
         }
 
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FlinkCatalogOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlinkCatalogOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeFlinkCatalogOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FlinkCatalogOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlinkCatalogOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

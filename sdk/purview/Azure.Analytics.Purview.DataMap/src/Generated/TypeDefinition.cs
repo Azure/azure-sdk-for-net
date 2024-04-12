@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -1791,8 +1790,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasTypesDef.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await BatchCreateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
@@ -1810,8 +1809,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasTypesDef.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = BatchCreate(content, context);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
@@ -1910,8 +1909,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasTypesDef.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await BatchUpdateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
@@ -1928,8 +1927,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasTypesDef.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = BatchUpdate(content, context);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
@@ -2023,8 +2022,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasTypesDef.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await BatchDeleteAsync(content, context).ConfigureAwait(false);
             return response;
         }
@@ -2038,8 +2037,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasTypesDef.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = BatchDelete(content, context);
             return response;
         }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The start time for the metric interval (ISO-8601 format). </summary>
+        [WirePath("intervalStartTime")]
         public string IntervalStartTime { get; }
         /// <summary> Interval type (length). </summary>
+        [WirePath("intervalType")]
         public QueryTimeGrainType? IntervalType { get; }
         /// <summary> Execution count of a query in this interval. </summary>
+        [WirePath("executionCount")]
         public long? ExecutionCount { get; }
         /// <summary> List of metric objects for this interval. </summary>
+        [WirePath("metrics")]
         public IList<QueryMetricProperties> Metrics { get; }
     }
 }

@@ -3257,7 +3257,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// whether it resides in the same account or in a different account.
         /// </param>
         /// <param name="options">
-        /// Optional parameters.
+        /// Optional parameters.  Note that <see cref="BlobCopyFromUriOptions.CopySourceTagsMode"/> is not applicable to this API.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3412,7 +3412,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// whether it resides in the same account or in a different account.
         /// </param>
         /// <param name="options">
-        /// Optional parameters.
+        /// Optional parameters.  Note that <see cref="BlobCopyFromUriOptions.CopySourceTagsMode"/> is not applicable to this API.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate

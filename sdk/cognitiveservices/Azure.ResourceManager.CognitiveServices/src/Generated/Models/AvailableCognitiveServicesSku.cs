@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -74,16 +73,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
         /// <summary> The name of SKU. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Specifies the tier of Cognitive Services account. </summary>
+        [WirePath("tier")]
         public string Tier { get; }
         /// <summary> The Kind of resources that are supported in this SKU. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> The set of locations that the SKU is available. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </summary>
+        [WirePath("restrictions")]
         public IReadOnlyList<CognitiveServicesSkuRestrictions> Restrictions { get; }
     }
 }

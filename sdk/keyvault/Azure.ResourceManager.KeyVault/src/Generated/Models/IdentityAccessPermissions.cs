@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -71,12 +70,16 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Permissions to keys. </summary>
+        [WirePath("keys")]
         public IList<IdentityAccessKeyPermission> Keys { get; }
         /// <summary> Permissions to secrets. </summary>
+        [WirePath("secrets")]
         public IList<IdentityAccessSecretPermission> Secrets { get; }
         /// <summary> Permissions to certificates. </summary>
+        [WirePath("certificates")]
         public IList<IdentityAccessCertificatePermission> Certificates { get; }
         /// <summary> Permissions to storage accounts. </summary>
+        [WirePath("storage")]
         public IList<IdentityAccessStoragePermission> Storage { get; }
     }
 }

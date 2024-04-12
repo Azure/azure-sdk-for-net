@@ -34,5 +34,13 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new ListAliasesResult(value);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ListAliasesResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeListAliasesResult(document.RootElement);
+        }
     }
 }

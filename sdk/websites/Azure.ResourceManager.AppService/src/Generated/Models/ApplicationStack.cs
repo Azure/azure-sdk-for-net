@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -74,16 +73,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Application stack name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Application stack display name. </summary>
+        [WirePath("display")]
         public string Display { get; set; }
         /// <summary> Application stack dependency. </summary>
+        [WirePath("dependency")]
         public string Dependency { get; set; }
         /// <summary> List of major versions available. </summary>
+        [WirePath("majorVersions")]
         public IList<StackMajorVersion> MajorVersions { get; }
         /// <summary> List of frameworks associated with application stack. </summary>
+        [WirePath("frameworks")]
         public IList<ApplicationStack> Frameworks { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this is the stack is deprecated; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("isDeprecated")]
         public IList<ApplicationStack> IsDeprecated { get; }
     }
 }

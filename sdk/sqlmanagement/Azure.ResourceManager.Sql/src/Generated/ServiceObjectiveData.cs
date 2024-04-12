@@ -77,14 +77,19 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The name for the service objective. </summary>
+        [WirePath("properties.serviceObjectiveName")]
         public string ServiceObjectiveName { get; }
         /// <summary> Gets whether the service level objective is the default service objective. </summary>
+        [WirePath("properties.isDefault")]
         public bool? IsDefault { get; }
         /// <summary> Gets whether the service level objective is a system service objective. </summary>
+        [WirePath("properties.isSystem")]
         public bool? IsSystem { get; }
         /// <summary> The description for the service level objective. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> Gets whether the service level objective is enabled. </summary>
+        [WirePath("properties.enabled")]
         public bool? IsEnabled { get; }
     }
 }

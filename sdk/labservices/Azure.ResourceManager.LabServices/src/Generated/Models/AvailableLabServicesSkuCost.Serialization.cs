@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableLabServicesSkuCost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableLabServicesSkuCost)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableLabServicesSkuCost)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableLabServicesSkuCost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableLabServicesSkuCost)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableLabServicesSkuCost)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.LabServices.Models
             float? quantity = default;
             string extendedUnit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterId"u8))
@@ -108,10 +107,10 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AvailableLabServicesSkuCost(meterId, quantity, extendedUnit, serializedAdditionalRawData);
         }
 
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableLabServicesSkuCost)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableLabServicesSkuCost)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeAvailableLabServicesSkuCost(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableLabServicesSkuCost)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableLabServicesSkuCost)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -73,14 +72,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Read-write endpoint of the failover group instance. </summary>
+        [WirePath("properties.readWriteEndpoint")]
         public FailoverGroupReadWriteEndpoint ReadWriteEndpoint { get; set; }
         /// <summary> Read-only endpoint of the failover group instance. </summary>
+        [WirePath("properties.readOnlyEndpoint")]
         public FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
         /// <summary> List of databases in the failover group. </summary>
+        [WirePath("properties.databases")]
         public IList<ResourceIdentifier> FailoverDatabases { get; }
         /// <summary> List of partner server information for the failover group. </summary>
+        [WirePath("properties.partnerServers")]
         public IList<PartnerServerInfo> PartnerServers { get; }
     }
 }

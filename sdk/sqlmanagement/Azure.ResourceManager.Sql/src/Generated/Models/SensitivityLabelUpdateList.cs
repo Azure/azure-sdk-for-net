@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Gets the operations. </summary>
+        [WirePath("operations")]
         public IList<SensitivityLabelUpdate> Operations { get; }
     }
 }

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PartialNotificationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartialNotificationSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartialNotificationSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Webhooks)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PartialNotificationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartialNotificationSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartialNotificationSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             IDictionary<string, MachineLearningWebhook> webhooks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("webhooks"u8))
@@ -105,10 +104,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PartialNotificationSetting(webhooks ?? new ChangeTrackingDictionary<string, MachineLearningWebhook>(), serializedAdditionalRawData);
         }
 
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PartialNotificationSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartialNotificationSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializePartialNotificationSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartialNotificationSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartialNotificationSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

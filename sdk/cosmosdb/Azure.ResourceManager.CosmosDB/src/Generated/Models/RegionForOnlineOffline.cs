@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -71,6 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Cosmos DB region, with spaces between words and each word capitalized. </summary>
+        [WirePath("region")]
         public string Region { get; }
     }
 }

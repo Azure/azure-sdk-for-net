@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Support
             var format = options.Format == "W" ? ((IPersistableModel<SupportTicketData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportTicketData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportTicketData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,17 +103,17 @@ namespace Azure.ResourceManager.Support
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails);
+                writer.WriteObjectValue(ContactDetails, options);
             }
             if (Optional.IsDefined(ServiceLevelAgreement))
             {
                 writer.WritePropertyName("serviceLevelAgreement"u8);
-                writer.WriteObjectValue(ServiceLevelAgreement);
+                writer.WriteObjectValue(ServiceLevelAgreement, options);
             }
             if (Optional.IsDefined(SupportEngineer))
             {
                 writer.WritePropertyName("supportEngineer"u8);
-                writer.WriteObjectValue(SupportEngineer);
+                writer.WriteObjectValue(SupportEngineer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SupportPlanType))
             {
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.Support
             if (Optional.IsDefined(TechnicalTicketDetails))
             {
                 writer.WritePropertyName("technicalTicketDetails"u8);
-                writer.WriteObjectValue(TechnicalTicketDetails);
+                writer.WriteObjectValue(TechnicalTicketDetails, options);
             }
             if (Optional.IsDefined(QuotaTicketDetails))
             {
                 writer.WritePropertyName("quotaTicketDetails"u8);
-                writer.WriteObjectValue(QuotaTicketDetails);
+                writer.WriteObjectValue(QuotaTicketDetails, options);
             }
             if (Optional.IsCollectionDefined(SecondaryConsent))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Support
                 writer.WriteStartArray();
                 foreach (var item in SecondaryConsent)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Support
             var format = options.Format == "W" ? ((IPersistableModel<SupportTicketData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportTicketData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportTicketData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Support
             QuotaTicketDetails quotaTicketDetails = default;
             IList<SecondaryConsent> secondaryConsent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -479,10 +479,10 @@ namespace Azure.ResourceManager.Support
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SupportTicketData(
                 id,
                 name,
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Support
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SupportTicketData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportTicketData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Support
                         return DeserializeSupportTicketData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SupportTicketData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportTicketData)} does not support reading '{options.Format}' format.");
             }
         }
 

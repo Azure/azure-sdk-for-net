@@ -56,7 +56,7 @@ For Metrics queries across multiple Azure resources, use the following client:
 
 ```C# Snippet:CreateMetricsClient
 var client = new MetricsClient(
-    new Uri("https://metrics.monitor.azure.com/.default"),
+    new Uri("https://<region>.metrics.monitor.azure.com"),
     new DefaultAzureCredential());
 ```
 
@@ -122,6 +122,8 @@ All client instance methods are thread-safe and independent of each other ([guid
 ## Examples
 
 - [Logs query](#logs-query)
+  - [Workspace-centric logs query](#workspace-centric-logs-query)
+  - [Resource-centric logs query](#resource-centric-logs-query)
   - [Handle logs query response](#handle-logs-query-response)
   - [Map logs query results to a model](#map-logs-query-results-to-a-model)
   - [Map logs query results to a primitive](#map-logs-query-results-to-a-primitive)
@@ -142,9 +144,9 @@ All client instance methods are thread-safe and independent of each other ([guid
 
 ### Logs query
 
-You can query logs by workspace ID or resource ID. The result is returned as a table with a collection of rows.
+You can query logs by Log Analytics workspace ID or Azure resource ID. The result is returned as a table with a collection of rows.
 
-**Workspace-centric logs query**
+#### Workspace-centric logs query
 
 To query by workspace ID, use the [LogsQueryClient.QueryWorkspaceAsync](https://learn.microsoft.com/dotnet/api/azure.monitor.query.logsqueryclient.queryworkspaceasync) method:
 
@@ -165,7 +167,7 @@ foreach (var row in table.Rows)
 }
 ```
 
-**Resource-centric logs query**
+#### Resource-centric logs query
 
 To query by resource ID, use the [LogsQueryClient.QueryResourceAsync](https://learn.microsoft.com/dotnet/api/azure.monitor.query.logsqueryclient.queryresourceasync) method.
 
@@ -651,13 +653,16 @@ Each Azure resource must reside in:
 - The same region as the endpoint specified when creating the client.
 - The same Azure subscription.
 
-Furthermore, the metric namespace containing the metrics to be queried must be provided. For a list of metric namespaces, see [Supported metrics and log categories by resource type][metric_namespaces].
+Furthermore:
+
+- The user must be authorized to read monitoring data at the Azure subscription level. For example, the [Monitoring Reader role](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles/monitor#monitoring-reader) on the subscription to be queried.
+- The metric namespace containing the metrics to be queried must be provided. For a list of metric namespaces, see [Supported metrics and log categories by resource type][metric_namespaces].
 
 ```C# Snippet:QueryResourcesMetrics
 string resourceId =
     "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
 var client = new MetricsClient(
-    new Uri("https://metrics.monitor.azure.com/.default"),
+    new Uri("https://<region>.metrics.monitor.azure.com"),
     new DefaultAzureCredential());
 Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
     resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
@@ -673,18 +678,18 @@ foreach (MetricsQueryResult value in metricsQueryResults.Values)
 
 For an inventory of metrics and dimensions available for each Azure resource type, see [Supported metrics with Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-supported).
 
-The `QueryResources` method also accepts a `MetricsQueryResourcesOptions`-typed argument, in which the user can specify extra properties to filter the results. The following example demonstrates the `RollUpBy` and `OrderBy` properties:
+The `QueryResources` method also accepts a `MetricsQueryResourcesOptions`-typed argument, in which the user can specify extra properties to filter the results. The following example demonstrates the `OrderBy` and `Size` properties:
 
 ```C# Snippet:QueryResourcesMetricsWithOptions
 string resourceId =
     "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
 var client = new MetricsClient(
-    new Uri("https://metrics.monitor.azure.com/.default"),
+    new Uri("https://<region>.metrics.monitor.azure.com"),
     new DefaultAzureCredential());
 var options = new MetricsQueryResourcesOptions
 {
     OrderBy = "sum asc",
-    RollUpBy = { "RollUpBy=City" }
+    Size = 10
 };
 
 Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
@@ -707,7 +712,7 @@ To register a client with the dependency injection container, invoke the corresp
 | Client               | Extension method        |
 |----------------------|-------------------------|
 | `LogsQueryClient`    | [AddLogsQueryClient](https://learn.microsoft.com/dotnet/api/microsoft.extensions.azure.logsqueryclientbuilderextensions?view=azure-dotnet)    |
-| `MetricsClient`      | `AddMetricsClient`      |
+| `MetricsClient`      | [AddMetricsClient](https://learn.microsoft.com/dotnet/api/microsoft.extensions.azure.metricsclientbuilderextensions.addmetricsclient?view=azure-dotnet)      |
 | `MetricsQueryClient` | [AddMetricsQueryClient](https://learn.microsoft.com/dotnet/api/microsoft.extensions.azure.metricsqueryclientbuilderextensions?view=azure-dotnet) |
 
 For more information, see [Register client](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection#register-client).

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.AI.OpenAI
 {
@@ -49,7 +48,6 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of <see cref="ContentFilterResultDetailsForPrompt"/>. </summary>
         internal ContentFilterResultDetailsForPrompt()
         {
-            CustomBlocklists = new ChangeTrackingList<ContentFilterBlocklistIdResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentFilterResultDetailsForPrompt"/>. </summary>
@@ -81,8 +79,9 @@ namespace Azure.AI.OpenAI
         /// down or otherwise unable to complete the operation in time.
         /// </param>
         /// <param name="jailbreak"> Whether a jailbreak attempt was detected in the prompt. </param>
+        /// <param name="indirectAttack"> Whether an indirect attack was detected in the prompt. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContentFilterResultDetailsForPrompt(ContentFilterResult sexual, ContentFilterResult violence, ContentFilterResult hate, ContentFilterResult selfHarm, ContentFilterDetectionResult profanity, IReadOnlyList<ContentFilterBlocklistIdResult> customBlocklists, ResponseError error, ContentFilterDetectionResult jailbreak, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContentFilterResultDetailsForPrompt(ContentFilterResult sexual, ContentFilterResult violence, ContentFilterResult hate, ContentFilterResult selfHarm, ContentFilterDetectionResult profanity, ContentFilterDetailedResults customBlocklists, ResponseError error, ContentFilterDetectionResult jailbreak, ContentFilterDetectionResult indirectAttack, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sexual = sexual;
             Violence = violence;
@@ -92,6 +91,7 @@ namespace Azure.AI.OpenAI
             CustomBlocklists = customBlocklists;
             Error = error;
             Jailbreak = jailbreak;
+            IndirectAttack = indirectAttack;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -123,7 +123,7 @@ namespace Azure.AI.OpenAI
         /// <summary> Describes whether profanity was detected. </summary>
         public ContentFilterDetectionResult Profanity { get; }
         /// <summary> Describes detection results against configured custom blocklists. </summary>
-        public IReadOnlyList<ContentFilterBlocklistIdResult> CustomBlocklists { get; }
+        public ContentFilterDetailedResults CustomBlocklists { get; }
         /// <summary>
         /// Describes an error returned if the content filtering system is
         /// down or otherwise unable to complete the operation in time.
@@ -131,5 +131,7 @@ namespace Azure.AI.OpenAI
         public ResponseError Error { get; }
         /// <summary> Whether a jailbreak attempt was detected in the prompt. </summary>
         public ContentFilterDetectionResult Jailbreak { get; }
+        /// <summary> Whether an indirect attack was detected in the prompt. </summary>
+        public ContentFilterDetectionResult IndirectAttack { get; }
     }
 }

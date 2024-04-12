@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -71,14 +70,19 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The role definition ID. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The role definition name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> If this is a service role. </summary>
+        [WirePath("isServiceRole")]
         public bool? IsServiceRole { get; }
         /// <summary> Role definition permissions. </summary>
+        [WirePath("permissions")]
         public IReadOnlyList<Permission> Permissions { get; }
         /// <summary> Role definition assignable scopes. </summary>
+        [WirePath("scopes")]
         public IReadOnlyList<string> Scopes { get; }
     }
 }

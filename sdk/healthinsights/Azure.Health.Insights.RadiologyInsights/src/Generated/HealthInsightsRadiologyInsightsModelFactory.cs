@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
@@ -309,7 +308,11 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         /// <summary> Initializes a new instance of <see cref="RadiologyInsights.RadiologyInsightsPatientResult"/>. </summary>
         /// <param name="patientId"> Identifier given for the patient in the request. </param>
-        /// <param name="inferences"> The model's inferences for the given patient. </param>
+        /// <param name="inferences">
+        /// The model's inferences for the given patient.
+        /// Please note <see cref="RadiologyInsights.RadiologyInsightsInference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RadiologyInsights.AgeMismatchInference"/>, <see cref="RadiologyInsights.CompleteOrderDiscrepancyInference"/>, <see cref="RadiologyInsights.CriticalResultInference"/>, <see cref="RadiologyInsights.FindingInference"/>, <see cref="RadiologyInsights.FollowupCommunicationInference"/>, <see cref="RadiologyInsights.FollowupRecommendationInference"/>, <see cref="RadiologyInsights.LateralityDiscrepancyInference"/>, <see cref="RadiologyInsights.LimitedOrderDiscrepancyInference"/>, <see cref="RadiologyInsights.RadiologyProcedureInference"/> and <see cref="RadiologyInsights.SexMismatchInference"/>.
+        /// </param>
         /// <returns> A new <see cref="RadiologyInsights.RadiologyInsightsPatientResult"/> instance for mocking. </returns>
         public static RadiologyInsightsPatientResult RadiologyInsightsPatientResult(string patientId = null, IEnumerable<RadiologyInsightsInference> inferences = null)
         {
@@ -522,7 +525,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="imagingProcedures"> Imaging procedures. </param>
         /// <param name="orderedProcedure"> Ordered procedure information from the document information or text. </param>
         /// <returns> A new <see cref="RadiologyInsights.RadiologyProcedureInference"/> instance for mocking. </returns>
-        public static RadiologyProcedureInference RadiologyProcedureInference(IEnumerable<FhirR4Extension> extension = null, IEnumerable<FhirR4CodeableConcept> procedureCodes = null, IEnumerable<ImagingProcedure> imagingProcedures = null, FhirR4Extendible orderedProcedure = null)
+        public static RadiologyProcedureInference RadiologyProcedureInference(IEnumerable<FhirR4Extension> extension = null, IEnumerable<FhirR4CodeableConcept> procedureCodes = null, IEnumerable<ImagingProcedure> imagingProcedures = null, OrderedProcedure orderedProcedure = null)
         {
             extension ??= new List<FhirR4Extension>();
             procedureCodes ??= new List<FhirR4CodeableConcept>();
@@ -575,12 +578,16 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="isOption"> The option value indicates whether or not the sentence containing the recommendation includes an optional statement. Keywords for optional statements include 'recommend', 'consider', and so on. </param>
         /// <param name="isGuideline"> The guideline value indicates whether or not the recommendation is part of a guideline section that compiles all recommendations applicable to various findings. </param>
         /// <param name="isHedging"> Hedging refers to ambiguous, vague or imprecise language within the sentence of the recommendation. Keywords for hedging are 'can be','may be',and so on. </param>
-        /// <param name="recommendedProcedure"> The procedure recommendation can be a generic procedure or an imaging procedure. </param>
+        /// <param name="recommendedProcedure">
+        /// The procedure recommendation can be a generic procedure or an imaging procedure.
+        /// Please note <see cref="ProcedureRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="RadiologyInsights.GenericProcedureRecommendation"/> and <see cref="RadiologyInsights.ImagingProcedureRecommendation"/>.
+        /// </param>
         /// <returns> A new <see cref="RadiologyInsights.FollowupRecommendationInference"/> instance for mocking. </returns>
-        public static FollowupRecommendationInference FollowupRecommendationInference(IEnumerable<FhirR4Extension> extension = null, string effectiveDateTime = null, FhirR4Period effectivePeriod = null, IEnumerable<FhirR4Extendible> findings = null, bool isConditional = default, bool isOption = default, bool isGuideline = default, bool isHedging = default, ProcedureRecommendation recommendedProcedure = null)
+        public static FollowupRecommendationInference FollowupRecommendationInference(IEnumerable<FhirR4Extension> extension = null, string effectiveDateTime = null, FhirR4Period effectivePeriod = null, IEnumerable<RecommendationFinding> findings = null, bool isConditional = default, bool isOption = default, bool isGuideline = default, bool isHedging = default, ProcedureRecommendation recommendedProcedure = null)
         {
             extension ??= new List<FhirR4Extension>();
-            findings ??= new List<FhirR4Extendible>();
+            findings ??= new List<RecommendationFinding>();
 
             return new FollowupRecommendationInference(
                 "followupRecommendation",
@@ -594,6 +601,19 @@ namespace Azure.Health.Insights.RadiologyInsights
                 isGuideline,
                 isHedging,
                 recommendedProcedure);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.RecommendationFinding"/>. </summary>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="finding"> Finding linked to a recommendation. </param>
+        /// <param name="criticalFinding"> Critical result linked to a recommendation. </param>
+        /// <param name="recommendationFindingStatus"> Recommendation finding status. </param>
+        /// <returns> A new <see cref="RadiologyInsights.RecommendationFinding"/> instance for mocking. </returns>
+        public static RecommendationFinding RecommendationFinding(IEnumerable<FhirR4Extension> extension = null, FhirR4Observation finding = null, CriticalResult criticalFinding = null, RecommendationFindingStatusType recommendationFindingStatus = default)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new RecommendationFinding(extension?.ToList(), finding, criticalFinding, recommendationFindingStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="RadiologyInsights.GenericProcedureRecommendation"/>. </summary>

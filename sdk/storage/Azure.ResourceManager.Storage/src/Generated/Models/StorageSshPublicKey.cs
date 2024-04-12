@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Optional. It is used to store the function/usage of the key. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Ssh public key base64 encoded. The format should be: '&lt;keyType&gt; &lt;keyData&gt;', e.g. ssh-rsa AAAABBBB. </summary>
+        [WirePath("key")]
         public string Key { get; set; }
     }
 }

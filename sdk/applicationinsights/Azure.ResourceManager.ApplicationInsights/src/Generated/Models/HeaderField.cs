@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The name of the header. </summary>
+        [WirePath("key")]
         public string HeaderFieldName { get; set; }
         /// <summary> The value of the header. </summary>
+        [WirePath("value")]
         public string HeaderFieldValue { get; set; }
     }
 }

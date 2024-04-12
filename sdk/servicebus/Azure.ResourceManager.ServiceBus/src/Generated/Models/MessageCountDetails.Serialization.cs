@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<MessageCountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageCountDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageCountDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<MessageCountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageCountDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageCountDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             long? transferMessageCount = default;
             long? transferDeadLetterMessageCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeMessageCount"u8))
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MessageCountDetails(
                 activeMessageCount,
                 deadLetterMessageCount,
@@ -157,6 +157,91 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 transferMessageCount,
                 transferDeadLetterMessageCount,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveMessageCount), out propertyOverride);
+            if (Optional.IsDefined(ActiveMessageCount) || hasPropertyOverride)
+            {
+                builder.Append("  activeMessageCount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ActiveMessageCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeadLetterMessageCount), out propertyOverride);
+            if (Optional.IsDefined(DeadLetterMessageCount) || hasPropertyOverride)
+            {
+                builder.Append("  deadLetterMessageCount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DeadLetterMessageCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScheduledMessageCount), out propertyOverride);
+            if (Optional.IsDefined(ScheduledMessageCount) || hasPropertyOverride)
+            {
+                builder.Append("  scheduledMessageCount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ScheduledMessageCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransferMessageCount), out propertyOverride);
+            if (Optional.IsDefined(TransferMessageCount) || hasPropertyOverride)
+            {
+                builder.Append("  transferMessageCount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TransferMessageCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransferDeadLetterMessageCount), out propertyOverride);
+            if (Optional.IsDefined(TransferDeadLetterMessageCount) || hasPropertyOverride)
+            {
+                builder.Append("  transferDeadLetterMessageCount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TransferDeadLetterMessageCount.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MessageCountDetails>.Write(ModelReaderWriterOptions options)
@@ -167,8 +252,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MessageCountDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageCountDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +271,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         return DeserializeMessageCountDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageCountDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageCountDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

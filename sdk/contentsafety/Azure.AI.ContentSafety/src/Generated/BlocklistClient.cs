@@ -9,7 +9,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -115,8 +114,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(options, nameof(options));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AddOrUpdateBlocklistItemsAsync(name, content, context).ConfigureAwait(false);
             return Response.FromValue(AddOrUpdateTextBlocklistItemsResult.FromResponse(response), response);
         }
@@ -134,8 +133,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(options, nameof(options));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AddOrUpdateBlocklistItems(name, content, context);
             return Response.FromValue(AddOrUpdateTextBlocklistItemsResult.FromResponse(response), response);
         }
@@ -615,8 +614,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(options, nameof(options));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await RemoveBlocklistItemsAsync(name, content, context).ConfigureAwait(false);
             return response;
         }
@@ -634,8 +633,8 @@ namespace Azure.AI.ContentSafety
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(options, nameof(options));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = RemoveBlocklistItems(name, content, context);
             return response;
         }

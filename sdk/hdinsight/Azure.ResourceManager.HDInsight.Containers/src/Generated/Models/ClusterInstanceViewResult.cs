@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of <see cref="ClusterInstanceViewResult"/>. </summary>
         /// <param name="name"> Name of the instance view. </param>
         /// <param name="status"> Status of the instance view. </param>
-        /// <param name="serviceStatuses"> List of statuses of relevant services that make up the HDInsight on aks cluster to surface to the customer. </param>
+        /// <param name="serviceStatuses"> List of statuses of relevant services that make up the HDInsight on AKS cluster to surface to the customer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="status"/> or <paramref name="serviceStatuses"/> is null. </exception>
         internal ClusterInstanceViewResult(string name, ClusterInstanceViewStatus status, IEnumerable<HDInsightServiceStatus> serviceStatuses)
         {
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of <see cref="ClusterInstanceViewResult"/>. </summary>
         /// <param name="name"> Name of the instance view. </param>
         /// <param name="status"> Status of the instance view. </param>
-        /// <param name="serviceStatuses"> List of statuses of relevant services that make up the HDInsight on aks cluster to surface to the customer. </param>
+        /// <param name="serviceStatuses"> List of statuses of relevant services that make up the HDInsight on AKS cluster to surface to the customer. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ClusterInstanceViewResult(string name, ClusterInstanceViewStatus status, IReadOnlyList<HDInsightServiceStatus> serviceStatuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public string Name { get; }
         /// <summary> Status of the instance view. </summary>
         public ClusterInstanceViewStatus Status { get; }
-        /// <summary> List of statuses of relevant services that make up the HDInsight on aks cluster to surface to the customer. </summary>
+        /// <summary> List of statuses of relevant services that make up the HDInsight on AKS cluster to surface to the customer. </summary>
         public IReadOnlyList<HDInsightServiceStatus> ServiceStatuses { get; }
     }
 }
