@@ -292,10 +292,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ARRANGE
             var metricInfo = new DerivedMetricInfo(
                 id: "Metric1",
-                telemetryType: TelemetryType.Request,
+                telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "Duration",
-                aggregation: DerivedMetricInfoAggregation.Avg
+                aggregation: AggregationType.Avg,
+                backEndAggregation: Models.AggregationType.Avg
             );
 
             var durationString = TimeSpan.FromMilliseconds(120).ToString();
@@ -307,7 +308,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             double projection = metric.Project(telemetry);
 
             // ASSERT
-            Assert.Equal(DerivedMetricInfoAggregation.Avg, metric.AggregationType);
+            Assert.Equal(AggregationType.Avg, metric.AggregationType);
             Assert.Empty(errors);
             Assert.Equal(120, projection);
         }

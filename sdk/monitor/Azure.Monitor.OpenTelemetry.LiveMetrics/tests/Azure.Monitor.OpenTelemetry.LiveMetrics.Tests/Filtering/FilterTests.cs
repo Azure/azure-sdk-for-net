@@ -912,7 +912,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
         public void FilterDurationAsString()
         {
             // ARRANGE
-            var equalsValue = new FilterInfo("Duration", FilterInfoPredicate.Equal, "123");
+            var equalsValue = new FilterInfo("Duration", PredicateType.Equal, "123");
 
             // ACT
             bool result1 = new Filter<DocumentMockWithStringDuration>(equalsValue).Check(new DocumentMockWithStringDuration(TimeSpan.Parse("123", CultureInfo.InvariantCulture).ToString()));
