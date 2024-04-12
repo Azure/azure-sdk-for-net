@@ -59,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             this.CreateMetadata();
 
             // create document streams based on description in info
-            this.CreateDocumentStreams(out CollectionConfigurationError[] documentStreamErrors, previousDocumentStreams ?? Array.Empty<DocumentStream>());
+            this.CreateDocumentStreams(previousDocumentStreams ?? Array.Empty<DocumentStream>(), out CollectionConfigurationError[] documentStreamErrors);
 
             errors = metricErrors.Concat(documentStreamErrors).ToArray();
 
@@ -142,9 +142,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             }
         }
 
-        private void CreateDocumentStreams(
-            out CollectionConfigurationError[] errors,
-            IEnumerable<DocumentStream> previousDocumentStreams)
+        private void CreateDocumentStreams(IEnumerable<DocumentStream> previousDocumentStreams,
+            out CollectionConfigurationError[] errors)
         {
             var errorList = new List<CollectionConfigurationError>();
             var documentStreamIds = new HashSet<string>();
