@@ -14,7 +14,7 @@ using Azure.ResourceManager.TrustedSigning.Models;
 
 namespace Azure.ResourceManager.TrustedSigning.Samples
 {
-    public partial class Sample_CodeSigningAccountCollection
+    public partial class Sample_TrustedSigningAccountCollection
     {
         // Lists trusted signing accounts within a resource group.
         [NUnit.Framework.Test]
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this CodeSigningAccountResource
-            CodeSigningAccountCollection collection = resourceGroupResource.GetCodeSigningAccounts();
+            // get the collection of this TrustedSigningAccountResource
+            TrustedSigningAccountCollection collection = resourceGroupResource.GetTrustedSigningAccounts();
 
             // invoke the operation and iterate over the result
-            await foreach (CodeSigningAccountResource item in collection.GetAllAsync())
+            await foreach (TrustedSigningAccountResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CodeSigningAccountData resourceData = item.Data;
+                TrustedSigningAccountData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this CodeSigningAccountResource
-            CodeSigningAccountCollection collection = resourceGroupResource.GetCodeSigningAccounts();
+            // get the collection of this TrustedSigningAccountResource
+            TrustedSigningAccountCollection collection = resourceGroupResource.GetTrustedSigningAccounts();
 
             // invoke the operation
             string accountName = "MyAccount";
-            CodeSigningAccountResource result = await collection.GetAsync(accountName);
+            TrustedSigningAccountResource result = await collection.GetAsync(accountName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CodeSigningAccountData resourceData = result.Data;
+            TrustedSigningAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this CodeSigningAccountResource
-            CodeSigningAccountCollection collection = resourceGroupResource.GetCodeSigningAccounts();
+            // get the collection of this TrustedSigningAccountResource
+            TrustedSigningAccountCollection collection = resourceGroupResource.GetTrustedSigningAccounts();
 
             // invoke the operation
             string accountName = "MyAccount";
@@ -136,13 +136,13 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this CodeSigningAccountResource
-            CodeSigningAccountCollection collection = resourceGroupResource.GetCodeSigningAccounts();
+            // get the collection of this TrustedSigningAccountResource
+            TrustedSigningAccountCollection collection = resourceGroupResource.GetTrustedSigningAccounts();
 
             // invoke the operation
             string accountName = "MyAccount";
-            NullableResponse<CodeSigningAccountResource> response = await collection.GetIfExistsAsync(accountName);
-            CodeSigningAccountResource result = response.HasValue ? response.Value : null;
+            NullableResponse<TrustedSigningAccountResource> response = await collection.GetIfExistsAsync(accountName);
+            TrustedSigningAccountResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CodeSigningAccountData resourceData = result.Data;
+                TrustedSigningAccountData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -178,21 +178,21 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this CodeSigningAccountResource
-            CodeSigningAccountCollection collection = resourceGroupResource.GetCodeSigningAccounts();
+            // get the collection of this TrustedSigningAccountResource
+            TrustedSigningAccountCollection collection = resourceGroupResource.GetTrustedSigningAccounts();
 
             // invoke the operation
             string accountName = "MyAccount";
-            CodeSigningAccountData data = new CodeSigningAccountData(new AzureLocation("westus"))
+            TrustedSigningAccountData data = new TrustedSigningAccountData(new AzureLocation("westus"))
             {
                 SkuName = TrustedSigningSkuName.Basic,
             };
-            ArmOperation<CodeSigningAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data);
-            CodeSigningAccountResource result = lro.Value;
+            ArmOperation<TrustedSigningAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data);
+            TrustedSigningAccountResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CodeSigningAccountData resourceData = result.Data;
+            TrustedSigningAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

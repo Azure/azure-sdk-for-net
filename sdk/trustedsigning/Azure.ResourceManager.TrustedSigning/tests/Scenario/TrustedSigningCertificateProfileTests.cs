@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             string profileName = "profileA";
-            ResourceIdentifier certificateProfileResourceId = CertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
-            CertificateProfileResource certificateProfile = client.GetCertificateProfileResource(certificateProfileResourceId);
+            ResourceIdentifier certificateProfileResourceId = TrustedSigningCertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
+            TrustedSigningCertificateProfileResource certificateProfile = client.GetTrustedSigningCertificateProfileResource(certificateProfileResourceId);
 
             // invoke the operation
             var result = await certificateProfile.DeleteAsync(WaitUntil.Completed);
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             string profileName = "profileA";
-            ResourceIdentifier certificateProfileResourceId = CertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
-            CertificateProfileResource certificateProfile = client.GetCertificateProfileResource(certificateProfileResourceId);
-            CertificateProfileResource result = await certificateProfile.GetAsync();
+            ResourceIdentifier certificateProfileResourceId = TrustedSigningCertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
+            TrustedSigningCertificateProfileResource certificateProfile = client.GetTrustedSigningCertificateProfileResource(certificateProfileResourceId);
+            TrustedSigningCertificateProfileResource result = await certificateProfile.GetAsync();
 
-            CertificateProfileData resourceData = result.Data;
+            TrustedSigningCertificateProfileData resourceData = result.Data;
             Assert.IsNotNull(resourceData);
         }
 
@@ -78,18 +78,18 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
-            ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
+            ResourceIdentifier codeSigningAccountResourceId = TrustedSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            TrustedSigningAccountResource codeSigningAccount = client.GetTrustedSigningAccountResource(codeSigningAccountResourceId);
 
             // get the collection of this CertificateProfileResource
-            CertificateProfileCollection collection = codeSigningAccount.GetCertificateProfiles();
+            TrustedSigningCertificateProfileCollection collection = codeSigningAccount.GetTrustedSigningCertificateProfiles();
 
             // invoke the operation and iterate over the result
-            await foreach (CertificateProfileResource item in collection.GetAllAsync())
+            await foreach (TrustedSigningCertificateProfileResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CertificateProfileData resourceData = item.Data;
+                TrustedSigningCertificateProfileData resourceData = item.Data;
                 // for demo we just print out the id
                 Assert.IsNotNull (resourceData);
             }
@@ -107,27 +107,27 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
-            ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
+            ResourceIdentifier codeSigningAccountResourceId = TrustedSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            TrustedSigningAccountResource codeSigningAccount = client.GetTrustedSigningAccountResource(codeSigningAccountResourceId);
 
             // get the collection of this CertificateProfileResource
-            CertificateProfileCollection collection = codeSigningAccount.GetCertificateProfiles();
+            TrustedSigningCertificateProfileCollection collection = codeSigningAccount.GetTrustedSigningCertificateProfiles();
 
             // invoke the operation
             string profileName = "profileA";
-            CertificateProfileData data = new CertificateProfileData()
+            TrustedSigningCertificateProfileData data = new TrustedSigningCertificateProfileData()
             {
-                ProfileType = ProfileType.PublicTrust,
+                ProfileType = CertificateProfileType.PublicTrust,
                 IncludeStreetAddress = false,
                 IncludePostalCode = true,
                 IdentityValidationId = "",
             };
-            ArmOperation<CertificateProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
-            CertificateProfileResource result = lro.Value;
+            ArmOperation<TrustedSigningCertificateProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
+            TrustedSigningCertificateProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CertificateProfileData resourceData = result.Data;
+            TrustedSigningCertificateProfileData resourceData = result.Data;
             // for demo we just print out the id
             Assert.IsNotNull(resourceData);
         }

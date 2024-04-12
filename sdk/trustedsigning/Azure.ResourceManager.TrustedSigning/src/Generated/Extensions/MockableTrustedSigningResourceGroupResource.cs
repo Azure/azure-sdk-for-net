@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of CodeSigningAccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CodeSigningAccountResources and their operations over a CodeSigningAccountResource. </returns>
-        public virtual CodeSigningAccountCollection GetCodeSigningAccounts()
+        /// <summary> Gets a collection of TrustedSigningAccountResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of TrustedSigningAccountResources and their operations over a TrustedSigningAccountResource. </returns>
+        public virtual TrustedSigningAccountCollection GetTrustedSigningAccounts()
         {
-            return GetCachedClient(client => new CodeSigningAccountCollection(client, Id));
+            return GetCachedClient(client => new TrustedSigningAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CodeSigningAccountResource"/></description>
+        /// <description><see cref="TrustedSigningAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CodeSigningAccountResource>> GetCodeSigningAccountAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrustedSigningAccountResource>> GetTrustedSigningAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetCodeSigningAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetTrustedSigningAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CodeSigningAccountResource"/></description>
+        /// <description><see cref="TrustedSigningAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CodeSigningAccountResource> GetCodeSigningAccount(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<TrustedSigningAccountResource> GetTrustedSigningAccount(string accountName, CancellationToken cancellationToken = default)
         {
-            return GetCodeSigningAccounts().Get(accountName, cancellationToken);
+            return GetTrustedSigningAccounts().Get(accountName, cancellationToken);
         }
     }
 }

@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string profileName, CancellationToken cancellationToken = default)
+        public async Task<Response<TrustedSigningCertificateProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.TrustedSigning
             {
                 case 200:
                     {
-                        CertificateProfileData value = default;
+                        TrustedSigningCertificateProfileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateProfileData.DeserializeCertificateProfileData(document.RootElement);
+                        value = TrustedSigningCertificateProfileData.DeserializeTrustedSigningCertificateProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateProfileData)null, message.Response);
+                    return Response.FromValue((TrustedSigningCertificateProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateProfileData> Get(string subscriptionId, string resourceGroupName, string accountName, string profileName, CancellationToken cancellationToken = default)
+        public Response<TrustedSigningCertificateProfileData> Get(string subscriptionId, string resourceGroupName, string accountName, string profileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.TrustedSigning
             {
                 case 200:
                     {
-                        CertificateProfileData value = default;
+                        TrustedSigningCertificateProfileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateProfileData.DeserializeCertificateProfileData(document.RootElement);
+                        value = TrustedSigningCertificateProfileData.DeserializeTrustedSigningCertificateProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateProfileData)null, message.Response);
+                    return Response.FromValue((TrustedSigningCertificateProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string profileName, CertificateProfileData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string profileName, TrustedSigningCertificateProfileData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="profileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string profileName, CertificateProfileData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string profileName, TrustedSigningCertificateProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="profileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string accountName, string profileName, CertificateProfileData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string accountName, string profileName, TrustedSigningCertificateProfileData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        internal HttpMessage CreateRevokeCertificateRequest(string subscriptionId, string resourceGroupName, string accountName, string profileName, RevokeCertificate body)
+        internal HttpMessage CreateRevokeCertificateRequest(string subscriptionId, string resourceGroupName, string accountName, string profileName, RevokeCertificateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.TrustedSigning
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body, new ModelReaderWriterOptions("W"));
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, new ModelReaderWriterOptions("W"));
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -396,19 +396,19 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Trusted Signing account name. </param>
         /// <param name="profileName"> Certificate profile name. </param>
-        /// <param name="body"> Parameters to revoke the certificate profile. </param>
+        /// <param name="content"> Parameters to revoke the certificate profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="profileName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="profileName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RevokeCertificateAsync(string subscriptionId, string resourceGroupName, string accountName, string profileName, RevokeCertificate body, CancellationToken cancellationToken = default)
+        public async Task<Response> RevokeCertificateAsync(string subscriptionId, string resourceGroupName, string accountName, string profileName, RevokeCertificateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRevokeCertificateRequest(subscriptionId, resourceGroupName, accountName, profileName, body);
+            using var message = CreateRevokeCertificateRequest(subscriptionId, resourceGroupName, accountName, profileName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -424,19 +424,19 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Trusted Signing account name. </param>
         /// <param name="profileName"> Certificate profile name. </param>
-        /// <param name="body"> Parameters to revoke the certificate profile. </param>
+        /// <param name="content"> Parameters to revoke the certificate profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="profileName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="profileName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RevokeCertificate(string subscriptionId, string resourceGroupName, string accountName, string profileName, RevokeCertificate body, CancellationToken cancellationToken = default)
+        public Response RevokeCertificate(string subscriptionId, string resourceGroupName, string accountName, string profileName, RevokeCertificateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
             Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateRevokeCertificateRequest(subscriptionId, resourceGroupName, accountName, profileName, body);
+            using var message = CreateRevokeCertificateRequest(subscriptionId, resourceGroupName, accountName, profileName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

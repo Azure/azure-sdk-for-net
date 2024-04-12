@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
-    internal partial class AccountSku : IUtf8JsonSerializable, IJsonModel<AccountSku>
+    internal partial class TrustedSigningAccountSku : IUtf8JsonSerializable, IJsonModel<TrustedSigningAccountSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrustedSigningAccountSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<AccountSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TrustedSigningAccountSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningAccountSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountSku)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TrustedSigningAccountSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             writer.WriteEndObject();
         }
 
-        AccountSku IJsonModel<AccountSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TrustedSigningAccountSku IJsonModel<TrustedSigningAccountSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningAccountSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountSku)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TrustedSigningAccountSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccountSku(document.RootElement, options);
+            return DeserializeTrustedSigningAccountSku(document.RootElement, options);
         }
 
-        internal static AccountSku DeserializeAccountSku(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TrustedSigningAccountSku DeserializeTrustedSigningAccountSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -82,38 +82,38 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AccountSku(name, serializedAdditionalRawData);
+            return new TrustedSigningAccountSku(name, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AccountSku>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TrustedSigningAccountSku>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningAccountSku>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccountSku)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrustedSigningAccountSku)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AccountSku IPersistableModel<AccountSku>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TrustedSigningAccountSku IPersistableModel<TrustedSigningAccountSku>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningAccountSku>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAccountSku(document.RootElement, options);
+                        return DeserializeTrustedSigningAccountSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccountSku)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrustedSigningAccountSku)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AccountSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TrustedSigningAccountSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -14,10 +14,10 @@ using Azure.ResourceManager.TrustedSigning.Models;
 namespace Azure.ResourceManager.TrustedSigning
 {
     /// <summary>
-    /// A class representing the CertificateProfile data model.
+    /// A class representing the TrustedSigningCertificateProfile data model.
     /// Certificate profile resource.
     /// </summary>
-    public partial class CertificateProfileData : ResourceData
+    public partial class TrustedSigningCertificateProfileData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CertificateProfileData"/>. </summary>
-        public CertificateProfileData()
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningCertificateProfileData"/>. </summary>
+        public TrustedSigningCertificateProfileData()
         {
-            Certificates = new ChangeTrackingList<Certificate>();
+            Certificates = new ChangeTrackingList<TrustedSigningCertificate>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CertificateProfileData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningCertificateProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <param name="status"> Status of the certificate profile. </param>
         /// <param name="certificates"> List of renewed certificates. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProfileType? profileType, string commonName, string organization, string organizationUnit, string streetAddress, bool? includeStreetAddress, string city, bool? includeCity, string state, bool? includeState, string country, bool? includeCountry, string postalCode, bool? includePostalCode, string enhancedKeyUsage, string identityValidationId, ProvisioningState? provisioningState, CertificateProfileStatus? status, IReadOnlyList<Certificate> certificates, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal TrustedSigningCertificateProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificateProfileType? profileType, string commonName, string organization, string organizationUnit, string streetAddress, bool? includeStreetAddress, string city, bool? includeCity, string state, bool? includeState, string country, bool? includeCountry, string postalCode, bool? includePostalCode, string enhancedKeyUsage, string identityValidationId, TrustedSigningProvisioningState? provisioningState, CertificateProfileStatus? status, IReadOnlyList<TrustedSigningCertificate> certificates, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProfileType = profileType;
             CommonName = commonName;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary> Profile type of the certificate. </summary>
-        public ProfileType? ProfileType { get; set; }
+        public CertificateProfileType? ProfileType { get; set; }
         /// <summary> Used as CN in the certificate subject name. </summary>
         public string CommonName { get; }
         /// <summary> Used as O in the certificate subject name. </summary>
@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <summary> Identity validation id used for the certificate subject name. </summary>
         public string IdentityValidationId { get; set; }
         /// <summary> Status of the current operation on certificate profile. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public TrustedSigningProvisioningState? ProvisioningState { get; }
         /// <summary> Status of the certificate profile. </summary>
         public CertificateProfileStatus? Status { get; }
         /// <summary> List of renewed certificates. </summary>
-        public IReadOnlyList<Certificate> Certificates { get; }
+        public IReadOnlyList<TrustedSigningCertificate> Certificates { get; }
     }
 }

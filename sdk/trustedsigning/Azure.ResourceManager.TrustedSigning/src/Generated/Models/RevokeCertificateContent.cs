@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
-    /// <summary> Properties of the certificate. </summary>
-    public partial class Certificate
+    /// <summary> Defines the certificate revocation properties. </summary>
+    public partial class RevokeCertificateContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,65 +45,55 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Certificate"/>. </summary>
-        internal Certificate()
+        /// <summary> Initializes a new instance of <see cref="RevokeCertificateContent"/>. </summary>
+        /// <param name="serialNumber"> Serial number of the certificate. </param>
+        /// <param name="thumbprint"> Thumbprint of the certificate. </param>
+        /// <param name="effectiveOn"> The timestamp when the revocation is effective. </param>
+        /// <param name="reason"> Reason for the revocation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/>, <paramref name="thumbprint"/> or <paramref name="reason"/> is null. </exception>
+        public RevokeCertificateContent(string serialNumber, string thumbprint, DateTimeOffset effectiveOn, string reason)
         {
+            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
+            Argument.AssertNotNull(thumbprint, nameof(thumbprint));
+            Argument.AssertNotNull(reason, nameof(reason));
+
+            SerialNumber = serialNumber;
+            Thumbprint = thumbprint;
+            EffectiveOn = effectiveOn;
+            Reason = reason;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Certificate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RevokeCertificateContent"/>. </summary>
         /// <param name="serialNumber"> Serial number of the certificate. </param>
-        /// <param name="subjectName"> Subject name of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
-        /// <param name="createdDate"> Certificate created date. </param>
-        /// <param name="expiryDate"> Certificate expiry date. </param>
-        /// <param name="status"> Status of the certificate. </param>
-        /// <param name="requestedOn"> The timestamp when the revocation is requested. </param>
         /// <param name="effectiveOn"> The timestamp when the revocation is effective. </param>
-        /// <param name="reason"> Reason for revocation. </param>
+        /// <param name="reason"> Reason for the revocation. </param>
         /// <param name="remarks"> Remarks for the revocation. </param>
-        /// <param name="statusRevocationStatus"> Status of the revocation. </param>
-        /// <param name="failureReason"> Reason for the revocation failure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Certificate(string serialNumber, string subjectName, string thumbprint, string createdDate, string expiryDate, CertificateStatus? status, DateTimeOffset? requestedOn, DateTimeOffset? effectiveOn, string reason, string remarks, RevocationStatus? statusRevocationStatus, string failureReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RevokeCertificateContent(string serialNumber, string thumbprint, DateTimeOffset effectiveOn, string reason, string remarks, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SerialNumber = serialNumber;
-            SubjectName = subjectName;
             Thumbprint = thumbprint;
-            CreatedDate = createdDate;
-            ExpiryDate = expiryDate;
-            Status = status;
-            RequestedOn = requestedOn;
             EffectiveOn = effectiveOn;
             Reason = reason;
             Remarks = remarks;
-            StatusRevocationStatus = statusRevocationStatus;
-            FailureReason = failureReason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RevokeCertificateContent"/> for deserialization. </summary>
+        internal RevokeCertificateContent()
+        {
         }
 
         /// <summary> Serial number of the certificate. </summary>
         public string SerialNumber { get; }
-        /// <summary> Subject name of the certificate. </summary>
-        public string SubjectName { get; }
         /// <summary> Thumbprint of the certificate. </summary>
         public string Thumbprint { get; }
-        /// <summary> Certificate created date. </summary>
-        public string CreatedDate { get; }
-        /// <summary> Certificate expiry date. </summary>
-        public string ExpiryDate { get; }
-        /// <summary> Status of the certificate. </summary>
-        public CertificateStatus? Status { get; }
-        /// <summary> The timestamp when the revocation is requested. </summary>
-        public DateTimeOffset? RequestedOn { get; }
         /// <summary> The timestamp when the revocation is effective. </summary>
-        public DateTimeOffset? EffectiveOn { get; }
-        /// <summary> Reason for revocation. </summary>
+        public DateTimeOffset EffectiveOn { get; }
+        /// <summary> Reason for the revocation. </summary>
         public string Reason { get; }
         /// <summary> Remarks for the revocation. </summary>
-        public string Remarks { get; }
-        /// <summary> Status of the revocation. </summary>
-        public RevocationStatus? StatusRevocationStatus { get; }
-        /// <summary> Reason for the revocation failure. </summary>
-        public string FailureReason { get; }
+        public string Remarks { get; set; }
     }
 }

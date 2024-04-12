@@ -35,27 +35,27 @@ namespace Azure.ResourceManager.TrustedSigning.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CodeSigningAccountResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CodeSigningAccountResource.CreateResourceIdentifier" /> to create a <see cref="CodeSigningAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="TrustedSigningAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrustedSigningAccountResource.CreateResourceIdentifier" /> to create a <see cref="TrustedSigningAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CodeSigningAccountResource"/> object. </returns>
-        public virtual CodeSigningAccountResource GetCodeSigningAccountResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TrustedSigningAccountResource"/> object. </returns>
+        public virtual TrustedSigningAccountResource GetTrustedSigningAccountResource(ResourceIdentifier id)
         {
-            CodeSigningAccountResource.ValidateResourceId(id);
-            return new CodeSigningAccountResource(Client, id);
+            TrustedSigningAccountResource.ValidateResourceId(id);
+            return new TrustedSigningAccountResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CertificateProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CertificateProfileResource.CreateResourceIdentifier" /> to create a <see cref="CertificateProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="TrustedSigningCertificateProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrustedSigningCertificateProfileResource.CreateResourceIdentifier" /> to create a <see cref="TrustedSigningCertificateProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CertificateProfileResource"/> object. </returns>
-        public virtual CertificateProfileResource GetCertificateProfileResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TrustedSigningCertificateProfileResource"/> object. </returns>
+        public virtual TrustedSigningCertificateProfileResource GetTrustedSigningCertificateProfileResource(ResourceIdentifier id)
         {
-            CertificateProfileResource.ValidateResourceId(id);
-            return new CertificateProfileResource(Client, id);
+            TrustedSigningCertificateProfileResource.ValidateResourceId(id);
+            return new TrustedSigningCertificateProfileResource(Client, id);
         }
     }
 }

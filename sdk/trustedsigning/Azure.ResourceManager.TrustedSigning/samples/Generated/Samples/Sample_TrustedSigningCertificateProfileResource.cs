@@ -13,7 +13,7 @@ using Azure.ResourceManager.TrustedSigning.Models;
 
 namespace Azure.ResourceManager.TrustedSigning.Samples
 {
-    public partial class Sample_CertificateProfileResource
+    public partial class Sample_TrustedSigningCertificateProfileResource
     {
         // Get details of a certificate profile.
         [NUnit.Framework.Test]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CertificateProfileResource created on azure
-            // for more information of creating CertificateProfileResource, please refer to the document of CertificateProfileResource
+            // this example assumes you already have this TrustedSigningCertificateProfileResource created on azure
+            // for more information of creating TrustedSigningCertificateProfileResource, please refer to the document of TrustedSigningCertificateProfileResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             string profileName = "profileA";
-            ResourceIdentifier certificateProfileResourceId = CertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
-            CertificateProfileResource certificateProfile = client.GetCertificateProfileResource(certificateProfileResourceId);
+            ResourceIdentifier trustedSigningCertificateProfileResourceId = TrustedSigningCertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
+            TrustedSigningCertificateProfileResource trustedSigningCertificateProfile = client.GetTrustedSigningCertificateProfileResource(trustedSigningCertificateProfileResourceId);
 
             // invoke the operation
-            CertificateProfileResource result = await certificateProfile.GetAsync();
+            TrustedSigningCertificateProfileResource result = await trustedSigningCertificateProfile.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CertificateProfileData resourceData = result.Data;
+            TrustedSigningCertificateProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -60,29 +60,29 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CertificateProfileResource created on azure
-            // for more information of creating CertificateProfileResource, please refer to the document of CertificateProfileResource
+            // this example assumes you already have this TrustedSigningCertificateProfileResource created on azure
+            // for more information of creating TrustedSigningCertificateProfileResource, please refer to the document of TrustedSigningCertificateProfileResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             string profileName = "profileA";
-            ResourceIdentifier certificateProfileResourceId = CertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
-            CertificateProfileResource certificateProfile = client.GetCertificateProfileResource(certificateProfileResourceId);
+            ResourceIdentifier trustedSigningCertificateProfileResourceId = TrustedSigningCertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
+            TrustedSigningCertificateProfileResource trustedSigningCertificateProfile = client.GetTrustedSigningCertificateProfileResource(trustedSigningCertificateProfileResourceId);
 
             // invoke the operation
-            CertificateProfileData data = new CertificateProfileData()
+            TrustedSigningCertificateProfileData data = new TrustedSigningCertificateProfileData()
             {
-                ProfileType = ProfileType.PublicTrust,
+                ProfileType = CertificateProfileType.PublicTrust,
                 IncludeStreetAddress = false,
                 IncludePostalCode = true,
                 IdentityValidationId = "00000000-1234-5678-3333-444444444444",
             };
-            ArmOperation<CertificateProfileResource> lro = await certificateProfile.UpdateAsync(WaitUntil.Completed, data);
-            CertificateProfileResource result = lro.Value;
+            ArmOperation<TrustedSigningCertificateProfileResource> lro = await trustedSigningCertificateProfile.UpdateAsync(WaitUntil.Completed, data);
+            TrustedSigningCertificateProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CertificateProfileData resourceData = result.Data;
+            TrustedSigningCertificateProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -100,17 +100,17 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CertificateProfileResource created on azure
-            // for more information of creating CertificateProfileResource, please refer to the document of CertificateProfileResource
+            // this example assumes you already have this TrustedSigningCertificateProfileResource created on azure
+            // for more information of creating TrustedSigningCertificateProfileResource, please refer to the document of TrustedSigningCertificateProfileResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             string profileName = "profileA";
-            ResourceIdentifier certificateProfileResourceId = CertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
-            CertificateProfileResource certificateProfile = client.GetCertificateProfileResource(certificateProfileResourceId);
+            ResourceIdentifier trustedSigningCertificateProfileResourceId = TrustedSigningCertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
+            TrustedSigningCertificateProfileResource trustedSigningCertificateProfile = client.GetTrustedSigningCertificateProfileResource(trustedSigningCertificateProfileResourceId);
 
             // invoke the operation
-            await certificateProfile.DeleteAsync(WaitUntil.Completed);
+            await trustedSigningCertificateProfile.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -128,21 +128,21 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CertificateProfileResource created on azure
-            // for more information of creating CertificateProfileResource, please refer to the document of CertificateProfileResource
+            // this example assumes you already have this TrustedSigningCertificateProfileResource created on azure
+            // for more information of creating TrustedSigningCertificateProfileResource, please refer to the document of TrustedSigningCertificateProfileResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
             string profileName = "profileA";
-            ResourceIdentifier certificateProfileResourceId = CertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
-            CertificateProfileResource certificateProfile = client.GetCertificateProfileResource(certificateProfileResourceId);
+            ResourceIdentifier trustedSigningCertificateProfileResourceId = TrustedSigningCertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
+            TrustedSigningCertificateProfileResource trustedSigningCertificateProfile = client.GetTrustedSigningCertificateProfileResource(trustedSigningCertificateProfileResourceId);
 
             // invoke the operation
-            RevokeCertificate body = new RevokeCertificate("xxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", DateTimeOffset.Parse("2023-11-12T23:40:25+00:00"), "KeyCompromised")
+            RevokeCertificateContent content = new RevokeCertificateContent("xxxxxxxxxxxxxxxxxx", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", DateTimeOffset.Parse("2023-11-12T23:40:25+00:00"), "KeyCompromised")
             {
                 Remarks = "test",
             };
-            await certificateProfile.RevokeCertificateAsync(body);
+            await trustedSigningCertificateProfile.RevokeCertificateAsync(content);
 
             Console.WriteLine($"Succeeded");
         }

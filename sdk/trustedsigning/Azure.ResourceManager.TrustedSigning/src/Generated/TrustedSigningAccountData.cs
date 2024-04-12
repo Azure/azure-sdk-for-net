@@ -14,10 +14,10 @@ using Azure.ResourceManager.TrustedSigning.Models;
 namespace Azure.ResourceManager.TrustedSigning
 {
     /// <summary>
-    /// A class representing the CodeSigningAccount data model.
+    /// A class representing the TrustedSigningAccount data model.
     /// Trusted signing account resource.
     /// </summary>
-    public partial class CodeSigningAccountData : TrackedResourceData
+    public partial class TrustedSigningAccountData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CodeSigningAccountData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public CodeSigningAccountData(AzureLocation location) : base(location)
+        public TrustedSigningAccountData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CodeSigningAccountData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <param name="sku"> SKU of the trusted signing account. </param>
         /// <param name="provisioningState"> Status of the current operation on trusted signing account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CodeSigningAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri accountUri, AccountSku sku, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal TrustedSigningAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri accountUri, TrustedSigningAccountSku sku, TrustedSigningProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             AccountUri = accountUri;
             Sku = sku;
@@ -76,26 +76,26 @@ namespace Azure.ResourceManager.TrustedSigning
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CodeSigningAccountData"/> for deserialization. </summary>
-        internal CodeSigningAccountData()
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountData"/> for deserialization. </summary>
+        internal TrustedSigningAccountData()
         {
         }
 
         /// <summary> The URI of the trusted signing account which is used during signing files. </summary>
         public Uri AccountUri { get; }
         /// <summary> SKU of the trusted signing account. </summary>
-        internal AccountSku Sku { get; set; }
+        internal TrustedSigningAccountSku Sku { get; set; }
         /// <summary> Name of the SKU. </summary>
         public TrustedSigningSkuName? SkuName
         {
             get => Sku is null ? default(TrustedSigningSkuName?) : Sku.Name;
             set
             {
-                Sku = value.HasValue ? new AccountSku(value.Value) : null;
+                Sku = value.HasValue ? new TrustedSigningAccountSku(value.Value) : null;
             }
         }
 
         /// <summary> Status of the current operation on trusted signing account. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public TrustedSigningProvisioningState? ProvisioningState { get; }
     }
 }

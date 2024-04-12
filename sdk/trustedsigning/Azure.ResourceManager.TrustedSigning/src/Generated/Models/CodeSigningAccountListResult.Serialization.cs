@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             {
                 return null;
             }
-            IReadOnlyList<CodeSigningAccountData> value = default;
+            IReadOnlyList<TrustedSigningAccountData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CodeSigningAccountData> array = new List<CodeSigningAccountData>();
+                    List<TrustedSigningAccountData> array = new List<TrustedSigningAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CodeSigningAccountData.DeserializeCodeSigningAccountData(item, options));
+                        array.Add(TrustedSigningAccountData.DeserializeTrustedSigningAccountData(item, options));
                     }
                     value = array;
                     continue;

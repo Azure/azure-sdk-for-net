@@ -15,16 +15,16 @@ using Azure.ResourceManager.TrustedSigning.Models;
 
 namespace Azure.ResourceManager.TrustedSigning
 {
-    public partial class CertificateProfileData : IUtf8JsonSerializable, IJsonModel<CertificateProfileData>
+    public partial class TrustedSigningCertificateProfileData : IUtf8JsonSerializable, IJsonModel<TrustedSigningCertificateProfileData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateProfileData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrustedSigningCertificateProfileData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<CertificateProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TrustedSigningCertificateProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningCertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateProfileData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TrustedSigningCertificateProfileData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -169,19 +169,19 @@ namespace Azure.ResourceManager.TrustedSigning
             writer.WriteEndObject();
         }
 
-        CertificateProfileData IJsonModel<CertificateProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TrustedSigningCertificateProfileData IJsonModel<TrustedSigningCertificateProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningCertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateProfileData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TrustedSigningCertificateProfileData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCertificateProfileData(document.RootElement, options);
+            return DeserializeTrustedSigningCertificateProfileData(document.RootElement, options);
         }
 
-        internal static CertificateProfileData DeserializeCertificateProfileData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TrustedSigningCertificateProfileData DeserializeTrustedSigningCertificateProfileData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.TrustedSigning
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ProfileType? profileType = default;
+            CertificateProfileType? profileType = default;
             string commonName = default;
             string organization = default;
             string organizationUnit = default;
@@ -209,9 +209,9 @@ namespace Azure.ResourceManager.TrustedSigning
             bool? includePostalCode = default;
             string enhancedKeyUsage = default;
             string identityValidationId = default;
-            ProvisioningState? provisioningState = default;
+            TrustedSigningProvisioningState? provisioningState = default;
             CertificateProfileStatus? status = default;
-            IReadOnlyList<Certificate> certificates = default;
+            IReadOnlyList<TrustedSigningCertificate> certificates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.TrustedSigning
                             {
                                 continue;
                             }
-                            profileType = new ProfileType(property0.Value.GetString());
+                            profileType = new CertificateProfileType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("commonName"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.TrustedSigning
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new TrustedSigningProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -377,10 +377,10 @@ namespace Azure.ResourceManager.TrustedSigning
                             {
                                 continue;
                             }
-                            List<Certificate> array = new List<Certificate>();
+                            List<TrustedSigningCertificate> array = new List<TrustedSigningCertificate>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Certificate.DeserializeCertificate(item, options));
+                                array.Add(TrustedSigningCertificate.DeserializeTrustedSigningCertificate(item, options));
                             }
                             certificates = array;
                             continue;
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.TrustedSigning
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CertificateProfileData(
+            return new TrustedSigningCertificateProfileData(
                 id,
                 name,
                 type,
@@ -417,39 +417,39 @@ namespace Azure.ResourceManager.TrustedSigning
                 identityValidationId,
                 provisioningState,
                 status,
-                certificates ?? new ChangeTrackingList<Certificate>(),
+                certificates ?? new ChangeTrackingList<TrustedSigningCertificate>(),
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CertificateProfileData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TrustedSigningCertificateProfileData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningCertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CertificateProfileData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrustedSigningCertificateProfileData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CertificateProfileData IPersistableModel<CertificateProfileData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TrustedSigningCertificateProfileData IPersistableModel<TrustedSigningCertificateProfileData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningCertificateProfileData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCertificateProfileData(document.RootElement, options);
+                        return DeserializeTrustedSigningCertificateProfileData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertificateProfileData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrustedSigningCertificateProfileData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CertificateProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TrustedSigningCertificateProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

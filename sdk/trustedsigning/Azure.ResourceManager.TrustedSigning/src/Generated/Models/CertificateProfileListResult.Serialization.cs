@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             {
                 return null;
             }
-            IReadOnlyList<CertificateProfileData> value = default;
+            IReadOnlyList<TrustedSigningCertificateProfileData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CertificateProfileData> array = new List<CertificateProfileData>();
+                    List<TrustedSigningCertificateProfileData> array = new List<TrustedSigningCertificateProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CertificateProfileData.DeserializeCertificateProfileData(item, options));
+                        array.Add(TrustedSigningCertificateProfileData.DeserializeTrustedSigningCertificateProfileData(item, options));
                     }
                     value = array;
                     continue;

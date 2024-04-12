@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
-    /// <summary> Parameters for creating or updating a trusted signing account. </summary>
-    public partial class CodeSigningAccountPatch
+    /// <summary> The parameters used to check the availability of the trusted signing account name. </summary>
+    public partial class TrustedSigningAccountNameAvailabilityContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,31 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CodeSigningAccountPatch"/>. </summary>
-        public CodeSigningAccountPatch()
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Trusted signing account name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public TrustedSigningAccountNameAvailabilityContent(string name)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CodeSigningAccountPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="sku"> SKU of the trusted signing account. </param>
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Trusted signing account name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CodeSigningAccountPatch(IDictionary<string, string> tags, AccountSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrustedSigningAccountNameAvailabilityContent(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
-            Sku = sku;
+            Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> SKU of the trusted signing account. </summary>
-        internal AccountSku Sku { get; set; }
-        /// <summary> Name of the SKU. </summary>
-        public TrustedSigningSkuName? SkuName
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountNameAvailabilityContent"/> for deserialization. </summary>
+        internal TrustedSigningAccountNameAvailabilityContent()
         {
-            get => Sku is null ? default(TrustedSigningSkuName?) : Sku.Name;
-            set
-            {
-                Sku = value.HasValue ? new AccountSku(value.Value) : null;
-            }
         }
+
+        /// <summary> Trusted signing account name. </summary>
+        public string Name { get; }
     }
 }

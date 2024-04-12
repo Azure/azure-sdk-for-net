@@ -14,12 +14,12 @@ using Azure.ResourceManager.TrustedSigning.Models;
 
 namespace Azure.ResourceManager.TrustedSigning.Samples
 {
-    public partial class Sample_CodeSigningAccountResource
+    public partial class Sample_TrustedSigningAccountResource
     {
         // Checks that the trusted signing account name is available.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckNameAvailabilityCodeSigningAccount_ChecksThatTheTrustedSigningAccountNameIsAvailable()
+        public async Task CheckTrustedSigningAccountNameAvailability_ChecksThatTheTrustedSigningAccountNameIsAvailable()
         {
             // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CodeSigningAccounts_CheckNameAvailability.json
             // this example is just showing the usage of "CodeSigningAccounts_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            CheckNameAvailability body = new CheckNameAvailability("sample-account");
-            CheckNameAvailabilityResult result = await subscriptionResource.CheckNameAvailabilityCodeSigningAccountAsync(body);
+            TrustedSigningAccountNameAvailabilityContent content = new TrustedSigningAccountNameAvailabilityContent("sample-account");
+            TrustedSigningAccountNameAvailabilityResult result = await subscriptionResource.CheckTrustedSigningAccountNameAvailabilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
         // Lists trusted signing accounts within a subscription.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCodeSigningAccounts_ListsTrustedSigningAccountsWithinASubscription()
+        public async Task GetTrustedSigningAccounts_ListsTrustedSigningAccountsWithinASubscription()
         {
             // Generated from example definition: specification/codesigning/resource-manager/Microsoft.CodeSigning/preview/2024-02-05-preview/examples/CodeSigningAccounts_ListBySubscription.json
             // this example is just showing the usage of "CodeSigningAccounts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CodeSigningAccountResource item in subscriptionResource.GetCodeSigningAccountsAsync())
+            await foreach (TrustedSigningAccountResource item in subscriptionResource.GetTrustedSigningAccountsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CodeSigningAccountData resourceData = item.Data;
+                TrustedSigningAccountData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -87,20 +87,20 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CodeSigningAccountResource created on azure
-            // for more information of creating CodeSigningAccountResource, please refer to the document of CodeSigningAccountResource
+            // this example assumes you already have this TrustedSigningAccountResource created on azure
+            // for more information of creating TrustedSigningAccountResource, please refer to the document of TrustedSigningAccountResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
-            ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
+            ResourceIdentifier trustedSigningAccountResourceId = TrustedSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            TrustedSigningAccountResource trustedSigningAccount = client.GetTrustedSigningAccountResource(trustedSigningAccountResourceId);
 
             // invoke the operation
-            CodeSigningAccountResource result = await codeSigningAccount.GetAsync();
+            TrustedSigningAccountResource result = await trustedSigningAccount.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CodeSigningAccountData resourceData = result.Data;
+            TrustedSigningAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -118,28 +118,28 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CodeSigningAccountResource created on azure
-            // for more information of creating CodeSigningAccountResource, please refer to the document of CodeSigningAccountResource
+            // this example assumes you already have this TrustedSigningAccountResource created on azure
+            // for more information of creating TrustedSigningAccountResource, please refer to the document of TrustedSigningAccountResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
-            ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
+            ResourceIdentifier trustedSigningAccountResourceId = TrustedSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            TrustedSigningAccountResource trustedSigningAccount = client.GetTrustedSigningAccountResource(trustedSigningAccountResourceId);
 
             // invoke the operation
-            CodeSigningAccountPatch patch = new CodeSigningAccountPatch()
+            TrustedSigningAccountPatch patch = new TrustedSigningAccountPatch()
             {
                 Tags =
 {
 ["key1"] = "value1",
 },
             };
-            ArmOperation<CodeSigningAccountResource> lro = await codeSigningAccount.UpdateAsync(WaitUntil.Completed, patch);
-            CodeSigningAccountResource result = lro.Value;
+            ArmOperation<TrustedSigningAccountResource> lro = await trustedSigningAccount.UpdateAsync(WaitUntil.Completed, patch);
+            TrustedSigningAccountResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CodeSigningAccountData resourceData = result.Data;
+            TrustedSigningAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -157,16 +157,16 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CodeSigningAccountResource created on azure
-            // for more information of creating CodeSigningAccountResource, please refer to the document of CodeSigningAccountResource
+            // this example assumes you already have this TrustedSigningAccountResource created on azure
+            // for more information of creating TrustedSigningAccountResource, please refer to the document of TrustedSigningAccountResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
-            ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
+            ResourceIdentifier trustedSigningAccountResourceId = TrustedSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            TrustedSigningAccountResource trustedSigningAccount = client.GetTrustedSigningAccountResource(trustedSigningAccountResourceId);
 
             // invoke the operation
-            await codeSigningAccount.DeleteAsync(WaitUntil.Completed);
+            await trustedSigningAccount.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

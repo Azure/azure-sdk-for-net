@@ -13,23 +13,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
-    public partial class CheckNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<CheckNameAvailabilityResult>
+    public partial class TrustedSigningAccountNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<TrustedSigningAccountNameAvailabilityResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckNameAvailabilityResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrustedSigningAccountNameAvailabilityResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<CheckNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TrustedSigningAccountNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningAccountNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckNameAvailabilityResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TrustedSigningAccountNameAvailabilityResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NameAvailable))
+            if (options.Format != "W" && Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
-                writer.WriteBooleanValue(NameAvailable.Value);
+                writer.WriteBooleanValue(IsNameAvailable.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Reason))
             {
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             writer.WriteEndObject();
         }
 
-        CheckNameAvailabilityResult IJsonModel<CheckNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TrustedSigningAccountNameAvailabilityResult IJsonModel<TrustedSigningAccountNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningAccountNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckNameAvailabilityResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TrustedSigningAccountNameAvailabilityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCheckNameAvailabilityResult(document.RootElement, options);
+            return DeserializeTrustedSigningAccountNameAvailabilityResult(document.RootElement, options);
         }
 
-        internal static CheckNameAvailabilityResult DeserializeCheckNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TrustedSigningAccountNameAvailabilityResult DeserializeTrustedSigningAccountNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 return null;
             }
             bool? nameAvailable = default;
-            NameUnavailabilityReason? reason = default;
+            TrustedSigningAccountNameUnavailabilityReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                     {
                         continue;
                     }
-                    reason = new NameUnavailabilityReason(property.Value.GetString());
+                    reason = new TrustedSigningAccountNameUnavailabilityReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -115,38 +115,38 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData);
+            return new TrustedSigningAccountNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CheckNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TrustedSigningAccountNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningAccountNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CheckNameAvailabilityResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrustedSigningAccountNameAvailabilityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CheckNameAvailabilityResult IPersistableModel<CheckNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TrustedSigningAccountNameAvailabilityResult IPersistableModel<TrustedSigningAccountNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningAccountNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCheckNameAvailabilityResult(document.RootElement, options);
+                        return DeserializeTrustedSigningAccountNameAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CheckNameAvailabilityResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrustedSigningAccountNameAvailabilityResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CheckNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TrustedSigningAccountNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
-    public partial class CodeSigningAccountPatch : IUtf8JsonSerializable, IJsonModel<CodeSigningAccountPatch>
+    public partial class TrustedSigningAccountPatch : IUtf8JsonSerializable, IJsonModel<TrustedSigningAccountPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CodeSigningAccountPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrustedSigningAccountPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<CodeSigningAccountPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TrustedSigningAccountPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeSigningAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CodeSigningAccountPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TrustedSigningAccountPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             writer.WriteEndObject();
         }
 
-        CodeSigningAccountPatch IJsonModel<CodeSigningAccountPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TrustedSigningAccountPatch IJsonModel<TrustedSigningAccountPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeSigningAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CodeSigningAccountPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TrustedSigningAccountPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCodeSigningAccountPatch(document.RootElement, options);
+            return DeserializeTrustedSigningAccountPatch(document.RootElement, options);
         }
 
-        internal static CodeSigningAccountPatch DeserializeCodeSigningAccountPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TrustedSigningAccountPatch DeserializeTrustedSigningAccountPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            AccountSku sku = default;
+            TrustedSigningAccountSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                             {
                                 continue;
                             }
-                            sku = AccountSku.DeserializeAccountSku(property0.Value, options);
+                            sku = TrustedSigningAccountSku.DeserializeTrustedSigningAccountSku(property0.Value, options);
                             continue;
                         }
                     }
@@ -130,38 +130,38 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CodeSigningAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), sku, serializedAdditionalRawData);
+            return new TrustedSigningAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), sku, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CodeSigningAccountPatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TrustedSigningAccountPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeSigningAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CodeSigningAccountPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrustedSigningAccountPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CodeSigningAccountPatch IPersistableModel<CodeSigningAccountPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TrustedSigningAccountPatch IPersistableModel<TrustedSigningAccountPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeSigningAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TrustedSigningAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCodeSigningAccountPatch(document.RootElement, options);
+                        return DeserializeTrustedSigningAccountPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CodeSigningAccountPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrustedSigningAccountPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CodeSigningAccountPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TrustedSigningAccountPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

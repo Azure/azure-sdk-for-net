@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
-    /// <summary> Defines the certificate revocation properties. </summary>
-    public partial class RevokeCertificate
+    /// <summary> Properties of the certificate. </summary>
+    public partial class TrustedSigningCertificate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,55 +45,65 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RevokeCertificate"/>. </summary>
-        /// <param name="serialNumber"> Serial number of the certificate. </param>
-        /// <param name="thumbprint"> Thumbprint of the certificate. </param>
-        /// <param name="effectiveOn"> The timestamp when the revocation is effective. </param>
-        /// <param name="reason"> Reason for the revocation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/>, <paramref name="thumbprint"/> or <paramref name="reason"/> is null. </exception>
-        public RevokeCertificate(string serialNumber, string thumbprint, DateTimeOffset effectiveOn, string reason)
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningCertificate"/>. </summary>
+        internal TrustedSigningCertificate()
         {
-            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
-            Argument.AssertNotNull(thumbprint, nameof(thumbprint));
-            Argument.AssertNotNull(reason, nameof(reason));
-
-            SerialNumber = serialNumber;
-            Thumbprint = thumbprint;
-            EffectiveOn = effectiveOn;
-            Reason = reason;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RevokeCertificate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningCertificate"/>. </summary>
         /// <param name="serialNumber"> Serial number of the certificate. </param>
+        /// <param name="subjectName"> Subject name of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
+        /// <param name="createOn"> Certificate created date. </param>
+        /// <param name="expireOn"> Certificate expiry date. </param>
+        /// <param name="status"> Status of the certificate. </param>
+        /// <param name="requestedOn"> The timestamp when the revocation is requested. </param>
         /// <param name="effectiveOn"> The timestamp when the revocation is effective. </param>
-        /// <param name="reason"> Reason for the revocation. </param>
+        /// <param name="reason"> Reason for revocation. </param>
         /// <param name="remarks"> Remarks for the revocation. </param>
+        /// <param name="statusRevocationStatus"> Status of the revocation. </param>
+        /// <param name="failureReason"> Reason for the revocation failure. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RevokeCertificate(string serialNumber, string thumbprint, DateTimeOffset effectiveOn, string reason, string remarks, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrustedSigningCertificate(string serialNumber, string subjectName, string thumbprint, DateTimeOffset? createOn, DateTimeOffset? expireOn, TrustedSigningCertificateStatus? status, DateTimeOffset? requestedOn, DateTimeOffset? effectiveOn, string reason, string remarks, CertificateRevocationStatus? statusRevocationStatus, string failureReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SerialNumber = serialNumber;
+            SubjectName = subjectName;
             Thumbprint = thumbprint;
+            CreateOn = createOn;
+            ExpireOn = expireOn;
+            Status = status;
+            RequestedOn = requestedOn;
             EffectiveOn = effectiveOn;
             Reason = reason;
             Remarks = remarks;
+            StatusRevocationStatus = statusRevocationStatus;
+            FailureReason = failureReason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RevokeCertificate"/> for deserialization. </summary>
-        internal RevokeCertificate()
-        {
         }
 
         /// <summary> Serial number of the certificate. </summary>
         public string SerialNumber { get; }
+        /// <summary> Subject name of the certificate. </summary>
+        public string SubjectName { get; }
         /// <summary> Thumbprint of the certificate. </summary>
         public string Thumbprint { get; }
+        /// <summary> Certificate created date. </summary>
+        public DateTimeOffset? CreateOn { get; }
+        /// <summary> Certificate expiry date. </summary>
+        public DateTimeOffset? ExpireOn { get; }
+        /// <summary> Status of the certificate. </summary>
+        public TrustedSigningCertificateStatus? Status { get; }
+        /// <summary> The timestamp when the revocation is requested. </summary>
+        public DateTimeOffset? RequestedOn { get; }
         /// <summary> The timestamp when the revocation is effective. </summary>
-        public DateTimeOffset EffectiveOn { get; }
-        /// <summary> Reason for the revocation. </summary>
+        public DateTimeOffset? EffectiveOn { get; }
+        /// <summary> Reason for revocation. </summary>
         public string Reason { get; }
         /// <summary> Remarks for the revocation. </summary>
-        public string Remarks { get; set; }
+        public string Remarks { get; }
+        /// <summary> Status of the revocation. </summary>
+        public CertificateRevocationStatus? StatusRevocationStatus { get; }
+        /// <summary> Reason for the revocation failure. </summary>
+        public string FailureReason { get; }
     }
 }

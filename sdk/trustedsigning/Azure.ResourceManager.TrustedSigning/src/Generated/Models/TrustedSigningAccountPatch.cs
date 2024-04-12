@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
-    /// <summary> The CheckNameAvailability operation response. </summary>
-    public partial class CheckNameAvailabilityResult
+    /// <summary> Parameters for creating or updating a trusted signing account. </summary>
+    public partial class TrustedSigningAccountPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,35 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
-        internal CheckNameAvailabilityResult()
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountPatch"/>. </summary>
+        public TrustedSigningAccountPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
-        /// <param name="reason"> The reason that a trusted signing account name could not be used. The Reason element is only returned if nameAvailable is false. </param>
-        /// <param name="message"> An error message explaining the Reason value in more detail. </param>
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> SKU of the trusted signing account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityResult(bool? nameAvailable, NameUnavailabilityReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrustedSigningAccountPatch(IDictionary<string, string> tags, TrustedSigningAccountSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NameAvailable = nameAvailable;
-            Reason = reason;
-            Message = message;
+            Tags = tags;
+            Sku = sku;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </summary>
-        public bool? NameAvailable { get; }
-        /// <summary> The reason that a trusted signing account name could not be used. The Reason element is only returned if nameAvailable is false. </summary>
-        public NameUnavailabilityReason? Reason { get; }
-        /// <summary> An error message explaining the Reason value in more detail. </summary>
-        public string Message { get; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> SKU of the trusted signing account. </summary>
+        internal TrustedSigningAccountSku Sku { get; set; }
+        /// <summary> Name of the SKU. </summary>
+        public TrustedSigningSkuName? SkuName
+        {
+            get => Sku is null ? default(TrustedSigningSkuName?) : Sku.Name;
+            set
+            {
+                Sku = value.HasValue ? new TrustedSigningAccountSku(value.Value) : null;
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
     /// <summary> SKU of the trusted signing account. </summary>
-    internal partial class AccountSku
+    internal partial class TrustedSigningAccountSku
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,24 +45,24 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccountSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountSku"/>. </summary>
         /// <param name="name"> Name of the SKU. </param>
-        public AccountSku(TrustedSigningSkuName name)
+        public TrustedSigningAccountSku(TrustedSigningSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccountSku"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountSku"/>. </summary>
         /// <param name="name"> Name of the SKU. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccountSku(TrustedSigningSkuName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrustedSigningAccountSku(TrustedSigningSkuName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccountSku"/> for deserialization. </summary>
-        internal AccountSku()
+        /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountSku"/> for deserialization. </summary>
+        internal TrustedSigningAccountSku()
         {
         }
 

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
-    public partial class RevokeCertificate : IUtf8JsonSerializable, IJsonModel<RevokeCertificate>
+    public partial class RevokeCertificateContent : IUtf8JsonSerializable, IJsonModel<RevokeCertificateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RevokeCertificate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RevokeCertificateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<RevokeCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RevokeCertificateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RevokeCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RevokeCertificateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RevokeCertificate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RevokeCertificateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             writer.WriteEndObject();
         }
 
-        RevokeCertificate IJsonModel<RevokeCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RevokeCertificateContent IJsonModel<RevokeCertificateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RevokeCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RevokeCertificateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RevokeCertificate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RevokeCertificateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRevokeCertificate(document.RootElement, options);
+            return DeserializeRevokeCertificateContent(document.RootElement, options);
         }
 
-        internal static RevokeCertificate DeserializeRevokeCertificate(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RevokeCertificateContent DeserializeRevokeCertificateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RevokeCertificate(
+            return new RevokeCertificateContent(
                 serialNumber,
                 thumbprint,
                 effectiveAt,
@@ -126,35 +126,35 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RevokeCertificate>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RevokeCertificateContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RevokeCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RevokeCertificateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RevokeCertificate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RevokeCertificateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RevokeCertificate IPersistableModel<RevokeCertificate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RevokeCertificateContent IPersistableModel<RevokeCertificateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RevokeCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RevokeCertificateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRevokeCertificate(document.RootElement, options);
+                        return DeserializeRevokeCertificateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RevokeCertificate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RevokeCertificateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RevokeCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RevokeCertificateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

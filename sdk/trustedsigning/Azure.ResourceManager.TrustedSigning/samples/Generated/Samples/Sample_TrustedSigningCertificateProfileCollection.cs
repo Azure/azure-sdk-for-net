@@ -13,7 +13,7 @@ using Azure.ResourceManager.TrustedSigning.Models;
 
 namespace Azure.ResourceManager.TrustedSigning.Samples
 {
-    public partial class Sample_CertificateProfileCollection
+    public partial class Sample_TrustedSigningCertificateProfileCollection
     {
         // List certificate profiles under a trusted signing account.
         [NUnit.Framework.Test]
@@ -28,23 +28,23 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CodeSigningAccountResource created on azure
-            // for more information of creating CodeSigningAccountResource, please refer to the document of CodeSigningAccountResource
+            // this example assumes you already have this TrustedSigningAccountResource created on azure
+            // for more information of creating TrustedSigningAccountResource, please refer to the document of TrustedSigningAccountResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
-            ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
+            ResourceIdentifier trustedSigningAccountResourceId = TrustedSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            TrustedSigningAccountResource trustedSigningAccount = client.GetTrustedSigningAccountResource(trustedSigningAccountResourceId);
 
-            // get the collection of this CertificateProfileResource
-            CertificateProfileCollection collection = codeSigningAccount.GetCertificateProfiles();
+            // get the collection of this TrustedSigningCertificateProfileResource
+            TrustedSigningCertificateProfileCollection collection = trustedSigningAccount.GetTrustedSigningCertificateProfiles();
 
             // invoke the operation and iterate over the result
-            await foreach (CertificateProfileResource item in collection.GetAllAsync())
+            await foreach (TrustedSigningCertificateProfileResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CertificateProfileData resourceData = item.Data;
+                TrustedSigningCertificateProfileData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -65,24 +65,24 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CodeSigningAccountResource created on azure
-            // for more information of creating CodeSigningAccountResource, please refer to the document of CodeSigningAccountResource
+            // this example assumes you already have this TrustedSigningAccountResource created on azure
+            // for more information of creating TrustedSigningAccountResource, please refer to the document of TrustedSigningAccountResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
-            ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
+            ResourceIdentifier trustedSigningAccountResourceId = TrustedSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            TrustedSigningAccountResource trustedSigningAccount = client.GetTrustedSigningAccountResource(trustedSigningAccountResourceId);
 
-            // get the collection of this CertificateProfileResource
-            CertificateProfileCollection collection = codeSigningAccount.GetCertificateProfiles();
+            // get the collection of this TrustedSigningCertificateProfileResource
+            TrustedSigningCertificateProfileCollection collection = trustedSigningAccount.GetTrustedSigningCertificateProfiles();
 
             // invoke the operation
             string profileName = "profileA";
-            CertificateProfileResource result = await collection.GetAsync(profileName);
+            TrustedSigningCertificateProfileResource result = await collection.GetAsync(profileName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CertificateProfileData resourceData = result.Data;
+            TrustedSigningCertificateProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -100,16 +100,16 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CodeSigningAccountResource created on azure
-            // for more information of creating CodeSigningAccountResource, please refer to the document of CodeSigningAccountResource
+            // this example assumes you already have this TrustedSigningAccountResource created on azure
+            // for more information of creating TrustedSigningAccountResource, please refer to the document of TrustedSigningAccountResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
-            ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
+            ResourceIdentifier trustedSigningAccountResourceId = TrustedSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            TrustedSigningAccountResource trustedSigningAccount = client.GetTrustedSigningAccountResource(trustedSigningAccountResourceId);
 
-            // get the collection of this CertificateProfileResource
-            CertificateProfileCollection collection = codeSigningAccount.GetCertificateProfiles();
+            // get the collection of this TrustedSigningCertificateProfileResource
+            TrustedSigningCertificateProfileCollection collection = trustedSigningAccount.GetTrustedSigningCertificateProfiles();
 
             // invoke the operation
             string profileName = "profileA";
@@ -131,21 +131,21 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CodeSigningAccountResource created on azure
-            // for more information of creating CodeSigningAccountResource, please refer to the document of CodeSigningAccountResource
+            // this example assumes you already have this TrustedSigningAccountResource created on azure
+            // for more information of creating TrustedSigningAccountResource, please refer to the document of TrustedSigningAccountResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
-            ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
+            ResourceIdentifier trustedSigningAccountResourceId = TrustedSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            TrustedSigningAccountResource trustedSigningAccount = client.GetTrustedSigningAccountResource(trustedSigningAccountResourceId);
 
-            // get the collection of this CertificateProfileResource
-            CertificateProfileCollection collection = codeSigningAccount.GetCertificateProfiles();
+            // get the collection of this TrustedSigningCertificateProfileResource
+            TrustedSigningCertificateProfileCollection collection = trustedSigningAccount.GetTrustedSigningCertificateProfiles();
 
             // invoke the operation
             string profileName = "profileA";
-            NullableResponse<CertificateProfileResource> response = await collection.GetIfExistsAsync(profileName);
-            CertificateProfileResource result = response.HasValue ? response.Value : null;
+            NullableResponse<TrustedSigningCertificateProfileResource> response = await collection.GetIfExistsAsync(profileName);
+            TrustedSigningCertificateProfileResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CertificateProfileData resourceData = result.Data;
+                TrustedSigningCertificateProfileData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -174,32 +174,32 @@ namespace Azure.ResourceManager.TrustedSigning.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CodeSigningAccountResource created on azure
-            // for more information of creating CodeSigningAccountResource, please refer to the document of CodeSigningAccountResource
+            // this example assumes you already have this TrustedSigningAccountResource created on azure
+            // for more information of creating TrustedSigningAccountResource, please refer to the document of TrustedSigningAccountResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "MyResourceGroup";
             string accountName = "MyAccount";
-            ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
+            ResourceIdentifier trustedSigningAccountResourceId = TrustedSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            TrustedSigningAccountResource trustedSigningAccount = client.GetTrustedSigningAccountResource(trustedSigningAccountResourceId);
 
-            // get the collection of this CertificateProfileResource
-            CertificateProfileCollection collection = codeSigningAccount.GetCertificateProfiles();
+            // get the collection of this TrustedSigningCertificateProfileResource
+            TrustedSigningCertificateProfileCollection collection = trustedSigningAccount.GetTrustedSigningCertificateProfiles();
 
             // invoke the operation
             string profileName = "profileA";
-            CertificateProfileData data = new CertificateProfileData()
+            TrustedSigningCertificateProfileData data = new TrustedSigningCertificateProfileData()
             {
-                ProfileType = ProfileType.PublicTrust,
+                ProfileType = CertificateProfileType.PublicTrust,
                 IncludeStreetAddress = false,
                 IncludePostalCode = true,
                 IdentityValidationId = "00000000-1234-5678-3333-444444444444",
             };
-            ArmOperation<CertificateProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
-            CertificateProfileResource result = lro.Value;
+            ArmOperation<TrustedSigningCertificateProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
+            TrustedSigningCertificateProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CertificateProfileData resourceData = result.Data;
+            TrustedSigningCertificateProfileData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
