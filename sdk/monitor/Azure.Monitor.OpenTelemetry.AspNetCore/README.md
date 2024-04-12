@@ -287,7 +287,7 @@ Refer to [Drop an instrument](https://github.com/open-telemetry/opentelemetry-do
 
 #### Disable Azure SDK Logs
 
-By default, the Azure Monitor Distro collects [client library requests and responses to Azure services](https://learn.microsoft.com/dotnet/azure/sdk/logging#logging-using-azuremonitoropentelemetryaspnetcore).
+By default, the Azure Monitor Distro collects [logs from Azure SDKs](https://learn.microsoft.com/dotnet/azure/sdk/logging#logging-using-azuremonitoropentelemetryaspnetcore).
 These are visible in your application's console output as well as in the Application Insights Traces.
 
 This can be configured or disabled in the appsettings.json.
