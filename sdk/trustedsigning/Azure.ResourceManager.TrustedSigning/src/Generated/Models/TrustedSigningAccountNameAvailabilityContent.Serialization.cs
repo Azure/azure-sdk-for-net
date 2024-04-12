@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(ResourceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -67,6 +69,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 return null;
             }
             string name = default;
+            ResourceType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -76,13 +79,18 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TrustedSigningAccountNameAvailabilityContent(name, serializedAdditionalRawData);
+            return new TrustedSigningAccountNameAvailabilityContent(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrustedSigningAccountNameAvailabilityContent>.Write(ModelReaderWriterOptions options)

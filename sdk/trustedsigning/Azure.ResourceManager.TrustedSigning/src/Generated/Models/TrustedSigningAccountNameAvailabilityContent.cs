@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
@@ -47,20 +48,24 @@ namespace Azure.ResourceManager.TrustedSigning.Models
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Trusted signing account name. </param>
+        /// <param name="resourceType"> The type of the resource, "Microsoft.CodeSigning/codeSigningAccounts". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public TrustedSigningAccountNameAvailabilityContent(string name)
+        public TrustedSigningAccountNameAvailabilityContent(string name, ResourceType resourceType)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Trusted signing account name. </param>
+        /// <param name="resourceType"> The type of the resource, "Microsoft.CodeSigning/codeSigningAccounts". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrustedSigningAccountNameAvailabilityContent(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrustedSigningAccountNameAvailabilityContent(string name, ResourceType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
+            ResourceType = resourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,5 +76,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
 
         /// <summary> Trusted signing account name. </summary>
         public string Name { get; }
+        /// <summary> The type of the resource, "Microsoft.CodeSigning/codeSigningAccounts". </summary>
+        public ResourceType ResourceType { get; }
     }
 }

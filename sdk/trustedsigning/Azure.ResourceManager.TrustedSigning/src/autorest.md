@@ -75,4 +75,18 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  # Fix the missing `type` property for CheckTrustedSigningAccountNameAvailability
+  - from: codeSigningAccount.json
+    where: $.definitions
+    transform: >
+      $.CheckNameAvailability.properties['type'] = {
+          'type': 'string',
+          'description': 'The type of the resource, \"Microsoft.CodeSigning/codeSigningAccounts\".',
+          'x-ms-format': 'resource-type'
+        };
+      $.CheckNameAvailability['required'] = [
+          'type',
+          'name'
+        ];
 ```
