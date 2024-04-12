@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<MetadataEntity>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             if (Optional.IsDefined(Email))
             {

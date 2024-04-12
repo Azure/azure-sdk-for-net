@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(NodeIdentity))
             {
                 writer.WritePropertyName("nodeIdentityReference"u8);
-                writer.WriteObjectValue<ComputeNodeIdentityReference>(NodeIdentity, options);
+                writer.WriteObjectValue(NodeIdentity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

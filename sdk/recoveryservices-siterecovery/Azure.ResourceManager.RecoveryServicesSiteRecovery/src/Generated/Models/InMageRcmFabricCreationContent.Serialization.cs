@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WritePropertyName("physicalSiteId"u8);
             writer.WriteStringValue(PhysicalSiteId);
             writer.WritePropertyName("sourceAgentIdentity"u8);
-            writer.WriteObjectValue<IdentityProviderContent>(SourceAgentIdentity, options);
+            writer.WriteObjectValue(SourceAgentIdentity, options);
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

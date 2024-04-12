@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(EphemeralOSDiskSettings))
             {
                 writer.WritePropertyName("ephemeralOSDiskSettings"u8);
-                writer.WriteObjectValue<DiffDiskSettings>(EphemeralOSDiskSettings, options);
+                writer.WriteObjectValue(EphemeralOSDiskSettings, options);
             }
             if (Optional.IsDefined(Caching))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue<ManagedDisk>(ManagedDisk, options);
+                writer.WriteObjectValue(ManagedDisk, options);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {

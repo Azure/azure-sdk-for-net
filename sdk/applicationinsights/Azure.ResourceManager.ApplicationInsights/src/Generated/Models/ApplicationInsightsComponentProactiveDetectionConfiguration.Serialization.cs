@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(RuleDefinitions))
             {
                 writer.WritePropertyName("RuleDefinitions"u8);
-                writer.WriteObjectValue<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>(RuleDefinitions, options);
+                writer.WriteObjectValue(RuleDefinitions, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

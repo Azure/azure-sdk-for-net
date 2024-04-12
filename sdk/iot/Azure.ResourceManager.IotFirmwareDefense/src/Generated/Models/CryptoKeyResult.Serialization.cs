@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 if (PairedKey != null)
                 {
                     writer.WritePropertyName("pairedKey"u8);
-                    writer.WriteObjectValue<CryptoPairedKey>(PairedKey, options);
+                    writer.WriteObjectValue(PairedKey, options);
                 }
                 else
                 {

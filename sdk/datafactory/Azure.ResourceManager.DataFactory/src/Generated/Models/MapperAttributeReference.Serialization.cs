@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EntityConnectionReference))
             {
                 writer.WritePropertyName("entityConnectionReference"u8);
-                writer.WriteObjectValue<MapperConnectionReference>(EntityConnectionReference, options);
+                writer.WriteObjectValue(EntityConnectionReference, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -29,18 +29,18 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToSerialString());
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue<LabVirtualMachineImageReference>(ImageReference, options);
+            writer.WriteObjectValue(ImageReference, options);
             if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<LabServicesSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue<LabVirtualMachineAdditionalCapability>(AdditionalCapabilities, options);
+                writer.WriteObjectValue(AdditionalCapabilities, options);
             }
             writer.WritePropertyName("usageQuota"u8);
             writer.WriteStringValue(UsageQuota, "P");
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStringValue(UseSharedPassword.Value.ToSerialString());
             }
             writer.WritePropertyName("adminUser"u8);
-            writer.WriteObjectValue<LabVirtualMachineCredential>(AdminUser, options);
+            writer.WriteObjectValue(AdminUser, options);
             if (Optional.IsDefined(NonAdminUser))
             {
                 writer.WritePropertyName("nonAdminUser"u8);
-                writer.WriteObjectValue<LabVirtualMachineCredential>(NonAdminUser, options);
+                writer.WriteObjectValue(NonAdminUser, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

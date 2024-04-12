@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WriteStartArray();
                 foreach (var item in QuotaChangeRequests)
                 {
-                    writer.WriteObjectValue<SupportQuotaChangeContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

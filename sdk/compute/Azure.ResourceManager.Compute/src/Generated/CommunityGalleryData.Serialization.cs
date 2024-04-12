@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(CommunityMetadata))
             {
                 writer.WritePropertyName("communityMetadata"u8);
-                writer.WriteObjectValue<CommunityGalleryMetadata>(CommunityMetadata, options);
+                writer.WriteObjectValue(CommunityMetadata, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("identifier"u8);

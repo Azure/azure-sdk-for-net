@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(MeterDetails))
             {
                 writer.WritePropertyName("meterDetails"u8);
-                writer.WriteObjectValue<EdgeOrderProductMeterDetails>(MeterDetails, options);
+                writer.WriteObjectValue(MeterDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MeteringType))
             {

@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(ManagedOutboundIPs))
             {
                 writer.WritePropertyName("managedOutboundIPs"u8);
-                writer.WriteObjectValue<ManagedClusterLoadBalancerProfileManagedOutboundIPs>(ManagedOutboundIPs, options);
+                writer.WriteObjectValue(ManagedOutboundIPs, options);
             }
             if (Optional.IsDefined(OutboundIPPrefixes))
             {
                 writer.WritePropertyName("outboundIPPrefixes"u8);
-                writer.WriteObjectValue<ManagedClusterLoadBalancerProfileOutboundIPPrefixes>(OutboundIPPrefixes, options);
+                writer.WriteObjectValue(OutboundIPPrefixes, options);
             }
             if (Optional.IsDefined(OutboundIPs))
             {
                 writer.WritePropertyName("outboundIPs"u8);
-                writer.WriteObjectValue<ManagedClusterLoadBalancerProfileOutboundIPs>(OutboundIPs, options);
+                writer.WriteObjectValue(OutboundIPs, options);
             }
             if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {

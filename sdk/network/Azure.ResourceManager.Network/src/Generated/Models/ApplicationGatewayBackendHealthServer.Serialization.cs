@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
-                writer.WriteObjectValue<NetworkInterfaceIPConfigurationData>(IPConfiguration, options);
+                writer.WriteObjectValue(IPConfiguration, options);
             }
             if (Optional.IsDefined(Health))
             {

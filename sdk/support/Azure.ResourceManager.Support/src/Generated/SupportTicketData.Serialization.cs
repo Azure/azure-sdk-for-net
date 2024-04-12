@@ -103,17 +103,17 @@ namespace Azure.ResourceManager.Support
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue<SupportContactProfile>(ContactDetails, options);
+                writer.WriteObjectValue(ContactDetails, options);
             }
             if (Optional.IsDefined(ServiceLevelAgreement))
             {
                 writer.WritePropertyName("serviceLevelAgreement"u8);
-                writer.WriteObjectValue<SupportServiceLevelAgreement>(ServiceLevelAgreement, options);
+                writer.WriteObjectValue(ServiceLevelAgreement, options);
             }
             if (Optional.IsDefined(SupportEngineer))
             {
                 writer.WritePropertyName("supportEngineer"u8);
-                writer.WriteObjectValue<SupportEngineer>(SupportEngineer, options);
+                writer.WriteObjectValue(SupportEngineer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SupportPlanType))
             {
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.Support
             if (Optional.IsDefined(TechnicalTicketDetails))
             {
                 writer.WritePropertyName("technicalTicketDetails"u8);
-                writer.WriteObjectValue<TechnicalTicketDetails>(TechnicalTicketDetails, options);
+                writer.WriteObjectValue(TechnicalTicketDetails, options);
             }
             if (Optional.IsDefined(QuotaTicketDetails))
             {
                 writer.WritePropertyName("quotaTicketDetails"u8);
-                writer.WriteObjectValue<QuotaTicketDetails>(QuotaTicketDetails, options);
+                writer.WriteObjectValue(QuotaTicketDetails, options);
             }
             if (Optional.IsCollectionDefined(SecondaryConsent))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Support
                 writer.WriteStartArray();
                 foreach (var item in SecondaryConsent)
                 {
-                    writer.WriteObjectValue<SecondaryConsent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

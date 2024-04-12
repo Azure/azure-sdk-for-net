@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 if (Subject != null)
                 {
                     writer.WritePropertyName("subject"u8);
-                    writer.WriteObjectValue<CryptoCertificateEntity>(Subject, options);
+                    writer.WriteObjectValue(Subject, options);
                 }
                 else
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 if (Issuer != null)
                 {
                     writer.WritePropertyName("issuer"u8);
-                    writer.WriteObjectValue<CryptoCertificateEntity>(Issuer, options);
+                    writer.WriteObjectValue(Issuer, options);
                 }
                 else
                 {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 if (PairedKey != null)
                 {
                     writer.WritePropertyName("pairedKey"u8);
-                    writer.WriteObjectValue<CryptoPairedKey>(PairedKey, options);
+                    writer.WriteObjectValue(PairedKey, options);
                 }
                 else
                 {

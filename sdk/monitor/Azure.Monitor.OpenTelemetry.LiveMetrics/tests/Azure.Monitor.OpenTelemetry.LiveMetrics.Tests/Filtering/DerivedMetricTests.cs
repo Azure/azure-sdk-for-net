@@ -286,6 +286,32 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             Assert.Equal(120, projection);
         }
 
+        [Fact]
+        public void DerivedMetricProjectsCorrectlyWhenDurationIsString()
+        {
+            // ARRANGE
+            var metricInfo = new DerivedMetricInfo(
+                id: "Metric1",
+                telemetryType: TelemetryType.Request,
+                filterGroups: new FilterConjunctionGroupInfo[0],
+                projection: "Duration",
+                aggregation: DerivedMetricInfoAggregation.Avg
+            );
+
+            var durationString = TimeSpan.FromMilliseconds(120).ToString();
+            var telemetry = new DocumentMockWithStringDuration(durationString);
+
+            // ACT
+            CollectionConfigurationError[] errors;
+            var metric = new DerivedMetric<DocumentMockWithStringDuration>(metricInfo, out errors);
+            double projection = metric.Project(telemetry);
+
+            // ASSERT
+            Assert.Equal(DerivedMetricInfoAggregation.Avg, metric.AggregationType);
+            Assert.Empty(errors);
+            Assert.Equal(120, projection);
+        }
+
         [Fact(Skip = "Unknown failure.")]
         public void DerivedMetricReportsErrorsForInvalidFilters()
         {

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("backupSettings"u8);
-            writer.WriteObjectValue<PostgreSqlFlexibleServerBackupSettings>(BackupSettings, options);
+            writer.WriteObjectValue(BackupSettings, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -44,7 +44,7 @@ namespace Azure.Analytics.Defender.Easm
             if (Optional.IsDefined(Cvss3Summary))
             {
                 writer.WritePropertyName("cvss3Summary"u8);
-                writer.WriteObjectValue<Cvss3Summary>(Cvss3Summary, options);
+                writer.WriteObjectValue(Cvss3Summary, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -172,7 +172,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CveDetails>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

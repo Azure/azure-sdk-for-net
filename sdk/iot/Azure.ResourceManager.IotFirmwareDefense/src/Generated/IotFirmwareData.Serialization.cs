@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 writer.WriteStartArray();
                 foreach (var item in StatusMessages)
                 {
-                    writer.WriteObjectValue<FirmwareAnalysisStatusMessage>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningErrors)
                 {
-                    writer.WriteObjectValue<ErrorResponseWrapper>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,27 +101,27 @@ namespace Azure.ResourceManager.MachineLearningCompute
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
-                writer.WriteObjectValue<StorageAccountProperties>(StorageAccount, options);
+                writer.WriteObjectValue(StorageAccount, options);
             }
             if (Optional.IsDefined(ContainerRegistry))
             {
                 writer.WritePropertyName("containerRegistry"u8);
-                writer.WriteObjectValue<ContainerRegistryProperties>(ContainerRegistry, options);
+                writer.WriteObjectValue(ContainerRegistry, options);
             }
             if (Optional.IsDefined(ContainerService))
             {
                 writer.WritePropertyName("containerService"u8);
-                writer.WriteObjectValue<AcsClusterProperties>(ContainerService, options);
+                writer.WriteObjectValue(ContainerService, options);
             }
             if (Optional.IsDefined(AppInsights))
             {
                 writer.WritePropertyName("appInsights"u8);
-                writer.WriteObjectValue<AppInsightsProperties>(AppInsights, options);
+                writer.WriteObjectValue(AppInsights, options);
             }
             if (Optional.IsDefined(GlobalServiceConfiguration))
             {
                 writer.WritePropertyName("globalServiceConfiguration"u8);
-                writer.WriteObjectValue<GlobalServiceConfiguration>(GlobalServiceConfiguration, options);
+                writer.WriteObjectValue(GlobalServiceConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

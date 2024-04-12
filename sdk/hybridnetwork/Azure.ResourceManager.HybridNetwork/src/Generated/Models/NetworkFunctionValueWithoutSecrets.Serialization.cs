@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(NetworkFunctionDefinitionVersionResourceReference))
             {
                 writer.WritePropertyName("networkFunctionDefinitionVersionResourceReference"u8);
-                writer.WriteObjectValue<DeploymentResourceIdReference>(NetworkFunctionDefinitionVersionResourceReference, options);
+                writer.WriteObjectValue(NetworkFunctionDefinitionVersionResourceReference, options);
             }
             if (Optional.IsDefined(NfviType))
             {

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Confluent
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<ConfluentAgreement>(body, new ModelReaderWriterOptions("W"));
+                content.JsonWriter.WriteObjectValue(body, new ModelReaderWriterOptions("W"));
                 request.Content = content;
             }
             _userAgent.Apply(message);

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RecoveryPointRehydrationInfo))
             {
                 writer.WritePropertyName("recoveryPointRehydrationInfo"u8);
-                writer.WriteObjectValue<RecoveryPointRehydrationInfo>(RecoveryPointRehydrationInfo, options);
+                writer.WriteObjectValue(RecoveryPointRehydrationInfo, options);
             }
             if (Optional.IsDefined(RecoveryPointId))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(EncryptionDetails))
             {
                 writer.WritePropertyName("encryptionDetails"u8);
-                writer.WriteObjectValue<VmEncryptionDetails>(EncryptionDetails, options);
+                writer.WriteObjectValue(EncryptionDetails, options);
             }
             if (Optional.IsCollectionDefined(RestoreDiskLunList))
             {
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(IdentityInfo))
             {
                 writer.WritePropertyName("identityInfo"u8);
-                writer.WriteObjectValue<BackupIdentityInfo>(IdentityInfo, options);
+                writer.WriteObjectValue(IdentityInfo, options);
             }
             if (Optional.IsDefined(IdentityBasedRestoreDetails))
             {
                 writer.WritePropertyName("identityBasedRestoreDetails"u8);
-                writer.WriteObjectValue<IdentityBasedRestoreDetails>(IdentityBasedRestoreDetails, options);
+                writer.WriteObjectValue(IdentityBasedRestoreDetails, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -150,12 +150,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(SecuredVmDetails))
             {
                 writer.WritePropertyName("securedVMDetails"u8);
-                writer.WriteObjectValue<SecuredVmDetails>(SecuredVmDetails, options);
+                writer.WriteObjectValue(SecuredVmDetails, options);
             }
             if (Optional.IsDefined(TargetDiskNetworkAccessSettings))
             {
                 writer.WritePropertyName("targetDiskNetworkAccessSettings"u8);
-                writer.WriteObjectValue<BackupTargetDiskNetworkAccessSettings>(TargetDiskNetworkAccessSettings, options);
+                writer.WriteObjectValue(TargetDiskNetworkAccessSettings, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);

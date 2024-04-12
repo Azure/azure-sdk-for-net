@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxOperatingSystemProfile"u8);
-                writer.WriteObjectValue<HDInsightLinuxOSProfile>(LinuxProfile, options);
+                writer.WriteObjectValue(LinuxProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

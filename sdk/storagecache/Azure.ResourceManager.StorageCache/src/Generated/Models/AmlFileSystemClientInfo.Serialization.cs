@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (options.Format != "W" && Optional.IsDefined(ContainerStorageInterface))
             {
                 writer.WritePropertyName("containerStorageInterface"u8);
-                writer.WriteObjectValue<AmlFileSystemContainerStorageInterface>(ContainerStorageInterface, options);
+                writer.WriteObjectValue(ContainerStorageInterface, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

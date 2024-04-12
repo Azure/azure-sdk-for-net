@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 #endif
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue<SynapseSecretBase>(Password, options);
+            writer.WriteObjectValue(Password, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

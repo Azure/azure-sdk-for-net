@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetEntities)
                 {
-                    writer.WriteObjectValue<MapperTable>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Connection))
             {
                 writer.WritePropertyName("connection"u8);
-                writer.WriteObjectValue<MapperConnection>(Connection, options);
+                writer.WriteObjectValue(Connection, options);
             }
             if (Optional.IsCollectionDefined(DataMapperMappings))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DataMapperMappings)
                 {
-                    writer.WriteObjectValue<DataMapperMapping>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

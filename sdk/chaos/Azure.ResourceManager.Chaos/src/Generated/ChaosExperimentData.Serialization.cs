@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.Chaos
             writer.WriteStartArray();
             foreach (var item in Steps)
             {
-                writer.WriteObjectValue<ChaosExperimentStep>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("selectors"u8);
             writer.WriteStartArray();
             foreach (var item in Selectors)
             {
-                writer.WriteObjectValue<ChaosTargetSelector>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

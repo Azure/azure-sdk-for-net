@@ -60,22 +60,22 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ApplicationLogs))
             {
                 writer.WritePropertyName("applicationLogs"u8);
-                writer.WriteObjectValue<ApplicationLogsConfig>(ApplicationLogs, options);
+                writer.WriteObjectValue(ApplicationLogs, options);
             }
             if (Optional.IsDefined(HttpLogs))
             {
                 writer.WritePropertyName("httpLogs"u8);
-                writer.WriteObjectValue<AppServiceHttpLogsConfig>(HttpLogs, options);
+                writer.WriteObjectValue(HttpLogs, options);
             }
             if (Optional.IsDefined(IsFailedRequestsTracing))
             {
                 writer.WritePropertyName("failedRequestsTracing"u8);
-                writer.WriteObjectValue<WebAppEnabledConfig>(IsFailedRequestsTracing, options);
+                writer.WriteObjectValue(IsFailedRequestsTracing, options);
             }
             if (Optional.IsDefined(IsDetailedErrorMessages))
             {
                 writer.WritePropertyName("detailedErrorMessages"u8);
-                writer.WriteObjectValue<WebAppEnabledConfig>(IsDetailedErrorMessages, options);
+                writer.WriteObjectValue(IsDetailedErrorMessages, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WriteStartArray();
                 foreach (var item in SessionHostHealthCheckResults)
                 {
-                    writer.WriteObjectValue<SessionHostHealthCheckReport>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

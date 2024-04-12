@@ -29,17 +29,17 @@ namespace Azure.Communication
             if (CallingServer.Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser"u8);
-                writer.WriteObjectValue<CommunicationUserIdentifierModel>(CommunicationUser);
+                writer.WriteObjectValue(CommunicationUser);
             }
             if (CallingServer.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
-                writer.WriteObjectValue<PhoneNumberIdentifierModel>(PhoneNumber);
+                writer.WriteObjectValue(PhoneNumber);
             }
             if (CallingServer.Optional.IsDefined(MicrosoftTeamsUser))
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
-                writer.WriteObjectValue<MicrosoftTeamsUserIdentifierModel>(MicrosoftTeamsUser);
+                writer.WriteObjectValue(MicrosoftTeamsUser);
             }
             writer.WriteEndObject();
         }
@@ -100,6 +100,22 @@ namespace Azure.Communication
                 }
             }
             return new CommunicationIdentifierModel(rawId, kind, communicationUser, phoneNumber, microsoftTeamsUser);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CommunicationIdentifierModel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCommunicationIdentifierModel(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new CallingServer.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             if (Optional.IsDefined(ElasticityProfile))
             {
                 writer.WritePropertyName("elasticityProfile"u8);
-                writer.WriteObjectValue<StandbyVirtualMachinePoolElasticityPatchProfile>(ElasticityProfile, options);
+                writer.WriteObjectValue(ElasticityProfile, options);
             }
             if (Optional.IsDefined(VirtualMachineState))
             {

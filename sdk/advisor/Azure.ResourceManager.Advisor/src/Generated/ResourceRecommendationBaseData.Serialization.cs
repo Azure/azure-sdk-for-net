@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Advisor
             if (Optional.IsDefined(ShortDescription))
             {
                 writer.WritePropertyName("shortDescription"u8);
-                writer.WriteObjectValue<ShortDescription>(ShortDescription, options);
+                writer.WriteObjectValue(ShortDescription, options);
             }
             if (Optional.IsCollectionDefined(SuppressionIds))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Advisor
             if (Optional.IsDefined(ResourceMetadata))
             {
                 writer.WritePropertyName("resourceMetadata"u8);
-                writer.WriteObjectValue<ResourceMetadata>(ResourceMetadata, options);
+                writer.WriteObjectValue(ResourceMetadata, options);
             }
             if (Optional.IsDefined(Description))
             {

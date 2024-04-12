@@ -32,44 +32,44 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceConfigsProfiles)
                 {
-                    writer.WriteObjectValue<ClusterServiceConfigsProfile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
-                writer.WriteObjectValue<ClusterSshProfile>(SshProfile, options);
+                writer.WriteObjectValue(SshProfile, options);
             }
             if (Optional.IsDefined(AutoscaleProfile))
             {
                 writer.WritePropertyName("autoscaleProfile"u8);
-                writer.WriteObjectValue<ClusterAutoscaleProfile>(AutoscaleProfile, options);
+                writer.WriteObjectValue(AutoscaleProfile, options);
             }
             if (Optional.IsDefined(AuthorizationProfile))
             {
                 writer.WritePropertyName("authorizationProfile"u8);
-                writer.WriteObjectValue<AuthorizationProfile>(AuthorizationProfile, options);
+                writer.WriteObjectValue(AuthorizationProfile, options);
             }
             if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
-                writer.WriteObjectValue<ClusterLogAnalyticsProfile>(LogAnalyticsProfile, options);
+                writer.WriteObjectValue(LogAnalyticsProfile, options);
             }
             if (Optional.IsDefined(PrometheusProfile))
             {
                 writer.WritePropertyName("prometheusProfile"u8);
-                writer.WriteObjectValue<ClusterPrometheusProfile>(PrometheusProfile, options);
+                writer.WriteObjectValue(PrometheusProfile, options);
             }
             if (Optional.IsDefined(RangerPluginProfile))
             {
                 writer.WritePropertyName("rangerPluginProfile"u8);
-                writer.WriteObjectValue<ClusterRangerPluginProfile>(RangerPluginProfile, options);
+                writer.WriteObjectValue(RangerPluginProfile, options);
             }
             if (Optional.IsDefined(RangerProfile))
             {
                 writer.WritePropertyName("rangerProfile"u8);
-                writer.WriteObjectValue<RangerProfile>(RangerProfile, options);
+                writer.WriteObjectValue(RangerProfile, options);
             }
             if (Optional.IsCollectionDefined(ScriptActionProfiles))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in ScriptActionProfiles)
                 {
-                    writer.WriteObjectValue<ScriptActionProfile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

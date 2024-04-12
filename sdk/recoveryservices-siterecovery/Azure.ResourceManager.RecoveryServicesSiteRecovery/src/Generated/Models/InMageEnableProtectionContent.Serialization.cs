@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskExclusionContent))
             {
                 writer.WritePropertyName("diskExclusionInput"u8);
-                writer.WriteObjectValue<InMageDiskExclusionContent>(DiskExclusionContent, options);
+                writer.WriteObjectValue(DiskExclusionContent, options);
             }
             if (Optional.IsCollectionDefined(DisksToInclude))
             {

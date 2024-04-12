@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(LatestRun))
             {
                 writer.WritePropertyName("latest_run"u8);
-                writer.WriteObjectValue<TriggeredJobRun>(LatestRun, options);
+                writer.WriteObjectValue(LatestRun, options);
             }
             if (Optional.IsDefined(HistoryUri))
             {

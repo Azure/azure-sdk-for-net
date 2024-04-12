@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.FrontDoor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CustomHttpsConfiguration>(customHttpsConfiguration, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(customHttpsConfiguration, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;

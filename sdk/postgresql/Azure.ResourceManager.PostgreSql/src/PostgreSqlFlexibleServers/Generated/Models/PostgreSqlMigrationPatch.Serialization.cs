@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(SecretParameters))
             {
                 writer.WritePropertyName("secretParameters"u8);
-                writer.WriteObjectValue<PostgreSqlMigrationSecretParameters>(SecretParameters, options);
+                writer.WriteObjectValue(SecretParameters, options);
             }
             if (Optional.IsCollectionDefined(DbsToMigrate))
             {

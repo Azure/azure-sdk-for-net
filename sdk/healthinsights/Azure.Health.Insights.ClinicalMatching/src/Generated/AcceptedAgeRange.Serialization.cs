@@ -29,12 +29,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(MinimumAge))
             {
                 writer.WritePropertyName("minimumAge"u8);
-                writer.WriteObjectValue<AcceptedAge>(MinimumAge, options);
+                writer.WriteObjectValue(MinimumAge, options);
             }
             if (Optional.IsDefined(MaximumAge))
             {
                 writer.WritePropertyName("maximumAge"u8);
-                writer.WriteObjectValue<AcceptedAge>(MaximumAge, options);
+                writer.WriteObjectValue(MaximumAge, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -150,7 +150,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AcceptedAgeRange>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

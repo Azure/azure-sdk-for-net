@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(AvailablePatchCountByClassification))
             {
                 writer.WritePropertyName("availablePatchCountByClassification"u8);
-                writer.WriteObjectValue<AvailablePatchCountByClassification>(AvailablePatchCountByClassification, options);
+                writer.WriteObjectValue(AvailablePatchCountByClassification, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {

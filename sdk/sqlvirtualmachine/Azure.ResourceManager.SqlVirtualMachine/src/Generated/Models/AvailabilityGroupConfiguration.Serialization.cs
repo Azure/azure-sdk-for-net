@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WriteStartArray();
                 foreach (var item in Replicas)
                 {
-                    writer.WriteObjectValue<AvailabilityGroupReplica>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

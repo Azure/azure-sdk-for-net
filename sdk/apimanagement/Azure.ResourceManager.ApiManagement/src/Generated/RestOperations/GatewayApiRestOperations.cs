@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<AssociationContract>(associationContract, new ModelReaderWriterOptions("W"));
+                content.JsonWriter.WriteObjectValue(associationContract, new ModelReaderWriterOptions("W"));
                 request.Content = content;
             }
             _userAgent.Apply(message);

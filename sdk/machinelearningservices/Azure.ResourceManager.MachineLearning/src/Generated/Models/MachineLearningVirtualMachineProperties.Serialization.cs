@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AdministratorAccount != null)
                 {
                     writer.WritePropertyName("administratorAccount"u8);
-                    writer.WriteObjectValue<MachineLearningVmSshCredentials>(AdministratorAccount, options);
+                    writer.WriteObjectValue(AdministratorAccount, options);
                 }
                 else
                 {

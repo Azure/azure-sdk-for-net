@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue<EventSubscriptionDestination>(Destination, options);
+                writer.WriteObjectValue(Destination, options);
             }
             if (Optional.IsDefined(DeliveryWithResourceIdentity))
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
-                writer.WriteObjectValue<DeliveryWithResourceIdentity>(DeliveryWithResourceIdentity, options);
+                writer.WriteObjectValue(DeliveryWithResourceIdentity, options);
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue<EventSubscriptionFilter>(Filter, options);
+                writer.WriteObjectValue(Filter, options);
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
-                writer.WriteObjectValue<EventSubscriptionRetryPolicy>(RetryPolicy, options);
+                writer.WriteObjectValue(RetryPolicy, options);
             }
             if (Optional.IsDefined(DeadLetterDestination))
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
-                writer.WriteObjectValue<DeadLetterDestination>(DeadLetterDestination, options);
+                writer.WriteObjectValue(DeadLetterDestination, options);
             }
             if (Optional.IsDefined(DeadLetterWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterWithResourceIdentity"u8);
-                writer.WriteObjectValue<DeadLetterWithResourceIdentity>(DeadLetterWithResourceIdentity, options);
+                writer.WriteObjectValue(DeadLetterWithResourceIdentity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

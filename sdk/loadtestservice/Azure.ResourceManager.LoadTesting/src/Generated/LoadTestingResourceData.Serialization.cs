@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.LoadTesting
                 if (Encryption != null)
                 {
                     writer.WritePropertyName("encryption"u8);
-                    writer.WriteObjectValue<LoadTestingCmkEncryptionProperties>(Encryption, options);
+                    writer.WriteObjectValue(Encryption, options);
                 }
                 else
                 {

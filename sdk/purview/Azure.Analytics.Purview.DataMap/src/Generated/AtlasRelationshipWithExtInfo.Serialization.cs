@@ -33,14 +33,14 @@ namespace Azure.Analytics.Purview.DataMap
                 foreach (var item in ReferredEntities)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<AtlasEntityHeader>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Relationship))
             {
                 writer.WritePropertyName("relationship"u8);
-                writer.WriteObjectValue<AtlasRelationship>(Relationship, options);
+                writer.WriteObjectValue(Relationship, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -161,7 +161,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AtlasRelationshipWithExtInfo>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

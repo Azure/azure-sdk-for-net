@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Publishers)
                 {
-                    writer.WriteObjectValue<PublisherInformation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

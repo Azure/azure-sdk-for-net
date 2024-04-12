@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ClientAuth))
             {
                 writer.WritePropertyName("clientAuth"u8);
-                writer.WriteObjectValue<IngressSettingsClientAuth>(ClientAuth, options);
+                writer.WriteObjectValue(ClientAuth, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

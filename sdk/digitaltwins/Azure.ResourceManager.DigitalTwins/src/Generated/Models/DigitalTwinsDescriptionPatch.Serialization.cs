@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 if (Properties != null)
                 {
                     writer.WritePropertyName("properties"u8);
-                    writer.WriteObjectValue<DigitalTwinsPatchProperties>(Properties, options);
+                    writer.WriteObjectValue(Properties, options);
                 }
                 else
                 {

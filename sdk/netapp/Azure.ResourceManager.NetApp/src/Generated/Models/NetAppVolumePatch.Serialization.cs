@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue<VolumePatchPropertiesExportPolicy>(ExportPolicy, options);
+                writer.WriteObjectValue(ExportPolicy, options);
             }
             if (Optional.IsDefined(ThroughputMibps))
             {

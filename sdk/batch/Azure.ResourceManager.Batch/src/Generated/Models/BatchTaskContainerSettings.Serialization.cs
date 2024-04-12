@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(Registry))
             {
                 writer.WritePropertyName("registry"u8);
-                writer.WriteObjectValue<BatchVmContainerRegistry>(Registry, options);
+                writer.WriteObjectValue(Registry, options);
             }
             if (Optional.IsDefined(WorkingDirectory))
             {

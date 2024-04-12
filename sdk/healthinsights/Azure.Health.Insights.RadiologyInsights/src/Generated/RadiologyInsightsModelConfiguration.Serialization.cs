@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(InferenceOptions))
             {
                 writer.WritePropertyName("inferenceOptions"u8);
-                writer.WriteObjectValue<RadiologyInsightsInferenceOptions>(InferenceOptions, options);
+                writer.WriteObjectValue(InferenceOptions, options);
             }
             if (Optional.IsDefined(Locale))
             {
@@ -207,7 +207,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RadiologyInsightsModelConfiguration>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

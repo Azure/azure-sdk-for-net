@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(VmAgent))
             {
                 writer.WritePropertyName("vmAgent"u8);
-                writer.WriteObjectValue<VirtualMachineConfigAgentInstanceView>(VmAgent, options);
+                writer.WriteObjectValue(VmAgent, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

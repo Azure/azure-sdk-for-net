@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue<AsymmetricEncryptedSecret>(ConnectionString, options);
+                writer.WriteObjectValue(ConnectionString, options);
             }
             if (Optional.IsDefined(ControllerEndpoint))
             {

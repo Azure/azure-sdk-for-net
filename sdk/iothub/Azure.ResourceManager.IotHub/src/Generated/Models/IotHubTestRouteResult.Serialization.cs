@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue<IotHubTestRouteResultDetails>(Details, options);
+                writer.WriteObjectValue(Details, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

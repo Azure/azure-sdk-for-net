@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             foreach (var item in Collections)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<MongoDBCollectionSettings>(item.Value, options);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(TargetRUs))

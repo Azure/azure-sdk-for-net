@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
-                writer.WriteObjectValue<SubnetSharedPublicIPAddressConfiguration>(SharedPublicIPAddressConfiguration, options);
+                writer.WriteObjectValue(SharedPublicIPAddressConfiguration, options);
             }
             if (Optional.IsDefined(VirtualNetworkPoolName))
             {

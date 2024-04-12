@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(InquiryValidation))
             {
                 writer.WritePropertyName("inquiryValidation"u8);
-                writer.WriteObjectValue<InquiryValidation>(InquiryValidation, options);
+                writer.WriteObjectValue(InquiryValidation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

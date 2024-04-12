@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentParameters))
             {
                 writer.WritePropertyName("currentParameters"u8);
-                writer.WriteObjectValue<UpsertManagedServerOperationParameters>(CurrentParameters, options);
+                writer.WriteObjectValue(CurrentParameters, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RequestedParameters))
             {
                 writer.WritePropertyName("requestedParameters"u8);
-                writer.WriteObjectValue<UpsertManagedServerOperationParameters>(RequestedParameters, options);
+                writer.WriteObjectValue(RequestedParameters, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

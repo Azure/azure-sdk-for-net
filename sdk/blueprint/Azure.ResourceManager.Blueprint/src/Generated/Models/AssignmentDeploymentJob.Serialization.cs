@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue<AssignmentDeploymentJobResult>(Result, options);
+                writer.WriteObjectValue(Result, options);
             }
             if (Optional.IsCollectionDefined(History))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStartArray();
                 foreach (var item in History)
                 {
-                    writer.WriteObjectValue<AssignmentDeploymentJobResult>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

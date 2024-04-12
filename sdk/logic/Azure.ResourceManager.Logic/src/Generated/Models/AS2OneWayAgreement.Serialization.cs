@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("senderBusinessIdentity"u8);
-            writer.WriteObjectValue<IntegrationAccountBusinessIdentity>(SenderBusinessIdentity, options);
+            writer.WriteObjectValue(SenderBusinessIdentity, options);
             writer.WritePropertyName("receiverBusinessIdentity"u8);
-            writer.WriteObjectValue<IntegrationAccountBusinessIdentity>(ReceiverBusinessIdentity, options);
+            writer.WriteObjectValue(ReceiverBusinessIdentity, options);
             writer.WritePropertyName("protocolSettings"u8);
-            writer.WriteObjectValue<AS2ProtocolSettings>(ProtocolSettings, options);
+            writer.WriteObjectValue(ProtocolSettings, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

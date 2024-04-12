@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkFunction
             if (Optional.IsDefined(IngestionPolicy))
             {
                 writer.WritePropertyName("ingestionPolicy"u8);
-                writer.WriteObjectValue<IngestionPolicyPropertiesFormat>(IngestionPolicy, options);
+                writer.WriteObjectValue(IngestionPolicy, options);
             }
             if (Optional.IsCollectionDefined(EmissionPolicies))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 writer.WriteStartArray();
                 foreach (var item in EmissionPolicies)
                 {
-                    writer.WriteObjectValue<EmissionPoliciesPropertiesFormat>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

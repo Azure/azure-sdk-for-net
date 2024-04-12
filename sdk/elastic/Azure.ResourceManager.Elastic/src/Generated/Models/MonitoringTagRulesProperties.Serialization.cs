@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
-                writer.WriteObjectValue<LogRules>(LogRules, options);
+                writer.WriteObjectValue(LogRules, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

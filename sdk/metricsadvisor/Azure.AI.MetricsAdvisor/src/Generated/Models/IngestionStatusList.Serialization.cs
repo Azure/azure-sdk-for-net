@@ -44,5 +44,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new IngestionStatusList(nextLink, value ?? new ChangeTrackingList<DataFeedIngestionStatus>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IngestionStatusList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIngestionStatusList(document.RootElement);
+        }
     }
 }

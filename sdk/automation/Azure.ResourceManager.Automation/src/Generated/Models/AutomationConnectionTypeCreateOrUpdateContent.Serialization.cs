@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automation.Models
             foreach (var item in FieldDefinitions)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<AutomationConnectionFieldDefinition>(item.Value, options);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

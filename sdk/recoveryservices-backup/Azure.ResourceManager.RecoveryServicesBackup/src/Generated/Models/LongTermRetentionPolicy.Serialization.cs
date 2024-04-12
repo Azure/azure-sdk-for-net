@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(DailySchedule))
             {
                 writer.WritePropertyName("dailySchedule"u8);
-                writer.WriteObjectValue<DailyRetentionSchedule>(DailySchedule, options);
+                writer.WriteObjectValue(DailySchedule, options);
             }
             if (Optional.IsDefined(WeeklySchedule))
             {
                 writer.WritePropertyName("weeklySchedule"u8);
-                writer.WriteObjectValue<WeeklyRetentionSchedule>(WeeklySchedule, options);
+                writer.WriteObjectValue(WeeklySchedule, options);
             }
             if (Optional.IsDefined(MonthlySchedule))
             {
                 writer.WritePropertyName("monthlySchedule"u8);
-                writer.WriteObjectValue<MonthlyRetentionSchedule>(MonthlySchedule, options);
+                writer.WriteObjectValue(MonthlySchedule, options);
             }
             if (Optional.IsDefined(YearlySchedule))
             {
                 writer.WritePropertyName("yearlySchedule"u8);
-                writer.WriteObjectValue<YearlyRetentionSchedule>(YearlySchedule, options);
+                writer.WriteObjectValue(YearlySchedule, options);
             }
             writer.WritePropertyName("retentionPolicyType"u8);
             writer.WriteStringValue(RetentionPolicyType);

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("workspace"u8);
-            writer.WriteObjectValue<DataContainerWorkspace>(Workspace, options);
+            writer.WriteObjectValue(Workspace, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

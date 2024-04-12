@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in IPAddressGroups)
                 {
-                    writer.WriteObjectValue<IPAddressGroup>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

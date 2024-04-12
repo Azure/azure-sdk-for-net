@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue<VolumePropertiesExportPolicy>(ExportPolicy, options);
+                writer.WriteObjectValue(ExportPolicy, options);
             }
             if (Optional.IsCollectionDefined(ProtocolTypes))
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in MountTargets)
                 {
-                    writer.WriteObjectValue<NetAppVolumeMountTarget>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(DataProtection))
             {
                 writer.WritePropertyName("dataProtection"u8);
-                writer.WriteObjectValue<NetAppVolumeDataProtection>(DataProtection, options);
+                writer.WriteObjectValue(DataProtection, options);
             }
             if (Optional.IsDefined(IsRestoring))
             {
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in PlacementRules)
                 {
-                    writer.WriteObjectValue<NetAppVolumePlacementRule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

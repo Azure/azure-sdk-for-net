@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(RampUpStartTime, options);
+                writer.WriteObjectValue(RampUpStartTime, options);
             }
             if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(PeakStartTime, options);
+                writer.WriteObjectValue(PeakStartTime, options);
             }
             if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(RampDownStartTime, options);
+                writer.WriteObjectValue(RampDownStartTime, options);
             }
             if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
-                writer.WriteObjectValue<ScalingActionTime>(OffPeakStartTime, options);
+                writer.WriteObjectValue(OffPeakStartTime, options);
             }
             if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
             {

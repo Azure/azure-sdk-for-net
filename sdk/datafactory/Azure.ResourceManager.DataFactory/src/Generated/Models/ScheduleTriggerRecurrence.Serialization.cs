@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue<DataFactoryRecurrenceSchedule>(Schedule, options);
+                writer.WriteObjectValue(Schedule, options);
             }
             foreach (var item in AdditionalProperties)
             {

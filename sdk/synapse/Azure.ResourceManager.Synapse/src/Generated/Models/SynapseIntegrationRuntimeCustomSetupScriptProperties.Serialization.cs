@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue<SynapseSecureString>(SasToken, options);
+                writer.WriteObjectValue(SasToken, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

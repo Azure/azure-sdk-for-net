@@ -96,12 +96,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AzureBlobStorageWriteSettings(type, maxConcurrentConnections, copyBehavior, additionalProperties, blockSizeInMB);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureBlobStorageWriteSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureBlobStorageWriteSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class AzureBlobStorageWriteSettingsConverter : JsonConverter<AzureBlobStorageWriteSettings>
         {
             public override void Write(Utf8JsonWriter writer, AzureBlobStorageWriteSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AzureBlobStorageWriteSettings>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override AzureBlobStorageWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

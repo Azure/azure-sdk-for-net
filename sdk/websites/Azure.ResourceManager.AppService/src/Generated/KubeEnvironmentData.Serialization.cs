@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ArcConfiguration))
             {
                 writer.WritePropertyName("arcConfiguration"u8);
-                writer.WriteObjectValue<ArcConfiguration>(ArcConfiguration, options);
+                writer.WriteObjectValue(ArcConfiguration, options);
             }
             if (Optional.IsDefined(AppLogsConfiguration))
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
-                writer.WriteObjectValue<AppLogsConfiguration>(AppLogsConfiguration, options);
+                writer.WriteObjectValue(AppLogsConfiguration, options);
             }
             if (Optional.IsDefined(AksResourceId))
             {

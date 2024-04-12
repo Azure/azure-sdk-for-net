@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue<LoadTestingQuotaBucketDimensions>(Dimensions, options);
+                writer.WriteObjectValue(Dimensions, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

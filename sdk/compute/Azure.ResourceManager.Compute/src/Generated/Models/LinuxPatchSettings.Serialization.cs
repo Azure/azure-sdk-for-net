@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AutomaticByPlatformSettings))
             {
                 writer.WritePropertyName("automaticByPlatformSettings"u8);
-                writer.WriteObjectValue<LinuxVmGuestPatchAutomaticByPlatformSettings>(AutomaticByPlatformSettings, options);
+                writer.WriteObjectValue(AutomaticByPlatformSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

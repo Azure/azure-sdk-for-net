@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(NotebookPreparationError))
             {
                 writer.WritePropertyName("notebookPreparationError"u8);
-                writer.WriteObjectValue<MachineLearningNotebookPreparationError>(NotebookPreparationError, options);
+                writer.WriteObjectValue(NotebookPreparationError, options);
             }
             if (Optional.IsDefined(ResourceId))
             {

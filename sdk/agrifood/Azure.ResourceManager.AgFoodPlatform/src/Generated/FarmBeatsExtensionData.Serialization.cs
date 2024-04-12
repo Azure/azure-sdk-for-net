@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 writer.WriteStartArray();
                 foreach (var item in DetailedInformation)
                 {
-                    writer.WriteObjectValue<DetailedInformation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

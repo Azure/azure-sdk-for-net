@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Reasons)
                 {
-                    writer.WriteObjectValue<AssignmentReportResourceComplianceReason>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
