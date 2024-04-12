@@ -31,20 +31,58 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 ### Key concepts for each example
 
 For each call that you make to APC with the SDK, you will follow the same pattern:
-* Create a client `baseClient = new ProgrammableConnectivityClient()`
-* Access the sub-client for your use case (sim-swap/location/number-verification/device-network) by calling say `baseClient.GetSimSwapClient()`
-* Create the content for your request by using the objects given by the SDK, for example `SimSwapVerificationContent`
-* Call the client with the content you've created
-* Access the result
+* Create a client and sub-client for your use case (sim-swap/location/number-verification/device-network)
+* Create the content for your request by using the objects given by the SDK
+* Call the client with the content
+* Access the result returned
 
-When handling an error, catch `RequestFailedException`, and log the details. See [README.md](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/programmableconnectivity/Azure.Communication.ProgrammableConnectivity/samples/README.md) for a specific example.
+```C# Snippet:APC_Sample_SimSwapRetrieveTest
+string apcGatewayId = "/subscriptions/abcdefgh/resourceGroups/.../Microsoft.programmableconnectivity/...";
+Uri endpoint = new Uri("https://your-endpoint-here.com");
+TokenCredential credential = new DefaultAzureCredential();
+ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
+SimSwap client = baseClient.GetSimSwapClient();
+
+SimSwapRetrievalContent content = new SimSwapRetrievalContent(
+    new NetworkIdentifier("NetworkCode", "Orange_Spain"))
+{
+    PhoneNumber = "+50000000000",
+};
+
+Response<SimSwapRetrievalResult> response = await client.RetrieveAsync(apcGatewayId, content);
+Console.WriteLine(response.Value.Date);
+```
+
+When handling an error, catch `RequestFailedException`, and log the details.
+
+```C# Snippet:APC_Sample_NetworkRetrievalBadIdentifierTest
+string apcGatewayId = "/subscriptions/abcdefgh/resourceGroups/.../Microsoft.programmableconnectivity/...";
+Uri endpoint = new Uri("https://your-endpoint-here.com");
+TokenCredential credential = new DefaultAzureCredential();
+ProgrammableConnectivityClient baseClient = new ProgrammableConnectivityClient(endpoint, credential);
+DeviceNetwork client = baseClient.GetDeviceNetworkClient();
+
+NetworkIdentifier networkIdentifier = new NetworkIdentifier("IPv5", "127.0.0.1");
+try
+{
+    Response<NetworkRetrievalResult> response = await client.RetrieveAsync(apcGatewayId, networkIdentifier);
+}
+catch (RequestFailedException ex)
+{
+    Console.WriteLine($"Exception Message: {ex.Message}");
+    Console.WriteLine($"Status Code: {ex.Status}");
+    Console.WriteLine($"Error Code: {ex.ErrorCode}");
+}
+```
 
 ## Troubleshooting
 
-If your call doesn't work, we recommend logging the exception messages, and progressing from there. You can see an example of how to handle errors [here](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/programmableconnectivity/Azure.Communication.ProgrammableConnectivity/samples/README.md)
+If your call doesn't work, we recommend logging the exception messages, and progressing from there.
+
+Try sending the request with `curl` or with HTTP files, using postman for example. This will narrow down the issue you're facing.
 
 ## Contributing
 
-APC is currently not accepting/expecting contributions for this codebase.
+APC is currently not accepting/expecting contributions for this codebase. Suggestions/issues are welcome.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/programmableconnectivity/Azure.Communication.ProgrammableConnectivity/README.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%communication%2FAzure.Communication.ProgrammableConnectivity%2FREADME.png)
