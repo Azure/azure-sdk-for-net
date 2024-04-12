@@ -60,7 +60,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 if (item is Request request)
                 {
                     ApplyFilters(metricAccumulators, _collectionConfiguration.RequestMetrics, request, out filteringErrors, ref projectionError);
-
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordRequestSucceeded(item.Extension_Duration);
@@ -73,7 +72,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 else if (item is RemoteDependency remoteDependency)
                 {
                     ApplyFilters(metricAccumulators, _collectionConfiguration.DependencyMetrics, remoteDependency, out filteringErrors, ref projectionError);
-
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordDependencySucceeded(item.Extension_Duration);
@@ -86,7 +84,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 else if (item is Models.Exception exception)
                 {
                     ApplyFilters(metricAccumulators, _collectionConfiguration.ExceptionMetrics, exception, out filteringErrors, ref projectionError);
-
                     liveMetricsBuffer.RecordException();
                 }
                 else if (item is Models.Trace trace)
