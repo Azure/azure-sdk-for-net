@@ -55,17 +55,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             IEnumerable<DocumentStream> documentStreams = _collectionConfiguration.DocumentStreams;
             foreach (var item in filledBuffer.ReadAllAndClear())
             {
-                DocumentIngress? telemetryDocument = null;
+                bool matchesDocumentStreamFilter = false;
 
                 CollectionConfigurationError[] groupErrors;
 
                 if (item is Request request)
                 {
-                    telemetryDocument = CreateTelemetryDocument(request,
+                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
                         documentStreams,
                         documentStream => documentStream.RequestQuotaTracker,
-                        documentStream => documentStream.CheckFilters(request, out groupErrors),
-                        CreateUpdatedRequest);
+                        documentStream => documentStream.CheckFilters(request, out groupErrors));
                     ApplyFilters(metricAccumulators, _collectionConfiguration.RequestMetrics, request, out filteringErrors, ref projectionError);
                     if (item.Extension_IsSuccess)
                     {
@@ -78,11 +77,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else if (item is RemoteDependency remoteDependency)
                 {
-                    telemetryDocument = CreateTelemetryDocument(remoteDependency,
+                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
                         documentStreams,
                         documentStream => documentStream.DependencyQuotaTracker,
-                        documentStream => documentStream.CheckFilters(remoteDependency, out groupErrors),
-                        CreateUpdatedRemoteDependency);
+                        documentStream => documentStream.CheckFilters(remoteDependency, out groupErrors));
                     ApplyFilters(metricAccumulators, _collectionConfiguration.DependencyMetrics, remoteDependency, out filteringErrors, ref projectionError);
                     if (item.Extension_IsSuccess)
                     {
@@ -95,21 +93,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else if (item is Models.Exception exception)
                 {
-                    telemetryDocument = CreateTelemetryDocument(exception,
+                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
                         documentStreams,
                         documentStream => documentStream.ExceptionQuotaTracker,
-                        documentStream => documentStream.CheckFilters(exception, out groupErrors),
-                        CreateUpdatedException);
+                        documentStream => documentStream.CheckFilters(exception, out groupErrors));
                     ApplyFilters(metricAccumulators, _collectionConfiguration.ExceptionMetrics, exception, out filteringErrors, ref projectionError);
                     liveMetricsBuffer.RecordException();
                 }
                 else if (item is Models.Trace trace)
                 {
-                    telemetryDocument = CreateTelemetryDocument(trace,
+                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
                         documentStreams,
                         documentStream => documentStream.TraceQuotaTracker,
-                        documentStream => documentStream.CheckFilters(trace, out groupErrors),
-                        CreateUpdatedTrace);
+                        documentStream => documentStream.CheckFilters(trace, out groupErrors));
                     ApplyFilters(metricAccumulators, _collectionConfiguration.TraceMetrics, trace, out filteringErrors, ref projectionError);
                 }
                 else
@@ -117,9 +113,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     Debug.WriteLine($"Unknown DocumentType: {item.DocumentType}");
                 }
 
-                if (telemetryDocument != null)
+                if (matchesDocumentStreamFilter)
                 {
-                    dataPoint.Documents.Add(telemetryDocument);
+                    dataPoint.Documents.Add(item);
                 }
             }
 
@@ -139,26 +135,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             }
 
             return dataPoint;
-        }
-
-        private Request CreateUpdatedRequest(Request request, IList<string> documentStreamIds)
-        {
-            return new Request(request.DocumentType, documentStreamIds, request.Properties, request.Name, request.Url, request.ResponseCode, request.Duration);
-        }
-
-        private RemoteDependency CreateUpdatedRemoteDependency(RemoteDependency remoteDependency, IList<string> documentStreamIds)
-        {
-            return new RemoteDependency(remoteDependency.DocumentType, documentStreamIds, remoteDependency.Properties, remoteDependency.Name, remoteDependency.CommandName, remoteDependency.ResultCode, remoteDependency.Duration);
-        }
-
-        private Models.Exception CreateUpdatedException(Models.Exception exception, IList<string> documentStreamIds)
-        {
-            return new Models.Exception(exception.DocumentType, documentStreamIds, exception.Properties, exception.ExceptionType, exception.ExceptionMessage);
-        }
-
-        private Models.Trace CreateUpdatedTrace(Models.Trace trace, IList<string> documentStreamIds)
-        {
-            return new Models.Trace(trace.DocumentType, documentStreamIds, trace.Properties, trace.Message);
         }
 
         /// <remarks>
@@ -338,17 +314,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             return true;
         }
 
-        private DocumentIngress? CreateTelemetryDocument<TTelemetry>(
-            TTelemetry telemetry,
+        private bool MatchesDocumentStreamFilters(
             IEnumerable<DocumentStream> documentStreams,
             Func<DocumentStream, QuickPulseQuotaTracker> getQuotaTracker,
-            Func<DocumentStream, bool> checkDocumentStreamFilters,
-            Func<TTelemetry, IList<string>, DocumentIngress> convertTelemetryToTelemetryDocument)
+            Func<DocumentStream, bool> checkDocumentStreamFilters)
         {
             // check which document streams are interested in this telemetry
             var interested = false;
-            DocumentIngress? telemetryDocument = null;
-            var matchingDocumentStreamIds = new ChangeTrackingList<string>();
 
             foreach (DocumentStream matchingDocumentStream in documentStreams.Where(checkDocumentStreamFilters))
             {
@@ -356,17 +328,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 if (getQuotaTracker(matchingDocumentStream).ApplyQuota())
                 {
                     interested = true;
-
-                    matchingDocumentStreamIds.Add(matchingDocumentStream.Id);
                 }
             }
 
-            if (interested)
-            {
-                telemetryDocument = convertTelemetryToTelemetryDocument(telemetry, matchingDocumentStreamIds);
-            }
-
-            return telemetryDocument;
+            return interested;
         }
     }
 }
