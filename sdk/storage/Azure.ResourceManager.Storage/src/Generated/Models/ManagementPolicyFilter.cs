@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -78,10 +77,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> An array of strings for prefixes to be match. </summary>
+        [WirePath("prefixMatch")]
         public IList<string> PrefixMatch { get; }
         /// <summary> An array of predefined enum values. Currently blockBlob supports all tiering and delete actions. Only delete actions are supported for appendBlob. </summary>
+        [WirePath("blobTypes")]
         public IList<string> BlobTypes { get; }
         /// <summary> An array of blob index tag based filters, there can be at most 10 tag filters. </summary>
+        [WirePath("blobIndexMatch")]
         public IList<ManagementPolicyTagFilter> BlobIndexMatch { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Data.SchemaRegistry;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
@@ -50,6 +49,14 @@ namespace Azure.Data.SchemaRegistry.Models
                 }
             }
             return new ErrorDetail(code, message, details ?? new ChangeTrackingList<ErrorDetail>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ErrorDetail FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeErrorDetail(document.RootElement);
         }
     }
 }

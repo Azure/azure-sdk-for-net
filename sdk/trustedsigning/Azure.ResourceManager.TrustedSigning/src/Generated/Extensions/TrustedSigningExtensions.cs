@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TrustedSigning.Mocking;
 using Azure.ResourceManager.TrustedSigning.Models;
@@ -36,58 +34,58 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CodeSigningAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CodeSigningAccountResource.CreateResourceIdentifier" /> to create a <see cref="CodeSigningAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TrustedSigningAccountResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrustedSigningAccountResource.CreateResourceIdentifier" /> to create a <see cref="TrustedSigningAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningArmClient.GetCodeSigningAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningArmClient.GetTrustedSigningAccountResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CodeSigningAccountResource"/> object. </returns>
-        public static CodeSigningAccountResource GetCodeSigningAccountResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TrustedSigningAccountResource"/> object. </returns>
+        public static TrustedSigningAccountResource GetTrustedSigningAccountResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableTrustedSigningArmClient(client).GetCodeSigningAccountResource(id);
+            return GetMockableTrustedSigningArmClient(client).GetTrustedSigningAccountResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CertificateProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CertificateProfileResource.CreateResourceIdentifier" /> to create a <see cref="CertificateProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TrustedSigningCertificateProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TrustedSigningCertificateProfileResource.CreateResourceIdentifier" /> to create a <see cref="TrustedSigningCertificateProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningArmClient.GetCertificateProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningArmClient.GetTrustedSigningCertificateProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CertificateProfileResource"/> object. </returns>
-        public static CertificateProfileResource GetCertificateProfileResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TrustedSigningCertificateProfileResource"/> object. </returns>
+        public static TrustedSigningCertificateProfileResource GetTrustedSigningCertificateProfileResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableTrustedSigningArmClient(client).GetCertificateProfileResource(id);
+            return GetMockableTrustedSigningArmClient(client).GetTrustedSigningCertificateProfileResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of CodeSigningAccountResources in the ResourceGroupResource.
+        /// Gets a collection of TrustedSigningAccountResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningResourceGroupResource.GetCodeSigningAccounts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningResourceGroupResource.GetTrustedSigningAccounts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of CodeSigningAccountResources and their operations over a CodeSigningAccountResource. </returns>
-        public static CodeSigningAccountCollection GetCodeSigningAccounts(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of TrustedSigningAccountResources and their operations over a TrustedSigningAccountResource. </returns>
+        public static TrustedSigningAccountCollection GetTrustedSigningAccounts(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableTrustedSigningResourceGroupResource(resourceGroupResource).GetCodeSigningAccounts();
+            return GetMockableTrustedSigningResourceGroupResource(resourceGroupResource).GetTrustedSigningAccounts();
         }
 
         /// <summary>
@@ -107,12 +105,12 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CodeSigningAccountResource"/></description>
+        /// <description><see cref="TrustedSigningAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningResourceGroupResource.GetCodeSigningAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningResourceGroupResource.GetTrustedSigningAccountAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -121,11 +119,11 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CodeSigningAccountResource>> GetCodeSigningAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        public static async Task<Response<TrustedSigningAccountResource>> GetTrustedSigningAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableTrustedSigningResourceGroupResource(resourceGroupResource).GetCodeSigningAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableTrustedSigningResourceGroupResource(resourceGroupResource).GetTrustedSigningAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,12 +143,12 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CodeSigningAccountResource"/></description>
+        /// <description><see cref="TrustedSigningAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningResourceGroupResource.GetCodeSigningAccount(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningResourceGroupResource.GetTrustedSigningAccount(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -159,11 +157,11 @@ namespace Azure.ResourceManager.TrustedSigning
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<CodeSigningAccountResource> GetCodeSigningAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
+        public static Response<TrustedSigningAccountResource> GetTrustedSigningAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableTrustedSigningResourceGroupResource(resourceGroupResource).GetCodeSigningAccount(accountName, cancellationToken);
+            return GetMockableTrustedSigningResourceGroupResource(resourceGroupResource).GetTrustedSigningAccount(accountName, cancellationToken);
         }
 
         /// <summary>
@@ -183,23 +181,23 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CodeSigningAccountResource"/></description>
+        /// <description><see cref="TrustedSigningAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningSubscriptionResource.CheckNameAvailabilityCodeSigningAccount(CheckNameAvailability,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningSubscriptionResource.CheckTrustedSigningAccountNameAvailability(TrustedSigningAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="body"> The CheckAvailability request. </param>
+        /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="body"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityCodeSigningAccountAsync(this SubscriptionResource subscriptionResource, CheckNameAvailability body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<TrustedSigningAccountNameAvailabilityResult>> CheckTrustedSigningAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, TrustedSigningAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableTrustedSigningSubscriptionResource(subscriptionResource).CheckNameAvailabilityCodeSigningAccountAsync(body, cancellationToken).ConfigureAwait(false);
+            return await GetMockableTrustedSigningSubscriptionResource(subscriptionResource).CheckTrustedSigningAccountNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,23 +217,23 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CodeSigningAccountResource"/></description>
+        /// <description><see cref="TrustedSigningAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningSubscriptionResource.CheckNameAvailabilityCodeSigningAccount(CheckNameAvailability,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningSubscriptionResource.CheckTrustedSigningAccountNameAvailability(TrustedSigningAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="body"> The CheckAvailability request. </param>
+        /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="body"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityCodeSigningAccount(this SubscriptionResource subscriptionResource, CheckNameAvailability body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<TrustedSigningAccountNameAvailabilityResult> CheckTrustedSigningAccountNameAvailability(this SubscriptionResource subscriptionResource, TrustedSigningAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableTrustedSigningSubscriptionResource(subscriptionResource).CheckNameAvailabilityCodeSigningAccount(body, cancellationToken);
+            return GetMockableTrustedSigningSubscriptionResource(subscriptionResource).CheckTrustedSigningAccountNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -255,23 +253,23 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CodeSigningAccountResource"/></description>
+        /// <description><see cref="TrustedSigningAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningSubscriptionResource.GetCodeSigningAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningSubscriptionResource.GetTrustedSigningAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CodeSigningAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CodeSigningAccountResource> GetCodeSigningAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="TrustedSigningAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<TrustedSigningAccountResource> GetTrustedSigningAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableTrustedSigningSubscriptionResource(subscriptionResource).GetCodeSigningAccountsAsync(cancellationToken);
+            return GetMockableTrustedSigningSubscriptionResource(subscriptionResource).GetTrustedSigningAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -291,23 +289,23 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CodeSigningAccountResource"/></description>
+        /// <description><see cref="TrustedSigningAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningSubscriptionResource.GetCodeSigningAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrustedSigningSubscriptionResource.GetTrustedSigningAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="CodeSigningAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CodeSigningAccountResource> GetCodeSigningAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TrustedSigningAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<TrustedSigningAccountResource> GetTrustedSigningAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableTrustedSigningSubscriptionResource(subscriptionResource).GetCodeSigningAccounts(cancellationToken);
+            return GetMockableTrustedSigningSubscriptionResource(subscriptionResource).GetTrustedSigningAccounts(cancellationToken);
         }
     }
 }

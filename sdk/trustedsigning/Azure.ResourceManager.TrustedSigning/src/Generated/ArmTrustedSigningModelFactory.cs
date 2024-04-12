@@ -10,24 +10,23 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
     /// <summary> Model factory for models. </summary>
     public static partial class ArmTrustedSigningModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.CheckNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.TrustedSigningAccountNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> The reason that a trusted signing account name could not be used. The Reason element is only returned if nameAvailable is false. </param>
         /// <param name="message"> An error message explaining the Reason value in more detail. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = null, NameUnavailabilityReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.TrustedSigningAccountNameAvailabilityResult"/> instance for mocking. </returns>
+        public static TrustedSigningAccountNameAvailabilityResult TrustedSigningAccountNameAvailabilityResult(bool? isNameAvailable = null, TrustedSigningAccountNameUnavailabilityReason? reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new TrustedSigningAccountNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrustedSigning.CodeSigningAccountData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrustedSigning.TrustedSigningAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,12 +36,12 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// <param name="accountUri"> The URI of the trusted signing account which is used during signing files. </param>
         /// <param name="skuName"> SKU of the trusted signing account. </param>
         /// <param name="provisioningState"> Status of the current operation on trusted signing account. </param>
-        /// <returns> A new <see cref="TrustedSigning.CodeSigningAccountData"/> instance for mocking. </returns>
-        public static CodeSigningAccountData CodeSigningAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, Uri accountUri = null, TrustedSigningSkuName? skuName = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="TrustedSigning.TrustedSigningAccountData"/> instance for mocking. </returns>
+        public static TrustedSigningAccountData TrustedSigningAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, Uri accountUri = null, TrustedSigningSkuName? skuName = null, TrustedSigningProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CodeSigningAccountData(
+            return new TrustedSigningAccountData(
                 id,
                 name,
                 resourceType,
@@ -50,12 +49,12 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 tags,
                 location,
                 accountUri,
-                skuName.HasValue ? new AccountSku(skuName.Value, serializedAdditionalRawData: null) : null,
+                skuName.HasValue ? new TrustedSigningAccountSku(skuName.Value, serializedAdditionalRawData: null) : null,
                 provisioningState,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrustedSigning.CertificateProfileData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrustedSigning.TrustedSigningCertificateProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -79,12 +78,12 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// <param name="provisioningState"> Status of the current operation on certificate profile. </param>
         /// <param name="status"> Status of the certificate profile. </param>
         /// <param name="certificates"> List of renewed certificates. </param>
-        /// <returns> A new <see cref="TrustedSigning.CertificateProfileData"/> instance for mocking. </returns>
-        public static CertificateProfileData CertificateProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProfileType? profileType = null, string commonName = null, string organization = null, string organizationUnit = null, string streetAddress = null, bool? includeStreetAddress = null, string city = null, bool? includeCity = null, string state = null, bool? includeState = null, string country = null, bool? includeCountry = null, string postalCode = null, bool? includePostalCode = null, string enhancedKeyUsage = null, string identityValidationId = null, ProvisioningState? provisioningState = null, CertificateProfileStatus? status = null, IEnumerable<Certificate> certificates = null)
+        /// <returns> A new <see cref="TrustedSigning.TrustedSigningCertificateProfileData"/> instance for mocking. </returns>
+        public static TrustedSigningCertificateProfileData TrustedSigningCertificateProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CertificateProfileType? profileType = null, string commonName = null, string organization = null, string organizationUnit = null, string streetAddress = null, bool? includeStreetAddress = null, string city = null, bool? includeCity = null, string state = null, bool? includeState = null, string country = null, bool? includeCountry = null, string postalCode = null, bool? includePostalCode = null, string enhancedKeyUsage = null, string identityValidationId = null, TrustedSigningProvisioningState? provisioningState = null, CertificateProfileStatus? status = null, IEnumerable<TrustedSigningCertificate> certificates = null)
         {
-            certificates ??= new List<Certificate>();
+            certificates ??= new List<TrustedSigningCertificate>();
 
-            return new CertificateProfileData(
+            return new TrustedSigningCertificateProfileData(
                 id,
                 name,
                 resourceType,
@@ -111,12 +110,12 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Certificate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TrustedSigningCertificate"/>. </summary>
         /// <param name="serialNumber"> Serial number of the certificate. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
-        /// <param name="createdDate"> Certificate created date. </param>
-        /// <param name="expiryDate"> Certificate expiry date. </param>
+        /// <param name="createOn"> Certificate created date. </param>
+        /// <param name="expireOn"> Certificate expiry date. </param>
         /// <param name="status"> Status of the certificate. </param>
         /// <param name="requestedOn"> The timestamp when the revocation is requested. </param>
         /// <param name="effectiveOn"> The timestamp when the revocation is effective. </param>
@@ -124,15 +123,15 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// <param name="remarks"> Remarks for the revocation. </param>
         /// <param name="statusRevocationStatus"> Status of the revocation. </param>
         /// <param name="failureReason"> Reason for the revocation failure. </param>
-        /// <returns> A new <see cref="Models.Certificate"/> instance for mocking. </returns>
-        public static Certificate Certificate(string serialNumber = null, string subjectName = null, string thumbprint = null, string createdDate = null, string expiryDate = null, CertificateStatus? status = null, DateTimeOffset? requestedOn = null, DateTimeOffset? effectiveOn = null, string reason = null, string remarks = null, RevocationStatus? statusRevocationStatus = null, string failureReason = null)
+        /// <returns> A new <see cref="Models.TrustedSigningCertificate"/> instance for mocking. </returns>
+        public static TrustedSigningCertificate TrustedSigningCertificate(string serialNumber = null, string subjectName = null, string thumbprint = null, DateTimeOffset? createOn = null, DateTimeOffset? expireOn = null, TrustedSigningCertificateStatus? status = null, DateTimeOffset? requestedOn = null, DateTimeOffset? effectiveOn = null, string reason = null, string remarks = null, CertificateRevocationStatus? statusRevocationStatus = null, string failureReason = null)
         {
-            return new Certificate(
+            return new TrustedSigningCertificate(
                 serialNumber,
                 subjectName,
                 thumbprint,
-                createdDate,
-                expiryDate,
+                createOn,
+                expireOn,
                 status,
                 requestedOn,
                 effectiveOn,
@@ -143,16 +142,16 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RevokeCertificate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RevokeCertificateContent"/>. </summary>
         /// <param name="serialNumber"> Serial number of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="effectiveOn"> The timestamp when the revocation is effective. </param>
         /// <param name="reason"> Reason for the revocation. </param>
         /// <param name="remarks"> Remarks for the revocation. </param>
-        /// <returns> A new <see cref="Models.RevokeCertificate"/> instance for mocking. </returns>
-        public static RevokeCertificate RevokeCertificate(string serialNumber = null, string thumbprint = null, DateTimeOffset effectiveOn = default, string reason = null, string remarks = null)
+        /// <returns> A new <see cref="Models.RevokeCertificateContent"/> instance for mocking. </returns>
+        public static RevokeCertificateContent RevokeCertificateContent(string serialNumber = null, string thumbprint = null, DateTimeOffset effectiveOn = default, string reason = null, string remarks = null)
         {
-            return new RevokeCertificate(
+            return new RevokeCertificateContent(
                 serialNumber,
                 thumbprint,
                 effectiveOn,

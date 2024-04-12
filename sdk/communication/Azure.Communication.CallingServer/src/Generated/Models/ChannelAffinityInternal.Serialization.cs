@@ -23,9 +23,17 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(Participant))
             {
                 writer.WritePropertyName("participant"u8);
-                writer.WriteObjectValue(Participant);
+                writer.WriteObjectValue<CommunicationIdentifierModel>(Participant);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

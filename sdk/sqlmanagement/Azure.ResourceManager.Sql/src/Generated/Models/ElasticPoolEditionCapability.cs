@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The elastic pool edition name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The list of supported elastic pool DTU levels for the edition. </summary>
+        [WirePath("supportedElasticPoolPerformanceLevels")]
         public IReadOnlyList<ElasticPoolPerformanceLevelCapability> SupportedElasticPoolPerformanceLevels { get; }
         /// <summary> Whether or not zone redundancy is supported for the edition. </summary>
+        [WirePath("zoneRedundant")]
         public bool? IsZoneRedundant { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

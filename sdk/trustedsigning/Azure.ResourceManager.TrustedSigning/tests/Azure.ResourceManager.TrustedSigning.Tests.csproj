@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.TrustedSigning.csproj" />
+    <Compile Remove="Generated\**" />
+    <EmbeddedResource Remove="Generated\**" />
+    <None Remove="Generated\**" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Generated\" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.TrustedSigning.csproj" />
   </ItemGroup>
 </Project>

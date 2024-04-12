@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -23,12 +22,12 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataContainer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("workspace"u8);
-            writer.WriteObjectValue(Workspace);
+            writer.WriteObjectValue(Workspace, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataContainer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             DataContainerWorkspace workspace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspace"u8))
@@ -79,10 +78,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataContainer(workspace, serializedAdditionalRawData);
         }
 
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataContainer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeDataContainer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataContainer)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.GuestConfiguration;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             ResourceType? type = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -143,10 +142,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GuestConfigurationResourceData(
                 id,
                 name,
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         return DeserializeGuestConfigurationResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

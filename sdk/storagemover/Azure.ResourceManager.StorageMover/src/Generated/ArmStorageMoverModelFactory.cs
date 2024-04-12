@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -118,9 +117,9 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <returns> A new <see cref="Models.EndpointBaseProperties"/> instance for mocking. </returns>
-        public static EndpointBaseProperties EndpointBaseProperties(string endpointType = "Unknown", string description = null, StorageMoverProvisioningState? provisioningState = null)
+        public static EndpointBaseProperties EndpointBaseProperties(string endpointType = null, string description = null, StorageMoverProvisioningState? provisioningState = null)
         {
-            return new UnknownEndpointBaseProperties(endpointType, description, provisioningState, serializedAdditionalRawData: null);
+            return new UnknownEndpointBaseProperties(endpointType == null ? default : new EndpointType(endpointType), description, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMover.StorageMoverProjectData"/>. </summary>

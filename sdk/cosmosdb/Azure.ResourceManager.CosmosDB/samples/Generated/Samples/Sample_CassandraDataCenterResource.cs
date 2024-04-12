@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
@@ -23,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_CosmosDBManagedCassandraDataCenterGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBManagedCassandraDataCenterGet.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBManagedCassandraDataCenterGet.json
             // this example is just showing the usage of "CassandraDataCenters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -33,7 +30,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CassandraDataCenterResource created on azure
             // for more information of creating CassandraDataCenterResource, please refer to the document of CassandraDataCenterResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "cassandra-prod-rg";
             string clusterName = "cassandra-prod";
             string dataCenterName = "dc1";
@@ -55,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_CosmosDBManagedCassandraDataCenterDelete()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBManagedCassandraDataCenterDelete.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBManagedCassandraDataCenterDelete.json
             // this example is just showing the usage of "CassandraDataCenters_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this CassandraDataCenterResource created on azure
             // for more information of creating CassandraDataCenterResource, please refer to the document of CassandraDataCenterResource
-            string subscriptionId = "subid";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "cassandra-prod-rg";
             string clusterName = "cassandra-prod";
             string dataCenterName = "dc1";
@@ -83,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CosmosDBManagedCassandraDataCenterUpdate()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBManagedCassandraDataCenterPatch.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBManagedCassandraDataCenterPatch.json
             // this example is just showing the usage of "CassandraDataCenters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

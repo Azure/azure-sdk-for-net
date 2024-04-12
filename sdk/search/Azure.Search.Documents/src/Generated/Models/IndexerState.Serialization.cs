@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -94,6 +93,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 resetDocsFinalChangeTrackingState,
                 resetDocumentKeys ?? new ChangeTrackingList<string>(),
                 resetDatasourceDocumentIds ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IndexerState FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIndexerState(document.RootElement);
         }
     }
 }

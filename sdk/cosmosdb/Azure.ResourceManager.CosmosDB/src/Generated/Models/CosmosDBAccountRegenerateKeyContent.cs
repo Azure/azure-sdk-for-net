@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The access key to regenerate. </summary>
+        [WirePath("keyKind")]
         public CosmosDBAccountKeyKind KeyKind { get; }
     }
 }

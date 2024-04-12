@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The type of service accessed by the managed instance service, e.g., Azure Storage, Azure Active Directory, etc. </summary>
+        [WirePath("category")]
         public string Category { get; }
         /// <summary> The endpoints that the managed instance service communicates with in order to function correctly. </summary>
+        [WirePath("endpoints")]
         public IReadOnlyList<ManagedInstanceEndpointDependency> Endpoints { get; }
     }
 }

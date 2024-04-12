@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -80,8 +79,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateOrUpdateAsync(content, businessAttributeUpdateBehavior?.ToString(), collectionId, context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -114,8 +113,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateOrUpdate(content, businessAttributeUpdateBehavior?.ToString(), collectionId, context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -369,8 +368,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasEntitiesWithExtInfo, nameof(atlasEntitiesWithExtInfo));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntitiesWithExtInfo.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await BatchCreateOrUpdateAsync(content, collectionId, businessAttributeUpdateBehavior?.ToString(), context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -404,8 +403,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasEntitiesWithExtInfo, nameof(atlasEntitiesWithExtInfo));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntitiesWithExtInfo.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = BatchCreateOrUpdate(content, collectionId, businessAttributeUpdateBehavior?.ToString(), context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -641,8 +640,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(classificationAssociateConfig, nameof(classificationAssociateConfig));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = classificationAssociateConfig.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AddClassificationAsync(content, context).ConfigureAwait(false);
             return response;
         }
@@ -656,8 +655,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(classificationAssociateConfig, nameof(classificationAssociateConfig));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = classificationAssociateConfig.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AddClassification(content, context);
             return response;
         }
@@ -878,8 +877,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromObject(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateAttributeByIdAsync(guid, name, content, context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -904,8 +903,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromObject(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateAttributeById(guid, name, content, context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -1432,8 +1431,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AddClassificationsAsync(guid, content, context).ConfigureAwait(false);
             return response;
         }
@@ -1450,8 +1449,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AddClassifications(guid, content, context);
             return response;
         }
@@ -1552,8 +1551,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateClassificationsAsync(guid, content, context).ConfigureAwait(false);
             return response;
         }
@@ -1570,8 +1569,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateClassifications(guid, content, context);
             return response;
         }
@@ -1886,8 +1885,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -1928,8 +1927,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(atlasEntityWithExtInfo, nameof(atlasEntityWithExtInfo));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntityWithExtInfo.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateByUniqueAttribute(typeName, content, attribute, context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -2332,8 +2331,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AddClassificationsByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
             return response;
         }
@@ -2354,8 +2353,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AddClassificationsByUniqueAttribute(typeName, content, attribute, context);
             return response;
         }
@@ -2468,8 +2467,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateClassificationsUniqueByAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
             return response;
         }
@@ -2490,8 +2489,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateClassificationsUniqueByAttribute(typeName, content, attribute, context);
             return response;
         }
@@ -2597,8 +2596,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasEntityHeaders, nameof(atlasEntityHeaders));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntityHeaders.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await BatchSetClassificationsAsync(content, context).ConfigureAwait(false);
             IReadOnlyList<string> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -2620,8 +2619,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasEntityHeaders, nameof(atlasEntityHeaders));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasEntityHeaders.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = BatchSetClassifications(content, context);
             IReadOnlyList<string> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
@@ -3044,8 +3043,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await RemoveBusinessMetadataAsync(guid, content, context).ConfigureAwait(false);
             return response;
         }
@@ -3062,8 +3061,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = RemoveBusinessMetadata(guid, content, context);
             return response;
         }
@@ -3168,8 +3167,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AddOrUpdateBusinessMetadataAsync(guid, content, overwrite, context).ConfigureAwait(false);
             return response;
         }
@@ -3190,8 +3189,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AddOrUpdateBusinessMetadata(guid, content, overwrite, context);
             return response;
         }
@@ -3302,8 +3301,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await RemoveBusinessMetadataAttributesAsync(guid, businessMetadataName, content, context).ConfigureAwait(false);
             return response;
         }
@@ -3322,8 +3321,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = RemoveBusinessMetadataAttributes(guid, businessMetadataName, content, context);
             return response;
         }
@@ -3430,8 +3429,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AddOrUpdateBusinessMetadataAttributesAsync(guid, businessMetadataName, content, context).ConfigureAwait(false);
             return response;
         }
@@ -3450,8 +3449,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(businessMetadataName, nameof(businessMetadataName));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AddOrUpdateBusinessMetadataAttributes(guid, businessMetadataName, content, context);
             return response;
         }
@@ -3643,8 +3642,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(businessMetadataOptions, nameof(businessMetadataOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = businessMetadataOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ImportBusinessMetadataAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(BulkImportResult.FromResponse(response), response);
         }
@@ -3658,8 +3657,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(businessMetadataOptions, nameof(businessMetadataOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = businessMetadataOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ImportBusinessMetadata(content, context);
             return Response.FromValue(BulkImportResult.FromResponse(response), response);
         }
@@ -3753,8 +3752,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await RemoveLabelsAsync(guid, content, context).ConfigureAwait(false);
             return response;
         }
@@ -3770,8 +3769,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = RemoveLabels(guid, content, context);
             return response;
         }
@@ -3869,8 +3868,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await SetLabelsAsync(guid, content, context).ConfigureAwait(false);
             return response;
         }
@@ -3886,8 +3885,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = SetLabels(guid, content, context);
             return response;
         }
@@ -3985,8 +3984,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AddLabelAsync(guid, content, context).ConfigureAwait(false);
             return response;
         }
@@ -4002,8 +4001,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AddLabel(guid, content, context);
             return response;
         }
@@ -4119,8 +4118,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await RemoveLabelsByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
             return response;
         }
@@ -4154,8 +4153,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = RemoveLabelsByUniqueAttribute(typeName, content, attribute, context);
             return response;
         }
@@ -4305,8 +4304,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await SetLabelsByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
             return response;
         }
@@ -4342,8 +4341,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = SetLabelsByUniqueAttribute(typeName, content, attribute, context);
             return response;
         }
@@ -4497,8 +4496,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AddLabelsByUniqueAttributeAsync(typeName, content, attribute, context).ConfigureAwait(false);
             return response;
         }
@@ -4534,8 +4533,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = body != null ? RequestContentHelper.FromEnumerable(body) : null;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AddLabelsByUniqueAttribute(typeName, content, attribute, context);
             return response;
         }
@@ -4669,8 +4668,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNull(collectionId, nameof(collectionId));
             Argument.AssertNotNull(moveEntitiesConfig, nameof(moveEntitiesConfig));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = moveEntitiesConfig.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await MoveEntitiesToCollectionAsync(collectionId, content, context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }
@@ -4686,8 +4685,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNull(collectionId, nameof(collectionId));
             Argument.AssertNotNull(moveEntitiesConfig, nameof(moveEntitiesConfig));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = moveEntitiesConfig.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = MoveEntitiesToCollection(collectionId, content, context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
         }

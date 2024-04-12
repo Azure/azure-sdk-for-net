@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.DataShare.Models
             IList<string> tablesToExclude = default;
             IList<string> tablesToInclude = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("externalTablesToExclude"u8))
@@ -221,10 +220,10 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TableLevelSharingProperties(
                 externalTablesToExclude ?? new ChangeTrackingList<string>(),
                 externalTablesToInclude ?? new ChangeTrackingList<string>(),
@@ -244,7 +243,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -260,7 +259,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeTableLevelSharingProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

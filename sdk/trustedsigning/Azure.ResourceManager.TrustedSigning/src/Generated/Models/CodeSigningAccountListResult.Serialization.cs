@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             var format = options.Format == "W" ? ((IPersistableModel<CodeSigningAccountListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CodeSigningAccountListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CodeSigningAccountListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             var format = options.Format == "W" ? ((IPersistableModel<CodeSigningAccountListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CodeSigningAccountListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CodeSigningAccountListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,18 +76,18 @@ namespace Azure.ResourceManager.TrustedSigning.Models
             {
                 return null;
             }
-            IReadOnlyList<CodeSigningAccountData> value = default;
+            IReadOnlyList<TrustedSigningAccountData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CodeSigningAccountData> array = new List<CodeSigningAccountData>();
+                    List<TrustedSigningAccountData> array = new List<TrustedSigningAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CodeSigningAccountData.DeserializeCodeSigningAccountData(item, options));
+                        array.Add(TrustedSigningAccountData.DeserializeTrustedSigningAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,10 +103,10 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CodeSigningAccountListResult(value, nextLink, serializedAdditionalRawData);
         }
 
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CodeSigningAccountListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CodeSigningAccountListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
                         return DeserializeCodeSigningAccountListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CodeSigningAccountListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CodeSigningAccountListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

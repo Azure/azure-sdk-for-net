@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -24,6 +23,14 @@ namespace Azure.Monitor.Query.Models
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

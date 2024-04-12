@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationValueWithSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationValueWithSecrets)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationValueWithSecrets)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ConfigurationGroupSchemaResourceReference))
             {
                 writer.WritePropertyName("configurationGroupSchemaResourceReference"u8);
-                writer.WriteObjectValue(ConfigurationGroupSchemaResourceReference);
+                writer.WriteObjectValue(ConfigurationGroupSchemaResourceReference, options);
             }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationValueWithSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationValueWithSecrets)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationValueWithSecrets)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             DeploymentResourceIdReference configurationGroupSchemaResourceReference = default;
             ConfigurationGroupValueConfigurationType configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretConfigurationValue"u8))
@@ -168,10 +167,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConfigurationValueWithSecrets(
                 provisioningState,
                 publisherName,
@@ -193,7 +192,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationValueWithSecrets)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationValueWithSecrets)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +208,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeConfigurationValueWithSecrets(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationValueWithSecrets)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationValueWithSecrets)} does not support reading '{options.Format}' format.");
             }
         }
 

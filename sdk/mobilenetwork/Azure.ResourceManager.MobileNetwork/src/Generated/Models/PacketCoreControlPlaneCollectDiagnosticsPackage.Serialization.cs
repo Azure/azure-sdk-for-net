@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<PacketCoreControlPlaneCollectDiagnosticsPackage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PacketCoreControlPlaneCollectDiagnosticsPackage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PacketCoreControlPlaneCollectDiagnosticsPackage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<PacketCoreControlPlaneCollectDiagnosticsPackage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PacketCoreControlPlaneCollectDiagnosticsPackage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PacketCoreControlPlaneCollectDiagnosticsPackage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
             Uri storageAccountBlobUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountBlobUrl"u8))
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PacketCoreControlPlaneCollectDiagnosticsPackage(storageAccountBlobUrl, serializedAdditionalRawData);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PacketCoreControlPlaneCollectDiagnosticsPackage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PacketCoreControlPlaneCollectDiagnosticsPackage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializePacketCoreControlPlaneCollectDiagnosticsPackage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PacketCoreControlPlaneCollectDiagnosticsPackage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PacketCoreControlPlaneCollectDiagnosticsPackage)} does not support reading '{options.Format}' format.");
             }
         }
 

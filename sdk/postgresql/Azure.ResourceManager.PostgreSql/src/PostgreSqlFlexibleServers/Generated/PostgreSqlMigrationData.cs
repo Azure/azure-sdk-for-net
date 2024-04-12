@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
@@ -120,44 +119,64 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary> ID for migration, a GUID. </summary>
+        [WirePath("properties.migrationId")]
         public string MigrationId { get; }
         /// <summary> Current status of migration. </summary>
+        [WirePath("properties.currentStatus")]
         public PostgreSqlMigrationStatus CurrentStatus { get; }
         /// <summary> There are two types of migration modes Online and Offline. </summary>
+        [WirePath("properties.migrationMode")]
         public PostgreSqlMigrationMode? MigrationMode { get; set; }
         /// <summary> Metadata of the source database server. </summary>
+        [WirePath("properties.sourceDbServerMetadata")]
         public PostgreSqlServerMetadata SourceDbServerMetadata { get; }
         /// <summary> Metadata of the target database server. </summary>
+        [WirePath("properties.targetDbServerMetadata")]
         public PostgreSqlServerMetadata TargetDbServerMetadata { get; }
         /// <summary> ResourceId of the source database server. </summary>
+        [WirePath("properties.sourceDbServerResourceId")]
         public ResourceIdentifier SourceDbServerResourceId { get; set; }
         /// <summary> Source server fully qualified domain name or ip. It is a optional value, if customer provide it, dms will always use it for connection. </summary>
+        [WirePath("properties.sourceDbServerFullyQualifiedDomainName")]
         public string SourceDbServerFullyQualifiedDomainName { get; set; }
         /// <summary> ResourceId of the source database server. </summary>
+        [WirePath("properties.targetDbServerResourceId")]
         public ResourceIdentifier TargetDbServerResourceId { get; }
         /// <summary> Target server fully qualified domain name or ip. It is a optional value, if customer provide it, dms will always use it for connection. </summary>
+        [WirePath("properties.targetDbServerFullyQualifiedDomainName")]
         public string TargetDbServerFullyQualifiedDomainName { get; set; }
         /// <summary> Migration secret parameters. </summary>
+        [WirePath("properties.secretParameters")]
         public PostgreSqlMigrationSecretParameters SecretParameters { get; set; }
         /// <summary> Number of databases to migrate. </summary>
+        [WirePath("properties.dbsToMigrate")]
         public IList<string> DbsToMigrate { get; }
         /// <summary> Indicates whether to setup LogicalReplicationOnSourceDb, if needed. </summary>
+        [WirePath("properties.setupLogicalReplicationOnSourceDbIfNeeded")]
         public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded { get; set; }
         /// <summary> Indicates whether the databases on the target server can be overwritten, if already present. If set to False, the migration workflow will wait for a confirmation, if it detects that the database already exists. </summary>
+        [WirePath("properties.overwriteDbsInTarget")]
         public PostgreSqlMigrationOverwriteDbsInTarget? OverwriteDbsInTarget { get; set; }
         /// <summary> Start time in UTC for migration window. </summary>
+        [WirePath("properties.migrationWindowStartTimeInUtc")]
         public DateTimeOffset? MigrationWindowStartTimeInUtc { get; set; }
         /// <summary> End time in UTC for migration window. </summary>
+        [WirePath("properties.migrationWindowEndTimeInUtc")]
         public DateTimeOffset? MigrationWindowEndTimeInUtc { get; set; }
         /// <summary> Indicates whether the data migration should start right away. </summary>
+        [WirePath("properties.startDataMigration")]
         public PostgreSqlMigrationStartDataMigration? StartDataMigration { get; set; }
         /// <summary> To trigger cutover for entire migration we need to send this flag as True. </summary>
+        [WirePath("properties.triggerCutover")]
         public PostgreSqlMigrationTriggerCutover? TriggerCutover { get; set; }
         /// <summary> When you want to trigger cutover for specific databases send triggerCutover flag as True and database names in this array. </summary>
+        [WirePath("properties.dbsToTriggerCutoverOn")]
         public IList<string> DbsToTriggerCutoverOn { get; }
         /// <summary> To trigger cancel for entire migration we need to send this flag as True. </summary>
+        [WirePath("properties.cancel")]
         public PostgreSqlMigrationCancel? Cancel { get; set; }
         /// <summary> When you want to trigger cancel for specific databases send cancel flag as True and database names in this array. </summary>
+        [WirePath("properties.dbsToCancelMigrationOn")]
         public IList<string> DbsToCancelMigrationOn { get; }
     }
 }

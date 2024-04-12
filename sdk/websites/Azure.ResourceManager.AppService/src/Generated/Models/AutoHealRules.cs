@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Conditions that describe when to execute the auto-heal actions. </summary>
+        [WirePath("triggers")]
         public AutoHealTriggers Triggers { get; set; }
         /// <summary> Actions to be executed when a rule is triggered. </summary>
+        [WirePath("actions")]
         public AutoHealActions Actions { get; set; }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
@@ -23,7 +22,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<FollowupRecommendationInference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FollowupRecommendationInference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FollowupRecommendationInference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +34,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(EffectivePeriod))
             {
                 writer.WritePropertyName("effectivePeriod"u8);
-                writer.WriteObjectValue(EffectivePeriod);
+                writer.WriteObjectValue(EffectivePeriod, options);
             }
             if (Optional.IsCollectionDefined(Findings))
             {
@@ -43,7 +42,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Findings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +55,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WritePropertyName("isHedging"u8);
             writer.WriteBooleanValue(IsHedging);
             writer.WritePropertyName("recommendedProcedure"u8);
-            writer.WriteObjectValue(RecommendedProcedure);
+            writer.WriteObjectValue(RecommendedProcedure, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsCollectionDefined(Extension))
@@ -65,7 +64,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +91,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<FollowupRecommendationInference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FollowupRecommendationInference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FollowupRecommendationInference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +108,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
             string effectiveDateTime = default;
             FhirR4Period effectivePeriod = default;
-            IReadOnlyList<FhirR4Extendible> findings = default;
+            IReadOnlyList<RecommendationFinding> findings = default;
             bool isConditional = default;
             bool isOption = default;
             bool isGuideline = default;
@@ -118,7 +117,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             string kind = default;
             IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("effectiveDateTime"u8))
@@ -141,10 +140,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<FhirR4Extendible> array = new List<FhirR4Extendible>();
+                    List<RecommendationFinding> array = new List<RecommendationFinding>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4Extendible.DeserializeFhirR4Extendible(item, options));
+                        array.Add(RecommendationFinding.DeserializeRecommendationFinding(item, options));
                     }
                     findings = array;
                     continue;
@@ -195,17 +194,17 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FollowupRecommendationInference(
                 kind,
                 extension ?? new ChangeTrackingList<FhirR4Extension>(),
                 serializedAdditionalRawData,
                 effectiveDateTime,
                 effectivePeriod,
-                findings ?? new ChangeTrackingList<FhirR4Extendible>(),
+                findings ?? new ChangeTrackingList<RecommendationFinding>(),
                 isConditional,
                 isOption,
                 isGuideline,
@@ -222,7 +221,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FollowupRecommendationInference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FollowupRecommendationInference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -238,7 +237,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                         return DeserializeFollowupRecommendationInference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FollowupRecommendationInference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FollowupRecommendationInference)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -256,7 +255,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

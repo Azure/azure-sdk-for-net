@@ -10,10 +10,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MobileNetwork.Models;
 using Azure.ResourceManager.Resources;
 
@@ -39,6 +38,8 @@ namespace Azure.ResourceManager.MobileNetwork
 
         private readonly ClientDiagnostics _packetCoreControlPlaneClientDiagnostics;
         private readonly PacketCoreControlPlanesRestOperations _packetCoreControlPlaneRestClient;
+        private readonly ClientDiagnostics _ueInformationClientDiagnostics;
+        private readonly UeInformationRestOperations _ueInformationRestClient;
         private readonly PacketCoreControlPlaneData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -66,6 +67,8 @@ namespace Azure.ResourceManager.MobileNetwork
             _packetCoreControlPlaneClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MobileNetwork", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string packetCoreControlPlaneApiVersion);
             _packetCoreControlPlaneRestClient = new PacketCoreControlPlanesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, packetCoreControlPlaneApiVersion);
+            _ueInformationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MobileNetwork", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _ueInformationRestClient = new UeInformationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -112,7 +115,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +146,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -181,7 +184,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +215,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,7 +253,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,7 +284,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -299,6 +302,75 @@ namespace Azure.ResourceManager.MobileNetwork
             return GetPacketCoreDataPlanes().Get(packetCoreDataPlaneName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ExtendedUEInfoResources in the PacketCoreControlPlane. </summary>
+        /// <returns> An object representing collection of ExtendedUEInfoResources and their operations over a ExtendedUEInfoResource. </returns>
+        public virtual ExtendedUEInfoCollection GetExtendedUEInfos()
+        {
+            return GetCachedClient(client => new ExtendedUEInfoCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets extended information about the specified UE from the packet core.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/ues/{ueId}/extendedInformation/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExtendedUeInformation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExtendedUEInfoResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ueId"> IMSI of a UE. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ueId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ueId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ExtendedUEInfoResource>> GetExtendedUEInfoAsync(string ueId, CancellationToken cancellationToken = default)
+        {
+            return await GetExtendedUEInfos().GetAsync(ueId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets extended information about the specified UE from the packet core.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/ues/{ueId}/extendedInformation/default</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExtendedUeInformation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExtendedUEInfoResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ueId"> IMSI of a UE. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ueId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ueId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ExtendedUEInfoResource> GetExtendedUEInfo(string ueId, CancellationToken cancellationToken = default)
+        {
+            return GetExtendedUEInfos().Get(ueId, cancellationToken);
+        }
+
         /// <summary>
         /// Gets information about the specified packet core control plane.
         /// <list type="bullet">
@@ -312,7 +384,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -352,7 +424,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -392,7 +464,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -434,7 +506,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -476,7 +548,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -518,7 +590,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -560,7 +632,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -602,7 +674,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -632,7 +704,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary>
-        /// Reinstall the specified packet core control plane. This action will remove any transaction state from the packet core to return it to a known state. This action will cause a service outage.
+        /// Reinstall the specified packet core control plane. This action will try to restore the packet core to the installed state that was disrupted by a transient failure. This action will cause a service outage.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -644,7 +716,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -674,7 +746,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary>
-        /// Reinstall the specified packet core control plane. This action will remove any transaction state from the packet core to return it to a known state. This action will cause a service outage.
+        /// Reinstall the specified packet core control plane. This action will try to restore the packet core to the installed state that was disrupted by a transient failure. This action will cause a service outage.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -686,7 +758,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -728,7 +800,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -774,7 +846,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -808,6 +880,58 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary>
+        /// List all UEs and their state in a packet core.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/ues</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UeInformation_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="UEInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<UEInfo> GetAllUeInformationAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _ueInformationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ueInformationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UEInfo.DeserializeUEInfo(e), _ueInformationClientDiagnostics, Pipeline, "PacketCoreControlPlaneResource.GetAllUeInformation", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all UEs and their state in a packet core.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/ues</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UeInformation_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="UEInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<UEInfo> GetAllUeInformation(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _ueInformationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _ueInformationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UEInfo.DeserializeUEInfo(e), _ueInformationClientDiagnostics, Pipeline, "PacketCoreControlPlaneResource.GetAllUeInformation", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -820,7 +944,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -882,7 +1006,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -944,7 +1068,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1001,7 +1125,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1058,7 +1182,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1118,7 +1242,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

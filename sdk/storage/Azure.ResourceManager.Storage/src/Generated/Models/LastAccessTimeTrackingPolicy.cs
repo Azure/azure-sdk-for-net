@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -75,12 +74,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> When set to true last access time based tracking is enabled. </summary>
+        [WirePath("enable")]
         public bool IsEnabled { get; set; }
         /// <summary> Name of the policy. The valid value is AccessTimeTracking. This field is currently read only. </summary>
+        [WirePath("name")]
         public LastAccessTimeTrackingPolicyName? Name { get; set; }
         /// <summary> The field specifies blob object tracking granularity in days, typically how often the blob object should be tracked.This field is currently read only with value as 1. </summary>
+        [WirePath("trackingGranularityInDays")]
         public int? TrackingGranularityInDays { get; set; }
         /// <summary> An array of predefined supported blob types. Only blockBlob is the supported value. This field is currently read only. </summary>
+        [WirePath("blobType")]
         public IList<string> BlobType { get; }
     }
 }

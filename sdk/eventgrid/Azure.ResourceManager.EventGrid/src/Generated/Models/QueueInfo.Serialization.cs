@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueueInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueueInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueueInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(DeadLetterDestinationWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterDestinationWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeadLetterDestinationWithResourceIdentity);
+                writer.WriteObjectValue(DeadLetterDestinationWithResourceIdentity, options);
             }
             if (Optional.IsDefined(EventTimeToLive))
             {
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueueInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueueInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueueInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             DeadLetterWithResourceIdentity deadLetterDestinationWithResourceIdentity = default;
             TimeSpan? eventTimeToLive = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("receiveLockDurationInSeconds"u8))
@@ -131,10 +130,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new QueueInfo(receiveLockDurationInSeconds, maxDeliveryCount, deadLetterDestinationWithResourceIdentity, eventTimeToLive, serializedAdditionalRawData);
         }
 
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueueInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueueInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeQueueInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueueInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueueInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

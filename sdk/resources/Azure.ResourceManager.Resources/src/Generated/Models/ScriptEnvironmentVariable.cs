@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -75,10 +74,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The name of the environment variable. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The value of the environment variable. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary> The value of the secure environment variable. </summary>
+        [WirePath("secureValue")]
         public string SecureValue { get; set; }
     }
 }

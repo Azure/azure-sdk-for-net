@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<UserContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserContractData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in Identities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<UserContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserContractData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement
             DateTimeOffset? registrationDate = default;
             IReadOnlyList<GroupContractProperties> groups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -259,10 +259,10 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UserContractData(
                 id,
                 name,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserContractData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeUserContractData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserContractData)} does not support reading '{options.Format}' format.");
             }
         }
 

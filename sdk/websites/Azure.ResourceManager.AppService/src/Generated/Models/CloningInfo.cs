@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -113,36 +112,47 @@ namespace Azure.ResourceManager.AppService.Models
         /// Correlation ID of cloning operation. This ID ties multiple cloning operations
         /// together to use the same snapshot.
         /// </summary>
+        [WirePath("correlationId")]
         public Guid? CorrelationId { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to overwrite destination app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("overwrite")]
         public bool? CanOverwrite { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to clone custom hostnames from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("cloneCustomHostNames")]
         public bool? CloneCustomHostNames { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to clone source control from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("cloneSourceControl")]
         public bool? CloneSourceControl { get; set; }
         /// <summary>
         /// ARM resource ID of the source app. App resource ID is of the form
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </summary>
+        [WirePath("sourceWebAppId")]
         public ResourceIdentifier SourceWebAppId { get; set; }
         /// <summary> Location of source app ex: West US or North Europe. </summary>
+        [WirePath("sourceWebAppLocation")]
         public AzureLocation? SourceWebAppLocation { get; set; }
         /// <summary> App Service Environment. </summary>
+        [WirePath("hostingEnvironment")]
         public string HostingEnvironment { get; set; }
         /// <summary>
         /// Application setting overrides for cloned app. If specified, these settings override the settings cloned
         /// from source app. Otherwise, application settings from source app are retained.
         /// </summary>
+        [WirePath("appSettingsOverrides")]
         public IDictionary<string, string> AppSettingsOverrides { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to configure load balancing for source and destination app. </summary>
+        [WirePath("configureLoadBalancing")]
         public bool? ConfigureLoadBalancing { get; set; }
         /// <summary>
         /// ARM resource ID of the Traffic Manager profile to use, if it exists. Traffic Manager resource ID is of the form
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{profileName}.
         /// </summary>
+        [WirePath("trafficManagerProfileId")]
         public ResourceIdentifier TrafficManagerProfileId { get; set; }
         /// <summary> Name of Traffic Manager profile to create. This is only needed if Traffic Manager profile does not already exist. </summary>
+        [WirePath("trafficManagerProfileName")]
         public string TrafficManagerProfileName { get; set; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// <summary> Initializes a new instance of <see cref="CodeSigningAccountListResult"/>. </summary>
         /// <param name="value"> The CodeSigningAccount items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal CodeSigningAccountListResult(IEnumerable<CodeSigningAccountData> value)
+        internal CodeSigningAccountListResult(IEnumerable<TrustedSigningAccountData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// <param name="value"> The CodeSigningAccount items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CodeSigningAccountListResult(IReadOnlyList<CodeSigningAccountData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CodeSigningAccountListResult(IReadOnlyList<TrustedSigningAccountData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         }
 
         /// <summary> The CodeSigningAccount items on this page. </summary>
-        public IReadOnlyList<CodeSigningAccountData> Value { get; }
+        public IReadOnlyList<TrustedSigningAccountData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

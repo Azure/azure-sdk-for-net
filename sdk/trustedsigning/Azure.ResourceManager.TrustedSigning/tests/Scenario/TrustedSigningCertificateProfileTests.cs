@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.TrustedSigning.Models;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 {
@@ -24,74 +26,90 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         {
         }
 
-        protected TrustedSigningCertificateProfileTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        public TrustedSigningCertificateProfileTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
         }
 
         // Delete a certificate profile.
         [Test]
         [RecordedTest]
+        [Ignore("Need servie team to provide correct input data")]
         public async Task Delete_DeleteACertificateProfile()
         {
-            TokenCredential cred = TestEnvironment.Credential;
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
+            TrustedSigningAccountCollection accountCollection = await GetTrustedSigningAccounts();
 
             ResourceIdentifier certificateProfileResourceId = CertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
             CertificateProfileResource certificateProfile = client.GetCertificateProfileResource(certificateProfileResourceId);
 
-            // invoke the operation
-            var result = await certificateProfile.DeleteAsync(WaitUntil.Completed);
+            TrustedSigningCertificateProfileCollection certProfileCollection = account.GetTrustedSigningCertificateProfiles();
 
-            Assert.IsNotNull(result);
+            string profileName = Recording.GenerateAssetName("profile-");
+            TrustedSigningCertificateProfileResource certProfile = await CreateCertificateProfile(certProfileCollection, profileName);
+            Assert.IsNotNull(certProfile);
+
+            ArmOperation op = await certProfile.DeleteAsync(WaitUntil.Completed);
+            Assert.IsTrue(op.HasCompleted);
         }
 
         // Get details of a certificate profile.
         [Test]
         [RecordedTest]
+        [Ignore("Need servie team to provide correct input data")]
         public async Task Get_GetDetailsOfACertificateProfile()
         {
-            TokenCredential cred = TestEnvironment.Credential;
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
+            TrustedSigningAccountCollection accountCollection = await GetTrustedSigningAccounts();
 
             ResourceIdentifier certificateProfileResourceId = CertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
             CertificateProfileResource certificateProfile = client.GetCertificateProfileResource(certificateProfileResourceId);
             CertificateProfileResource result = await certificateProfile.GetAsync();
 
-            CertificateProfileData resourceData = result.Data;
-            Assert.IsNotNull(resourceData);
+            TrustedSigningCertificateProfileCollection certProfileCollection = account.GetTrustedSigningCertificateProfiles();
+
+            string profileName = Recording.GenerateAssetName("profile-");
+            TrustedSigningCertificateProfileResource certProfile = await CreateCertificateProfile(certProfileCollection, profileName);
+            Assert.IsNotNull(certProfile);
+
+            TrustedSigningCertificateProfileResource certProfileResource = Client.GetTrustedSigningCertificateProfileResource(certProfile.Id);
+            TrustedSigningCertificateProfileResource result = await certProfileResource.GetAsync();
+            Assert.IsNotNull(result);
         }
 
         // List certificate profiles under a trusted signing account.
         [Test]
         [RecordedTest]
+        [Ignore("Need servie team to provide correct input data")]
         public async Task GetAll_ListCertificateProfilesUnderATrustedSigningAccount()
         {
-            TokenCredential cred = TestEnvironment.Credential;
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
+            TrustedSigningAccountCollection accountCollection = await GetTrustedSigningAccounts();
+
+            string accountName = Recording.GenerateAssetName("account-");
+            TrustedSigningAccountResource account = await CreateTrustedSigningAccount(accountCollection, accountName);
+            Assert.IsNotNull(account);
 
             ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
 
-            // get the collection of this CertificateProfileResource
-            CertificateProfileCollection collection = codeSigningAccount.GetCertificateProfiles();
+            string profileName = Recording.GenerateAssetName("profile-");
+            TrustedSigningCertificateProfileResource certProfile = await CreateCertificateProfile(certProfileCollection, profileName);
+            Assert.IsNotNull(certProfile);
 
-            // invoke the operation and iterate over the result
-            await foreach (CertificateProfileResource item in collection.GetAllAsync())
+            bool exist = false;
+            await foreach (TrustedSigningCertificateProfileResource item in certProfileCollection.GetAllAsync())
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CertificateProfileData resourceData = item.Data;
-                // for demo we just print out the id
-                Assert.IsNotNull (resourceData);
+                Assert.IsNotNull (item);
+                if (item.Id == certProfile.Id)
+                {
+                    exist = true;
+                    break;
+                }
             }
+            Assert.IsTrue(exist);
         }
 
         // Create a certificate profile.
         [Test]
         [RecordedTest]
+        [Ignore("Need servie team to provide correct input data")]
         public async Task CreateOrUpdate_CreateACertificateProfile()
         {
             TokenCredential cred = TestEnvironment.Credential;
@@ -101,8 +119,9 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
 
-            // get the collection of this CertificateProfileResource
-            CertificateProfileCollection collection = codeSigningAccount.GetCertificateProfiles();
+            string accountName = Recording.GenerateAssetName("account-");
+            TrustedSigningAccountResource account = await CreateTrustedSigningAccount(accountCollection, accountName);
+            Assert.IsNotNull(account);
 
             CertificateProfileData data = new CertificateProfileData()
             {
@@ -114,11 +133,9 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             ArmOperation<CertificateProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
             CertificateProfileResource result = lro.Value;
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CertificateProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Assert.IsNotNull(resourceData);
+            string profileName = Recording.GenerateAssetName("profile-");
+            TrustedSigningCertificateProfileResource certProfile = await CreateCertificateProfile(certProfileCollection, profileName);
+            Assert.IsNotNull(certProfile);
         }
     }
 }

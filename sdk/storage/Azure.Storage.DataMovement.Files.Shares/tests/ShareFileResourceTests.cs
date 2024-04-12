@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,7 +13,6 @@ using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Moq;
-using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -86,14 +85,19 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> An object that defines the filter set. </summary>
+        [WirePath("filters")]
         public BlobInventoryPolicyFilter Filters { get; set; }
         /// <summary> This is a required field, it specifies the format for the inventory files. </summary>
+        [WirePath("format")]
         public BlobInventoryPolicyFormat Format { get; set; }
         /// <summary> This is a required field. This field is used to schedule an inventory formation. </summary>
+        [WirePath("schedule")]
         public BlobInventoryPolicySchedule Schedule { get; set; }
         /// <summary> This is a required field. This field specifies the scope of the inventory created either at the blob or container level. </summary>
+        [WirePath("objectType")]
         public BlobInventoryPolicyObjectType ObjectType { get; set; }
         /// <summary> This is a required field. This field specifies the fields and properties of the object to be included in the inventory. The Schema field value 'Name' is always required. The valid values for this field for the 'Blob' definition.objectType include 'Name, Creation-Time, Last-Modified, Content-Length, Content-MD5, BlobType, AccessTier, AccessTierChangeTime, AccessTierInferred, Tags, Expiry-Time, hdi_isfolder, Owner, Group, Permissions, Acl, Snapshot, VersionId, IsCurrentVersion, Metadata, LastAccessTime, Tags, Etag, ContentType, ContentEncoding, ContentLanguage, ContentCRC64, CacheControl, ContentDisposition, LeaseStatus, LeaseState, LeaseDuration, ServerEncrypted, Deleted, DeletionId, DeletedTime, RemainingRetentionDays, ImmutabilityPolicyUntilDate, ImmutabilityPolicyMode, LegalHold, CopyId, CopyStatus, CopySource, CopyProgress, CopyCompletionTime, CopyStatusDescription, CustomerProvidedKeySha256, RehydratePriority, ArchiveStatus, XmsBlobSequenceNumber, EncryptionScope, IncrementalCopy, TagCount'. For Blob object type schema field value 'DeletedTime' is applicable only for Hns enabled accounts. The valid values for 'Container' definition.objectType include 'Name, Last-Modified, Metadata, LeaseStatus, LeaseState, LeaseDuration, PublicAccess, HasImmutabilityPolicy, HasLegalHold, Etag, DefaultEncryptionScope, DenyEncryptionScopeOverride, ImmutableStorageWithVersioningEnabled, Deleted, Version, DeletedTime, RemainingRetentionDays'. Schema field values 'Expiry-Time, hdi_isfolder, Owner, Group, Permissions, Acl, DeletionId' are valid only for Hns enabled accounts.Schema field values 'Tags, TagCount' are only valid for Non-Hns accounts. </summary>
+        [WirePath("schemaFields")]
         public IList<string> SchemaFields { get; }
     }
 }
