@@ -15,6 +15,11 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 {
     public class TrustedSigningCertificateProfileTests : TrustedSigningManagementTestBase
     {
+        protected string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
+        protected string resourceGroupName = "acsportal-bvt";
+        protected string accountName = "sample-test-wcus";
+        protected string profileName = "testProfileA";
+
         protected TrustedSigningCertificateProfileTests(bool isAsync) : base(isAsync)
         {
         }
@@ -32,10 +37,6 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
-            string resourceGroupName = "MyResourceGroup";
-            string accountName = "MyAccount";
-            string profileName = "profileA";
             ResourceIdentifier certificateProfileResourceId = CertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
             CertificateProfileResource certificateProfile = client.GetCertificateProfileResource(certificateProfileResourceId);
 
@@ -54,10 +55,6 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
-            string resourceGroupName = "MyResourceGroup";
-            string accountName = "MyAccount";
-            string profileName = "profileA";
             ResourceIdentifier certificateProfileResourceId = CertificateProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, profileName);
             CertificateProfileResource certificateProfile = client.GetCertificateProfileResource(certificateProfileResourceId);
             CertificateProfileResource result = await certificateProfile.GetAsync();
@@ -75,9 +72,6 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
-            string resourceGroupName = "MyResourceGroup";
-            string accountName = "MyAccount";
             ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
 
@@ -104,17 +98,12 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
-            string resourceGroupName = "MyResourceGroup";
-            string accountName = "MyAccount";
             ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
 
             // get the collection of this CertificateProfileResource
             CertificateProfileCollection collection = codeSigningAccount.GetCertificateProfiles();
 
-            // invoke the operation
-            string profileName = "profileA";
             CertificateProfileData data = new CertificateProfileData()
             {
                 ProfileType = ProfileType.PublicTrust,
