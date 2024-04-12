@@ -3,9 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,9 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void DeserializeTenantIdValue(JsonProperty property, ref Guid? tenantId)
         {
-            if (property.Value.ValueKind == JsonValueKind.Null)
-                return;
-            var str = property.Value.GetString();
+            var str = property.Value.ValueKind == JsonValueKind.Null ? null : property.Value.GetString();
             if (!string.IsNullOrEmpty(str))
             {
                 tenantId = Guid.Parse(str);
