@@ -142,7 +142,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
             {
                 DocumentType = DocumentType.Request,
                 Name = activity.DisplayName,
-                //Url = TODO: I'M TRYING TO GET THE TYPE OF Url CHANGED BACK TO string. THIS IS A TEMPORARY FIX. (2024-03-22)
+                //Url = TODO: I'M TRYING TO GET THE TYPE OF URL CHANGED BACK TO STRING. THIS IS A TEMPORARY FIX. (2024-03-22)
                 ResponseCode = httpResponseStatusCode,
                 Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                                                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
@@ -154,7 +154,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
                 Extension_Duration = activity.Duration.TotalMilliseconds,
             };
 
-            // TODO: I'M TRYING TO GET THE TYPE OF Url CHANGED BACK TO string. THIS IS A TEMPORARY FIX. (2024-03-22)
+            // TODO: I'M TRYING TO GET THE TYPE OF URL CHANGED BACK TO STRING. THIS IS A TEMPORARY FIX. (2024-03-22)
             if (Uri.TryCreate(url, UriKind.Absolute, out Uri? uri))
             {
                 requestDocumentIngress.Url = uri;
