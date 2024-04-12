@@ -26,10 +26,10 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("filtered"u8);
             writer.WriteBooleanValue(Filtered);
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -68,20 +68,20 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            string id = default;
             bool filtered = default;
+            string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("filtered"u8))
                 {
                     filtered = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,7 +90,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContentFilterBlocklistIdResult(id, filtered, serializedAdditionalRawData);
+            return new ContentFilterBlocklistIdResult(filtered, id, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentFilterBlocklistIdResult>.Write(ModelReaderWriterOptions options)

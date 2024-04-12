@@ -51,15 +51,10 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("profanity"u8);
                 writer.WriteObjectValue(Profanity, options);
             }
-            if (Optional.IsCollectionDefined(CustomBlocklists))
+            if (Optional.IsDefined(CustomBlocklists))
             {
                 writer.WritePropertyName("custom_blocklists"u8);
-                writer.WriteStartArray();
-                foreach (var item in CustomBlocklists)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(CustomBlocklists, options);
             }
             if (Optional.IsDefined(Error))
             {
@@ -70,6 +65,11 @@ namespace Azure.AI.OpenAI
             {
                 writer.WritePropertyName("jailbreak"u8);
                 writer.WriteObjectValue(Jailbreak, options);
+            }
+            if (Optional.IsDefined(IndirectAttack))
+            {
+                writer.WritePropertyName("indirect_attack"u8);
+                writer.WriteObjectValue(IndirectAttack, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,9 +114,10 @@ namespace Azure.AI.OpenAI
             ContentFilterResult hate = default;
             ContentFilterResult selfHarm = default;
             ContentFilterDetectionResult profanity = default;
-            IReadOnlyList<ContentFilterBlocklistIdResult> customBlocklists = default;
+            ContentFilterDetailedResults customBlocklists = default;
             ResponseError error = default;
             ContentFilterDetectionResult jailbreak = default;
+            ContentFilterDetectionResult indirectAttack = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,12 +173,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    List<ContentFilterBlocklistIdResult> array = new List<ContentFilterBlocklistIdResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ContentFilterBlocklistIdResult.DeserializeContentFilterBlocklistIdResult(item, options));
-                    }
-                    customBlocklists = array;
+                    customBlocklists = ContentFilterDetailedResults.DeserializeContentFilterDetailedResults(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -198,6 +194,15 @@ namespace Azure.AI.OpenAI
                     jailbreak = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("indirect_attack"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    indirectAttack = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -210,9 +215,10 @@ namespace Azure.AI.OpenAI
                 hate,
                 selfHarm,
                 profanity,
-                customBlocklists ?? new ChangeTrackingList<ContentFilterBlocklistIdResult>(),
+                customBlocklists,
                 error,
                 jailbreak,
+                indirectAttack,
                 serializedAdditionalRawData);
         }
 

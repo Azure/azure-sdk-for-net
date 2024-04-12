@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Represents the outcome of an evaluation against a custom blocklist as performed by content filtering. </summary>
-    public partial class ContentFilterBlocklistIdResult
+    /// <summary> Represents a structured collection of result details for content filtering. </summary>
+    public partial class ContentFilterDetailedResults
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +46,37 @@ namespace Azure.AI.OpenAI
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ContentFilterBlocklistIdResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterDetailedResults"/>. </summary>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
-        /// <param name="id"> The ID of the custom blocklist evaluated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal ContentFilterBlocklistIdResult(bool filtered, string id)
+        /// <param name="details"> The collection of detailed blocklist result information. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="details"/> is null. </exception>
+        internal ContentFilterDetailedResults(bool filtered, IEnumerable<ContentFilterBlocklistIdResult> details)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(details, nameof(details));
 
             Filtered = filtered;
-            Id = id;
+            Details = details.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentFilterBlocklistIdResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentFilterDetailedResults"/>. </summary>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
-        /// <param name="id"> The ID of the custom blocklist evaluated. </param>
+        /// <param name="details"> The collection of detailed blocklist result information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContentFilterBlocklistIdResult(bool filtered, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContentFilterDetailedResults(bool filtered, IReadOnlyList<ContentFilterBlocklistIdResult> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Filtered = filtered;
-            Id = id;
+            Details = details;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentFilterBlocklistIdResult"/> for deserialization. </summary>
-        internal ContentFilterBlocklistIdResult()
+        /// <summary> Initializes a new instance of <see cref="ContentFilterDetailedResults"/> for deserialization. </summary>
+        internal ContentFilterDetailedResults()
         {
         }
 
         /// <summary> A value indicating whether or not the content has been filtered. </summary>
         public bool Filtered { get; }
-        /// <summary> The ID of the custom blocklist evaluated. </summary>
-        public string Id { get; }
+        /// <summary> The collection of detailed blocklist result information. </summary>
+        public IReadOnlyList<ContentFilterBlocklistIdResult> Details { get; }
     }
 }

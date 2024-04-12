@@ -53,6 +53,16 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
+            if (Optional.IsCollectionDefined(TimestampGranularities))
+            {
+                writer.WritePropertyName("timestamp_granularities"u8);
+                writer.WriteStartArray();
+                foreach (var item in TimestampGranularities)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(DeploymentName))
             {
                 writer.WritePropertyName("model"u8);
@@ -102,6 +112,7 @@ namespace Azure.AI.OpenAI
             string language = default;
             string prompt = default;
             float? temperature = default;
+            IList<AudioTranscriptionTimestampGranularity> timestampGranularities = default;
             string model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -145,6 +156,20 @@ namespace Azure.AI.OpenAI
                     temperature = property.Value.GetSingle();
                     continue;
                 }
+                if (property.NameEquals("timestamp_granularities"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AudioTranscriptionTimestampGranularity> array = new List<AudioTranscriptionTimestampGranularity>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new AudioTranscriptionTimestampGranularity(item.GetString()));
+                    }
+                    timestampGranularities = array;
+                    continue;
+                }
                 if (property.NameEquals("model"u8))
                 {
                     model = property.Value.GetString();
@@ -163,6 +188,7 @@ namespace Azure.AI.OpenAI
                 language,
                 prompt,
                 temperature,
+                timestampGranularities ?? new ChangeTrackingList<AudioTranscriptionTimestampGranularity>(),
                 model,
                 serializedAdditionalRawData);
         }
