@@ -123,18 +123,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             Assert.That(destinationPath, Is.EqualTo(storageResource.Uri.AbsoluteUri));
             Assert.That(storageResource, Is.TypeOf<ShareFileStorageResource>());
-            Assert.That(storageResource._options.HttpHeaders.ContentType, Is.EqualTo(originalDestinationData.ContentHeaders.ContentType));
-            Assert.That(storageResource._options.HttpHeaders.ContentEncoding, Is.EqualTo(originalDestinationData.ContentHeaders.ContentEncoding));
-            Assert.That(storageResource._options.HttpHeaders.ContentLanguage, Is.EqualTo(originalDestinationData.ContentHeaders.ContentLanguage));
-            Assert.That(storageResource._options.HttpHeaders.ContentDisposition, Is.EqualTo(originalDestinationData.ContentHeaders.ContentDisposition));
-            Assert.That(storageResource._options.HttpHeaders.CacheControl, Is.EqualTo(originalDestinationData.ContentHeaders.CacheControl));
+            Assert.That(storageResource._options.ContentType, Is.EqualTo(originalDestinationData.ContentHeaders.ContentType));
+            Assert.That(storageResource._options.ContentEncoding, Is.EqualTo(originalDestinationData.ContentHeaders.ContentEncoding));
+            Assert.That(storageResource._options.ContentLanguage, Is.EqualTo(originalDestinationData.ContentHeaders.ContentLanguage));
+            Assert.That(storageResource._options.ContentDisposition, Is.EqualTo(originalDestinationData.ContentHeaders.ContentDisposition));
+            Assert.That(storageResource._options.CacheControl, Is.EqualTo(originalDestinationData.ContentHeaders.CacheControl));
             Assert.That(storageResource._options.FileMetadata, Is.EqualTo(originalDestinationData.FileMetadata));
             Assert.That(storageResource._options.DirectoryMetadata, Is.EqualTo(originalDestinationData.DirectoryMetadata));
-            Assert.That(storageResource._options.SmbProperties.FileAttributes, Is.EqualTo(originalDestinationData.SmbProperties.FileAttributes));
-            Assert.That(storageResource._options.SmbProperties.FilePermissionKey, Is.EqualTo(originalDestinationData.SmbProperties.FilePermissionKey));
-            Assert.That(storageResource._options.SmbProperties.FileCreatedOn, Is.EqualTo(originalDestinationData.SmbProperties.FileCreatedOn));
-            Assert.That(storageResource._options.SmbProperties.FileLastWrittenOn, Is.EqualTo(originalDestinationData.SmbProperties.FileLastWrittenOn));
-            Assert.That(storageResource._options.SmbProperties.FileChangedOn, Is.EqualTo(originalDestinationData.SmbProperties.FileChangedOn));
+            Assert.That(storageResource._options.FileAttributes, Is.EqualTo(originalDestinationData.SmbProperties.FileAttributes));
+            Assert.That(storageResource._options.FilePermissionKey, Is.EqualTo(originalDestinationData.SmbProperties.FilePermissionKey));
+            Assert.That(storageResource._options.FileCreatedOn, Is.EqualTo(originalDestinationData.SmbProperties.FileCreatedOn));
+            Assert.That(storageResource._options.FileLastWrittenOn, Is.EqualTo(originalDestinationData.SmbProperties.FileLastWrittenOn));
+            Assert.That(storageResource._options.FileChangedOn, Is.EqualTo(originalDestinationData.SmbProperties.FileChangedOn));
         }
 
         [Test]
