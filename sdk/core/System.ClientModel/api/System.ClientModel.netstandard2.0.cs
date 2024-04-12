@@ -7,6 +7,13 @@ namespace System.ClientModel
         public static implicit operator System.ClientModel.ApiKeyCredential (string key) { throw null; }
         public void Update(string key) { }
     }
+    public abstract partial class AsyncEnumerableResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>, System.IDisposable where T : System.ClientModel.Primitives.IPersistableModel<T>
+    {
+        protected internal AsyncEnumerableResult(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public void Dispose() { }
+        protected abstract void Dispose(bool disposing);
+        public abstract System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
     public abstract partial class BinaryContent : System.IDisposable
     {
         protected BinaryContent() { }
@@ -39,6 +46,14 @@ namespace System.ClientModel
         protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
+    }
+    public abstract partial class EnumerableClientResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable, System.IDisposable where T : System.ClientModel.Primitives.IPersistableModel<T>
+    {
+        protected internal EnumerableClientResult(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public void Dispose() { }
+        protected abstract void Dispose(bool disposing);
+        public abstract System.Collections.Generic.IEnumerator<T> GetEnumerator();
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
 }
 namespace System.ClientModel.Primitives
