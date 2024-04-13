@@ -44,7 +44,7 @@ namespace Azure.Identity.Tests
         }
 
         [NonParallelizable]
-        [Test]
+        [RecordedTest]
         public async Task ValidateUserAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.SFEnable) || string.IsNullOrEmpty(TestEnvironment.UserAssignedVault))

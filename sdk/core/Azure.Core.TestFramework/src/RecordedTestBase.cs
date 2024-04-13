@@ -126,10 +126,19 @@ namespace Azure.Core.TestFramework
         public List<BodyRegexSanitizer> BodyRegexSanitizers { get; } =
             new()
             {
-                new BodyRegexSanitizer("(client_assertion=)[^&]+", SanitizeValue),
-                new BodyRegexSanitizer("(client_id=)[^&]+", SanitizeValue),
-                new BodyRegexSanitizer("(client_secret=)[^&]+", SanitizeValue),
-                new BodyRegexSanitizer("(?:\\\\.*[?](sv|sig|se|srt|ss|sp)=)(?<secret>(([^&\\s]*)))", SanitizeValue)
+                new BodyRegexSanitizer("(client_assertion=)(?<secret>[^&]+)", SanitizeValue)
+                {
+                    GroupForReplace = "secret"
+                },
+                new BodyRegexSanitizer("(client_id=)(?<secret>[^&]+)", SanitizeValue)
+                {
+                    GroupForReplace = "secret"
+                },
+                new BodyRegexSanitizer("(client_secret=)(?<secret>[^&]+)", SanitizeValue)
+                {
+                    GroupForReplace = "secret"
+                },
+                new BodyRegexSanitizer("(?:\\\\.*[?](sv|sig|se|srt|ss|sp)=)(?<secret>[^&]+)", SanitizeValue)
                 {
                     GroupForReplace = "secret"
                 },
