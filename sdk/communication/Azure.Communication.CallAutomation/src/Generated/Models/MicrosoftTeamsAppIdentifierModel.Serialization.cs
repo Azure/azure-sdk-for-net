@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication
 {
-    internal partial class TeamsAppIdentifier : IUtf8JsonSerializable
+    internal partial class MicrosoftTeamsAppIdentifierModel : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,7 +25,7 @@ namespace Azure.Communication
             writer.WriteEndObject();
         }
 
-        internal static TeamsAppIdentifier DeserializeTeamsAppIdentifier(JsonElement element)
+        internal static MicrosoftTeamsAppIdentifierModel DeserializeMicrosoftTeamsAppIdentifierModel(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -50,7 +50,7 @@ namespace Azure.Communication
                     continue;
                 }
             }
-            return new TeamsAppIdentifier(appId, cloud);
+            return new MicrosoftTeamsAppIdentifierModel(appId, cloud);
         }
     }
 }

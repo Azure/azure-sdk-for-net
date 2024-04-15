@@ -59,7 +59,7 @@ namespace Azure.Communication
             CommunicationUserIdentifierModel communicationUser = default;
             PhoneNumberIdentifierModel phoneNumber = default;
             MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default;
-            TeamsAppIdentifier microsoftTeamsApp = default;
+            MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -109,7 +109,7 @@ namespace Azure.Communication
                     {
                         continue;
                     }
-                    microsoftTeamsApp = TeamsAppIdentifier.DeserializeTeamsAppIdentifier(property.Value);
+                    microsoftTeamsApp = MicrosoftTeamsAppIdentifierModel.DeserializeMicrosoftTeamsAppIdentifierModel(property.Value);
                     continue;
                 }
             }
