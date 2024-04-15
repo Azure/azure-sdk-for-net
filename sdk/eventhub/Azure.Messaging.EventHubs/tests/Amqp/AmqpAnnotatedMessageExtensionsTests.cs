@@ -295,20 +295,24 @@ namespace Azure.Messaging.EventHubs.Tests
         public void SystemPropertiesCanBeRead()
         {
             var sequenceNumber = 123L;
+            var replicationSegment = 0;
             var offset = 456L;
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
+            var lastReplicationSegment = 0;
             var lastOffset = 654L;
             var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
-            var message = CreateDataBodyMessageWithSystemProperties(sequenceNumber, lastSequence, offset, lastOffset, partitionKey, enqueueTime, lastEnqueue, lastRetrieve);
+            var message = CreateDataBodyMessageWithSystemProperties(sequenceNumber, lastSequence, replicationSegment, lastReplicationSegment, offset, lastOffset, partitionKey, enqueueTime, lastEnqueue, lastRetrieve);
 
             Assert.That(message.GetSequenceNumber(), Is.EqualTo(sequenceNumber), "The sequence number should match.");
+            Assert.That(message.GetReplicationSegment(), Is.EqualTo(replicationSegment), "The replication segment should match.");
             Assert.That(message.GetOffset(), Is.EqualTo(offset), "The offset should match.");
             Assert.That(message.GetEnqueuedTime(), Is.EqualTo(enqueueTime), "The enqueue time should match.");
             Assert.That(message.GetPartitionKey(), Is.EqualTo(partitionKey), "The partition key should match.");
             Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(lastSequence), "The last sequence number should match.");
+            Assert.That(message.GetLastPartitionReplicationSegment(), Is.EqualTo(lastReplicationSegment), "The last replication segment should match.");
             Assert.That(message.GetLastPartitionOffset(), Is.EqualTo(lastOffset), "The last offset should match.");
             Assert.That(message.GetLastPartitionEnqueuedTime(), Is.EqualTo(lastEnqueue), "The last enqueue time should match.");
             Assert.That(message.GetLastPartitionPropertiesRetrievalTime(), Is.EqualTo(lastRetrieve), "The last retrieve time should match.");
@@ -331,23 +335,27 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var sequenceNumber = 123L;
             var offset = 456L;
+            var replicationSegment = 0;
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
+            var lastReplicationSegment = 0;
             var lastOffset = 654L;
             var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
 
             var message = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new[] { (ReadOnlyMemory<byte>)Array.Empty<byte>() }));
-            message.PopulateFromEventProperties(properties, sequenceNumber, offset, enqueueTime, partitionKey, lastSequence, lastOffset, lastEnqueue, lastRetrieve);
+            message.PopulateFromEventProperties(properties, sequenceNumber, offset, replicationSegment, enqueueTime, partitionKey, lastSequence, lastReplicationSegment, lastOffset, lastEnqueue, lastRetrieve);
 
             Assert.That(message.ApplicationProperties, Is.EquivalentTo(properties), "The application properties should match.");
             Assert.That(message.GetSequenceNumber(), Is.EqualTo(sequenceNumber), "The sequence number should match.");
+            Assert.That(message.GetReplicationSegment(), Is.EqualTo(replicationSegment), "The replication segment should match.");
             Assert.That(message.GetOffset(), Is.EqualTo(offset), "The offset should match.");
             Assert.That(message.GetEnqueuedTime(), Is.EqualTo(enqueueTime), "The enqueue time should match.");
             Assert.That(message.GetPartitionKey(), Is.EqualTo(partitionKey), "The partition key should match.");
             Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(lastSequence), "The last sequence number should match.");
             Assert.That(message.GetLastPartitionOffset(), Is.EqualTo(lastOffset), "The last offset should match.");
+            Assert.That(message.GetLastPartitionReplicationSegment(), Is.EqualTo(lastReplicationSegment), "The last replication segment should match.");
             Assert.That(message.GetLastPartitionEnqueuedTime(), Is.EqualTo(lastEnqueue), "The last enqueue time should match.");
             Assert.That(message.GetLastPartitionPropertiesRetrievalTime(), Is.EqualTo(lastRetrieve), "The last retrieve time should match.");
         }
@@ -362,19 +370,23 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var sequenceNumber = 123L;
             var offset = 456L;
+            var replicationSegment = 12;
             var enqueueTime = new DateTimeOffset(2015, 10, 27, 00, 00, 00, TimeSpan.Zero);
             var partitionKey = "fake-key";
             var lastSequence = 321L;
+            var lastReplicationSegment = 13;
             var lastOffset = 654L;
             var lastEnqueue = new DateTimeOffset(2012, 03, 04, 08, 00, 00, TimeSpan.Zero);
             var lastRetrieve = new DateTimeOffset(2020, 01, 01, 05, 15, 37, TimeSpan.Zero);
-            var message = CreateDataBodyMessageWithSystemProperties(default, default, default, default, default, default, default, default);
+            var message = CreateDataBodyMessageWithSystemProperties(default, default, default, default, default, default, default, default, default, default);
 
             Assert.That(message.GetSequenceNumber(sequenceNumber), Is.EqualTo(sequenceNumber), "The sequence number should match.");
+            Assert.That(message.GetReplicationSegment(replicationSegment), Is.EqualTo(replicationSegment), "The replication segment should match.");
             Assert.That(message.GetOffset(offset), Is.EqualTo(offset), "The offset should match.");
             Assert.That(message.GetEnqueuedTime(enqueueTime), Is.EqualTo(enqueueTime), "The enqueue time should match.");
             Assert.That(message.GetPartitionKey(partitionKey), Is.EqualTo(partitionKey), "The partition key should match.");
             Assert.That(message.GetLastPartitionSequenceNumber(lastSequence), Is.EqualTo(lastSequence), "The last sequence number should match.");
+            Assert.That(message.GetLastPartitionReplicationSegment(lastReplicationSegment), Is.EqualTo(lastReplicationSegment), "The last replication segment should match.");
             Assert.That(message.GetLastPartitionOffset(lastOffset), Is.EqualTo(lastOffset), "The last offset should match.");
             Assert.That(message.GetLastPartitionEnqueuedTime(lastEnqueue), Is.EqualTo(lastEnqueue), "The last enqueue time should match.");
             Assert.That(message.GetLastPartitionPropertiesRetrievalTime(lastRetrieve), Is.EqualTo(lastRetrieve), "The last retrieve time should match.");
@@ -388,14 +400,16 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SystemPropertiesReturnExpectedDefaultValuesWhenNotInTheMessageAndNoCustom()
         {
-            var message = CreateDataBodyMessageWithSystemProperties(default, default, default, default, default, default, default, default);
+            var message = CreateDataBodyMessageWithSystemProperties(default, default, default, default, default, default, default, default, default, default);
 
             Assert.That(message.GetSequenceNumber(), Is.EqualTo(long.MinValue), "The sequence number should match.");
+            Assert.That(message.GetReplicationSegment(), Is.EqualTo(-1), "The replication segment should match.");
             Assert.That(message.GetOffset(), Is.EqualTo(long.MinValue), "The offset should match.");
             Assert.That(message.GetEnqueuedTime(), Is.EqualTo(default(DateTimeOffset)), "The enqueue time should match.");
             Assert.That(message.GetPartitionKey(), Is.EqualTo(null), "The partition key should match.");
             Assert.That(message.GetLastPartitionSequenceNumber(), Is.EqualTo(null), "The last sequence number should match.");
             Assert.That(message.GetLastPartitionOffset(), Is.EqualTo(null), "The last offset should match.");
+            Assert.That(message.GetLastPartitionReplicationSegment(), Is.EqualTo(null), "The last replication segment should match.");
             Assert.That(message.GetLastPartitionEnqueuedTime(), Is.EqualTo(null), "The last enqueue time should match.");
             Assert.That(message.GetLastPartitionPropertiesRetrievalTime(), Is.EqualTo(null), "The last retrieve time should match.");
         }
@@ -499,6 +513,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         /// <param name="sequenceNumber">The sequence number of the event; if null, this will not be populated.</param>
         /// <param name="lastSequenceNumber">The sequence number that was last enqueued in the partition; if null, this will not be populated.</param>
+        /// <param name="replicationSegment">The replication segment of the event; if null, this will not be populated.</param>
+        /// <param name="lastReplicationSegment">The replication segment that was last enqueued in the partition; if null, this will not be populated.</param>
         /// <param name="offset">The offset of the event; if null, this will not be populated.</param>
         /// <param name="lastOffset">The offset that was last enqueued in the partition; if null, this will not be populated.</param>
         /// <param name="partitionKey">The partition key of the event; if null, this will not be populated.</param>
@@ -510,6 +526,8 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static AmqpAnnotatedMessage CreateDataBodyMessageWithSystemProperties(long? sequenceNumber,
                                                                                       long? lastSequenceNumber,
+                                                                                      int? replicationSegment,
+                                                                                      int? lastReplicationSegment,
                                                                                       long? offset,
                                                                                       long? lastOffset,
                                                                                       string partitionKey,
@@ -524,6 +542,11 @@ namespace Azure.Messaging.EventHubs.Tests
             if (sequenceNumber.HasValue)
             {
                 message.MessageAnnotations.Add(AmqpProperty.SequenceNumber.ToString(), sequenceNumber.Value);
+            }
+
+            if (replicationSegment.HasValue)
+            {
+                message.MessageAnnotations.Add(AmqpProperty.ReplicationSegment.ToString(), replicationSegment.Value);
             }
 
             if (offset.HasValue)
@@ -548,6 +571,11 @@ namespace Azure.Messaging.EventHubs.Tests
             if (lastSequenceNumber.HasValue)
             {
                 message.DeliveryAnnotations.Add(AmqpProperty.PartitionLastEnqueuedSequenceNumber.ToString(), lastSequenceNumber.Value);
+            }
+
+            if (lastReplicationSegment.HasValue)
+            {
+                message.DeliveryAnnotations.Add(AmqpProperty.PartitionLastEnqueuedReplicationSegment.ToString(), lastReplicationSegment.Value);
             }
 
             if (lastOffset.HasValue)

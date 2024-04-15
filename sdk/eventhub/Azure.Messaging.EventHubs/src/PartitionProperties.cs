@@ -77,9 +77,39 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionId">The identifier of the partition.</param>
         /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
         /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
-        /// <param name="beginningReplicationSegment"></param>
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
-        /// <param name="lastReplicationSegment"></param>
+        /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
+        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal PartitionProperties(string eventHubName,
+                                               string partitionId,
+                                               bool isEmpty,
+                                               long beginningSequenceNumber,
+                                               long lastSequenceNumber,
+                                               long lastOffset,
+                                               DateTimeOffset lastEnqueuedTime)
+        {
+            EventHubName = eventHubName;
+            Id = partitionId;
+            BeginningSequenceNumber = beginningSequenceNumber;
+            LastEnqueuedSequenceNumber = lastSequenceNumber;
+            LastEnqueuedOffset = lastOffset;
+            LastEnqueuedTime = lastEnqueuedTime;
+            IsEmpty = isEmpty;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that contains the partitions.</param>
+        /// <param name="partitionId">The identifier of the partition.</param>
+        /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
+        /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
+        /// <param name="beginningReplicationSegment">The first replication segment available for events in the partition.</param>
+        /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
+        /// <param name="lastReplicationSegment">The replication segment of the last event to be enqueued in the partition.</param>
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         ///

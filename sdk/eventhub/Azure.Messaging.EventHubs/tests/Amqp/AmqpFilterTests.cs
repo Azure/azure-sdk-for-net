@@ -38,18 +38,21 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void BuildFilterExpressionPrefersOffset()
+        public void BuildFilterExpressionPrefersSequenceNumber()
         {
             // Set all properties for the event position.
 
-            var offset = 1;
-            var position = EventPosition.FromOffset(offset);
-            position.SequenceNumber = "222";
-            position.EnqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
+            var offset = "1";
+            var sequenceNumber = 222;
+            var replicationSegment = 4;
+            var eventPosition = EventPosition.FromSequenceNumber(sequenceNumber, replicationSegment);
+            eventPosition.Offset = offset;
+            eventPosition.EnqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
 
-            var filter = AmqpFilter.BuildFilterExpression(position);
-            Assert.That(filter, Contains.Substring(AmqpFilter.OffsetName), "The offset should have precedence for filtering.");
-            Assert.That(filter, Contains.Substring(offset.ToString()), "The offset value should be present in the filter.");
+            var filter = AmqpFilter.BuildFilterExpression(eventPosition);
+            Assert.That(filter, Contains.Substring(AmqpFilter.SequenceNumberName), "The sequence number should have precedence for filtering.");
+            Assert.That(filter, Contains.Substring(sequenceNumber.ToString()), "The sequence number value should be present in the filter.");
+            Assert.That(filter, Contains.Substring(replicationSegment.ToString()), "The replication segment value should be present in the filter.");
         }
 
         /// <summary>
@@ -58,17 +61,17 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void BuildFilterExpressionPrefersSequenceNumberToEnqueuedTime()
+        public void BuildFilterExpressionPrefersOffsetToEnqueuedTime()
         {
             // Set all properties for the event position.
 
-            var sequence = 2345;
-            var position = EventPosition.FromSequenceNumber(sequence);
+            var offset = 2345;
+            var position = EventPosition.FromOffset(offset);
             position.EnqueuedTime = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
 
             var filter = AmqpFilter.BuildFilterExpression(position);
             Assert.That(filter, Contains.Substring(AmqpFilter.SequenceNumberName), "The sequence number should have precedence over the enqueued time for filtering.");
-            Assert.That(filter, Contains.Substring(sequence.ToString()), "The sequence number value should be present in the filter.");
+            Assert.That(filter, Contains.Substring(offset.ToString()), "The sequence number value should be present in the filter.");
         }
 
         /// <summary>
@@ -144,6 +147,25 @@ namespace Azure.Messaging.EventHubs.Tests
             var filter = AmqpFilter.BuildFilterExpression(position);
 
             Assert.That(filter, Contains.Substring(comparison), "The comparison should be based on the inclusive flag.");
+            Assert.That(filter, Contains.Substring(":123"), "The filter should set replicationSegment:sequenceNumber.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpFilter.BuildFilterExpression(EventPosition)" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public void BuildFilterExpressionHonorsInclusiveFlagForSequenceNumberAndReplicationSegment(bool inclusive)
+        {
+            var comparison = (inclusive) ? ">=" : ">";
+            var position = EventPosition.FromSequenceNumber(123, 4, inclusive);
+            var filter = AmqpFilter.BuildFilterExpression(position);
+
+            Assert.That(filter, Contains.Substring(comparison), "The comparison should be based on the inclusive flag.");
+            Assert.That(filter, Contains.Substring("4:123"), "The filter should set replicationSegment:sequenceNumber.");
         }
 
         /// <summary>

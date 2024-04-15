@@ -22,17 +22,33 @@ namespace Azure.Messaging.EventHubs
     public static class EventHubsModelFactory
     {
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubProperties"/> class.
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.EventHubProperties"/> class.
         /// </summary>
         ///
         /// <param name="name">The name of the Event Hub.</param>
         /// <param name="createdOn">The date and time at which the Event Hub was created.</param>
         /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static EventHubProperties EventHubProperties(string name,
                                                             DateTimeOffset createdOn,
                                                             string[] partitionIds) =>
            new EventHubProperties(name, createdOn, partitionIds);
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.EventHubProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="name">The name of the Event Hub.</param>
+        /// <param name="createdOn">The date and time at which the Event Hub was created.</param>
+        /// <param name="partitionIds">The set of unique identifiers for each partition.</param>
+        /// <param name="geoReplicationCount">The total number of replicas including the primary of the Event Hubs namespace.</param>
+        ///
+        public static EventHubProperties EventHubProperties(string name,
+                                                            DateTimeOffset createdOn,
+                                                            string[] partitionIds,
+                                                            int geoReplicationCount) =>
+           new EventHubProperties(name, createdOn, partitionIds, geoReplicationCount);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.PartitionProperties"/> class.
@@ -54,7 +70,7 @@ namespace Azure.Messaging.EventHubs
                                                               long lastSequenceNumber,
                                                               long lastOffset,
                                                               DateTimeOffset lastEnqueuedTime) =>
-            new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
+            new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, default, lastSequenceNumber, default, lastOffset, lastEnqueuedTime);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.PartitionProperties"/> class.
@@ -82,7 +98,7 @@ namespace Azure.Messaging.EventHubs
             new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, beginningReplicationSegment, lastSequenceNumber, lastReplicationSegment, lastOffset, lastEnqueuedTime);
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventHubProperties"/> class.
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.EventHubProperties"/> class.
         /// </summary>
         ///
         /// <param name="isIdempotentPublishingEnabled">Indicates whether idempotent publishing is enabled.</param>
@@ -142,7 +158,29 @@ namespace Azure.Messaging.EventHubs
             new FactoryPartitionContext("<< NULL >>", "<< NULL >>", "<< NULL >>", partitionId, lastEnqueuedEventProperties);
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="EventData"/> class.
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.EventData"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBody">The data to use as the body of the event.</param>
+        /// <param name="properties">The set of free-form event properties to send with the event.</param>
+        /// <param name="systemProperties">The set of system properties that accompany events read from the Event Hubs service.</param>
+        /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
+        /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
+        /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
+        /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EventData EventData(BinaryData eventBody,
+                                          IDictionary<string, object> properties,
+                                          IReadOnlyDictionary<string, object> systemProperties,
+                                          string partitionKey,
+                                          long sequenceNumber,
+                                          long offset,
+                                          DateTimeOffset enqueuedTime) =>
+             new EventData(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime: enqueuedTime, partitionKey: partitionKey);
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.EventData"/> class.
         /// </summary>
         ///
         /// <param name="eventBody">The data to use as the body of the event.</param>

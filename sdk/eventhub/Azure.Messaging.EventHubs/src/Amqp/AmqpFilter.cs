@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs
 
             if (!string.IsNullOrEmpty(eventPosition.SequenceNumber))
             {
-                return $"{SequenceNumberName} {(eventPosition.IsInclusive ? ">=" : ">")} {eventPosition.ReplicationSegment ?? ""}:{eventPosition.SequenceNumber}";
+                return $"{SequenceNumberName} {(eventPosition.IsInclusive ? ">=" : ">")} {eventPosition.ReplicationSegment.ToString() ?? ""}:{eventPosition.SequenceNumber}";
             }
 
             if (!string.IsNullOrEmpty(eventPosition.Offset))

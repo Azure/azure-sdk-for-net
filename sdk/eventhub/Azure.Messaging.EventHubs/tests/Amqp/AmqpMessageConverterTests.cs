@@ -161,11 +161,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using AmqpMessage message = converter.CreateMessageFromEvent(eventData, partitionKey);
             Assert.That(message, Is.Not.Null, "The AMQP message should have been created.");
-            Assert.That(message.MessageAnnotations.Map.TryGetValue(AmqpProperty.PartitionKey, out object annotationPartionKey), Is.EqualTo(!string.IsNullOrEmpty(partitionKey)), "The partition key annotation was not correctly set.");
+            Assert.That(message.MessageAnnotations.Map.TryGetValue(AmqpProperty.PartitionKey, out object annotationPartitionKey), Is.EqualTo(!string.IsNullOrEmpty(partitionKey)), "The partition key annotation was not correctly set.");
 
             if (!string.IsNullOrEmpty(partitionKey))
             {
-                Assert.That(annotationPartionKey, Is.EqualTo(partitionKey), "The partition key annotation should match.");
+                Assert.That(annotationPartitionKey, Is.EqualTo(partitionKey), "The partition key annotation should match.");
             }
         }
 
@@ -319,7 +319,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using AmqpMessage message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
 
             Assert.That(message, Is.Not.Null, "The AMQP message should have been created.");
-            Assert.That(message.DataBody, Is.Not.Null, "The AMQP message should a body.");
+            Assert.That(message.DataBody, Is.Not.Null, "The AMQP message should have a body.");
             Assert.That(message.ApplicationProperties, Is.Not.Null, "The AMQP message should have a set of application properties.");
 
             var propertyKey = eventData.Properties.Keys.First();
@@ -2045,7 +2045,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var name = "SomeName";
             var partition = "55";
             var beginSequenceNumber = 555L;
+            var beginReplicationSegment = 1;
             var lastSequenceNumber = 666L;
+            var lastReplicationSegment = 1;
             var lastOffset = 777L;
             var lastEnqueueTime = DateTimeOffset.Parse("2015-10-27T00:00:00z");
             var isEmpty = false;
@@ -2055,7 +2057,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 { AmqpManagement.ResponseMap.Name, name },
                 { AmqpManagement.ResponseMap.PartitionIdentifier, partition },
                 { AmqpManagement.ResponseMap.PartitionBeginSequenceNumber, beginSequenceNumber },
+                { AmqpManagement.ResponseMap.PartitionBeginReplicationSegment, beginReplicationSegment },
                 { AmqpManagement.ResponseMap.PartitionLastEnqueuedSequenceNumber, lastSequenceNumber },
+                { AmqpManagement.ResponseMap.PartitionLastEnqueuedReplicationSegment, lastReplicationSegment },
                 { AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset, lastOffset.ToString() },
                 { AmqpManagement.ResponseMap.PartitionLastEnqueuedTimeUtc, lastEnqueueTime.UtcDateTime },
                 { AmqpManagement.ResponseMap.PartitionRuntimeInfoPartitionIsEmpty, isEmpty }
@@ -2068,7 +2072,9 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(properties.EventHubName, Is.EqualTo(name), "The name should match");
             Assert.That(properties.Id, Is.EqualTo(partition), "The partition should match");
             Assert.That(properties.BeginningSequenceNumber, Is.EqualTo(beginSequenceNumber), "The beginning sequence number should match");
+            Assert.That(properties.BeginningReplicationSegment, Is.EqualTo(beginReplicationSegment), "The beginning replication segment should match");
             Assert.That(properties.LastEnqueuedSequenceNumber, Is.EqualTo(lastSequenceNumber), "The last sequence number should match");
+            Assert.That(properties.LastEnqueuedReplicationSegment, Is.EqualTo(lastReplicationSegment), "The last replication segment should match");
             Assert.That(properties.LastEnqueuedOffset, Is.EqualTo(lastOffset), "The offset should match");
             Assert.That(properties.LastEnqueuedTime, Is.EqualTo(lastEnqueueTime), "The last enqueued time should match");
             Assert.That(properties.IsEmpty, Is.EqualTo(isEmpty), "The empty flag should match");

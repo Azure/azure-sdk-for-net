@@ -639,6 +639,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(link.Settings.DesiredCapabilities, Is.Not.Null, "There should have been a set of desired capabilities created.");
             Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.TrackLastEnqueuedEventProperties), Is.True, "Last event tracking should be requested.");
+            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
         }
 
         /// <summary>
@@ -1289,6 +1290,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var linkTarget = (Target)link.Settings.Target;
             Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
             Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.EnableIdempotentPublishing), Is.True, "The idempotent publishing capability should have been set.");
+            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerGroupId], Is.EqualTo(options.ProducerGroupId), "The producer group should have been set.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerOwnerLevel], Is.EqualTo(options.OwnerLevel), "The owner level should have been set.");
@@ -1362,6 +1364,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var linkTarget = (Target)link.Settings.Target;
             Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
             Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.EnableIdempotentPublishing), Is.True, "The idempotent publishing capability should have been set.");
+            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerGroupId.ToString()), Is.False, "The producer group should not have been set.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerOwnerLevel.ToString()), Is.False, "The owner level should not have been set.");
@@ -1435,6 +1438,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var linkTarget = (Target)link.Settings.Target;
             Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
             Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.EnableIdempotentPublishing), Is.True, "The idempotent publishing capability should have been set.");
+            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerGroupId.ToString()), Is.True, "The producer group should have been set.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.ProducerOwnerLevel.ToString()), Is.True, "The owner level should have been set.");
@@ -1513,7 +1517,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var linkTarget = (Target)link.Settings.Target;
             Assert.That(linkTarget.Address.ToString(), Contains.Substring($"/{ partitionId }"), "The partition identifier should have been part of the link address.");
-            Assert.That(link.Settings.DesiredCapabilities, Is.Null, "The idempotent publishing capability should not have been set.");
+            Assert.That(link.Settings.DesiredCapabilities, Is.Not.Null, "Desired capabilities should have been created.");
+            Assert.That(link.Settings.DesiredCapabilities.Contains(AmqpProperty.GeoReplication), Is.True, "Geo replication should always be requested.");
             Assert.That(link.Settings.Properties.Any(item => item.Key.Key.ToString() == AmqpProperty.EntityType.ToString()), Is.True, "There should be an entity type specified.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerGroupId], Is.EqualTo(options.ProducerGroupId), "The producer group should have been set.");
             Assert.That(link.Settings.Properties[AmqpProperty.ProducerOwnerLevel], Is.EqualTo(options.OwnerLevel), "The owner level should have been set.");

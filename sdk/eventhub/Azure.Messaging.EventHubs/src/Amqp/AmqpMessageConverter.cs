@@ -184,7 +184,8 @@ namespace Azure.Messaging.EventHubs.Amqp
             return new EventHubProperties(
                 (string)responseData[AmqpManagement.ResponseMap.Name],
                 new DateTimeOffset((DateTime)responseData[AmqpManagement.ResponseMap.CreatedAt], TimeSpan.Zero),
-                (string[])responseData[AmqpManagement.ResponseMap.PartitionIdentifiers]);
+                (string[])responseData[AmqpManagement.ResponseMap.PartitionIdentifiers],
+                (int)responseData[AmqpManagement.ResponseMap.GeoReplicationFactor]);
         }
 
         /// <summary>
@@ -249,10 +250,10 @@ namespace Azure.Messaging.EventHubs.Amqp
                 (string)responseData[AmqpManagement.ResponseMap.PartitionIdentifier],
                 (bool)responseData[AmqpManagement.ResponseMap.PartitionRuntimeInfoPartitionIsEmpty],
                 (long)responseData[AmqpManagement.ResponseMap.PartitionBeginSequenceNumber],
-                ((int)responseData[AmqpManagement.ResponseMap.PartitionBeginReplicationSegment]).ToString(),
+                ((int)responseData[AmqpManagement.ResponseMap.PartitionBeginReplicationSegment]),
                 (long)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedSequenceNumber],
+                ((int)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedReplicationSegment]),
                 long.Parse((string)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedOffset], NumberStyles.Integer, CultureInfo.InvariantCulture),
-                ((int)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedReplicationSegment]).ToString(),
                 new DateTimeOffset((DateTime)responseData[AmqpManagement.ResponseMap.PartitionLastEnqueuedTimeUtc], TimeSpan.Zero));
         }
 
