@@ -20,6 +20,8 @@ public class ClientRetryPolicy : PipelinePolicy
     /// The <see cref="ClientRetryPolicy"/> instance used by a default
     /// <see cref="ClientPipeline"/>.
     /// </summary>
+    // Note: if this becomes mutable, now we have mutable global state, which
+    // we don't want to have.
     public static ClientRetryPolicy Default { get; } = new ClientRetryPolicy();
 
     private const int DefaultMaxRetries = 3;
