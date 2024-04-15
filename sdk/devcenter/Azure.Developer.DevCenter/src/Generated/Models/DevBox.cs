@@ -47,6 +47,11 @@ namespace Azure.Developer.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevBox"/>. </summary>
+        public DevBox()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevBox"/>. </summary>
         /// <param name="name"> Display name for the Dev Box. </param>
         /// <param name="projectName"> Name of the project this Dev Box belongs to. </param>
         /// <param name="poolName"> The name of the Dev Box pool this machine belongs to. </param>
@@ -96,17 +101,12 @@ namespace Azure.Developer.DevCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBox"/> for deserialization. </summary>
-        internal DevBox()
-        {
-        }
-
         /// <summary> Display name for the Dev Box. </summary>
         public string Name { get; }
         /// <summary> Name of the project this Dev Box belongs to. </summary>
         public string ProjectName { get; }
         /// <summary> The name of the Dev Box pool this machine belongs to. </summary>
-        public string PoolName { get; set; }
+        public string PoolName { get; }
         /// <summary> Indicates whether hibernate is enabled/disabled or unknown. </summary>
         public HibernateSupport? HibernateSupport { get; }
         /// <summary> The current provisioning state of the Dev Box. </summary>
@@ -143,6 +143,6 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Creation time of this Dev Box. </summary>
         public DateTimeOffset? CreatedTime { get; }
         /// <summary> Indicates whether the owner of the Dev Box is a local administrator. </summary>
-        public LocalAdministratorStatus? LocalAdministratorStatus { get; set; }
+        public LocalAdministratorStatus? LocalAdministratorStatus { get; }
     }
 }

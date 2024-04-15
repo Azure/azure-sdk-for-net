@@ -47,6 +47,12 @@ namespace Azure.Developer.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
+        public DevCenterEnvironment()
+        {
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
         /// <param name="parameters"> Parameters object for the environment. </param>
         /// <param name="name"> Environment name. </param>
         /// <param name="environmentTypeName"> Environment type. </param>
@@ -69,11 +75,6 @@ namespace Azure.Developer.DevCenter.Models
             EnvironmentDefinitionName = environmentDefinitionName;
             Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/> for deserialization. </summary>
-        internal DevCenterEnvironment()
-        {
         }
 
         /// <summary>
@@ -110,15 +111,15 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> Environment name. </summary>
         public string Name { get; }
         /// <summary> Environment type. </summary>
-        public string EnvironmentTypeName { get; set; }
+        public string EnvironmentTypeName { get; }
         /// <summary> The AAD object id of the owner of this Environment. </summary>
         public Guid? UserId { get; }
         /// <summary> The provisioning state of the environment. </summary>
         public EnvironmentProvisioningState? ProvisioningState { get; }
         /// <summary> Name of the catalog. </summary>
-        public string CatalogName { get; set; }
+        public string CatalogName { get; }
         /// <summary> Name of the environment definition. </summary>
-        public string EnvironmentDefinitionName { get; set; }
+        public string EnvironmentDefinitionName { get; }
         /// <summary> Provisioning error details. Populated only for error states. </summary>
         public ResponseError Error { get; }
     }
