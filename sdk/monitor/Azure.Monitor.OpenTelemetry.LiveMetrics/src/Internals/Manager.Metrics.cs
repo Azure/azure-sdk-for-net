@@ -131,18 +131,34 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             _process.Refresh();
 
+            // OLD METRIC NAME. TODO: Remove this after the UX is updated to use the new metrics
             yield return new Models.MetricPoint
             {
                 Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
-                Value = _process.PrivateMemorySize64,
+                Value = _process.WorkingSet64,
+                Weight = 1
+            };
+
+            yield return new Models.MetricPoint
+            {
+                Name = LiveMetricConstants.MetricId.ProcessPhysicalBytesMetricIdValue,
+                Value = _process.WorkingSet64,
                 Weight = 1
             };
 
             if (TryCalculateCPUCounter(out var processorValue))
             {
+                // OLD METRIC NAME. TODO: Remove this after the UX is updated to use the new metrics
                 yield return new Models.MetricPoint
                 {
                     Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
+                    Value = Convert.ToSingle(processorValue),
+                    Weight = 1
+                };
+
+                yield return new Models.MetricPoint
+                {
+                    Name = LiveMetricConstants.MetricId.ProcessProcessorTimeNormalizedMetricIdValue,
                     Value = Convert.ToSingle(processorValue),
                     Weight = 1
                 };
