@@ -7,11 +7,12 @@ namespace System.ClientModel
         public static implicit operator System.ClientModel.ApiKeyCredential (string key) { throw null; }
         public void Update(string key) { }
     }
-    public abstract partial class AsyncEnumerableResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>, System.IDisposable where T : System.ClientModel.Primitives.IPersistableModel<T>
+    public abstract partial class AsyncEnumerableResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>, System.IAsyncDisposable where T : System.ClientModel.Primitives.IPersistableModel<T>
     {
         protected internal AsyncEnumerableResult(System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
-        public void Dispose() { }
         protected abstract void Dispose(bool disposing);
+        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        protected abstract System.Threading.Tasks.ValueTask DisposeAsyncCore();
         public abstract System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public abstract partial class BinaryContent : System.IDisposable
