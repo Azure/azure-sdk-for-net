@@ -200,7 +200,7 @@ namespace Azure.Core.TestFramework
             "sig",
             // "sp",
             "sip",
-            "ses",
+            // "ses",
             "client_id",
             "client_secret"
         };
