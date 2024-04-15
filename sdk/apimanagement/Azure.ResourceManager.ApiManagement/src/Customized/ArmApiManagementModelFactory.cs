@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersionDescription: apiVersionDescription,
                 apiVersionSetId: apiVersionSetId,
                 isSubscriptionRequired: isSubscriptionRequired,
-                termsOfServiceUri: termsOfServiceUri,
+                termsOfServiceLink: termsOfServiceUri.AbsoluteUri,
                 contact: contact,
                 license: license,
                 sourceApiId: sourceApiId,
                 displayName: displayName,
-                serviceUri: serviceUri,
+                serviceLink: serviceUri.AbsoluteUri,
                 path: path,
-                protocols: protocols?.ToList(),
+                protocols: protocols,
                 apiVersionSet: apiVersionSet);
         }
 
@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersionDescription: apiVersionDescription,
                 apiVersionSetId: apiVersionSetId,
                 isSubscriptionRequired: isSubscriptionRequired,
-                termsOfServiceUri: termsOfServiceUri,
+                termsOfServiceLink: termsOfServiceUri.AbsoluteUri,
                 contact: contact,
                 license: license,
                 displayName: displayName,
-                serviceUri: serviceUri,
+                serviceLink: serviceUri.AbsoluteUri,
                 path: path,
-                protocols: protocols?.ToList());
+                protocols: protocols);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApiEntityBaseContract"/>. </summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                  apiVersionDescription: apiVersionDescription,
                  apiVersionSetId: apiVersionSetId,
                  isSubscriptionRequired: isSubscriptionRequired,
-                 termsOfServiceUri: termsOfServiceUri,
+                 termsOfServiceLink: termsOfServiceUri.AbsoluteUri,
                  contact: contact,
                  license: license);
         }
@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersionDescription: apiVersionDescription,
                 apiVersionSetId: apiVersionSetId,
                 isSubscriptionRequired: isSubscriptionRequired,
-                termsOfServiceUri: termsOfServiceUri,
+                termsOfServiceLink: termsOfServiceUri.AbsoluteUri,
                 contact: contact,
                 license: license,
                 sourceApiId: sourceApiId,
                 displayName: displayName,
-                serviceUri: serviceUri,
+                serviceLink: serviceUri.AbsoluteUri,
                 path: path,
-                protocols: protocols?.ToList(),
+                protocols: protocols,
                 apiVersionSet: apiVersionSet,
                 value: value,
                 format: format,
@@ -256,14 +256,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersionDescription: apiVersionDescription,
                 apiVersionSetId: apiVersionSetId,
                 isSubscriptionRequired: isSubscriptionRequired,
-                termsOfServiceUri: termsOfServiceUri,
+                termsOfServiceLink: termsOfServiceUri.AbsoluteUri,
                 contact: contact,
                 license: license,
                 id: id,
                 name: name,
                 serviceUri: serviceUri,
                 path: path,
-                protocols: protocols?.ToList());
+                protocols: protocols);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GatewayApiData"/>. </summary>
@@ -313,14 +313,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersionDescription: apiVersionDescription,
                 apiVersionSetId: apiVersionSetId,
                 isSubscriptionRequired: isSubscriptionRequired,
-                termsOfServiceUri: termsOfServiceUri,
+                termsOfServiceLink: termsOfServiceUri.AbsoluteUri,
                 contact: contact,
                 license: license,
                 sourceApiId: sourceApiId,
                 displayName: displayName,
-                serviceUri: serviceUri,
+                serviceLink: serviceUri.AbsoluteUri,
                 path: path,
-                protocols: protocols?.ToList(),
+                protocols: protocols,
                 apiVersionSet: apiVersionSet);
         }
 
@@ -371,14 +371,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersionDescription: apiVersionDescription,
                 apiVersionSetId: apiVersionSetId,
                 isSubscriptionRequired: isSubscriptionRequired,
-                termsOfServiceUri: termsOfServiceUri,
+                termsOfServiceLink: termsOfServiceUri.AbsoluteUri,
                 contact: contact,
                 license: license,
                 sourceApiId: sourceApiId,
                 displayName: displayName,
-                serviceUri: serviceUri,
+                serviceLink: serviceUri.AbsoluteUri,
                 path: path,
-                protocols: protocols?.ToList(),
+                protocols: protocols,
                 apiVersionSet: apiVersionSet);
         }
     }
