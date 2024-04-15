@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -136,6 +138,114 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubEventHandler(urlTemplate, userEventPattern, systemEvents ?? new ChangeTrackingList<string>(), auth, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UrlTemplate), out propertyOverride);
+            if (Optional.IsDefined(UrlTemplate) || hasPropertyOverride)
+            {
+                builder.Append("  urlTemplate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (UrlTemplate.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UrlTemplate}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UrlTemplate}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserEventPattern), out propertyOverride);
+            if (Optional.IsDefined(UserEventPattern) || hasPropertyOverride)
+            {
+                builder.Append("  userEventPattern: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (UserEventPattern.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserEventPattern}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserEventPattern}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemEvents), out propertyOverride);
+            if (Optional.IsCollectionDefined(SystemEvents) || hasPropertyOverride)
+            {
+                if (SystemEvents.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  systemEvents: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SystemEvents)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Auth), out propertyOverride);
+            if (Optional.IsDefined(Auth) || hasPropertyOverride)
+            {
+                builder.Append("  auth: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Auth, options, 2, false, "  auth: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<WebPubSubEventHandler>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHandler>)this).GetFormatFromOptions(options) : options.Format;
@@ -144,6 +254,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(WebPubSubEventHandler)} does not support writing '{options.Format}' format.");
             }
