@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class MicrosoftSecurityIncidentCreationAlertRuleTemplate : IUtf8JsonSerializable, IJsonModel<MicrosoftSecurityIncidentCreationAlertRuleTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MicrosoftSecurityIncidentCreationAlertRuleTemplate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MicrosoftSecurityIncidentCreationAlertRuleTemplate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MicrosoftSecurityIncidentCreationAlertRuleTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static MicrosoftSecurityIncidentCreationAlertRuleTemplate DeserializeMicrosoftSecurityIncidentCreationAlertRuleTemplate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

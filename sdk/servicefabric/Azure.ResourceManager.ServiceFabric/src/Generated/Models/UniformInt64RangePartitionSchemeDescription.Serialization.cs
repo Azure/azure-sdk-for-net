@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 {
     public partial class UniformInt64RangePartitionSchemeDescription : IUtf8JsonSerializable, IJsonModel<UniformInt64RangePartitionSchemeDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UniformInt64RangePartitionSchemeDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UniformInt64RangePartitionSchemeDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UniformInt64RangePartitionSchemeDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static UniformInt64RangePartitionSchemeDescription DeserializeUniformInt64RangePartitionSchemeDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
