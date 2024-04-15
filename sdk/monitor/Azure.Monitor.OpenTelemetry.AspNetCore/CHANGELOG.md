@@ -1,5 +1,14 @@
 # Release History
 
+## 1.1.1 (Unreleased)
+
+* Update OpenTelemetry dependencies. This includes a hotfix for [GHSA-vh2m-22xx-q94f](https://github.com/open-telemetry/opentelemetry-dotnet/security/advisories/GHSA-vh2m-22xx-q94f).
+  ([#43197](https://github.com/Azure/azure-sdk-for-net/pull/43197))
+  - OpenTelemetry 1.8.0
+  - OpenTelemetry.Extensions.Hosting 1.8.0
+  - OpenTelemetry.Instrumentation.AspNetCore 1.8.1
+  - OpenTelemetry.Instrumentation.Http 1.8.1
+
 ## 1.1.0 (2024-01-25)
 
 ### Other Changes
