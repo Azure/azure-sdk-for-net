@@ -707,6 +707,8 @@ namespace Azure.Messaging.EventHubs.Amqp
                     linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
                     linkSettings.DesiredCapabilities.Add(AmqpProperty.TrackLastEnqueuedEventProperties);
                 }
+                linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
+                linkSettings.DesiredCapabilities.Add(AmqpProperty.GeoReplication);
 
                 link = new ReceivingAmqpLink(linkSettings);
                 linkSettings.LinkName = $"{ Id };{ connection.Identifier }:{ session.Identifier }:{ link.Identifier }";
@@ -812,6 +814,8 @@ namespace Azure.Messaging.EventHubs.Amqp
                     linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
                     linkSettings.DesiredCapabilities.Add(AmqpProperty.EnableIdempotentPublishing);
                 }
+                linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
+                linkSettings.DesiredCapabilities.Add(AmqpProperty.GeoReplication);
 
                 // If any of the options have a value, the entire set must be specified for the link settings.  For any options that did not have a
                 // value, specifying null will signal the service to generate the value.

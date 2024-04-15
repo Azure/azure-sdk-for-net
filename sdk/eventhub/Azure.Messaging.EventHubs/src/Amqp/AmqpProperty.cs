@@ -44,6 +44,12 @@ namespace Azure.Messaging.EventHubs
         public static AmqpSymbol TrackLastEnqueuedEventProperties { get; } = AmqpConstants.Vendor + ":enable-receiver-runtime-metric";
 
         /// <summary>
+        ///   The capability for geo replication in a namespace, to associate with a link.
+        /// </summary>
+        ///
+        public static AmqpSymbol GeoReplication { get; } = AmqpConstants.Vendor + ":georeplication";
+
+        /// <summary>
         ///   The capability for opting-into idempotent publishing.
         /// </summary>
         ///
@@ -86,6 +92,12 @@ namespace Azure.Messaging.EventHubs
         public static AmqpSymbol Offset { get; } = "x-opt-offset";
 
         /// <summary>
+        ///   The replication segment of a message.
+        /// </summary>
+        ///
+        public static AmqpSymbol ReplicationSegment { get; } = "x-opt-sequence-number-epoch";
+
+        /// <summary>
         ///   The partition hashing key used for grouping a batch of events together with the intent of routing to a single partition.
         /// </summary>
         ///
@@ -96,6 +108,12 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         public static AmqpSymbol PartitionLastEnqueuedSequenceNumber { get; } = "last_enqueued_sequence_number";
+
+        /// <summary>
+        ///   The message property that identifies the last replication segment enqueued for a partition.
+        /// </summary>
+        ///
+        public static AmqpSymbol PartitionLastEnqueuedReplicationSegment { get; } = "last_enqueued_sequence_number_epoch";
 
         /// <summary>
         ///   The message property that identifies the last offset enqueued for a partition.

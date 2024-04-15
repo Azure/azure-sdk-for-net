@@ -22,14 +22,22 @@ namespace Azure.Messaging.EventHubs.Processor
         public long SequenceNumber { get; }
 
         /// <summary>
+        ///   The replication segment to associate with the checkpoint.
+        /// </summary>
+        ///
+        public int ReplicationSegment { get; }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="CheckpointPosition"/> struct.
         /// </summary>
         ///
         /// <param name="sequenceNumber">The sequence number to associate with the checkpoint. This indicates that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="replicationSegment">The replication segment to associate with the checkpoint.</param>
         ///
-        public CheckpointPosition(long sequenceNumber)
+        public CheckpointPosition(long sequenceNumber, int replicationSegment = -1)
         {
             SequenceNumber = sequenceNumber;
+            ReplicationSegment = replicationSegment;
         }
 
         /// <summary>
@@ -40,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public static CheckpointPosition FromEvent(EventData eventData)
         {
-            return new CheckpointPosition(eventData.SequenceNumber);
+            return new CheckpointPosition(eventData.SequenceNumber, eventData.ReplicationSegment);
         }
 
         /// <summary>

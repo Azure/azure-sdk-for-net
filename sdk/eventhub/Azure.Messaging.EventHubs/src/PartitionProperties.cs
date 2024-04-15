@@ -32,10 +32,22 @@ namespace Azure.Messaging.EventHubs
         public long BeginningSequenceNumber { get; }
 
         /// <summary>
+        ///   The first replication segment available for events in the partition.
+        /// </summary>
+        ///
+        public long BeginningReplicationSegment { get; }
+
+        /// <summary>
         ///   The sequence number of the last observed event to be enqueued in the partition.
         /// </summary>
         ///
         public long LastEnqueuedSequenceNumber { get; }
+
+        /// <summary>
+        ///   The replication segment of the last observed event to be enqueued in the partition.
+        /// </summary>
+        ///
+        public long LastEnqueuedReplicationSegment { get; }
 
         /// <summary>
         ///   The offset of the last observed event to be enqueued in the partition.
@@ -65,7 +77,9 @@ namespace Azure.Messaging.EventHubs
         /// <param name="partitionId">The identifier of the partition.</param>
         /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
         /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
+        /// <param name="beginningReplicationSegment"></param>
         /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
+        /// <param name="lastReplicationSegment"></param>
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         ///
@@ -73,14 +87,18 @@ namespace Azure.Messaging.EventHubs
                                                string partitionId,
                                                bool isEmpty,
                                                long beginningSequenceNumber,
+                                               int beginningReplicationSegment,
                                                long lastSequenceNumber,
+                                               int lastReplicationSegment,
                                                long lastOffset,
                                                DateTimeOffset lastEnqueuedTime)
         {
             EventHubName = eventHubName;
             Id = partitionId;
             BeginningSequenceNumber = beginningSequenceNumber;
+            BeginningReplicationSegment = beginningReplicationSegment;
             LastEnqueuedSequenceNumber = lastSequenceNumber;
+            LastEnqueuedReplicationSegment = lastReplicationSegment;
             LastEnqueuedOffset = lastOffset;
             LastEnqueuedTime = lastEnqueuedTime;
             IsEmpty = isEmpty;

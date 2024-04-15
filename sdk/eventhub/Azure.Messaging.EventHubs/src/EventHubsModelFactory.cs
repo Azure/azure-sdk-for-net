@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs
            new EventHubProperties(name, createdOn, partitionIds);
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.PartitionProperties"/> class.
         /// </summary>
         ///
         /// <param name="eventHubName">The name of the Event Hub that contains the partitions.</param>
@@ -46,6 +46,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PartitionProperties PartitionProperties(string eventHubName,
                                                               string partitionId,
                                                               bool isEmpty,
@@ -54,6 +55,31 @@ namespace Azure.Messaging.EventHubs
                                                               long lastOffset,
                                                               DateTimeOffset lastEnqueuedTime) =>
             new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, lastSequenceNumber, lastOffset, lastEnqueuedTime);
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Azure.Messaging.EventHubs.PartitionProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that contains the partitions.</param>
+        /// <param name="partitionId">The identifier of the partition.</param>
+        /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
+        /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
+        /// <param name="beginningReplicationSegment"></param>
+        /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
+        /// <param name="lastReplicationSegment"></param>
+        /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
+        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
+        ///
+        public static PartitionProperties PartitionProperties(string eventHubName,
+                                                              string partitionId,
+                                                              bool isEmpty,
+                                                              long beginningSequenceNumber,
+                                                              int beginningReplicationSegment,
+                                                              long lastSequenceNumber,
+                                                              int lastReplicationSegment,
+                                                              long lastOffset,
+                                                              DateTimeOffset lastEnqueuedTime) =>
+            new PartitionProperties(eventHubName, partitionId, isEmpty, beginningSequenceNumber, beginningReplicationSegment, lastSequenceNumber, lastReplicationSegment, lastOffset, lastEnqueuedTime);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventHubProperties"/> class.
@@ -66,9 +92,9 @@ namespace Azure.Messaging.EventHubs
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PartitionPublishingProperties PartitionPublishingProperties(bool isIdempotentPublishingEnabled,
-                                                                                    long? producerGroupId,
-                                                                                    short? ownerLevel,
-                                                                                    int? lastPublishedSequenceNumber) =>
+                                                                                  long? producerGroupId,
+                                                                                  short? ownerLevel,
+                                                                                  int? lastPublishedSequenceNumber) =>
             new PartitionPublishingProperties(isIdempotentPublishingEnabled, producerGroupId, ownerLevel, lastPublishedSequenceNumber);
 
         /// <summary>
@@ -126,6 +152,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="sequenceNumber">The sequence number assigned to the event when it was enqueued in the associated Event Hub partition.</param>
         /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
+        /// <param name="replicationSegment">The replication segment assigned to the event when it was enqueued in the associated Event Hub partition.</param>
         ///
         public static EventData EventData(BinaryData eventBody,
                                           IDictionary<string, object> properties = null,
@@ -133,8 +160,9 @@ namespace Azure.Messaging.EventHubs
                                           string partitionKey = null,
                                           long sequenceNumber = long.MinValue,
                                           long offset = long.MinValue,
-                                          DateTimeOffset enqueuedTime = default) =>
-             new EventData(eventBody, properties, systemProperties, sequenceNumber, offset, enqueuedTime, partitionKey);
+                                          DateTimeOffset enqueuedTime = default,
+                                          int replicationSegment = -1) =>
+             new EventData(eventBody, properties, systemProperties, sequenceNumber, offset, replicationSegment, enqueuedTime, partitionKey);
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventDataBatch" /> class.

@@ -75,16 +75,34 @@ namespace Azure.Messaging.EventHubs
             public static MapKey PartitionIdentifiers { get; } = new MapKey("partition_ids");
 
             /// <summary>
+            ///   The message property that identifies whether this Event Hub has geo-replication enabled.
+            /// </summary>
+            ///
+            public static MapKey GeoReplicationFactor { get; } = new MapKey("georeplication_factor");
+
+            /// <summary>
             ///   The message property that identifies the beginning sequence number in a partition.
             /// </summary>
             ///
             public static MapKey PartitionBeginSequenceNumber { get; } = new MapKey("begin_sequence_number");
 
             /// <summary>
+            ///   The message property that identifies the beginning replication segment in a partition.
+            /// </summary>
+            ///
+            public static MapKey PartitionBeginReplicationSegment { get; } = new MapKey("begin_sequence_number_epoch");
+
+            /// <summary>
             ///   The message property that identifies the last sequence number enqueued for a partition.
             /// </summary>
             ///
             public static MapKey PartitionLastEnqueuedSequenceNumber { get; } = new MapKey("last_enqueued_sequence_number");
+
+            /// <summary>
+            ///   The message property that identifies the last replication segment enqueued for a partition.
+            /// </summary>
+            ///
+            public static MapKey PartitionLastEnqueuedReplicationSegment { get; } = new MapKey("last_enqueued_sequence_number_epoch");
 
             /// <summary>
             ///   The message property that identifies the last offset enqueued for a partition.

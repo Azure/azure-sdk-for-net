@@ -27,7 +27,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   which has not expired due to the retention policy.
         /// </summary>
         ///
-        public static EventPosition Earliest { get; } = new EventPosition { Offset = StartOfStream, IsInclusive = false };
+        public static EventPosition Earliest { get; } = new EventPosition { SequenceNumber = StartOfStream, IsInclusive = false };
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
@@ -35,7 +35,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   consumer begins reading with this position.
         /// </summary>
         ///
-        public static EventPosition Latest { get; } = new EventPosition { Offset = EndOfStream, IsInclusive = false };
+        public static EventPosition Latest { get; } = new EventPosition { SequenceNumber = EndOfStream, IsInclusive = false };
 
         /// <summary>
         ///   The offset of the event identified by this position.
@@ -69,6 +69,15 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <value>Expected to be <c>null</c> if the event position represents an offset or enqueue time.</value>
         ///
         internal string SequenceNumber { get; set; }
+
+        /// <summary>
+        ///   The replication segment of the event identified by this position. Needs to be accompanied by a sequence number when
+        ///   using a geo replication enabled Event Hubs namespace.
+        /// </summary>
+        ///
+        /// <value>Expected to be <c>null</c> if the Event Hub does not support geo replication.</value>
+        ///
+        internal int? ReplicationSegment { get; set; }
 
         /// <summary>
         ///   Corresponds to a specific offset in the partition event stream.  By default, if an event is located
@@ -113,6 +122,31 @@ namespace Azure.Messaging.EventHubs.Consumer
         }
 
         /// <summary>
+        ///   Corresponds to an event with the specified sequence number and replication segment in the partition for use
+        ///   with geo replication enabled Event Hubs namespaces.  By default, the event with this <paramref name="sequenceNumber"/> will
+        ///   be read.  Setting <paramref name="isInclusive"/> to <c>false</c> will skip the event with that sequence number and begin
+        ///   reading at the next available event.
+        /// </summary>
+        ///
+        /// <param name="sequenceNumber">The sequence number assigned to an event when it was enqueued in the partition.</param>
+        /// <param name="replicationSegment"></param>
+        /// <param name="isInclusive">When <c>true</c>, the event with the <paramref name="sequenceNumber"/> is included; otherwise the next event in sequence will be read.</param>
+        ///
+        /// <returns>The specified position of an event in the partition.</returns>
+        ///
+        public static EventPosition FromSequenceNumber(long sequenceNumber,
+                                                       int replicationSegment,
+                                                       bool isInclusive = true)
+        {
+            return new EventPosition
+            {
+                SequenceNumber = sequenceNumber.ToString(CultureInfo.InvariantCulture),
+                ReplicationSegment = replicationSegment,
+                IsInclusive = isInclusive
+            };
+        }
+
+        /// <summary>
         ///   Corresponds to a specific date and time within the partition to begin seeking an event; the event enqueued on or after
         ///   the specified <paramref name="enqueuedTime" /> will be read.
         /// </summary>
@@ -142,6 +176,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             return (Offset == other.Offset)
                 && (SequenceNumber == other.SequenceNumber)
                 && (EnqueuedTime == other.EnqueuedTime)
+                && (ReplicationSegment == other.ReplicationSegment)
                 && (IsInclusive == other.IsInclusive);
         }
 
@@ -175,6 +210,7 @@ namespace Azure.Messaging.EventHubs.Consumer
             hashCode.Add(SequenceNumber);
             hashCode.Add(EnqueuedTime);
             hashCode.Add(IsInclusive);
+            hashCode.Add(ReplicationSegment);
 
             return hashCode.ToHashCode();
         }
@@ -188,10 +224,11 @@ namespace Azure.Messaging.EventHubs.Consumer
         public override string ToString() =>
             this switch
             {
-                _ when (Offset == StartOfStream) => nameof(Earliest),
-                _ when (Offset == EndOfStream) => nameof(Latest),
+                _ when (SequenceNumber == StartOfStream) => nameof(Earliest),
+                _ when (SequenceNumber == EndOfStream) => nameof(Latest),
                 _ when (!string.IsNullOrEmpty(Offset)) => $"Offset: [{ Offset }] | Inclusive: [{ IsInclusive }]",
-                _ when (!string.IsNullOrEmpty(SequenceNumber)) => $"Sequence Number: [{ SequenceNumber }] | Inclusive: [{ IsInclusive }]",
+                _ when (!string.IsNullOrEmpty(SequenceNumber) && ReplicationSegment.HasValue) => $"Sequence Number: [{SequenceNumber}] | Replication Segment: [{ReplicationSegment}] | Inclusive: [{IsInclusive}]",
+                _ when (!string.IsNullOrEmpty(SequenceNumber)) => $"Sequence Number: [{SequenceNumber}] | Inclusive: [{IsInclusive}]",
                 _ when (EnqueuedTime.HasValue) => $"Enqueued: [{ EnqueuedTime }]",
                 _ => base.ToString()
             };
