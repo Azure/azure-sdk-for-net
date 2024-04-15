@@ -30,6 +30,8 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ResponseNullFilterPolicy NullFilterPolicy = new ResponseNullFilterPolicy();
 
+        protected LROCheck LROCheck  = new LROCheck();
+
         protected ArmClient GlobalClient { get; private set; }
 
         public TestEnvironment SessionEnvironment { get; private set; }
@@ -135,6 +137,7 @@ namespace Azure.ResourceManager.TestFramework
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerRetry);
+            options.AddPolicy(LROCheck, HttpPipelinePosition.PerCall);
             if (enableDeleteAfter)
             {
                 AddDeleteAfterTagPolicy deleteAfterTagPolicy = new AddDeleteAfterTagPolicy(Recording.UtcNow);
