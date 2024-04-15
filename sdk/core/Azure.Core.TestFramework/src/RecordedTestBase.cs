@@ -184,9 +184,9 @@ namespace Azure.Core.TestFramework
             "ServiceBusDlqSupplementaryAuthorization",
             "ServiceBusSupplementaryAuthorization",
             "x-ms-encryption-key",
-            "x-ms-rename-source",
-            "x-ms-file-rename-source",
-            "x-ms-copy-source",
+            // "x-ms-rename-source",
+            // "x-ms-file-rename-source",
+            // "x-ms-copy-source",
             "x-ms-copy-source-authorization",
             "x-ms-file-rename-source-authorization",
             "x-ms-encryption-key-sha256",
@@ -198,7 +198,7 @@ namespace Azure.Core.TestFramework
         public List<string> SanitizedQueryParameters { get; } = new()
         {
             "sig",
-            "sp",
+            // "sp",
             "sip",
             "ses",
             "client_id",
