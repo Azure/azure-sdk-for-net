@@ -42,12 +42,13 @@ namespace Azure.Communication
                       rawId);
             }
 
-            if (kind == CommunicationIdentifierModelKind.MicrosoftTeamsApp)
+            if (kind == CommunicationIdentifierModelKind.MicrosoftTeamsApp
+                && identifier.MicrosoftTeamsApp is not null)
             {
                 var user = identifier.MicrosoftTeamsApp;
                 return new MicrosoftTeamsAppIdentifier(
-                    AssertNotNull(user.AppId, nameof(user.AppId), nameof(MicrosoftTeamsAppIdentifier)),
-                    Deserialize(AssertNotNull(user.Cloud, nameof(user.Cloud), nameof(MicrosoftTeamsAppIdentifier))));
+                    AssertNotNull(user.AppId, nameof(user.AppId), nameof(MicrosoftTeamsAppIdentifierModel)),
+                    Deserialize(AssertNotNull(user.Cloud, nameof(user.Cloud), nameof(MicrosoftTeamsAppIdentifierModel))));
             }
 
             return new UnknownIdentifier(rawId);
@@ -129,7 +130,7 @@ namespace Azure.Communication
                 MicrosoftTeamsAppIdentifier u => new CommunicationIdentifierModel
                 {
                     RawId = u.RawId,
-                    MicrosoftTeamsApp = new TeamsAppIdentifier(u.AppId)
+                    MicrosoftTeamsApp = new MicrosoftTeamsAppIdentifierModel(u.AppId)
                     {
                         Cloud = Serialize(u.Cloud),
                     }
