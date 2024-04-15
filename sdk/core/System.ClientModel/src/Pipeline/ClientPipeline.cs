@@ -110,7 +110,11 @@ public sealed partial class ClientPipeline
         pipelineLength += options.PerCallPolicies?.Length ?? 0;
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
-        pipelineLength++; // for retry policy
+        if (options.RetryPolicy is not null)
+        {
+            pipelineLength++; // for retry policy
+        }
+
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
@@ -129,8 +133,11 @@ public sealed partial class ClientPipeline
 
         int perCallIndex = index;
 
-        // Add retry policy.
-        policies[index++] = options.RetryPolicy ?? ClientRetryPolicy.Default;
+        if (options.RetryPolicy is not null)
+        {
+            // Add retry policy.
+            policies[index++] = options.RetryPolicy;
+        }
 
         // Per try policies come after the retry policy.
         perTryPolicies.CopyTo(policies.AsSpan(index));

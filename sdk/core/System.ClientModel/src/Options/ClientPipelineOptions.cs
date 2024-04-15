@@ -23,6 +23,13 @@ public class ClientPipelineOptions
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public ClientPipelineOptions()
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    {
+        RetryPolicy = ClientRetryPolicy.Default;
+    }
+
     #region Pipeline creation: Overrides of default pipeline policies
 
     /// <summary>
