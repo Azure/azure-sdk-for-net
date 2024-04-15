@@ -1,6 +1,6 @@
 # Release History
 
-## 12.18.0-beta.2 (Unreleased)
+## 12.18.0-beta.2 (2024-04-15)
 - Added support for service version 2024-05-04.
 - Added ability to retrieve file handle client name with ShareFile/DirectoryClient.GetHandles() and .GetHandlesAsync().
 - Added ability to call ShareFileClient.GetRangeListDiff() and .GetRangeListDiffAsync() on a file that has been renamed.

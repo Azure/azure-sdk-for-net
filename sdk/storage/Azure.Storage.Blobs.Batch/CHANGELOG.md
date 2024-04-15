@@ -1,6 +1,6 @@
 # Release History
 
-## 12.17.0-beta.2 (Unreleased)
+## 12.17.0-beta.2 (2024-04-15)
 - Added support for service version 2023-05-04.
 - Added support for deleting individual blob versions.
 
