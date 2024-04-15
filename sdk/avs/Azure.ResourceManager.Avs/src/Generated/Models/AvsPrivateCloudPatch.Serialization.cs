@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     public partial class AvsPrivateCloudPatch : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvsPrivateCloudPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AvsPrivateCloudPatch DeserializeAvsPrivateCloudPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

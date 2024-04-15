@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class GitOperationResultContractData : IUtf8JsonSerializable, IJsonModel<GitOperationResultContractData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitOperationResultContractData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitOperationResultContractData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GitOperationResultContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static GitOperationResultContractData DeserializeGitOperationResultContractData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

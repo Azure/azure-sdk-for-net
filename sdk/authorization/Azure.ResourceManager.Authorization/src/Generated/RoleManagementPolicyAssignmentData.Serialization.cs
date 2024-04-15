@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Authorization
 {
     public partial class RoleManagementPolicyAssignmentData : IUtf8JsonSerializable, IJsonModel<RoleManagementPolicyAssignmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementPolicyAssignmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementPolicyAssignmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleManagementPolicyAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Authorization
 
         internal static RoleManagementPolicyAssignmentData DeserializeRoleManagementPolicyAssignmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

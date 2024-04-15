@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
     public partial class AgFoodPlatformPrivateLinkServiceConnectionState : IUtf8JsonSerializable, IJsonModel<AgFoodPlatformPrivateLinkServiceConnectionState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgFoodPlatformPrivateLinkServiceConnectionState>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgFoodPlatformPrivateLinkServiceConnectionState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AgFoodPlatformPrivateLinkServiceConnectionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 
         internal static AgFoodPlatformPrivateLinkServiceConnectionState DeserializeAgFoodPlatformPrivateLinkServiceConnectionState(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

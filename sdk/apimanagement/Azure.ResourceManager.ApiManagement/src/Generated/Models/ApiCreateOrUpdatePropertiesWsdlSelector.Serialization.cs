@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiCreateOrUpdatePropertiesWsdlSelector : IUtf8JsonSerializable, IJsonModel<ApiCreateOrUpdatePropertiesWsdlSelector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiCreateOrUpdatePropertiesWsdlSelector>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiCreateOrUpdatePropertiesWsdlSelector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiCreateOrUpdatePropertiesWsdlSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiCreateOrUpdatePropertiesWsdlSelector DeserializeApiCreateOrUpdatePropertiesWsdlSelector(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

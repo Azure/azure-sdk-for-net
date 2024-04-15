@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     internal partial class DatastoreList : IUtf8JsonSerializable, IJsonModel<DatastoreList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatastoreList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatastoreList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatastoreList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static DatastoreList DeserializeDatastoreList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

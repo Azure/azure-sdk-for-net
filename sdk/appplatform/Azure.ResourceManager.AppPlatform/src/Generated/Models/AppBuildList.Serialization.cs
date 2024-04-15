@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     internal partial class AppBuildList : IUtf8JsonSerializable, IJsonModel<AppBuildList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppBuildList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppBuildList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppBuildList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppBuildList DeserializeAppBuildList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

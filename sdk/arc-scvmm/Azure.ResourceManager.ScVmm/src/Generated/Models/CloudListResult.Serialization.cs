@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 {
     internal partial class CloudListResult : IUtf8JsonSerializable, IJsonModel<CloudListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CloudListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         internal static CloudListResult DeserializeCloudListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

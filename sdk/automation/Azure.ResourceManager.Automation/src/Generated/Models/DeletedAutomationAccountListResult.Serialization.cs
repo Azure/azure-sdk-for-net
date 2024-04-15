@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
 {
     internal partial class DeletedAutomationAccountListResult : IUtf8JsonSerializable, IJsonModel<DeletedAutomationAccountListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeletedAutomationAccountListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeletedAutomationAccountListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeletedAutomationAccountListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static DeletedAutomationAccountListResult DeserializeDeletedAutomationAccountListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

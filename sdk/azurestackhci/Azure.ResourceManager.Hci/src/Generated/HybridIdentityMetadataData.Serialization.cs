@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Hci
 {
     public partial class HybridIdentityMetadataData : IUtf8JsonSerializable, IJsonModel<HybridIdentityMetadataData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridIdentityMetadataData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridIdentityMetadataData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridIdentityMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Hci
 
         internal static HybridIdentityMetadataData DeserializeHybridIdentityMetadataData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Batch
 {
     public partial class BatchAccountData : IUtf8JsonSerializable, IJsonModel<BatchAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Batch
 
         internal static BatchAccountData DeserializeBatchAccountData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

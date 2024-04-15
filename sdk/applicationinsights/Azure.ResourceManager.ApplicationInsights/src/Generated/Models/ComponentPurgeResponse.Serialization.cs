@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class ComponentPurgeResponse : IUtf8JsonSerializable, IJsonModel<ComponentPurgeResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComponentPurgeResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComponentPurgeResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComponentPurgeResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static ComponentPurgeResponse DeserializeComponentPurgeResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     internal partial class UnknownRoleManagementPolicyRule : IUtf8JsonSerializable, IJsonModel<RoleManagementPolicyRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementPolicyRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementPolicyRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleManagementPolicyRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static UnknownRoleManagementPolicyRule DeserializeUnknownRoleManagementPolicyRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

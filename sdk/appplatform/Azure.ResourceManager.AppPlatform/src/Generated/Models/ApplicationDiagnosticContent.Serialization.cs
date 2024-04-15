@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class ApplicationDiagnosticContent : IUtf8JsonSerializable, IJsonModel<ApplicationDiagnosticContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationDiagnosticContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationDiagnosticContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationDiagnosticContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static ApplicationDiagnosticContent DeserializeApplicationDiagnosticContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

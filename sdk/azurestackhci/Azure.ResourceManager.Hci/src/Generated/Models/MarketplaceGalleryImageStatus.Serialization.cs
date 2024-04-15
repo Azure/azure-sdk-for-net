@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class MarketplaceGalleryImageStatus : IUtf8JsonSerializable, IJsonModel<MarketplaceGalleryImageStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceGalleryImageStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceGalleryImageStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MarketplaceGalleryImageStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static MarketplaceGalleryImageStatus DeserializeMarketplaceGalleryImageStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

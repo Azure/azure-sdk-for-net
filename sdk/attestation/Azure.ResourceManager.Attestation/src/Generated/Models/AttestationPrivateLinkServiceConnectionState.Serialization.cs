@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Attestation.Models
 {
     public partial class AttestationPrivateLinkServiceConnectionState : IUtf8JsonSerializable, IJsonModel<AttestationPrivateLinkServiceConnectionState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationPrivateLinkServiceConnectionState>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationPrivateLinkServiceConnectionState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AttestationPrivateLinkServiceConnectionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Attestation.Models
 
         internal static AttestationPrivateLinkServiceConnectionState DeserializeAttestationPrivateLinkServiceConnectionState(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

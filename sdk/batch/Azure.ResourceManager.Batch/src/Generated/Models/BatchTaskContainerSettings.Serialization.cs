@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchTaskContainerSettings : IUtf8JsonSerializable, IJsonModel<BatchTaskContainerSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskContainerSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskContainerSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchTaskContainerSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchTaskContainerSettings DeserializeBatchTaskContainerSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

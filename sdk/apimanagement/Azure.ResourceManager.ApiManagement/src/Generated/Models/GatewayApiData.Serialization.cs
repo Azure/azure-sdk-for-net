@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class GatewayApiData : IUtf8JsonSerializable, IJsonModel<GatewayApiData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayApiData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayApiData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GatewayApiData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static GatewayApiData DeserializeGatewayApiData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
 {
     internal partial class AutomationActivityListResult : IUtf8JsonSerializable, IJsonModel<AutomationActivityListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationActivityListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationActivityListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationActivityListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationActivityListResult DeserializeAutomationActivityListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

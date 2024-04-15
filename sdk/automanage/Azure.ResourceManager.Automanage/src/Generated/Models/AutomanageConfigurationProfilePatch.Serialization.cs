@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Automanage.Models
 {
     public partial class AutomanageConfigurationProfilePatch : IUtf8JsonSerializable, IJsonModel<AutomanageConfigurationProfilePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomanageConfigurationProfilePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomanageConfigurationProfilePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomanageConfigurationProfilePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Automanage.Models
 
         internal static AutomanageConfigurationProfilePatch DeserializeAutomanageConfigurationProfilePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

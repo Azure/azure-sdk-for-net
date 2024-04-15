@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class SnapshotDownloadContent : IUtf8JsonSerializable, IJsonModel<SnapshotDownloadContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotDownloadContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotDownloadContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SnapshotDownloadContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         internal static SnapshotDownloadContent DeserializeSnapshotDownloadContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

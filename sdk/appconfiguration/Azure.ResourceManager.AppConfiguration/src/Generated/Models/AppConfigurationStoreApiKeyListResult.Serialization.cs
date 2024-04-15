@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 {
     internal partial class AppConfigurationStoreApiKeyListResult : IUtf8JsonSerializable, IJsonModel<AppConfigurationStoreApiKeyListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationStoreApiKeyListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationStoreApiKeyListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppConfigurationStoreApiKeyListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static AppConfigurationStoreApiKeyListResult DeserializeAppConfigurationStoreApiKeyListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
