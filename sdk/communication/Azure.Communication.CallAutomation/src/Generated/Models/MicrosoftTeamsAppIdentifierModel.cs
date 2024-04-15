@@ -10,12 +10,12 @@ using System;
 namespace Azure.Communication
 {
     /// <summary> A Microsoft Teams application. </summary>
-    internal partial class TeamsAppIdentifier
+    internal partial class MicrosoftTeamsAppIdentifierModel
     {
-        /// <summary> Initializes a new instance of <see cref="TeamsAppIdentifier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifierModel"/>. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
-        public TeamsAppIdentifier(string appId)
+        public MicrosoftTeamsAppIdentifierModel(string appId)
         {
             if (appId == null)
             {
@@ -25,10 +25,10 @@ namespace Azure.Communication
             AppId = appId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TeamsAppIdentifier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifierModel"/>. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
         /// <param name="cloud"> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </param>
-        internal TeamsAppIdentifier(string appId, CommunicationCloudEnvironmentModel? cloud)
+        internal MicrosoftTeamsAppIdentifierModel(string appId, CommunicationCloudEnvironmentModel? cloud)
         {
             AppId = appId;
             Cloud = cloud;

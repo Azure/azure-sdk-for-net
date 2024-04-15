@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Communication
 {
     [CodeGenModel("MicrosoftTeamsAppIdentifierModel", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    internal partial class TeamsAppIdentifier
+    internal partial class MicrosoftTeamsAppIdentifierModel
     {
     }
 }
