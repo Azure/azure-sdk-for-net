@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 {
     internal partial class MoveCollectionPropertiesErrors : IUtf8JsonSerializable, IJsonModel<MoveCollectionPropertiesErrors>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoveCollectionPropertiesErrors>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoveCollectionPropertiesErrors>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MoveCollectionPropertiesErrors>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoveCollectionPropertiesErrors DeserializeMoveCollectionPropertiesErrors(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
