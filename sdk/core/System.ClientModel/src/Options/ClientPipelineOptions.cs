@@ -40,7 +40,7 @@ public class ClientPipelineOptions
     /// In most cases, this property will be set to an instance of
     /// <see cref="ClientRetryPolicy"/>.
     /// </remarks>
-    public PipelinePolicy? RetryPolicy
+    public /* virtual */ PipelinePolicy? RetryPolicy
     {
         get => _retryPolicy;
         set
