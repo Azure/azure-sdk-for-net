@@ -157,7 +157,8 @@ stages:
                       deploy:
                         steps:
                           - checkout: self
-                          - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+                          - checkout: azure-sdk-build-tools
+                            path: azure-sdk-build-tools
                           - task: MSBuild@1
                             displayName: 'Upload Symbols for ${{artifact.name}}'
                             inputs:
