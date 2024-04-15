@@ -51,15 +51,10 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("profanity"u8);
                 writer.WriteObjectValue(Profanity, options);
             }
-            if (Optional.IsCollectionDefined(CustomBlocklists))
+            if (Optional.IsDefined(CustomBlocklists))
             {
                 writer.WritePropertyName("custom_blocklists"u8);
-                writer.WriteStartArray();
-                foreach (var item in CustomBlocklists)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(CustomBlocklists, options);
             }
             if (Optional.IsDefined(Error))
             {
@@ -119,7 +114,7 @@ namespace Azure.AI.OpenAI
             ContentFilterResult hate = default;
             ContentFilterResult selfHarm = default;
             ContentFilterDetectionResult profanity = default;
-            IReadOnlyList<ContentFilterBlocklistIdResult> customBlocklists = default;
+            ContentFilterDetailedResults customBlocklists = default;
             ResponseError error = default;
             ContentFilterDetectionResult protectedMaterialText = default;
             ContentFilterCitedDetectionResult protectedMaterialCode = default;
@@ -178,12 +173,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    List<ContentFilterBlocklistIdResult> array = new List<ContentFilterBlocklistIdResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ContentFilterBlocklistIdResult.DeserializeContentFilterBlocklistIdResult(item, options));
-                    }
-                    customBlocklists = array;
+                    customBlocklists = ContentFilterDetailedResults.DeserializeContentFilterDetailedResults(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -225,7 +215,7 @@ namespace Azure.AI.OpenAI
                 hate,
                 selfHarm,
                 profanity,
-                customBlocklists ?? new ChangeTrackingList<ContentFilterBlocklistIdResult>(),
+                customBlocklists,
                 error,
                 protectedMaterialText,
                 protectedMaterialCode,
@@ -271,7 +261,7 @@ namespace Azure.AI.OpenAI
             return DeserializeContentFilterResultsForChoice(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();

@@ -157,7 +157,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeCriticalResultInference(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();

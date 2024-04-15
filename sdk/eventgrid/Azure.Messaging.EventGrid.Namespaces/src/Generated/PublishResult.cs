@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary> The result of the Publish operation. </summary>
-    public partial class PublishResult
+    internal partial class PublishResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

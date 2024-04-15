@@ -36,6 +36,11 @@ namespace Azure.AI.OpenAI
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model);
+            }
             if (Optional.IsCollectionDefined(PromptFilterResults))
             {
                 writer.WritePropertyName("prompt_filter_results"u8);
@@ -122,7 +127,7 @@ namespace Azure.AI.OpenAI
             return DeserializeChatCompletions(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
