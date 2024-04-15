@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppDaprComponentData : IUtf8JsonSerializable, IJsonModel<ContainerAppDaprComponentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppDaprComponentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppDaprComponentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppDaprComponentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppDaprComponentData DeserializeContainerAppDaprComponentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

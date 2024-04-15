@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class SourceCodeRepoAuthInfo : IUtf8JsonSerializable, IJsonModel<SourceCodeRepoAuthInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceCodeRepoAuthInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceCodeRepoAuthInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SourceCodeRepoAuthInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static SourceCodeRepoAuthInfo DeserializeSourceCodeRepoAuthInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

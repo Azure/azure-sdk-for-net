@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class OdbcTableDataset : IUtf8JsonSerializable, IJsonModel<OdbcTableDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OdbcTableDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OdbcTableDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OdbcTableDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static OdbcTableDataset DeserializeOdbcTableDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

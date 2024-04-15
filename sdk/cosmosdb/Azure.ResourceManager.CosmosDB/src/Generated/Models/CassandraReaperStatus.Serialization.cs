@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CassandraReaperStatus : IUtf8JsonSerializable, IJsonModel<CassandraReaperStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraReaperStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraReaperStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CassandraReaperStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraReaperStatus DeserializeCassandraReaperStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

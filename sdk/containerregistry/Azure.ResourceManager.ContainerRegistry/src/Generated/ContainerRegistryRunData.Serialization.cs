@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ContainerRegistryRunData : IUtf8JsonSerializable, IJsonModel<ContainerRegistryRunData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryRunData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryRunData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static ContainerRegistryRunData DeserializeContainerRegistryRunData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

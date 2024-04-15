@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class RestorableSqlContainersListResult : IUtf8JsonSerializable, IJsonModel<RestorableSqlContainersListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorableSqlContainersListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorableSqlContainersListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestorableSqlContainersListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static RestorableSqlContainersListResult DeserializeRestorableSqlContainersListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

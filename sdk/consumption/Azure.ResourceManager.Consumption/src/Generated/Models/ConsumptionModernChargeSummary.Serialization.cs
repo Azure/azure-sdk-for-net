@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionModernChargeSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionModernChargeSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionModernChargeSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionModernChargeSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionModernChargeSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionModernChargeSummary DeserializeConsumptionModernChargeSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

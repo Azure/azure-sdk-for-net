@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ContainerRegistryReplicationData : IUtf8JsonSerializable, IJsonModel<ContainerRegistryReplicationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryReplicationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryReplicationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryReplicationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static ContainerRegistryReplicationData DeserializeContainerRegistryReplicationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

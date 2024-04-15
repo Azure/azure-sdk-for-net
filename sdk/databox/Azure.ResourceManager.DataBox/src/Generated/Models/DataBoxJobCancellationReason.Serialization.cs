@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxJobCancellationReason : IUtf8JsonSerializable, IJsonModel<DataBoxJobCancellationReason>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxJobCancellationReason>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxJobCancellationReason>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxJobCancellationReason>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxJobCancellationReason DeserializeDataBoxJobCancellationReason(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class HBaseLinkedService : IUtf8JsonSerializable, IJsonModel<HBaseLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HBaseLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HBaseLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HBaseLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HBaseLinkedService DeserializeHBaseLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 {
     internal partial class ConfidentialComputeProperties : IUtf8JsonSerializable, IJsonModel<ConfidentialComputeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfidentialComputeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfidentialComputeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConfidentialComputeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ConfidentialComputeProperties DeserializeConfidentialComputeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class DiskList : IUtf8JsonSerializable, IJsonModel<DiskList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiskList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskList DeserializeDiskList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

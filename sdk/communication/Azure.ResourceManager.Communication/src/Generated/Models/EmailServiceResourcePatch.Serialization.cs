@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Communication.Models
 {
     public partial class EmailServiceResourcePatch : IUtf8JsonSerializable, IJsonModel<EmailServiceResourcePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmailServiceResourcePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmailServiceResourcePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EmailServiceResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         internal static EmailServiceResourcePatch DeserializeEmailServiceResourcePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

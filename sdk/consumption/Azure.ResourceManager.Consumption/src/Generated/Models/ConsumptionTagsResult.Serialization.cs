@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionTagsResult : IUtf8JsonSerializable, IJsonModel<ConsumptionTagsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionTagsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionTagsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionTagsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionTagsResult DeserializeConsumptionTagsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

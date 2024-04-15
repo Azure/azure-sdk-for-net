@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineNetworkInterfaceConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualMachineNetworkInterfaceConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineNetworkInterfaceConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineNetworkInterfaceConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineNetworkInterfaceConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineNetworkInterfaceConfiguration DeserializeVirtualMachineNetworkInterfaceConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class Participant : IUtf8JsonSerializable, IJsonModel<Participant>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Participant>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Participant>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<Participant>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static Participant DeserializeParticipant(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

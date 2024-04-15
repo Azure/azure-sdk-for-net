@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SapBWCubeDataset : IUtf8JsonSerializable, IJsonModel<SapBWCubeDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapBWCubeDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapBWCubeDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapBWCubeDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SapBWCubeDataset DeserializeSapBWCubeDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

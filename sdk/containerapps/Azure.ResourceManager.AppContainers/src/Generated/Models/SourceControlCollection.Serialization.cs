@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     internal partial class SourceControlCollection : IUtf8JsonSerializable, IJsonModel<SourceControlCollection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceControlCollection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceControlCollection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SourceControlCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static SourceControlCollection DeserializeSourceControlCollection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

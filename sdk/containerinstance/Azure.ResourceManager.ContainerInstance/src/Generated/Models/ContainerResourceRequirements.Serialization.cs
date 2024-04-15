@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 {
     public partial class ContainerResourceRequirements : IUtf8JsonSerializable, IJsonModel<ContainerResourceRequirements>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerResourceRequirements>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerResourceRequirements>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerResourceRequirements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerResourceRequirements DeserializeContainerResourceRequirements(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

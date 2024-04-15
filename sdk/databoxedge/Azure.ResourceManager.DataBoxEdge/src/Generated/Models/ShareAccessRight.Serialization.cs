@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class ShareAccessRight : IUtf8JsonSerializable, IJsonModel<ShareAccessRight>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareAccessRight>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareAccessRight>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ShareAccessRight>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static ShareAccessRight DeserializeShareAccessRight(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

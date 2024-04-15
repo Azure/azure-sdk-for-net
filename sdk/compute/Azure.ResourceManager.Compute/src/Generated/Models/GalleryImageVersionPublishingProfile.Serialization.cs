@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class GalleryImageVersionPublishingProfile : IUtf8JsonSerializable, IJsonModel<GalleryImageVersionPublishingProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImageVersionPublishingProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImageVersionPublishingProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GalleryImageVersionPublishingProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryImageVersionPublishingProfile DeserializeGalleryImageVersionPublishingProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

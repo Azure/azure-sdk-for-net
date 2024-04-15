@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class ThroughputSettingsUpdateData : IUtf8JsonSerializable, IJsonModel<ThroughputSettingsUpdateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThroughputSettingsUpdateData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThroughputSettingsUpdateData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ThroughputSettingsUpdateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ThroughputSettingsUpdateData DeserializeThroughputSettingsUpdateData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

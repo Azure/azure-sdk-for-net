@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class GalleryApplicationCustomActionParameter : IUtf8JsonSerializable, IJsonModel<GalleryApplicationCustomActionParameter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryApplicationCustomActionParameter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryApplicationCustomActionParameter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GalleryApplicationCustomActionParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryApplicationCustomActionParameter DeserializeGalleryApplicationCustomActionParameter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
