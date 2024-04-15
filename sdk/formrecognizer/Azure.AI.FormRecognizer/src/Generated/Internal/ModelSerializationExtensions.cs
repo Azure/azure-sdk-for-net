@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -17,6 +18,8 @@ namespace Azure.AI.FormRecognizer
 {
     internal static class ModelSerializationExtensions
     {
+        internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
+
         public static object GetObject(this JsonElement element)
         {
             switch (element.ValueKind)

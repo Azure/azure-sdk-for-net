@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotHub.Models
 {
     internal partial class IotHubPrivateLinkResources : IUtf8JsonSerializable, IJsonModel<IotHubPrivateLinkResources>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubPrivateLinkResources>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubPrivateLinkResources>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotHubPrivateLinkResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubPrivateLinkResources DeserializeIotHubPrivateLinkResources(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

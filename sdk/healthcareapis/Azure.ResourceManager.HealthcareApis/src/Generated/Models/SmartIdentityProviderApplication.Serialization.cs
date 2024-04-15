@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 {
     public partial class SmartIdentityProviderApplication : IUtf8JsonSerializable, IJsonModel<SmartIdentityProviderApplication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmartIdentityProviderApplication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmartIdentityProviderApplication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SmartIdentityProviderApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static SmartIdentityProviderApplication DeserializeSmartIdentityProviderApplication(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

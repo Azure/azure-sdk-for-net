@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 {
     public partial class HybridContainerServiceNamedAgentPoolProfile : IUtf8JsonSerializable, IJsonModel<HybridContainerServiceNamedAgentPoolProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridContainerServiceNamedAgentPoolProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridContainerServiceNamedAgentPoolProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridContainerServiceNamedAgentPoolProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static HybridContainerServiceNamedAgentPoolProfile DeserializeHybridContainerServiceNamedAgentPoolProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
