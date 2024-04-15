@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    /// <summary>
-    /// An abstract representation of a required action for an assistant thread run to continue.
-    /// Please note <see cref="RequiredAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="SubmitToolOutputsAction"/>.
-    /// </summary>
-    public abstract partial class RequiredAction
+    /// <summary> An abstract representation of a required action for an assistant thread run to continue. </summary>
+    public partial class RequiredAction
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,7 +46,7 @@ namespace Azure.AI.OpenAI.Assistants
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RequiredAction"/>. </summary>
-        protected RequiredAction()
+        internal RequiredAction()
         {
         }
 
