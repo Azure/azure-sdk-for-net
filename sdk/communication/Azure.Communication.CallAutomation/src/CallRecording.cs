@@ -66,11 +66,7 @@ namespace Azure.Communication.CallAutomation
 
                 if (options.RecordingStorage != null)
                 {
-                    if (options.RecordingStorage is AzureCommunicationsRecordingStorage storage)
-                    {
-                        request.ExternalStorage = new RecordingStorageInternal(storage.RecordingStorageKind);
-                    }
-
+                    // This is required only when blob storage in use
                     if (options.RecordingStorage is AzureBlobContainerRecordingStorage blobStorage)
                     {
                         request.ExternalStorage = new RecordingStorageInternal(blobStorage.RecordingStorageKind, blobStorage.RecordingDestinationContainerUri);
