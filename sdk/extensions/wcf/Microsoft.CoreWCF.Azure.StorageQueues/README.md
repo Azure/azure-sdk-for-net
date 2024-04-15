@@ -122,7 +122,7 @@ If a message was recevied from the queue, but wasn't able to be processed, it wi
 
 CoreWCF is an implementation of the service side features of Windows Communication Foundation (WCF) for .NET. The goal of this project is to enable migrating existing WCF services to .NET that are currently using MSMQ and wish to deploy their service to Azure, replacing MSMQ with Azure Queue Storage.
 
-More general samples of using CoreWCF can be found in the [CoreWCF samples repository][corewcf_repo]. To create a client to send messages to an Azure Storage Queue, see the To create a service to receive messages sent to an Azure Storage Queue, see the [Microsoft.WCF.Azure.StorageQueues documentation][wcf_docs]. 
+More general samples of using CoreWCF can be found in the [CoreWCF samples repository][corewcf_repo]. To create a client to send messages to an Azure Storage Queue, see the[Microsoft.WCF.Azure.StorageQueues documentation][wcf_docs]. 
 
 ## Contributing
 
