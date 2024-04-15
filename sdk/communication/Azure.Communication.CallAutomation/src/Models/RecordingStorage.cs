@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation
         public RecordingStorageKind RecordingStorageKind { get; private set; }
 
         /// <summary> Creates AzureBlobContainer Storage for Recording. </summary>
-        public static RecordingStorage CreateAzureBlobContainerRecordingStorageNew(Uri recordingDestinationContainerUri)
+        public static RecordingStorage CreateAzureBlobContainerRecordingStorage(Uri recordingDestinationContainerUri)
         {
             return new AzureBlobContainerRecordingStorage(recordingDestinationContainerUri);
         }

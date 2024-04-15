@@ -71,7 +71,7 @@ namespace Azure.Communication.CallAutomation
         { }
 
         private CallAutomationClient(string endpoint, TokenCredential tokenCredential, CallAutomationClientOptions options)
-            : this(new Uri(endpoint), options.BuildHttpPipeline(tokenCredential), options)
+      : this(new Uri(endpoint), options.BuildHttpPipeline(tokenCredential), options)
         { }
 
         private CallAutomationClient(Uri endpoint, HttpPipeline httpPipeline, CallAutomationClientOptions options)

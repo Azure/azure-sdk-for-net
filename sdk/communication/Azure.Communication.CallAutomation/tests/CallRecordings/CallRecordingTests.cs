@@ -152,7 +152,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             {
                 new Func<CallRecording, RecordingStateResult>?[]
                 {
-                   callRecording => callRecording.Start(new StartRecordingOptions(_callLocator) { RecordingStateCallbackUri = _callBackUri, ChannelAffinity = testChannelAffinities, RecordingStorage = RecordingStorage.CreateAzureBlobContainerRecordingStorage(new Uri("htttp://contosoblob.com"))})
+                   callRecording => callRecording.Start(new StartRecordingOptions(_callLocator) { RecordingStateCallbackUri = _callBackUri, ChannelAffinity = testChannelAffinities, RecordingStorage = RecordingStorage.CreateAzureBlobContainerRecordingStorage(new Uri("htttps://contosoblob.com"))})
                 },
                 new Func<CallRecording, RecordingStateResult>?[]
                 {
