@@ -24,8 +24,6 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNull(operationId, nameof(operationId));
             Argument.AssertNotNull(resourceLocation, nameof(resourceLocation));
-
-            Kind = OperationKind.DocumentModelBuild;
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentModelBuildOperationDetails"/>. </summary>
