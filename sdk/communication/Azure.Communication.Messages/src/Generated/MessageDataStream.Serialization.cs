@@ -31,7 +31,7 @@ namespace Azure.Communication.Messages
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("body"u8);
+            writer.WritePropertyName(""u8);
             writer.WriteBase64StringValue(Body.ToArray(), "D");
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -72,7 +72,7 @@ namespace Azure.Communication.Messages
                 return null;
             }
             string id = default;
-            BinaryData body = default;
+            System.BinaryData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -82,9 +82,9 @@ namespace Azure.Communication.Messages
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("body"u8))
+                if (property.NameEquals(""u8))
                 {
-                    body = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
+ = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (options.Format != "W")
@@ -93,7 +93,7 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MessageDataStream(id, body, serializedAdditionalRawData);
+            return new MessageDataStream(id, , serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageDataStream>.Write(ModelReaderWriterOptions options)
