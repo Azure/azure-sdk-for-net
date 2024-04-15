@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class HomeNetworkPublicKey : IUtf8JsonSerializable, IJsonModel<HomeNetworkPublicKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HomeNetworkPublicKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HomeNetworkPublicKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HomeNetworkPublicKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static HomeNetworkPublicKey DeserializeHomeNetworkPublicKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

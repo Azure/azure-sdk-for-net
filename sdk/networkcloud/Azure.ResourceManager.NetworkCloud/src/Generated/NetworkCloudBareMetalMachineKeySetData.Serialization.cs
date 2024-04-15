@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudBareMetalMachineKeySetData : IUtf8JsonSerializable, IJsonModel<NetworkCloudBareMetalMachineKeySetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudBareMetalMachineKeySetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudBareMetalMachineKeySetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkCloudBareMetalMachineKeySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
         internal static NetworkCloudBareMetalMachineKeySetData DeserializeNetworkCloudBareMetalMachineKeySetData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
