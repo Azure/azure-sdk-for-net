@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class PersonalComputeInstanceSettings : IUtf8JsonSerializable, IJsonModel<PersonalComputeInstanceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PersonalComputeInstanceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PersonalComputeInstanceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PersonalComputeInstanceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static PersonalComputeInstanceSettings DeserializePersonalComputeInstanceSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

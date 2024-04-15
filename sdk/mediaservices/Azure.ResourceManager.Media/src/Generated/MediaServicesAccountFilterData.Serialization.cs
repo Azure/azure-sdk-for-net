@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaServicesAccountFilterData : IUtf8JsonSerializable, IJsonModel<MediaServicesAccountFilterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaServicesAccountFilterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaServicesAccountFilterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaServicesAccountFilterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media
 
         internal static MediaServicesAccountFilterData DeserializeMediaServicesAccountFilterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
