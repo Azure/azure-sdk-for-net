@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class ProcessThreadInfoListResult : IUtf8JsonSerializable, IJsonModel<ProcessThreadInfoListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProcessThreadInfoListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProcessThreadInfoListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProcessThreadInfoListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ProcessThreadInfoListResult DeserializeProcessThreadInfoListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

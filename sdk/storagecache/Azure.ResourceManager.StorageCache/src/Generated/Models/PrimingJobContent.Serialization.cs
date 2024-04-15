@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 {
     public partial class PrimingJobContent : IUtf8JsonSerializable, IJsonModel<PrimingJobContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrimingJobContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrimingJobContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrimingJobContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static PrimingJobContent DeserializePrimingJobContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

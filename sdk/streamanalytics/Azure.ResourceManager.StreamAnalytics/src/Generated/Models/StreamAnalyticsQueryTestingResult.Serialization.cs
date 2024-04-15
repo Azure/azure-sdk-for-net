@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     public partial class StreamAnalyticsQueryTestingResult : IUtf8JsonSerializable, IJsonModel<StreamAnalyticsQueryTestingResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamAnalyticsQueryTestingResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamAnalyticsQueryTestingResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StreamAnalyticsQueryTestingResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamAnalyticsQueryTestingResult DeserializeStreamAnalyticsQueryTestingResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

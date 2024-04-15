@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class ContainerMemoryStatistics : IUtf8JsonSerializable, IJsonModel<ContainerMemoryStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerMemoryStatistics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerMemoryStatistics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerMemoryStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ContainerMemoryStatistics DeserializeContainerMemoryStatistics(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

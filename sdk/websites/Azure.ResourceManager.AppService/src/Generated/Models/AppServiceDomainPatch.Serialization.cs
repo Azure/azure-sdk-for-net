@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceDomainPatch : IUtf8JsonSerializable, IJsonModel<AppServiceDomainPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceDomainPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceDomainPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceDomainPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceDomainPatch DeserializeAppServiceDomainPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

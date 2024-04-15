@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 {
     public partial class SignalRServiceUsageName : IUtf8JsonSerializable, IJsonModel<SignalRServiceUsageName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRServiceUsageName>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRServiceUsageName>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SignalRServiceUsageName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static SignalRServiceUsageName DeserializeSignalRServiceUsageName(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

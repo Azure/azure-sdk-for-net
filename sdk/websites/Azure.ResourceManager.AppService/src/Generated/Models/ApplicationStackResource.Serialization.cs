@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class ApplicationStackResource : IUtf8JsonSerializable, IJsonModel<ApplicationStackResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationStackResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationStackResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationStackResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ApplicationStackResource DeserializeApplicationStackResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

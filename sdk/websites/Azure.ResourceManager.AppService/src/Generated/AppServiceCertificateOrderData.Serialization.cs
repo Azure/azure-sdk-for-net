@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class AppServiceCertificateOrderData : IUtf8JsonSerializable, IJsonModel<AppServiceCertificateOrderData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceCertificateOrderData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceCertificateOrderData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceCertificateOrderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static AppServiceCertificateOrderData DeserializeAppServiceCertificateOrderData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

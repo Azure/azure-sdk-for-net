@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceGoogleProvider : IUtf8JsonSerializable, IJsonModel<AppServiceGoogleProvider>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceGoogleProvider>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceGoogleProvider>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceGoogleProvider>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceGoogleProvider DeserializeAppServiceGoogleProvider(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

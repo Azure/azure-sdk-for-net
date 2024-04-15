@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseKustoPoolPatch : IUtf8JsonSerializable, IJsonModel<SynapseKustoPoolPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseKustoPoolPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseKustoPoolPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseKustoPoolPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseKustoPoolPatch DeserializeSynapseKustoPoolPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

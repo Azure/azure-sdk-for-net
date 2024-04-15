@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class HybridConnectionData : IUtf8JsonSerializable, IJsonModel<HybridConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static HybridConnectionData DeserializeHybridConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
