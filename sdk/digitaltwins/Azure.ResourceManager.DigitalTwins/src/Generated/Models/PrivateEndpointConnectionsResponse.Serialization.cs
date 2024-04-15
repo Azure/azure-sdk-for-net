@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 {
     internal partial class PrivateEndpointConnectionsResponse : IUtf8JsonSerializable, IJsonModel<PrivateEndpointConnectionsResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionsResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionsResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateEndpointConnectionsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static PrivateEndpointConnectionsResponse DeserializePrivateEndpointConnectionsResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

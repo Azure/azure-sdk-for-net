@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
 {
     public partial class EasmTask : IUtf8JsonSerializable, IJsonModel<EasmTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EasmTask>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EasmTask>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EasmTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
 
         internal static EasmTask DeserializeEasmTask(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

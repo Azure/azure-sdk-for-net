@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class BackupVaultResourceMoveDetails : IUtf8JsonSerializable, IJsonModel<BackupVaultResourceMoveDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupVaultResourceMoveDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupVaultResourceMoveDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupVaultResourceMoveDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BackupVaultResourceMoveDetails DeserializeBackupVaultResourceMoveDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

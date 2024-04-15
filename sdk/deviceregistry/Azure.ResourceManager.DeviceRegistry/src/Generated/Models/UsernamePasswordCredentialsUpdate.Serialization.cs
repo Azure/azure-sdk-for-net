@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     public partial class UsernamePasswordCredentialsUpdate : IUtf8JsonSerializable, IJsonModel<UsernamePasswordCredentialsUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UsernamePasswordCredentialsUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UsernamePasswordCredentialsUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UsernamePasswordCredentialsUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         internal static UsernamePasswordCredentialsUpdate DeserializeUsernamePasswordCredentialsUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

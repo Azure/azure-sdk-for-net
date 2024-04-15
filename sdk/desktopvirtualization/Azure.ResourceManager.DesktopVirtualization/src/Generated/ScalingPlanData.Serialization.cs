@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     public partial class ScalingPlanData : IUtf8JsonSerializable, IJsonModel<ScalingPlanData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingPlanData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingPlanData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScalingPlanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static ScalingPlanData DeserializeScalingPlanData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
