@@ -41,7 +41,7 @@ public void ConfigureServices(IServiceCollection services)
 
 To receive requests from the Azure Queue Storage service, you'll need to configure CoreWCF with the appropriate endpoint, and configure credentials.  The [Azure Identity library][identity] makes it easy to add Microsoft Entra ID support for authenticating with Azure services.  
 
-There are multiple authentication mechanisms for Azure Queue Storage. Which mechanism to use is configured via the property `AzureQueueStorageBinding.Security.Transport.ClientCredentialType`. The default authentication mechanism is `Default` which uses `DefaultAzureCredential`.
+There are multiple authentication mechanisms for Azure Queue Storage. Which mechanism to use is configured via the property `AzureQueueStorageBinding.Security.Transport.ClientCredentialType`. The default authentication mechanism is `Default`, which uses `DefaultAzureCredential`.
 
 ```C# Snippet:CoreWCF_Azure_Storage_Queues_Sample_DefaultAzureCredential
 public void Configure(IApplicationBuilder app)
@@ -116,7 +116,7 @@ If there are any errors receiving a message from Azure Queue Storage, the CoreWC
 });
 ```
 
-If a message was recevied from the queue, but wasn't able to be processed, it will be placed in the dead letter queue. You can sepcify the dead letter queue name by passing it to the constructor of `AazureQueueStorageBinding`. If not specified, the default value of `default-dead-letter-queue` will be used.
+If a message was recevied from the queue, but wasn't able to be processed, it will be placed in the dead letter queue. You can sepcify the dead letter queue name by passing it to the constructor of `AzureQueueStorageBinding`. If not specified, the default value of `default-dead-letter-queue` will be used.
 
 ## Key concepts
 

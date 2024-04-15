@@ -47,7 +47,7 @@ namespace Microsoft.CoreWCF.Azure
         public bool EnableTenantDiscovery { get; set; }
 
         /// <summary>
-        /// Gets of sets the <see href="https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredentialoptions">Azure.Identity.DefaultAzureCredentialOptions</see> instance used with DefaultAzureCredentials.
+        /// Gets of sets the <see href="https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredentialoptions">Azure.Identity.DefaultAzureCredentialOptions</see> instance used with DefaultAzureCredential.
         /// </summary>
         public DefaultAzureCredentialOptions DefaultAzureCredentialOptions { get; set; }
 
