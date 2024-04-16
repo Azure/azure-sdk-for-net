@@ -25,6 +25,6 @@
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.Storage.*\**\*.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(SDKType)' == 'datamovement'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Storage.DataMovement.*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Storage.DataMovement.*\**\*.csproj" />
   </ItemGroup>
 </Project>
