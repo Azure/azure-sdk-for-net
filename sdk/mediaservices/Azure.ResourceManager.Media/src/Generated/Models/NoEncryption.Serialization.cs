@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     internal partial class NoEncryption : IUtf8JsonSerializable, IJsonModel<NoEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NoEncryption>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NoEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NoEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static NoEncryption DeserializeNoEncryption(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

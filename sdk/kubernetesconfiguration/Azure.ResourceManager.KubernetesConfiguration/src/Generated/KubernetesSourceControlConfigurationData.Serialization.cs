@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 {
     public partial class KubernetesSourceControlConfigurationData : IUtf8JsonSerializable, IJsonModel<KubernetesSourceControlConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesSourceControlConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesSourceControlConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KubernetesSourceControlConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         internal static KubernetesSourceControlConfigurationData DeserializeKubernetesSourceControlConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

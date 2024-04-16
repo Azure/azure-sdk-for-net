@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class KustoClusterDataSetMapping : IUtf8JsonSerializable, IJsonModel<KustoClusterDataSetMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoClusterDataSetMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoClusterDataSetMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoClusterDataSetMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static KustoClusterDataSetMapping DeserializeKustoClusterDataSetMapping(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class MongoDBRoleDefinitionCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<MongoDBRoleDefinitionCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBRoleDefinitionCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBRoleDefinitionCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MongoDBRoleDefinitionCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoDBRoleDefinitionCreateOrUpdateContent DeserializeMongoDBRoleDefinitionCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

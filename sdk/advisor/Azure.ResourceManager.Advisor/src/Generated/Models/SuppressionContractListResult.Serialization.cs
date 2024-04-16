@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Advisor.Models
 {
     internal partial class SuppressionContractListResult : IUtf8JsonSerializable, IJsonModel<SuppressionContractListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuppressionContractListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuppressionContractListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SuppressionContractListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         internal static SuppressionContractListResult DeserializeSuppressionContractListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

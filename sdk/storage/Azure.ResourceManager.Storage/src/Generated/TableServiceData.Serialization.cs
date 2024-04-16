@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class TableServiceData : IUtf8JsonSerializable, IJsonModel<TableServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TableServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TableServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TableServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Storage
 
         internal static TableServiceData DeserializeTableServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

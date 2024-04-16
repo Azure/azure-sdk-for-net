@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     internal partial class HardwareSecurityModulesPrivateEndpointConnectionListResult : IUtf8JsonSerializable, IJsonModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         internal static HardwareSecurityModulesPrivateEndpointConnectionListResult DeserializeHardwareSecurityModulesPrivateEndpointConnectionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

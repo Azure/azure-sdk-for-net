@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiCenter
 {
     public partial class ApiCenterServiceData : IUtf8JsonSerializable, IJsonModel<ApiCenterServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiCenterServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiCenterServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiCenterServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ApiCenter
 
         internal static ApiCenterServiceData DeserializeApiCenterServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

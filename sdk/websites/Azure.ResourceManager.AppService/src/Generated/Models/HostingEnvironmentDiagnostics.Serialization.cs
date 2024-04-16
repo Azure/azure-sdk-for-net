@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class HostingEnvironmentDiagnostics : IUtf8JsonSerializable, IJsonModel<HostingEnvironmentDiagnostics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostingEnvironmentDiagnostics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostingEnvironmentDiagnostics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HostingEnvironmentDiagnostics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static HostingEnvironmentDiagnostics DeserializeHostingEnvironmentDiagnostics(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

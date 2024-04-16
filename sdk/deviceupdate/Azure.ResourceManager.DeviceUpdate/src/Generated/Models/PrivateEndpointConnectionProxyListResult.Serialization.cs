@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     internal partial class PrivateEndpointConnectionProxyListResult : IUtf8JsonSerializable, IJsonModel<PrivateEndpointConnectionProxyListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionProxyListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionProxyListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateEndpointConnectionProxyListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static PrivateEndpointConnectionProxyListResult DeserializePrivateEndpointConnectionProxyListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NewRelicObservability
 {
     public partial class NewRelicMonitorResourceData : IUtf8JsonSerializable, IJsonModel<NewRelicMonitorResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicMonitorResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicMonitorResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NewRelicMonitorResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.NewRelicObservability
 
         internal static NewRelicMonitorResourceData DeserializeNewRelicMonitorResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
 {
     internal partial class PrivateZoneListResult : IUtf8JsonSerializable, IJsonModel<PrivateZoneListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateZoneListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateZoneListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateZoneListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         internal static PrivateZoneListResult DeserializePrivateZoneListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class ManagedDiskData : IUtf8JsonSerializable, IJsonModel<ManagedDiskData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedDiskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static ManagedDiskData DeserializeManagedDiskData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

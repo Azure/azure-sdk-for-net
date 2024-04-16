@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class CdnOriginGroupData : IUtf8JsonSerializable, IJsonModel<CdnOriginGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnOriginGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnOriginGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CdnOriginGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Cdn
 
         internal static CdnOriginGroupData DeserializeCdnOriginGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

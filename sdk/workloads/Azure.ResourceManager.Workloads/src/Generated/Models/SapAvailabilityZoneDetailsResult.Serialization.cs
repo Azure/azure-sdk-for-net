@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class SapAvailabilityZoneDetailsResult : IUtf8JsonSerializable, IJsonModel<SapAvailabilityZoneDetailsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapAvailabilityZoneDetailsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapAvailabilityZoneDetailsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapAvailabilityZoneDetailsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapAvailabilityZoneDetailsResult DeserializeSapAvailabilityZoneDetailsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

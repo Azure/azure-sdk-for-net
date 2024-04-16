@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI.Assistants
 {
     public partial class RunStepCodeInterpreterImageOutput : IUtf8JsonSerializable, IJsonModel<RunStepCodeInterpreterImageOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepCodeInterpreterImageOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepCodeInterpreterImageOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RunStepCodeInterpreterImageOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         internal static RunStepCodeInterpreterImageOutput DeserializeRunStepCodeInterpreterImageOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,7 +136,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

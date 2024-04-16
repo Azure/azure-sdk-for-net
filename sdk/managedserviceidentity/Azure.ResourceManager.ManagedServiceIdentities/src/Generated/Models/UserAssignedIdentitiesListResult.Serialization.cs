@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
     internal partial class UserAssignedIdentitiesListResult : IUtf8JsonSerializable, IJsonModel<UserAssignedIdentitiesListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAssignedIdentitiesListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAssignedIdentitiesListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserAssignedIdentitiesListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 
         internal static UserAssignedIdentitiesListResult DeserializeUserAssignedIdentitiesListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

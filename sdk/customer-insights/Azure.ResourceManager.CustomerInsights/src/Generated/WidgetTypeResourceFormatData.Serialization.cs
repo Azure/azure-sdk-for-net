@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class WidgetTypeResourceFormatData : IUtf8JsonSerializable, IJsonModel<WidgetTypeResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WidgetTypeResourceFormatData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WidgetTypeResourceFormatData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WidgetTypeResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.CustomerInsights
 
         internal static WidgetTypeResourceFormatData DeserializeWidgetTypeResourceFormatData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

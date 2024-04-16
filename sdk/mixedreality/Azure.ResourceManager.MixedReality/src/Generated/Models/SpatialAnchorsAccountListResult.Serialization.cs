@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MixedReality.Models
 {
     internal partial class SpatialAnchorsAccountListResult : IUtf8JsonSerializable, IJsonModel<SpatialAnchorsAccountListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpatialAnchorsAccountListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpatialAnchorsAccountListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SpatialAnchorsAccountListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MixedReality.Models
 
         internal static SpatialAnchorsAccountListResult DeserializeSpatialAnchorsAccountListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

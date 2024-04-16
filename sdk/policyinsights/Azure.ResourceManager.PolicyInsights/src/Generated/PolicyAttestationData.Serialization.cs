@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PolicyInsights
 {
     public partial class PolicyAttestationData : IUtf8JsonSerializable, IJsonModel<PolicyAttestationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyAttestationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyAttestationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicyAttestationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         internal static PolicyAttestationData DeserializePolicyAttestationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

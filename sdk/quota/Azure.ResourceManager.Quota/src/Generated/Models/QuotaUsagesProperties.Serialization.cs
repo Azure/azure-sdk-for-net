@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Quota.Models
 {
     public partial class QuotaUsagesProperties : IUtf8JsonSerializable, IJsonModel<QuotaUsagesProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaUsagesProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaUsagesProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuotaUsagesProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         internal static QuotaUsagesProperties DeserializeQuotaUsagesProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

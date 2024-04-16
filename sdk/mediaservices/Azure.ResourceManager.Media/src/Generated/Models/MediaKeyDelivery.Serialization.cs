@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     internal partial class MediaKeyDelivery : IUtf8JsonSerializable, IJsonModel<MediaKeyDelivery>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaKeyDelivery>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaKeyDelivery>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaKeyDelivery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaKeyDelivery DeserializeMediaKeyDelivery(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class SavingsPlanToPurchaseExchange : IUtf8JsonSerializable, IJsonModel<SavingsPlanToPurchaseExchange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanToPurchaseExchange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanToPurchaseExchange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SavingsPlanToPurchaseExchange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static SavingsPlanToPurchaseExchange DeserializeSavingsPlanToPurchaseExchange(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

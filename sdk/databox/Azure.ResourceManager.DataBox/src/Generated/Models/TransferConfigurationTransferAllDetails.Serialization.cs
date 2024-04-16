@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal partial class TransferConfigurationTransferAllDetails : IUtf8JsonSerializable, IJsonModel<TransferConfigurationTransferAllDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransferConfigurationTransferAllDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransferConfigurationTransferAllDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TransferConfigurationTransferAllDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static TransferConfigurationTransferAllDetails DeserializeTransferConfigurationTransferAllDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

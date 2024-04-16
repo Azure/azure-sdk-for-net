@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal partial class ListApplicationsResult : IUtf8JsonSerializable, IJsonModel<ListApplicationsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListApplicationsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListApplicationsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ListApplicationsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static ListApplicationsResult DeserializeListApplicationsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

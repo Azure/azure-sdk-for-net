@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class SqlDBTableDataSetMapping : IUtf8JsonSerializable, IJsonModel<SqlDBTableDataSetMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDBTableDataSetMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDBTableDataSetMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlDBTableDataSetMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static SqlDBTableDataSetMapping DeserializeSqlDBTableDataSetMapping(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

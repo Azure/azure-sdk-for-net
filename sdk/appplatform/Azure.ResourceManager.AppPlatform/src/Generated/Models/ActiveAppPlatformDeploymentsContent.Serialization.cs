@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class ActiveAppPlatformDeploymentsContent : IUtf8JsonSerializable, IJsonModel<ActiveAppPlatformDeploymentsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActiveAppPlatformDeploymentsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActiveAppPlatformDeploymentsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ActiveAppPlatformDeploymentsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static ActiveAppPlatformDeploymentsContent DeserializeActiveAppPlatformDeploymentsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

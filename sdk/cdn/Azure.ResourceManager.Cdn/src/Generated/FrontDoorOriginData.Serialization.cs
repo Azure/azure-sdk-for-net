@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class FrontDoorOriginData : IUtf8JsonSerializable, IJsonModel<FrontDoorOriginData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorOriginData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorOriginData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorOriginData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Cdn
 
         internal static FrontDoorOriginData DeserializeFrontDoorOriginData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

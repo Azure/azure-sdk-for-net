@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.WebPubSub
 {
     public partial class WebPubSubSharedPrivateLinkData : IUtf8JsonSerializable, IJsonModel<WebPubSubSharedPrivateLinkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebPubSubSharedPrivateLinkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebPubSubSharedPrivateLinkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebPubSubSharedPrivateLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         internal static WebPubSubSharedPrivateLinkData DeserializeWebPubSubSharedPrivateLinkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class JitRequestData : IUtf8JsonSerializable, IJsonModel<JitRequestData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitRequestData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitRequestData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JitRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Resources
 
         internal static JitRequestData DeserializeJitRequestData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

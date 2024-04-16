@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Support.Models
 {
     internal partial class SupportEngineer : IUtf8JsonSerializable, IJsonModel<SupportEngineer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportEngineer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportEngineer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SupportEngineer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static SupportEngineer DeserializeSupportEngineer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

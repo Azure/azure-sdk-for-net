@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.Models
 {
     internal partial class MySqlRecommendationActionListResult : IUtf8JsonSerializable, IJsonModel<MySqlRecommendationActionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlRecommendationActionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlRecommendationActionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlRecommendationActionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlRecommendationActionListResult DeserializeMySqlRecommendationActionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

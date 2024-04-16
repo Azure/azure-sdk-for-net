@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 {
     internal partial class VnetSolution : IUtf8JsonSerializable, IJsonModel<VnetSolution>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VnetSolution>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VnetSolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VnetSolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static VnetSolution DeserializeVnetSolution(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

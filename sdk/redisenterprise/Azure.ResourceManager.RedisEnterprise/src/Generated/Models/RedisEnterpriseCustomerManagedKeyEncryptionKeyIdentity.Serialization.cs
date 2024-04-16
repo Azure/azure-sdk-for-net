@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     public partial class RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity DeserializeRedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     public partial class ConfidentialLedgerMemberIdentityCertificate : IUtf8JsonSerializable, IJsonModel<ConfidentialLedgerMemberIdentityCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfidentialLedgerMemberIdentityCertificate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfidentialLedgerMemberIdentityCertificate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConfidentialLedgerMemberIdentityCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         internal static ConfidentialLedgerMemberIdentityCertificate DeserializeConfidentialLedgerMemberIdentityCertificate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

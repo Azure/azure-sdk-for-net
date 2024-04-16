@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     public partial class IotFirmwarePatch : IUtf8JsonSerializable, IJsonModel<IotFirmwarePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotFirmwarePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotFirmwarePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotFirmwarePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static IotFirmwarePatch DeserializeIotFirmwarePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class StaticSitePatch : IUtf8JsonSerializable, IJsonModel<StaticSitePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSitePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSitePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StaticSitePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StaticSitePatch DeserializeStaticSitePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.TrafficManager
 {
     public partial class TrafficManagerUserMetricData : IUtf8JsonSerializable, IJsonModel<TrafficManagerUserMetricData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerUserMetricData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerUserMetricData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrafficManagerUserMetricData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.TrafficManager
 
         internal static TrafficManagerUserMetricData DeserializeTrafficManagerUserMetricData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

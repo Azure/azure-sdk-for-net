@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiData : IUtf8JsonSerializable, IJsonModel<ApiData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiData DeserializeApiData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
