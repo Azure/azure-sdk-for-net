@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class GitLabProjectListResponse : IUtf8JsonSerializable, IJsonModel<GitLabProjectListResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitLabProjectListResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitLabProjectListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GitLabProjectListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GitLabProjectListResponse DeserializeGitLabProjectListResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

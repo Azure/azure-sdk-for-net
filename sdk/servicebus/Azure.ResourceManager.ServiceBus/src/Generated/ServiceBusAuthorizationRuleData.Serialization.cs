@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceBus
 {
     public partial class ServiceBusAuthorizationRuleData : IUtf8JsonSerializable, IJsonModel<ServiceBusAuthorizationRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusAuthorizationRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusAuthorizationRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceBusAuthorizationRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static ServiceBusAuthorizationRuleData DeserializeServiceBusAuthorizationRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

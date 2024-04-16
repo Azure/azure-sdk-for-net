@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class AssociationContract : IUtf8JsonSerializable, IJsonModel<AssociationContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssociationContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssociationContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AssociationContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static AssociationContract DeserializeAssociationContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

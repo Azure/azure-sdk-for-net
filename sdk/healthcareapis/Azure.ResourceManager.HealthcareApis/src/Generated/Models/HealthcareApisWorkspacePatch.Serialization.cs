@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 {
     public partial class HealthcareApisWorkspacePatch : IUtf8JsonSerializable, IJsonModel<HealthcareApisWorkspacePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisWorkspacePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisWorkspacePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HealthcareApisWorkspacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisWorkspacePatch DeserializeHealthcareApisWorkspacePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

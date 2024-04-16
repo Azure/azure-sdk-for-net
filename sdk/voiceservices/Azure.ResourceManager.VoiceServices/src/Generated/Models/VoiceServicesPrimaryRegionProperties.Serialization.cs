@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
 {
     public partial class VoiceServicesPrimaryRegionProperties : IUtf8JsonSerializable, IJsonModel<VoiceServicesPrimaryRegionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VoiceServicesPrimaryRegionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VoiceServicesPrimaryRegionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VoiceServicesPrimaryRegionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
 
         internal static VoiceServicesPrimaryRegionProperties DeserializeVoiceServicesPrimaryRegionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

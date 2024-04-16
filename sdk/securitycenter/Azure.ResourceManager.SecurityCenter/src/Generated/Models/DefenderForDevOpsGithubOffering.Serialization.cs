@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class DefenderForDevOpsGithubOffering : IUtf8JsonSerializable, IJsonModel<DefenderForDevOpsGithubOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForDevOpsGithubOffering>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForDevOpsGithubOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DefenderForDevOpsGithubOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForDevOpsGithubOffering DeserializeDefenderForDevOpsGithubOffering(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

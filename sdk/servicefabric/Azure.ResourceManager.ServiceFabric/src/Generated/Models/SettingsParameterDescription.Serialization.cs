@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 {
     public partial class SettingsParameterDescription : IUtf8JsonSerializable, IJsonModel<SettingsParameterDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SettingsParameterDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SettingsParameterDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SettingsParameterDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static SettingsParameterDescription DeserializeSettingsParameterDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

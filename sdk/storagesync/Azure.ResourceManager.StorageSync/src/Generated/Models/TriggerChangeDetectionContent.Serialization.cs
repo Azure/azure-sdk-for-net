@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class TriggerChangeDetectionContent : IUtf8JsonSerializable, IJsonModel<TriggerChangeDetectionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggerChangeDetectionContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggerChangeDetectionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TriggerChangeDetectionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         internal static TriggerChangeDetectionContent DeserializeTriggerChangeDetectionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

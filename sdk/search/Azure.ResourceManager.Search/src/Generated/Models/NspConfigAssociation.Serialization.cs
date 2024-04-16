@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     public partial class NspConfigAssociation : IUtf8JsonSerializable, IJsonModel<NspConfigAssociation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspConfigAssociation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspConfigAssociation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NspConfigAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static NspConfigAssociation DeserializeNspConfigAssociation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

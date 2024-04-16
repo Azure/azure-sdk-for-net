@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     public partial class ClusterPoolNodeOSImageUpdateProperties : IUtf8JsonSerializable, IJsonModel<ClusterPoolNodeOSImageUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterPoolNodeOSImageUpdateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterPoolNodeOSImageUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterPoolNodeOSImageUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static ClusterPoolNodeOSImageUpdateProperties DeserializeClusterPoolNodeOSImageUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

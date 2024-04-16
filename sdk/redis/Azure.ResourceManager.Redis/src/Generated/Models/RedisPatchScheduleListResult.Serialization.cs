@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Redis.Models
 {
     internal partial class RedisPatchScheduleListResult : IUtf8JsonSerializable, IJsonModel<RedisPatchScheduleListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisPatchScheduleListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisPatchScheduleListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisPatchScheduleListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisPatchScheduleListResult DeserializeRedisPatchScheduleListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

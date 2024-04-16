@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
     public partial class SpringBootSitePatch : IUtf8JsonSerializable, IJsonModel<SpringBootSitePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootSitePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootSitePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SpringBootSitePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
 
         internal static SpringBootSitePatch DeserializeSpringBootSitePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class SiteAuthSettingsV2 : IUtf8JsonSerializable, IJsonModel<SiteAuthSettingsV2>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteAuthSettingsV2>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteAuthSettingsV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SiteAuthSettingsV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static SiteAuthSettingsV2 DeserializeSiteAuthSettingsV2(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

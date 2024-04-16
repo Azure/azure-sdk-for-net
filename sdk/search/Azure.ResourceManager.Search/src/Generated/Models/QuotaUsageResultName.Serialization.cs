@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     public partial class QuotaUsageResultName : IUtf8JsonSerializable, IJsonModel<QuotaUsageResultName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaUsageResultName>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaUsageResultName>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuotaUsageResultName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static QuotaUsageResultName DeserializeQuotaUsageResultName(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

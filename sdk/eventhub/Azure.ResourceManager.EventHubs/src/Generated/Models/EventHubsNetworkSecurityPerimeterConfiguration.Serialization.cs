@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class EventHubsNetworkSecurityPerimeterConfiguration : IUtf8JsonSerializable, IJsonModel<EventHubsNetworkSecurityPerimeterConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNetworkSecurityPerimeterConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNetworkSecurityPerimeterConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubsNetworkSecurityPerimeterConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsNetworkSecurityPerimeterConfiguration DeserializeEventHubsNetworkSecurityPerimeterConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

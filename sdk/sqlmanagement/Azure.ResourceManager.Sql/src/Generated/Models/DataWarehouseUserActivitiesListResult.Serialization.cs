@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class DataWarehouseUserActivitiesListResult : IUtf8JsonSerializable, IJsonModel<DataWarehouseUserActivitiesListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataWarehouseUserActivitiesListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataWarehouseUserActivitiesListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataWarehouseUserActivitiesListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static DataWarehouseUserActivitiesListResult DeserializeDataWarehouseUserActivitiesListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

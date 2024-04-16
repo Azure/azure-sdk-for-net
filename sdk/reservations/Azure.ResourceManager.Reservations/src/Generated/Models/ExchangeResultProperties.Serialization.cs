@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ExchangeResultProperties : IUtf8JsonSerializable, IJsonModel<ExchangeResultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExchangeResultProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExchangeResultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExchangeResultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ExchangeResultProperties DeserializeExchangeResultProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxSkuInformation : IUtf8JsonSerializable, IJsonModel<DataBoxSkuInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxSkuInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxSkuInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxSkuInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxSkuInformation DeserializeDataBoxSkuInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

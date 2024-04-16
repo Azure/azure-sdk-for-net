@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class DiagnosticContractData : IUtf8JsonSerializable, IJsonModel<DiagnosticContractData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticContractData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticContractData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiagnosticContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static DiagnosticContractData DeserializeDiagnosticContractData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

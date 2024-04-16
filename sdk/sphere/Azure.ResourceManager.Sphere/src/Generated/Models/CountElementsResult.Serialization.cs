@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sphere.Models
 {
     public partial class CountElementsResult : IUtf8JsonSerializable, IJsonModel<CountElementsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CountElementsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CountElementsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CountElementsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         internal static CountElementsResult DeserializeCountElementsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

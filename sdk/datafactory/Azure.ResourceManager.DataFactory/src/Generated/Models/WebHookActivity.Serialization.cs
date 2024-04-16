@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class WebHookActivity : IUtf8JsonSerializable, IJsonModel<WebHookActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebHookActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebHookActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebHookActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebHookActivity DeserializeWebHookActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

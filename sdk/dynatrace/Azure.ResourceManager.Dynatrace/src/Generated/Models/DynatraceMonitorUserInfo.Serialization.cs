@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 {
     public partial class DynatraceMonitorUserInfo : IUtf8JsonSerializable, IJsonModel<DynatraceMonitorUserInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceMonitorUserInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceMonitorUserInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DynatraceMonitorUserInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceMonitorUserInfo DeserializeDynatraceMonitorUserInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class IntegrationServiceEnvironmentManagedApiData : IUtf8JsonSerializable, IJsonModel<IntegrationServiceEnvironmentManagedApiData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentManagedApiData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentManagedApiData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationServiceEnvironmentManagedApiData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Logic
 
         internal static IntegrationServiceEnvironmentManagedApiData DeserializeIntegrationServiceEnvironmentManagedApiData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

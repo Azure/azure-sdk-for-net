@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     internal partial class ServiceFabricList : IUtf8JsonSerializable, IJsonModel<ServiceFabricList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceFabricList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static ServiceFabricList DeserializeServiceFabricList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

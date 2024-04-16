@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     public partial class SearchServicePatch : IUtf8JsonSerializable, IJsonModel<SearchServicePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServicePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServicePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SearchServicePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchServicePatch DeserializeSearchServicePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

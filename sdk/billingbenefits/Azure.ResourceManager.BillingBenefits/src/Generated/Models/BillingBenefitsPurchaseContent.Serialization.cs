@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 {
     public partial class BillingBenefitsPurchaseContent : IUtf8JsonSerializable, IJsonModel<BillingBenefitsPurchaseContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsPurchaseContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsPurchaseContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BillingBenefitsPurchaseContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static BillingBenefitsPurchaseContent DeserializeBillingBenefitsPurchaseContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Elastic.Models
 {
     internal partial class MonitoringTagRulesListResponse : IUtf8JsonSerializable, IJsonModel<MonitoringTagRulesListResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringTagRulesListResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringTagRulesListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitoringTagRulesListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static MonitoringTagRulesListResponse DeserializeMonitoringTagRulesListResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

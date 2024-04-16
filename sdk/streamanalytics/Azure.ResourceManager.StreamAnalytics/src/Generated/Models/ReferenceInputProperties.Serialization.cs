@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     public partial class ReferenceInputProperties : IUtf8JsonSerializable, IJsonModel<ReferenceInputProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReferenceInputProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReferenceInputProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReferenceInputProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static ReferenceInputProperties DeserializeReferenceInputProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

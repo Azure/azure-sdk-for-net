@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 {
     public partial class TagsObject : IUtf8JsonSerializable, IJsonModel<TagsObject>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TagsObject>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TagsObject>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TagsObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         internal static TagsObject DeserializeTagsObject(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

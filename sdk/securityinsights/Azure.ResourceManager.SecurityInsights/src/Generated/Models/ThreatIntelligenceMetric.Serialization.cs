@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class ThreatIntelligenceMetric : IUtf8JsonSerializable, IJsonModel<ThreatIntelligenceMetric>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreatIntelligenceMetric>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreatIntelligenceMetric>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ThreatIntelligenceMetric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static ThreatIntelligenceMetric DeserializeThreatIntelligenceMetric(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

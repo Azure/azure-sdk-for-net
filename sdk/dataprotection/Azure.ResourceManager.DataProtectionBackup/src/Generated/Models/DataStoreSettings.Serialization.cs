@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownDataStoreParameters))]
     public partial class DataStoreSettings : IUtf8JsonSerializable, IJsonModel<DataStoreSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataStoreSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataStoreSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataStoreSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataStoreSettings DeserializeDataStoreSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

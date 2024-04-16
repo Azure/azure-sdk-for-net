@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseDataLakeStorageAccountDetails : IUtf8JsonSerializable, IJsonModel<SynapseDataLakeStorageAccountDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseDataLakeStorageAccountDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseDataLakeStorageAccountDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseDataLakeStorageAccountDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseDataLakeStorageAccountDetails DeserializeSynapseDataLakeStorageAccountDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

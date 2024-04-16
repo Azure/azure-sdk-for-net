@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class RoleResourceFormat : IUtf8JsonSerializable, IJsonModel<RoleResourceFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleResourceFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleResourceFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleResourceFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static RoleResourceFormat DeserializeRoleResourceFormat(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     internal partial class NetworkSecurityPerimeterConfigurationListResult : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterConfigurationListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterConfigurationListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterConfigurationListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkSecurityPerimeterConfigurationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static NetworkSecurityPerimeterConfigurationListResult DeserializeNetworkSecurityPerimeterConfigurationListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

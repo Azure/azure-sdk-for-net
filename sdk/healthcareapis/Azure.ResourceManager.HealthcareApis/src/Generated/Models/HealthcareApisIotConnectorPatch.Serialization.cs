@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 {
     public partial class HealthcareApisIotConnectorPatch : IUtf8JsonSerializable, IJsonModel<HealthcareApisIotConnectorPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisIotConnectorPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisIotConnectorPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HealthcareApisIotConnectorPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisIotConnectorPatch DeserializeHealthcareApisIotConnectorPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

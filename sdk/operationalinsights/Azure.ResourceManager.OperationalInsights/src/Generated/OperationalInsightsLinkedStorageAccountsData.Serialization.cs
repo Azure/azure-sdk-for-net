@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class OperationalInsightsLinkedStorageAccountsData : IUtf8JsonSerializable, IJsonModel<OperationalInsightsLinkedStorageAccountsData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsLinkedStorageAccountsData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsLinkedStorageAccountsData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationalInsightsLinkedStorageAccountsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static OperationalInsightsLinkedStorageAccountsData DeserializeOperationalInsightsLinkedStorageAccountsData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

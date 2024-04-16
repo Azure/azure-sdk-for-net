@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
 {
     public partial class OperationalizationClusterData : IUtf8JsonSerializable, IJsonModel<OperationalizationClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalizationClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalizationClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationalizationClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
 
         internal static OperationalizationClusterData DeserializeOperationalizationClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

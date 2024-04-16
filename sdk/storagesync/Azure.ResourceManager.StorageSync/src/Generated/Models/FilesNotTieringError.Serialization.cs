@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class FilesNotTieringError : IUtf8JsonSerializable, IJsonModel<FilesNotTieringError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilesNotTieringError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilesNotTieringError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FilesNotTieringError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         internal static FilesNotTieringError DeserializeFilesNotTieringError(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

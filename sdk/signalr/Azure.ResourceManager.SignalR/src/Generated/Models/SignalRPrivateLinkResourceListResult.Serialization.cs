@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     internal partial class SignalRPrivateLinkResourceListResult : IUtf8JsonSerializable, IJsonModel<SignalRPrivateLinkResourceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRPrivateLinkResourceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRPrivateLinkResourceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SignalRPrivateLinkResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRPrivateLinkResourceListResult DeserializeSignalRPrivateLinkResourceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

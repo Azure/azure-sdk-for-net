@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotHub
 {
     public partial class IotHubCertificateDescriptionData : IUtf8JsonSerializable, IJsonModel<IotHubCertificateDescriptionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubCertificateDescriptionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubCertificateDescriptionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotHubCertificateDescriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.IotHub
 
         internal static IotHubCertificateDescriptionData DeserializeIotHubCertificateDescriptionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class CommonDataServiceForAppsEntityDataset : IUtf8JsonSerializable, IJsonModel<CommonDataServiceForAppsEntityDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonDataServiceForAppsEntityDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonDataServiceForAppsEntityDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommonDataServiceForAppsEntityDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CommonDataServiceForAppsEntityDataset DeserializeCommonDataServiceForAppsEntityDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

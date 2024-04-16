@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class IfConditionActivity : IUtf8JsonSerializable, IJsonModel<IfConditionActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IfConditionActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IfConditionActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IfConditionActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IfConditionActivity DeserializeIfConditionActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

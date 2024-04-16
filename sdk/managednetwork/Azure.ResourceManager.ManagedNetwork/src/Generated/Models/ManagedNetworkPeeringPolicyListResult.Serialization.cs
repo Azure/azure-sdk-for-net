@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
 {
     internal partial class ManagedNetworkPeeringPolicyListResult : IUtf8JsonSerializable, IJsonModel<ManagedNetworkPeeringPolicyListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedNetworkPeeringPolicyListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedNetworkPeeringPolicyListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedNetworkPeeringPolicyListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
 
         internal static ManagedNetworkPeeringPolicyListResult DeserializeManagedNetworkPeeringPolicyListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

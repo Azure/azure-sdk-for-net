@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class ResourceGuardProtectedObjectData : IUtf8JsonSerializable, IJsonModel<ResourceGuardProtectedObjectData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceGuardProtectedObjectData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceGuardProtectedObjectData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceGuardProtectedObjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ResourceGuardProtectedObjectData DeserializeResourceGuardProtectedObjectData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

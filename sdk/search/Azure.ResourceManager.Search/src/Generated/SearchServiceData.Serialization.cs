@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Search
 {
     public partial class SearchServiceData : IUtf8JsonSerializable, IJsonModel<SearchServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SearchServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Search
 
         internal static SearchServiceData DeserializeSearchServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     public partial class FhirServiceData : IUtf8JsonSerializable, IJsonModel<FhirServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FhirServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal static FhirServiceData DeserializeFhirServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

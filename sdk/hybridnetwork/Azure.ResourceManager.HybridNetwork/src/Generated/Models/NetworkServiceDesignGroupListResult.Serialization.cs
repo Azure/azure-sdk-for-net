@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     internal partial class NetworkServiceDesignGroupListResult : IUtf8JsonSerializable, IJsonModel<NetworkServiceDesignGroupListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkServiceDesignGroupListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkServiceDesignGroupListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkServiceDesignGroupListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static NetworkServiceDesignGroupListResult DeserializeNetworkServiceDesignGroupListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

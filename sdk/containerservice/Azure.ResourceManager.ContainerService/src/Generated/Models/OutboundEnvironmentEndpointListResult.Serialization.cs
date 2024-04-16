@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     internal partial class OutboundEnvironmentEndpointListResult : IUtf8JsonSerializable, IJsonModel<OutboundEnvironmentEndpointListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutboundEnvironmentEndpointListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutboundEnvironmentEndpointListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OutboundEnvironmentEndpointListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static OutboundEnvironmentEndpointListResult DeserializeOutboundEnvironmentEndpointListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

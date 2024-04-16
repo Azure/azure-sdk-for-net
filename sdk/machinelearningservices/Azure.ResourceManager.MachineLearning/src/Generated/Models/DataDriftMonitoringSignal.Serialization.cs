@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class DataDriftMonitoringSignal : IUtf8JsonSerializable, IJsonModel<DataDriftMonitoringSignal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataDriftMonitoringSignal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataDriftMonitoringSignal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataDriftMonitoringSignal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static DataDriftMonitoringSignal DeserializeDataDriftMonitoringSignal(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2ASwitchProtectionContent : IUtf8JsonSerializable, IJsonModel<A2ASwitchProtectionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2ASwitchProtectionContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2ASwitchProtectionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<A2ASwitchProtectionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static A2ASwitchProtectionContent DeserializeA2ASwitchProtectionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

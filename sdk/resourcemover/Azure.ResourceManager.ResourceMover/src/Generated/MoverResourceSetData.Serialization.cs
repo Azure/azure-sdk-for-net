@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceMover
 {
     public partial class MoverResourceSetData : IUtf8JsonSerializable, IJsonModel<MoverResourceSetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourceSetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourceSetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MoverResourceSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ResourceMover
 
         internal static MoverResourceSetData DeserializeMoverResourceSetData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

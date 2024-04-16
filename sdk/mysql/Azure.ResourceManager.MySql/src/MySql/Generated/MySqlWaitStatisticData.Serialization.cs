@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MySql
 {
     public partial class MySqlWaitStatisticData : IUtf8JsonSerializable, IJsonModel<MySqlWaitStatisticData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlWaitStatisticData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlWaitStatisticData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlWaitStatisticData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MySql
 
         internal static MySqlWaitStatisticData DeserializeMySqlWaitStatisticData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

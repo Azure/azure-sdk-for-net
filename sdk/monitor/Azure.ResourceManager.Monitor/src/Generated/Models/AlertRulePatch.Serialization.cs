@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class AlertRulePatch : IUtf8JsonSerializable, IJsonModel<AlertRulePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertRulePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertRulePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AlertRulePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static AlertRulePatch DeserializeAlertRulePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

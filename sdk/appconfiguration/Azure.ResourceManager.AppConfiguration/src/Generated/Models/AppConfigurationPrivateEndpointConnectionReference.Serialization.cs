@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 {
     public partial class AppConfigurationPrivateEndpointConnectionReference : IUtf8JsonSerializable, IJsonModel<AppConfigurationPrivateEndpointConnectionReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationPrivateEndpointConnectionReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationPrivateEndpointConnectionReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppConfigurationPrivateEndpointConnectionReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static AppConfigurationPrivateEndpointConnectionReference DeserializeAppConfigurationPrivateEndpointConnectionReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     internal partial class AccessControlListsResult : IUtf8JsonSerializable, IJsonModel<AccessControlListsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessControlListsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessControlListsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AccessControlListsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static AccessControlListsResult DeserializeAccessControlListsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

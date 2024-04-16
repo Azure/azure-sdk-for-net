@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRouteCircuitData : IUtf8JsonSerializable, IJsonModel<ExpressRouteCircuitData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCircuitData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCircuitData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExpressRouteCircuitData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteCircuitData DeserializeExpressRouteCircuitData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

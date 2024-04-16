@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class PartnerDestinationPatch : IUtf8JsonSerializable, IJsonModel<PartnerDestinationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerDestinationPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerDestinationPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PartnerDestinationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static PartnerDestinationPatch DeserializePartnerDestinationPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

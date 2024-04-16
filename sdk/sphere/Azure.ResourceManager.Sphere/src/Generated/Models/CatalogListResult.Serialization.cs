@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sphere.Models
 {
     internal partial class CatalogListResult : IUtf8JsonSerializable, IJsonModel<CatalogListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CatalogListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CatalogListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CatalogListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         internal static CatalogListResult DeserializeCatalogListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

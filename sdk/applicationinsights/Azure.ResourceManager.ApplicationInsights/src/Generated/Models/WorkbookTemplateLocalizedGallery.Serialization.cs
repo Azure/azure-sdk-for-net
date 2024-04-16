@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class WorkbookTemplateLocalizedGallery : IUtf8JsonSerializable, IJsonModel<WorkbookTemplateLocalizedGallery>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkbookTemplateLocalizedGallery>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkbookTemplateLocalizedGallery>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkbookTemplateLocalizedGallery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static WorkbookTemplateLocalizedGallery DeserializeWorkbookTemplateLocalizedGallery(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

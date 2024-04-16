@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     internal partial class ProvisioningServiceDescriptionListResult : IUtf8JsonSerializable, IJsonModel<ProvisioningServiceDescriptionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisioningServiceDescriptionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisioningServiceDescriptionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProvisioningServiceDescriptionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static ProvisioningServiceDescriptionListResult DeserializeProvisioningServiceDescriptionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

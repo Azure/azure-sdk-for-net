@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class PartnerNamespaceChannelData : IUtf8JsonSerializable, IJsonModel<PartnerNamespaceChannelData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerNamespaceChannelData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerNamespaceChannelData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PartnerNamespaceChannelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static PartnerNamespaceChannelData DeserializePartnerNamespaceChannelData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

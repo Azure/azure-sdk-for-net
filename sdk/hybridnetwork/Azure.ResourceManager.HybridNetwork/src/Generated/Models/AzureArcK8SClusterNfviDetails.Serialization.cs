@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class AzureArcK8SClusterNfviDetails : IUtf8JsonSerializable, IJsonModel<AzureArcK8SClusterNfviDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureArcK8SClusterNfviDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureArcK8SClusterNfviDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureArcK8SClusterNfviDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static AzureArcK8SClusterNfviDetails DeserializeAzureArcK8SClusterNfviDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

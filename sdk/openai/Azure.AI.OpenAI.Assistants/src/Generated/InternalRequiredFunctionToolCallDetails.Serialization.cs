@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI.Assistants
 {
     internal partial class InternalRequiredFunctionToolCallDetails : IUtf8JsonSerializable, IJsonModel<InternalRequiredFunctionToolCallDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalRequiredFunctionToolCallDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalRequiredFunctionToolCallDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InternalRequiredFunctionToolCallDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         internal static InternalRequiredFunctionToolCallDetails DeserializeInternalRequiredFunctionToolCallDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,7 +136,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

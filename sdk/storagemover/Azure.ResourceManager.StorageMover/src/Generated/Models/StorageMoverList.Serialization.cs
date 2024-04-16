@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 {
     internal partial class StorageMoverList : IUtf8JsonSerializable, IJsonModel<StorageMoverList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageMoverList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageMoverList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageMoverList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         internal static StorageMoverList DeserializeStorageMoverList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

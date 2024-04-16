@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     internal partial class HciSkuList : IUtf8JsonSerializable, IJsonModel<HciSkuList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciSkuList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciSkuList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HciSkuList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static HciSkuList DeserializeHciSkuList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

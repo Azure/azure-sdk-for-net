@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AzureSqlMITableDataset : IUtf8JsonSerializable, IJsonModel<AzureSqlMITableDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSqlMITableDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSqlMITableDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureSqlMITableDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureSqlMITableDataset DeserializeAzureSqlMITableDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

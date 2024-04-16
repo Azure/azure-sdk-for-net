@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class RecallActionContent : IUtf8JsonSerializable, IJsonModel<RecallActionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecallActionContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecallActionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RecallActionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         internal static RecallActionContent DeserializeRecallActionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

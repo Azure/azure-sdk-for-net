@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     public partial class DeviceUpdateInstanceData : IUtf8JsonSerializable, IJsonModel<DeviceUpdateInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdateInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdateInstanceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeviceUpdateInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         internal static DeviceUpdateInstanceData DeserializeDeviceUpdateInstanceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

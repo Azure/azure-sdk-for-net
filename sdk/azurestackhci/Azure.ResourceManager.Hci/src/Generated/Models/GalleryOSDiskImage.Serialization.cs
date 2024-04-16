@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     internal partial class GalleryOSDiskImage : IUtf8JsonSerializable, IJsonModel<GalleryOSDiskImage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryOSDiskImage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryOSDiskImage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GalleryOSDiskImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static GalleryOSDiskImage DeserializeGalleryOSDiskImage(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

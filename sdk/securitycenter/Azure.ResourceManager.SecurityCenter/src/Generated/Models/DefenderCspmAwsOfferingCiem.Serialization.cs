@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class DefenderCspmAwsOfferingCiem : IUtf8JsonSerializable, IJsonModel<DefenderCspmAwsOfferingCiem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderCspmAwsOfferingCiem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderCspmAwsOfferingCiem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DefenderCspmAwsOfferingCiem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderCspmAwsOfferingCiem DeserializeDefenderCspmAwsOfferingCiem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

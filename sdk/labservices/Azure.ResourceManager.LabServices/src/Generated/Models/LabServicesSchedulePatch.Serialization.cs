@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.LabServices.Models
 {
     public partial class LabServicesSchedulePatch : IUtf8JsonSerializable, IJsonModel<LabServicesSchedulePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabServicesSchedulePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabServicesSchedulePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LabServicesSchedulePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabServicesSchedulePatch DeserializeLabServicesSchedulePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

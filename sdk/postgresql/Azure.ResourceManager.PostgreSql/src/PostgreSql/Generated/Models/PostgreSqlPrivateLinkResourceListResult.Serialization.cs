@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
 {
     internal partial class PostgreSqlPrivateLinkResourceListResult : IUtf8JsonSerializable, IJsonModel<PostgreSqlPrivateLinkResourceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlPrivateLinkResourceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlPrivateLinkResourceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlPrivateLinkResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         internal static PostgreSqlPrivateLinkResourceListResult DeserializePostgreSqlPrivateLinkResourceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

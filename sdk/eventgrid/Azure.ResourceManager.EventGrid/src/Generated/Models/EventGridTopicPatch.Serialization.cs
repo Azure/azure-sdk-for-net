@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class EventGridTopicPatch : IUtf8JsonSerializable, IJsonModel<EventGridTopicPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridTopicPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridTopicPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventGridTopicPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventGridTopicPatch DeserializeEventGridTopicPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppVolumeSnapshotRestoreFilesContent : IUtf8JsonSerializable, IJsonModel<NetAppVolumeSnapshotRestoreFilesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeSnapshotRestoreFilesContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeSnapshotRestoreFilesContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppVolumeSnapshotRestoreFilesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppVolumeSnapshotRestoreFilesContent DeserializeNetAppVolumeSnapshotRestoreFilesContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

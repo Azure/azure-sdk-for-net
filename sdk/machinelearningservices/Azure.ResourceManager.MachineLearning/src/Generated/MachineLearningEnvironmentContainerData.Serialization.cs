@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningEnvironmentContainerData : IUtf8JsonSerializable, IJsonModel<MachineLearningEnvironmentContainerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningEnvironmentContainerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningEnvironmentContainerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningEnvironmentContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static MachineLearningEnvironmentContainerData DeserializeMachineLearningEnvironmentContainerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

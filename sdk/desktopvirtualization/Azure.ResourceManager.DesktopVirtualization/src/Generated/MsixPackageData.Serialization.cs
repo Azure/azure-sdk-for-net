@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     public partial class MsixPackageData : IUtf8JsonSerializable, IJsonModel<MsixPackageData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MsixPackageData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MsixPackageData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MsixPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static MsixPackageData DeserializeMsixPackageData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

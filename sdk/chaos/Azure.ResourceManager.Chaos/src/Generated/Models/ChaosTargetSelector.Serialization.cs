@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Models
     [PersistableModelProxy(typeof(UnknownChaosTargetSelector))]
     public partial class ChaosTargetSelector : IUtf8JsonSerializable, IJsonModel<ChaosTargetSelector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosTargetSelector>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosTargetSelector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChaosTargetSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static ChaosTargetSelector DeserializeChaosTargetSelector(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

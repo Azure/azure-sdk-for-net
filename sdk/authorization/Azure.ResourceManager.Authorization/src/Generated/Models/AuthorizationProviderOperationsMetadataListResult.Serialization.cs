@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     internal partial class AuthorizationProviderOperationsMetadataListResult : IUtf8JsonSerializable, IJsonModel<AuthorizationProviderOperationsMetadataListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizationProviderOperationsMetadataListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizationProviderOperationsMetadataListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AuthorizationProviderOperationsMetadataListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static AuthorizationProviderOperationsMetadataListResult DeserializeAuthorizationProviderOperationsMetadataListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

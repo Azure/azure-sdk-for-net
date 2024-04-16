@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 {
     public partial class ProvisionedClusterPropertiesAutoScalerProfile : IUtf8JsonSerializable, IJsonModel<ProvisionedClusterPropertiesAutoScalerProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterPropertiesAutoScalerProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterPropertiesAutoScalerProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProvisionedClusterPropertiesAutoScalerProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ProvisionedClusterPropertiesAutoScalerProfile DeserializeProvisionedClusterPropertiesAutoScalerProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

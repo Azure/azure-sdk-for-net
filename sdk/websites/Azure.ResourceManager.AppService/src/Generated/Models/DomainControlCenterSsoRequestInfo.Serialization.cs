@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class DomainControlCenterSsoRequestInfo : IUtf8JsonSerializable, IJsonModel<DomainControlCenterSsoRequestInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainControlCenterSsoRequestInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainControlCenterSsoRequestInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DomainControlCenterSsoRequestInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DomainControlCenterSsoRequestInfo DeserializeDomainControlCenterSsoRequestInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

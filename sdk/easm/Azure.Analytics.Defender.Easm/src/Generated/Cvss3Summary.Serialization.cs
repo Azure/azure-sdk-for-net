@@ -15,7 +15,7 @@ namespace Azure.Analytics.Defender.Easm
 {
     public partial class Cvss3Summary : IUtf8JsonSerializable, IJsonModel<Cvss3Summary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Cvss3Summary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Cvss3Summary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<Cvss3Summary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -143,7 +143,7 @@ namespace Azure.Analytics.Defender.Easm
 
         internal static Cvss3Summary DeserializeCvss3Summary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -337,7 +337,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

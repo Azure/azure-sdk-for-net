@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerInstance
 {
     public partial class ContainerGroupData : IUtf8JsonSerializable, IJsonModel<ContainerGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ContainerInstance
 
         internal static ContainerGroupData DeserializeContainerGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

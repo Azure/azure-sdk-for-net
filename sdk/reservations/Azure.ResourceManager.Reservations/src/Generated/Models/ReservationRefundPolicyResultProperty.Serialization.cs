@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationRefundPolicyResultProperty : IUtf8JsonSerializable, IJsonModel<ReservationRefundPolicyResultProperty>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRefundPolicyResultProperty>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRefundPolicyResultProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationRefundPolicyResultProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ReservationRefundPolicyResultProperty DeserializeReservationRefundPolicyResultProperty(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

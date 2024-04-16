@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci
 {
     public partial class NetworkInterfaceData : IUtf8JsonSerializable, IJsonModel<NetworkInterfaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterfaceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterfaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkInterfaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Hci
 
         internal static NetworkInterfaceData DeserializeNetworkInterfaceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

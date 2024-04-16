@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class PropertyDefinition : IUtf8JsonSerializable, IJsonModel<PropertyDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PropertyDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PropertyDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PropertyDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static PropertyDefinition DeserializePropertyDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

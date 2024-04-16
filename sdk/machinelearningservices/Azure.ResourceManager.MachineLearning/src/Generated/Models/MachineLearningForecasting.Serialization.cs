@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningForecasting : IUtf8JsonSerializable, IJsonModel<MachineLearningForecasting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningForecasting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningForecasting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningForecasting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningForecasting DeserializeMachineLearningForecasting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

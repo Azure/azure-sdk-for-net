@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningBatchEndpointProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningBatchEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningBatchEndpointProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningBatchEndpointProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningBatchEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningBatchEndpointProperties DeserializeMachineLearningBatchEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

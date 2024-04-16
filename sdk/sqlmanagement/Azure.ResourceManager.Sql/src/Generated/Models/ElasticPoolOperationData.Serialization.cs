@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ElasticPoolOperationData : IUtf8JsonSerializable, IJsonModel<ElasticPoolOperationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticPoolOperationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticPoolOperationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ElasticPoolOperationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ElasticPoolOperationData DeserializeElasticPoolOperationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

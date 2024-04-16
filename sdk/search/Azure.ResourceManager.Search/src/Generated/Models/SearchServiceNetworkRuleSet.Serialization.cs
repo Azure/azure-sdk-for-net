@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     public partial class SearchServiceNetworkRuleSet : IUtf8JsonSerializable, IJsonModel<SearchServiceNetworkRuleSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServiceNetworkRuleSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServiceNetworkRuleSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SearchServiceNetworkRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchServiceNetworkRuleSet DeserializeSearchServiceNetworkRuleSet(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

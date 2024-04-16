@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class PremierAddOnPatchResource : IUtf8JsonSerializable, IJsonModel<PremierAddOnPatchResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PremierAddOnPatchResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PremierAddOnPatchResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PremierAddOnPatchResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static PremierAddOnPatchResource DeserializePremierAddOnPatchResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

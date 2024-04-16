@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class NotificationSetting : IUtf8JsonSerializable, IJsonModel<NotificationSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static NotificationSetting DeserializeNotificationSetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

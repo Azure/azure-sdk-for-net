@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class AmlCompute : IUtf8JsonSerializable, IJsonModel<AmlCompute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlCompute>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlCompute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AmlCompute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AmlCompute DeserializeAmlCompute(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

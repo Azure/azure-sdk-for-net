@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class ComplianceResult : IUtf8JsonSerializable, IJsonModel<ComplianceResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComplianceResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComplianceResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComplianceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         internal static ComplianceResult DeserializeComplianceResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

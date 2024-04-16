@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class ManagedDatabaseAdvancedThreatProtectionListResult : IUtf8JsonSerializable, IJsonModel<ManagedDatabaseAdvancedThreatProtectionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDatabaseAdvancedThreatProtectionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDatabaseAdvancedThreatProtectionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedDatabaseAdvancedThreatProtectionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedDatabaseAdvancedThreatProtectionListResult DeserializeManagedDatabaseAdvancedThreatProtectionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

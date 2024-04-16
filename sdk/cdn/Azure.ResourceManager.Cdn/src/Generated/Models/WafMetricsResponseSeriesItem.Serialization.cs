@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class WafMetricsResponseSeriesItem : IUtf8JsonSerializable, IJsonModel<WafMetricsResponseSeriesItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WafMetricsResponseSeriesItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WafMetricsResponseSeriesItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WafMetricsResponseSeriesItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static WafMetricsResponseSeriesItem DeserializeWafMetricsResponseSeriesItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

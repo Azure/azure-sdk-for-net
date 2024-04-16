@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ManagedInstanceServerConfigurationOptionData : IUtf8JsonSerializable, IJsonModel<ManagedInstanceServerConfigurationOptionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceServerConfigurationOptionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceServerConfigurationOptionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedInstanceServerConfigurationOptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static ManagedInstanceServerConfigurationOptionData DeserializeManagedInstanceServerConfigurationOptionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

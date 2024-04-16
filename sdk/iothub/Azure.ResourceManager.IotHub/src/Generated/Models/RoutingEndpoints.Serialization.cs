@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class RoutingEndpoints : IUtf8JsonSerializable, IJsonModel<RoutingEndpoints>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingEndpoints>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingEndpoints>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoutingEndpoints>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static RoutingEndpoints DeserializeRoutingEndpoints(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

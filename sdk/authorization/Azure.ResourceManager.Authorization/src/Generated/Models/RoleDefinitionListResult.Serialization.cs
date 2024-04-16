@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     internal partial class RoleDefinitionListResult : IUtf8JsonSerializable, IJsonModel<RoleDefinitionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleDefinitionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleDefinitionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleDefinitionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleDefinitionListResult DeserializeRoleDefinitionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

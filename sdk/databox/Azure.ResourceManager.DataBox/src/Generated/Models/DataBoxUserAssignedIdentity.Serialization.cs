@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal partial class DataBoxUserAssignedIdentity : IUtf8JsonSerializable, IJsonModel<DataBoxUserAssignedIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxUserAssignedIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxUserAssignedIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxUserAssignedIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxUserAssignedIdentity DeserializeDataBoxUserAssignedIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

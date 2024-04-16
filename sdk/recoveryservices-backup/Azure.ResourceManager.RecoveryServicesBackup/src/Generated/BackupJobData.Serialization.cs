@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupJobData : IUtf8JsonSerializable, IJsonModel<BackupJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupJobData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         internal static BackupJobData DeserializeBackupJobData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

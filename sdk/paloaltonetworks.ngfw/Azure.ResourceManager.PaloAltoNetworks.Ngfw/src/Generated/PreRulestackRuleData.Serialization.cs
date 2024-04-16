@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     public partial class PreRulestackRuleData : IUtf8JsonSerializable, IJsonModel<PreRulestackRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PreRulestackRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PreRulestackRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PreRulestackRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         internal static PreRulestackRuleData DeserializePreRulestackRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

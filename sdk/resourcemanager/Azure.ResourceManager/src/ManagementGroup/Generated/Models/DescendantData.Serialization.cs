@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 {
     public partial class DescendantData : IUtf8JsonSerializable, IJsonModel<DescendantData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DescendantData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DescendantData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DescendantData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         internal static DescendantData DeserializeDescendantData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

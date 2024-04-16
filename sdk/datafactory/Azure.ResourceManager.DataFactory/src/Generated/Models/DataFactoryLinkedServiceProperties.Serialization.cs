@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownLinkedService))]
     public partial class DataFactoryLinkedServiceProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryLinkedServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryLinkedServiceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryLinkedServiceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryLinkedServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFactoryLinkedServiceProperties DeserializeDataFactoryLinkedServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

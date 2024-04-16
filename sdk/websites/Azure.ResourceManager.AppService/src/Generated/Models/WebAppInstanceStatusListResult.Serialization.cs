@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class WebAppInstanceStatusListResult : IUtf8JsonSerializable, IJsonModel<WebAppInstanceStatusListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppInstanceStatusListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppInstanceStatusListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebAppInstanceStatusListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppInstanceStatusListResult DeserializeWebAppInstanceStatusListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

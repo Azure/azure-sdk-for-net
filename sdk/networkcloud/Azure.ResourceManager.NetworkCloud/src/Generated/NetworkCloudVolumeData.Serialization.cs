@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudVolumeData : IUtf8JsonSerializable, IJsonModel<NetworkCloudVolumeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudVolumeData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudVolumeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkCloudVolumeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
         internal static NetworkCloudVolumeData DeserializeNetworkCloudVolumeData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

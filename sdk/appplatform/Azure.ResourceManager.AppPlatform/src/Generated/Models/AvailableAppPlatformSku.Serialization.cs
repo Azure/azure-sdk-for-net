@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AvailableAppPlatformSku : IUtf8JsonSerializable, IJsonModel<AvailableAppPlatformSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableAppPlatformSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableAppPlatformSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailableAppPlatformSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AvailableAppPlatformSku DeserializeAvailableAppPlatformSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

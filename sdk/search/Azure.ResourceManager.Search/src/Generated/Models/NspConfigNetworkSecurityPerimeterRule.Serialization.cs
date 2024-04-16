@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     public partial class NspConfigNetworkSecurityPerimeterRule : IUtf8JsonSerializable, IJsonModel<NspConfigNetworkSecurityPerimeterRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspConfigNetworkSecurityPerimeterRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspConfigNetworkSecurityPerimeterRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NspConfigNetworkSecurityPerimeterRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static NspConfigNetworkSecurityPerimeterRule DeserializeNspConfigNetworkSecurityPerimeterRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

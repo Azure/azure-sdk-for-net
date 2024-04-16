@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class BackupServerContainer : IUtf8JsonSerializable, IJsonModel<BackupServerContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupServerContainer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupServerContainer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupServerContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupServerContainer DeserializeBackupServerContainer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

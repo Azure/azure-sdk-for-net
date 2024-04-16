@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class JobTarget : IUtf8JsonSerializable, IJsonModel<JobTarget>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobTarget>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobTarget>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JobTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static JobTarget DeserializeJobTarget(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

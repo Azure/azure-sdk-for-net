@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class DevCenterTrackedResourceUpdate : IUtf8JsonSerializable, IJsonModel<DevCenterTrackedResourceUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterTrackedResourceUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterTrackedResourceUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevCenterTrackedResourceUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static DevCenterTrackedResourceUpdate DeserializeDevCenterTrackedResourceUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
