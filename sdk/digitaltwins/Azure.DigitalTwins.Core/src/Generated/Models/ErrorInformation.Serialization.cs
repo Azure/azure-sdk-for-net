@@ -19,7 +19,7 @@ namespace Azure.DigitalTwins.Core
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue<InnerError>(Innererror);
+                writer.WriteObjectValue(Innererror);
             }
             writer.WriteEndObject();
         }
@@ -71,6 +71,22 @@ namespace Azure.DigitalTwins.Core
                 }
             }
             return new ErrorInformation(code, message, details ?? new ChangeTrackingList<ErrorInformation>(), innererror);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ErrorInformation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeErrorInformation(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

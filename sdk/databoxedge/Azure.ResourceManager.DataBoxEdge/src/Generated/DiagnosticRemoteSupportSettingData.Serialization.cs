@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in RemoteSupportSettingsList)
                 {
-                    writer.WriteObjectValue<EdgeRemoteSupportSettings>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

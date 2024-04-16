@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Automanage
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<AutomanageConfigurationProfileAssignmentProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManagedBy))
             {

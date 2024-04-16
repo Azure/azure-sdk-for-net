@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Hash))
             {
                 writer.WritePropertyName("hash"u8);
-                writer.WriteObjectValue<AutomationContentHash>(Hash, options);
+                writer.WriteObjectValue(Hash, options);
             }
             if (Optional.IsDefined(SourceType))
             {

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automanage
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue<ConfigurationProfileAssignmentReportResourceDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

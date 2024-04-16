@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in ReadyReplicas)
                 {
-                    writer.WriteObjectValue<AgentPoolUpdateProfile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

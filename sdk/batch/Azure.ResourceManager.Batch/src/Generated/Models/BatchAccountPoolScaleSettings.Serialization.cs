@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(FixedScale))
             {
                 writer.WritePropertyName("fixedScale"u8);
-                writer.WriteObjectValue<BatchAccountFixedScaleSettings>(FixedScale, options);
+                writer.WriteObjectValue(FixedScale, options);
             }
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue<BatchAccountAutoScaleSettings>(AutoScale, options);
+                writer.WriteObjectValue(AutoScale, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

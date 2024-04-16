@@ -34,7 +34,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(AcceptedAgeRange))
             {
                 writer.WritePropertyName("acceptedAgeRange"u8);
-                writer.WriteObjectValue<AcceptedAgeRange>(AcceptedAgeRange, options);
+                writer.WriteObjectValue(AcceptedAgeRange, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -146,11 +146,11 @@ namespace Azure.Health.Insights.ClinicalMatching
             return DeserializeClinicalTrialDemographics(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ClinicalTrialDemographics>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

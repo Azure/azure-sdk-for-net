@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
-                writer.WriteObjectValue<MongoDBShardKeySetting>(ShardKey, options);
+                writer.WriteObjectValue(ShardKey, options);
             }
             if (Optional.IsDefined(TargetRUs))
             {

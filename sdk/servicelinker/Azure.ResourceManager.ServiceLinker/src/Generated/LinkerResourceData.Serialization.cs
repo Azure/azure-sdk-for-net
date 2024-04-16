@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.ServiceLinker
             if (Optional.IsDefined(TargetService))
             {
                 writer.WritePropertyName("targetService"u8);
-                writer.WriteObjectValue<TargetServiceBaseInfo>(TargetService, options);
+                writer.WriteObjectValue(TargetService, options);
             }
             if (Optional.IsDefined(AuthInfo))
             {
                 writer.WritePropertyName("authInfo"u8);
-                writer.WriteObjectValue<AuthBaseInfo>(AuthInfo, options);
+                writer.WriteObjectValue(AuthInfo, options);
             }
             if (Optional.IsDefined(ClientType))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 if (VnetSolution != null)
                 {
                     writer.WritePropertyName("vNetSolution"u8);
-                    writer.WriteObjectValue<VnetSolution>(VnetSolution, options);
+                    writer.WriteObjectValue(VnetSolution, options);
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 if (SecretStore != null)
                 {
                     writer.WritePropertyName("secretStore"u8);
-                    writer.WriteObjectValue<LinkerSecretStore>(SecretStore, options);
+                    writer.WriteObjectValue(SecretStore, options);
                 }
                 else
                 {

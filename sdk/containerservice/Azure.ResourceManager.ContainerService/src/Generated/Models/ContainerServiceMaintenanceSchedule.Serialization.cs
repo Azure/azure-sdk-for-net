@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Daily))
             {
                 writer.WritePropertyName("daily"u8);
-                writer.WriteObjectValue<DailySchedule>(Daily, options);
+                writer.WriteObjectValue(Daily, options);
             }
             if (Optional.IsDefined(Weekly))
             {
                 writer.WritePropertyName("weekly"u8);
-                writer.WriteObjectValue<ContainerServiceMaintenanceWeeklySchedule>(Weekly, options);
+                writer.WriteObjectValue(Weekly, options);
             }
             if (Optional.IsDefined(AbsoluteMonthly))
             {
                 writer.WritePropertyName("absoluteMonthly"u8);
-                writer.WriteObjectValue<ContainerServiceMaintenanceAbsoluteMonthlySchedule>(AbsoluteMonthly, options);
+                writer.WriteObjectValue(AbsoluteMonthly, options);
             }
             if (Optional.IsDefined(RelativeMonthly))
             {
                 writer.WritePropertyName("relativeMonthly"u8);
-                writer.WriteObjectValue<ContainerServiceMaintenanceRelativeMonthlySchedule>(RelativeMonthly, options);
+                writer.WriteObjectValue(RelativeMonthly, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

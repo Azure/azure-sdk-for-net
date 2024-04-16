@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
-                writer.WriteObjectValue<PartnerTopicEventTypeInfo>(EventTypeInfo, options);
+                writer.WriteObjectValue(EventTypeInfo, options);
             }
             if (Optional.IsDefined(Source))
             {

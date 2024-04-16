@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStringValue(JobName);
             }
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue<DataTransferDataSourceSink>(Source, options);
+            writer.WriteObjectValue(Source, options);
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue<DataTransferDataSourceSink>(Destination, options);
+            writer.WriteObjectValue(Destination, options);
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<ErrorResponse>(Error, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Duration))
             {

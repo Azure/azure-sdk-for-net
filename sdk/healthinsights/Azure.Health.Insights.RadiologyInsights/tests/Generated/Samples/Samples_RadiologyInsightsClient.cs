@@ -819,7 +819,7 @@ FullName = "<fullName>",
 SpecialtyType = SpecialtyType.Pathology,
 AdministrativeMetadata = new DocumentAdministrativeMetadata
 {
-OrderedProcedures = {new FhirR4Extendible
+OrderedProcedures = {new OrderedProcedure
 {
 Extension = {default},
 Code = default,
@@ -916,7 +916,7 @@ FullName = "<fullName>",
 SpecialtyType = SpecialtyType.Pathology,
 AdministrativeMetadata = new DocumentAdministrativeMetadata
 {
-OrderedProcedures = {new FhirR4Extendible
+OrderedProcedures = {new OrderedProcedure
 {
 Extension = {default},
 Code = default,

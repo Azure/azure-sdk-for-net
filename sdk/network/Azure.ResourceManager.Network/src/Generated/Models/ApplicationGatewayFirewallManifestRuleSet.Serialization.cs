@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in RuleGroups)
             {
-                writer.WriteObjectValue<ApplicationGatewayFirewallRuleGroup>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

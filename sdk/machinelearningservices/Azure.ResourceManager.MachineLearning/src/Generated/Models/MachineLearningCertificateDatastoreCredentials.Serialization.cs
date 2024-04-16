@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue<MachineLearningCertificateDatastoreSecrets>(Secrets, options);
+            writer.WriteObjectValue(Secrets, options);
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
             writer.WritePropertyName("thumbprint"u8);

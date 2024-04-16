@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartArray();
             foreach (var item in PublicKeys)
             {
-                writer.WriteObjectValue<ContainerServiceSshPublicKey>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

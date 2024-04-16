@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Automation
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("updateConfiguration"u8);
-            writer.WriteObjectValue<SoftwareUpdateConfigurationSpecificProperties>(UpdateConfiguration, options);
+            writer.WriteObjectValue(UpdateConfiguration, options);
             writer.WritePropertyName("scheduleInfo"u8);
-            writer.WriteObjectValue<SoftwareUpdateConfigurationScheduleProperties>(ScheduleInfo, options);
+            writer.WriteObjectValue(ScheduleInfo, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<AutomationResponseError>(Error, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
-                writer.WriteObjectValue<SoftwareUpdateConfigurationTasks>(Tasks, options);
+                writer.WriteObjectValue(Tasks, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

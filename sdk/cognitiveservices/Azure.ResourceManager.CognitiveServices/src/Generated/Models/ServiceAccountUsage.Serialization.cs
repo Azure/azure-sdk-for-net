@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue<ServiceAccountUsageMetricName>(Name, options);
+                writer.WriteObjectValue(Name, options);
             }
             if (Optional.IsDefined(QuotaPeriod))
             {

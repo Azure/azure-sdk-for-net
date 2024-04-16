@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
-                writer.WriteObjectValue<AutoHealTriggers>(Triggers, options);
+                writer.WriteObjectValue(Triggers, options);
             }
             if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue<AutoHealActions>(Actions, options);
+                writer.WriteObjectValue(Actions, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

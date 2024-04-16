@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue<SsisAccessCredential>(AccessCredential, options);
+                writer.WriteObjectValue(AccessCredential, options);
             }
             if (Optional.IsDefined(LogRefreshInterval))
             {

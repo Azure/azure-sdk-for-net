@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in FieldRestrictions)
                 {
-                    writer.WriteObjectValue<FieldRestrictions>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(ContentEvaluationResult))
             {
                 writer.WritePropertyName("contentEvaluationResult"u8);
-                writer.WriteObjectValue<CheckRestrictionsResultContentEvaluationResult>(ContentEvaluationResult, options);
+                writer.WriteObjectValue(ContentEvaluationResult, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

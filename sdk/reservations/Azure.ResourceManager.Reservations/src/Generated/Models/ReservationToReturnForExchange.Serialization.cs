@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(BillingRefundAmount))
             {
                 writer.WritePropertyName("billingRefundAmount"u8);
-                writer.WriteObjectValue<PurchasePrice>(BillingRefundAmount, options);
+                writer.WriteObjectValue(BillingRefundAmount, options);
             }
             if (Optional.IsDefined(BillingInformation))
             {
                 writer.WritePropertyName("billingInformation"u8);
-                writer.WriteObjectValue<BillingInformation>(BillingInformation, options);
+                writer.WriteObjectValue(BillingInformation, options);
             }
             if (Optional.IsDefined(Status))
             {

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             if (Optional.IsDefined(TagSettings))
             {
                 writer.WritePropertyName("tagSettings"u8);
-                writer.WriteObjectValue<VmTagSettings>(TagSettings, options);
+                writer.WriteObjectValue(TagSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

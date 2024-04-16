@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteStartArray();
             foreach (var item in Channels)
             {
-                writer.WriteObjectValue<OrbitalContactProfileLinkChannel>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

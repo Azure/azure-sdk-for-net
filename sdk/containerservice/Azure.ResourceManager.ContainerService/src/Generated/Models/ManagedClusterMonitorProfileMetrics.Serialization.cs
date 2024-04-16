@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(KubeStateMetrics))
             {
                 writer.WritePropertyName("kubeStateMetrics"u8);
-                writer.WriteObjectValue<ManagedClusterMonitorProfileKubeStateMetrics>(KubeStateMetrics, options);
+                writer.WriteObjectValue(KubeStateMetrics, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

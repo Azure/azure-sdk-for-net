@@ -26,10 +26,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CopyActivityLogSettings))
             {
                 writer.WritePropertyName("copyActivityLogSettings"u8);
-                writer.WriteObjectValue<CopyActivityLogSettings>(CopyActivityLogSettings);
+                writer.WriteObjectValue(CopyActivityLogSettings);
             }
             writer.WritePropertyName("logLocationSettings"u8);
-            writer.WriteObjectValue<LogLocationSettings>(LogLocationSettings);
+            writer.WriteObjectValue(LogLocationSettings);
             writer.WriteEndObject();
         }
 
@@ -71,12 +71,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LogSettings(enableCopyActivityLog, copyActivityLogSettings, logLocationSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LogSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLogSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class LogSettingsConverter : JsonConverter<LogSettings>
         {
             public override void Write(Utf8JsonWriter writer, LogSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<LogSettings>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override LogSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

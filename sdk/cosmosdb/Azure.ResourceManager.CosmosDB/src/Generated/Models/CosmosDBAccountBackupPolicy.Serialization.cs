@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
-                writer.WriteObjectValue<BackupPolicyMigrationState>(MigrationState, options);
+                writer.WriteObjectValue(MigrationState, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

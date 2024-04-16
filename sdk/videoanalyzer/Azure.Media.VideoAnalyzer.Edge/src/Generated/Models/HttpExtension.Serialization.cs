@@ -17,13 +17,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue<EndpointBase>(Endpoint);
+            writer.WriteObjectValue(Endpoint);
             writer.WritePropertyName("image"u8);
-            writer.WriteObjectValue<ImageProperties>(Image);
+            writer.WriteObjectValue(Image);
             if (Optional.IsDefined(SamplingOptions))
             {
                 writer.WritePropertyName("samplingOptions"u8);
-                writer.WriteObjectValue<SamplingOptions>(SamplingOptions);
+                writer.WriteObjectValue(SamplingOptions);
             }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
@@ -33,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue<NodeInput>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -100,6 +100,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 endpoint,
                 image,
                 samplingOptions);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HttpExtension FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHttpExtension(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

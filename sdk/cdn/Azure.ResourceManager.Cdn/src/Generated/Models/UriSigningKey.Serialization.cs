@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("keyId"u8);
             writer.WriteStringValue(KeyId);
             writer.WritePropertyName("keySourceParameters"u8);
-            writer.WriteObjectValue<KeyVaultSigningKey>(KeySourceParameters, options);
+            writer.WriteObjectValue(KeySourceParameters, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

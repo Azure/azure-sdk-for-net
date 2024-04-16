@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<SqlSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(PerDatabaseSettings))
             {
                 writer.WritePropertyName("perDatabaseSettings"u8);
-                writer.WriteObjectValue<ElasticPoolPerDatabaseSettings>(PerDatabaseSettings, options);
+                writer.WriteObjectValue(PerDatabaseSettings, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {

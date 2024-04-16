@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStringValue(PanETag.Value.ToString());
             }
             writer.WritePropertyName("networkProfile"u8);
-            writer.WriteObjectValue<FirewallNetworkProfile>(NetworkProfile, options);
+            writer.WriteObjectValue(NetworkProfile, options);
             if (Optional.IsDefined(IsPanoramaManaged))
             {
                 writer.WritePropertyName("isPanoramaManaged"u8);
@@ -84,22 +84,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(PanoramaConfig))
             {
                 writer.WritePropertyName("panoramaConfig"u8);
-                writer.WriteObjectValue<FirewallPanoramaConfiguration>(PanoramaConfig, options);
+                writer.WriteObjectValue(PanoramaConfig, options);
             }
             if (Optional.IsDefined(AssociatedRulestack))
             {
                 writer.WritePropertyName("associatedRulestack"u8);
-                writer.WriteObjectValue<RulestackDetails>(AssociatedRulestack, options);
+                writer.WriteObjectValue(AssociatedRulestack, options);
             }
             writer.WritePropertyName("dnsSettings"u8);
-            writer.WriteObjectValue<FirewallDnsSettings>(DnsSettings, options);
+            writer.WriteObjectValue(DnsSettings, options);
             if (Optional.IsCollectionDefined(FrontEndSettings))
             {
                 writer.WritePropertyName("frontEndSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in FrontEndSettings)
                 {
-                    writer.WriteObjectValue<FirewallFrontendSetting>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("planData"u8);
-            writer.WriteObjectValue<FirewallBillingPlanInfo>(PlanData, options);
+            writer.WriteObjectValue(PlanData, options);
             writer.WritePropertyName("marketplaceDetails"u8);
-            writer.WriteObjectValue<PanFirewallMarketplaceDetails>(MarketplaceDetails, options);
+            writer.WriteObjectValue(MarketplaceDetails, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

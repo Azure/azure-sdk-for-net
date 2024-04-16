@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(AppSeen))
             {
                 writer.WritePropertyName("appSeen"u8);
-                writer.WriteObjectValue<AppSeenInfoList>(AppSeen, options);
+                writer.WriteObjectValue(AppSeen, options);
             }
             if (Optional.IsDefined(ResponseOn))
             {

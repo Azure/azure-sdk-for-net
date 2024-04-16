@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             if (options.Format != "W" && Optional.IsDefined(ConfigurationData))
             {
                 writer.WritePropertyName("configurationData"u8);
-                writer.WriteObjectValue<ConfigurationDetail>(ConfigurationData, options);
+                writer.WriteObjectValue(ConfigurationData, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PerformanceData))
             {
                 writer.WritePropertyName("performanceData"u8);
-                writer.WriteObjectValue<PerformanceDetail>(PerformanceData, options);
+                writer.WriteObjectValue(PerformanceData, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue<SapMigrateError>(Errors, options);
+                writer.WriteObjectValue(Errors, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

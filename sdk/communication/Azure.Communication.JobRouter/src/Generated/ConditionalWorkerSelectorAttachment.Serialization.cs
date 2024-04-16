@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
 
             writer.WriteStartObject();
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue<RouterRule>(Condition, options);
+            writer.WriteObjectValue(Condition, options);
             writer.WritePropertyName("workerSelectors"u8);
             writer.WriteStartArray();
             foreach (var item in WorkerSelectors)
@@ -150,11 +150,11 @@ namespace Azure.Communication.JobRouter
             return DeserializeConditionalWorkerSelectorAttachment(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ConditionalWorkerSelectorAttachment>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

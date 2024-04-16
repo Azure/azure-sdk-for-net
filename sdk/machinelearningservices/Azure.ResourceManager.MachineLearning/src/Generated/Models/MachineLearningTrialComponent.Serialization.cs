@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Distribution != null)
                 {
                     writer.WritePropertyName("distribution"u8);
-                    writer.WriteObjectValue<MachineLearningDistributionConfiguration>(Distribution, options);
+                    writer.WriteObjectValue(Distribution, options);
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue<MachineLearningJobResourceConfiguration>(Resources, options);
+                writer.WriteObjectValue(Resources, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

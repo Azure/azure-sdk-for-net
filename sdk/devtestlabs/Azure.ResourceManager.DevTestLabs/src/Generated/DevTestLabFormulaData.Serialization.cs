@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(FormulaContent))
             {
                 writer.WritePropertyName("formulaContent"u8);
-                writer.WriteObjectValue<DevTestLabVmCreationContent>(FormulaContent, options);
+                writer.WriteObjectValue(FormulaContent, options);
             }
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue<FormulaPropertiesFromVm>(Vm, options);
+                writer.WriteObjectValue(Vm, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

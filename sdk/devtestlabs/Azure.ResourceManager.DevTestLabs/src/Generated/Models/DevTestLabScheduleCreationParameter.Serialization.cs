@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(WeeklyRecurrence))
             {
                 writer.WritePropertyName("weeklyRecurrence"u8);
-                writer.WriteObjectValue<DevTestLabWeekDetails>(WeeklyRecurrence, options);
+                writer.WriteObjectValue(WeeklyRecurrence, options);
             }
             if (Optional.IsDefined(DailyRecurrence))
             {
                 writer.WritePropertyName("dailyRecurrence"u8);
-                writer.WriteObjectValue<DayDetails>(DailyRecurrence, options);
+                writer.WriteObjectValue(DailyRecurrence, options);
             }
             if (Optional.IsDefined(HourlyRecurrence))
             {
                 writer.WritePropertyName("hourlyRecurrence"u8);
-                writer.WriteObjectValue<HourDetails>(HourlyRecurrence, options);
+                writer.WriteObjectValue(HourlyRecurrence, options);
             }
             if (Optional.IsDefined(TimeZoneId))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(NotificationSettings))
             {
                 writer.WritePropertyName("notificationSettings"u8);
-                writer.WriteObjectValue<DevTestLabNotificationSettings>(NotificationSettings, options);
+                writer.WriteObjectValue(NotificationSettings, options);
             }
             if (Optional.IsDefined(TargetResourceId))
             {

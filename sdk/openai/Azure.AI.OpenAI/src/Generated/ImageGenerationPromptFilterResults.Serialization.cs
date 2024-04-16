@@ -29,32 +29,32 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Sexual))
             {
                 writer.WritePropertyName("sexual"u8);
-                writer.WriteObjectValue<ContentFilterResult>(Sexual, options);
+                writer.WriteObjectValue(Sexual, options);
             }
             if (Optional.IsDefined(Violence))
             {
                 writer.WritePropertyName("violence"u8);
-                writer.WriteObjectValue<ContentFilterResult>(Violence, options);
+                writer.WriteObjectValue(Violence, options);
             }
             if (Optional.IsDefined(Hate))
             {
                 writer.WritePropertyName("hate"u8);
-                writer.WriteObjectValue<ContentFilterResult>(Hate, options);
+                writer.WriteObjectValue(Hate, options);
             }
             if (Optional.IsDefined(SelfHarm))
             {
                 writer.WritePropertyName("self_harm"u8);
-                writer.WriteObjectValue<ContentFilterResult>(SelfHarm, options);
+                writer.WriteObjectValue(SelfHarm, options);
             }
             if (Optional.IsDefined(Profanity))
             {
                 writer.WritePropertyName("profanity"u8);
-                writer.WriteObjectValue<ContentFilterDetectionResult>(Profanity, options);
+                writer.WriteObjectValue(Profanity, options);
             }
             if (Optional.IsDefined(Jailbreak))
             {
                 writer.WritePropertyName("jailbreak"u8);
-                writer.WriteObjectValue<ContentFilterDetectionResult>(Jailbreak, options);
+                writer.WriteObjectValue(Jailbreak, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -213,11 +213,11 @@ namespace Azure.AI.OpenAI
             return DeserializeImageGenerationPromptFilterResults(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ImageGenerationPromptFilterResults>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

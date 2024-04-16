@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
-                writer.WriteObjectValue<RunbookAssociationProperty>(Runbook, options);
+                writer.WriteObjectValue(Runbook, options);
             }
             if (Optional.IsDefined(StartedBy))
             {

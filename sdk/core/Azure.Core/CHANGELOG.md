@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- `RequestFailedException` will not include the response content or headers in the message when the `IsError` property of the response is false.
 
 ## 1.38.0 (2024-02-26)
 

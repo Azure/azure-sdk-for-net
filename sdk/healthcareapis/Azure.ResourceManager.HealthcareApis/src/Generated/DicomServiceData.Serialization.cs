@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(AuthenticationConfiguration))
             {
                 writer.WritePropertyName("authenticationConfiguration"u8);
-                writer.WriteObjectValue<DicomServiceAuthenticationConfiguration>(AuthenticationConfiguration, options);
+                writer.WriteObjectValue(AuthenticationConfiguration, options);
             }
             if (Optional.IsDefined(CorsConfiguration))
             {
                 writer.WritePropertyName("corsConfiguration"u8);
-                writer.WriteObjectValue<DicomServiceCorsConfiguration>(CorsConfiguration, options);
+                writer.WriteObjectValue(CorsConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ServiceUri))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<HealthcareApisPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<Encryption>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfiguration"u8);
-                writer.WriteObjectValue<HealthcareApisServiceStorageConfiguration>(StorageConfiguration, options);
+                writer.WriteObjectValue(StorageConfiguration, options);
             }
             if (Optional.IsDefined(IsDataPartitionsEnabled))
             {

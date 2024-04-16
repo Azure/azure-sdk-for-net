@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("upgrade"u8);
-            writer.WriteObjectValue<ContainerServiceFleetManagedClusterUpgradeSpec>(Upgrade, options);
+            writer.WriteObjectValue(Upgrade, options);
             if (Optional.IsDefined(NodeImageSelection))
             {
                 writer.WritePropertyName("nodeImageSelection"u8);
-                writer.WriteObjectValue<NodeImageSelection>(NodeImageSelection, options);
+                writer.WriteObjectValue(NodeImageSelection, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
