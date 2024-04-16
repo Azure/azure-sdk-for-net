@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 {
     internal partial class StorageProfileSmbCSIDriver : IUtf8JsonSerializable, IJsonModel<StorageProfileSmbCSIDriver>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageProfileSmbCSIDriver>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageProfileSmbCSIDriver>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageProfileSmbCSIDriver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static StorageProfileSmbCSIDriver DeserializeStorageProfileSmbCSIDriver(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

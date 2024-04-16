@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class UnknownDataQualityMetricThresholdBase : IUtf8JsonSerializable, IJsonModel<DataQualityMetricThresholdBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataQualityMetricThresholdBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataQualityMetricThresholdBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataQualityMetricThresholdBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownDataQualityMetricThresholdBase DeserializeUnknownDataQualityMetricThresholdBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

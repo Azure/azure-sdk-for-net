@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class ColumnTransformer : IUtf8JsonSerializable, IJsonModel<ColumnTransformer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ColumnTransformer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ColumnTransformer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ColumnTransformer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ColumnTransformer DeserializeColumnTransformer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

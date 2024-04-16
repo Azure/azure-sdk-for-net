@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     public partial class ManagedHsmPrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<ManagedHsmPrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedHsmPrivateLinkResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedHsmPrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedHsmPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static ManagedHsmPrivateLinkResourceData DeserializeManagedHsmPrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

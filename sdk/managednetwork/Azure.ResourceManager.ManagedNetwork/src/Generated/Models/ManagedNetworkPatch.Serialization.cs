@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
 {
     public partial class ManagedNetworkPatch : IUtf8JsonSerializable, IJsonModel<ManagedNetworkPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedNetworkPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedNetworkPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedNetworkPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
 
         internal static ManagedNetworkPatch DeserializeManagedNetworkPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

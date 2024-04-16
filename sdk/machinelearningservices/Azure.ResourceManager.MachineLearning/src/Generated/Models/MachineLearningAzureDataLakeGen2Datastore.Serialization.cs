@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningAzureDataLakeGen2Datastore : IUtf8JsonSerializable, IJsonModel<MachineLearningAzureDataLakeGen2Datastore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAzureDataLakeGen2Datastore>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAzureDataLakeGen2Datastore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningAzureDataLakeGen2Datastore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAzureDataLakeGen2Datastore DeserializeMachineLearningAzureDataLakeGen2Datastore(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

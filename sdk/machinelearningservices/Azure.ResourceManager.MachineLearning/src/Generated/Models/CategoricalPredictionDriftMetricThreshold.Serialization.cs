@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class CategoricalPredictionDriftMetricThreshold : IUtf8JsonSerializable, IJsonModel<CategoricalPredictionDriftMetricThreshold>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CategoricalPredictionDriftMetricThreshold>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CategoricalPredictionDriftMetricThreshold>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CategoricalPredictionDriftMetricThreshold>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CategoricalPredictionDriftMetricThreshold DeserializeCategoricalPredictionDriftMetricThreshold(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

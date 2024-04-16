@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class DatastoreResourceArmPaginatedResult : IUtf8JsonSerializable, IJsonModel<DatastoreResourceArmPaginatedResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatastoreResourceArmPaginatedResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatastoreResourceArmPaginatedResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatastoreResourceArmPaginatedResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static DatastoreResourceArmPaginatedResult DeserializeDatastoreResourceArmPaginatedResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class ArtifactManifestPropertiesFormat : IUtf8JsonSerializable, IJsonModel<ArtifactManifestPropertiesFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArtifactManifestPropertiesFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArtifactManifestPropertiesFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArtifactManifestPropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static ArtifactManifestPropertiesFormat DeserializeArtifactManifestPropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

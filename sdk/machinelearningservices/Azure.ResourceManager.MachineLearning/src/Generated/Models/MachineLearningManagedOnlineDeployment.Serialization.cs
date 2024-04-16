@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningManagedOnlineDeployment : IUtf8JsonSerializable, IJsonModel<MachineLearningManagedOnlineDeployment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningManagedOnlineDeployment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningManagedOnlineDeployment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningManagedOnlineDeployment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningManagedOnlineDeployment DeserializeMachineLearningManagedOnlineDeployment(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class AgeMismatchInference : IUtf8JsonSerializable, IJsonModel<AgeMismatchInference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgeMismatchInference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgeMismatchInference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AgeMismatchInference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static AgeMismatchInference DeserializeAgeMismatchInference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,7 +153,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

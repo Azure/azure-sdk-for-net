@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Maintenance
 {
     public partial class MaintenanceConfigurationData : IUtf8JsonSerializable, IJsonModel<MaintenanceConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MaintenanceConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Maintenance
 
         internal static MaintenanceConfigurationData DeserializeMaintenanceConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class ComputeStartStopCronSchedule : IUtf8JsonSerializable, IJsonModel<ComputeStartStopCronSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeStartStopCronSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeStartStopCronSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComputeStartStopCronSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ComputeStartStopCronSchedule DeserializeComputeStartStopCronSchedule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

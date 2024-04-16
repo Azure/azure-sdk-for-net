@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class SetRulesContent : IUtf8JsonSerializable, IJsonModel<SetRulesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SetRulesContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SetRulesContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SetRulesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static SetRulesContent DeserializeSetRulesContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

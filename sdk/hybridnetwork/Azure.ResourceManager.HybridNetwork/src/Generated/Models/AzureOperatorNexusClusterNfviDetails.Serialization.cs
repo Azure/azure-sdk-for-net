@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class AzureOperatorNexusClusterNfviDetails : IUtf8JsonSerializable, IJsonModel<AzureOperatorNexusClusterNfviDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureOperatorNexusClusterNfviDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureOperatorNexusClusterNfviDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureOperatorNexusClusterNfviDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static AzureOperatorNexusClusterNfviDetails DeserializeAzureOperatorNexusClusterNfviDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

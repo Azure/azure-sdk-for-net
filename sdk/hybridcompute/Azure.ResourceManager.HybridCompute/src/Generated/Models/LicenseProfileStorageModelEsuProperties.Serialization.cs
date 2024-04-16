@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class LicenseProfileStorageModelEsuProperties : IUtf8JsonSerializable, IJsonModel<LicenseProfileStorageModelEsuProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LicenseProfileStorageModelEsuProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LicenseProfileStorageModelEsuProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LicenseProfileStorageModelEsuProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static LicenseProfileStorageModelEsuProperties DeserializeLicenseProfileStorageModelEsuProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

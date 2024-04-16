@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     internal partial class NetworkFunctionListResult : IUtf8JsonSerializable, IJsonModel<NetworkFunctionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFunctionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFunctionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFunctionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static NetworkFunctionListResult DeserializeNetworkFunctionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

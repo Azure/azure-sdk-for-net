@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class TopNFeaturesByAttribution : IUtf8JsonSerializable, IJsonModel<TopNFeaturesByAttribution>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopNFeaturesByAttribution>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopNFeaturesByAttribution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TopNFeaturesByAttribution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TopNFeaturesByAttribution DeserializeTopNFeaturesByAttribution(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

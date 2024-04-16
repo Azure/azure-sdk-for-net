@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class AS2SecuritySettings : IUtf8JsonSerializable, IJsonModel<AS2SecuritySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AS2SecuritySettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AS2SecuritySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AS2SecuritySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2SecuritySettings DeserializeAS2SecuritySettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

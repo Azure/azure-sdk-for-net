@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class AutoMLJob : IUtf8JsonSerializable, IJsonModel<AutoMLJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoMLJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoMLJob>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoMLJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AutoMLJob DeserializeAutoMLJob(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

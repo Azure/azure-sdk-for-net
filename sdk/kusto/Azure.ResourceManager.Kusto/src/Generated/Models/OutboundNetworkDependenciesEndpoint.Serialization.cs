@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class OutboundNetworkDependenciesEndpoint : IUtf8JsonSerializable, IJsonModel<OutboundNetworkDependenciesEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutboundNetworkDependenciesEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutboundNetworkDependenciesEndpoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OutboundNetworkDependenciesEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static OutboundNetworkDependenciesEndpoint DeserializeOutboundNetworkDependenciesEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

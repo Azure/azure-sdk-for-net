@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     [PersistableModelProxy(typeof(UnknownTargetRollingWindowSize))]
     public partial class TargetRollingWindowSize : IUtf8JsonSerializable, IJsonModel<TargetRollingWindowSize>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetRollingWindowSize>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetRollingWindowSize>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TargetRollingWindowSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TargetRollingWindowSize DeserializeTargetRollingWindowSize(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

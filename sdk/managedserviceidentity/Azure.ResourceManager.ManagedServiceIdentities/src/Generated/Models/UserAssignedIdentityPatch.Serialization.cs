@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
     public partial class UserAssignedIdentityPatch : IUtf8JsonSerializable, IJsonModel<UserAssignedIdentityPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAssignedIdentityPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAssignedIdentityPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserAssignedIdentityPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 
         internal static UserAssignedIdentityPatch DeserializeUserAssignedIdentityPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

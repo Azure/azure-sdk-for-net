@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class MediaJobInputHttp : IUtf8JsonSerializable, IJsonModel<MediaJobInputHttp>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobInputHttp>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobInputHttp>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaJobInputHttp>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaJobInputHttp DeserializeMediaJobInputHttp(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

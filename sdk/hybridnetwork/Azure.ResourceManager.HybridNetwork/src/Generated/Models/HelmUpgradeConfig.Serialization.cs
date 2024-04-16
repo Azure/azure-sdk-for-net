@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class HelmUpgradeConfig : IUtf8JsonSerializable, IJsonModel<HelmUpgradeConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HelmUpgradeConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HelmUpgradeConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HelmUpgradeConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static HelmUpgradeConfig DeserializeHelmUpgradeConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

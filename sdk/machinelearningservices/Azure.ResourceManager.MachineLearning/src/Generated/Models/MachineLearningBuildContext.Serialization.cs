@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningBuildContext : IUtf8JsonSerializable, IJsonModel<MachineLearningBuildContext>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningBuildContext>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningBuildContext>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningBuildContext>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningBuildContext DeserializeMachineLearningBuildContext(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

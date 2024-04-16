@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class IntegrationServiceEnvironmentSku : IUtf8JsonSerializable, IJsonModel<IntegrationServiceEnvironmentSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationServiceEnvironmentSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmentSku DeserializeIntegrationServiceEnvironmentSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

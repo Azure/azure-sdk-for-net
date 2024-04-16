@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.LabServices.Models
 {
     public partial class LabNetworkProfile : IUtf8JsonSerializable, IJsonModel<LabNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabNetworkProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LabNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabNetworkProfile DeserializeLabNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

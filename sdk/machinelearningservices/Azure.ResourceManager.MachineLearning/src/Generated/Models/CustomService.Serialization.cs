@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class CustomService : IUtf8JsonSerializable, IJsonModel<CustomService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CustomService DeserializeCustomService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
