@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FilterGroup"/>. </summary>
-        public FilterGroup()
+        internal FilterGroup()
         {
             Filter = new ChangeTrackingList<SelfHelpFilter>();
         }
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of <see cref="FilterGroup"/>. </summary>
         /// <param name="filter"> List of filters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FilterGroup(IList<SelfHelpFilter> filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FilterGroup(IReadOnlyList<SelfHelpFilter> filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Filter = filter;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of filters. </summary>
-        public IList<SelfHelpFilter> Filter { get; }
+        public IReadOnlyList<SelfHelpFilter> Filter { get; }
     }
 }

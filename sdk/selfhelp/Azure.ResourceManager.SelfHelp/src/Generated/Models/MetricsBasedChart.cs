@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MetricsBasedChart"/>. </summary>
-        public MetricsBasedChart()
+        internal MetricsBasedChart()
         {
         }
 
@@ -70,27 +70,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Chart name. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> Allowed values are Sum, Avg, Count, Min, Max. Default is Sum. </summary>
-        public AggregationType? AggregationType { get; set; }
+        public AggregationType? AggregationType { get; }
         /// <summary> Time span duration. </summary>
-        public TimeSpan? TimeSpanDuration { get; set; }
+        public TimeSpan? TimeSpanDuration { get; }
         /// <summary> Chart title. </summary>
-        public string Title { get; set; }
+        public string Title { get; }
         /// <summary> Filter group. </summary>
-        internal FilterGroup FilterGroup { get; set; }
+        internal FilterGroup FilterGroup { get; }
         /// <summary> List of filters. </summary>
-        public IList<SelfHelpFilter> Filter
+        public IReadOnlyList<SelfHelpFilter> Filter
         {
-            get
-            {
-                if (FilterGroup is null)
-                    FilterGroup = new FilterGroup();
-                return FilterGroup.Filter;
-            }
+            get => FilterGroup?.Filter;
         }
 
         /// <summary> Place holder used in HTML Content replace control with the content. </summary>
-        public string ReplacementKey { get; set; }
+        public string ReplacementKey { get; }
     }
 }

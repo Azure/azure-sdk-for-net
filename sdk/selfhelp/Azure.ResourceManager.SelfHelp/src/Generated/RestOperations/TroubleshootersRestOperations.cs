@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SelfHelp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01-preview";
+            _apiVersion = apiVersion ?? "2024-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.SelfHelp
             return message;
         }
 
-        /// <summary> Creates the specific troubleshooter action under a resource or subscription using the ‘solutionId’ and  ‘properties.parameters’ as the trigger. &lt;br/&gt; Troubleshooters are step-by-step interactive guidance that scope the problem by collecting additional inputs from you in each stage while troubleshooting an Azure issue. You will be guided down decision tree style workflow and the best possible solution will be presented at the end of the workflow. &lt;br/&gt; Create API creates the Troubleshooter API using ‘parameters’ and ‘solutionId’ &lt;br/&gt; After creating the Troubleshooter instance, the following APIs can be used:&lt;br/&gt; CONTINUE API: to move to the next step in the flow &lt;br/&gt;GET API: to identify the next step after executing the CONTINUE API.   &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note:&lt;/b&gt; ‘requiredParameters’ from solutions response must be passed via ‘properties. parameters’ in the request body of Troubleshooters API. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <summary> Creates the specific troubleshooter action under a resource or subscription using the ‘solutionId’ and  ‘properties.parameters’ as the trigger. &lt;br/&gt; Azure Troubleshooters help with hard to classify issues, reducing the gap between customer observed problems and solutions by guiding the user effortlessly through the troubleshooting process. Each Troubleshooter flow represents a problem area within Azure and has a complex tree-like structure that addresses many root causes. These flows are prepared with the help of Subject Matter experts and customer support engineers by carefully considering previous support requests raised by customers. Troubleshooters terminate at a well curated solution based off of resource backend signals and customer manual selections. </summary>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="data"> The required request body for this Troubleshooter resource creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.SelfHelp
             }
         }
 
-        /// <summary> Creates the specific troubleshooter action under a resource or subscription using the ‘solutionId’ and  ‘properties.parameters’ as the trigger. &lt;br/&gt; Troubleshooters are step-by-step interactive guidance that scope the problem by collecting additional inputs from you in each stage while troubleshooting an Azure issue. You will be guided down decision tree style workflow and the best possible solution will be presented at the end of the workflow. &lt;br/&gt; Create API creates the Troubleshooter API using ‘parameters’ and ‘solutionId’ &lt;br/&gt; After creating the Troubleshooter instance, the following APIs can be used:&lt;br/&gt; CONTINUE API: to move to the next step in the flow &lt;br/&gt;GET API: to identify the next step after executing the CONTINUE API.   &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note:&lt;/b&gt; ‘requiredParameters’ from solutions response must be passed via ‘properties. parameters’ in the request body of Troubleshooters API. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <summary> Creates the specific troubleshooter action under a resource or subscription using the ‘solutionId’ and  ‘properties.parameters’ as the trigger. &lt;br/&gt; Azure Troubleshooters help with hard to classify issues, reducing the gap between customer observed problems and solutions by guiding the user effortlessly through the troubleshooting process. Each Troubleshooter flow represents a problem area within Azure and has a complex tree-like structure that addresses many root causes. These flows are prepared with the help of Subject Matter experts and customer support engineers by carefully considering previous support requests raised by customers. Troubleshooters terminate at a well curated solution based off of resource backend signals and customer manual selections. </summary>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="data"> The required request body for this Troubleshooter resource creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Gets troubleshooter instance result which includes the step status/result of the troubleshooter resource name that is being executed.&lt;br/&gt; Get API is used to retrieve the result of a Troubleshooter instance, which includes the status and result of each step in the Troubleshooter workflow. This API requires the Troubleshooter resource name that was created using the Create API. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Gets troubleshooter instance result which includes the step status/result of the troubleshooter resource name that is being executed.&lt;br/&gt; Get API is used to retrieve the result of a Troubleshooter instance, which includes the status and result of each step in the Troubleshooter workflow. This API requires the Troubleshooter resource name that was created using the Create API. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Uses ‘stepId’ and ‘responses’ as the trigger to continue the troubleshooting steps for the respective troubleshooter resource name. &lt;br/&gt;Continue API is used to provide inputs that are required for the specific troubleshooter to progress into the next step in the process. This API is used after the Troubleshooter has been created using the Create API. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="continueRequestBody"> The required request body for going to next step in Troubleshooter resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Uses ‘stepId’ and ‘responses’ as the trigger to continue the troubleshooting steps for the respective troubleshooter resource name. &lt;br/&gt;Continue API is used to provide inputs that are required for the specific troubleshooter to progress into the next step in the process. This API is used after the Troubleshooter has been created using the Create API. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="continueRequestBody"> The required request body for going to next step in Troubleshooter resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Ends the troubleshooter action. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Ends the troubleshooter action. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Restarts the troubleshooter API using applicable troubleshooter resource name as the input.&lt;br/&gt; It returns new resource name which should be used in subsequent request. The old resource name is obsolete after this API is invoked. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Restarts the troubleshooter API using applicable troubleshooter resource name as the input.&lt;br/&gt; It returns new resource name which should be used in subsequent request. The old resource name is obsolete after this API is invoked. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>

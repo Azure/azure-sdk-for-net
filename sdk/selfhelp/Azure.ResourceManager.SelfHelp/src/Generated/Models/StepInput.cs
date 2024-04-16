@@ -53,7 +53,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Initializes a new instance of <see cref="StepInput"/>. </summary>
         /// <param name="questionId"> Use Index as QuestionId. </param>
-        /// <param name="questionType"> Text Input. Will be a single line input. </param>
+        /// <param name="questionType"> Type of Question. </param>
+        /// <param name="questionTitle"> Question title. </param>
         /// <param name="questionContent"> User question content. </param>
         /// <param name="questionContentType"> Default is Text. </param>
         /// <param name="responseHint"> Place holder text for response hints. </param>
@@ -62,10 +63,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="responseValidationProperties"> Troubleshooter step input response validation properties. </param>
         /// <param name="responseOptions"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StepInput(string questionId, string questionType, string questionContent, QuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IReadOnlyList<ResponseConfig> responseOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StepInput(string questionId, QuestionType? questionType, string questionTitle, string questionContent, QuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IReadOnlyList<ResponseConfig> responseOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QuestionId = questionId;
             QuestionType = questionType;
+            QuestionTitle = questionTitle;
             QuestionContent = questionContent;
             QuestionContentType = questionContentType;
             ResponseHint = responseHint;
@@ -78,8 +80,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Use Index as QuestionId. </summary>
         public string QuestionId { get; }
-        /// <summary> Text Input. Will be a single line input. </summary>
-        public string QuestionType { get; }
+        /// <summary> Type of Question. </summary>
+        public QuestionType? QuestionType { get; }
+        /// <summary> Question title. </summary>
+        public string QuestionTitle { get; }
         /// <summary> User question content. </summary>
         public string QuestionContent { get; }
         /// <summary> Default is Text. </summary>

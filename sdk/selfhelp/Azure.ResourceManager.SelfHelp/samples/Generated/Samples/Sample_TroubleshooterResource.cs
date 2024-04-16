@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_TroubleshootersCreate()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2023-09-01-preview/examples/Troubleshooter_Create.json
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Troubleshooter_Create.json
             // this example is just showing the usage of "Troubleshooters_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_TroubleshootersGet()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2023-09-01-preview/examples/Troubleshooter_Get.json
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Troubleshooter_Get.json
             // this example is just showing the usage of "Troubleshooters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Continue_TroubleshooterContinue()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2023-09-01-preview/examples/Troubleshooter_Continue.json
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Troubleshooter_Continue.json
             // this example is just showing the usage of "Troubleshooters_Continue" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +128,7 @@ Response = "Connection exception",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task End_TroubleshootersEnd()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2023-09-01-preview/examples/Troubleshooter_End.json
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Troubleshooter_End.json
             // this example is just showing the usage of "Troubleshooters_End" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -154,7 +154,7 @@ Response = "Connection exception",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Restart_TroubleshootersRestart()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2023-09-01-preview/examples/Troubleshooter_Restart.json
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Troubleshooter_Restart.json
             // this example is just showing the usage of "Troubleshooters_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

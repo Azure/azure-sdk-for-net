@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            IList<SelfHelpFilter> filter = default;
+            IReadOnlyList<SelfHelpFilter> filter = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

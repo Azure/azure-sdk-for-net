@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Solution response. </summary>
+    /// <summary> Solution PatchRequest body. </summary>
     public partial class SolutionResourcePatch
     {
         /// <summary>
@@ -48,18 +48,49 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of <see cref="SolutionResourcePatch"/>. </summary>
         public SolutionResourcePatch()
         {
+            TriggerCriteria = new ChangeTrackingList<TriggerCriterion>();
+            Parameters = new ChangeTrackingDictionary<string, string>();
+            Sections = new ChangeTrackingList<SelfHelpSection>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SolutionResourcePatch"/>. </summary>
-        /// <param name="properties"> Solution result. </param>
+        /// <param name="triggerCriteria"> Solution request trigger criteria. </param>
+        /// <param name="parameters"> Client input parameters to run Solution. </param>
+        /// <param name="solutionId"> Solution Id to identify single solution. </param>
+        /// <param name="provisioningState"> Status of solution provisioning. </param>
+        /// <param name="title"> The title. </param>
+        /// <param name="content"> The HTML content that needs to be rendered and shown to customer. </param>
+        /// <param name="replacementMaps"> Solution replacement maps. </param>
+        /// <param name="sections"> List of section object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionResourcePatch(SolutionResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SolutionResourcePatch(IList<TriggerCriterion> triggerCriteria, IDictionary<string, string> parameters, string solutionId, SolutionProvisioningState? provisioningState, string title, string content, ReplacementMaps replacementMaps, IReadOnlyList<SelfHelpSection> sections, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            TriggerCriteria = triggerCriteria;
+            Parameters = parameters;
+            SolutionId = solutionId;
+            ProvisioningState = provisioningState;
+            Title = title;
+            Content = content;
+            ReplacementMaps = replacementMaps;
+            Sections = sections;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Solution result. </summary>
-        public SolutionResourceProperties Properties { get; set; }
+        /// <summary> Solution request trigger criteria. </summary>
+        public IList<TriggerCriterion> TriggerCriteria { get; }
+        /// <summary> Client input parameters to run Solution. </summary>
+        public IDictionary<string, string> Parameters { get; }
+        /// <summary> Solution Id to identify single solution. </summary>
+        public string SolutionId { get; }
+        /// <summary> Status of solution provisioning. </summary>
+        public SolutionProvisioningState? ProvisioningState { get; }
+        /// <summary> The title. </summary>
+        public string Title { get; }
+        /// <summary> The HTML content that needs to be rendered and shown to customer. </summary>
+        public string Content { get; }
+        /// <summary> Solution replacement maps. </summary>
+        public ReplacementMaps ReplacementMaps { get; }
+        /// <summary> List of section object. </summary>
+        public IReadOnlyList<SelfHelpSection> Sections { get; }
     }
 }

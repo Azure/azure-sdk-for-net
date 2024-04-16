@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WebResult"/>. </summary>
-        public WebResult()
+        internal WebResult()
         {
             SearchResults = new ChangeTrackingList<SearchResult>();
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
         /// <param name="searchResults"> AzureKB search results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebResult(string replacementKey, IList<SearchResult> searchResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebResult(string replacementKey, IReadOnlyList<SearchResult> searchResults, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReplacementKey = replacementKey;
             SearchResults = searchResults;
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Place holder used in HTML Content replace control with the content. </summary>
-        public string ReplacementKey { get; set; }
+        public string ReplacementKey { get; }
         /// <summary> AzureKB search results. </summary>
-        public IList<SearchResult> SearchResults { get; }
+        public IReadOnlyList<SearchResult> SearchResults { get; }
     }
 }

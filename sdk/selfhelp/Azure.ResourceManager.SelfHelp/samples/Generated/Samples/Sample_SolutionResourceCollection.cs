@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_SolutionCreate()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2023-09-01-preview/examples/Solution_Create.json
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Solution_Create.json
             // this example is just showing the usage of "Solution_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -40,9 +40,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             string solutionResourceName = "SolutionResourceName1";
             SolutionResourceData data = new SolutionResourceData()
             {
-                Properties = new SolutionResourceProperties()
-                {
-                    TriggerCriteria =
+                TriggerCriteria =
 {
 new TriggerCriterion()
 {
@@ -50,11 +48,10 @@ Name = SelfHelpName.SolutionId,
 Value = "SolutionId1",
 }
 },
-                    Parameters =
+                Parameters =
 {
 ["resourceUri"] = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp",
 },
-                },
             };
             ArmOperation<SolutionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, solutionResourceName, data);
             SolutionResource result = lro.Value;
@@ -71,7 +68,7 @@ Value = "SolutionId1",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_SolutionGet()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2023-09-01-preview/examples/Solution_Get.json
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Solution_Get.json
             // this example is just showing the usage of "Solution_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,7 +100,7 @@ Value = "SolutionId1",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_SolutionGet()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2023-09-01-preview/examples/Solution_Get.json
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Solution_Get.json
             // this example is just showing the usage of "Solution_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +128,7 @@ Value = "SolutionId1",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_SolutionGet()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2023-09-01-preview/examples/Solution_Get.json
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Solution_Get.json
             // this example is just showing the usage of "Solution_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

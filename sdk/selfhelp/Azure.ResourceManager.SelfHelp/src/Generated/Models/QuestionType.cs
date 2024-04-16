@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Text Input. Will be a single line input. </summary>
+    /// <summary> Type of Question. </summary>
     public readonly partial struct QuestionType : IEquatable<QuestionType>
     {
         private readonly string _value;
@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string DropdownValue = "Dropdown";
         private const string TextInputValue = "TextInput";
         private const string MultiLineInfoBoxValue = "MultiLineInfoBox";
+        private const string DateTimePickerValue = "DateTimePicker";
+        private const string MultiSelectValue = "MultiSelect";
 
         /// <summary> SingleChoice radio button. </summary>
         public static QuestionType RadioButton { get; } = new QuestionType(RadioButtonValue);
@@ -35,6 +37,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static QuestionType TextInput { get; } = new QuestionType(TextInputValue);
         /// <summary> MultiLineInfoBox. </summary>
         public static QuestionType MultiLineInfoBox { get; } = new QuestionType(MultiLineInfoBoxValue);
+        /// <summary> DateTime Picker. </summary>
+        public static QuestionType DateTimePicker { get; } = new QuestionType(DateTimePickerValue);
+        /// <summary> Multi Select. </summary>
+        public static QuestionType MultiSelect { get; } = new QuestionType(MultiSelectValue);
         /// <summary> Determines if two <see cref="QuestionType"/> values are the same. </summary>
         public static bool operator ==(QuestionType left, QuestionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QuestionType"/> values are not the same. </summary>

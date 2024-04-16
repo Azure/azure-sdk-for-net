@@ -34,7 +34,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(QuestionType))
             {
                 writer.WritePropertyName("questionType"u8);
-                writer.WriteStringValue(QuestionType);
+                writer.WriteStringValue(QuestionType.Value.ToString());
+            }
+            if (Optional.IsDefined(QuestionTitle))
+            {
+                writer.WritePropertyName("questionTitle"u8);
+                writer.WriteStringValue(QuestionTitle);
             }
             if (Optional.IsDefined(QuestionContent))
             {
@@ -115,7 +120,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             string questionId = default;
-            string questionType = default;
+            QuestionType? questionType = default;
+            string questionTitle = default;
             string questionContent = default;
             QuestionContentType? questionContentType = default;
             string responseHint = default;
@@ -134,7 +140,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 if (property.NameEquals("questionType"u8))
                 {
-                    questionType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    questionType = new QuestionType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("questionTitle"u8))
+                {
+                    questionTitle = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("questionContent"u8))
@@ -198,6 +213,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new StepInput(
                 questionId,
                 questionType,
+                questionTitle,
                 questionContent,
                 questionContentType,
                 responseHint,

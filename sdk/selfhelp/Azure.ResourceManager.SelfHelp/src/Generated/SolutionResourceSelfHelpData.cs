@@ -7,11 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SelfHelp.Models;
 
-namespace Azure.ResourceManager.SelfHelp.Models
+namespace Azure.ResourceManager.SelfHelp
 {
-    /// <summary> Solution result. </summary>
-    public partial class SolutionResourceProperties
+    /// <summary>
+    /// A class representing the SolutionResourceSelfHelp data model.
+    /// Self Help Solution response.
+    /// </summary>
+    public partial class SolutionResourceSelfHelpData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,30 +51,26 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SolutionResourceProperties"/>. </summary>
-        public SolutionResourceProperties()
+        /// <summary> Initializes a new instance of <see cref="SolutionResourceSelfHelpData"/>. </summary>
+        public SolutionResourceSelfHelpData()
         {
-            TriggerCriteria = new ChangeTrackingList<TriggerCriterion>();
-            Parameters = new ChangeTrackingDictionary<string, string>();
-            Sections = new ChangeTrackingList<SelfHelpSection>();
+            Sections = new ChangeTrackingList<SectionSelfHelp>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SolutionResourceProperties"/>. </summary>
-        /// <param name="triggerCriteria"> Solution request trigger criteria. </param>
-        /// <param name="parameters"> Client input parameters to run Solution. </param>
-        /// <param name="solutionId"> Solution Id to identify single solution. </param>
-        /// <param name="provisioningState"> Status of solution provisioning. </param>
+        /// <summary> Initializes a new instance of <see cref="SolutionResourceSelfHelpData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="solutionId"> SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP. </param>
         /// <param name="title"> The title. </param>
         /// <param name="content"> The HTML content that needs to be rendered and shown to customer. </param>
         /// <param name="replacementMaps"> Solution replacement maps. </param>
         /// <param name="sections"> List of section object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SolutionResourceProperties(IList<TriggerCriterion> triggerCriteria, IDictionary<string, string> parameters, string solutionId, SolutionProvisioningState? provisioningState, string title, string content, ReplacementMaps replacementMaps, IList<SelfHelpSection> sections, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SolutionResourceSelfHelpData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, string title, string content, ReplacementMapsSelfHelp replacementMaps, IReadOnlyList<SectionSelfHelp> sections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            TriggerCriteria = triggerCriteria;
-            Parameters = parameters;
             SolutionId = solutionId;
-            ProvisioningState = provisioningState;
             Title = title;
             Content = content;
             ReplacementMaps = replacementMaps;
@@ -76,21 +78,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Solution request trigger criteria. </summary>
-        public IList<TriggerCriterion> TriggerCriteria { get; }
-        /// <summary> Client input parameters to run Solution. </summary>
-        public IDictionary<string, string> Parameters { get; }
-        /// <summary> Solution Id to identify single solution. </summary>
-        public string SolutionId { get; set; }
-        /// <summary> Status of solution provisioning. </summary>
-        public SolutionProvisioningState? ProvisioningState { get; set; }
+        /// <summary> SolutionId is a unique id to identify a solution. You can retrieve the solution id using the Discovery api - https://learn.microsoft.com/en-us/rest/api/help/discovery-solution/list?view=rest-help-2023-09-01-preview&amp;tabs=HTTP. </summary>
+        public string SolutionId { get; }
         /// <summary> The title. </summary>
-        public string Title { get; set; }
+        public string Title { get; }
         /// <summary> The HTML content that needs to be rendered and shown to customer. </summary>
-        public string Content { get; set; }
+        public string Content { get; }
         /// <summary> Solution replacement maps. </summary>
-        public ReplacementMaps ReplacementMaps { get; set; }
+        public ReplacementMapsSelfHelp ReplacementMaps { get; }
         /// <summary> List of section object. </summary>
-        public IList<SelfHelpSection> Sections { get; }
+        public IReadOnlyList<SectionSelfHelp> Sections { get; }
     }
 }

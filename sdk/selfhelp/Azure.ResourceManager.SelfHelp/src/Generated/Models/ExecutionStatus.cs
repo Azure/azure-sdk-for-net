@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private const string FailedValue = "Failed";
         private const string WarningValue = "Warning";
 
-        /// <summary> Success. </summary>
+        /// <summary> Step execution succeeded. </summary>
         public static ExecutionStatus Success { get; } = new ExecutionStatus(SuccessValue);
-        /// <summary> Running. </summary>
+        /// <summary> Step execution running. </summary>
         public static ExecutionStatus Running { get; } = new ExecutionStatus(RunningValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Step execution failed. </summary>
         public static ExecutionStatus Failed { get; } = new ExecutionStatus(FailedValue);
-        /// <summary> Warning. </summary>
+        /// <summary> Step execution warning. </summary>
         public static ExecutionStatus Warning { get; } = new ExecutionStatus(WarningValue);
         /// <summary> Determines if two <see cref="ExecutionStatus"/> values are the same. </summary>
         public static bool operator ==(ExecutionStatus left, ExecutionStatus right) => left.Equals(right);

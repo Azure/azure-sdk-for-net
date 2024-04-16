@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            IList<WebResult> webResults = default;
-            IList<SolutionsDiagnostic> diagnostics = default;
-            IList<SolutionsTroubleshooters> troubleshooters = default;
-            IList<MetricsBasedChart> metricsBasedCharts = default;
-            IList<SelfHelpVideo> videos = default;
-            IList<VideoGroup> videoGroups = default;
+            IReadOnlyList<WebResult> webResults = default;
+            IReadOnlyList<SolutionsDiagnostic> diagnostics = default;
+            IReadOnlyList<SolutionsTroubleshooters> troubleshooters = default;
+            IReadOnlyList<MetricsBasedChart> metricsBasedCharts = default;
+            IReadOnlyList<SelfHelpVideo> videos = default;
+            IReadOnlyList<VideoGroup> videoGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,6 +251,84 @@ namespace Azure.ResourceManager.SelfHelp
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Warm up the solution resource by preloading asynchronous diagnostics results into cache
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}/warmup</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Solution_WarmUp</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SolutionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="solutionWarmUpRequestBody"> The required request body for warming up a solution resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> WarmUpAsync(SolutionWarmUpRequestBody solutionWarmUpRequestBody = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResource.WarmUp");
+            scope.Start();
+            try
+            {
+                var response = await _solutionResourceSolutionRestClient.WarmUpAsync(Id.Parent, Id.Name, solutionWarmUpRequestBody, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Warm up the solution resource by preloading asynchronous diagnostics results into cache
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}/warmup</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Solution_WarmUp</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SolutionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="solutionWarmUpRequestBody"> The required request body for warming up a solution resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response WarmUp(SolutionWarmUpRequestBody solutionWarmUpRequestBody = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _solutionResourceSolutionClientDiagnostics.CreateScope("SolutionResource.WarmUp");
+            scope.Start();
+            try
+            {
+                var response = _solutionResourceSolutionRestClient.WarmUp(Id.Parent, Id.Name, solutionWarmUpRequestBody, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

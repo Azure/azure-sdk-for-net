@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SearchResult"/>. </summary>
-        public SearchResult()
+        internal SearchResult()
         {
         }
 
@@ -74,20 +74,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Unique id of the result. </summary>
-        public string SolutionId { get; set; }
+        public string SolutionId { get; }
         /// <summary> Content of the search result. </summary>
-        public string Content { get; set; }
+        public string Content { get; }
         /// <summary> Title of the search result. </summary>
-        public string Title { get; set; }
+        public string Title { get; }
         /// <summary> Confidence of the search result. </summary>
-        public SelfHelpConfidence? Confidence { get; set; }
+        public SelfHelpConfidence? Confidence { get; }
         /// <summary> Source of the search result. </summary>
-        public string Source { get; set; }
+        public string Source { get; }
         /// <summary> Result type of the search result. </summary>
-        public ResultType? ResultType { get; set; }
+        public ResultType? ResultType { get; }
         /// <summary> rank of the search result. </summary>
-        public int? Rank { get; set; }
+        public int? Rank { get; }
         /// <summary> Link to the document. </summary>
-        public string Link { get; set; }
+        public string Link { get; }
     }
 }

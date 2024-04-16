@@ -24,11 +24,17 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         private const string DiagnosticsValue = "Diagnostics";
         private const string SolutionsValue = "Solutions";
+        private const string TroubleshootersValue = "Troubleshooters";
+        private const string SelfHelpValue = "SelfHelp";
 
         /// <summary> Diagnostics resource type. </summary>
         public static SolutionType Diagnostics { get; } = new SolutionType(DiagnosticsValue);
         /// <summary> Solutions resource type. </summary>
         public static SolutionType Solutions { get; } = new SolutionType(SolutionsValue);
+        /// <summary> Troubleshooters resource type. </summary>
+        public static SolutionType Troubleshooters { get; } = new SolutionType(TroubleshootersValue);
+        /// <summary> SelfHelp resource type. </summary>
+        public static SolutionType SelfHelp { get; } = new SolutionType(SelfHelpValue);
         /// <summary> Determines if two <see cref="SolutionType"/> values are the same. </summary>
         public static bool operator ==(SolutionType left, SolutionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SolutionType"/> values are not the same. </summary>

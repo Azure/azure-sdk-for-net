@@ -26,11 +26,65 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(TriggerCriteria))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("triggerCriteria"u8);
+                writer.WriteStartArray();
+                foreach (var item in TriggerCriteria)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Parameters))
+            {
+                writer.WritePropertyName("parameters"u8);
+                writer.WriteStartObject();
+                foreach (var item in Parameters)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsDefined(SolutionId))
+            {
+                writer.WritePropertyName("solutionId"u8);
+                writer.WriteStringValue(SolutionId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Title))
+            {
+                writer.WritePropertyName("title"u8);
+                writer.WriteStringValue(Title);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Content))
+            {
+                writer.WritePropertyName("content"u8);
+                writer.WriteStringValue(Content);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReplacementMaps))
+            {
+                writer.WritePropertyName("replacementMaps"u8);
+                writer.WriteObjectValue(ReplacementMaps, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Sections))
+            {
+                writer.WritePropertyName("sections"u8);
+                writer.WriteStartArray();
+                foreach (var item in Sections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -69,7 +123,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            SolutionResourceProperties properties = default;
+            IList<TriggerCriterion> triggerCriteria = default;
+            IDictionary<string, string> parameters = default;
+            string solutionId = default;
+            SolutionProvisioningState? provisioningState = default;
+            string title = default;
+            string content = default;
+            ReplacementMaps replacementMaps = default;
+            IReadOnlyList<SelfHelpSection> sections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -78,9 +139,87 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = SolutionResourceProperties.DeserializeSolutionResourceProperties(property.Value, options);
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("triggerCriteria"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<TriggerCriterion> array = new List<TriggerCriterion>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(TriggerCriterion.DeserializeTriggerCriterion(item, options));
+                            }
+                            triggerCriteria = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("parameters"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            parameters = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("solutionId"u8))
+                        {
+                            solutionId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new SolutionProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("title"u8))
+                        {
+                            title = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("content"u8))
+                        {
+                            content = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("replacementMaps"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            replacementMaps = ReplacementMaps.DeserializeReplacementMaps(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("sections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SelfHelpSection> array = new List<SelfHelpSection>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(SelfHelpSection.DeserializeSelfHelpSection(item, options));
+                            }
+                            sections = array;
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +228,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SolutionResourcePatch(properties, serializedAdditionalRawData);
+            return new SolutionResourcePatch(
+                triggerCriteria ?? new ChangeTrackingList<TriggerCriterion>(),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                solutionId,
+                provisioningState,
+                title,
+                content,
+                replacementMaps,
+                sections ?? new ChangeTrackingList<SelfHelpSection>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionResourcePatch>.Write(ModelReaderWriterOptions options)

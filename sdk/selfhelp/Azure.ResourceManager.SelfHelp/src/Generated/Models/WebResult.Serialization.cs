@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             string replacementKey = default;
-            IList<SearchResult> searchResults = default;
+            IReadOnlyList<SearchResult> searchResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

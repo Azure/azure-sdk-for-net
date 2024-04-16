@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
-        /// Creates the specific troubleshooter action under a resource or subscription using the ‘solutionId’ and  ‘properties.parameters’ as the trigger. &lt;br/&gt; Troubleshooters are step-by-step interactive guidance that scope the problem by collecting additional inputs from you in each stage while troubleshooting an Azure issue. You will be guided down decision tree style workflow and the best possible solution will be presented at the end of the workflow. &lt;br/&gt; Create API creates the Troubleshooter API using ‘parameters’ and ‘solutionId’ &lt;br/&gt; After creating the Troubleshooter instance, the following APIs can be used:&lt;br/&gt; CONTINUE API: to move to the next step in the flow &lt;br/&gt;GET API: to identify the next step after executing the CONTINUE API.   &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note:&lt;/b&gt; ‘requiredParameters’ from solutions response must be passed via ‘properties. parameters’ in the request body of Troubleshooters API.
+        /// Creates the specific troubleshooter action under a resource or subscription using the ‘solutionId’ and  ‘properties.parameters’ as the trigger. &lt;br/&gt; Azure Troubleshooters help with hard to classify issues, reducing the gap between customer observed problems and solutions by guiding the user effortlessly through the troubleshooting process. Each Troubleshooter flow represents a problem area within Azure and has a complex tree-like structure that addresses many root causes. These flows are prepared with the help of Subject Matter experts and customer support engineers by carefully considering previous support requests raised by customers. Troubleshooters terminate at a well curated solution based off of resource backend signals and customer manual selections.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
-        /// Creates the specific troubleshooter action under a resource or subscription using the ‘solutionId’ and  ‘properties.parameters’ as the trigger. &lt;br/&gt; Troubleshooters are step-by-step interactive guidance that scope the problem by collecting additional inputs from you in each stage while troubleshooting an Azure issue. You will be guided down decision tree style workflow and the best possible solution will be presented at the end of the workflow. &lt;br/&gt; Create API creates the Troubleshooter API using ‘parameters’ and ‘solutionId’ &lt;br/&gt; After creating the Troubleshooter instance, the following APIs can be used:&lt;br/&gt; CONTINUE API: to move to the next step in the flow &lt;br/&gt;GET API: to identify the next step after executing the CONTINUE API.   &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note:&lt;/b&gt; ‘requiredParameters’ from solutions response must be passed via ‘properties. parameters’ in the request body of Troubleshooters API.
+        /// Creates the specific troubleshooter action under a resource or subscription using the ‘solutionId’ and  ‘properties.parameters’ as the trigger. &lt;br/&gt; Azure Troubleshooters help with hard to classify issues, reducing the gap between customer observed problems and solutions by guiding the user effortlessly through the troubleshooting process. Each Troubleshooter flow represents a problem area within Azure and has a complex tree-like structure that addresses many root causes. These flows are prepared with the help of Subject Matter experts and customer support engineers by carefully considering previous support requests raised by customers. Troubleshooters terminate at a well curated solution based off of resource backend signals and customer manual selections.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

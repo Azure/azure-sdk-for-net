@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SelfHelp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01-preview";
+            _apiVersion = apiVersion ?? "2024-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.SelfHelp
             return message;
         }
 
-        /// <summary> Creates a solution for the specific Azure resource or subscription using the triggering criteria ‘solutionId and requiredInputs’ from discovery solutions.&lt;br/&gt; Solutions are a rich, insightful and a centralized self help experience that brings all the relevant content to troubleshoot an Azure issue into a unified experience. Solutions include the following components : Text, Diagnostics , Troubleshooters, Images , Video tutorials, Tables , custom charts, images , AzureKB, etc, with capabilities to support new solutions types in the future. Each solution type may require one or more ‘requiredParameters’ that are required to execute the individual solution component. In the absence of the ‘requiredParameters’ it is likely that some of the solutions might fail execution, and you might see an empty response. &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note:&lt;/b&gt;  &lt;br/&gt;1. ‘requiredInputs’ from Discovery solutions response must be passed via ‘parameters’ in the request body of Solutions API. &lt;br/&gt;2. ‘requiredParameters’ from the Solutions response is the same as ‘ additionalParameters’ in the request for diagnostics &lt;br/&gt;3. ‘requiredParameters’ from the Solutions response is the same as ‘properties.parameters’ in the request for Troubleshooters. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <summary> Creates a solution for the specific Azure resource or subscription using the inputs ‘solutionId and requiredInputs’ from discovery solutions. &lt;br/&gt; Azure solutions comprise a comprehensive library of self-help resources that have been thoughtfully curated by Azure engineers to aid customers in resolving typical troubleshooting issues. These solutions encompass: &lt;br/&gt; (1.) Dynamic and context-aware diagnostics, guided troubleshooting wizards, and data visualizations. &lt;br/&gt; (2.) Rich instructional video tutorials and illustrative diagrams and images. &lt;br/&gt; (3.) Thoughtfully assembled textual troubleshooting instructions. &lt;br/&gt; All these components are seamlessly converged into unified solutions tailored to address a specific support problem area. </summary>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="solutionResourceName"> Solution resource Name. </param>
         /// <param name="data"> The required request body for this solution resource creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.SelfHelp
             }
         }
 
-        /// <summary> Creates a solution for the specific Azure resource or subscription using the triggering criteria ‘solutionId and requiredInputs’ from discovery solutions.&lt;br/&gt; Solutions are a rich, insightful and a centralized self help experience that brings all the relevant content to troubleshoot an Azure issue into a unified experience. Solutions include the following components : Text, Diagnostics , Troubleshooters, Images , Video tutorials, Tables , custom charts, images , AzureKB, etc, with capabilities to support new solutions types in the future. Each solution type may require one or more ‘requiredParameters’ that are required to execute the individual solution component. In the absence of the ‘requiredParameters’ it is likely that some of the solutions might fail execution, and you might see an empty response. &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note:&lt;/b&gt;  &lt;br/&gt;1. ‘requiredInputs’ from Discovery solutions response must be passed via ‘parameters’ in the request body of Solutions API. &lt;br/&gt;2. ‘requiredParameters’ from the Solutions response is the same as ‘ additionalParameters’ in the request for diagnostics &lt;br/&gt;3. ‘requiredParameters’ from the Solutions response is the same as ‘properties.parameters’ in the request for Troubleshooters. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <summary> Creates a solution for the specific Azure resource or subscription using the inputs ‘solutionId and requiredInputs’ from discovery solutions. &lt;br/&gt; Azure solutions comprise a comprehensive library of self-help resources that have been thoughtfully curated by Azure engineers to aid customers in resolving typical troubleshooting issues. These solutions encompass: &lt;br/&gt; (1.) Dynamic and context-aware diagnostics, guided troubleshooting wizards, and data visualizations. &lt;br/&gt; (2.) Rich instructional video tutorials and illustrative diagrams and images. &lt;br/&gt; (3.) Thoughtfully assembled textual troubleshooting instructions. &lt;br/&gt; All these components are seamlessly converged into unified solutions tailored to address a specific support problem area. </summary>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="solutionResourceName"> Solution resource Name. </param>
         /// <param name="data"> The required request body for this solution resource creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Get the solution using the applicable solutionResourceName while creating the solution. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="solutionResourceName"> Solution resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="solutionResourceName"/> is null. </exception>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Get the solution using the applicable solutionResourceName while creating the solution. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="solutionResourceName"> Solution resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="solutionResourceName"/> is null. </exception>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Update the requiredInputs or additional information needed to execute the solution. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="solutionResourceName"> Solution resource Name. </param>
         /// <param name="patch"> The required request body for updating a solution resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Update the requiredInputs or additional information needed to execute the solution. </summary>
-        /// <param name="scope"> This is an extension resource provider and only resource level extension is supported at the moment. </param>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
         /// <param name="solutionResourceName"> Solution resource Name. </param>
         /// <param name="patch"> The required request body for updating a solution resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -250,6 +250,78 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                 case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateWarmUpRequest(string scope, string solutionResourceName, SolutionWarmUpRequestBody solutionWarmUpRequestBody)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Help/solutions/", false);
+            uri.AppendPath(solutionResourceName, true);
+            uri.AppendPath("/warmup", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (solutionWarmUpRequestBody != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(solutionWarmUpRequestBody, ModelSerializationExtensions.WireOptions);
+                request.Content = content;
+            }
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Warm up the solution resource by preloading asynchronous diagnostics results into cache. </summary>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
+        /// <param name="solutionResourceName"> Solution resource Name. </param>
+        /// <param name="solutionWarmUpRequestBody"> The required request body for warming up a solution resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="solutionResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> WarmUpAsync(string scope, string solutionResourceName, SolutionWarmUpRequestBody solutionWarmUpRequestBody = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
+
+            using var message = CreateWarmUpRequest(scope, solutionResourceName, solutionWarmUpRequestBody);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Warm up the solution resource by preloading asynchronous diagnostics results into cache. </summary>
+        /// <param name="scope"> scope = resourceUri of affected resource.&lt;br/&gt; For example: /subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read. </param>
+        /// <param name="solutionResourceName"> Solution resource Name. </param>
+        /// <param name="solutionWarmUpRequestBody"> The required request body for warming up a solution resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="solutionResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response WarmUp(string scope, string solutionResourceName, SolutionWarmUpRequestBody solutionWarmUpRequestBody = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
+
+            using var message = CreateWarmUpRequest(scope, solutionResourceName, solutionWarmUpRequestBody);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);

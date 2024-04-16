@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ReplacementMaps"/>. </summary>
-        public ReplacementMaps()
+        internal ReplacementMaps()
         {
             WebResults = new ChangeTrackingList<WebResult>();
             Diagnostics = new ChangeTrackingList<SolutionsDiagnostic>();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
         /// <param name="videoGroups"> Group of Videos. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplacementMaps(IList<WebResult> webResults, IList<SolutionsDiagnostic> diagnostics, IList<SolutionsTroubleshooters> troubleshooters, IList<MetricsBasedChart> metricsBasedCharts, IList<SelfHelpVideo> videos, IList<VideoGroup> videoGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReplacementMaps(IReadOnlyList<WebResult> webResults, IReadOnlyList<SolutionsDiagnostic> diagnostics, IReadOnlyList<SolutionsTroubleshooters> troubleshooters, IReadOnlyList<MetricsBasedChart> metricsBasedCharts, IReadOnlyList<SelfHelpVideo> videos, IReadOnlyList<VideoGroup> videoGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WebResults = webResults;
             Diagnostics = diagnostics;
@@ -76,16 +76,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Solution AzureKB results. </summary>
-        public IList<WebResult> WebResults { get; }
+        public IReadOnlyList<WebResult> WebResults { get; }
         /// <summary> Solution diagnostics results. </summary>
-        public IList<SolutionsDiagnostic> Diagnostics { get; }
+        public IReadOnlyList<SolutionsDiagnostic> Diagnostics { get; }
         /// <summary> Solutions Troubleshooters. </summary>
-        public IList<SolutionsTroubleshooters> Troubleshooters { get; }
+        public IReadOnlyList<SolutionsTroubleshooters> Troubleshooters { get; }
         /// <summary> Solution metrics based charts. </summary>
-        public IList<MetricsBasedChart> MetricsBasedCharts { get; }
+        public IReadOnlyList<MetricsBasedChart> MetricsBasedCharts { get; }
         /// <summary> Video solutions, which have the power to engage the customer by stimulating their senses. </summary>
-        public IList<SelfHelpVideo> Videos { get; }
+        public IReadOnlyList<SelfHelpVideo> Videos { get; }
         /// <summary> Group of Videos. </summary>
-        public IList<VideoGroup> VideoGroups { get; }
+        public IReadOnlyList<VideoGroup> VideoGroups { get; }
     }
 }

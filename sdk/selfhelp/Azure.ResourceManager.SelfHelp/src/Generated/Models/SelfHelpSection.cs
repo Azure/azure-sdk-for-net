@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpSection"/>. </summary>
-        public SelfHelpSection()
+        internal SelfHelpSection()
         {
         }
 
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Solution sections title. </summary>
-        public string Title { get; set; }
+        public string Title { get; }
         /// <summary> Solution sections content. </summary>
-        public string Content { get; set; }
+        public string Content { get; }
         /// <summary> Solution replacement maps. </summary>
-        public ReplacementMaps ReplacementMaps { get; set; }
+        public ReplacementMaps ReplacementMaps { get; }
     }
 }

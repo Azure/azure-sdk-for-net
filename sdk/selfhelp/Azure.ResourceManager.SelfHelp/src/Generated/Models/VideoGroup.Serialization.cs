@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            IList<VideoGroupVideo> videos = default;
+            IReadOnlyList<VideoGroupVideo> videos = default;
             string replacementKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VideoGroup"/>. </summary>
-        public VideoGroup()
+        internal VideoGroup()
         {
             Videos = new ChangeTrackingList<VideoGroupVideo>();
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="videos"> List of videos will be shown to customers. </param>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the insight content. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VideoGroup(IList<VideoGroupVideo> videos, string replacementKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VideoGroup(IReadOnlyList<VideoGroupVideo> videos, string replacementKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Videos = videos;
             ReplacementKey = replacementKey;
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> List of videos will be shown to customers. </summary>
-        public IList<VideoGroupVideo> Videos { get; }
+        public IReadOnlyList<VideoGroupVideo> Videos { get; }
         /// <summary> Place holder used in HTML Content replace control with the insight content. </summary>
-        public string ReplacementKey { get; set; }
+        public string ReplacementKey { get; }
     }
 }

@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: SelfHelp
 namespace: Azure.ResourceManager.SelfHelp
-require: https://github.com/Azure/azure-rest-api-specs/blob/3eb9ec8e9c8f717c6b461c4c0f49a4662fb948fd/specification/help/resource-manager/readme.md
-tag: package-2023-09-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/b38632bbd56247985cb0493b128ba048e5fee16b/specification/help/resource-manager/readme.md
+tag: package-2024-03-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -59,6 +59,8 @@ list-exception:
 - /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}
 - /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}
 - /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}
+- /{scope}/providers/Microsoft.Help/simplifiedSolutions/{simplifiedSolutionsResourceName}
+- /providers/Microsoft.Help/selfHelp/{solutionId}
 
 rename-mapping:
   DiagnosticResource: SelfHelpDiagnostic

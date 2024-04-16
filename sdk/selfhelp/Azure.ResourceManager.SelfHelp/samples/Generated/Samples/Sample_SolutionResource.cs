@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_SolutionGet()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2023-09-01-preview/examples/Solution_Get.json
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Solution_Get.json
             // this example is just showing the usage of "Solution_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_SolutionUpdate()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2023-09-01-preview/examples/Solution_Update.json
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Solution_Update.json
             // this example is just showing the usage of "Solution_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,6 +75,32 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             SolutionResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Solution_WarmUp
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task WarmUp_SolutionWarmUp()
+        {
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/Solution_WarmUp.json
+            // this example is just showing the usage of "Solution_WarmUp" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SolutionResource created on azure
+            // for more information of creating SolutionResource, please refer to the document of SolutionResource
+            string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
+            string solutionResourceName = "SolutionResourceName1";
+            ResourceIdentifier solutionResourceId = SolutionResource.CreateResourceIdentifier(scope, solutionResourceName);
+            SolutionResource solutionResource = client.GetSolutionResource(solutionResourceId);
+
+            // invoke the operation
+            await solutionResource.WarmUpAsync();
+
+            Console.WriteLine($"Succeeded");
         }
     }
 }

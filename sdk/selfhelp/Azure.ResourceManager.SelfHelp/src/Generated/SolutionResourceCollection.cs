@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
-        /// Creates a solution for the specific Azure resource or subscription using the triggering criteria ‘solutionId and requiredInputs’ from discovery solutions.&lt;br/&gt; Solutions are a rich, insightful and a centralized self help experience that brings all the relevant content to troubleshoot an Azure issue into a unified experience. Solutions include the following components : Text, Diagnostics , Troubleshooters, Images , Video tutorials, Tables , custom charts, images , AzureKB, etc, with capabilities to support new solutions types in the future. Each solution type may require one or more ‘requiredParameters’ that are required to execute the individual solution component. In the absence of the ‘requiredParameters’ it is likely that some of the solutions might fail execution, and you might see an empty response. &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note:&lt;/b&gt;  &lt;br/&gt;1. ‘requiredInputs’ from Discovery solutions response must be passed via ‘parameters’ in the request body of Solutions API. &lt;br/&gt;2. ‘requiredParameters’ from the Solutions response is the same as ‘ additionalParameters’ in the request for diagnostics &lt;br/&gt;3. ‘requiredParameters’ from the Solutions response is the same as ‘properties.parameters’ in the request for Troubleshooters
+        /// Creates a solution for the specific Azure resource or subscription using the inputs ‘solutionId and requiredInputs’ from discovery solutions. &lt;br/&gt; Azure solutions comprise a comprehensive library of self-help resources that have been thoughtfully curated by Azure engineers to aid customers in resolving typical troubleshooting issues. These solutions encompass: &lt;br/&gt; (1.) Dynamic and context-aware diagnostics, guided troubleshooting wizards, and data visualizations. &lt;br/&gt; (2.) Rich instructional video tutorials and illustrative diagrams and images. &lt;br/&gt; (3.) Thoughtfully assembled textual troubleshooting instructions. &lt;br/&gt; All these components are seamlessly converged into unified solutions tailored to address a specific support problem area.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
-        /// Creates a solution for the specific Azure resource or subscription using the triggering criteria ‘solutionId and requiredInputs’ from discovery solutions.&lt;br/&gt; Solutions are a rich, insightful and a centralized self help experience that brings all the relevant content to troubleshoot an Azure issue into a unified experience. Solutions include the following components : Text, Diagnostics , Troubleshooters, Images , Video tutorials, Tables , custom charts, images , AzureKB, etc, with capabilities to support new solutions types in the future. Each solution type may require one or more ‘requiredParameters’ that are required to execute the individual solution component. In the absence of the ‘requiredParameters’ it is likely that some of the solutions might fail execution, and you might see an empty response. &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note:&lt;/b&gt;  &lt;br/&gt;1. ‘requiredInputs’ from Discovery solutions response must be passed via ‘parameters’ in the request body of Solutions API. &lt;br/&gt;2. ‘requiredParameters’ from the Solutions response is the same as ‘ additionalParameters’ in the request for diagnostics &lt;br/&gt;3. ‘requiredParameters’ from the Solutions response is the same as ‘properties.parameters’ in the request for Troubleshooters
+        /// Creates a solution for the specific Azure resource or subscription using the inputs ‘solutionId and requiredInputs’ from discovery solutions. &lt;br/&gt; Azure solutions comprise a comprehensive library of self-help resources that have been thoughtfully curated by Azure engineers to aid customers in resolving typical troubleshooting issues. These solutions encompass: &lt;br/&gt; (1.) Dynamic and context-aware diagnostics, guided troubleshooting wizards, and data visualizations. &lt;br/&gt; (2.) Rich instructional video tutorials and illustrative diagrams and images. &lt;br/&gt; (3.) Thoughtfully assembled textual troubleshooting instructions. &lt;br/&gt; All these components are seamlessly converged into unified solutions tailored to address a specific support problem area.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
