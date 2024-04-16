@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class MobileNetworkSimData : IUtf8JsonSerializable, IJsonModel<MobileNetworkSimData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkSimData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkSimData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MobileNetworkSimData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal static MobileNetworkSimData DeserializeMobileNetworkSimData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

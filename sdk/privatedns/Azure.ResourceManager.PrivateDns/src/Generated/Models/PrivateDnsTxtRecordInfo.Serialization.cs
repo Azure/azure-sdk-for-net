@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
 {
     public partial class PrivateDnsTxtRecordInfo : IUtf8JsonSerializable, IJsonModel<PrivateDnsTxtRecordInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateDnsTxtRecordInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateDnsTxtRecordInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateDnsTxtRecordInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         internal static PrivateDnsTxtRecordInfo DeserializePrivateDnsTxtRecordInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

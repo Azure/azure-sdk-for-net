@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class VirtualNetworkGatewayConnectionListEntity : IUtf8JsonSerializable, IJsonModel<VirtualNetworkGatewayConnectionListEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayConnectionListEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayConnectionListEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualNetworkGatewayConnectionListEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualNetworkGatewayConnectionListEntity DeserializeVirtualNetworkGatewayConnectionListEntity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

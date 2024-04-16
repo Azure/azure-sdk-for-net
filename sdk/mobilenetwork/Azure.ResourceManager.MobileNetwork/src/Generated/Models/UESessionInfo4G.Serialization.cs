@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class UESessionInfo4G : IUtf8JsonSerializable, IJsonModel<UESessionInfo4G>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UESessionInfo4G>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UESessionInfo4G>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UESessionInfo4G>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static UESessionInfo4G DeserializeUESessionInfo4G(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class OperationalInsightsDataSourceData : IUtf8JsonSerializable, IJsonModel<OperationalInsightsDataSourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsDataSourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsDataSourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationalInsightsDataSourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static OperationalInsightsDataSourceData DeserializeOperationalInsightsDataSourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

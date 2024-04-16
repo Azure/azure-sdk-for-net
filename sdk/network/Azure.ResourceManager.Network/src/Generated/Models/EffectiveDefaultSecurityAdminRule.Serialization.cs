@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class EffectiveDefaultSecurityAdminRule : IUtf8JsonSerializable, IJsonModel<EffectiveDefaultSecurityAdminRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveDefaultSecurityAdminRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveDefaultSecurityAdminRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EffectiveDefaultSecurityAdminRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static EffectiveDefaultSecurityAdminRule DeserializeEffectiveDefaultSecurityAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

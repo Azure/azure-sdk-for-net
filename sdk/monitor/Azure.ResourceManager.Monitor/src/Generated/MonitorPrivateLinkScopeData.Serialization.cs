@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class MonitorPrivateLinkScopeData : IUtf8JsonSerializable, IJsonModel<MonitorPrivateLinkScopeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorPrivateLinkScopeData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorPrivateLinkScopeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorPrivateLinkScopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static MonitorPrivateLinkScopeData DeserializeMonitorPrivateLinkScopeData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

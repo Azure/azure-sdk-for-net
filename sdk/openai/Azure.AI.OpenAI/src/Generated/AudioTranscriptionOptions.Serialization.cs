@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
 {
     public partial class AudioTranscriptionOptions : IUtf8JsonSerializable, IJsonModel<AudioTranscriptionOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AudioTranscriptionOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AudioTranscriptionOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AudioTranscriptionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.AI.OpenAI
 
         internal static AudioTranscriptionOptions DeserializeAudioTranscriptionOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

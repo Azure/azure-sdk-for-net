@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class LogAnalyticsQueryPackData : IUtf8JsonSerializable, IJsonModel<LogAnalyticsQueryPackData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsQueryPackData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsQueryPackData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogAnalyticsQueryPackData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static LogAnalyticsQueryPackData DeserializeLogAnalyticsQueryPackData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Orbital.Models
 {
     public partial class OrbitalAvailableContactsContent : IUtf8JsonSerializable, IJsonModel<OrbitalAvailableContactsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalAvailableContactsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalAvailableContactsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OrbitalAvailableContactsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Orbital.Models
 
         internal static OrbitalAvailableContactsContent DeserializeOrbitalAvailableContactsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

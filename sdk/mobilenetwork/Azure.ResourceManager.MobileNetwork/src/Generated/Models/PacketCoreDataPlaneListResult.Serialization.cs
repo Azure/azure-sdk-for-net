@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     internal partial class PacketCoreDataPlaneListResult : IUtf8JsonSerializable, IJsonModel<PacketCoreDataPlaneListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCoreDataPlaneListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCoreDataPlaneListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PacketCoreDataPlaneListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PacketCoreDataPlaneListResult DeserializePacketCoreDataPlaneListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

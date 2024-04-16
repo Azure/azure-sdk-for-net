@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
 {
     internal partial class PostgreSqlServerSecurityAlertPolicyListResult : IUtf8JsonSerializable, IJsonModel<PostgreSqlServerSecurityAlertPolicyListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlServerSecurityAlertPolicyListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlServerSecurityAlertPolicyListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlServerSecurityAlertPolicyListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         internal static PostgreSqlServerSecurityAlertPolicyListResult DeserializePostgreSqlServerSecurityAlertPolicyListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
 {
     public partial class DataProductData : IUtf8JsonSerializable, IJsonModel<DataProductData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataProductData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
 
         internal static DataProductData DeserializeDataProductData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

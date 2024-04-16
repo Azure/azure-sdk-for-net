@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     public partial class NewRelicMetricsStatusResult : IUtf8JsonSerializable, IJsonModel<NewRelicMetricsStatusResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicMetricsStatusResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicMetricsStatusResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NewRelicMetricsStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         internal static NewRelicMetricsStatusResult DeserializeNewRelicMetricsStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

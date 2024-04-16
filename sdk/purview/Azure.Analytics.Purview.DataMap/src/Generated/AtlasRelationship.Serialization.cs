@@ -15,7 +15,7 @@ namespace Azure.Analytics.Purview.DataMap
 {
     public partial class AtlasRelationship : IUtf8JsonSerializable, IJsonModel<AtlasRelationship>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasRelationship>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasRelationship>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AtlasRelationship>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -151,7 +151,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         internal static AtlasRelationship DeserializeAtlasRelationship(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -363,7 +363,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class ResourceProviderManifest : IUtf8JsonSerializable, IJsonModel<ResourceProviderManifest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceProviderManifest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceProviderManifest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceProviderManifest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ResourceProviderManifest DeserializeResourceProviderManifest(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

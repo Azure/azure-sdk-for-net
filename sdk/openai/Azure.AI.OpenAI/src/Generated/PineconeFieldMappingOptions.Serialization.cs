@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
 {
     public partial class PineconeFieldMappingOptions : IUtf8JsonSerializable, IJsonModel<PineconeFieldMappingOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PineconeFieldMappingOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PineconeFieldMappingOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PineconeFieldMappingOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -85,7 +85,7 @@ namespace Azure.AI.OpenAI
 
         internal static PineconeFieldMappingOptions DeserializePineconeFieldMappingOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -188,7 +188,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }
