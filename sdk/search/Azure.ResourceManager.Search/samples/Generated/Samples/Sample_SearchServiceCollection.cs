@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Search.Samples
             string searchServiceName = "mysearchservice";
             SearchServiceData data = new SearchServiceData(new AzureLocation("westus"))
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Search.Samples
             string searchServiceName = "mysearchservice";
             SearchServiceData data = new SearchServiceData(new AzureLocation("westus"))
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Search.Samples
             string searchServiceName = "mysearchservice";
             SearchServiceData data = new SearchServiceData(new AzureLocation("westus"))
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
@@ -187,11 +187,11 @@ namespace Azure.ResourceManager.Search.Samples
             string searchServiceName = "mysearchservice";
             SearchServiceData data = new SearchServiceData(new AzureLocation("westus"))
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                PublicNetworkAccess = SearchServicePublicNetworkAccess.Disabled,
+                PublicInternetAccess = SearchServicePublicInternetAccess.Disabled,
                 Tags =
 {
 ["app-name"] = "My e-commerce app",
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Search.Samples
             string searchServiceName = "mysearchservice";
             SearchServiceData data = new SearchServiceData(new AzureLocation("westus"))
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 ReplicaCount = 1,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
@@ -293,7 +293,7 @@ Value = "123.4.6.0/18",
             string searchServiceName = "mysearchservice";
             SearchServiceData data = new SearchServiceData(new AzureLocation("westus"))
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 ReplicaCount = 1,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
@@ -353,7 +353,7 @@ Value = "123.4.6.0/18",
             string searchServiceName = "mysearchservice";
             SearchServiceData data = new SearchServiceData(new AzureLocation("westus"))
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
@@ -403,7 +403,7 @@ Value = "123.4.6.0/18",
             string searchServiceName = "mysearchservice";
             SearchServiceData data = new SearchServiceData(new AzureLocation("westus"))
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
@@ -453,7 +453,7 @@ SearchDisabledDataExfiltrationOption.All
             string searchServiceName = "mysearchservice";
             SearchServiceData data = new SearchServiceData(new AzureLocation("westus"))
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 Identity = new ManagedServiceIdentity("SystemAssigned, UserAssigned")
                 {
                     UserAssignedIdentities =
@@ -506,7 +506,7 @@ SearchDisabledDataExfiltrationOption.All
             string searchServiceName = "mysearchservice";
             SearchServiceData data = new SearchServiceData(new AzureLocation("westus"))
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,

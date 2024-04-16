@@ -9,6 +9,7 @@ csharp: true
 library-name: Search
 namespace: Azure.ResourceManager.Search
 require: https://github.com/Azure/azure-rest-api-specs/blob/3fb73ef5a3af2c138b53e3cced182095b671a679/specification/search/resource-manager/readme.md
+#tag: package-preview-2024-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,6 +20,9 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 enable-bicep-serialization: true
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 rename-mapping:
   AadAuthFailureMode: SearchAadAuthFailureMode
@@ -35,22 +39,28 @@ rename-mapping:
   PrivateLinkServiceConnectionStatus: SearchServicePrivateLinkServiceConnectionStatus
   PrivateLinkServiceConnectionProvisioningState: SearchPrivateLinkServiceConnectionProvisioningState
   ProvisioningState: SearchServiceProvisioningState
-  PublicNetworkAccess: SearchServicePublicNetworkAccess
+  PublicNetworkAccess: SearchServicePublicInternetAccess
   QueryKey: SearchServiceQueryKey
   ResourceType: SearchServiceResourceType
   SearchEncryptionWithCmk: SearchEncryptionWithCmkEnforcement
   SearchService.properties.disableLocalAuth: isLocalAuthDisabled
+  SearchService.properties.publicNetworkAccess: PublicInternetAccess
+  SearchService.sku: SearchSku
   SearchServiceUpdate.properties.disableLocalAuth: isLocalAuthDisabled
+  SearchServiceUpdate.properties.publicNetworkAccess: PublicInternetAccess
+  SearchServiceUpdate.sku: SearchSku
   ShareablePrivateLinkResourceProperties: ShareableSearchServicePrivateLinkResourceProperties
   ShareablePrivateLinkResourceType: ShareableSearchServicePrivateLinkResourceType
   SharedPrivateLinkResource: SharedSearchServicePrivateLinkResource
   SharedPrivateLinkResourceProperties: SharedSearchServicePrivateLinkResourceProperties
   SharedPrivateLinkResourceProperties.privateLinkResourceId: -|arm-id
   SharedPrivateLinkResourceProperties.resourceRegion: -|azure-location
-  SharedPrivateLinkResourceProvisioningState: SharedSearchServicePrivateLinkResourceProvisioningState
-  SharedPrivateLinkResourceStatus: SharedSearchServicePrivateLinkResourceStatus
+  SharedPrivateLinkResourceProperties.status: SharedPrivateLinkResourceStatus
+  SharedPrivateLinkResourceProperties.provisioningState: SharedPrivateLinkResourceProvisioningState
+  SharedPrivateLinkResourceProvisioningState: SearchServiceSharedPrivateLinkResourceProvisioningState
+  SharedPrivateLinkResourceStatus: SearchServiceSharedPrivateLinkResourceStatus
   UnavailableNameReason: SearchServiceNameUnavailableReason
-
+  SkuName: SearchServiceSkuName
 
 format-by-name-rules:
   'tenantId': 'uuid'

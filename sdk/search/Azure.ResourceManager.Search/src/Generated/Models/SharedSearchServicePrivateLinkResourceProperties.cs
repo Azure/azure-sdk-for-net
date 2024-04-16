@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="groupId"> The group ID from the provider of resource the shared private link resource is for. </param>
         /// <param name="requestMessage"> The message for requesting approval of the shared private link resource. </param>
         /// <param name="resourceRegion"> Optional. Can be used to specify the Azure Resource Manager location of the resource for which a shared private link is being created. This is only required for those resources whose DNS configuration are regional (such as Azure Kubernetes Service). </param>
-        /// <param name="status"> Status of the shared private link resource. Valid values are Pending, Approved, Rejected or Disconnected. </param>
-        /// <param name="provisioningState"> The provisioning state of the shared private link resource. Valid values are Updating, Deleting, Failed, Succeeded or Incomplete. </param>
+        /// <param name="sharedPrivateLinkResourceStatus"> Status of the shared private link resource. Valid values are Pending, Approved, Rejected or Disconnected. </param>
+        /// <param name="sharedPrivateLinkResourceProvisioningState"> The provisioning state of the shared private link resource. Valid values are Updating, Deleting, Failed, Succeeded or Incomplete. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharedSearchServicePrivateLinkResourceProperties(ResourceIdentifier privateLinkResourceId, string groupId, string requestMessage, AzureLocation? resourceRegion, SharedSearchServicePrivateLinkResourceStatus? status, SharedSearchServicePrivateLinkResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SharedSearchServicePrivateLinkResourceProperties(ResourceIdentifier privateLinkResourceId, string groupId, string requestMessage, AzureLocation? resourceRegion, SearchServiceSharedPrivateLinkResourceStatus? sharedPrivateLinkResourceStatus, SearchServiceSharedPrivateLinkResourceProvisioningState? sharedPrivateLinkResourceProvisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrivateLinkResourceId = privateLinkResourceId;
             GroupId = groupId;
             RequestMessage = requestMessage;
             ResourceRegion = resourceRegion;
-            Status = status;
-            ProvisioningState = provisioningState;
+            SharedPrivateLinkResourceStatus = sharedPrivateLinkResourceStatus;
+            SharedPrivateLinkResourceProvisioningState = sharedPrivateLinkResourceProvisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Search.Models
         public AzureLocation? ResourceRegion { get; set; }
         /// <summary> Status of the shared private link resource. Valid values are Pending, Approved, Rejected or Disconnected. </summary>
         [WirePath("status")]
-        public SharedSearchServicePrivateLinkResourceStatus? Status { get; set; }
+        public SearchServiceSharedPrivateLinkResourceStatus? SharedPrivateLinkResourceStatus { get; set; }
         /// <summary> The provisioning state of the shared private link resource. Valid values are Updating, Deleting, Failed, Succeeded or Incomplete. </summary>
         [WirePath("provisioningState")]
-        public SharedSearchServicePrivateLinkResourceProvisioningState? ProvisioningState { get; set; }
+        public SearchServiceSharedPrivateLinkResourceProvisioningState? SharedPrivateLinkResourceProvisioningState { get; set; }
     }
 }

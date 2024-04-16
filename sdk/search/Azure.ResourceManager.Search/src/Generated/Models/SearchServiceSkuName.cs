@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions.'. </summary>
-    public readonly partial struct SearchSkuName : IEquatable<SearchSkuName>
+    public readonly partial struct SearchServiceSkuName : IEquatable<SearchServiceSkuName>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="SearchSkuName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceSkuName"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SearchSkuName(string value)
+        public SearchServiceSkuName(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -31,31 +31,31 @@ namespace Azure.ResourceManager.Search.Models
         private const string StorageOptimizedL2Value = "storage_optimized_l2";
 
         /// <summary> Free tier, with no SLA guarantees and a subset of the features offered on billable tiers. </summary>
-        public static SearchSkuName Free { get; } = new SearchSkuName(FreeValue);
+        public static SearchServiceSkuName Free { get; } = new SearchServiceSkuName(FreeValue);
         /// <summary> Billable tier for a dedicated service having up to 3 replicas. </summary>
-        public static SearchSkuName Basic { get; } = new SearchSkuName(BasicValue);
+        public static SearchServiceSkuName Basic { get; } = new SearchServiceSkuName(BasicValue);
         /// <summary> Billable tier for a dedicated service having up to 12 partitions and 12 replicas. </summary>
-        public static SearchSkuName Standard { get; } = new SearchSkuName(StandardValue);
+        public static SearchServiceSkuName Standard { get; } = new SearchServiceSkuName(StandardValue);
         /// <summary> Similar to 'standard', but with more capacity per search unit. </summary>
-        public static SearchSkuName Standard2 { get; } = new SearchSkuName(Standard2Value);
+        public static SearchServiceSkuName Standard2 { get; } = new SearchServiceSkuName(Standard2Value);
         /// <summary> The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). </summary>
-        public static SearchSkuName Standard3 { get; } = new SearchSkuName(Standard3Value);
+        public static SearchServiceSkuName Standard3 { get; } = new SearchServiceSkuName(Standard3Value);
         /// <summary> Billable tier for a dedicated service that supports 1TB per partition, up to 12 partitions. </summary>
-        public static SearchSkuName StorageOptimizedL1 { get; } = new SearchSkuName(StorageOptimizedL1Value);
+        public static SearchServiceSkuName StorageOptimizedL1 { get; } = new SearchServiceSkuName(StorageOptimizedL1Value);
         /// <summary> Billable tier for a dedicated service that supports 2TB per partition, up to 12 partitions. </summary>
-        public static SearchSkuName StorageOptimizedL2 { get; } = new SearchSkuName(StorageOptimizedL2Value);
-        /// <summary> Determines if two <see cref="SearchSkuName"/> values are the same. </summary>
-        public static bool operator ==(SearchSkuName left, SearchSkuName right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="SearchSkuName"/> values are not the same. </summary>
-        public static bool operator !=(SearchSkuName left, SearchSkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SearchSkuName"/>. </summary>
-        public static implicit operator SearchSkuName(string value) => new SearchSkuName(value);
+        public static SearchServiceSkuName StorageOptimizedL2 { get; } = new SearchServiceSkuName(StorageOptimizedL2Value);
+        /// <summary> Determines if two <see cref="SearchServiceSkuName"/> values are the same. </summary>
+        public static bool operator ==(SearchServiceSkuName left, SearchServiceSkuName right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SearchServiceSkuName"/> values are not the same. </summary>
+        public static bool operator !=(SearchServiceSkuName left, SearchServiceSkuName right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="SearchServiceSkuName"/>. </summary>
+        public static implicit operator SearchServiceSkuName(string value) => new SearchServiceSkuName(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SearchSkuName other && Equals(other);
+        public override bool Equals(object obj) => obj is SearchServiceSkuName other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(SearchSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SearchServiceSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

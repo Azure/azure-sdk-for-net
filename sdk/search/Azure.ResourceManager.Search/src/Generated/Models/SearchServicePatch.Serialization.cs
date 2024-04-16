@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Optional.IsDefined(SearchSku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
+                writer.WriteObjectValue(SearchSku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("hostingMode"u8);
                 writer.WriteStringValue(HostingMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (Optional.IsDefined(PublicInternetAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+                writer.WriteStringValue(PublicInternetAccess.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Search.Models
             int? replicaCount = default;
             int? partitionCount = default;
             SearchServiceHostingMode? hostingMode = default;
-            SearchServicePublicNetworkAccess? publicNetworkAccess = default;
+            SearchServicePublicInternetAccess? publicNetworkAccess = default;
             SearchServiceStatus? status = default;
             string statusDetails = default;
             SearchServiceProvisioningState? provisioningState = default;
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Search.Models
                             {
                                 continue;
                             }
-                            publicNetworkAccess = new SearchServicePublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new SearchServicePublicInternetAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -599,8 +599,8 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
-            if (Optional.IsDefined(Sku) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchSku), out propertyOverride);
+            if (Optional.IsDefined(SearchSku) || hasPropertyOverride)
             {
                 builder.Append("  sku: ");
                 if (hasPropertyOverride)
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 else
                 {
-                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SearchSku, options, 2, false, "  sku: ");
                 }
             }
 
@@ -699,8 +699,8 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
-            if (Optional.IsDefined(PublicNetworkAccess) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicInternetAccess), out propertyOverride);
+            if (Optional.IsDefined(PublicInternetAccess) || hasPropertyOverride)
             {
                 builder.Append("    publicNetworkAccess: ");
                 if (hasPropertyOverride)
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 else
                 {
-                    builder.AppendLine($"'{PublicNetworkAccess.Value.ToString()}'");
+                    builder.AppendLine($"'{PublicInternetAccess.Value.ToString()}'");
                 }
             }
 
@@ -925,10 +925,10 @@ namespace Azure.ResourceManager.Search.Models
             {
                 switch (item.Key)
                 {
-                    case "SkuName":
+                    case "SearchSkuName":
                         Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
                         propertyDictionary.Add("Name", item.Value);
-                        bicepOptions.PropertyOverrides.Add(Sku, propertyDictionary);
+                        bicepOptions.PropertyOverrides.Add(SearchSku, propertyDictionary);
                         break;
                     default:
                         continue;

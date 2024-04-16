@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Search.Samples
             {
                 ReplicaCount = 1,
                 PartitionCount = 1,
-                PublicNetworkAccess = SearchServicePublicNetworkAccess.Disabled,
+                PublicInternetAccess = SearchServicePublicInternetAccess.Disabled,
             };
             SearchServiceResource result = await searchService.UpdateAsync(patch);
 
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Search.Samples
             {
                 ReplicaCount = 3,
                 PartitionCount = 1,
-                PublicNetworkAccess = SearchServicePublicNetworkAccess.Enabled,
+                PublicInternetAccess = SearchServicePublicInternetAccess.Enabled,
                 NetworkRuleSet = new NetworkRuleSet()
                 {
                     IPRules =
@@ -396,7 +396,7 @@ Value = "123.4.6.0/18",
             {
                 ReplicaCount = 3,
                 PartitionCount = 1,
-                PublicNetworkAccess = SearchServicePublicNetworkAccess.Enabled,
+                PublicInternetAccess = SearchServicePublicInternetAccess.Enabled,
                 NetworkRuleSet = new NetworkRuleSet()
                 {
                     IPRules =
@@ -445,7 +445,7 @@ Value = "123.4.6.0/18",
             // invoke the operation
             SearchServicePatch patch = new SearchServicePatch(new AzureLocation("placeholder"))
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 Identity = new ManagedServiceIdentity("None"),
             };
             SearchServiceResource result = await searchService.UpdateAsync(patch);

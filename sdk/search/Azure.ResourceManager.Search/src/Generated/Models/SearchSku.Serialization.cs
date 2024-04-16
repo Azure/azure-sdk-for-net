@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            SearchSkuName? name = default;
+            SearchServiceSkuName? name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    name = new SearchSkuName(property.Value.GetString());
+                    name = new SearchServiceSkuName(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
