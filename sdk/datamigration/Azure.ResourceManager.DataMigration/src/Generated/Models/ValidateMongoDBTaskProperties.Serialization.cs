@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class ValidateMongoDBTaskProperties : IUtf8JsonSerializable, IJsonModel<ValidateMongoDBTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateMongoDBTaskProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateMongoDBTaskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ValidateMongoDBTaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ValidateMongoDBTaskProperties DeserializeValidateMongoDBTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

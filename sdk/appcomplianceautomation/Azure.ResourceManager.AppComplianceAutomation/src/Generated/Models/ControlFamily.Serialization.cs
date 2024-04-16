@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public partial class ControlFamily : IUtf8JsonSerializable, IJsonModel<ControlFamily>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControlFamily>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControlFamily>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ControlFamily>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         internal static ControlFamily DeserializeControlFamily(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

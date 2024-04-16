@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 {
     internal partial class VaultUsageListResult : IUtf8JsonSerializable, IJsonModel<VaultUsageListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultUsageListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VaultUsageListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VaultUsageListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static VaultUsageListResult DeserializeVaultUsageListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class PredefinedTagsListResult : IUtf8JsonSerializable, IJsonModel<PredefinedTagsListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredefinedTagsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredefinedTagsListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PredefinedTagsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static PredefinedTagsListResult DeserializePredefinedTagsListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

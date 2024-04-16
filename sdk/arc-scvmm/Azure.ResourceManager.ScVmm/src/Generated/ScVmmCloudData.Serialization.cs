@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ScVmm
 {
     public partial class ScVmmCloudData : IUtf8JsonSerializable, IJsonModel<ScVmmCloudData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmCloudData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmCloudData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScVmmCloudData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ScVmm
 
         internal static ScVmmCloudData DeserializeScVmmCloudData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

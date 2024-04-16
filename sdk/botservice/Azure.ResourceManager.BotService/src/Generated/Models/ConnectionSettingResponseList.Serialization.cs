@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BotService.Models
 {
     internal partial class ConnectionSettingResponseList : IUtf8JsonSerializable, IJsonModel<ConnectionSettingResponseList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionSettingResponseList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionSettingResponseList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectionSettingResponseList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static ConnectionSettingResponseList DeserializeConnectionSettingResponseList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ProductGroupData : IUtf8JsonSerializable, IJsonModel<ProductGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProductGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ProductGroupData DeserializeProductGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     [PersistableModelProxy(typeof(UnknownReplicationProviderSpecificContainerCreationContent))]
     public partial class ReplicationProviderSpecificContainerCreationContent : IUtf8JsonSerializable, IJsonModel<ReplicationProviderSpecificContainerCreationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProviderSpecificContainerCreationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProviderSpecificContainerCreationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReplicationProviderSpecificContainerCreationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static ReplicationProviderSpecificContainerCreationContent DeserializeReplicationProviderSpecificContainerCreationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

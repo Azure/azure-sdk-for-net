@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class SecurityRuleData : IUtf8JsonSerializable, IJsonModel<SecurityRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network
 
         internal static SecurityRuleData DeserializeSecurityRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

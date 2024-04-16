@@ -6,7 +6,7 @@ namespace Azure.Core.TestFramework.Models
     public partial class UriRegexSanitizer
     {
         public static UriRegexSanitizer CreateWithQueryParameter(string queryParameter, string value) =>
-            new($@"([\x0026|&|?]{queryParameter}=)(?<group>[\w\d%]+)", value)
+            new($@"([\x0026|&|?]{queryParameter}=)(?<group>[^&]+)", value)
             {
                 GroupForReplace = "group"
             };

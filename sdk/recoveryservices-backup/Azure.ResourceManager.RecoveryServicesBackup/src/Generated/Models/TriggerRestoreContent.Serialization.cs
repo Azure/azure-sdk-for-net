@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class TriggerRestoreContent : IUtf8JsonSerializable, IJsonModel<TriggerRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggerRestoreContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggerRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TriggerRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static TriggerRestoreContent DeserializeTriggerRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

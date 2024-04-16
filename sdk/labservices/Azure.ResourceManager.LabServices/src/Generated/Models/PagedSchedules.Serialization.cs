@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.LabServices.Models
 {
     internal partial class PagedSchedules : IUtf8JsonSerializable, IJsonModel<PagedSchedules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PagedSchedules>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PagedSchedules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PagedSchedules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static PagedSchedules DeserializePagedSchedules(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

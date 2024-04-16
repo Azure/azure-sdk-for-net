@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Subscription.Models
 {
     public partial class SubscriptionAliasCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<SubscriptionAliasCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionAliasCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionAliasCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SubscriptionAliasCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Subscription.Models
 
         internal static SubscriptionAliasCreateOrUpdateContent DeserializeSubscriptionAliasCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

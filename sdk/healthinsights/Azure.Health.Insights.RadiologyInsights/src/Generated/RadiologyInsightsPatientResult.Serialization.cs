@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class RadiologyInsightsPatientResult : IUtf8JsonSerializable, IJsonModel<RadiologyInsightsPatientResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RadiologyInsightsPatientResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RadiologyInsightsPatientResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RadiologyInsightsPatientResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,7 +67,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static RadiologyInsightsPatientResult DeserializeRadiologyInsightsPatientResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,11 +142,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeRadiologyInsightsPatientResult(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

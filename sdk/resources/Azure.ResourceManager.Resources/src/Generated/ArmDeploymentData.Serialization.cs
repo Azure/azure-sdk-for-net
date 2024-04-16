@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ArmDeploymentData : IUtf8JsonSerializable, IJsonModel<ArmDeploymentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmDeploymentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources
 
         internal static ArmDeploymentData DeserializeArmDeploymentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

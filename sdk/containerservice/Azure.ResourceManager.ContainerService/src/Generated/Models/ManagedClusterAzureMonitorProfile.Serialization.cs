@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     internal partial class ManagedClusterAzureMonitorProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterAzureMonitorProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAzureMonitorProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAzureMonitorProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterAzureMonitorProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterAzureMonitorProfile DeserializeManagedClusterAzureMonitorProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

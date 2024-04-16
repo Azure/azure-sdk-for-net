@@ -15,7 +15,7 @@ namespace Azure.Analytics.Defender.Easm
 {
     public partial class AzureDataExplorerDataConnection : IUtf8JsonSerializable, IJsonModel<AzureDataExplorerDataConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDataExplorerDataConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDataExplorerDataConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureDataExplorerDataConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Defender.Easm
 
         internal static AzureDataExplorerDataConnection DeserializeAzureDataExplorerDataConnection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -295,11 +295,11 @@ namespace Azure.Analytics.Defender.Easm
             return DeserializeAzureDataExplorerDataConnection(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

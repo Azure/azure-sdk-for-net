@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Kusto
 {
     public partial class KustoPrivateEndpointConnectionData : IUtf8JsonSerializable, IJsonModel<KustoPrivateEndpointConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoPrivateEndpointConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoPrivateEndpointConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Kusto
 
         internal static KustoPrivateEndpointConnectionData DeserializeKustoPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityDevOps
 {
     public partial class AzureDevOpsConnectorData : IUtf8JsonSerializable, IJsonModel<AzureDevOpsConnectorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDevOpsConnectorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDevOpsConnectorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureDevOpsConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         internal static AzureDevOpsConnectorData DeserializeAzureDevOpsConnectorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

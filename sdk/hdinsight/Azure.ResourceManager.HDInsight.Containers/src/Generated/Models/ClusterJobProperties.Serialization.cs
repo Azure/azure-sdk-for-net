@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     [PersistableModelProxy(typeof(UnknownClusterJobProperties))]
     public partial class ClusterJobProperties : IUtf8JsonSerializable, IJsonModel<ClusterJobProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterJobProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterJobProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static ClusterJobProperties DeserializeClusterJobProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

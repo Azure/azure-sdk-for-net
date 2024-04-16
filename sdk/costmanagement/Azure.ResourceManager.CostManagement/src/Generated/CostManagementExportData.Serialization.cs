@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CostManagement
 {
     public partial class CostManagementExportData : IUtf8JsonSerializable, IJsonModel<CostManagementExportData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementExportData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementExportData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CostManagementExportData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CostManagement
 
         internal static CostManagementExportData DeserializeCostManagementExportData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

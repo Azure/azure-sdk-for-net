@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ConnectionMonitorData : IUtf8JsonSerializable, IJsonModel<ConnectionMonitorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectionMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ConnectionMonitorData DeserializeConnectionMonitorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

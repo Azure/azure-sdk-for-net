@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightClusterRole : IUtf8JsonSerializable, IJsonModel<HDInsightClusterRole>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightClusterRole>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightClusterRole>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HDInsightClusterRole>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightClusterRole DeserializeHDInsightClusterRole(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

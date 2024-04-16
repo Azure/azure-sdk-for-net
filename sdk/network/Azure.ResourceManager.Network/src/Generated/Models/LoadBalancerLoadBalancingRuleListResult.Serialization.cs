@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal partial class LoadBalancerLoadBalancingRuleListResult : IUtf8JsonSerializable, IJsonModel<LoadBalancerLoadBalancingRuleListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancerLoadBalancingRuleListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancerLoadBalancingRuleListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LoadBalancerLoadBalancingRuleListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static LoadBalancerLoadBalancingRuleListResult DeserializeLoadBalancerLoadBalancingRuleListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

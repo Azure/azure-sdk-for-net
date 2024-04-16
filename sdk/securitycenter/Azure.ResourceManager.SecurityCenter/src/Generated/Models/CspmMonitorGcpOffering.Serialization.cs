@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class CspmMonitorGcpOffering : IUtf8JsonSerializable, IJsonModel<CspmMonitorGcpOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CspmMonitorGcpOffering>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CspmMonitorGcpOffering>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CspmMonitorGcpOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static CspmMonitorGcpOffering DeserializeCspmMonitorGcpOffering(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

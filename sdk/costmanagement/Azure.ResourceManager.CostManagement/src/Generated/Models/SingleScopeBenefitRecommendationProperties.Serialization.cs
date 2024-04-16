@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class SingleScopeBenefitRecommendationProperties : IUtf8JsonSerializable, IJsonModel<SingleScopeBenefitRecommendationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleScopeBenefitRecommendationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleScopeBenefitRecommendationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SingleScopeBenefitRecommendationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static SingleScopeBenefitRecommendationProperties DeserializeSingleScopeBenefitRecommendationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

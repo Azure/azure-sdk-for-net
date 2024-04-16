@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class AppServiceEnvironmentData : IUtf8JsonSerializable, IJsonModel<AppServiceEnvironmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceEnvironmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceEnvironmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static AppServiceEnvironmentData DeserializeAppServiceEnvironmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 {
     internal partial class PrivateStoreList : IUtf8JsonSerializable, IJsonModel<PrivateStoreList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateStoreList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateStoreList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateStoreList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static PrivateStoreList DeserializePrivateStoreList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

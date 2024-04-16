@@ -1,6 +1,16 @@
 # Release History
 
-## 12.18.0-beta.2 (Unreleased)
+## 12.18.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.18.0-beta.2 (2024-04-15)
 - Added support for service version 2024-05-04.
 - Added ability to retrieve path ACL with DataLakePath/File/DirectoryClient.GetProperties(), .GetPropertiesAsync(), DataLakeFileClient.Read(), and .ReadAsync().
 - Fixed bug where on `DataLakeDirectoryClient`, `DataLakeFileClient` and `DataLakePathClient`, calling `.Rename(..)` will throw a 403 Authentication Error, if the source storage client was instantiated with a SAS on the `Uri`, will not pass the SAS to the destination- Fixed bug where on `ShareDirectoryClient`, `ShareFileClient` and `DataLakePathClient`, calling `.Rename(..)` will throw a 403 Authentication Error, if the source storage client was instantiated with a SAS on the `Uri`, will not pass the SAS to the destination client, when the destination does not have any credentials.

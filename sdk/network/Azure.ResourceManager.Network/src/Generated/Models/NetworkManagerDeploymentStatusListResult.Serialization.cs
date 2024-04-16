@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal partial class NetworkManagerDeploymentStatusListResult : IUtf8JsonSerializable, IJsonModel<NetworkManagerDeploymentStatusListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkManagerDeploymentStatusListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkManagerDeploymentStatusListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkManagerDeploymentStatusListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkManagerDeploymentStatusListResult DeserializeNetworkManagerDeploymentStatusListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     internal partial class AwsCloudTrailDataConnectorDataTypes : IUtf8JsonSerializable, IJsonModel<AwsCloudTrailDataConnectorDataTypes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AwsCloudTrailDataConnectorDataTypes>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AwsCloudTrailDataConnectorDataTypes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AwsCloudTrailDataConnectorDataTypes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AwsCloudTrailDataConnectorDataTypes DeserializeAwsCloudTrailDataConnectorDataTypes(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class MagentoObjectDataset : IUtf8JsonSerializable, IJsonModel<MagentoObjectDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MagentoObjectDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MagentoObjectDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MagentoObjectDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MagentoObjectDataset DeserializeMagentoObjectDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

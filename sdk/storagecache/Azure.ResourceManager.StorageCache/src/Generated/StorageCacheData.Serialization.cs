@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.StorageCache
 {
     public partial class StorageCacheData : IUtf8JsonSerializable, IJsonModel<StorageCacheData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageCacheData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.StorageCache
 
         internal static StorageCacheData DeserializeStorageCacheData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static SelfHelpSolutionMetadata DeserializeSelfHelpSolutionMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal partial class InboundNatRuleListResult : IUtf8JsonSerializable, IJsonModel<InboundNatRuleListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundNatRuleListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundNatRuleListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InboundNatRuleListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static InboundNatRuleListResult DeserializeInboundNatRuleListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     public partial class ContainerServiceFleetManagedClusterUpdate : IUtf8JsonSerializable, IJsonModel<ContainerServiceFleetManagedClusterUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceFleetManagedClusterUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceFleetManagedClusterUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerServiceFleetManagedClusterUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         internal static ContainerServiceFleetManagedClusterUpdate DeserializeContainerServiceFleetManagedClusterUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

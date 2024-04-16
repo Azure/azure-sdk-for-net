@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     internal partial class LogicalNetworkPropertiesDhcpOptions : IUtf8JsonSerializable, IJsonModel<LogicalNetworkPropertiesDhcpOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicalNetworkPropertiesDhcpOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicalNetworkPropertiesDhcpOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicalNetworkPropertiesDhcpOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static LogicalNetworkPropertiesDhcpOptions DeserializeLogicalNetworkPropertiesDhcpOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseRecommendedSensitivityLabelUpdate : IUtf8JsonSerializable, IJsonModel<SynapseRecommendedSensitivityLabelUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseRecommendedSensitivityLabelUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseRecommendedSensitivityLabelUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseRecommendedSensitivityLabelUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseRecommendedSensitivityLabelUpdate DeserializeSynapseRecommendedSensitivityLabelUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

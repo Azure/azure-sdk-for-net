@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class NetworkSecurityPerimeterConfigurationProfile : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterConfigurationProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterConfigurationProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterConfigurationProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkSecurityPerimeterConfigurationProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static NetworkSecurityPerimeterConfigurationProfile DeserializeNetworkSecurityPerimeterConfigurationProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

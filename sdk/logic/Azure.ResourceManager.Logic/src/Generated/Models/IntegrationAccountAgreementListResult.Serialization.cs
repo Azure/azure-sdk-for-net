@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class IntegrationAccountAgreementListResult : IUtf8JsonSerializable, IJsonModel<IntegrationAccountAgreementListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountAgreementListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountAgreementListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationAccountAgreementListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountAgreementListResult DeserializeIntegrationAccountAgreementListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

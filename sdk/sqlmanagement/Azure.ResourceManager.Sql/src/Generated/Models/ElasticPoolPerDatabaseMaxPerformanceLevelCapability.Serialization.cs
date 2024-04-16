@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ElasticPoolPerDatabaseMaxPerformanceLevelCapability : IUtf8JsonSerializable, IJsonModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ElasticPoolPerDatabaseMaxPerformanceLevelCapability DeserializeElasticPoolPerDatabaseMaxPerformanceLevelCapability(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Nginx
 {
     public partial class NginxDeploymentData : IUtf8JsonSerializable, IJsonModel<NginxDeploymentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NginxDeploymentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Nginx
 
         internal static NginxDeploymentData DeserializeNginxDeploymentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

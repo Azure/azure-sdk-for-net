@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class MediaServicesAccountPatch : IUtf8JsonSerializable, IJsonModel<MediaServicesAccountPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaServicesAccountPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaServicesAccountPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaServicesAccountPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaServicesAccountPatch DeserializeMediaServicesAccountPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Billing.Models
 {
     internal partial class PaymentMethodsListResult : IUtf8JsonSerializable, IJsonModel<PaymentMethodsListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaymentMethodsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaymentMethodsListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PaymentMethodsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         internal static PaymentMethodsListResult DeserializePaymentMethodsListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

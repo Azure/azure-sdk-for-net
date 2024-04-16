@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     internal partial class JobSecretsCollection : IUtf8JsonSerializable, IJsonModel<JobSecretsCollection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobSecretsCollection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobSecretsCollection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JobSecretsCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static JobSecretsCollection DeserializeJobSecretsCollection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

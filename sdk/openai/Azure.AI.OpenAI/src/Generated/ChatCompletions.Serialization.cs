@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI
 {
     public partial class ChatCompletions : IUtf8JsonSerializable, IJsonModel<ChatCompletions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChatCompletions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,6 +36,11 @@ namespace Azure.AI.OpenAI
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model);
+            }
             if (Optional.IsCollectionDefined(PromptFilterResults))
             {
                 writer.WritePropertyName("prompt_filter_results"u8);
@@ -122,11 +127,11 @@ namespace Azure.AI.OpenAI
             return DeserializeChatCompletions(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

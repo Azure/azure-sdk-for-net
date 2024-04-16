@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 {
     public partial class NotificationHubTestSendResult : IUtf8JsonSerializable, IJsonModel<NotificationHubTestSendResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubTestSendResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubTestSendResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationHubTestSendResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubTestSendResult DeserializeNotificationHubTestSendResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

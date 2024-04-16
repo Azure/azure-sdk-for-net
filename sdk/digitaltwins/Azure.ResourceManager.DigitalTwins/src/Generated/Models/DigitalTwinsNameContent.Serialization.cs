@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 {
     public partial class DigitalTwinsNameContent : IUtf8JsonSerializable, IJsonModel<DigitalTwinsNameContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsNameContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsNameContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DigitalTwinsNameContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static DigitalTwinsNameContent DeserializeDigitalTwinsNameContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

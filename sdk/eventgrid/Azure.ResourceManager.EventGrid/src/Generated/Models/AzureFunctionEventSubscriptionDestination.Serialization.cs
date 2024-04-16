@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class AzureFunctionEventSubscriptionDestination : IUtf8JsonSerializable, IJsonModel<AzureFunctionEventSubscriptionDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFunctionEventSubscriptionDestination>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFunctionEventSubscriptionDestination>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureFunctionEventSubscriptionDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static AzureFunctionEventSubscriptionDestination DeserializeAzureFunctionEventSubscriptionDestination(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

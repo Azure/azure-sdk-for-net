@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class FhirR4Narrative : IUtf8JsonSerializable, IJsonModel<FhirR4Narrative>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4Narrative>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4Narrative>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FhirR4Narrative>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -77,7 +77,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static FhirR4Narrative DeserializeFhirR4Narrative(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,11 +168,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeFhirR4Narrative(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

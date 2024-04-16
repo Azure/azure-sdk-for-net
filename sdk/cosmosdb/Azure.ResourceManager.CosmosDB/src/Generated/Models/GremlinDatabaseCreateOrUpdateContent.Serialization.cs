@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class GremlinDatabaseCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<GremlinDatabaseCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GremlinDatabaseCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GremlinDatabaseCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GremlinDatabaseCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static GremlinDatabaseCreateOrUpdateContent DeserializeGremlinDatabaseCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

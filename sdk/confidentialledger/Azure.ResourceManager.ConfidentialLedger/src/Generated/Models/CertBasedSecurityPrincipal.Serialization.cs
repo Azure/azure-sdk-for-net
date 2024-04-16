@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     public partial class CertBasedSecurityPrincipal : IUtf8JsonSerializable, IJsonModel<CertBasedSecurityPrincipal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertBasedSecurityPrincipal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertBasedSecurityPrincipal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CertBasedSecurityPrincipal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         internal static CertBasedSecurityPrincipal DeserializeCertBasedSecurityPrincipal(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

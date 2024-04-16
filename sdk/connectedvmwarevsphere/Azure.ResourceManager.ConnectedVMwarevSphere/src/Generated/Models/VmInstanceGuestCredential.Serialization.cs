@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     public partial class VmInstanceGuestCredential : IUtf8JsonSerializable, IJsonModel<VmInstanceGuestCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmInstanceGuestCredential>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmInstanceGuestCredential>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VmInstanceGuestCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static VmInstanceGuestCredential DeserializeVmInstanceGuestCredential(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

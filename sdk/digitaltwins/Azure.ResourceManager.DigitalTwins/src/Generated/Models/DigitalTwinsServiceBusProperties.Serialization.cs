@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 {
     public partial class DigitalTwinsServiceBusProperties : IUtf8JsonSerializable, IJsonModel<DigitalTwinsServiceBusProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsServiceBusProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsServiceBusProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DigitalTwinsServiceBusProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         internal static DigitalTwinsServiceBusProperties DeserializeDigitalTwinsServiceBusProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

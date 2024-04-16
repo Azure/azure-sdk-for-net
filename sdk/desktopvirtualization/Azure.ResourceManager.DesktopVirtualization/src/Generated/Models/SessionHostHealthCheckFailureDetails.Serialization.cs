@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class SessionHostHealthCheckFailureDetails : IUtf8JsonSerializable, IJsonModel<SessionHostHealthCheckFailureDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionHostHealthCheckFailureDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionHostHealthCheckFailureDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SessionHostHealthCheckFailureDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static SessionHostHealthCheckFailureDetails DeserializeSessionHostHealthCheckFailureDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

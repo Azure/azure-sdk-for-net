@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     [PersistableModelProxy(typeof(UnknownEventHubsApplicationGroupPolicy))]
     public partial class EventHubsApplicationGroupPolicy : IUtf8JsonSerializable, IJsonModel<EventHubsApplicationGroupPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsApplicationGroupPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsApplicationGroupPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubsApplicationGroupPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsApplicationGroupPolicy DeserializeEventHubsApplicationGroupPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

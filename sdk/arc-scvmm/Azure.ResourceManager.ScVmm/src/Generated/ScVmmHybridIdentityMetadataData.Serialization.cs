@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ScVmm
 {
     public partial class ScVmmHybridIdentityMetadataData : IUtf8JsonSerializable, IJsonModel<ScVmmHybridIdentityMetadataData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmHybridIdentityMetadataData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmHybridIdentityMetadataData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScVmmHybridIdentityMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ScVmm
 
         internal static ScVmmHybridIdentityMetadataData DeserializeScVmmHybridIdentityMetadataData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     public partial class RestoreProperties : IUtf8JsonSerializable, IJsonModel<RestoreProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestoreProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         internal static RestoreProperties DeserializeRestoreProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

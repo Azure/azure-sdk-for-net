@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     internal partial class ProtectionPolicyResourceList : IUtf8JsonSerializable, IJsonModel<ProtectionPolicyResourceList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProtectionPolicyResourceList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProtectionPolicyResourceList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProtectionPolicyResourceList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static ProtectionPolicyResourceList DeserializeProtectionPolicyResourceList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

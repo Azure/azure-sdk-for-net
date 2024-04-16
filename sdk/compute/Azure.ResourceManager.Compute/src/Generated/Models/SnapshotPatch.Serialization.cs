@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class SnapshotPatch : IUtf8JsonSerializable, IJsonModel<SnapshotPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SnapshotPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SnapshotPatch DeserializeSnapshotPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

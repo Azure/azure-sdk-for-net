@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SiteSourceControlData : IUtf8JsonSerializable, IJsonModel<SiteSourceControlData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteSourceControlData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteSourceControlData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SiteSourceControlData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static SiteSourceControlData DeserializeSiteSourceControlData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

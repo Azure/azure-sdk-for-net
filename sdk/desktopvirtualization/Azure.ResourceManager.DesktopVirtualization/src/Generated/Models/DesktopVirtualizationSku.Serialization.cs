@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class DesktopVirtualizationSku : IUtf8JsonSerializable, IJsonModel<DesktopVirtualizationSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DesktopVirtualizationSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DesktopVirtualizationSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DesktopVirtualizationSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static DesktopVirtualizationSku DeserializeDesktopVirtualizationSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

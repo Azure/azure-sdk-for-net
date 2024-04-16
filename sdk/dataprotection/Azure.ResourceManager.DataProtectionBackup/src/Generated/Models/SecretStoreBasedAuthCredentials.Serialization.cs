@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class SecretStoreBasedAuthCredentials : IUtf8JsonSerializable, IJsonModel<SecretStoreBasedAuthCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretStoreBasedAuthCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretStoreBasedAuthCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecretStoreBasedAuthCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static SecretStoreBasedAuthCredentials DeserializeSecretStoreBasedAuthCredentials(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

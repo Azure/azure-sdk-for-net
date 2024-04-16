@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class StatementConditionProperties : IUtf8JsonSerializable, IJsonModel<StatementConditionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatementConditionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatementConditionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StatementConditionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static StatementConditionProperties DeserializeStatementConditionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

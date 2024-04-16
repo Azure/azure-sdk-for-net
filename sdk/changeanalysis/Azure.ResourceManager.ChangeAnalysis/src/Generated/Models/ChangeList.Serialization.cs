@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
     internal partial class ChangeList : IUtf8JsonSerializable, IJsonModel<ChangeList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChangeList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChangeList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChangeList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
 
         internal static ChangeList DeserializeChangeList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

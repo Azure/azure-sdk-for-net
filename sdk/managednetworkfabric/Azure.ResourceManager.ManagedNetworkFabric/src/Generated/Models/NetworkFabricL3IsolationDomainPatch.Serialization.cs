@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class NetworkFabricL3IsolationDomainPatch : IUtf8JsonSerializable, IJsonModel<NetworkFabricL3IsolationDomainPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricL3IsolationDomainPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricL3IsolationDomainPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFabricL3IsolationDomainPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static NetworkFabricL3IsolationDomainPatch DeserializeNetworkFabricL3IsolationDomainPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

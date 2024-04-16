@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ManagedDatabaseMoveDefinition : IUtf8JsonSerializable, IJsonModel<ManagedDatabaseMoveDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDatabaseMoveDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDatabaseMoveDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedDatabaseMoveDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedDatabaseMoveDefinition DeserializeManagedDatabaseMoveDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

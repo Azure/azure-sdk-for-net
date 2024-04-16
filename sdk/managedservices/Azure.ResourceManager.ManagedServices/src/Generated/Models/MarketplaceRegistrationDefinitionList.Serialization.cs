@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
 {
     internal partial class MarketplaceRegistrationDefinitionList : IUtf8JsonSerializable, IJsonModel<MarketplaceRegistrationDefinitionList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceRegistrationDefinitionList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceRegistrationDefinitionList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MarketplaceRegistrationDefinitionList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
 
         internal static MarketplaceRegistrationDefinitionList DeserializeMarketplaceRegistrationDefinitionList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Analysis.Models
 {
     public partial class AnalysisResourceSku : IUtf8JsonSerializable, IJsonModel<AnalysisResourceSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisResourceSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisResourceSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AnalysisResourceSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Analysis.Models
 
         internal static AnalysisResourceSku DeserializeAnalysisResourceSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

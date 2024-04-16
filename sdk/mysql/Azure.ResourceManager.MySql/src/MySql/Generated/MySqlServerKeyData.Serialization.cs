@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql
 {
     public partial class MySqlServerKeyData : IUtf8JsonSerializable, IJsonModel<MySqlServerKeyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerKeyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerKeyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlServerKeyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MySql
 
         internal static MySqlServerKeyData DeserializeMySqlServerKeyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

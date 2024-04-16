@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageCache
 {
     public partial class AmlFileSystemData : IUtf8JsonSerializable, IJsonModel<AmlFileSystemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AmlFileSystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.StorageCache
 
         internal static AmlFileSystemData DeserializeAmlFileSystemData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

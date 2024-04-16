@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class SocketAddressMatchCondition : IUtf8JsonSerializable, IJsonModel<SocketAddressMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SocketAddressMatchCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SocketAddressMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SocketAddressMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static SocketAddressMatchCondition DeserializeSocketAddressMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

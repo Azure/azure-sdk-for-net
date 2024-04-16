@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class DataFactoryMappingDataFlowProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryMappingDataFlowProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryMappingDataFlowProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryMappingDataFlowProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryMappingDataFlowProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFactoryMappingDataFlowProperties DeserializeDataFactoryMappingDataFlowProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

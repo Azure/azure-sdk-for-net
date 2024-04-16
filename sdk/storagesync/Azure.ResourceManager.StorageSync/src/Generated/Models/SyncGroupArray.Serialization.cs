@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 {
     internal partial class SyncGroupArray : IUtf8JsonSerializable, IJsonModel<SyncGroupArray>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncGroupArray>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncGroupArray>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SyncGroupArray>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         internal static SyncGroupArray DeserializeSyncGroupArray(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

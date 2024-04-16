@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public partial class ServiceFabricManagedClustersSku : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedClustersSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedClustersSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedClustersSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceFabricManagedClustersSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ServiceFabricManagedClustersSku DeserializeServiceFabricManagedClustersSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

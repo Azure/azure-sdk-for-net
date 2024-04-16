@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class VmResourceFeatureSupportContent : IUtf8JsonSerializable, IJsonModel<VmResourceFeatureSupportContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmResourceFeatureSupportContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmResourceFeatureSupportContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VmResourceFeatureSupportContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmResourceFeatureSupportContent DeserializeVmResourceFeatureSupportContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

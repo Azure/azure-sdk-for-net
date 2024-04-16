@@ -9,13 +9,13 @@ using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    /// <summary> Trace type name. </summary>
+    /// <summary> Trace document type. </summary>
     internal partial class Trace : DocumentIngress
     {
         /// <summary> Initializes a new instance of <see cref="Trace"/>. </summary>
         public Trace()
         {
-            DocumentType = DocumentIngressDocumentType.Trace;
+            DocumentType = DocumentType.Trace;
         }
 
         /// <summary> Initializes a new instance of <see cref="Trace"/>. </summary>
@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="documentStreamIds"> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="message"> Trace message. </param>
-        internal Trace(DocumentIngressDocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string message) : base(documentType, documentStreamIds, properties)
+        internal Trace(DocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string message) : base(documentType, documentStreamIds, properties)
         {
             Message = message;
             DocumentType = documentType;

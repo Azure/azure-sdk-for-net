@@ -15,7 +15,7 @@ namespace Azure.Security.CodeTransparency
 {
     public partial class DidDocumentKey : IUtf8JsonSerializable, IJsonModel<DidDocumentKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DidDocumentKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DidDocumentKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DidDocumentKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.Security.CodeTransparency
 
         internal static DidDocumentKey DeserializeDidDocumentKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,11 +148,11 @@ namespace Azure.Security.CodeTransparency
             return DeserializeDidDocumentKey(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
 {
     public partial class ContentFilterResultsForChoice : IUtf8JsonSerializable, IJsonModel<ContentFilterResultsForChoice>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentFilterResultsForChoice>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentFilterResultsForChoice>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContentFilterResultsForChoice>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -51,15 +51,10 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("profanity"u8);
                 writer.WriteObjectValue(Profanity, options);
             }
-            if (Optional.IsCollectionDefined(CustomBlocklists))
+            if (Optional.IsDefined(CustomBlocklists))
             {
                 writer.WritePropertyName("custom_blocklists"u8);
-                writer.WriteStartArray();
-                foreach (var item in CustomBlocklists)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(CustomBlocklists, options);
             }
             if (Optional.IsDefined(Error))
             {
@@ -108,7 +103,7 @@ namespace Azure.AI.OpenAI
 
         internal static ContentFilterResultsForChoice DeserializeContentFilterResultsForChoice(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -119,7 +114,7 @@ namespace Azure.AI.OpenAI
             ContentFilterResult hate = default;
             ContentFilterResult selfHarm = default;
             ContentFilterDetectionResult profanity = default;
-            IReadOnlyList<ContentFilterBlocklistIdResult> customBlocklists = default;
+            ContentFilterDetailedResults customBlocklists = default;
             ResponseError error = default;
             ContentFilterDetectionResult protectedMaterialText = default;
             ContentFilterCitedDetectionResult protectedMaterialCode = default;
@@ -178,12 +173,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    List<ContentFilterBlocklistIdResult> array = new List<ContentFilterBlocklistIdResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ContentFilterBlocklistIdResult.DeserializeContentFilterBlocklistIdResult(item, options));
-                    }
-                    customBlocklists = array;
+                    customBlocklists = ContentFilterDetailedResults.DeserializeContentFilterDetailedResults(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -225,7 +215,7 @@ namespace Azure.AI.OpenAI
                 hate,
                 selfHarm,
                 profanity,
-                customBlocklists ?? new ChangeTrackingList<ContentFilterBlocklistIdResult>(),
+                customBlocklists,
                 error,
                 protectedMaterialText,
                 protectedMaterialCode,
@@ -271,11 +261,11 @@ namespace Azure.AI.OpenAI
             return DeserializeContentFilterResultsForChoice(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

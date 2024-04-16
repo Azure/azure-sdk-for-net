@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class PremierAddOnOfferListResult : IUtf8JsonSerializable, IJsonModel<PremierAddOnOfferListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PremierAddOnOfferListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PremierAddOnOfferListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PremierAddOnOfferListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static PremierAddOnOfferListResult DeserializePremierAddOnOfferListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class AzureCoreNetworkFunctionVhdApplication : IUtf8JsonSerializable, IJsonModel<AzureCoreNetworkFunctionVhdApplication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCoreNetworkFunctionVhdApplication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCoreNetworkFunctionVhdApplication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureCoreNetworkFunctionVhdApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static AzureCoreNetworkFunctionVhdApplication DeserializeAzureCoreNetworkFunctionVhdApplication(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

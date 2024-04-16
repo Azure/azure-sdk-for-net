@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class LiveEventInputTrackSelection : IUtf8JsonSerializable, IJsonModel<LiveEventInputTrackSelection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LiveEventInputTrackSelection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LiveEventInputTrackSelection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LiveEventInputTrackSelection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventInputTrackSelection DeserializeLiveEventInputTrackSelection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

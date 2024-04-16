@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class ImageModelDistributionSettings : IUtf8JsonSerializable, IJsonModel<ImageModelDistributionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageModelDistributionSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageModelDistributionSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ImageModelDistributionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageModelDistributionSettings DeserializeImageModelDistributionSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

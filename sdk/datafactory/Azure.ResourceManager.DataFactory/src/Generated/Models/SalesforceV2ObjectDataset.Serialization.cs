@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SalesforceV2ObjectDataset : IUtf8JsonSerializable, IJsonModel<SalesforceV2ObjectDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SalesforceV2ObjectDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SalesforceV2ObjectDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SalesforceV2ObjectDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SalesforceV2ObjectDataset DeserializeSalesforceV2ObjectDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

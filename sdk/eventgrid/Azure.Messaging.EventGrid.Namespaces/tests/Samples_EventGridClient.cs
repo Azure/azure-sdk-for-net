@@ -63,7 +63,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             EventGridClient client = new EventGridClient(endpoint, credential);
 
             CloudEvent @event = new CloudEvent("<source>", "<type>", new { foo = "bar" });
-            Response<PublishResult> response = client.PublishCloudEvent("<topicName>", @event);
+            Response response = client.PublishCloudEvent("<topicName>", @event);
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
             EventGridClient client = new EventGridClient(endpoint, credential);
 
             CloudEvent @event = new CloudEvent("<source>", "<type>", new { foo = "bar" });
-            Response<PublishResult> response = await client.PublishCloudEventAsync("<topicName>", @event);
+            Response response = await client.PublishCloudEventAsync("<topicName>", @event);
         }
 
         [Test]
@@ -149,7 +149,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
                 DataContentType = "<datacontenttype>",
                 Subject = "<subject>",
             };
-            Response<PublishResult> response = client.PublishCloudEvent("<topicName>", @event);
+            Response response = client.PublishCloudEvent("<topicName>", @event);
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
                 DataContentType = "<datacontenttype>",
                 Subject = "<subject>",
             };
-            Response<PublishResult> response = await client.PublishCloudEventAsync("<topicName>", @event);
+            Response response = await client.PublishCloudEventAsync("<topicName>", @event);
         }
 
         [Test]
@@ -228,7 +228,7 @@ specversion = "<specversion>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            Response<PublishResult> response = client.PublishCloudEvents("<topicName>", new CloudEvent[]
+            Response response = client.PublishCloudEvents("<topicName>", new CloudEvent[]
             {
                 new CloudEvent("<source>", "<type>", new { foo = "bar" })
             });
@@ -242,7 +242,7 @@ specversion = "<specversion>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            Response<PublishResult> response = await client.PublishCloudEventsAsync("<topicName>", new CloudEvent[]
+            Response response = await client.PublishCloudEventsAsync("<topicName>", new CloudEvent[]
             {
                 new CloudEvent("<source>", "<type>", new { foo = "bar" })
             });
@@ -316,7 +316,7 @@ subject = "<subject>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            Response<PublishResult> response = client.PublishCloudEvents("<topicName>", new CloudEvent[]
+            Response response = client.PublishCloudEvents("<topicName>", new CloudEvent[]
             {
                 new CloudEvent("<source>", "<type>", new { foo = "bar" })
                 {
@@ -338,7 +338,7 @@ subject = "<subject>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            Response<PublishResult> response = await client.PublishCloudEventsAsync("<topicName>", new CloudEvent[]
+            Response response = await client.PublishCloudEventsAsync("<topicName>", new CloudEvent[]
             {
                 new CloudEvent("<source>", "<type>", new { foo = "bar" })
                 {

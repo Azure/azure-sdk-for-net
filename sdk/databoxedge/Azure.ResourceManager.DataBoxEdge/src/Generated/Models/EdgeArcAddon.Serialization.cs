@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class EdgeArcAddon : IUtf8JsonSerializable, IJsonModel<EdgeArcAddon>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeArcAddon>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeArcAddon>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeArcAddon>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeArcAddon DeserializeEdgeArcAddon(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

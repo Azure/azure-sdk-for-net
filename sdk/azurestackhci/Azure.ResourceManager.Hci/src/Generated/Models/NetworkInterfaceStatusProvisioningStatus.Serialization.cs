@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class NetworkInterfaceStatusProvisioningStatus : IUtf8JsonSerializable, IJsonModel<NetworkInterfaceStatusProvisioningStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterfaceStatusProvisioningStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterfaceStatusProvisioningStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkInterfaceStatusProvisioningStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static NetworkInterfaceStatusProvisioningStatus DeserializeNetworkInterfaceStatusProvisioningStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

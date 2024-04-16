@@ -296,6 +296,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task StageBlockAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1216,6 +1217,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task CommitBlockListAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2132,6 +2134,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task UploadAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3167,6 +3170,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task SyncUploadFromUriAsync_CPK()
         {
             // Arrange

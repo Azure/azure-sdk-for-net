@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 {
     public partial class NicIPConfigurationResourceSettings : IUtf8JsonSerializable, IJsonModel<NicIPConfigurationResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NicIPConfigurationResourceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NicIPConfigurationResourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NicIPConfigurationResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static NicIPConfigurationResourceSettings DeserializeNicIPConfigurationResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

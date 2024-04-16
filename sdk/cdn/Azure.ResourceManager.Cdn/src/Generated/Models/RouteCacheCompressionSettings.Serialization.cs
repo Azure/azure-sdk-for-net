@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class RouteCacheCompressionSettings : IUtf8JsonSerializable, IJsonModel<RouteCacheCompressionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteCacheCompressionSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteCacheCompressionSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RouteCacheCompressionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RouteCacheCompressionSettings DeserializeRouteCacheCompressionSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

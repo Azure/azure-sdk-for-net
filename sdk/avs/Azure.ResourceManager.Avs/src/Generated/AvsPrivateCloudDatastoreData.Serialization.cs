@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class AvsPrivateCloudDatastoreData : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudDatastoreData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudDatastoreData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudDatastoreData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvsPrivateCloudDatastoreData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Avs
 
         internal static AvsPrivateCloudDatastoreData DeserializeAvsPrivateCloudDatastoreData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

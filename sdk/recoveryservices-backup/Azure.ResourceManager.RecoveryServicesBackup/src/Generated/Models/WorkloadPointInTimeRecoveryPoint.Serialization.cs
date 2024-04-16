@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class WorkloadPointInTimeRecoveryPoint : IUtf8JsonSerializable, IJsonModel<WorkloadPointInTimeRecoveryPoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadPointInTimeRecoveryPoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadPointInTimeRecoveryPoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkloadPointInTimeRecoveryPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadPointInTimeRecoveryPoint DeserializeWorkloadPointInTimeRecoveryPoint(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
