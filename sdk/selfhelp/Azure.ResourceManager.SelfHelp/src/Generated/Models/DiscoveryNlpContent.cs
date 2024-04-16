@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Discover NLP request. </summary>
-    public partial class DiscoveryNlpRequest
+    public partial class DiscoveryNlpContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,23 +45,23 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryNlpRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryNlpContent"/>. </summary>
         /// <param name="issueSummary"> Natural language description of the issue. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="issueSummary"/> is null. </exception>
-        public DiscoveryNlpRequest(string issueSummary)
+        public DiscoveryNlpContent(string issueSummary)
         {
             Argument.AssertNotNull(issueSummary, nameof(issueSummary));
 
             IssueSummary = issueSummary;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryNlpRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiscoveryNlpContent"/>. </summary>
         /// <param name="issueSummary"> Natural language description of the issue. </param>
         /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. </param>
         /// <param name="serviceId"> ARM service Id of the service that is having the issue. For more information on service Id see https://learn.microsoft.com/rest/api/support/services/list?tabs=HTTP. </param>
         /// <param name="additionalContext"> Additional information in the form of a string. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryNlpRequest(string issueSummary, string resourceId, string serviceId, string additionalContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiscoveryNlpContent(string issueSummary, string resourceId, string serviceId, string additionalContext, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IssueSummary = issueSummary;
             ResourceId = resourceId;
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiscoveryNlpRequest"/> for deserialization. </summary>
-        internal DiscoveryNlpRequest()
+        /// <summary> Initializes a new instance of <see cref="DiscoveryNlpContent"/> for deserialization. </summary>
+        internal DiscoveryNlpContent()
         {
         }
 

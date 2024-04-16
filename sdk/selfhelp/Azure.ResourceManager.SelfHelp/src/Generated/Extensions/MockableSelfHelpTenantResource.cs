@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="discoverSolutionRequest"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPTenantScopesAsync(DiscoveryNlpRequest discoverSolutionRequest = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPTenantScopesAsync(DiscoveryNlpContent discoverSolutionRequest = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPTenantScopeRestClient.CreatePostRequest(discoverSolutionRequest);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SolutionNlpMetadataResource.DeserializeSolutionNlpMetadataResource(e), DiscoverySolutionNLPTenantScopeClientDiagnostics, Pipeline, "MockableSelfHelpTenantResource.PostDiscoverySolutionNLPTenantScopes", "value", null, cancellationToken);
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// <param name="discoverSolutionRequest"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPTenantScopes(DiscoveryNlpRequest discoverSolutionRequest = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPTenantScopes(DiscoveryNlpContent discoverSolutionRequest = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPTenantScopeRestClient.CreatePostRequest(discoverSolutionRequest);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SolutionNlpMetadataResource.DeserializeSolutionNlpMetadataResource(e), DiscoverySolutionNLPTenantScopeClientDiagnostics, Pipeline, "MockableSelfHelpTenantResource.PostDiscoverySolutionNLPTenantScopes", "value", null, cancellationToken);

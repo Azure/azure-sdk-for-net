@@ -569,15 +569,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SectionSelfHelp(title, content, replacementMaps, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DiscoveryNlpRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DiscoveryNlpContent"/>. </summary>
         /// <param name="issueSummary"> Natural language description of the issue. </param>
         /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. </param>
         /// <param name="serviceId"> ARM service Id of the service that is having the issue. For more information on service Id see https://learn.microsoft.com/rest/api/support/services/list?tabs=HTTP. </param>
         /// <param name="additionalContext"> Additional information in the form of a string. </param>
-        /// <returns> A new <see cref="Models.DiscoveryNlpRequest"/> instance for mocking. </returns>
-        public static DiscoveryNlpRequest DiscoveryNlpRequest(string issueSummary = null, string resourceId = null, string serviceId = null, string additionalContext = null)
+        /// <returns> A new <see cref="Models.DiscoveryNlpContent"/> instance for mocking. </returns>
+        public static DiscoveryNlpContent DiscoveryNlpRequest(string issueSummary = null, string resourceId = null, string serviceId = null, string additionalContext = null)
         {
-            return new DiscoveryNlpRequest(issueSummary, resourceId, serviceId, additionalContext, serializedAdditionalRawData: null);
+            return new DiscoveryNlpContent(issueSummary, resourceId, serviceId, additionalContext, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SolutionNlpMetadataResource"/>. </summary>

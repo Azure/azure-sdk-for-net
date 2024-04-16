@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class DiscoveryNlpRequest : IUtf8JsonSerializable, IJsonModel<DiscoveryNlpRequest>
+    public partial class DiscoveryNlpContent : IUtf8JsonSerializable, IJsonModel<DiscoveryNlpContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiscoveryNlpRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiscoveryNlpContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DiscoveryNlpRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiscoveryNlpContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveryNlpRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryNlpContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.SelfHelp.Models
             writer.WriteEndObject();
         }
 
-        DiscoveryNlpRequest IJsonModel<DiscoveryNlpRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DiscoveryNlpContent IJsonModel<DiscoveryNlpContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveryNlpRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DiscoveryNlpContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDiscoveryNlpRequest(document.RootElement, options);
         }
 
-        internal static DiscoveryNlpRequest DeserializeDiscoveryNlpRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DiscoveryNlpContent DeserializeDiscoveryNlpRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -115,25 +115,25 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DiscoveryNlpRequest(issueSummary, resourceId, serviceId, additionalContext, serializedAdditionalRawData);
+            return new DiscoveryNlpContent(issueSummary, resourceId, serviceId, additionalContext, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DiscoveryNlpRequest>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DiscoveryNlpContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveryNlpRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryNlpContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DiscoveryNlpRequest IPersistableModel<DiscoveryNlpRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DiscoveryNlpContent IPersistableModel<DiscoveryNlpContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DiscoveryNlpContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeDiscoveryNlpRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveryNlpRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiscoveryNlpContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DiscoveryNlpRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiscoveryNlpContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreatePostRequest(DiscoveryNlpRequest discoverSolutionRequest)
+        internal HttpMessage CreatePostRequest(DiscoveryNlpContent discoverSolutionRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
         /// <param name="discoverSolutionRequest"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<DiscoveryNlpResponse>> PostAsync(DiscoveryNlpRequest discoverSolutionRequest = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DiscoveryNlpResponse>> PostAsync(DiscoveryNlpContent discoverSolutionRequest = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePostRequest(discoverSolutionRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
         /// <param name="discoverSolutionRequest"> Request body for discovering solutions using NLP. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<DiscoveryNlpResponse> Post(DiscoveryNlpRequest discoverSolutionRequest = null, CancellationToken cancellationToken = default)
+        public Response<DiscoveryNlpResponse> Post(DiscoveryNlpContent discoverSolutionRequest = null, CancellationToken cancellationToken = default)
         {
             using var message = CreatePostRequest(discoverSolutionRequest);
             _pipeline.Send(message, cancellationToken);

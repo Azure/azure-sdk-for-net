@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.PostDiscoverySolutionNLPSubscriptionScopes(DiscoveryNlpRequest,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.PostDiscoverySolutionNLPSubscriptionScopes(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPSubscriptionScopesAsync(this SubscriptionResource subscriptionResource, DiscoveryNlpRequest discoverSolutionRequest = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPSubscriptionScopesAsync(this SubscriptionResource subscriptionResource, DiscoveryNlpContent discoverSolutionRequest = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.PostDiscoverySolutionNLPSubscriptionScopes(DiscoveryNlpRequest,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpSubscriptionResource.PostDiscoverySolutionNLPSubscriptionScopes(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPSubscriptionScopes(this SubscriptionResource subscriptionResource, DiscoveryNlpRequest discoverSolutionRequest = null, CancellationToken cancellationToken = default)
+        public static Pageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPSubscriptionScopes(this SubscriptionResource subscriptionResource, DiscoveryNlpContent discoverSolutionRequest = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.PostDiscoverySolutionNLPTenantScopes(DiscoveryNlpRequest,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.PostDiscoverySolutionNLPTenantScopes(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPTenantScopesAsync(this TenantResource tenantResource, DiscoveryNlpRequest discoverSolutionRequest = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPTenantScopesAsync(this TenantResource tenantResource, DiscoveryNlpContent discoverSolutionRequest = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.PostDiscoverySolutionNLPTenantScopes(DiscoveryNlpRequest,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpTenantResource.PostDiscoverySolutionNLPTenantScopes(DiscoveryNlpContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SolutionNlpMetadataResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPTenantScopes(this TenantResource tenantResource, DiscoveryNlpRequest discoverSolutionRequest = null, CancellationToken cancellationToken = default)
+        public static Pageable<SolutionNlpMetadataResource> PostDiscoverySolutionNLPTenantScopes(this TenantResource tenantResource, DiscoveryNlpContent discoverSolutionRequest = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

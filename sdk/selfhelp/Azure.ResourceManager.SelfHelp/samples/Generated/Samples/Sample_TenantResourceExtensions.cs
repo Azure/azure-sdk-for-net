@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            DiscoveryNlpRequest discoverSolutionRequest = new DiscoveryNlpRequest("how to retrieve certs from deleted keyvault.")
+            DiscoveryNlpContent discoverSolutionRequest = new DiscoveryNlpContent("how to retrieve certs from deleted keyvault.")
             {
                 ResourceId = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourceGroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read",
                 ServiceId = "0d0fcd2e-c4fd-4349-8497-200edb39s3ca",
