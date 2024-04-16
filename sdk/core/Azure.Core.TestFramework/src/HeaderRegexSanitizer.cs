@@ -8,6 +8,7 @@ namespace Azure.Core.TestFramework.Models
         public static HeaderRegexSanitizer CreateWithQueryParameter(string headerKey, string queryParameter, string value) =>
             new(headerKey, value)
             {
+                // match the value of the query parameter up until the next ampersand or the end of the string
                 Regex = $@"([\x0026|&|?]{queryParameter}=)(?<group>[^&]+)",
                 GroupForReplace = "group"
             };

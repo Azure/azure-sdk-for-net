@@ -96,6 +96,9 @@ namespace Azure.Core.TestFramework
                 "$..primaryReadonlyMasterKey",
                 "$..principalId",
                 "$..privateKey",
+                "$.properties.WEBSITE_AUTH_ENCRYPTION_KEY",
+                "$.properties.siteConfig.machineKey.decryptionKey",
+                "$.properties.DOCKER_REGISTRY_SERVER_PASSWORD",
                 "$..refresh_token",
                 "$..runAsPassword",
                 "$..sasUri",
@@ -146,10 +149,23 @@ namespace Azure.Core.TestFramework
                 {
                     GroupForReplace = "group"
                 },
+                new BodyRegexSanitizer(@"token=(?<group>.*?)(?=&|$)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
                 new BodyRegexSanitizer(@"refresh_token=(?<group>.*?)(?=&|$)", SanitizeValue)
                 {
                     GroupForReplace = "group"
                 },
+                // TODO should we only replace the secret parts for these?
+                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<Value>)(.*)(?:</Value>)", SanitizeValue),
+                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<SignedTid>)(.*)(?:</SignedTid>)", SanitizeValue),
+                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<SignedOid>)(.*)(?:</SignedOid>)", SanitizeValue),
+                new BodyRegexSanitizer("(?:Password=)(.*?)(?:;)", SanitizeValue),
+                new BodyRegexSanitizer("(?:User ID=)(.*?)(?:;)", SanitizeValue),
+                new BodyRegexSanitizer("(?:<PrimaryKey>)(.*)(?:</PrimaryKey>)", SanitizeValue),
+                new BodyRegexSanitizer("(?:<SecondaryKey>)(.*)(?:</SecondaryKey>)", SanitizeValue),
+                new BodyRegexSanitizer("-----BEGIN PRIVATE KEY-----\\\\n(.+\\\\n)*-----END PRIVATE KEY-----\\\\n", SanitizeValue)
             };
 
         /// <summary>
@@ -183,6 +199,7 @@ namespace Azure.Core.TestFramework
             "Authorization",
             "ServiceBusDlqSupplementaryAuthorization",
             "ServiceBusSupplementaryAuthorization",
+            "subscription-key",
             "x-ms-encryption-key",
             "x-ms-copy-source-authorization",
             "x-ms-file-rename-source-authorization",
