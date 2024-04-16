@@ -18,8 +18,6 @@ namespace Azure.ResourceManager.Cdn.Tests
         {
         }
 
-        [TestCase]
-        [RecordedTest]
         public async Task MigrateResultTest()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();

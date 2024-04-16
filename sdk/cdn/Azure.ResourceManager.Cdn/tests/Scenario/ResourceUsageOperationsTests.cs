@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Tests
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string profileName = Recording.GenerateAssetName("profile-");
-            _ = await CreateCdnProfile(rg, profileName, CdnSkuName.StandardAkamai);
+            _ = await CreateCdnProfile(rg, profileName, CdnSkuName.StandardVerizon);
             int count = 0;
             await foreach (var tempResourceUsage in subscription.GetResourceUsagesAsync())
             {
