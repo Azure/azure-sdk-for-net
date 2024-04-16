@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
     public class AppServicePlanCollectionTests : AppServiceTestBase
     {
         public AppServicePlanCollectionTests(bool isAsync)
-           : base(isAsync)
+           : base(isAsync, RecordedTestMode.Record)
         {
         }
 
