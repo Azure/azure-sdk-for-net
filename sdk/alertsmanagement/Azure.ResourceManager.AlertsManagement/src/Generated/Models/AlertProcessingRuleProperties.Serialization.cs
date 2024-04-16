@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     public partial class AlertProcessingRuleProperties : IUtf8JsonSerializable, IJsonModel<AlertProcessingRuleProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertProcessingRuleProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertProcessingRuleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AlertProcessingRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static AlertProcessingRuleProperties DeserializeAlertProcessingRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

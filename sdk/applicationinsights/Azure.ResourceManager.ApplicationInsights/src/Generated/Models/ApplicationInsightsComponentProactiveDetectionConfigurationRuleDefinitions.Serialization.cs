@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

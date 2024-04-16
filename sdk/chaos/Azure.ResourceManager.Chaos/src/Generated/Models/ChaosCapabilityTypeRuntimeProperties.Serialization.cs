@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Models
 {
     internal partial class ChaosCapabilityTypeRuntimeProperties : IUtf8JsonSerializable, IJsonModel<ChaosCapabilityTypeRuntimeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosCapabilityTypeRuntimeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosCapabilityTypeRuntimeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChaosCapabilityTypeRuntimeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static ChaosCapabilityTypeRuntimeProperties DeserializeChaosCapabilityTypeRuntimeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

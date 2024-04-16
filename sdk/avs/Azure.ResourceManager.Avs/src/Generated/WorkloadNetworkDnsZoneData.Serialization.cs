@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class WorkloadNetworkDnsZoneData : IUtf8JsonSerializable, IJsonModel<WorkloadNetworkDnsZoneData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadNetworkDnsZoneData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadNetworkDnsZoneData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkloadNetworkDnsZoneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Avs
 
         internal static WorkloadNetworkDnsZoneData DeserializeWorkloadNetworkDnsZoneData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

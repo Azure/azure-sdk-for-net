@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     public partial class AppConfigurationReplicaData : IUtf8JsonSerializable, IJsonModel<AppConfigurationReplicaData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationReplicaData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationReplicaData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppConfigurationReplicaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppConfiguration
 
         internal static AppConfigurationReplicaData DeserializeAppConfigurationReplicaData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

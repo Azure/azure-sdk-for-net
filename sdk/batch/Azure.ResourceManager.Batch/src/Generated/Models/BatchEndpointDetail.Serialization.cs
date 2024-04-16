@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchEndpointDetail : IUtf8JsonSerializable, IJsonModel<BatchEndpointDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchEndpointDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchEndpointDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchEndpointDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchEndpointDetail DeserializeBatchEndpointDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

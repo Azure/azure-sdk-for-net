@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     internal partial class ManagedRuleSetDefinitionList : IUtf8JsonSerializable, IJsonModel<ManagedRuleSetDefinitionList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleSetDefinitionList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleSetDefinitionList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedRuleSetDefinitionList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleSetDefinitionList DeserializeManagedRuleSetDefinitionList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

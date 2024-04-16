@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class OSProfileUpdateLinuxConfiguration : IUtf8JsonSerializable, IJsonModel<OSProfileUpdateLinuxConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSProfileUpdateLinuxConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSProfileUpdateLinuxConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OSProfileUpdateLinuxConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static OSProfileUpdateLinuxConfiguration DeserializeOSProfileUpdateLinuxConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class HostnameConfiguration : IUtf8JsonSerializable, IJsonModel<HostnameConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostnameConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostnameConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HostnameConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static HostnameConfiguration DeserializeHostnameConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

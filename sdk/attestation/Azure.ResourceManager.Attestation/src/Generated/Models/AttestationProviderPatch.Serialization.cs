@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Attestation.Models
 {
     public partial class AttestationProviderPatch : IUtf8JsonSerializable, IJsonModel<AttestationProviderPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationProviderPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationProviderPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AttestationProviderPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Attestation.Models
 
         internal static AttestationProviderPatch DeserializeAttestationProviderPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

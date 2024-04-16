@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 {
     public partial class AppConfigurationNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<AppConfigurationNameAvailabilityResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationNameAvailabilityResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationNameAvailabilityResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppConfigurationNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static AppConfigurationNameAvailabilityResult DeserializeAppConfigurationNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
