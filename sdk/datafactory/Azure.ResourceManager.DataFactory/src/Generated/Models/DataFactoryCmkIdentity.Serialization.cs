@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     internal partial class DataFactoryCmkIdentity : IUtf8JsonSerializable, IJsonModel<DataFactoryCmkIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryCmkIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryCmkIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryCmkIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFactoryCmkIdentity DeserializeDataFactoryCmkIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppDiagnosticDataProviderMetadataPropertyBagItem : IUtf8JsonSerializable, IJsonModel<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppDiagnosticDataProviderMetadataPropertyBagItem DeserializeContainerAppDiagnosticDataProviderMetadataPropertyBagItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

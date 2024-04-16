@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     internal partial class UnknownTaskStepUpdateParameters : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTaskStepUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTaskStepUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTaskStepUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryTaskStepUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static UnknownTaskStepUpdateParameters DeserializeUnknownTaskStepUpdateParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

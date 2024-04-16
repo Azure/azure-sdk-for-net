@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class QueryDefinition : IUtf8JsonSerializable, IJsonModel<QueryDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QueryDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static QueryDefinition DeserializeQueryDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

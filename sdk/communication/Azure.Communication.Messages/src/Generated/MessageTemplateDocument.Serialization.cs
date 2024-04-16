@@ -15,7 +15,7 @@ namespace Azure.Communication.Messages
 {
     public partial class MessageTemplateDocument : IUtf8JsonSerializable, IJsonModel<MessageTemplateDocument>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageTemplateDocument>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageTemplateDocument>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MessageTemplateDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.Communication.Messages
 
         internal static MessageTemplateDocument DeserializeMessageTemplateDocument(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,7 +172,7 @@ namespace Azure.Communication.Messages
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

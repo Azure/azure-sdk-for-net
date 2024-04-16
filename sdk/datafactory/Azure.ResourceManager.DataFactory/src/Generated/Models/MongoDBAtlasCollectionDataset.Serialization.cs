@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class MongoDBAtlasCollectionDataset : IUtf8JsonSerializable, IJsonModel<MongoDBAtlasCollectionDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBAtlasCollectionDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBAtlasCollectionDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MongoDBAtlasCollectionDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MongoDBAtlasCollectionDataset DeserializeMongoDBAtlasCollectionDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

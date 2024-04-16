@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class DataBoxEdgeRefreshDetails : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeRefreshDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeRefreshDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeRefreshDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxEdgeRefreshDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeRefreshDetails DeserializeDataBoxEdgeRefreshDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

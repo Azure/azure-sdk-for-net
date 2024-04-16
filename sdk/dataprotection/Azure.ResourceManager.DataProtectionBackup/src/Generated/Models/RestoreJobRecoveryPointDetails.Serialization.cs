@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class RestoreJobRecoveryPointDetails : IUtf8JsonSerializable, IJsonModel<RestoreJobRecoveryPointDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreJobRecoveryPointDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreJobRecoveryPointDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestoreJobRecoveryPointDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static RestoreJobRecoveryPointDetails DeserializeRestoreJobRecoveryPointDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

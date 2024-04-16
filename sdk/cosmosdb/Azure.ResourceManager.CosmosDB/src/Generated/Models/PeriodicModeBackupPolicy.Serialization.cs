@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class PeriodicModeBackupPolicy : IUtf8JsonSerializable, IJsonModel<PeriodicModeBackupPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeriodicModeBackupPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeriodicModeBackupPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PeriodicModeBackupPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static PeriodicModeBackupPolicy DeserializePeriodicModeBackupPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

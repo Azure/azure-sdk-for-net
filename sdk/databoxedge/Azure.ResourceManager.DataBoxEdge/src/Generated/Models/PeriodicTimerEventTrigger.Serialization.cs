@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class PeriodicTimerEventTrigger : IUtf8JsonSerializable, IJsonModel<PeriodicTimerEventTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeriodicTimerEventTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeriodicTimerEventTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PeriodicTimerEventTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static PeriodicTimerEventTrigger DeserializePeriodicTimerEventTrigger(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

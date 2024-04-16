@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     internal partial class InvitationList : IUtf8JsonSerializable, IJsonModel<InvitationList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InvitationList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InvitationList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InvitationList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static InvitationList DeserializeInvitationList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

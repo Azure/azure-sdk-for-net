@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeScheduledEventsProfile : IUtf8JsonSerializable, IJsonModel<ComputeScheduledEventsProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeScheduledEventsProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeScheduledEventsProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComputeScheduledEventsProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ComputeScheduledEventsProfile DeserializeComputeScheduledEventsProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

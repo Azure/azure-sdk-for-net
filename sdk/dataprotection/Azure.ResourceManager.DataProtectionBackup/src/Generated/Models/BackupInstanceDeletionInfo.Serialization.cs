@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class BackupInstanceDeletionInfo : IUtf8JsonSerializable, IJsonModel<BackupInstanceDeletionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupInstanceDeletionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupInstanceDeletionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupInstanceDeletionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BackupInstanceDeletionInfo DeserializeBackupInstanceDeletionInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

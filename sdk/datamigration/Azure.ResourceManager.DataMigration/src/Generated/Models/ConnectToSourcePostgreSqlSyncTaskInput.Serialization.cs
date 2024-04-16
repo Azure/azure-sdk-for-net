@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     internal partial class ConnectToSourcePostgreSqlSyncTaskInput : IUtf8JsonSerializable, IJsonModel<ConnectToSourcePostgreSqlSyncTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourcePostgreSqlSyncTaskInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourcePostgreSqlSyncTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectToSourcePostgreSqlSyncTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToSourcePostgreSqlSyncTaskInput DeserializeConnectToSourcePostgreSqlSyncTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

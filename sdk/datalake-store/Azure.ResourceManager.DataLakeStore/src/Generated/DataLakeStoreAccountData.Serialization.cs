@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataLakeStore
 {
     public partial class DataLakeStoreAccountData : IUtf8JsonSerializable, IJsonModel<DataLakeStoreAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreAccountData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataLakeStoreAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataLakeStore
 
         internal static DataLakeStoreAccountData DeserializeDataLakeStoreAccountData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

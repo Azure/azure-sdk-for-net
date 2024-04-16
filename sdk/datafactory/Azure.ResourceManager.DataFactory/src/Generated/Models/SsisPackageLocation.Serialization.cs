@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SsisPackageLocation : IUtf8JsonSerializable, IJsonModel<SsisPackageLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SsisPackageLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SsisPackageLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SsisPackageLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisPackageLocation DeserializeSsisPackageLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

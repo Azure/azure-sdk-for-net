@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Confluent.Models
 {
     public partial class AccessClusterListResult : IUtf8JsonSerializable, IJsonModel<AccessClusterListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessClusterListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessClusterListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AccessClusterListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static AccessClusterListResult DeserializeAccessClusterListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

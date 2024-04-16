@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ZohoLinkedService : IUtf8JsonSerializable, IJsonModel<ZohoLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ZohoLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ZohoLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ZohoLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ZohoLinkedService DeserializeZohoLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     internal partial class ManagedClusterManagedOutboundIPProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterManagedOutboundIPProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterManagedOutboundIPProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterManagedOutboundIPProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterManagedOutboundIPProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterManagedOutboundIPProfile DeserializeManagedClusterManagedOutboundIPProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

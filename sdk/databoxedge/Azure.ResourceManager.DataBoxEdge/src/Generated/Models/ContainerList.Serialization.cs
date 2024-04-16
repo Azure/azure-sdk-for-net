@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     internal partial class ContainerList : IUtf8JsonSerializable, IJsonModel<ContainerList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static ContainerList DeserializeContainerList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

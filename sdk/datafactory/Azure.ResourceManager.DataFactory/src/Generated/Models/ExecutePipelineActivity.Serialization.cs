@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ExecutePipelineActivity : IUtf8JsonSerializable, IJsonModel<ExecutePipelineActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecutePipelineActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecutePipelineActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExecutePipelineActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ExecutePipelineActivity DeserializeExecutePipelineActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

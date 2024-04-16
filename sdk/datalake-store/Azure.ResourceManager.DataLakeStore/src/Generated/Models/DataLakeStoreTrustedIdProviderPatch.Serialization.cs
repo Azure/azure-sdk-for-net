@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 {
     public partial class DataLakeStoreTrustedIdProviderPatch : IUtf8JsonSerializable, IJsonModel<DataLakeStoreTrustedIdProviderPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreTrustedIdProviderPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreTrustedIdProviderPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataLakeStoreTrustedIdProviderPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         internal static DataLakeStoreTrustedIdProviderPatch DeserializeDataLakeStoreTrustedIdProviderPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

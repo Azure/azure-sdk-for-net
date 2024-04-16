@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class MongoDBV2CollectionDataset : IUtf8JsonSerializable, IJsonModel<MongoDBV2CollectionDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBV2CollectionDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBV2CollectionDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MongoDBV2CollectionDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MongoDBV2CollectionDataset DeserializeMongoDBV2CollectionDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

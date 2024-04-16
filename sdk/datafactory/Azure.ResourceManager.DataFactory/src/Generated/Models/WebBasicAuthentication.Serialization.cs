@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class WebBasicAuthentication : IUtf8JsonSerializable, IJsonModel<WebBasicAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebBasicAuthentication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebBasicAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebBasicAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebBasicAuthentication DeserializeWebBasicAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

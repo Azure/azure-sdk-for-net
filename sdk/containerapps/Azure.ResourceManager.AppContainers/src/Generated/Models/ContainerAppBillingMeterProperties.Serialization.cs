@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppBillingMeterProperties : IUtf8JsonSerializable, IJsonModel<ContainerAppBillingMeterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppBillingMeterProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppBillingMeterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppBillingMeterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppBillingMeterProperties DeserializeContainerAppBillingMeterProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CassandraKeyspaceData : IUtf8JsonSerializable, IJsonModel<CassandraKeyspaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraKeyspaceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraKeyspaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CassandraKeyspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static CassandraKeyspaceData DeserializeCassandraKeyspaceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

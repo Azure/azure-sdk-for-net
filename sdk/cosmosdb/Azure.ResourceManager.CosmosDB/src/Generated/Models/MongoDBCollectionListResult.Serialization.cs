@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class MongoDBCollectionListResult : IUtf8JsonSerializable, IJsonModel<MongoDBCollectionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBCollectionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBCollectionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MongoDBCollectionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoDBCollectionListResult DeserializeMongoDBCollectionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

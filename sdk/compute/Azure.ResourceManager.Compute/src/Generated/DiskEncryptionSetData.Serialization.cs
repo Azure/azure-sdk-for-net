@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class DiskEncryptionSetData : IUtf8JsonSerializable, IJsonModel<DiskEncryptionSetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskEncryptionSetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskEncryptionSetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiskEncryptionSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static DiskEncryptionSetData DeserializeDiskEncryptionSetData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

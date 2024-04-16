@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ContainerServiceOSOptionProperty : IUtf8JsonSerializable, IJsonModel<ContainerServiceOSOptionProperty>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceOSOptionProperty>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceOSOptionProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerServiceOSOptionProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceOSOptionProperty DeserializeContainerServiceOSOptionProperty(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

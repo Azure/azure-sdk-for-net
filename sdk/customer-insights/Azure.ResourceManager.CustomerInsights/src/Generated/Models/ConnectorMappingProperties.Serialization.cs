@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class ConnectorMappingProperties : IUtf8JsonSerializable, IJsonModel<ConnectorMappingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectorMappingProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectorMappingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectorMappingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ConnectorMappingProperties DeserializeConnectorMappingProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

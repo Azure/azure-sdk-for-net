@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class DiskAccessPatch : IUtf8JsonSerializable, IJsonModel<DiskAccessPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskAccessPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskAccessPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiskAccessPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskAccessPatch DeserializeDiskAccessPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CosmosDBTableCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<CosmosDBTableCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBTableCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBTableCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBTableCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBTableCreateOrUpdateContent DeserializeCosmosDBTableCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Datadog.Models
 {
     internal partial class DatadogMonitorResourceListResponse : IUtf8JsonSerializable, IJsonModel<DatadogMonitorResourceListResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogMonitorResourceListResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogMonitorResourceListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatadogMonitorResourceListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogMonitorResourceListResponse DeserializeDatadogMonitorResourceListResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class RestorableCosmosDBAccountData : IUtf8JsonSerializable, IJsonModel<RestorableCosmosDBAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorableCosmosDBAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorableCosmosDBAccountData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestorableCosmosDBAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static RestorableCosmosDBAccountData DeserializeRestorableCosmosDBAccountData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

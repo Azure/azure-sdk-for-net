@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ImageDeprecationStatus : IUtf8JsonSerializable, IJsonModel<ImageDeprecationStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageDeprecationStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageDeprecationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ImageDeprecationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImageDeprecationStatus DeserializeImageDeprecationStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

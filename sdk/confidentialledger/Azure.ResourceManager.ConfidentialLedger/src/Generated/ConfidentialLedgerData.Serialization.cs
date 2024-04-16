@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
 {
     public partial class ConfidentialLedgerData : IUtf8JsonSerializable, IJsonModel<ConfidentialLedgerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfidentialLedgerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfidentialLedgerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConfidentialLedgerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
 
         internal static ConfidentialLedgerData DeserializeConfidentialLedgerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

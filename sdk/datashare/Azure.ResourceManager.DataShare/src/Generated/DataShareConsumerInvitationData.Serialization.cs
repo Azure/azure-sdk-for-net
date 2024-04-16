@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataShare
 {
     public partial class DataShareConsumerInvitationData : IUtf8JsonSerializable, IJsonModel<DataShareConsumerInvitationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataShareConsumerInvitationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataShareConsumerInvitationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataShareConsumerInvitationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataShare
 
         internal static DataShareConsumerInvitationData DeserializeDataShareConsumerInvitationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

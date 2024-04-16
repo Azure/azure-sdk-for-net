@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppGlobalValidation : IUtf8JsonSerializable, IJsonModel<ContainerAppGlobalValidation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppGlobalValidation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppGlobalValidation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppGlobalValidation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppGlobalValidation DeserializeContainerAppGlobalValidation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

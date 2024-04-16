@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel DeserializeMigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

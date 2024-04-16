@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppHttpSettings : IUtf8JsonSerializable, IJsonModel<ContainerAppHttpSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppHttpSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppHttpSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppHttpSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppHttpSettings DeserializeContainerAppHttpSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

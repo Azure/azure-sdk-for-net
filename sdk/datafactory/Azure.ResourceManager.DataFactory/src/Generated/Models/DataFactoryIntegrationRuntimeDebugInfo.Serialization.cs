@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class DataFactoryIntegrationRuntimeDebugInfo : IUtf8JsonSerializable, IJsonModel<DataFactoryIntegrationRuntimeDebugInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryIntegrationRuntimeDebugInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryIntegrationRuntimeDebugInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryIntegrationRuntimeDebugInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFactoryIntegrationRuntimeDebugInfo DeserializeDataFactoryIntegrationRuntimeDebugInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

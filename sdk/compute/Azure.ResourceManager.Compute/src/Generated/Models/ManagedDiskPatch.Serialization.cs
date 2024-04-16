@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ManagedDiskPatch : IUtf8JsonSerializable, IJsonModel<ManagedDiskPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedDiskPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ManagedDiskPatch DeserializeManagedDiskPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

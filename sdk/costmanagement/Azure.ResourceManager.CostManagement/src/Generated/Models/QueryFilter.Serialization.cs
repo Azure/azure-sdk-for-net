@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class QueryFilter : IUtf8JsonSerializable, IJsonModel<QueryFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QueryFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static QueryFilter DeserializeQueryFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

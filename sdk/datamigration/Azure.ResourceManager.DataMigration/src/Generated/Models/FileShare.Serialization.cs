@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class FileShare : IUtf8JsonSerializable, IJsonModel<FileShare>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileShare>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileShare>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FileShare>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static FileShare DeserializeFileShare(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

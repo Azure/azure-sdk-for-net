@@ -15,7 +15,7 @@ namespace Azure.Communication.Messages
     [PersistableModelProxy(typeof(UnknownNotificationContent))]
     public partial class NotificationContent : IUtf8JsonSerializable, IJsonModel<NotificationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.Communication.Messages
 
         internal static NotificationContent DeserializeNotificationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -130,7 +130,7 @@ namespace Azure.Communication.Messages
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

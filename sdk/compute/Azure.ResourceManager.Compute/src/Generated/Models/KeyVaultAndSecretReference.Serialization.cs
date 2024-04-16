@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class KeyVaultAndSecretReference : IUtf8JsonSerializable, IJsonModel<KeyVaultAndSecretReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultAndSecretReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultAndSecretReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KeyVaultAndSecretReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static KeyVaultAndSecretReference DeserializeKeyVaultAndSecretReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

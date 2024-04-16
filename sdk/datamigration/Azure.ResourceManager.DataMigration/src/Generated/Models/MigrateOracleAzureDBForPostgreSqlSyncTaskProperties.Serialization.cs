@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MigrateOracleAzureDBForPostgreSqlSyncTaskProperties : IUtf8JsonSerializable, IJsonModel<MigrateOracleAzureDBForPostgreSqlSyncTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateOracleAzureDBForPostgreSqlSyncTaskProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateOracleAzureDBForPostgreSqlSyncTaskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateOracleAzureDBForPostgreSqlSyncTaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateOracleAzureDBForPostgreSqlSyncTaskProperties DeserializeMigrateOracleAzureDBForPostgreSqlSyncTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

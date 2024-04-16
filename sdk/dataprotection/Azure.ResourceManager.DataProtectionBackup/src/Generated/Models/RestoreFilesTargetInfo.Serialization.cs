@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class RestoreFilesTargetInfo : IUtf8JsonSerializable, IJsonModel<RestoreFilesTargetInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreFilesTargetInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreFilesTargetInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestoreFilesTargetInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static RestoreFilesTargetInfo DeserializeRestoreFilesTargetInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
