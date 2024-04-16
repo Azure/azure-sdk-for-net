@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApiManagement.Tests.Scenario
 {
-    public class ModelFactoryTests
+    public class ArmApiManagementModelFactoryTests
     {
         private readonly Uri uri = new Uri("http://newechoapi.cloudapp.net/api");
         private const string invalidateLink = "n/a";
