@@ -4,11 +4,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -868,6 +870,36 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        public async Task GetIfChangedSettingUnmodifiedDoesNotLogWarning()
+        {
+            ConfigurationClient service = GetClient();
+            ConfigurationSetting testSetting = CreateSetting();
+
+            string logMessage = null;
+            Action<EventWrittenEventArgs, string> warningLog = (_, text) =>
+            {
+                logMessage = text;
+            };
+
+            try
+            {
+                testSetting = await service.AddConfigurationSettingAsync(testSetting);
+
+                using (var listener = new AzureEventSourceListener(warningLog, EventLevel.Warning))
+                {
+                    Response<ConfigurationSetting> response = await service.GetConfigurationSettingAsync(testSetting, onlyIfChanged: true);
+                    Assert.AreEqual(304, response.GetRawResponse().Status);
+                }
+
+                Assert.Null(logMessage);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(testSetting));
+            }
+        }
+
+        [RecordedTest]
         public async Task GetSettingSpecialCharacters()
         {
             ConfigurationClient service = GetClient();
@@ -1007,6 +1039,90 @@ namespace Azure.Data.AppConfiguration.Tests
             }
 
             Assert.AreEqual(2, pagesCount);
+        }
+
+        [RecordedTest]
+        [AsyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task GetBatchSettingIfChangedWithUnmodifiedPageDoesNotLogWarningAsync()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+
+            var pagesEnumerator = service.GetConfigurationSettingsAsync(selector).AsPages().GetAsyncEnumerator();
+            await pagesEnumerator.MoveNextAsync();
+
+            Page<ConfigurationSetting> firstPage = pagesEnumerator.Current;
+
+            var matchConditions = new MatchConditions()
+            {
+                IfNoneMatch = firstPage.GetRawResponse().Headers.ETag
+            };
+            matchConditionsList.Add(matchConditions);
+
+            string logMessage = null;
+            Action<EventWrittenEventArgs, string> warningLog = (_, text) =>
+            {
+                logMessage = text;
+            };
+
+            pagesEnumerator = service.GetConfigurationSettingsAsync(selector).AsPages(matchConditionsList).GetAsyncEnumerator();
+
+            using (var listener = new AzureEventSourceListener(warningLog, EventLevel.Warning))
+            {
+                await pagesEnumerator.MoveNextAsync();
+                firstPage = pagesEnumerator.Current;
+                Assert.AreEqual(304, firstPage.GetRawResponse().Status);
+            }
+
+            Assert.Null(logMessage);
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task GetBatchSettingIfChangedWithUnmodifiedPageDoesNotLogWarningSync()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+
+            var pagesEnumerator = service.GetConfigurationSettings(selector).AsPages().GetEnumerator();
+            pagesEnumerator.MoveNext();
+
+            Page<ConfigurationSetting> firstPage = pagesEnumerator.Current;
+
+            var matchConditions = new MatchConditions()
+            {
+                IfNoneMatch = firstPage.GetRawResponse().Headers.ETag
+            };
+            matchConditionsList.Add(matchConditions);
+
+            string logMessage = null;
+            Action<EventWrittenEventArgs, string> warningLog = (_, text) =>
+            {
+                logMessage = text;
+            };
+
+            pagesEnumerator = service.GetConfigurationSettings(selector).AsPages(matchConditionsList).GetEnumerator();
+
+            using (var listener = new AzureEventSourceListener(warningLog, EventLevel.Warning))
+            {
+                pagesEnumerator.MoveNext();
+                firstPage = pagesEnumerator.Current;
+                Assert.AreEqual(304, firstPage.GetRawResponse().Status);
+            }
+
+            Assert.Null(logMessage);
         }
 
         [RecordedTest]
