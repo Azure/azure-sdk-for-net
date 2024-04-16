@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class JitNetworkAccessPolicyData : IUtf8JsonSerializable, IJsonModel<JitNetworkAccessPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitNetworkAccessPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitNetworkAccessPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JitNetworkAccessPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteStartArray();
             foreach (var item in VirtualMachines)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Requests))
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Requests)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static JitNetworkAccessPolicyData DeserializeJitNetworkAccessPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter
             IList<JitNetworkAccessRequestInfo> requests = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -215,10 +215,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new JitNetworkAccessPolicyData(
                 id,
                 name,
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeJitNetworkAccessPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JitNetworkAccessPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

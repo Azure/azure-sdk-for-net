@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -71,14 +70,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The location name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The list of supported server versions. </summary>
+        [WirePath("supportedServerVersions")]
         public IReadOnlyList<SqlServerVersionCapability> SupportedServerVersions { get; }
         /// <summary> The list of supported managed instance versions. </summary>
+        [WirePath("supportedManagedInstanceVersions")]
         public IReadOnlyList<ManagedInstanceVersionCapability> SupportedManagedInstanceVersions { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

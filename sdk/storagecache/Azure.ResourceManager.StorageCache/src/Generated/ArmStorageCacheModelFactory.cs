@@ -12,7 +12,6 @@ using System.Linq;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {

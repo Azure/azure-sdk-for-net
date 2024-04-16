@@ -10,27 +10,26 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class LicenseProfileMachineInstanceViewEsuProperties : IUtf8JsonSerializable, IJsonModel<LicenseProfileMachineInstanceViewEsuProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LicenseProfileMachineInstanceViewEsuProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LicenseProfileMachineInstanceViewEsuProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LicenseProfileMachineInstanceViewEsuProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(AssignedLicense))
             {
                 writer.WritePropertyName("assignedLicense"u8);
-                writer.WriteObjectValue(AssignedLicense);
+                writer.WriteObjectValue(AssignedLicense, options);
             }
             if (Optional.IsDefined(LicenseAssignmentState))
             {
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in EsuKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static LicenseProfileMachineInstanceViewEsuProperties DeserializeLicenseProfileMachineInstanceViewEsuProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Guid? assignedLicenseImmutableId = default;
             IReadOnlyList<EsuKey> esuKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assignedLicense"u8))
@@ -186,10 +185,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LicenseProfileMachineInstanceViewEsuProperties(
                 assignedLicenseImmutableId,
                 esuKeys ?? new ChangeTrackingList<EsuKey>(),
@@ -210,7 +209,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +225,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeLicenseProfileMachineInstanceViewEsuProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

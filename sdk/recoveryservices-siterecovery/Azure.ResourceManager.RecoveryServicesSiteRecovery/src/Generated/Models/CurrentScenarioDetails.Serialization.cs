@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class CurrentScenarioDetails : IUtf8JsonSerializable, IJsonModel<CurrentScenarioDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CurrentScenarioDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CurrentScenarioDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CurrentScenarioDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CurrentScenarioDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CurrentScenarioDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CurrentScenarioDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<CurrentScenarioDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CurrentScenarioDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CurrentScenarioDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static CurrentScenarioDetails DeserializeCurrentScenarioDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier jobId = default;
             DateTimeOffset? startTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scenarioName"u8))
@@ -112,10 +111,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CurrentScenarioDetails(scenarioName, jobId, startTime, serializedAdditionalRawData);
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CurrentScenarioDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CurrentScenarioDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeCurrentScenarioDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CurrentScenarioDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CurrentScenarioDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

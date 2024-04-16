@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.KeyVault;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Array of private link resources. </summary>
+        [WirePath("value")]
         public IReadOnlyList<KeyVaultPrivateLinkResourceData> Value { get; }
     }
 }

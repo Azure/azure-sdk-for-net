@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.Analysis
 {
     public partial class AnalysisServerData : IUtf8JsonSerializable, IJsonModel<AnalysisServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisServerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisServerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AnalysisServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(AnalysisSku);
+            writer.WriteObjectValue(AnalysisSku, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Analysis
             if (Optional.IsDefined(AsAdministrators))
             {
                 writer.WritePropertyName("asAdministrators"u8);
-                writer.WriteObjectValue(AsAdministrators);
+                writer.WriteObjectValue(AsAdministrators, options);
             }
             if (Optional.IsDefined(BackupBlobContainerUri))
             {
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Analysis
             if (Optional.IsDefined(GatewayDetails))
             {
                 writer.WritePropertyName("gatewayDetails"u8);
-                writer.WriteObjectValue(GatewayDetails);
+                writer.WriteObjectValue(GatewayDetails, options);
             }
             if (Optional.IsDefined(IPv4FirewallSettings))
             {
                 writer.WritePropertyName("ipV4FirewallSettings"u8);
-                writer.WriteObjectValue(IPv4FirewallSettings);
+                writer.WriteObjectValue(IPv4FirewallSettings, options);
             }
             if (Optional.IsDefined(QueryPoolConnectionMode))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Analysis
             if (Optional.IsDefined(AnalysisServerSku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(AnalysisServerSku);
+                writer.WriteObjectValue(AnalysisServerSku, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Analysis
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Analysis
 
         internal static AnalysisServerData DeserializeAnalysisServerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Analysis
             string serverFullName = default;
             AnalysisResourceSku sku0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -338,10 +338,10 @@ namespace Azure.ResourceManager.Analysis
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AnalysisServerData(
                 id,
                 name,
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Analysis
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisServerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Analysis
                         return DeserializeAnalysisServerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisServerData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -4,8 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
@@ -25,39 +28,38 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         public MonitoringDataPoint GetDataPoint()
         {
-            var dataPoint = new MonitoringDataPoint
+            var dataPoint = new MonitoringDataPoint(
+                version: SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
+                invariantVersion: 5,
+                instance: LiveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
+                roleName: LiveMetricsResource?.RoleName ?? "UNKNOWN_NAME",
+                machineName: Environment.MachineName, // TODO: MOVE TO PLATFORM
+                streamId: _streamId,
+                isWebApp: _isAzureWebApp,
+                performanceCollectionSupported: true)
             {
-                Version = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
-                InvariantVersion = 5,
-                Instance = LiveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
-                RoleName = LiveMetricsResource?.RoleName,
-                MachineName = Environment.MachineName, // TODO: MOVE TO PLATFORM
-                StreamId = _streamId,
                 Timestamp = DateTime.UtcNow, // Represents timestamp sample was created
                 TransmissionTime = DateTime.UtcNow, // represents timestamp transmission was sent
-                IsWebApp = _isAzureWebApp,
-                PerformanceCollectionSupported = true,
-                // AI SDK relies on PerformanceCounter to collect CPU and Memory metrics.
-                // Follow up with service team to get this removed for OTEL based live metrics.
-                // TopCpuProcesses = null,
-                // TODO: Configuration errors are thrown when filter is applied.
-                // CollectionConfigurationErrors = null,
+                //TopCpuProcesses = null, // TODO
             };
 
+            // TODO: Configuration errors are thrown when filter is applied.
+            // CollectionConfigurationErrors = null,
+
+            CollectionConfigurationError[] filteringErrors;
+            string projectionError = string.Empty;
+            Dictionary<string, AccumulatedValues> metricAccumulators = CreateMetricAccumulators(_collectionConfiguration);
             LiveMetricsBuffer liveMetricsBuffer = new();
             DocumentBuffer filledBuffer = _documentBuffer.FlipDocumentBuffers();
             foreach (var item in filledBuffer.ReadAllAndClear())
             {
-                // TODO: Filtering would be taken into account here before adding a document to the dataPoint.
                 // TODO: item.DocumentStreamIds = new List<string> { "" }; - Will add the identifier for the specific filtering rules (if applicable). See also "matchingDocumentStreamIds" in AI SDK.
-                //TODO: Apply filters
-                //foreach (CalculatedMetric<TTelemetry> metric in metrics)
-                //    if (metric.CheckFilters(telemetry, out filteringErrors))
 
                 dataPoint.Documents.Add(item);
 
-                if (item.DocumentType == DocumentIngressDocumentType.Request)
+                if (item is Request request)
                 {
+                    ApplyFilters(metricAccumulators, _collectionConfiguration.RequestMetrics, request, out filteringErrors, ref projectionError);
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordRequestSucceeded(item.Extension_Duration);
@@ -67,8 +69,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                         liveMetricsBuffer.RecordRequestFailed(item.Extension_Duration);
                     }
                 }
-                else if (item.DocumentType == DocumentIngressDocumentType.RemoteDependency)
+                else if (item is RemoteDependency remoteDependency)
                 {
+                    ApplyFilters(metricAccumulators, _collectionConfiguration.DependencyMetrics, remoteDependency, out filteringErrors, ref projectionError);
                     if (item.Extension_IsSuccess)
                     {
                         liveMetricsBuffer.RecordDependencySucceeded(item.Extension_Duration);
@@ -78,9 +81,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                         liveMetricsBuffer.RecordDependencyFailed(item.Extension_Duration);
                     }
                 }
-                else if (item.DocumentType == DocumentIngressDocumentType.Exception)
+                else if (item is Models.Exception exception)
                 {
+                    ApplyFilters(metricAccumulators, _collectionConfiguration.ExceptionMetrics, exception, out filteringErrors, ref projectionError);
                     liveMetricsBuffer.RecordException();
+                }
+                else if (item is Models.Trace trace)
+                {
+                    ApplyFilters(metricAccumulators, _collectionConfiguration.TraceMetrics, trace, out filteringErrors, ref projectionError);
                 }
                 else
                 {
@@ -89,6 +97,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             }
 
             foreach (var metricPoint in liveMetricsBuffer.GetMetricPoints())
+            {
+                dataPoint.Metrics.Add(metricPoint);
+            }
+
+            foreach (var metricPoint in CreateCalculatedMetrics(metricAccumulators))
             {
                 dataPoint.Metrics.Add(metricPoint);
             }
@@ -115,21 +128,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// </remarks>
         public IEnumerable<Models.MetricPoint> CollectProcessMetrics()
         {
-            yield return new Models.MetricPoint
-            {
-                Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
-                Value = _process.PrivateMemorySize64,
-                Weight = 1
-            };
+            _process.Refresh();
+
+            // OLD METRIC NAME. TODO: Remove this after the UX is updated to use the new metrics
+            yield return new Models.MetricPoint(name: LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue, value: _process.PrivateMemorySize64, weight: 1);
+
+            yield return new Models.MetricPoint(name: LiveMetricConstants.MetricId.ProcessPhysicalBytesMetricIdValue, value: _process.PrivateMemorySize64, weight: 1);
 
             if (TryCalculateCPUCounter(out var processorValue))
             {
-                yield return new Models.MetricPoint
-                {
-                    Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
-                    Value = Convert.ToSingle(processorValue),
-                    Weight = 1
-                };
+                // OLD METRIC NAME. TODO: Remove this after the UX is updated to use the new metrics
+                yield return new Models.MetricPoint(name: LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue, value: Convert.ToSingle(processorValue), weight: 1);
+
+                yield return new Models.MetricPoint(name: LiveMetricConstants.MetricId.ProcessProcessorTimeNormalizedMetricIdValue, value: Convert.ToSingle(processorValue), weight: 1);
             }
         }
 
@@ -137,6 +148,81 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             _cachedCollectedTime = DateTimeOffset.MinValue;
             _cachedCollectedValue = 0;
+        }
+
+        private static IEnumerable<MetricPoint> CreateCalculatedMetrics(Dictionary<string, AccumulatedValues> metricAccumulators)
+        {
+            var metrics = new List<MetricPoint>();
+
+            foreach (AccumulatedValues metricAccumulatedValues in metricAccumulators.Values)
+            {
+                try
+                {
+                    MetricPoint metricPoint = new MetricPoint(name: metricAccumulatedValues.MetricId, value: (float)metricAccumulatedValues.CalculateAggregation(out long count), weight: (int)count);
+                    metrics.Add(metricPoint);
+                }
+                catch (System.Exception)
+                {
+                    // skip this metric
+                    // TODO: log unknown error
+                    // QuickPulseEventSource.Log.UnknownErrorEvent(e.ToString());
+                }
+            }
+
+            return metrics;
+        }
+
+        private Dictionary<string, AccumulatedValues> CreateMetricAccumulators(CollectionConfiguration collectionConfiguration)
+        {
+            Dictionary<string, AccumulatedValues> metricAccumulators = new();
+
+            // prepare the accumulators based on the collection configuration
+            IEnumerable<Tuple<string, Models.AggregationType?>> allMetrics = collectionConfiguration.TelemetryMetadata;
+            foreach (Tuple<string, Models.AggregationType?> metricId in allMetrics)
+            {
+                var derivedMetricInfoAggregation = metricId.Item2;
+                if (!derivedMetricInfoAggregation.HasValue)
+                {
+                    continue;
+                }
+
+                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out Filtering.AggregationType aggregationType))
+                {
+                    var accumulatedValues = new AccumulatedValues(metricId.Item1, aggregationType);
+
+                    metricAccumulators.Add(metricId.Item1, accumulatedValues);
+                }
+            }
+            return metricAccumulators;
+        }
+
+        private void ApplyFilters<TTelemetry>(
+            Dictionary<string, AccumulatedValues> metricAccumulators,
+            IEnumerable<DerivedMetric<TTelemetry>> metrics,
+            TTelemetry telemetry,
+            out CollectionConfigurationError[] filteringErrors,
+            ref string projectionError)
+        {
+            filteringErrors = Array.Empty<CollectionConfigurationError>();
+
+            foreach (DerivedMetric<TTelemetry> metric in metrics)
+            {
+                if (metric.CheckFilters(telemetry, out filteringErrors))
+                {
+                    // the telemetry document has passed the filters, count it in and project
+                    try
+                    {
+                        double projection = metric.Project(telemetry);
+
+                        metricAccumulators[metric.Id].AddValue(projection);
+                    }
+                    catch (System.Exception e)
+                    {
+                        // most likely the projection did not result in a value parsable by double.Parse()
+                        projectionError = e.ToString();
+                    }
+                }
+            }
         }
 
         /// <summary>

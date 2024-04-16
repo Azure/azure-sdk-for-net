@@ -10,6 +10,9 @@
 
 ### Bugs Fixed
 
+- Fixed [a bug](https://github.com/Azure/azure-sdk-for-net/issues/38076) by changing the way how `BackendResponseCode` is serialized and deserialized.
+- Fixed [a bug](https://github.com/Azure/azure-sdk-for-net/issues/42865) by by changing `TermsOfServiceUri` and `ServiceUri` to string
+
 ### Other Changes
 
 ## 1.1.0 (2023-11-27)

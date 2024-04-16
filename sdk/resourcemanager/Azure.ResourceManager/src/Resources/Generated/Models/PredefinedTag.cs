@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The tag name ID. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The tag name. </summary>
+        [WirePath("tagName")]
         public string TagName { get; }
         /// <summary> The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0. </summary>
+        [WirePath("count")]
         public PredefinedTagCount Count { get; }
         /// <summary> The list of tag values. </summary>
+        [WirePath("values")]
         public IReadOnlyList<PredefinedTagValue> Values { get; }
     }
 }

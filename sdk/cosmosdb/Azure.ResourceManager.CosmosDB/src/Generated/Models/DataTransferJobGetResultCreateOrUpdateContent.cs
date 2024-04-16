@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -77,6 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Data Transfer Create Job Properties. </summary>
+        [WirePath("properties")]
         public DataTransferJobProperties Properties { get; set; }
     }
 }

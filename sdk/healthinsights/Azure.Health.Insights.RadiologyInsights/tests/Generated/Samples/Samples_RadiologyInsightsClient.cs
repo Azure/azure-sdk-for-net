@@ -9,9 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Health.Insights.RadiologyInsights;
 using Azure.Identity;
 using NUnit.Framework;
 
@@ -821,7 +819,7 @@ FullName = "<fullName>",
 SpecialtyType = SpecialtyType.Pathology,
 AdministrativeMetadata = new DocumentAdministrativeMetadata
 {
-OrderedProcedures = {new FhirR4Extendible
+OrderedProcedures = {new OrderedProcedure
 {
 Extension = {default},
 Code = default,
@@ -918,7 +916,7 @@ FullName = "<fullName>",
 SpecialtyType = SpecialtyType.Pathology,
 AdministrativeMetadata = new DocumentAdministrativeMetadata
 {
-OrderedProcedures = {new FhirR4Extendible
+OrderedProcedures = {new OrderedProcedure
 {
 Extension = {default},
 Code = default,

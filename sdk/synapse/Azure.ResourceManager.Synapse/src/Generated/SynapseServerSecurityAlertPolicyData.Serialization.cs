@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseServerSecurityAlertPolicyData : IUtf8JsonSerializable, IJsonModel<SynapseServerSecurityAlertPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseServerSecurityAlertPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseServerSecurityAlertPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseServerSecurityAlertPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseServerSecurityAlertPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseServerSecurityAlertPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseServerSecurityAlertPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseServerSecurityAlertPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseServerSecurityAlertPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseServerSecurityAlertPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseServerSecurityAlertPolicyData DeserializeSynapseServerSecurityAlertPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Synapse
             int? retentionDays = default;
             DateTimeOffset? creationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -267,10 +267,10 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SynapseServerSecurityAlertPolicyData(
                 id,
                 name,
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Synapse
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseServerSecurityAlertPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseServerSecurityAlertPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Synapse
                         return DeserializeSynapseServerSecurityAlertPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseServerSecurityAlertPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseServerSecurityAlertPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

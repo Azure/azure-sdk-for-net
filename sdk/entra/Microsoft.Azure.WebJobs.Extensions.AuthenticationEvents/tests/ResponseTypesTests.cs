@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             var (code, payload) = GetExpected(responseType);
 
-            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(eventsResponseHandler =>
+            HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
             {
                 MemoryStream memoryStream = null;
                 StreamWriter streamWriter = null;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 {
                     memoryStream = new MemoryStream();
                     streamWriter = new StreamWriter(memoryStream);
-                    eventsResponseHandler.SetValueAsync(GetResponseTypeObject(responseType, streamWriter), CancellationToken.None);
+                    await eventsResponseHandler.SetValueAsync(GetResponseTypeObject(responseType, streamWriter), CancellationToken.None);
                 }
                 finally
                 {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             });
 
             Assert.AreEqual(httpResponseMessage.StatusCode, code);
-            Assert.True(DoesPayloadMatch(payload, httpResponseMessage.Content.ReadAsStringAsync().Result));
+            Assert.True(DoesPayloadMatch(payload, await httpResponseMessage.Content.ReadAsStringAsync()));
         }
 
         private object GetResponseTypeObject(ResponseTypes responseType, StreamWriter streamWriter)

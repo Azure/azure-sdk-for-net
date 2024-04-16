@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataBox.Models;
 using Azure.ResourceManager.Models;
@@ -18,19 +17,19 @@ namespace Azure.ResourceManager.DataBox
 {
     public partial class DataBoxJobData : IUtf8JsonSerializable, IJsonModel<DataBoxJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxJobData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxJobData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.DataBox
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                writer.WriteObjectValue(Details, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CancellationReason))
             {
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.DataBox
             if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
-                writer.WriteObjectValue(DeliveryInfo);
+                writer.WriteObjectValue(DeliveryInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsCancellableWithoutFee))
             {
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.DataBox
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxJobData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.DataBox
 
         internal static DataBoxJobData DeserializeDataBoxJobData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.DataBox
             JobDeliveryInfo deliveryInfo = default;
             bool? isCancellableWithoutFee = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -407,10 +406,10 @@ namespace Azure.ResourceManager.DataBox
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxJobData(
                 id,
                 name,
@@ -447,7 +446,7 @@ namespace Azure.ResourceManager.DataBox
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxJobData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -463,7 +462,7 @@ namespace Azure.ResourceManager.DataBox
                         return DeserializeDataBoxJobData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxJobData)} does not support reading '{options.Format}' format.");
             }
         }
 

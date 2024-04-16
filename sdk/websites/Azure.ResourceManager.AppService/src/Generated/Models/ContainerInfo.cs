@@ -74,20 +74,28 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets the current time stamp. </summary>
+        [WirePath("currentTimeStamp")]
         public DateTimeOffset? CurrentTimeStamp { get; set; }
         /// <summary> Gets or sets the previous time stamp. </summary>
+        [WirePath("previousTimeStamp")]
         public DateTimeOffset? PreviousTimeStamp { get; set; }
         /// <summary> Gets or sets the current cpu stats. </summary>
+        [WirePath("currentCpuStats")]
         public ContainerCpuStatistics CurrentCpuStats { get; set; }
         /// <summary> Gets or sets the previous cpu stats. </summary>
+        [WirePath("previousCpuStats")]
         public ContainerCpuStatistics PreviousCpuStats { get; set; }
         /// <summary> Gets or sets the memory stats. </summary>
+        [WirePath("memoryStats")]
         public ContainerMemoryStatistics MemoryStats { get; set; }
         /// <summary> Gets or sets the name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Gets or sets the id. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> Gets or sets the eth 0. </summary>
+        [WirePath("eth0")]
         public ContainerNetworkInterfaceStatistics Eth0 { get; set; }
     }
 }

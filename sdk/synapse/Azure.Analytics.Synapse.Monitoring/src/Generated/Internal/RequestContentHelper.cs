@@ -101,7 +101,7 @@ namespace Azure.Analytics.Synapse.Monitoring
         public static RequestContent FromObject(object value)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(value);
+            content.JsonWriter.WriteObjectValue<object>(value);
             return content;
         }
 

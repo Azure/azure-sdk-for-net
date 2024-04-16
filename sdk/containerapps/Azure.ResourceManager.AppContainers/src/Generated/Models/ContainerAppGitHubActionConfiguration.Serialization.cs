@@ -10,32 +10,31 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppGitHubActionConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppGitHubActionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppGitHubActionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppGitHubActionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppGitHubActionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppGitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(RegistryInfo))
             {
                 writer.WritePropertyName("registryInfo"u8);
-                writer.WriteObjectValue(RegistryInfo);
+                writer.WriteObjectValue(RegistryInfo, options);
             }
             if (Optional.IsDefined(AzureCredentials))
             {
                 writer.WritePropertyName("azureCredentials"u8);
-                writer.WriteObjectValue(AzureCredentials);
+                writer.WriteObjectValue(AzureCredentials, options);
             }
             if (Optional.IsDefined(ContextPath))
             {
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppGitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppGitHubActionConfiguration DeserializeContainerAppGitHubActionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string runtimeStack = default;
             string runtimeVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registryInfo"u8))
@@ -178,10 +177,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppGitHubActionConfiguration(
                 registryInfo,
                 azureCredentials,
@@ -204,7 +203,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +219,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppGitHubActionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

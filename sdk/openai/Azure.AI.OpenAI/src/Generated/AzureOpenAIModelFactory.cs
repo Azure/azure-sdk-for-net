@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 
 namespace Azure.AI.OpenAI
 {
@@ -49,6 +48,16 @@ namespace Azure.AI.OpenAI
                 tokens?.ToList(),
                 seek,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranscriptionWord"/>. </summary>
+        /// <param name="word"> The textual content of the word. </param>
+        /// <param name="start"> The start time of the word relative to the beginning of the audio, expressed in seconds. </param>
+        /// <param name="end"> The end time of the word relative to the beginning of the audio, expressed in seconds. </param>
+        /// <returns> A new <see cref="OpenAI.AudioTranscriptionWord"/> instance for mocking. </returns>
+        public static AudioTranscriptionWord AudioTranscriptionWord(string word = null, TimeSpan start = default, TimeSpan end = default)
+        {
+            return new AudioTranscriptionWord(word, start, end, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranslationSegment"/>. </summary>
@@ -156,30 +165,30 @@ namespace Azure.AI.OpenAI
         /// down or otherwise unable to complete the operation in time.
         /// </param>
         /// <param name="jailbreak"> Whether a jailbreak attempt was detected in the prompt. </param>
+        /// <param name="indirectAttack"> Whether an indirect attack was detected in the prompt. </param>
         /// <returns> A new <see cref="OpenAI.ContentFilterResultDetailsForPrompt"/> instance for mocking. </returns>
-        public static ContentFilterResultDetailsForPrompt ContentFilterResultDetailsForPrompt(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null, ContentFilterDetectionResult profanity = null, IEnumerable<ContentFilterBlocklistIdResult> customBlocklists = null, ResponseError error = null, ContentFilterDetectionResult jailbreak = null)
+        public static ContentFilterResultDetailsForPrompt ContentFilterResultDetailsForPrompt(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null, ContentFilterDetectionResult profanity = null, ContentFilterDetailedResults customBlocklists = null, ResponseError error = null, ContentFilterDetectionResult jailbreak = null, ContentFilterDetectionResult indirectAttack = null)
         {
-            customBlocklists ??= new List<ContentFilterBlocklistIdResult>();
-
             return new ContentFilterResultDetailsForPrompt(
                 sexual,
                 violence,
                 hate,
                 selfHarm,
                 profanity,
-                customBlocklists?.ToList(),
+                customBlocklists,
                 error,
                 jailbreak,
+                indirectAttack,
                 serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResult"/>. </summary>
-        /// <param name="severity"> Ratings for the intensity and risk level of filtered content. </param>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
+        /// <param name="severity"> Ratings for the intensity and risk level of filtered content. </param>
         /// <returns> A new <see cref="OpenAI.ContentFilterResult"/> instance for mocking. </returns>
-        public static ContentFilterResult ContentFilterResult(ContentFilterSeverity severity = default, bool filtered = default)
+        public static ContentFilterResult ContentFilterResult(bool filtered = default, ContentFilterSeverity severity = default)
         {
-            return new ContentFilterResult(severity, filtered, serializedAdditionalRawData: null);
+            return new ContentFilterResult(filtered, severity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterDetectionResult"/>. </summary>
@@ -191,13 +200,24 @@ namespace Azure.AI.OpenAI
             return new ContentFilterDetectionResult(filtered, detected, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterBlocklistIdResult"/>. </summary>
-        /// <param name="id"> The ID of the custom blocklist evaluated. </param>
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterDetailedResults"/>. </summary>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
-        /// <returns> A new <see cref="OpenAI.ContentFilterBlocklistIdResult"/> instance for mocking. </returns>
-        public static ContentFilterBlocklistIdResult ContentFilterBlocklistIdResult(string id = null, bool filtered = default)
+        /// <param name="details"> The collection of detailed blocklist result information. </param>
+        /// <returns> A new <see cref="OpenAI.ContentFilterDetailedResults"/> instance for mocking. </returns>
+        public static ContentFilterDetailedResults ContentFilterDetailedResults(bool filtered = default, IEnumerable<ContentFilterBlocklistIdResult> details = null)
         {
-            return new ContentFilterBlocklistIdResult(id, filtered, serializedAdditionalRawData: null);
+            details ??= new List<ContentFilterBlocklistIdResult>();
+
+            return new ContentFilterDetailedResults(filtered, details?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterBlocklistIdResult"/>. </summary>
+        /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
+        /// <param name="id"> The ID of the custom blocklist evaluated. </param>
+        /// <returns> A new <see cref="OpenAI.ContentFilterBlocklistIdResult"/> instance for mocking. </returns>
+        public static ContentFilterBlocklistIdResult ContentFilterBlocklistIdResult(bool filtered = default, string id = null)
+        {
+            return new ContentFilterBlocklistIdResult(filtered, id, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.Choice"/>. </summary>
@@ -253,17 +273,15 @@ namespace Azure.AI.OpenAI
         /// <param name="protectedMaterialText"> Information about detection of protected text material. </param>
         /// <param name="protectedMaterialCode"> Information about detection of protected code material. </param>
         /// <returns> A new <see cref="OpenAI.ContentFilterResultsForChoice"/> instance for mocking. </returns>
-        public static ContentFilterResultsForChoice ContentFilterResultsForChoice(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null, ContentFilterDetectionResult profanity = null, IEnumerable<ContentFilterBlocklistIdResult> customBlocklists = null, ResponseError error = null, ContentFilterDetectionResult protectedMaterialText = null, ContentFilterCitedDetectionResult protectedMaterialCode = null)
+        public static ContentFilterResultsForChoice ContentFilterResultsForChoice(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null, ContentFilterDetectionResult profanity = null, ContentFilterDetailedResults customBlocklists = null, ResponseError error = null, ContentFilterDetectionResult protectedMaterialText = null, ContentFilterCitedDetectionResult protectedMaterialCode = null)
         {
-            customBlocklists ??= new List<ContentFilterBlocklistIdResult>();
-
             return new ContentFilterResultsForChoice(
                 sexual,
                 violence,
                 hate,
                 selfHarm,
                 profanity,
-                customBlocklists?.ToList(),
+                customBlocklists,
                 error,
                 protectedMaterialText,
                 protectedMaterialCode,
@@ -318,6 +336,7 @@ namespace Azure.AI.OpenAI
         /// Generally, `n` choices are generated per provided prompt with a default value of 1.
         /// Token limits and other settings may limit the number of choices generated.
         /// </param>
+        /// <param name="model"> The model name used for this completions request. </param>
         /// <param name="promptFilterResults">
         /// Content filtering results for zero or more prompts in the request. In a streaming request,
         /// results for different prompts may arrive at different times or in different orders.
@@ -328,7 +347,7 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
         /// <returns> A new <see cref="OpenAI.ChatCompletions"/> instance for mocking. </returns>
-        public static ChatCompletions ChatCompletions(string id = null, DateTimeOffset created = default, IEnumerable<ChatChoice> choices = null, IEnumerable<ContentFilterResultsForPrompt> promptFilterResults = null, string systemFingerprint = null, CompletionsUsage usage = null)
+        public static ChatCompletions ChatCompletions(string id = null, DateTimeOffset created = default, IEnumerable<ChatChoice> choices = null, string model = null, IEnumerable<ContentFilterResultsForPrompt> promptFilterResults = null, string systemFingerprint = null, CompletionsUsage usage = null)
         {
             choices ??= new List<ChatChoice>();
             promptFilterResults ??= new List<ContentFilterResultsForPrompt>();
@@ -337,6 +356,7 @@ namespace Azure.AI.OpenAI
                 id,
                 created,
                 choices?.ToList(),
+                model,
                 promptFilterResults?.ToList(),
                 systemFingerprint,
                 usage,
@@ -349,6 +369,8 @@ namespace Azure.AI.OpenAI
         /// <param name="toolCalls">
         /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
         /// completions request to resolve as configured.
+        /// Please note <see cref="ChatCompletionsToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ChatCompletionsFunctionToolCall"/>.
         /// </param>
         /// <param name="functionCall">
         /// The function call that must be resolved and have its output appended to subsequent input messages for the chat
@@ -494,6 +516,20 @@ namespace Azure.AI.OpenAI
         public static AzureGroundingEnhancementCoordinatePoint AzureGroundingEnhancementCoordinatePoint(float x = default, float y = default)
         {
             return new AzureGroundingEnhancementCoordinatePoint(x, y, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ImageGenerations"/>. </summary>
+        /// <param name="created">
+        /// A timestamp representing when this operation was started.
+        /// Expressed in seconds since the Unix epoch of 1970-01-01T00:00:00+0000.
+        /// </param>
+        /// <param name="data"> The images generated by the operation. </param>
+        /// <returns> A new <see cref="OpenAI.ImageGenerations"/> instance for mocking. </returns>
+        public static ImageGenerations ImageGenerations(DateTimeOffset created = default, IEnumerable<ImageGenerationData> data = null)
+        {
+            data ??= new List<ImageGenerationData>();
+
+            return new ImageGenerations(created, data?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ImageGenerationData"/>. </summary>
@@ -672,6 +708,8 @@ namespace Azure.AI.OpenAI
         /// <param name="toolCalls">
         /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
         /// completions request to resolve as configured.
+        /// Please note <see cref="ChatCompletionsToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ChatCompletionsFunctionToolCall"/>.
         /// </param>
         /// <param name="functionCall">
         /// The function call that must be resolved and have its output appended to subsequent input messages for the chat
@@ -768,7 +806,11 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataEndpointVectorizationSource"/>. </summary>
         /// <param name="endpoint"> Specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings. The api-version query parameter is not allowed. </param>
-        /// <param name="authentication"> Specifies the authentication options to use when retrieving embeddings from the specified endpoint. </param>
+        /// <param name="authentication">
+        /// Specifies the authentication options to use when retrieving embeddings from the specified endpoint.
+        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// </param>
         /// <returns> A new <see cref="OpenAI.OnYourDataEndpointVectorizationSource"/> instance for mocking. </returns>
         public static OnYourDataEndpointVectorizationSource OnYourDataEndpointVectorizationSource(Uri endpoint = null, OnYourDataAuthenticationOptions authentication = null)
         {

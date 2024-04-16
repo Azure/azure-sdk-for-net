@@ -714,6 +714,18 @@ namespace Azure.Messaging.EventGrid
                 Tags = tags
             };
         }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.CommunicationIdentifierModel"/>. </summary>
+        /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
+        /// <param name="communicationUser"> The communication user. </param>
+        /// <param name="phoneNumber"> The phone number. </param>
+        /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
+        /// <returns> A new <see cref="SystemEvents.CommunicationIdentifierModel"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunicationIdentifierModel CommunicationIdentifierModel(string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
+        {
+            return new CommunicationIdentifierModel(default, rawId, communicationUser, phoneNumber, microsoftTeamsUser, default);
+        }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings
 }

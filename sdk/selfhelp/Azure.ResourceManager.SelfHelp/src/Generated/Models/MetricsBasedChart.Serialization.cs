@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class MetricsBasedChart : IUtf8JsonSerializable, IJsonModel<MetricsBasedChart>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsBasedChart>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsBasedChart>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MetricsBasedChart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(FilterGroup))
             {
                 writer.WritePropertyName("filterGroup"u8);
-                writer.WriteObjectValue(FilterGroup);
+                writer.WriteObjectValue(FilterGroup, options);
             }
             if (Optional.IsDefined(ReplacementKey))
             {
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricsBasedChart>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static MetricsBasedChart DeserializeMetricsBasedChart(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             FilterGroup filterGroup = default;
             string replacementKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -149,10 +148,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MetricsBasedChart(
                 name,
                 aggregationType,
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeMetricsBasedChart(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricsBasedChart)} does not support reading '{options.Format}' format.");
             }
         }
 

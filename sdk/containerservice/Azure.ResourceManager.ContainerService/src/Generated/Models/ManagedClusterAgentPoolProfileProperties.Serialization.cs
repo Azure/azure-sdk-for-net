@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ManagedClusterAgentPoolProfileProperties : IUtf8JsonSerializable, IJsonModel<ManagedClusterAgentPoolProfileProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAgentPoolProfileProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAgentPoolProfileProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterAgentPoolProfileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAgentPoolProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfileProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings);
+                writer.WriteObjectValue(UpgradeSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
-                writer.WriteObjectValue(PowerState);
+                writer.WriteObjectValue(PowerState, options);
             }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
@@ -217,12 +216,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(KubeletConfig))
             {
                 writer.WritePropertyName("kubeletConfig"u8);
-                writer.WriteObjectValue(KubeletConfig);
+                writer.WriteObjectValue(KubeletConfig, options);
             }
             if (Optional.IsDefined(LinuxOSConfig))
             {
                 writer.WritePropertyName("linuxOSConfig"u8);
-                writer.WriteObjectValue(LinuxOSConfig);
+                writer.WriteObjectValue(LinuxOSConfig, options);
             }
             if (Optional.IsDefined(EnableEncryptionAtHost))
             {
@@ -247,7 +246,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData);
+                writer.WriteObjectValue(CreationData, options);
             }
             if (Optional.IsDefined(CapacityReservationGroupId))
             {
@@ -262,7 +261,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -287,7 +286,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAgentPoolProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfileProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -296,7 +295,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterAgentPoolProfileProperties DeserializeManagedClusterAgentPoolProfileProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -346,7 +345,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ResourceIdentifier hostGroupId = default;
             AgentPoolNetworkProfile networkProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -738,10 +737,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedClusterAgentPoolProfileProperties(
                 count,
                 vmSize,
@@ -798,7 +797,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfileProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -814,7 +813,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterAgentPoolProfileProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfileProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

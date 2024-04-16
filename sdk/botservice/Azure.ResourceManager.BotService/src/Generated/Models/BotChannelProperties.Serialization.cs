@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     [PersistableModelProxy(typeof(UnknownChannel))]
     public partial class BotChannelProperties : IUtf8JsonSerializable, IJsonModel<BotChannelProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotChannelProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotChannelProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BotChannelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BotChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotChannelProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotChannelProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static BotChannelProperties DeserializeBotChannelProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotChannelProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeBotChannelProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotChannelProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

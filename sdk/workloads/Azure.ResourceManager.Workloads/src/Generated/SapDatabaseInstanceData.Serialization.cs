@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Workloads
 {
     public partial class SapDatabaseInstanceData : IUtf8JsonSerializable, IJsonModel<SapDatabaseInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDatabaseInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDatabaseInstanceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapDatabaseInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SapDatabaseInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapDatabaseInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapDatabaseInstanceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads
                 writer.WriteStartArray();
                 foreach (var item in VmDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors);
+                writer.WriteObjectValue(Errors, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Workloads
             var format = options.Format == "W" ? ((IPersistableModel<SapDatabaseInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapDatabaseInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapDatabaseInstanceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Workloads
 
         internal static SapDatabaseInstanceData DeserializeSapDatabaseInstanceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Workloads
             SapVirtualInstanceProvisioningState? provisioningState = default;
             SapVirtualInstanceError errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -303,10 +303,10 @@ namespace Azure.ResourceManager.Workloads
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SapDatabaseInstanceData(
                 id,
                 name,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Workloads
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapDatabaseInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapDatabaseInstanceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Workloads
                         return DeserializeSapDatabaseInstanceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapDatabaseInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapDatabaseInstanceData)} does not support reading '{options.Format}' format.");
             }
         }
 

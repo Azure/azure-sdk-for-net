@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseDatabaseData : IUtf8JsonSerializable, IJsonModel<SynapseDatabaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseDatabaseData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseDatabaseData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseDatabaseData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseDatabaseData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseDatabaseData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseDatabaseData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseDatabaseData DeserializeSynapseDatabaseData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseDatabaseData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseDatabaseData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Synapse
                         return DeserializeSynapseDatabaseData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseDatabaseData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseDatabaseData)} does not support reading '{options.Format}' format.");
             }
         }
 

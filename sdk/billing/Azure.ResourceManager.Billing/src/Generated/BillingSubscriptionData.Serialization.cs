@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingSubscriptionData : IUtf8JsonSerializable, IJsonModel<BillingSubscriptionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingSubscriptionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingSubscriptionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BillingSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(LastMonthCharges))
             {
                 writer.WritePropertyName("lastMonthCharges"u8);
-                writer.WriteObjectValue(LastMonthCharges);
+                writer.WriteObjectValue(LastMonthCharges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MonthToDateCharges))
             {
                 writer.WritePropertyName("monthToDateCharges"u8);
-                writer.WriteObjectValue(MonthToDateCharges);
+                writer.WriteObjectValue(MonthToDateCharges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NextBillingCycleDetails))
             {
                 writer.WritePropertyName("nextBillingCycleDetails"u8);
-                writer.WriteObjectValue(NextBillingCycleDetails);
+                writer.WriteObjectValue(NextBillingCycleDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OfferId))
             {
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller);
+                writer.WriteObjectValue(Reseller, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RenewalTermDetails))
             {
                 writer.WritePropertyName("renewalTermDetails"u8);
-                writer.WriteObjectValue(RenewalTermDetails);
+                writer.WriteObjectValue(RenewalTermDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SkuDescription))
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Billing
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Billing
 
         internal static BillingSubscriptionData DeserializeBillingSubscriptionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Billing
             SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default;
             DateTimeOffset? enrollmentAccountStartDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -650,10 +650,10 @@ namespace Azure.ResourceManager.Billing
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BillingSubscriptionData(
                 id,
                 name,
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Billing
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.Billing
                         return DeserializeBillingSubscriptionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionData)} does not support reading '{options.Format}' format.");
             }
         }
 

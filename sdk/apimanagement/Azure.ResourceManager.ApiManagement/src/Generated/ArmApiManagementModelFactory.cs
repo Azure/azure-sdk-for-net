@@ -9,9 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -36,17 +34,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiVersionDescription"> Description of the API Version. </param>
         /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
         /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
         /// <param name="sourceApiId"> API identifier of the source API. </param>
         /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
-        /// <param name="serviceUri"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
+        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <param name="apiVersionSet"> Version set details. </param>
         /// <returns> A new <see cref="ApiManagement.ApiData"/> instance for mocking. </returns>
-        public static ApiData ApiData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, Uri termsOfServiceUri = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, Uri serviceUri = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null)
+        public static ApiData ApiData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null)
         {
             protocols ??= new List<ApiOperationInvokableProtocol>();
 
@@ -67,12 +65,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersionDescription,
                 apiVersionSetId,
                 isSubscriptionRequired,
-                termsOfServiceUri,
+                termsOfServiceLink,
                 contact,
                 license,
                 sourceApiId,
                 displayName,
-                serviceUri,
+                serviceLink,
                 path,
                 protocols?.ToList(),
                 apiVersionSet,
@@ -92,11 +90,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiVersionDescription"> Description of the API Version. </param>
         /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
         /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
         /// <returns> A new <see cref="Models.ApiEntityBaseContract"/> instance for mocking. </returns>
-        public static ApiEntityBaseContract ApiEntityBaseContract(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, Uri termsOfServiceUri = null, ApiContactInformation contact = null, ApiLicenseInformation license = null)
+        public static ApiEntityBaseContract ApiEntityBaseContract(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null)
         {
             return new ApiEntityBaseContract(
                 description,
@@ -111,7 +109,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersionDescription,
                 apiVersionSetId,
                 isSubscriptionRequired,
-                termsOfServiceUri,
+                termsOfServiceLink,
                 contact,
                 license,
                 serializedAdditionalRawData: null);
@@ -130,12 +128,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiVersionDescription"> Description of the API Version. </param>
         /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
         /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
         /// <param name="sourceApiId"> API identifier of the source API. </param>
         /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
-        /// <param name="serviceUri"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
+        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <param name="apiVersionSet"> Version set details. </param>
@@ -150,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         ///  * `graphql` creates GraphQL API.
         /// </param>
         /// <returns> A new <see cref="Models.ApiCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, Uri termsOfServiceUri = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, Uri serviceUri = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null, string value = null, ContentFormat? format = null, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = null, SoapApiType? soapApiType = null)
+        public static ApiCreateOrUpdateContent ApiCreateOrUpdateContent(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null, string value = null, ContentFormat? format = null, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = null, SoapApiType? soapApiType = null)
         {
             protocols ??= new List<ApiOperationInvokableProtocol>();
 
@@ -167,12 +165,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersionDescription,
                 apiVersionSetId,
                 isSubscriptionRequired,
-                termsOfServiceUri,
+                termsOfServiceLink,
                 contact,
                 license,
                 sourceApiId,
                 displayName,
-                serviceUri,
+                serviceLink,
                 path,
                 protocols?.ToList(),
                 apiVersionSet,
@@ -196,15 +194,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiVersionDescription"> Description of the API Version. </param>
         /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
         /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
         /// <param name="displayName"> API name. </param>
-        /// <param name="serviceUri"> Absolute URL of the backend service implementing this API. </param>
+        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. </param>
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <returns> A new <see cref="Models.ApiPatch"/> instance for mocking. </returns>
-        public static ApiPatch ApiPatch(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, Uri termsOfServiceUri = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, string displayName = null, Uri serviceUri = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null)
+        public static ApiPatch ApiPatch(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, string displayName = null, string serviceLink = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null)
         {
             protocols ??= new List<ApiOperationInvokableProtocol>();
 
@@ -221,11 +219,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersionDescription,
                 apiVersionSetId,
                 isSubscriptionRequired,
-                termsOfServiceUri,
+                termsOfServiceLink,
                 contact,
                 license,
                 displayName,
-                serviceUri,
+                serviceLink,
                 path,
                 protocols?.ToList(),
                 serializedAdditionalRawData: null);
@@ -593,7 +591,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiVersionDescription"> Description of the API Version. </param>
         /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
         /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
         /// <param name="id"> API identifier in the form /apis/{apiId}. </param>
@@ -602,7 +600,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <returns> A new <see cref="Models.AssociatedApiProperties"/> instance for mocking. </returns>
-        public static AssociatedApiProperties AssociatedApiProperties(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, Uri termsOfServiceUri = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, string id = null, string name = null, Uri serviceUri = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null)
+        public static AssociatedApiProperties AssociatedApiProperties(string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, string id = null, string name = null, Uri serviceUri = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null)
         {
             protocols ??= new List<ApiOperationInvokableProtocol>();
 
@@ -619,7 +617,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersionDescription,
                 apiVersionSetId,
                 isSubscriptionRequired,
-                termsOfServiceUri,
+                termsOfServiceLink,
                 contact,
                 license,
                 serializedAdditionalRawData: null,
@@ -1467,17 +1465,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiVersionDescription"> Description of the API Version. </param>
         /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
         /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
         /// <param name="sourceApiId"> API identifier of the source API. </param>
         /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
-        /// <param name="serviceUri"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
+        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <param name="apiVersionSet"> Version set details. </param>
         /// <returns> A new <see cref="Models.GatewayApiData"/> instance for mocking. </returns>
-        public static GatewayApiData GatewayApiData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, Uri termsOfServiceUri = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, Uri serviceUri = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null)
+        public static GatewayApiData GatewayApiData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null)
         {
             protocols ??= new List<ApiOperationInvokableProtocol>();
 
@@ -1498,12 +1496,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersionDescription,
                 apiVersionSetId,
                 isSubscriptionRequired,
-                termsOfServiceUri,
+                termsOfServiceLink,
                 contact,
                 license,
                 sourceApiId,
                 displayName,
-                serviceUri,
+                serviceLink,
                 path,
                 protocols?.ToList(),
                 apiVersionSet,
@@ -2219,17 +2217,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiVersionDescription"> Description of the API Version. </param>
         /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
         /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
         /// <param name="sourceApiId"> API identifier of the source API. </param>
         /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
-        /// <param name="serviceUri"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
+        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <param name="apiVersionSet"> Version set details. </param>
         /// <returns> A new <see cref="Models.ProductApiData"/> instance for mocking. </returns>
-        public static ProductApiData ProductApiData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, Uri termsOfServiceUri = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, Uri serviceUri = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null)
+        public static ProductApiData ProductApiData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, AuthenticationSettingsContract authenticationSettings = null, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = null, ApiType? apiType = null, string apiRevision = null, string apiVersion = null, bool? isCurrent = null, bool? isOnline = null, string apiRevisionDescription = null, string apiVersionDescription = null, ResourceIdentifier apiVersionSetId = null, bool? isSubscriptionRequired = null, string termsOfServiceLink = null, ApiContactInformation contact = null, ApiLicenseInformation license = null, ResourceIdentifier sourceApiId = null, string displayName = null, string serviceLink = null, string path = null, IEnumerable<ApiOperationInvokableProtocol> protocols = null, ApiVersionSetContractDetails apiVersionSet = null)
         {
             protocols ??= new List<ApiOperationInvokableProtocol>();
 
@@ -2250,12 +2248,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 apiVersionDescription,
                 apiVersionSetId,
                 isSubscriptionRequired,
-                termsOfServiceUri,
+                termsOfServiceLink,
                 contact,
                 license,
                 sourceApiId,
                 displayName,
-                serviceUri,
+                serviceLink,
                 path,
                 protocols?.ToList(),
                 apiVersionSet,

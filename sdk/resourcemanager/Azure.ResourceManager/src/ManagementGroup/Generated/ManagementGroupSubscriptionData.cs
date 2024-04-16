@@ -76,18 +76,22 @@ namespace Azure.ResourceManager.ManagementGroups
         }
 
         /// <summary> The AAD Tenant ID associated with the subscription. For example, 00000000-0000-0000-0000-000000000000. </summary>
+        [WirePath("properties.tenant")]
         public string Tenant { get; }
         /// <summary> The friendly name of the subscription. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> The ID of the parent management group. </summary>
         internal DescendantParentGroupInfo Parent { get; }
         /// <summary> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
+        [WirePath("properties.parent.id")]
         public ResourceIdentifier ParentId
         {
             get => Parent?.Id;
         }
 
         /// <summary> The state of the subscription. </summary>
+        [WirePath("properties.state")]
         public string State { get; }
     }
 }

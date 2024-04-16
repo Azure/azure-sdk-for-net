@@ -12,20 +12,19 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecureScoreControlDefinitionItem : IUtf8JsonSerializable, IJsonModel<SecureScoreControlDefinitionItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecureScoreControlDefinitionItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecureScoreControlDefinitionItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecureScoreControlDefinitionItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDefinitionItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (options.Format != "W" && Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue(Source, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentDefinitions))
             {
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDefinitionItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecureScoreControlDefinitionItem DeserializeSecureScoreControlDefinitionItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             SecureScoreControlDefinitionSource source = default;
             IReadOnlyList<SubResource> assessmentDefinitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -213,10 +212,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecureScoreControlDefinitionItem(
                 id,
                 name,
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -255,7 +254,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecureScoreControlDefinitionItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support reading '{options.Format}' format.");
             }
         }
 

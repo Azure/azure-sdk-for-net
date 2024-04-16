@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name of the object. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }

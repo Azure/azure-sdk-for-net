@@ -10,21 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class GitOperationResultContractData : IUtf8JsonSerializable, IJsonModel<GitOperationResultContractData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitOperationResultContractData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitOperationResultContractData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GitOperationResultContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GitOperationResultContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ActionLog))
             {
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in ActionLog)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitOperationResultContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static GitOperationResultContractData DeserializeGitOperationResultContractData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ErrorResponseBody error = default;
             IReadOnlyList<OperationResultLogItemContract> actionLog = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -242,10 +241,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GitOperationResultContractData(
                 id,
                 name,
@@ -270,7 +269,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -286,7 +285,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeGitOperationResultContractData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitOperationResultContractData)} does not support reading '{options.Format}' format.");
             }
         }
 

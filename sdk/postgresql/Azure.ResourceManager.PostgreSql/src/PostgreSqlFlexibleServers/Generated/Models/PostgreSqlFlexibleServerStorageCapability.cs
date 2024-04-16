@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -36,10 +35,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             SupportedIopsTiers = supportedIopsTiers;
         }
         /// <summary> Storage size in MB. </summary>
+        [WirePath("storageSizeMb")]
         public long? StorageSizeInMB { get; }
         /// <summary> Default tier for IOPS. </summary>
+        [WirePath("defaultIopsTier")]
         public string DefaultIopsTier { get; }
         /// <summary> List of available options to upgrade the storage performance. </summary>
+        [WirePath("supportedIopsTiers")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> SupportedIopsTiers { get; }
     }
 }

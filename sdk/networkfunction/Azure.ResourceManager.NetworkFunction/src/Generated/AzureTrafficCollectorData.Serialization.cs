@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkFunction.Models;
@@ -19,14 +18,14 @@ namespace Azure.ResourceManager.NetworkFunction
 {
     public partial class AzureTrafficCollectorData : IUtf8JsonSerializable, IJsonModel<AzureTrafficCollectorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureTrafficCollectorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureTrafficCollectorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureTrafficCollectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureTrafficCollectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.NetworkFunction
             var format = options.Format == "W" ? ((IPersistableModel<AzureTrafficCollectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.NetworkFunction
 
         internal static AzureTrafficCollectorData DeserializeAzureTrafficCollectorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.NetworkFunction
             SubResource virtualHub = default;
             CollectorProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -241,10 +240,10 @@ namespace Azure.ResourceManager.NetworkFunction
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureTrafficCollectorData(
                 id,
                 name,
@@ -268,7 +267,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.NetworkFunction
                         return DeserializeAzureTrafficCollectorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support reading '{options.Format}' format.");
             }
         }
 

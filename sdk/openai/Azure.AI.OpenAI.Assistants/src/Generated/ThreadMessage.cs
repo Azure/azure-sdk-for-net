@@ -51,7 +51,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="threadId"> The ID of the thread that this message belongs to. </param>
         /// <param name="role"> The role associated with the assistant thread message. </param>
-        /// <param name="contentItems"> The list of content items associated with the assistant thread message. </param>
+        /// <param name="contentItems">
+        /// The list of content items associated with the assistant thread message.
+        /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MessageImageFileContent"/> and <see cref="MessageTextContent"/>.
+        /// </param>
         /// <param name="fileIds">
         /// A list of file IDs that the assistant should use. Useful for tools like retrieval and code_interpreter that can
         /// access files.
@@ -80,7 +84,11 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
         /// <param name="threadId"> The ID of the thread that this message belongs to. </param>
         /// <param name="role"> The role associated with the assistant thread message. </param>
-        /// <param name="contentItems"> The list of content items associated with the assistant thread message. </param>
+        /// <param name="contentItems">
+        /// The list of content items associated with the assistant thread message.
+        /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MessageImageFileContent"/> and <see cref="MessageTextContent"/>.
+        /// </param>
         /// <param name="assistantId"> If applicable, the ID of the assistant that authored this message. </param>
         /// <param name="runId"> If applicable, the ID of the run associated with the authoring of this message. </param>
         /// <param name="fileIds">
@@ -121,7 +129,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary>
         /// The list of content items associated with the assistant thread message.
         /// Please note <see cref="MessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MessageTextContent"/> and <see cref="MessageImageFileContent"/>.
+        /// The available derived classes include <see cref="MessageImageFileContent"/> and <see cref="MessageTextContent"/>.
         /// </summary>
         public IReadOnlyList<MessageContent> ContentItems { get; }
         /// <summary> If applicable, the ID of the assistant that authored this message. </summary>

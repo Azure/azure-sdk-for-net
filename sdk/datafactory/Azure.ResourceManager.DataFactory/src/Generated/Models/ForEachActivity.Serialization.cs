@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ForEachActivity : IUtf8JsonSerializable, IJsonModel<ForEachActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForEachActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForEachActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ForEachActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ForEachActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForEachActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForEachActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,12 +78,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteNumberValue(BatchCount.Value);
             }
             writer.WritePropertyName("items"u8);
-            writer.WriteObjectValue(Items);
+            writer.WriteObjectValue(Items, options);
             writer.WritePropertyName("activities"u8);
             writer.WriteStartArray();
             foreach (var item in Activities)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForEachActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForEachActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForEachActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ForEachActivity DeserializeForEachActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -271,7 +270,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ForEachActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForEachActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -287,7 +286,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeForEachActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ForEachActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForEachActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

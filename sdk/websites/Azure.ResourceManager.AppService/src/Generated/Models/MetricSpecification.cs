@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -97,38 +96,55 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets the name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Gets the display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
         /// <summary> Gets the display description. </summary>
+        [WirePath("displayDescription")]
         public string DisplayDescription { get; }
         /// <summary> Gets the unit. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
         /// <summary> Gets the aggregation type. </summary>
+        [WirePath("aggregationType")]
         public string AggregationType { get; }
         /// <summary> Gets the is instance level aggregation supported. </summary>
+        [WirePath("supportsInstanceLevelAggregation")]
         public bool? IsInstanceLevelAggregationSupported { get; }
         /// <summary> Gets the is regional mdm account enabled. </summary>
+        [WirePath("enableRegionalMdmAccount")]
         public bool? IsRegionalMdmAccountEnabled { get; }
         /// <summary> Gets the source mdm account. </summary>
+        [WirePath("sourceMdmAccount")]
         public string SourceMdmAccount { get; }
         /// <summary> Gets the source mdm namespace. </summary>
+        [WirePath("sourceMdmNamespace")]
         public string SourceMdmNamespace { get; }
         /// <summary> Gets the metric filter pattern. </summary>
+        [WirePath("metricFilterPattern")]
         public string MetricFilterPattern { get; }
         /// <summary> Gets the fill gap with zero. </summary>
+        [WirePath("fillGapWithZero")]
         public bool? FillGapWithZero { get; }
         /// <summary> Gets the is internal. </summary>
+        [WirePath("isInternal")]
         public bool? IsInternal { get; }
         /// <summary> Gets the dimensions. </summary>
+        [WirePath("dimensions")]
         public IReadOnlyList<MetricDimension> Dimensions { get; }
         /// <summary> Gets the category. </summary>
+        [WirePath("category")]
         public string Category { get; }
         /// <summary> Gets the availabilities. </summary>
+        [WirePath("availabilities")]
         public IReadOnlyList<MetricAvailability> Availabilities { get; }
         /// <summary> Gets the supported time grain types. </summary>
+        [WirePath("supportedTimeGrainTypes")]
         public IReadOnlyList<string> SupportedTimeGrainTypes { get; }
         /// <summary> Gets the supported aggregation types. </summary>
+        [WirePath("supportedAggregationTypes")]
         public IReadOnlyList<string> SupportedAggregationTypes { get; }
     }
 }

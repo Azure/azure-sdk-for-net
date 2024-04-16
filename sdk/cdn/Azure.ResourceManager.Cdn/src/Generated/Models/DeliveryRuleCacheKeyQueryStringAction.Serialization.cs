@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class DeliveryRuleCacheKeyQueryStringAction : IUtf8JsonSerializable, IJsonModel<DeliveryRuleCacheKeyQueryStringAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryRuleCacheKeyQueryStringAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryRuleCacheKeyQueryStringAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeliveryRuleCacheKeyQueryStringAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleCacheKeyQueryStringAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeliveryRuleCacheKeyQueryStringAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeliveryRuleCacheKeyQueryStringAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue(Properties, options);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleCacheKeyQueryStringAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeliveryRuleCacheKeyQueryStringAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeliveryRuleCacheKeyQueryStringAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleCacheKeyQueryStringAction DeserializeDeliveryRuleCacheKeyQueryStringAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CacheKeyQueryStringActionProperties parameters = default;
             DeliveryRuleActionType name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DeliveryRuleCacheKeyQueryStringAction(name, serializedAdditionalRawData, parameters);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeliveryRuleCacheKeyQueryStringAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeliveryRuleCacheKeyQueryStringAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeDeliveryRuleCacheKeyQueryStringAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeliveryRuleCacheKeyQueryStringAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeliveryRuleCacheKeyQueryStringAction)} does not support reading '{options.Format}' format.");
             }
         }
 

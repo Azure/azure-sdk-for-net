@@ -111,38 +111,55 @@ namespace Azure.ResourceManager.PostgreSql
         }
 
         /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
+        [WirePath("sku")]
         public PostgreSqlSku Sku { get; set; }
         /// <summary> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
+        [WirePath("properties.administratorLogin")]
         public string AdministratorLogin { get; set; }
         /// <summary> Server version. </summary>
+        [WirePath("properties.version")]
         public PostgreSqlServerVersion? Version { get; set; }
         /// <summary> Enable ssl enforcement or not when connect to server. </summary>
+        [WirePath("properties.sslEnforcement")]
         public PostgreSqlSslEnforcementEnum? SslEnforcement { get; set; }
         /// <summary> Enforce a minimal Tls version for the server. </summary>
+        [WirePath("properties.minimalTlsVersion")]
         public PostgreSqlMinimalTlsVersionEnum? MinimalTlsVersion { get; set; }
         /// <summary> Status showing whether the server data encryption is enabled with customer-managed keys. </summary>
+        [WirePath("properties.byokEnforcement")]
         public string ByokEnforcement { get; }
         /// <summary> Status showing whether the server enabled infrastructure encryption. </summary>
+        [WirePath("properties.infrastructureEncryption")]
         public PostgreSqlInfrastructureEncryption? InfrastructureEncryption { get; set; }
         /// <summary> A state of a server that is visible to user. </summary>
+        [WirePath("properties.userVisibleState")]
         public PostgreSqlServerState? UserVisibleState { get; set; }
         /// <summary> The fully qualified domain name of a server. </summary>
+        [WirePath("properties.fullyQualifiedDomainName")]
         public string FullyQualifiedDomainName { get; set; }
         /// <summary> Earliest restore point creation time (ISO8601 format). </summary>
+        [WirePath("properties.earliestRestoreDate")]
         public DateTimeOffset? EarliestRestoreOn { get; set; }
         /// <summary> Storage profile of a server. </summary>
+        [WirePath("properties.storageProfile")]
         public PostgreSqlStorageProfile StorageProfile { get; set; }
         /// <summary> The replication role of the server. </summary>
+        [WirePath("properties.replicationRole")]
         public string ReplicationRole { get; set; }
         /// <summary> The master server id of a replica server. </summary>
+        [WirePath("properties.masterServerId")]
         public ResourceIdentifier MasterServerId { get; set; }
         /// <summary> The maximum number of replicas that a master server can have. </summary>
+        [WirePath("properties.replicaCapacity")]
         public int? ReplicaCapacity { get; set; }
         /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public PostgreSqlPublicNetworkAccessEnum? PublicNetworkAccess { get; set; }
         /// <summary> List of private endpoint connections on a server. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<PostgreSqlServerPrivateEndpointConnection> PrivateEndpointConnections { get; }
     }
 }

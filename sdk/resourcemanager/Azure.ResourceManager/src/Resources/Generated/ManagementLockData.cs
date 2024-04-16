@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -83,10 +82,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </summary>
+        [WirePath("properties.level")]
         public ManagementLockLevel Level { get; set; }
         /// <summary> Notes about the lock. Maximum of 512 characters. </summary>
+        [WirePath("properties.notes")]
         public string Notes { get; set; }
         /// <summary> The owners of the lock. </summary>
+        [WirePath("properties.owners")]
         public IList<ManagementLockOwner> Owners { get; }
     }
 }

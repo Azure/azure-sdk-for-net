@@ -17,21 +17,21 @@ namespace Azure.ResourceManager.Media
 {
     public partial class StreamingEndpointData : IUtf8JsonSerializable, IJsonModel<StreamingEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StreamingEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media
                 if (AccessControl != null)
                 {
                     writer.WritePropertyName("accessControl"u8);
-                    writer.WriteObjectValue(AccessControl);
+                    writer.WriteObjectValue(AccessControl, options);
                 }
                 else
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Media
                 if (CrossSiteAccessPolicies != null)
                 {
                     writer.WritePropertyName("crossSiteAccessPolicies"u8);
-                    writer.WriteObjectValue(CrossSiteAccessPolicies);
+                    writer.WriteObjectValue(CrossSiteAccessPolicies, options);
                 }
                 else
                 {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Media
 
         internal static StreamingEndpointData DeserializeStreamingEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Media
             DateTimeOffset? created = default;
             DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -434,10 +434,10 @@ namespace Azure.ResourceManager.Media
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StreamingEndpointData(
                 id,
                 name,
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Media
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Media
                         return DeserializeStreamingEndpointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingEndpointData)} does not support reading '{options.Format}' format.");
             }
         }
 

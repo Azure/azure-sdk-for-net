@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class ActiveSecurityAdminRule : IUtf8JsonSerializable, IJsonModel<ActiveSecurityAdminRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActiveSecurityAdminRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActiveSecurityAdminRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ActiveSecurityAdminRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ActiveSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleCollectionAppliesToGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Destinations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -175,7 +174,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActiveSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ActiveSecurityAdminRule DeserializeActiveSecurityAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -210,7 +209,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkProvisioningState? provisioningState = default;
             Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -404,10 +403,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ActiveSecurityAdminRule(
                 id,
                 commitTime,
@@ -440,7 +439,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -456,7 +455,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeActiveSecurityAdminRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActiveSecurityAdminRule)} does not support reading '{options.Format}' format.");
             }
         }
 

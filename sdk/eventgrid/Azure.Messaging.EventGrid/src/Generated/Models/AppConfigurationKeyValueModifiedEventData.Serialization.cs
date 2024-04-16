@@ -50,12 +50,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AppConfigurationKeyValueModifiedEventData(key, label, etag, syncToken);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AppConfigurationKeyValueModifiedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAppConfigurationKeyValueModifiedEventData(document.RootElement);
+        }
+
         internal partial class AppConfigurationKeyValueModifiedEventDataConverter : JsonConverter<AppConfigurationKeyValueModifiedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AppConfigurationKeyValueModifiedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AppConfigurationKeyValueModifiedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

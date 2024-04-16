@@ -71,10 +71,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> Name of this SKU. </summary>
+        [WirePath("name")]
         public ServiceBusSkuName Name { get; set; }
         /// <summary> The billing tier of this particular SKU. </summary>
+        [WirePath("tier")]
         public ServiceBusSkuTier? Tier { get; set; }
         /// <summary> Messaging units for your service bus premium namespace. Valid capacities are {1, 2, 4, 8, 16} multiples of your properties.premiumMessagingPartitions setting. For example, If properties.premiumMessagingPartitions is 1 then possible capacity values are 1, 2, 4, 8, and 16. If properties.premiumMessagingPartitions is 4 then possible capacity values are 4, 8, 16, 32 and 64. </summary>
+        [WirePath("capacity")]
         public int? Capacity { get; set; }
     }
 }

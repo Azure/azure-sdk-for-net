@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class FileshareProtectedItem : IUtf8JsonSerializable, IJsonModel<FileshareProtectedItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileshareProtectedItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileshareProtectedItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FileshareProtectedItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FileshareProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,14 +58,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in KpisHealths)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue(ExtendedInfo, options);
             }
             writer.WritePropertyName("protectedItemType"u8);
             writer.WriteStringValue(ProtectedItemType);
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileshareProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -197,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static FileshareProtectedItem DeserializeFileshareProtectedItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             int? softDeleteRetentionPeriodInDays = default;
             string vaultId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -443,10 +442,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FileshareProtectedItem(
                 protectedItemType,
                 backupManagementType,
@@ -486,7 +485,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -502,7 +501,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeFileshareProtectedItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileshareProtectedItem)} does not support reading '{options.Format}' format.");
             }
         }
 

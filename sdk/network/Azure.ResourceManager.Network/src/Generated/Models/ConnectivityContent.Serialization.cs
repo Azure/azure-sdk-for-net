@@ -10,27 +10,26 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class ConnectivityContent : IUtf8JsonSerializable, IJsonModel<ConnectivityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectivityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue(Source, options);
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue(Destination);
+            writer.WriteObjectValue(Destination, options);
             if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ProtocolConfiguration))
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
-                writer.WriteObjectValue(ProtocolConfiguration);
+                writer.WriteObjectValue(ProtocolConfiguration, options);
             }
             if (Optional.IsDefined(PreferredIPVersion))
             {
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectivityContent DeserializeConnectivityContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             ProtocolConfiguration protocolConfiguration = default;
             NetworkIPVersion? preferredIPVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -132,10 +131,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectivityContent(
                 source,
                 destination,
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeConnectivityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -38,6 +37,14 @@ namespace Azure.Search.Documents.Models
                 }
             }
             return new ErrorAdditionalInfo(type, info);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ErrorAdditionalInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeErrorAdditionalInfo(document.RootElement);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Short text describing the purpose of the network traffic. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> The IP addresses that network traffic will originate from in cidr notation. </summary>
+        [WirePath("endpoints")]
         public IReadOnlyList<string> Endpoints { get; }
         /// <summary> The ports that network traffic will arrive to the App Service Environment at. </summary>
+        [WirePath("ports")]
         public IReadOnlyList<string> Ports { get; }
     }
 }

@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
     public partial class SavingsPlanPurchaseValidateContent : IUtf8JsonSerializable, IJsonModel<SavingsPlanPurchaseValidateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanPurchaseValidateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanPurchaseValidateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SavingsPlanPurchaseValidateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanPurchaseValidateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanPurchaseValidateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanPurchaseValidateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WriteStartArray();
                 foreach (var item in Benefits)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanPurchaseValidateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanPurchaseValidateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanPurchaseValidateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static SavingsPlanPurchaseValidateContent DeserializeSavingsPlanPurchaseValidateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
             IList<BillingBenefitsSavingsPlanOrderAliasData> benefits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("benefits"u8))
@@ -96,10 +95,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SavingsPlanPurchaseValidateContent(benefits ?? new ChangeTrackingList<BillingBenefitsSavingsPlanOrderAliasData>(), serializedAdditionalRawData);
         }
 
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanPurchaseValidateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanPurchaseValidateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         return DeserializeSavingsPlanPurchaseValidateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanPurchaseValidateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanPurchaseValidateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

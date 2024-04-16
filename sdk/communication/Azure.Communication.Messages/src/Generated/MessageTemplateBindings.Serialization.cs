@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Communication.Messages.Models.Channels;
 using Azure.Core;
 
@@ -17,19 +16,19 @@ namespace Azure.Communication.Messages
     [PersistableModelProxy(typeof(UnknownMessageTemplateBindings))]
     public partial class MessageTemplateBindings : IUtf8JsonSerializable, IJsonModel<MessageTemplateBindings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageTemplateBindings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageTemplateBindings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MessageTemplateBindings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,7 +52,7 @@ namespace Azure.Communication.Messages
             var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -62,7 +61,7 @@ namespace Azure.Communication.Messages
 
         internal static MessageTemplateBindings DeserializeMessageTemplateBindings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -87,7 +86,7 @@ namespace Azure.Communication.Messages
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +102,7 @@ namespace Azure.Communication.Messages
                         return DeserializeMessageTemplateBindings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -117,11 +116,11 @@ namespace Azure.Communication.Messages
             return DeserializeMessageTemplateBindings(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }
