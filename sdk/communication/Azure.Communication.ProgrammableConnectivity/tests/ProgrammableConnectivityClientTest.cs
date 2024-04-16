@@ -284,7 +284,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
 #if !SNIPPET
             Assert.AreEqual(response.Status, 302);
 #endif
-            string locationUrl = response.Headers.TryGetValue("location", out var location) ? location : "not found";
+            string locationUrl = response.Headers.TryGetValue("location", out var location) ? location : "Not found";
 
             Console.WriteLine(locationUrl);
 
