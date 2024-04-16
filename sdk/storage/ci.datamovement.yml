@@ -18,6 +18,7 @@ pr:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: datamovement
     ServiceDirectory: storage
     BuildSnippets: false
     ArtifactName: packages
