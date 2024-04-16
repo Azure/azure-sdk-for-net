@@ -15,7 +15,8 @@ Param (
   [string] $APIViewUri,
   [string] $RepoFullName = "",
   [string] $ArtifactName = "packages",
-  [string] $TargetBranch = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/")
+  [string] $TargetBranch = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/"),
+  [string] $DevopsProject = "internal"
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
