@@ -11,6 +11,7 @@
    - "dataplane" will build the new track 2 client/data libraries
    - "mgmt" will build the management plane SDK.
    - "webjobs" will build the storage WebJobs Extensions.
+   - "datamovement" will build the storage Data Movement packages.
 -->
 
 <Project>
@@ -22,5 +23,8 @@
   </ItemGroup>
   <ItemGroup Condition="'$(SDKType)' == 'functions'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.Storage.*\**\*.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(SDKType)' == 'datamovement'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Storage.DataMovement.*\**\*.csproj" />
   </ItemGroup>
 </Project>
