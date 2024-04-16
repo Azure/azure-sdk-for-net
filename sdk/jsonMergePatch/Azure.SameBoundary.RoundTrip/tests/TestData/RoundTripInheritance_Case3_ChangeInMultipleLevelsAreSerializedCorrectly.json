@@ -1,0 +1,8 @@
+{
+    "baseProperty1": null,
+    "baseProperty2": 3,
+    "baseProperty3": {
+        "a": "b"
+    },
+    "extendedProperty": null
+}

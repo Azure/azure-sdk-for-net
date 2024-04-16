@@ -1,0 +1,36 @@
+{
+    "requiredStringDictionary": {
+        "key3": "value3"
+    },
+    "optionalStringDictionary": {
+        "key1": null
+    },
+    "requiredIntDictionary": {
+        "key1": 5
+    },
+    "optionalIntDictionary": {
+        "key1": null
+    },
+    "requiredModelDictionary": {
+        "key1": { }
+    },
+    "optionalModelDictionary": {
+        "key3": { }
+    },
+    "requiredDictionaryDictionary": {
+        "key1": {
+            "newKey": {
+                "property": "p"
+            }
+        }
+    },
+    "optionalDictionaryDictionary": {
+        "key1": null
+    },
+    "requiredArrayDictionary": {
+        "key1": [ { "property": "p" } ]
+    },
+    "optionalArrayDictionary": {
+        "key3": [ { "property": "p" } ]
+    }
+}

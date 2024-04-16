@@ -39,197 +39,90 @@ namespace Azure.SameBoundary.RoundTrip
         private void WritePatch(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-
-            // [Patch] We should decide what is the correct statement for removing an array.
-            if (((ChangeTrackingList<string>)RequiredStringArray).WasCleared())
-            {
-                writer.WritePropertyName("requiredStringArray"u8);
-                writer.WriteNullValue();
-            }
-            else if (((ChangeTrackingList<string>)RequiredStringArray).IsChanged())
-            {
-                writer.WritePropertyName("requiredStringArray");
-                writer.WriteStartArray();
-                foreach (var item in RequiredStringArray)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-
-            if (((ChangeTrackingList<string>)OptionalStringArray).WasCleared())
-            {
-                writer.WritePropertyName("optionalStringArray"u8);
-                writer.WriteNullValue();
-            }
-            else if (((ChangeTrackingList<string>)OptionalStringArray).IsChanged())
-            {
-                writer.WritePropertyName("optionalStringArray");
-                writer.WriteStartArray();
-                foreach (var item in OptionalStringArray)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-
-            if (((ChangeTrackingList<int>)RequiredIntArray).WasCleared())
-            {
-                writer.WritePropertyName("requiredIntArray"u8);
-                writer.WriteNullValue();
-            }
-            else if (((ChangeTrackingList<int>)RequiredIntArray).IsChanged())
-            {
-                writer.WritePropertyName("requiredIntArray");
-                writer.WriteStartArray();
-                foreach (var item in RequiredIntArray)
-                {
-                    writer.WriteNumberValue(item);
-                }
-                writer.WriteEndArray();
-            }
-
-            if (((ChangeTrackingList<int>)OptionalIntArray).WasCleared())
-            {
-                writer.WritePropertyName("optionalIntArray"u8);
-                writer.WriteNullValue();
-            }
-            else if (((ChangeTrackingList<int>)OptionalIntArray).IsChanged())
-            {
-                writer.WritePropertyName("optionalIntArray");
-                writer.WriteStartArray();
-                foreach (var item in OptionalIntArray)
-                {
-                    writer.WriteNumberValue(item);
-                }
-                writer.WriteEndArray();
-            }
-
-            if (((ChangeTrackingList<RoundTripDummy>)RequiredModelArray).WasCleared())
-            {
-                writer.WritePropertyName("requiredModelArray"u8);
-                writer.WriteNullValue();
-            }
-            else if (((ChangeTrackingList<RoundTripDummy>)RequiredModelArray).IsChanged() || RequiredModelArray.Any(item => item?.IsChanged() == true))
-            {
-                writer.WritePropertyName("requiredModelArray");
-                writer.WriteStartArray();
-                foreach (var item in RequiredModelArray)
-                {
-                    // [Patch] Should we handle `BaseArray[0].Property = null;` or throw error here
-                    // [Patch] The format is "W"
-                    ((IJsonModel<RoundTripDummy>)item).Write(writer, new ModelReaderWriterOptions("W"));
-                }
-                writer.WriteEndArray();
-            }
-
-            if (((ChangeTrackingList<RoundTripDummy>)OptionalModelArray).WasCleared())
-            {
-                writer.WritePropertyName("optionalModelArray"u8);
-                writer.WriteNullValue();
-            }
-            else if (((ChangeTrackingList<RoundTripDummy>)OptionalModelArray).IsChanged() || OptionalModelArray.Any(item => item?.IsChanged() == true))
-            {
-                writer.WritePropertyName("optionalModelArray");
-                writer.WriteStartArray();
-                foreach (var item in OptionalModelArray)
-                {
-                    // [Patch] Should we handle `BaseArray[0].Property = null;`? From spec, user is not allowed to do this.
-                    // [Patch] The format is "W"
-                    ((IJsonModel<RoundTripDummy>)item).Write(writer, new ModelReaderWriterOptions("W"));
-                }
-                writer.WriteEndArray();
-            }
-
-            if (((ChangeTrackingList<IList<RoundTripDummy>>)RequiredArrayArray).WasCleared())
-            {
-                writer.WritePropertyName("requiredArrayArray"u8);
-                writer.WriteNullValue();
-            }
-            // [Patch] If item is not ChangeTrackingList, it must be assigned by user, so RequiredArrayArray.IsChanged() would be `true`.
-            // [Patch] However, there is a case that multiple users are operating on the same RequiredArrayArray. After user1 checkes RequiredArrayArray.IsChanged() and starts to check remaining condition, user2 might do RequiredArrayArray[0] = <array>
-            // Option 1: We think RequiredArrayArray as changed
-            // Option 2: we think RequiredArrayArray as not changed
-            else if (((ChangeTrackingList<IList<RoundTripDummy>>)RequiredArrayArray).IsChanged() || RequiredArrayArray.Any(item => item is not ChangeTrackingList<RoundTripDummy> || (item is ChangeTrackingList<RoundTripDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item.IsChanged())))))
-            {
-                writer.WritePropertyName("requiredArrayArray");
-                writer.WriteStartArray();
-                foreach (var item in RequiredArrayArray)
+            ModelSerializationExtensions.WritePatchList(writer, "requiredStringArray"u8, RequiredStringArray, (item) => writer.WriteStringValue(item));
+            ModelSerializationExtensions.WritePatchList(writer, "optionalStringArray"u8, OptionalStringArray, (item) => writer.WriteStringValue(item));
+            ModelSerializationExtensions.WritePatchList(writer, "requiredIntArray"u8, RequiredIntArray, (item) => writer.WriteNumberValue(item));
+            ModelSerializationExtensions.WritePatchList(writer, "optionalIntArray"u8, OptionalIntArray, (item) => writer.WriteNumberValue(item));
+            ModelSerializationExtensions.WritePatchList(writer, "requiredModelArray"u8, RequiredModelArray,
+                (item) => ((IJsonModel<RoundTripDummy>)item).Write(writer, new ModelReaderWriterOptions("W")), // [Patch] The format is "W"
+                (item) => item?.IsChanged() == true);
+            ModelSerializationExtensions.WritePatchList(writer, "optionalModelArray"u8, OptionalModelArray,
+                (item) => ((IJsonModel<RoundTripDummy>)item).Write(writer, new ModelReaderWriterOptions("W")), // [Patch] The format is "W"
+                (item) => item?.IsChanged() == true);
+            ModelSerializationExtensions.WritePatchList(writer, "requiredArrayArray"u8, RequiredArrayArray,
+                (item) =>
                 {
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
-                        ((IJsonModel<RoundTripDummy>)item0).Write(writer, new ModelReaderWriterOptions("W"));
+                        if (item0 == null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IJsonModel<RoundTripDummy>)item0).Write(writer, new ModelReaderWriterOptions("W"));
+                        }
                     }
                     writer.WriteEndArray();
-                }
-                writer.WriteEndArray();
-            }
-
-            if (((ChangeTrackingList<IList<RoundTripDummy>>)OptionalArrayArray).WasCleared())
-            {
-                writer.WritePropertyName("optionalArrayArray"u8);
-                writer.WriteNullValue();
-            }
-            else if (((ChangeTrackingList<IList<RoundTripDummy>>)OptionalArrayArray).IsChanged() || OptionalArrayArray.Any(item => item is not ChangeTrackingList<RoundTripDummy> || (item is ChangeTrackingList<RoundTripDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item.IsChanged())))))
-            {
-                writer.WritePropertyName("optionalArrayArray");
-                writer.WriteStartArray();
-                foreach (var item in OptionalArrayArray)
+                },
+                (item) => item is not ChangeTrackingList<RoundTripDummy> || (item is ChangeTrackingList<RoundTripDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item?.IsChanged() == true))));
+            ModelSerializationExtensions.WritePatchList(writer, "optionalArrayArray"u8, OptionalArrayArray,
+                (item) =>
                 {
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
-                        ((IJsonModel<RoundTripDummy>)item0).Write(writer, new ModelReaderWriterOptions("W"));
+                        if (item0 == null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IJsonModel<RoundTripDummy>)item0).Write(writer, new ModelReaderWriterOptions("W"));
+                        }
                     }
                     writer.WriteEndArray();
-                }
-                writer.WriteEndArray();
-            }
-
-            if (((ChangeTrackingList<IDictionary<string, RoundTripDummy>>)RequiredDictionaryArray).WasCleared())
-            {
-                writer.WritePropertyName("requiredDictionaryArray"u8);
-                writer.WriteNullValue();
-            }
-            else if (((ChangeTrackingList<IDictionary<string, RoundTripDummy>>)RequiredDictionaryArray).IsChanged() || RequiredDictionaryArray.Any(item => item is not ChangeTrackingDictionary<string, RoundTripDummy> || (item is ChangeTrackingDictionary<string, RoundTripDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item.Value?.IsChanged() == true)))))
-            {
-                writer.WritePropertyName("requiredDictionaryArray");
-                writer.WriteStartArray();
-                foreach (var item in RequiredDictionaryArray)
+                },
+                (item) => item is not ChangeTrackingList<RoundTripDummy> || (item is ChangeTrackingList<RoundTripDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item?.IsChanged() == true))));
+            ModelSerializationExtensions.WritePatchList(writer, "requiredDictionaryArray"u8, RequiredDictionaryArray,
+                (item) =>
                 {
                     writer.WriteStartObject();
                     foreach (var item0 in item)
                     {
                         writer.WritePropertyName(item0.Key);
-                        ((IJsonModel<RoundTripDummy>)item0.Value).Write(writer, new ModelReaderWriterOptions("W"));
+                        if (item0.Value == null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IJsonModel<RoundTripDummy>)item0.Value).Write(writer, new ModelReaderWriterOptions("W"));
+                        }
                     }
                     writer.WriteEndObject();
-                }
-                writer.WriteEndArray();
-            }
-
-            if (((ChangeTrackingList<IDictionary<string, RoundTripDummy>>)OptionalDictionaryArray).WasCleared())
-            {
-                writer.WritePropertyName("requiredDictionaryArray"u8);
-                writer.WriteNullValue();
-            }
-            else if (((ChangeTrackingList<IDictionary<string, RoundTripDummy>>)RequiredDictionaryArray).IsChanged() || RequiredDictionaryArray.Any(item => item is not ChangeTrackingDictionary<string, RoundTripDummy> || (item is ChangeTrackingDictionary<string, RoundTripDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item.Value?.IsChanged() == true)))))
-            {
-                writer.WritePropertyName("requiredDictionaryArray");
-                writer.WriteStartArray();
-                foreach (var item in RequiredDictionaryArray)
+                },
+                (item) => item is not ChangeTrackingDictionary<string, RoundTripDummy> || (item is ChangeTrackingDictionary<string, RoundTripDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item.Value?.IsChanged() == true))));
+            ModelSerializationExtensions.WritePatchList(writer, "optionalDictionaryArray"u8, OptionalDictionaryArray,
+                (item) =>
                 {
                     writer.WriteStartObject();
                     foreach (var item0 in item)
                     {
                         writer.WritePropertyName(item0.Key);
-                        ((IJsonModel<RoundTripDummy>)item0.Value).Write(writer, new ModelReaderWriterOptions("W"));
+                        if (item0.Value == null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IJsonModel<RoundTripDummy>)item0.Value).Write(writer, new ModelReaderWriterOptions("W"));
+                        }
                     }
                     writer.WriteEndObject();
-                }
-                writer.WriteEndArray();
-            }
+                },
+                (item) => item is not ChangeTrackingDictionary<string, RoundTripDummy> || (item is ChangeTrackingDictionary<string, RoundTripDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item.Value?.IsChanged() == true))));
 
             writer.WriteEndObject();
         }

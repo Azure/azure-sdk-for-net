@@ -12,7 +12,7 @@ namespace Azure.SameBoundary.RoundTrip.Tests
         {
             var model = TestHelper.ReadModelFromFile<RoundTripPrimitiveModel>("RoundTripPrimitive_AllPropertiesReceived.json");
             string actual = TestHelper.ReadJsonFromModel(model);
-            string expected = TestHelper.ReadJsonFromFile("RoundTripPrimitive_Case1_ReceivedDataShouldBeRegardedAsNotChanged.json");
+            string expected = TestHelper.ReadJsonFromFile("Empty.json");
             Assert.IsTrue(TestHelper.AreEqualJson(expected, actual));
         }
 

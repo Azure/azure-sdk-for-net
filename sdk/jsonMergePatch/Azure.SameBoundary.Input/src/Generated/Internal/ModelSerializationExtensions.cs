@@ -7,9 +7,12 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Xml;
 using Azure.Core;
@@ -114,6 +117,194 @@ namespace Azure.SameBoundary.Input
                 throw new InvalidOperationException($"The requested operation requires an element of type 'String', but the target element has type '{element.ValueKind}'.");
             }
             return value;
+        }
+
+        public static void WritePatchDictionary2D<T>(Utf8JsonWriter writer, string propertyName, IDictionary<string, IDictionary<string, T>> dictionary, Action<T> writeItem, Func<T, bool> additionalItemChangeCheck = null)
+        {
+            if (dictionary != null && dictionary is not ChangeTrackingDictionary<string, IDictionary<string, T>>)
+            {
+                writer.WritePropertyName(propertyName);
+                writer.WriteStartObject();
+                foreach (var item in dictionary)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStartObject();
+                    foreach (var item0 in item.Value)
+                    {
+                        writer.WritePropertyName(item0.Key);
+                        writeItem(item0.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                return;
+            }
+
+            // [Patch] We should decide what is the correct statement for removing a dictionary.
+            if (dictionary == null || ((ChangeTrackingDictionary<string, IDictionary<string, T>>)dictionary).WasCleared())
+            {
+                writer.WritePropertyName(propertyName);
+                writer.WriteNullValue();
+            }
+            else
+            {
+                // [Patch] This flag is to track whether we write the property name.
+                bool propertyNameWritten = false;
+                // [Patch] Loop all the items in the dictionary to see if it changes.
+                foreach (var item in dictionary)
+                {
+                    WritePatchDictionary(writer, Encoding.ASCII.GetBytes(item.Key), item.Value, writeItem, additionalItemChangeCheck,
+                        () =>
+                        {
+                            if (!propertyNameWritten)
+                            {
+                                writer.WritePropertyName(propertyName);
+                                writer.WriteStartObject();
+                                propertyNameWritten = true;
+                            }
+                        });
+                }
+                // [Patch] Loop all the item in ChangedKeys but not in the dictionary. That means this item is removed.
+                foreach (var key in ((ChangeTrackingDictionary<string, IDictionary<string, T>>)dictionary).ChangedKeys ?? new List<string>())
+                {
+                    if (!dictionary.ContainsKey(key))
+                    {
+                        if (!propertyNameWritten)
+                        {
+                            writer.WritePropertyName(propertyName);
+                            writer.WriteStartObject();
+                            propertyNameWritten = true;
+                        }
+
+                        writer.WritePropertyName(key);
+                        writer.WriteNullValue();
+                    }
+                }
+
+                if (propertyNameWritten)
+                {
+                    writer.WriteEndObject();
+                }
+            }
+        }
+
+        public static void WritePatchDictionary<T>(Utf8JsonWriter writer, ReadOnlySpan<byte> propertyName, IDictionary<string, T> dictionary, Action<T> writeItem, Func<T, bool> additionalItemChangeCheck = null, Action additionalPropertyWrite = default)
+        {
+            // [Patch] If the dictionary is not ChangeTrackingDictionary, it must be assigned by user.
+            if (dictionary != null && dictionary is not ChangeTrackingDictionary<string, T>)
+            {
+                additionalPropertyWrite?.Invoke();
+                writer.WritePropertyName(propertyName);
+                writer.WriteStartObject();
+                foreach (var item in dictionary)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        writeItem(item.Value);
+                    }
+                }
+                writer.WriteEndObject();
+                return;
+            }
+
+            // [Patch] We should decide what is the correct statement for removing a dictionary.
+            if (dictionary == null || ((ChangeTrackingDictionary<string, T>)dictionary).WasCleared())
+            {
+                additionalPropertyWrite?.Invoke();
+                writer.WritePropertyName(propertyName);
+                writer.WriteNullValue();
+            }
+            else
+            {
+                // [Patch] This flag is to track whether we write the property name.
+                bool propertyNameWritten = false;
+                // [Patch] Loop all the items in the dictionary to see if it changes.
+                foreach (var item in dictionary)
+                {
+                    // [Patch] Case 1: dictionary["a"] = null;
+                    // [Patch] Case 2: dictionary["a"] = <T>;
+                    // [Patch] Case 3: dictionary["a"] is <T> and <T> is changed.
+                    if (((ChangeTrackingDictionary<string, T>)dictionary).IsChanged(item.Key) || (additionalItemChangeCheck != null && additionalItemChangeCheck(item.Value)))
+                    {
+                        if (!propertyNameWritten)
+                        {
+                            additionalPropertyWrite?.Invoke();
+                            writer.WritePropertyName(propertyName);
+                            writer.WriteStartObject();
+                            propertyNameWritten = true;
+                        }
+
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            writeItem(item.Value);
+                        }
+                    }
+                }
+                // [Patch] Loop all the item in ChangedKeys but not in the dictionary. That means this item is removed.
+                foreach (var key in ((ChangeTrackingDictionary<string, T>)dictionary).ChangedKeys ?? new List<string>())
+                {
+                    if (!dictionary.ContainsKey(key))
+                    {
+                        if (!propertyNameWritten)
+                        {
+                            additionalPropertyWrite?.Invoke();
+                            writer.WritePropertyName(propertyName);
+                            writer.WriteStartObject();
+                            propertyNameWritten = true;
+                        }
+
+                        writer.WritePropertyName(key);
+                        writer.WriteNullValue();
+                    }
+                }
+
+                if (propertyNameWritten)
+                {
+                    additionalPropertyWrite?.Invoke();
+                    writer.WriteEndObject();
+                }
+            }
+        }
+
+        public static void WritePatchList<T>(Utf8JsonWriter writer, ReadOnlySpan<byte> propertyName, IList<T> list, Action<T> writeItem, Func<T, bool> additionalItemChangeCheck = null)
+        {
+            // [Patch] We should decide what is the correct statement for removing an array.
+            if (list == null || (list is ChangeTrackingList<T> trackingList && trackingList.WasCleared()))
+            {
+                writer.WritePropertyName(propertyName);
+                writer.WriteNullValue();
+            }
+            else if (list is not ChangeTrackingList<T> || ((ChangeTrackingList<T>)list).IsChanged() || (additionalItemChangeCheck != null && list.Any(item => additionalItemChangeCheck(item))))
+            {
+                writer.WritePropertyName(propertyName);
+                writer.WriteStartArray();
+                foreach (var item in list)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                    }
+                    else
+                    {
+                        writeItem(item);
+                    }
+                }
+                writer.WriteEndArray();
+            }
         }
 
         public static void WriteStringValue(this Utf8JsonWriter writer, DateTimeOffset value, string format)

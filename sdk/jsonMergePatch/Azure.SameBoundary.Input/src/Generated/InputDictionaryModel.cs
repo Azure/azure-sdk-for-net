@@ -108,9 +108,9 @@ namespace Azure.SameBoundary.Input
             _optionalDictionaryDictionary = new ChangeTrackingDictionary<string, IDictionary<string, InputDummy>>(
                 optionalDictionaryDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingDictionary<string, InputDummy>(item.Value) as IDictionary<string, InputDummy>) as IDictionary<string, IDictionary<string, InputDummy>>);
             _requiredArrayDictionary = new ChangeTrackingDictionary<string, IList<InputDummy>>(
-                requiredArrayDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingList<InputDummy>(item.Value, true) as IList<InputDummy>) as IDictionary<string, IList<InputDummy>>);
+                requiredArrayDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingList<InputDummy>(item.Value) as IList<InputDummy>) as IDictionary<string, IList<InputDummy>>);
             _optionalArrayDictionary = new ChangeTrackingDictionary<string, IList<InputDummy>>(
-                optionalArrayDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingList<InputDummy>(item.Value, true) as IList<InputDummy>) as IDictionary<string, IList<InputDummy>>);
+                optionalArrayDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingList<InputDummy>(item.Value) as IList<InputDummy>) as IDictionary<string, IList<InputDummy>>);
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

@@ -28,7 +28,7 @@ namespace Azure.SameBoundary.RoundTrip
         /// <param name="anotherLevelProperty"></param>
         internal RoundTripAddAnotherLevelToInheritanceModel(string baseProperty1, int baseProperty2, IDictionary<string, string> baseProperty3, IDictionary<string, BinaryData> serializedAdditionalRawData, string extendedProperty, string anotherLevelProperty) : base(baseProperty1, baseProperty2, baseProperty3, serializedAdditionalRawData, extendedProperty)
         {
-            AnotherLevelProperty = anotherLevelProperty;
+            _anotherLevelProperty = anotherLevelProperty;
         }
 
         /// <summary> Initializes a new instance of <see cref="RoundTripAddAnotherLevelToInheritanceModel"/> for deserialization. </summary>

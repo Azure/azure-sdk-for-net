@@ -105,9 +105,9 @@ namespace Azure.SameBoundary.RoundTrip
             _optionalDictionaryDictionary = new ChangeTrackingDictionary<string, IDictionary<string, RoundTripDummy>>(
                 optionalDictionaryDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingDictionary<string, RoundTripDummy>(item.Value) as IDictionary<string, RoundTripDummy>) as IDictionary<string, IDictionary<string, RoundTripDummy>>);
             _requiredArrayDictionary = new ChangeTrackingDictionary<string, IList<RoundTripDummy>>(
-                requiredArrayDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingList<RoundTripDummy>(item.Value, true) as IList<RoundTripDummy>) as IDictionary<string, IList<RoundTripDummy>>);
+                requiredArrayDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingList<RoundTripDummy>(item.Value) as IList<RoundTripDummy>) as IDictionary<string, IList<RoundTripDummy>>);
             _optionalArrayDictionary = new ChangeTrackingDictionary<string, IList<RoundTripDummy>>(
-                optionalArrayDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingList<RoundTripDummy>(item.Value, true) as IList<RoundTripDummy>) as IDictionary<string, IList<RoundTripDummy>>);
+                optionalArrayDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingList<RoundTripDummy>(item.Value) as IList<RoundTripDummy>) as IDictionary<string, IList<RoundTripDummy>>);
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

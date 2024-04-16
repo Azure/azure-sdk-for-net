@@ -1,0 +1,48 @@
+{
+    "requiredArrayArray": [
+        [
+            { "property": "x_changed" },
+            { "property": "y" },
+            { "property": "z" }
+        ],
+        [
+            { "property": "a" },
+            { "property": "b" },
+            { "property": "c" },
+            { "property": "d" }
+        ]
+    ],
+    "optionalArrayArray": [
+        [
+            {},
+            { "property": "y" },
+            { "property": "z" }
+        ],
+        [
+            { "property": "a" },
+            { "property": "b" },
+            { "property": "c" },
+            { "property": "d" }
+        ]
+    ],
+    "requiredDictionaryArray": [
+        {
+            "key1": { "property": "value1_changed" },
+            "key2": { "property": "value2" }
+        },
+        {
+            "k1": { "property": "value1" },
+            "k2": { "property": "value2" }
+        }
+    ],
+    "optionalDictionaryArray": [
+        {
+            "key1": { },
+            "key2": { "property": "value2" }
+        },
+        {
+            "k1": { "property": "value1" },
+            "k2": { "property": "value2" }
+        }
+    ]
+}

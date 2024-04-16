@@ -19,10 +19,55 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestData\Case1_ReceivedDataShouldBeRegardedAsNotChanged.json">
+    <None Update="TestData\Empty.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\Case2_ExplicitSetPropertyShouldBeSerializedOtherwiseNot.json">
+    <None Update="TestData\RoundTripArray_AllPropertiesReceived.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripArray_Case2_ChangeOnArrayPropertyShouldBeSerialized.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripArray_Case3_ChangeOnArrayItemShouldBeSerialized.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripArray_Case4_ChangeOnArrayInnerItemShouldBeSerialized.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripDictionary_AllPropertiesReceived.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripDictionary_Case2_ChangeInDictionaryShouldBeSerialized.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripDictionary_Case3_ChangeInDictionaryItemShouldBeSerialized.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripDictionary_Case4_ChangeInDictionaryInnerItemShouldBeSerialized.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripInheritance_AllPropertiesReceived.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripInheritance_Case2_ChangeInInBaseModelShouldBeSerialized.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripInheritance_Case3_ChangeInMultipleLevelsAreSerializedCorrectly.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripInheritance_MultipleLevelsAllPropertiesReceived.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripNested_AllPropertiesReceived.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripNested_Case2_ChangeInNestedModelShouldBeSerialized.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripNested_Case3_ChangeModelPropertyShouldBeSerialized.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\RoundTripPrimitive_Case2_ExplicitSetPropertyShouldBeSerializedOtherwiseNot.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\RoundTripPrimitive_AllPropertiesReceived.json">
