@@ -8,9 +8,9 @@
 
   SDKType values
    - "all" will build all projects
-   - "dataplane" will build the new track 2 client/data libraries
+   - "client" will build the new track 2 client/data libraries
    - "mgmt" will build the management plane SDK.
-   - "webjobs" will build the storage WebJobs Extensions.
+   - "functions" will build the storage WebJobs Extensions.
    - "datamovement" will build the storage Data Movement packages.
 -->
 
