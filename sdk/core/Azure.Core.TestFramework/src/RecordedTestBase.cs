@@ -157,14 +157,34 @@ namespace Azure.Core.TestFramework
                 {
                     GroupForReplace = "group"
                 },
-                // TODO should we only replace the secret parts for these?
-                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<Value>)(.*)(?:</Value>)", SanitizeValue),
-                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<SignedTid>)(.*)(?:</SignedTid>)", SanitizeValue),
-                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<SignedOid>)(.*)(?:</SignedOid>)", SanitizeValue),
-                new BodyRegexSanitizer("(?:Password=)(.*?)(?:;)", SanitizeValue),
-                new BodyRegexSanitizer("(?:User ID=)(.*?)(?:;)", SanitizeValue),
-                new BodyRegexSanitizer("(?:<PrimaryKey>)(.*)(?:</PrimaryKey>)", SanitizeValue),
-                new BodyRegexSanitizer("(?:<SecondaryKey>)(.*)(?:</SecondaryKey>)", SanitizeValue),
+                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<Value>)(?<group>.*)(?:</Value>)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<SignedTid>)(?<group>.*)(?:</SignedTid>)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer("(?<=<UserDelegationKey>).*?(?:<SignedOid>)(?<group>.*)(?:</SignedOid>)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer("(?:Password=)(?<group>.*?)(?:;)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer("(?:User I[d|D]=)(?<group>.*?)(?:;)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer("(?:<PrimaryKey>)(?<group>.*)(?:</PrimaryKey>)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
+                new BodyRegexSanitizer("(?:<SecondaryKey>)(?<group>.*)(?:</SecondaryKey>)", SanitizeValue)
+                {
+                    GroupForReplace = "group"
+                },
                 new BodyRegexSanitizer("-----BEGIN PRIVATE KEY-----\\\\n(.+\\\\n)*-----END PRIVATE KEY-----\\\\n", SanitizeValue)
             };
 
