@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -95,7 +96,17 @@ namespace Azure.Core.TestFramework
 
             message.Response.ClientRequestId = request.ClientRequestId;
 
-            if (message.Response.ContentStream != null && ExpectSyncPipeline != null)
+            if (message.Response.ContentStream != null && message.BufferResponse)
+            {
+                if (!(message.Response.ContentStream is MemoryStream))
+                {
+                    throw new InvalidOperationException(
+                        "Response content stream must be MemoryStream when buffering is requested"
+                    );
+                }
+            }
+
+            if (message.Response.ContentStream != null && !message.BufferResponse && ExpectSyncPipeline != null)
             {
                 message.Response.ContentStream = new AsyncValidatingStream(!ExpectSyncPipeline.Value, message.Response.ContentStream);
             }

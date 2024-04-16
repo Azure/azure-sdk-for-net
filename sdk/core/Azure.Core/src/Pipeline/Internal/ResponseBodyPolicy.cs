@@ -68,7 +68,7 @@ namespace Azure.Core.Pipeline
             }
 
             Stream? responseContentStream = message.Response.ContentStream;
-            if (responseContentStream == null || responseContentStream.CanSeek)
+            if (responseContentStream == null || responseContentStream is MemoryStream)
             {
                 return;
             }
