@@ -74,6 +74,7 @@ namespace Azure.Core.TestFramework
                 "$..atlasKafkaPrimaryEndpoint",
                 "$..atlasKafkaSecondaryEndpoint",
                 "$..authHeader",
+                "$..blob_sas_url",
                 "$..certificatePassword",
                 "$..clientId",
                 "$..clientSecret",
