@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
-                writer.WriteObjectValue<AuthenticationSettingsContract>(AuthenticationSettings, options);
+                writer.WriteObjectValue(AuthenticationSettings, options);
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
-                writer.WriteObjectValue<SubscriptionKeyParameterNamesContract>(SubscriptionKeyParameterNames, options);
+                writer.WriteObjectValue(SubscriptionKeyParameterNames, options);
             }
             if (Optional.IsDefined(ApiType))
             {
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue<ApiContactInformation>(Contact, options);
+                writer.WriteObjectValue(Contact, options);
             }
             if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue<ApiLicenseInformation>(License, options);
+                writer.WriteObjectValue(License, options);
             }
             if (Optional.IsDefined(SourceApiId))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ApiVersionSet))
             {
                 writer.WritePropertyName("apiVersionSet"u8);
-                writer.WriteObjectValue<ApiVersionSetContractDetails>(ApiVersionSet, options);
+                writer.WriteObjectValue(ApiVersionSet, options);
             }
             if (Optional.IsDefined(Value))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(WsdlSelector))
             {
                 writer.WritePropertyName("wsdlSelector"u8);
-                writer.WriteObjectValue<ApiCreateOrUpdatePropertiesWsdlSelector>(WsdlSelector, options);
+                writer.WriteObjectValue(WsdlSelector, options);
             }
             if (Optional.IsDefined(SoapApiType))
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default;
             SoapApiType? apiType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -438,10 +438,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApiCreateOrUpdateContent(
                 description,
                 authenticationSettings,

@@ -87,6 +87,7 @@ namespace Azure.AI.OpenAI
         /// Generally, `n` choices are generated per provided prompt with a default value of 1.
         /// Token limits and other settings may limit the number of choices generated.
         /// </param>
+        /// <param name="model"> The model name used for this completions request. </param>
         /// <param name="promptFilterResults">
         /// Content filtering results for zero or more prompts in the request. In a streaming request,
         /// results for different prompts may arrive at different times or in different orders.
@@ -97,11 +98,12 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletions(string id, DateTimeOffset created, IReadOnlyList<ChatChoice> choices, IReadOnlyList<ContentFilterResultsForPrompt> promptFilterResults, string systemFingerprint, CompletionsUsage usage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatCompletions(string id, DateTimeOffset created, IReadOnlyList<ChatChoice> choices, string model, IReadOnlyList<ContentFilterResultsForPrompt> promptFilterResults, string systemFingerprint, CompletionsUsage usage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Created = created;
             Choices = choices;
+            Model = model;
             PromptFilterResults = promptFilterResults;
             SystemFingerprint = systemFingerprint;
             Usage = usage;
@@ -126,6 +128,8 @@ namespace Azure.AI.OpenAI
         /// Token limits and other settings may limit the number of choices generated.
         /// </summary>
         public IReadOnlyList<ChatChoice> Choices { get; }
+        /// <summary> The model name used for this completions request. </summary>
+        public string Model { get; }
         /// <summary>
         /// Content filtering results for zero or more prompts in the request. In a streaming request,
         /// results for different prompts may arrive at different times or in different orders.

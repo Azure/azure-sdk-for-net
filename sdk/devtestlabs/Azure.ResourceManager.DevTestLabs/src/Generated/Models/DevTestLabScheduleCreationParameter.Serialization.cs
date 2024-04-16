@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(WeeklyRecurrence))
             {
                 writer.WritePropertyName("weeklyRecurrence"u8);
-                writer.WriteObjectValue<DevTestLabWeekDetails>(WeeklyRecurrence, options);
+                writer.WriteObjectValue(WeeklyRecurrence, options);
             }
             if (Optional.IsDefined(DailyRecurrence))
             {
                 writer.WritePropertyName("dailyRecurrence"u8);
-                writer.WriteObjectValue<DayDetails>(DailyRecurrence, options);
+                writer.WriteObjectValue(DailyRecurrence, options);
             }
             if (Optional.IsDefined(HourlyRecurrence))
             {
                 writer.WritePropertyName("hourlyRecurrence"u8);
-                writer.WriteObjectValue<HourDetails>(HourlyRecurrence, options);
+                writer.WriteObjectValue(HourlyRecurrence, options);
             }
             if (Optional.IsDefined(TimeZoneId))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(NotificationSettings))
             {
                 writer.WritePropertyName("notificationSettings"u8);
-                writer.WriteObjectValue<DevTestLabNotificationSettings>(NotificationSettings, options);
+                writer.WriteObjectValue(NotificationSettings, options);
             }
             if (Optional.IsDefined(TargetResourceId))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             DevTestLabNotificationSettings notificationSettings = default;
             ResourceIdentifier targetResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -249,10 +249,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevTestLabScheduleCreationParameter(
                 name,
                 location,

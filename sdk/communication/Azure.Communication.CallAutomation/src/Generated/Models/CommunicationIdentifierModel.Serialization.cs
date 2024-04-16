@@ -29,22 +29,22 @@ namespace Azure.Communication
             if (CallAutomation.Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser"u8);
-                writer.WriteObjectValue<CommunicationUserIdentifierModel>(CommunicationUser);
+                writer.WriteObjectValue(CommunicationUser);
             }
             if (CallAutomation.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
-                writer.WriteObjectValue<PhoneNumberIdentifierModel>(PhoneNumber);
+                writer.WriteObjectValue(PhoneNumber);
             }
             if (CallAutomation.Optional.IsDefined(MicrosoftTeamsUser))
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
-                writer.WriteObjectValue<MicrosoftTeamsUserIdentifierModel>(MicrosoftTeamsUser);
+                writer.WriteObjectValue(MicrosoftTeamsUser);
             }
             if (CallAutomation.Optional.IsDefined(MicrosoftTeamsApp))
             {
                 writer.WritePropertyName("microsoftTeamsApp"u8);
-                writer.WriteObjectValue<MicrosoftTeamsAppIdentifierModel>(MicrosoftTeamsApp);
+                writer.WriteObjectValue(MicrosoftTeamsApp);
             }
             writer.WriteEndObject();
         }
@@ -121,6 +121,22 @@ namespace Azure.Communication
                 phoneNumber,
                 microsoftTeamsUser,
                 microsoftTeamsApp);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CommunicationIdentifierModel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCommunicationIdentifierModel(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new CallAutomation.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

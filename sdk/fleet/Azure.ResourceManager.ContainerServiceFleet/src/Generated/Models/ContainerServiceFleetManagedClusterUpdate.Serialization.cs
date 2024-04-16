@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("upgrade"u8);
-            writer.WriteObjectValue<ContainerServiceFleetManagedClusterUpgradeSpec>(Upgrade, options);
+            writer.WriteObjectValue(Upgrade, options);
             if (Optional.IsDefined(NodeImageSelection))
             {
                 writer.WritePropertyName("nodeImageSelection"u8);
-                writer.WriteObjectValue<NodeImageSelection>(NodeImageSelection, options);
+                writer.WriteObjectValue(NodeImageSelection, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             ContainerServiceFleetManagedClusterUpgradeSpec upgrade = default;
             NodeImageSelection nodeImageSelection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("upgrade"u8))
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerServiceFleetManagedClusterUpdate(upgrade, nodeImageSelection, serializedAdditionalRawData);
         }
 

@@ -60,17 +60,17 @@ namespace Azure.ResourceManager.Search
             if (Optional.IsDefined(NetworkSecurityPerimeter))
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
-                writer.WriteObjectValue<NSPConfigPerimeter>(NetworkSecurityPerimeter, options);
+                writer.WriteObjectValue(NetworkSecurityPerimeter, options);
             }
             if (Optional.IsDefined(ResourceAssociation))
             {
                 writer.WritePropertyName("resourceAssociation"u8);
-                writer.WriteObjectValue<NSPConfigAssociation>(ResourceAssociation, options);
+                writer.WriteObjectValue(ResourceAssociation, options);
             }
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue<NSPConfigProfile>(Profile, options);
+                writer.WriteObjectValue(Profile, options);
             }
             if (Optional.IsCollectionDefined(ProvisioningIssues))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Search
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningIssues)
                 {
-                    writer.WriteObjectValue<NSPProvisioningIssue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Search
             NSPConfigProfile profile = default;
             IList<NSPProvisioningIssue> provisioningIssues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -218,10 +218,10 @@ namespace Azure.ResourceManager.Search
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkSecurityPerimeterConfigurationData(
                 id,
                 name,

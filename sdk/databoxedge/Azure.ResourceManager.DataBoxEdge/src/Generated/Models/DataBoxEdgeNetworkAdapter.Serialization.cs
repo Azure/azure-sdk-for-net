@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(AdapterPosition))
             {
                 writer.WritePropertyName("adapterPosition"u8);
-                writer.WriteObjectValue<DataBoxEdgeNetworkAdapterPosition>(AdapterPosition, options);
+                writer.WriteObjectValue(AdapterPosition, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Index))
             {
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(IPv4Configuration))
             {
                 writer.WritePropertyName("ipv4Configuration"u8);
-                writer.WriteObjectValue<DataBoxEdgeIPv4Config>(IPv4Configuration, options);
+                writer.WriteObjectValue(IPv4Configuration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IPv6Configuration))
             {
                 writer.WritePropertyName("ipv6Configuration"u8);
-                writer.WriteObjectValue<DataBoxEdgeIPv6Config>(IPv6Configuration, options);
+                writer.WriteObjectValue(IPv6Configuration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IPv6LinkLocalAddress))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             string ipv6LinkLocalAddress = default;
             IReadOnlyList<string> dnsServers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adapterId"u8))
@@ -285,10 +285,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxEdgeNetworkAdapter(
                 adapterId,
                 adapterPosition,

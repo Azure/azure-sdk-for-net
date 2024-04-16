@@ -29,37 +29,32 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Sexual))
             {
                 writer.WritePropertyName("sexual"u8);
-                writer.WriteObjectValue<ContentFilterResult>(Sexual, options);
+                writer.WriteObjectValue(Sexual, options);
             }
             if (Optional.IsDefined(Violence))
             {
                 writer.WritePropertyName("violence"u8);
-                writer.WriteObjectValue<ContentFilterResult>(Violence, options);
+                writer.WriteObjectValue(Violence, options);
             }
             if (Optional.IsDefined(Hate))
             {
                 writer.WritePropertyName("hate"u8);
-                writer.WriteObjectValue<ContentFilterResult>(Hate, options);
+                writer.WriteObjectValue(Hate, options);
             }
             if (Optional.IsDefined(SelfHarm))
             {
                 writer.WritePropertyName("self_harm"u8);
-                writer.WriteObjectValue<ContentFilterResult>(SelfHarm, options);
+                writer.WriteObjectValue(SelfHarm, options);
             }
             if (Optional.IsDefined(Profanity))
             {
                 writer.WritePropertyName("profanity"u8);
-                writer.WriteObjectValue<ContentFilterDetectionResult>(Profanity, options);
+                writer.WriteObjectValue(Profanity, options);
             }
-            if (Optional.IsCollectionDefined(CustomBlocklists))
+            if (Optional.IsDefined(CustomBlocklists))
             {
                 writer.WritePropertyName("custom_blocklists"u8);
-                writer.WriteStartArray();
-                foreach (var item in CustomBlocklists)
-                {
-                    writer.WriteObjectValue<ContentFilterBlocklistIdResult>(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(CustomBlocklists, options);
             }
             if (Optional.IsDefined(Error))
             {
@@ -69,12 +64,12 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(ProtectedMaterialText))
             {
                 writer.WritePropertyName("protected_material_text"u8);
-                writer.WriteObjectValue<ContentFilterDetectionResult>(ProtectedMaterialText, options);
+                writer.WriteObjectValue(ProtectedMaterialText, options);
             }
             if (Optional.IsDefined(ProtectedMaterialCode))
             {
                 writer.WritePropertyName("protected_material_code"u8);
-                writer.WriteObjectValue<ContentFilterCitedDetectionResult>(ProtectedMaterialCode, options);
+                writer.WriteObjectValue(ProtectedMaterialCode, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -119,12 +114,12 @@ namespace Azure.AI.OpenAI
             ContentFilterResult hate = default;
             ContentFilterResult selfHarm = default;
             ContentFilterDetectionResult profanity = default;
-            IReadOnlyList<ContentFilterBlocklistIdResult> customBlocklists = default;
+            ContentFilterDetailedResults customBlocklists = default;
             ResponseError error = default;
             ContentFilterDetectionResult protectedMaterialText = default;
             ContentFilterCitedDetectionResult protectedMaterialCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sexual"u8))
@@ -178,12 +173,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    List<ContentFilterBlocklistIdResult> array = new List<ContentFilterBlocklistIdResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ContentFilterBlocklistIdResult.DeserializeContentFilterBlocklistIdResult(item, options));
-                    }
-                    customBlocklists = array;
+                    customBlocklists = ContentFilterDetailedResults.DeserializeContentFilterDetailedResults(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -215,17 +205,17 @@ namespace Azure.AI.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContentFilterResultsForChoice(
                 sexual,
                 violence,
                 hate,
                 selfHarm,
                 profanity,
-                customBlocklists ?? new ChangeTrackingList<ContentFilterBlocklistIdResult>(),
+                customBlocklists,
                 error,
                 protectedMaterialText,
                 protectedMaterialCode,
@@ -271,11 +261,11 @@ namespace Azure.AI.OpenAI
             return DeserializeContentFilterResultsForChoice(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ContentFilterResultsForChoice>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

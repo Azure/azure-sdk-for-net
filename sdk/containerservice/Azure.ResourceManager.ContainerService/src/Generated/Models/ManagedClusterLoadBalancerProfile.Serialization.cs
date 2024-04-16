@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(ManagedOutboundIPs))
             {
                 writer.WritePropertyName("managedOutboundIPs"u8);
-                writer.WriteObjectValue<ManagedClusterLoadBalancerProfileManagedOutboundIPs>(ManagedOutboundIPs, options);
+                writer.WriteObjectValue(ManagedOutboundIPs, options);
             }
             if (Optional.IsDefined(OutboundIPPrefixes))
             {
                 writer.WritePropertyName("outboundIPPrefixes"u8);
-                writer.WriteObjectValue<ManagedClusterLoadBalancerProfileOutboundIPPrefixes>(OutboundIPPrefixes, options);
+                writer.WriteObjectValue(OutboundIPPrefixes, options);
             }
             if (Optional.IsDefined(OutboundIPs))
             {
                 writer.WritePropertyName("outboundIPs"u8);
-                writer.WriteObjectValue<ManagedClusterLoadBalancerProfileOutboundIPs>(OutboundIPs, options);
+                writer.WriteObjectValue(OutboundIPs, options);
             }
             if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             bool? enableMultipleStandardLoadBalancers = default;
             ManagedClusterLoadBalancerBackendPoolType? backendPoolType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedOutboundIPs"u8))
@@ -201,10 +201,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedClusterLoadBalancerProfile(
                 managedOutboundIPs,
                 outboundIPPrefixes,

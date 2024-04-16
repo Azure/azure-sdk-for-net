@@ -37,7 +37,7 @@ namespace Azure.Maps.Routing.Models
 
         /// <summary> Sections of the route that are cars or trains. </summary>
         public static ResponseSectionType CarOrTrain { get; } = new ResponseSectionType(CarOrTrainValue);
-        /// <summary> Sections indicating which countries the route is in. </summary>
+        /// <summary> Sections indicating which countries/regions the route is in. </summary>
         public static ResponseSectionType Country { get; } = new ResponseSectionType(CountryValue);
         /// <summary> Sections of the route that are ferries. </summary>
         public static ResponseSectionType Ferry { get; } = new ResponseSectionType(FerryValue);
