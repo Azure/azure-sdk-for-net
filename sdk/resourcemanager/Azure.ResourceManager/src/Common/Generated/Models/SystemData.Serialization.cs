@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Models
     [JsonConverter(typeof(SystemDataConverter))]
     public partial class SystemData : IUtf8JsonSerializable, IJsonModel<SystemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Models
 
         internal static SystemData DeserializeSystemData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Models
         {
             public override void Write(Utf8JsonWriter writer, SystemData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model, new ModelReaderWriterOptions("W"));
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
 
             public override SystemData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class ObjectReplicationPolicyData : IUtf8JsonSerializable, IJsonModel<ObjectReplicationPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ObjectReplicationPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ObjectReplicationPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ObjectReplicationPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Storage
 
         internal static ObjectReplicationPolicyData DeserializeObjectReplicationPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

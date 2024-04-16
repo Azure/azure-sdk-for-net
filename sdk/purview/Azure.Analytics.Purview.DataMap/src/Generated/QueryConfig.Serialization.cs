@@ -15,7 +15,7 @@ namespace Azure.Analytics.Purview.DataMap
 {
     public partial class QueryConfig : IUtf8JsonSerializable, IJsonModel<QueryConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QueryConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         internal static QueryConfig DeserializeQueryConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -271,7 +271,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

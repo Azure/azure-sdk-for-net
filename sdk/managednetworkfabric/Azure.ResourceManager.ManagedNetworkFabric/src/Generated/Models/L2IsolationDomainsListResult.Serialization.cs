@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     internal partial class L2IsolationDomainsListResult : IUtf8JsonSerializable, IJsonModel<L2IsolationDomainsListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<L2IsolationDomainsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<L2IsolationDomainsListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<L2IsolationDomainsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static L2IsolationDomainsListResult DeserializeL2IsolationDomainsListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

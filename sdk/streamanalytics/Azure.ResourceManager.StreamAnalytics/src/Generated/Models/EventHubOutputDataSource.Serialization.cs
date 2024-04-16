@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     public partial class EventHubOutputDataSource : IUtf8JsonSerializable, IJsonModel<EventHubOutputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubOutputDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubOutputDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubOutputDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static EventHubOutputDataSource DeserializeEventHubOutputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

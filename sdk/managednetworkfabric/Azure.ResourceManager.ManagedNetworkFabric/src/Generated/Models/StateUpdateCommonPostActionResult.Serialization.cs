@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class StateUpdateCommonPostActionResult : IUtf8JsonSerializable, IJsonModel<StateUpdateCommonPostActionResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StateUpdateCommonPostActionResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StateUpdateCommonPostActionResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StateUpdateCommonPostActionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static StateUpdateCommonPostActionResult DeserializeStateUpdateCommonPostActionResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

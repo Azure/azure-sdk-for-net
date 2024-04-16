@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class ExecuteGovernanceRuleParams : IUtf8JsonSerializable, IJsonModel<ExecuteGovernanceRuleParams>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecuteGovernanceRuleParams>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecuteGovernanceRuleParams>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExecuteGovernanceRuleParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static ExecuteGovernanceRuleParams DeserializeExecuteGovernanceRuleParams(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

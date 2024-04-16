@@ -27,9 +27,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             // EXCEPTIONS
             internal const string ExceptionsPerSecondMetricIdValue = @"\ApplicationInsights\Exceptions/Sec";
 
-            // PROCESS METRICS
+            // PROCESS METRICS (OLD) // TODO: Remove these after the UX is updated to use the new metrics
             internal const string MemoryCommittedBytesMetricIdValue = @"\Memory\Committed Bytes";
             internal const string ProcessorTimeMetricIdValue = @"\Processor(_Total)\% Processor Time";
+
+            // PROCESS METRICS (NEW)
+            internal const string ProcessPhysicalBytesMetricIdValue = @"\Process\Physical Bytes";
+            internal const string ProcessProcessorTimeNormalizedMetricIdValue = @"\% Process\Processor Time Normalized";
         }
     }
 }

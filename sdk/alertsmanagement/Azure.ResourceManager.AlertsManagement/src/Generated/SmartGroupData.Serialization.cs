@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AlertsManagement
 {
     public partial class SmartGroupData : IUtf8JsonSerializable, IJsonModel<SmartGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmartGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmartGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SmartGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AlertsManagement
 
         internal static SmartGroupData DeserializeSmartGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads
 {
     public partial class SapVirtualInstanceData : IUtf8JsonSerializable, IJsonModel<SapVirtualInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapVirtualInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapVirtualInstanceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapVirtualInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Workloads
 
         internal static SapVirtualInstanceData DeserializeSapVirtualInstanceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

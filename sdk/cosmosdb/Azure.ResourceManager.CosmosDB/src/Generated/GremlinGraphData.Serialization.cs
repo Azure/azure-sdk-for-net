@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class GremlinGraphData : IUtf8JsonSerializable, IJsonModel<GremlinGraphData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GremlinGraphData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GremlinGraphData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GremlinGraphData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static GremlinGraphData DeserializeGremlinGraphData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

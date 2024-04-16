@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DataBoxEdgeJobData : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeJobData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxEdgeJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DataBoxEdgeJobData DeserializeDataBoxEdgeJobData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

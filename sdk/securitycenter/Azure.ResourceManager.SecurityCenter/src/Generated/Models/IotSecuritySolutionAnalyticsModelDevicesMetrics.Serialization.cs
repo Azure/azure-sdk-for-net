@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class IotSecuritySolutionAnalyticsModelDevicesMetrics : IUtf8JsonSerializable, IJsonModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotSecuritySolutionAnalyticsModelDevicesMetrics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static IotSecuritySolutionAnalyticsModelDevicesMetrics DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

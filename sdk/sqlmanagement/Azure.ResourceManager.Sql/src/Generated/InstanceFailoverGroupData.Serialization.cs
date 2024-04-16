@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class InstanceFailoverGroupData : IUtf8JsonSerializable, IJsonModel<InstanceFailoverGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceFailoverGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceFailoverGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InstanceFailoverGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static InstanceFailoverGroupData DeserializeInstanceFailoverGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     public partial class DataProductVersion : IUtf8JsonSerializable, IJsonModel<DataProductVersion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductVersion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductVersion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataProductVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 
         internal static DataProductVersion DeserializeDataProductVersion(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

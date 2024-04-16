@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceLinker
 {
     public partial class LinkerResourceData : IUtf8JsonSerializable, IJsonModel<LinkerResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LinkerResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ServiceLinker
 
         internal static LinkerResourceData DeserializeLinkerResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

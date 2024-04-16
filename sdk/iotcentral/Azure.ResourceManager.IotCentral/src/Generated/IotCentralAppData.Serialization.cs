@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotCentral
 {
     public partial class IotCentralAppData : IUtf8JsonSerializable, IJsonModel<IotCentralAppData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotCentralAppData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotCentralAppData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotCentralAppData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.IotCentral
 
         internal static IotCentralAppData DeserializeIotCentralAppData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

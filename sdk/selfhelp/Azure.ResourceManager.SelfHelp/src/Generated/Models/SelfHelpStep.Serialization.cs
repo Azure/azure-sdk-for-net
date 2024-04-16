@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class SelfHelpStep : IUtf8JsonSerializable, IJsonModel<SelfHelpStep>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHelpStep>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHelpStep>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SelfHelpStep>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static SelfHelpStep DeserializeSelfHelpStep(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

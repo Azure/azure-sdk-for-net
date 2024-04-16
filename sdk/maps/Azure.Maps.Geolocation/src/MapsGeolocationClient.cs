@@ -65,7 +65,7 @@ namespace Azure.Maps.Geolocation
 
         /// <summary> Initializes a new instance of MapsGeolocationClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Geolocation Service. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="clientId"/> is null. </exception>
         public MapsGeolocationClient(TokenCredential credential, string clientId)
         {
@@ -81,7 +81,7 @@ namespace Azure.Maps.Geolocation
 
         /// <summary> Initializes a new instance of MapsGeolocationClient. </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Maps Geolocation Service. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> or <paramref name="clientId"/> is null. </exception>
         public MapsGeolocationClient(TokenCredential credential, string clientId, MapsGeolocationClientOptions options)

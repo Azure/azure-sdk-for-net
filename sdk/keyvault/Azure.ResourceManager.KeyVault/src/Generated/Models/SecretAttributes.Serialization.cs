@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     public partial class SecretAttributes : IUtf8JsonSerializable, IJsonModel<SecretAttributes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretAttributes>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretAttributes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecretAttributes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static SecretAttributes DeserializeSecretAttributes(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

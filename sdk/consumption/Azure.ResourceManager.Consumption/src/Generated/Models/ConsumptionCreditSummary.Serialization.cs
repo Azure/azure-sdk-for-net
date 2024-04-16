@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionCreditSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionCreditSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionCreditSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionCreditSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionCreditSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionCreditSummary DeserializeConsumptionCreditSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

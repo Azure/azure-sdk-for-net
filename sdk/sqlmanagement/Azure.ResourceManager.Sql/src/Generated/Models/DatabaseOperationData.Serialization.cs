@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class DatabaseOperationData : IUtf8JsonSerializable, IJsonModel<DatabaseOperationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseOperationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseOperationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatabaseOperationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static DatabaseOperationData DeserializeDatabaseOperationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

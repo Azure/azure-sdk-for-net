@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PostgreSql
 {
     public partial class PostgreSqlServerData : IUtf8JsonSerializable, IJsonModel<PostgreSqlServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlServerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlServerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {

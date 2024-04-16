@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class SkuAvailabilityValidationContent : IUtf8JsonSerializable, IJsonModel<SkuAvailabilityValidationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuAvailabilityValidationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuAvailabilityValidationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SkuAvailabilityValidationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static SkuAvailabilityValidationContent DeserializeSkuAvailabilityValidationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 {
     public partial class ManagementGroupParentCreateOptions : IUtf8JsonSerializable, IJsonModel<ManagementGroupParentCreateOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementGroupParentCreateOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementGroupParentCreateOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagementGroupParentCreateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         internal static ManagementGroupParentCreateOptions DeserializeManagementGroupParentCreateOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

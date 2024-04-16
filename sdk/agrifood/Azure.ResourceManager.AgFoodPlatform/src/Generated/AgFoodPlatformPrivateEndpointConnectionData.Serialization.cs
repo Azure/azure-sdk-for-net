@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
 {
     public partial class AgFoodPlatformPrivateEndpointConnectionData : IUtf8JsonSerializable, IJsonModel<AgFoodPlatformPrivateEndpointConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgFoodPlatformPrivateEndpointConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgFoodPlatformPrivateEndpointConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AgFoodPlatformPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         internal static AgFoodPlatformPrivateEndpointConnectionData DeserializeAgFoodPlatformPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.Models
 {
     public partial class MySqlConfigurations : IUtf8JsonSerializable, IJsonModel<MySqlConfigurations>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlConfigurations>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlConfigurations>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlConfigurations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlConfigurations DeserializeMySqlConfigurations(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

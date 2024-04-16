@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci
 {
     public partial class GuestAgentData : IUtf8JsonSerializable, IJsonModel<GuestAgentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestAgentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestAgentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GuestAgentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Hci
 
         internal static GuestAgentData DeserializeGuestAgentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

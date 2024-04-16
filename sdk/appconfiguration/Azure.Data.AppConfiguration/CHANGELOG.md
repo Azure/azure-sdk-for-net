@@ -1,14 +1,9 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.4.1 (2024-04-17)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed a bug introduced in version 1.3.0 where the `GetConfigurationSetting` method incorrectly logged 304 responses as failures in distributed tracing.
 
 ## 1.4.0 (2024-04-10)
 

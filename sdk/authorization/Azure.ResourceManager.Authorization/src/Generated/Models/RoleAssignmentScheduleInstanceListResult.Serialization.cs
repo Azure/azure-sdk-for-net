@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     internal partial class RoleAssignmentScheduleInstanceListResult : IUtf8JsonSerializable, IJsonModel<RoleAssignmentScheduleInstanceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentScheduleInstanceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentScheduleInstanceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleAssignmentScheduleInstanceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleAssignmentScheduleInstanceListResult DeserializeRoleAssignmentScheduleInstanceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

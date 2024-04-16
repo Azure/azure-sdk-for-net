@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media
 {
     public partial class StreamingLocatorData : IUtf8JsonSerializable, IJsonModel<StreamingLocatorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingLocatorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingLocatorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StreamingLocatorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Media
 
         internal static StreamingLocatorData DeserializeStreamingLocatorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

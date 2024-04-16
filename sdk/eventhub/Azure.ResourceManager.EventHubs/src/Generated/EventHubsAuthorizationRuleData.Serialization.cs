@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventHubs
 {
     public partial class EventHubsAuthorizationRuleData : IUtf8JsonSerializable, IJsonModel<EventHubsAuthorizationRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsAuthorizationRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsAuthorizationRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubsAuthorizationRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static EventHubsAuthorizationRuleData DeserializeEventHubsAuthorizationRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

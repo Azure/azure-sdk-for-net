@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     internal partial class ManagedEnvironmentPropertiesPeerAuthentication : IUtf8JsonSerializable, IJsonModel<ManagedEnvironmentPropertiesPeerAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedEnvironmentPropertiesPeerAuthentication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedEnvironmentPropertiesPeerAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedEnvironmentPropertiesPeerAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ManagedEnvironmentPropertiesPeerAuthentication DeserializeManagedEnvironmentPropertiesPeerAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

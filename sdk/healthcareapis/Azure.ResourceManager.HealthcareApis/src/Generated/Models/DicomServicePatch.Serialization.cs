@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 {
     public partial class DicomServicePatch : IUtf8JsonSerializable, IJsonModel<DicomServicePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DicomServicePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DicomServicePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DicomServicePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static DicomServicePatch DeserializeDicomServicePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SqlDatabasePatch : IUtf8JsonSerializable, IJsonModel<SqlDatabasePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabasePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabasePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlDatabasePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlDatabasePatch DeserializeSqlDatabasePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

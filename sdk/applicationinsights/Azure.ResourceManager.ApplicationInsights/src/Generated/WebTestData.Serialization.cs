@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     public partial class WebTestData : IUtf8JsonSerializable, IJsonModel<WebTestData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebTestData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebTestData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebTestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         internal static WebTestData DeserializeWebTestData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Purview.Models
 {
     public partial class PurviewIngestionStorage : IUtf8JsonSerializable, IJsonModel<PurviewIngestionStorage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewIngestionStorage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewIngestionStorage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PurviewIngestionStorage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         internal static PurviewIngestionStorage DeserializePurviewIngestionStorage(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class CustomDataset : IUtf8JsonSerializable, IJsonModel<CustomDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CustomDataset DeserializeCustomDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

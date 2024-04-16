@@ -26,8 +26,8 @@ namespace Azure.Maps.Routing
         ///   ignored for the calculation of the reference route's travel time and traffic delay.
         ///  Please refer to [Supporting Points](https://docs.microsoft.com/azure/azure-maps/how-to-use-best-practices-for-routing#calculate-and-bias-alternative-routes-using-supporting-points) for details.
         /// </param>
-        /// <param name="avoidVignette"> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries in which all toll roads with vignettes are to be avoided, e.g. "AUS,CHE". Toll roads with vignettes in countries not in the list are unaffected. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </param>
-        /// <param name="allowVignette"> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries in which toll roads with vignettes are allowed, e.g. "AUS,CHE". Specifying **allowVignette** with some countries X is equivalent to specifying **avoidVignette** with all countries but X. Specifying **allowVignette** with an empty list is the same as avoiding all toll roads with vignettes. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </param>
+        /// <param name="avoidVignette"> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries/regions in which all toll roads with vignettes are to be avoided, e.g. "AUS,CHE". Toll roads with vignettes in countries/regions not in the list are unaffected. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </param>
+        /// <param name="allowVignette"> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries/regions in which toll roads with vignettes are allowed, e.g. "AUS,CHE". Specifying **allowVignette** with some countries/regions X is equivalent to specifying **avoidVignette** with all countries/regions but X. Specifying **allowVignette** with an empty list is the same as avoiding all toll roads with vignettes. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </param>
         /// <param name="geoJsonAvoidAreas"> A GeoJSON MultiPolygon representing list of areas to avoid. Only rectangle polygons are supported. The maximum size of a rectangle is about 160x160 km. Maximum number of avoided areas is **10**. It cannot cross the 180th meridian. It must be between -80 and +80 degrees of latitude. </param>
         internal RouteDirectionParameters(GeoJsonGeometryCollection geoJsonSupportingPoints, IList<string> avoidVignette, IList<string> allowVignette, GeoJsonMultiPolygon geoJsonAvoidAreas)
         {
@@ -36,9 +36,9 @@ namespace Azure.Maps.Routing
             AllowVignette = allowVignette;
             _GeoJsonAvoidAreas = geoJsonAvoidAreas;
         }
-        /// <summary> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries in which all toll roads with vignettes are to be avoided, e.g. "AUS,CHE". Toll roads with vignettes in countries not in the list are unaffected. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </summary>
+        /// <summary> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries/regions in which all toll roads with vignettes are to be avoided, e.g. "AUS,CHE". Toll roads with vignettes in countries/regions not in the list are unaffected. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </summary>
         public IList<string> AvoidVignette { get; }
-        /// <summary> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries in which toll roads with vignettes are allowed, e.g. "AUS,CHE". Specifying **allowVignette** with some countries X is equivalent to specifying **avoidVignette** with all countries but X. Specifying **allowVignette** with an empty list is the same as avoiding all toll roads with vignettes. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </summary>
+        /// <summary> This is a list of 3-character, ISO 3166-1, alpha-3 country codes of countries/regions in which toll roads with vignettes are allowed, e.g. "AUS,CHE". Specifying **allowVignette** with some countries/regions X is equivalent to specifying **avoidVignette** with all countries/regions but X. Specifying **allowVignette** with an empty list is the same as avoiding all toll roads with vignettes. Note: It is an error to specify both **avoidVignette** and **allowVignette**. </summary>
         public IList<string> AllowVignette { get; }
     }
 }

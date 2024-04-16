@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     internal partial class FluxConfigurationsList : IUtf8JsonSerializable, IJsonModel<FluxConfigurationsList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FluxConfigurationsList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FluxConfigurationsList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FluxConfigurationsList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static FluxConfigurationsList DeserializeFluxConfigurationsList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

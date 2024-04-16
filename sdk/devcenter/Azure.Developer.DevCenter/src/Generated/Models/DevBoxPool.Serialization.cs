@@ -15,7 +15,7 @@ namespace Azure.Developer.DevCenter.Models
 {
     public partial class DevBoxPool : IUtf8JsonSerializable, IJsonModel<DevBoxPool>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBoxPool>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBoxPool>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevBoxPool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -102,7 +102,7 @@ namespace Azure.Developer.DevCenter.Models
 
         internal static DevBoxPool DeserializeDevBoxPool(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -263,7 +263,7 @@ namespace Azure.Developer.DevCenter.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

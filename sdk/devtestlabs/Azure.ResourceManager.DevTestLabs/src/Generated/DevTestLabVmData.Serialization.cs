@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabVmData : IUtf8JsonSerializable, IJsonModel<DevTestLabVmData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabVmData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabVmData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabVmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DevTestLabs
 
         internal static DevTestLabVmData DeserializeDevTestLabVmData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

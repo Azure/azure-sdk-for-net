@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class CommunityGalleryImageVersionData : IUtf8JsonSerializable, IJsonModel<CommunityGalleryImageVersionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunityGalleryImageVersionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunityGalleryImageVersionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommunityGalleryImageVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static CommunityGalleryImageVersionData DeserializeCommunityGalleryImageVersionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

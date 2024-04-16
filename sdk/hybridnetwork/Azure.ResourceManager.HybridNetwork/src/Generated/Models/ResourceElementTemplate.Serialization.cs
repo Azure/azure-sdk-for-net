@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     [PersistableModelProxy(typeof(UnknownResourceElementTemplate))]
     public partial class ResourceElementTemplate : IUtf8JsonSerializable, IJsonModel<ResourceElementTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceElementTemplate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceElementTemplate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceElementTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static ResourceElementTemplate DeserializeResourceElementTemplate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

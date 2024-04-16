@@ -93,7 +93,20 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 {
                     var data = GetRandomBuffer(objectLength.Value);
                     using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
-                    await blobClient.UploadAsync(originalStream);
+                    await blobClient.UploadAsync(
+                        originalStream,
+                        new BlobUploadOptions()
+                        {
+                            AccessTier = _defaultAccessTier,
+                            Metadata = _defaultMetadata,
+                            HttpHeaders = new BlobHttpHeaders()
+                            {
+                                ContentType = _defaultContentType,
+                                ContentLanguage = _defaultContentLanguage,
+                                ContentDisposition = _defaultContentDisposition,
+                                CacheControl = _defaultCacheControl,
+                            }
+                        });
                 }
             }
             Uri sourceUri = blobClient.GenerateSasUri(BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
@@ -165,7 +178,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ContentDisposition = new(_defaultContentDisposition),
                     ContentLanguage = new(_defaultContentLanguage),
                     CacheControl = new(_defaultCacheControl),
-                    ContentType = new(_defaultContentType)
+                    ContentType = new(_defaultContentType),
+                    Metadata = new(_defaultMetadata)
                 };
             }
             else if (type == TransferPropertiesTestType.NoPreserve)
@@ -175,7 +189,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ContentDisposition = new(false),
                     ContentLanguage = new(false),
                     CacheControl = new(false),
-                    ContentType = new(false)
+                    ContentType = new(false),
+                    Metadata = new(false)
                 };
             }
             else if (type == TransferPropertiesTestType.Preserve)
@@ -185,7 +200,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ContentDisposition = new(true),
                     ContentLanguage = new(true),
                     CacheControl = new(true),
-                    ContentType = new(true)
+                    ContentType = new(true),
+                    Metadata = new(true)
                 };
             }
             return new AppendBlobStorageResource(objectClient, options);

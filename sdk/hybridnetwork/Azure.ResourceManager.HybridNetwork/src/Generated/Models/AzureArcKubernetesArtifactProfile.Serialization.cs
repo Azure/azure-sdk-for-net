@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class AzureArcKubernetesArtifactProfile : IUtf8JsonSerializable, IJsonModel<AzureArcKubernetesArtifactProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureArcKubernetesArtifactProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureArcKubernetesArtifactProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureArcKubernetesArtifactProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static AzureArcKubernetesArtifactProfile DeserializeAzureArcKubernetesArtifactProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

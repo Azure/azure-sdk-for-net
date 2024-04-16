@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class AdlsGen1FileDataSet : IUtf8JsonSerializable, IJsonModel<AdlsGen1FileDataSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdlsGen1FileDataSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdlsGen1FileDataSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AdlsGen1FileDataSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static AdlsGen1FileDataSet DeserializeAdlsGen1FileDataSet(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class SubnetData : IUtf8JsonSerializable, IJsonModel<SubnetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubnetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubnetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SubnetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Network
 
         internal static SubnetData DeserializeSubnetData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

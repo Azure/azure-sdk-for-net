@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     public partial class PublisherData : IUtf8JsonSerializable, IJsonModel<PublisherData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublisherData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublisherData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PublisherData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork
 
         internal static PublisherData DeserializePublisherData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

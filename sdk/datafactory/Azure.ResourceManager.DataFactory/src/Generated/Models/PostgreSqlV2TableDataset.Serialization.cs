@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class PostgreSqlV2TableDataset : IUtf8JsonSerializable, IJsonModel<PostgreSqlV2TableDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlV2TableDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlV2TableDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlV2TableDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PostgreSqlV2TableDataset DeserializePostgreSqlV2TableDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

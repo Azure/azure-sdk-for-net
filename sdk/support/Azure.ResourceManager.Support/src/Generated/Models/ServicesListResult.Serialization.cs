@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Support.Models
 {
     internal partial class ServicesListResult : IUtf8JsonSerializable, IJsonModel<ServicesListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicesListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicesListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServicesListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static ServicesListResult DeserializeServicesListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

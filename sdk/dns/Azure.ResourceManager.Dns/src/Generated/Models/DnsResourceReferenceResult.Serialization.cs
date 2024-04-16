@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Dns.Models
 {
     public partial class DnsResourceReferenceResult : IUtf8JsonSerializable, IJsonModel<DnsResourceReferenceResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsResourceReferenceResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsResourceReferenceResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DnsResourceReferenceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static DnsResourceReferenceResult DeserializeDnsResourceReferenceResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

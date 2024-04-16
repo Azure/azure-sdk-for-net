@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     internal partial class PercentageCostThresholdProperties : IUtf8JsonSerializable, IJsonModel<PercentageCostThresholdProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PercentageCostThresholdProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PercentageCostThresholdProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PercentageCostThresholdProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static PercentageCostThresholdProperties DeserializePercentageCostThresholdProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

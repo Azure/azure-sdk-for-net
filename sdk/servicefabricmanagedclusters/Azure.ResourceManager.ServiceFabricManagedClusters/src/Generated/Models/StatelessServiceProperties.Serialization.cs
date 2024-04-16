@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public partial class StatelessServiceProperties : IUtf8JsonSerializable, IJsonModel<StatelessServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatelessServiceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatelessServiceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StatelessServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static StatelessServiceProperties DeserializeStatelessServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

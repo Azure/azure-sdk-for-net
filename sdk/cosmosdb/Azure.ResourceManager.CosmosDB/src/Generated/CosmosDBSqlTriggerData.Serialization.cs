@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBSqlTriggerData : IUtf8JsonSerializable, IJsonModel<CosmosDBSqlTriggerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBSqlTriggerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBSqlTriggerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBSqlTriggerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static CosmosDBSqlTriggerData DeserializeCosmosDBSqlTriggerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

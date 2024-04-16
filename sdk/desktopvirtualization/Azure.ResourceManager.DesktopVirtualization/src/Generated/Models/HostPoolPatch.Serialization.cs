@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class HostPoolPatch : IUtf8JsonSerializable, IJsonModel<HostPoolPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostPoolPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostPoolPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HostPoolPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static HostPoolPatch DeserializeHostPoolPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

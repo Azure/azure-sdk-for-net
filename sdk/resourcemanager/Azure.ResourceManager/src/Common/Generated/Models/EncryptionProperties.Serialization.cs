@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Models
     [JsonConverter(typeof(EncryptionPropertiesConverter))]
     public partial class EncryptionProperties : IUtf8JsonSerializable, IJsonModel<EncryptionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EncryptionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Models
 
         internal static EncryptionProperties DeserializeEncryptionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Models
         {
             public override void Write(Utf8JsonWriter writer, EncryptionProperties model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model, new ModelReaderWriterOptions("W"));
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
 
             public override EncryptionProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

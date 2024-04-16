@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class PrivateLinkScopeValidationDetails : IUtf8JsonSerializable, IJsonModel<PrivateLinkScopeValidationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkScopeValidationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkScopeValidationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateLinkScopeValidationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static PrivateLinkScopeValidationDetails DeserializePrivateLinkScopeValidationDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

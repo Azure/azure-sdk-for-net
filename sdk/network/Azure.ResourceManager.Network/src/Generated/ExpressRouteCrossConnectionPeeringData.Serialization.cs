@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRouteCrossConnectionPeeringData : IUtf8JsonSerializable, IJsonModel<ExpressRouteCrossConnectionPeeringData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCrossConnectionPeeringData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCrossConnectionPeeringData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExpressRouteCrossConnectionPeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteCrossConnectionPeeringData DeserializeExpressRouteCrossConnectionPeeringData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

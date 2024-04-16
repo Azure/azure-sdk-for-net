@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 {
     public partial class DynatraceOneAgentEnabledAppServiceInfo : IUtf8JsonSerializable, IJsonModel<DynatraceOneAgentEnabledAppServiceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceOneAgentEnabledAppServiceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceOneAgentEnabledAppServiceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DynatraceOneAgentEnabledAppServiceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceOneAgentEnabledAppServiceInfo DeserializeDynatraceOneAgentEnabledAppServiceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

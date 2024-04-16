@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 {
     public partial class LoadBalancerBackendAddressPoolResourceSettings : IUtf8JsonSerializable, IJsonModel<LoadBalancerBackendAddressPoolResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancerBackendAddressPoolResourceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancerBackendAddressPoolResourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LoadBalancerBackendAddressPoolResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static LoadBalancerBackendAddressPoolResourceSettings DeserializeLoadBalancerBackendAddressPoolResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

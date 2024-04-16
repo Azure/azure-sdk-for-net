@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionEventSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionEventSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionEventSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionEventSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionEventSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionEventSummary DeserializeConsumptionEventSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

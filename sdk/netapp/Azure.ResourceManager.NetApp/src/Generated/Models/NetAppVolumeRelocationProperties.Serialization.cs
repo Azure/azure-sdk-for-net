@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppVolumeRelocationProperties : IUtf8JsonSerializable, IJsonModel<NetAppVolumeRelocationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeRelocationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeRelocationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppVolumeRelocationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppVolumeRelocationProperties DeserializeNetAppVolumeRelocationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

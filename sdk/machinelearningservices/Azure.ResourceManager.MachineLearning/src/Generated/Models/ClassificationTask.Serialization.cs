@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class ClassificationTask : IUtf8JsonSerializable, IJsonModel<ClassificationTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClassificationTask>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClassificationTask>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClassificationTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ClassificationTask DeserializeClassificationTask(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

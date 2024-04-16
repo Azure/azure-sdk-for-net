@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class AvailableCognitiveServicesSku : IUtf8JsonSerializable, IJsonModel<AvailableCognitiveServicesSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableCognitiveServicesSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableCognitiveServicesSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailableCognitiveServicesSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static AvailableCognitiveServicesSku DeserializeAvailableCognitiveServicesSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

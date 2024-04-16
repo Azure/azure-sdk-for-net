@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     public partial class LcmConfigurationSetting : IUtf8JsonSerializable, IJsonModel<LcmConfigurationSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LcmConfigurationSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LcmConfigurationSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LcmConfigurationSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static LcmConfigurationSetting DeserializeLcmConfigurationSetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

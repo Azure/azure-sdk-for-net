@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningCommandJob : IUtf8JsonSerializable, IJsonModel<MachineLearningCommandJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningCommandJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningCommandJob>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningCommandJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningCommandJob DeserializeMachineLearningCommandJob(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

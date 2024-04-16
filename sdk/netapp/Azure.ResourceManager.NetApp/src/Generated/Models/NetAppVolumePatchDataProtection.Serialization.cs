@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppVolumePatchDataProtection DeserializeNetAppVolumePatchDataProtection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

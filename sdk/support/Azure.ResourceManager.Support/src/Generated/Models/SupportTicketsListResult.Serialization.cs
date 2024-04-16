@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Support.Models
 {
     internal partial class SupportTicketsListResult : IUtf8JsonSerializable, IJsonModel<SupportTicketsListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportTicketsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportTicketsListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SupportTicketsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static SupportTicketsListResult DeserializeSupportTicketsListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

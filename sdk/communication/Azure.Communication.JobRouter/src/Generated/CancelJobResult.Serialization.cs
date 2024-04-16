@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
 {
     internal partial class CancelJobResult : IUtf8JsonSerializable, IJsonModel<CancelJobResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CancelJobResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CancelJobResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CancelJobResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,7 +58,7 @@ namespace Azure.Communication.JobRouter
 
         internal static CancelJobResult DeserializeCancelJobResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +120,7 @@ namespace Azure.Communication.JobRouter
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

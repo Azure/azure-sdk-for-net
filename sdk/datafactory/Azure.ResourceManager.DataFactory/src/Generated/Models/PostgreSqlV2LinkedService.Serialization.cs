@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class PostgreSqlV2LinkedService : IUtf8JsonSerializable, IJsonModel<PostgreSqlV2LinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlV2LinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlV2LinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlV2LinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PostgreSqlV2LinkedService DeserializePostgreSqlV2LinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

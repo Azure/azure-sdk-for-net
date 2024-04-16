@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.Models
 {
     public partial class MySqlServerPrivateLinkServiceConnectionStateProperty : IUtf8JsonSerializable, IJsonModel<MySqlServerPrivateLinkServiceConnectionStateProperty>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerPrivateLinkServiceConnectionStateProperty>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerPrivateLinkServiceConnectionStateProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlServerPrivateLinkServiceConnectionStateProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlServerPrivateLinkServiceConnectionStateProperty DeserializeMySqlServerPrivateLinkServiceConnectionStateProperty(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

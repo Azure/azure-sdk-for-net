@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class CloudEndpointChangeEnumerationActivity : IUtf8JsonSerializable, IJsonModel<CloudEndpointChangeEnumerationActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudEndpointChangeEnumerationActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudEndpointChangeEnumerationActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CloudEndpointChangeEnumerationActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         internal static CloudEndpointChangeEnumerationActivity DeserializeCloudEndpointChangeEnumerationActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

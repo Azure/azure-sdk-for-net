@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class DeliveryRuleCacheExpirationAction : IUtf8JsonSerializable, IJsonModel<DeliveryRuleCacheExpirationAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryRuleCacheExpirationAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryRuleCacheExpirationAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeliveryRuleCacheExpirationAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleCacheExpirationAction DeserializeDeliveryRuleCacheExpirationAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

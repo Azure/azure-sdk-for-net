@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     public partial class ArtifactManifestData : IUtf8JsonSerializable, IJsonModel<ArtifactManifestData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArtifactManifestData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArtifactManifestData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArtifactManifestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HybridNetwork
 
         internal static ArtifactManifestData DeserializeArtifactManifestData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

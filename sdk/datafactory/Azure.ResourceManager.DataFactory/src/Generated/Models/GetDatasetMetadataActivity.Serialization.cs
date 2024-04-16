@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class GetDatasetMetadataActivity : IUtf8JsonSerializable, IJsonModel<GetDatasetMetadataActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetDatasetMetadataActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetDatasetMetadataActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GetDatasetMetadataActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static GetDatasetMetadataActivity DeserializeGetDatasetMetadataActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

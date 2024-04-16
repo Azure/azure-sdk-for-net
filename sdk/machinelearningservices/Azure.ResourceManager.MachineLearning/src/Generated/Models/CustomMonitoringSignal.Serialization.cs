@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class CustomMonitoringSignal : IUtf8JsonSerializable, IJsonModel<CustomMonitoringSignal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomMonitoringSignal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomMonitoringSignal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomMonitoringSignal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CustomMonitoringSignal DeserializeCustomMonitoringSignal(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

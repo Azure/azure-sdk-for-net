@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     internal partial class RangerAuditSpec : IUtf8JsonSerializable, IJsonModel<RangerAuditSpec>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RangerAuditSpec>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RangerAuditSpec>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RangerAuditSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static RangerAuditSpec DeserializeRangerAuditSpec(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

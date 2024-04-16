@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     public partial class AssignmentReportResourceComplianceReason : IUtf8JsonSerializable, IJsonModel<AssignmentReportResourceComplianceReason>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentReportResourceComplianceReason>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentReportResourceComplianceReason>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AssignmentReportResourceComplianceReason>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static AssignmentReportResourceComplianceReason DeserializeAssignmentReportResourceComplianceReason(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

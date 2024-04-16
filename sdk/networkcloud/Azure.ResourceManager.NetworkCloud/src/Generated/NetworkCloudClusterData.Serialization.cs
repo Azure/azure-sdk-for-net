@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudClusterData : IUtf8JsonSerializable, IJsonModel<NetworkCloudClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkCloudClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
         internal static NetworkCloudClusterData DeserializeNetworkCloudClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

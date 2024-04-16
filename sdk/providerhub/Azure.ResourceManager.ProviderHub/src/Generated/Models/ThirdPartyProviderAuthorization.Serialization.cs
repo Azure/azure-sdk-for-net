@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class ThirdPartyProviderAuthorization : IUtf8JsonSerializable, IJsonModel<ThirdPartyProviderAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThirdPartyProviderAuthorization>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThirdPartyProviderAuthorization>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ThirdPartyProviderAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ThirdPartyProviderAuthorization DeserializeThirdPartyProviderAuthorization(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

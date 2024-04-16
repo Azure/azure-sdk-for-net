@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AnalysisDetectorEvidences : IUtf8JsonSerializable, IJsonModel<AnalysisDetectorEvidences>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisDetectorEvidences>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisDetectorEvidences>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AnalysisDetectorEvidences>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AnalysisDetectorEvidences DeserializeAnalysisDetectorEvidences(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

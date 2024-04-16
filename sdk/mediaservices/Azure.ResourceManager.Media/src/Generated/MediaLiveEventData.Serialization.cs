@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaLiveEventData : IUtf8JsonSerializable, IJsonModel<MediaLiveEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaLiveEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaLiveEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaLiveEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Media
 
         internal static MediaLiveEventData DeserializeMediaLiveEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

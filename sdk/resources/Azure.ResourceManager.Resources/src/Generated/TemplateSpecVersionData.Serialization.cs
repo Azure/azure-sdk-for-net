@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class TemplateSpecVersionData : IUtf8JsonSerializable, IJsonModel<TemplateSpecVersionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TemplateSpecVersionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TemplateSpecVersionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TemplateSpecVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Resources
 
         internal static TemplateSpecVersionData DeserializeTemplateSpecVersionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

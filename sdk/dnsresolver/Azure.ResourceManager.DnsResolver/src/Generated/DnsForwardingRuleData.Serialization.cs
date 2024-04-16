@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DnsResolver
 {
     public partial class DnsForwardingRuleData : IUtf8JsonSerializable, IJsonModel<DnsForwardingRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsForwardingRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsForwardingRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DnsForwardingRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DnsResolver
 
         internal static DnsForwardingRuleData DeserializeDnsForwardingRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

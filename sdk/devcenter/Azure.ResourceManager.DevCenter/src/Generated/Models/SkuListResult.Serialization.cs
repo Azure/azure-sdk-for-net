@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 {
     internal partial class SkuListResult : IUtf8JsonSerializable, IJsonModel<SkuListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SkuListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static SkuListResult DeserializeSkuListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

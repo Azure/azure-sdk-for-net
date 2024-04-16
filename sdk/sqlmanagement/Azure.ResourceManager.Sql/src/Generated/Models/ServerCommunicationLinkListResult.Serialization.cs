@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class ServerCommunicationLinkListResult : IUtf8JsonSerializable, IJsonModel<ServerCommunicationLinkListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerCommunicationLinkListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerCommunicationLinkListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServerCommunicationLinkListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ServerCommunicationLinkListResult DeserializeServerCommunicationLinkListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Billing.Models
 {
     public partial class PaymentMethodLogo : IUtf8JsonSerializable, IJsonModel<PaymentMethodLogo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaymentMethodLogo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaymentMethodLogo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PaymentMethodLogo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         internal static PaymentMethodLogo DeserializePaymentMethodLogo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

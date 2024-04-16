@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class GalleryImagePatch : IUtf8JsonSerializable, IJsonModel<GalleryImagePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImagePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImagePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GalleryImagePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryImagePatch DeserializeGalleryImagePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

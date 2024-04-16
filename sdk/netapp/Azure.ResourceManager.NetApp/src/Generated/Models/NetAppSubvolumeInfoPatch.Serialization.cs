@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppSubvolumeInfoPatch : IUtf8JsonSerializable, IJsonModel<NetAppSubvolumeInfoPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppSubvolumeInfoPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppSubvolumeInfoPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppSubvolumeInfoPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppSubvolumeInfoPatch DeserializeNetAppSubvolumeInfoPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class ExtensionTopicData : IUtf8JsonSerializable, IJsonModel<ExtensionTopicData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtensionTopicData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtensionTopicData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExtensionTopicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static ExtensionTopicData DeserializeExtensionTopicData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

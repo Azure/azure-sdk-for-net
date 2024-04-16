@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     public partial class ServiceBusNamespacePatch : IUtf8JsonSerializable, IJsonModel<ServiceBusNamespacePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNamespacePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNamespacePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceBusNamespacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusNamespacePatch DeserializeServiceBusNamespacePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

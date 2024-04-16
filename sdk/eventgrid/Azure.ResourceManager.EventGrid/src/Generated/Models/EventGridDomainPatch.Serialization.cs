@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class EventGridDomainPatch : IUtf8JsonSerializable, IJsonModel<EventGridDomainPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridDomainPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridDomainPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventGridDomainPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventGridDomainPatch DeserializeEventGridDomainPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

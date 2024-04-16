@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     public partial class FleetCredentialResult : IUtf8JsonSerializable, IJsonModel<FleetCredentialResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FleetCredentialResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FleetCredentialResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FleetCredentialResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         internal static FleetCredentialResult DeserializeFleetCredentialResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

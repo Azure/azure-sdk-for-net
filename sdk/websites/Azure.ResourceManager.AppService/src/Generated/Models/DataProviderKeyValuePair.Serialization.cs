@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class DataProviderKeyValuePair : IUtf8JsonSerializable, IJsonModel<DataProviderKeyValuePair>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProviderKeyValuePair>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProviderKeyValuePair>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataProviderKeyValuePair>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DataProviderKeyValuePair DeserializeDataProviderKeyValuePair(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

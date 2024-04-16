@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class NumberGreaterThanOrEqualsAdvancedFilter : IUtf8JsonSerializable, IJsonModel<NumberGreaterThanOrEqualsAdvancedFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NumberGreaterThanOrEqualsAdvancedFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NumberGreaterThanOrEqualsAdvancedFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NumberGreaterThanOrEqualsAdvancedFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static NumberGreaterThanOrEqualsAdvancedFilter DeserializeNumberGreaterThanOrEqualsAdvancedFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

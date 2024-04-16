@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class MigrateMySqlStatusData : IUtf8JsonSerializable, IJsonModel<MigrateMySqlStatusData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMySqlStatusData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMySqlStatusData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateMySqlStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static MigrateMySqlStatusData DeserializeMigrateMySqlStatusData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

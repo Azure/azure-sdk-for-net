@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BotService.Models
 {
     public partial class DirectLineSite : IUtf8JsonSerializable, IJsonModel<DirectLineSite>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectLineSite>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectLineSite>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DirectLineSite>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static DirectLineSite DeserializeDirectLineSite(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

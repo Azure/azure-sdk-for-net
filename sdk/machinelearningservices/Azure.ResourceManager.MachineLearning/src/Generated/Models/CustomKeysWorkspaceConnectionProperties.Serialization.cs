@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class CustomKeysWorkspaceConnectionProperties : IUtf8JsonSerializable, IJsonModel<CustomKeysWorkspaceConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomKeysWorkspaceConnectionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomKeysWorkspaceConnectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomKeysWorkspaceConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CustomKeysWorkspaceConnectionProperties DeserializeCustomKeysWorkspaceConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
