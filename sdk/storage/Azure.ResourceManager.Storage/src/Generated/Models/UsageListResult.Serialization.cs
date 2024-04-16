@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     internal partial class UsageListResult : IUtf8JsonSerializable, IJsonModel<UsageListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UsageListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UsageListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UsageListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static UsageListResult DeserializeUsageListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

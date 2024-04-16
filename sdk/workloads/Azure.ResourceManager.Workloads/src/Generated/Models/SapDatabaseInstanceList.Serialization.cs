@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     internal partial class SapDatabaseInstanceList : IUtf8JsonSerializable, IJsonModel<SapDatabaseInstanceList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDatabaseInstanceList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDatabaseInstanceList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapDatabaseInstanceList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapDatabaseInstanceList DeserializeSapDatabaseInstanceList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 {
     public partial class AzureStorageBlobContainerEndpointProperties : IUtf8JsonSerializable, IJsonModel<AzureStorageBlobContainerEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureStorageBlobContainerEndpointProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureStorageBlobContainerEndpointProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureStorageBlobContainerEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         internal static AzureStorageBlobContainerEndpointProperties DeserializeAzureStorageBlobContainerEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

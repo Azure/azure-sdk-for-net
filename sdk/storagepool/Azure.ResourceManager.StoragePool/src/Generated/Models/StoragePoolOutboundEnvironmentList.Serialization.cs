@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 {
     internal partial class StoragePoolOutboundEnvironmentList : IUtf8JsonSerializable, IJsonModel<StoragePoolOutboundEnvironmentList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StoragePoolOutboundEnvironmentList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StoragePoolOutboundEnvironmentList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StoragePoolOutboundEnvironmentList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         internal static StoragePoolOutboundEnvironmentList DeserializeStoragePoolOutboundEnvironmentList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -350,7 +349,7 @@ namespace Azure.ResourceManager.StorageCache
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -430,7 +429,7 @@ namespace Azure.ResourceManager.StorageCache
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -803,7 +802,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(primingjob, new ModelReaderWriterOptions("W"));
+                content.JsonWriter.WriteObjectValue(primingjob, ModelSerializationExtensions.WireOptions);
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -881,7 +880,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content, new ModelReaderWriterOptions("W"));
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -961,7 +960,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content, new ModelReaderWriterOptions("W"));
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -1041,7 +1040,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content, new ModelReaderWriterOptions("W"));
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -1197,7 +1196,7 @@ namespace Azure.ResourceManager.StorageCache
                 content.JsonWriter.WriteStartArray();
                 foreach (var item in spaceAllocation)
                 {
-                    content.JsonWriter.WriteObjectValue(item, new ModelReaderWriterOptions("W"));
+                    content.JsonWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
                 }
                 content.JsonWriter.WriteEndArray();
                 request.Content = content;
