@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 {
     internal partial class UnknownSecretInfoBase : IUtf8JsonSerializable, IJsonModel<SecretBaseInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretBaseInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretBaseInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecretBaseInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static UnknownSecretInfoBase DeserializeUnknownSecretInfoBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

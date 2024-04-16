@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     public partial class ServiceBusNetworkRuleSetVirtualNetworkRules : IUtf8JsonSerializable, IJsonModel<ServiceBusNetworkRuleSetVirtualNetworkRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNetworkRuleSetVirtualNetworkRules>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNetworkRuleSetVirtualNetworkRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceBusNetworkRuleSetVirtualNetworkRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusNetworkRuleSetVirtualNetworkRules DeserializeServiceBusNetworkRuleSetVirtualNetworkRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

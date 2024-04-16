@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Support.Models
 {
     public partial class ServiceClassificationAnswer : IUtf8JsonSerializable, IJsonModel<ServiceClassificationAnswer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceClassificationAnswer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceClassificationAnswer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceClassificationAnswer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static ServiceClassificationAnswer DeserializeServiceClassificationAnswer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

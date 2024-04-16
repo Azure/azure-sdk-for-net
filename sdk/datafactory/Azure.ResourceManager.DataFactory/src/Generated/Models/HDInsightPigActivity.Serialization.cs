@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class HDInsightPigActivity : IUtf8JsonSerializable, IJsonModel<HDInsightPigActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightPigActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightPigActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HDInsightPigActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HDInsightPigActivity DeserializeHDInsightPigActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

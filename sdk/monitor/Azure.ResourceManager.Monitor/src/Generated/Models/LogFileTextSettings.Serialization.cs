@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal partial class LogFileTextSettings : IUtf8JsonSerializable, IJsonModel<LogFileTextSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogFileTextSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogFileTextSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogFileTextSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static LogFileTextSettings DeserializeLogFileTextSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

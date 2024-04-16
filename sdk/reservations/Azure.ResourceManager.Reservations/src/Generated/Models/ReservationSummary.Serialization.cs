@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     internal partial class ReservationSummary : IUtf8JsonSerializable, IJsonModel<ReservationSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ReservationSummary DeserializeReservationSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

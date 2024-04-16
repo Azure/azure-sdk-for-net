@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     public partial class ProvisionedClusterUpgradeProfileData : IUtf8JsonSerializable, IJsonModel<ProvisionedClusterUpgradeProfileData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterUpgradeProfileData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterUpgradeProfileData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProvisionedClusterUpgradeProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.HybridContainerService
 
         internal static ProvisionedClusterUpgradeProfileData DeserializeProvisionedClusterUpgradeProfileData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

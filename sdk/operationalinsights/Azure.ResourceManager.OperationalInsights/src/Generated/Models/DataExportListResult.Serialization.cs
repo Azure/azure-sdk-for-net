@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 {
     internal partial class DataExportListResult : IUtf8JsonSerializable, IJsonModel<DataExportListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataExportListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataExportListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataExportListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static DataExportListResult DeserializeDataExportListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

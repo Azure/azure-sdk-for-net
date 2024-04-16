@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
 {
     public partial class PlaywrightTestingAccountData : IUtf8JsonSerializable, IJsonModel<PlaywrightTestingAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlaywrightTestingAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlaywrightTestingAccountData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PlaywrightTestingAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
 
         internal static PlaywrightTestingAccountData DeserializePlaywrightTestingAccountData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

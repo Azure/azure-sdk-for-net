@@ -65,15 +65,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiVersionDescription"> Description of the API Version. </param>
         /// <param name="apiVersionSetId"> A resource identifier for the related ApiVersionSet. </param>
         /// <param name="isSubscriptionRequired"> Specifies whether an API or Product subscription is required for accessing the API. </param>
-        /// <param name="termsOfServiceUri"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
+        /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
         /// <param name="displayName"> API name. </param>
-        /// <param name="serviceUri"> Absolute URL of the backend service implementing this API. </param>
+        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. </param>
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiPatch(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, Uri termsOfServiceUri, ApiContactInformation contact, ApiLicenseInformation license, string displayName, Uri serviceUri, string path, IList<ApiOperationInvokableProtocol> protocols, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiPatch(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
             IsSubscriptionRequired = isSubscriptionRequired;
-            TermsOfServiceUri = termsOfServiceUri;
+            TermsOfServiceLink = termsOfServiceLink;
             Contact = contact;
             License = license;
             DisplayName = displayName;
-            ServiceUri = serviceUri;
+            ServiceLink = serviceLink;
             Path = path;
             Protocols = protocols;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Specifies whether an API or Product subscription is required for accessing the API. </summary>
         public bool? IsSubscriptionRequired { get; set; }
         /// <summary> A URL to the Terms of Service for the API. MUST be in the format of a URL. </summary>
-        public Uri TermsOfServiceUri { get; set; }
+        public string TermsOfServiceLink { get; set; }
         /// <summary> Contact information for the API. </summary>
         public ApiContactInformation Contact { get; set; }
         /// <summary> License information for the API. </summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> API name. </summary>
         public string DisplayName { get; set; }
         /// <summary> Absolute URL of the backend service implementing this API. </summary>
-        public Uri ServiceUri { get; set; }
+        public string ServiceLink { get; set; }
         /// <summary> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </summary>
         public string Path { get; set; }
         /// <summary> Describes on which protocols the operations in this API can be invoked. </summary>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 {
     public partial class AmlFileSystemRootSquashSettings : IUtf8JsonSerializable, IJsonModel<AmlFileSystemRootSquashSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemRootSquashSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemRootSquashSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AmlFileSystemRootSquashSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static AmlFileSystemRootSquashSettings DeserializeAmlFileSystemRootSquashSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

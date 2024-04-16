@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class HybridRunbookWorkerData : IUtf8JsonSerializable, IJsonModel<HybridRunbookWorkerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridRunbookWorkerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridRunbookWorkerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridRunbookWorkerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Automation
 
         internal static HybridRunbookWorkerData DeserializeHybridRunbookWorkerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent DeserializeCosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

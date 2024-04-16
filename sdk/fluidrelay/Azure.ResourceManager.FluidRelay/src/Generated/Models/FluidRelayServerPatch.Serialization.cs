@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
 {
     public partial class FluidRelayServerPatch : IUtf8JsonSerializable, IJsonModel<FluidRelayServerPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FluidRelayServerPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FluidRelayServerPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FluidRelayServerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
 
         internal static FluidRelayServerPatch DeserializeFluidRelayServerPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

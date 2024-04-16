@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
     public partial class AadBasedSecurityPrincipal : IUtf8JsonSerializable, IJsonModel<AadBasedSecurityPrincipal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AadBasedSecurityPrincipal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AadBasedSecurityPrincipal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AadBasedSecurityPrincipal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         internal static AadBasedSecurityPrincipal DeserializeAadBasedSecurityPrincipal(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

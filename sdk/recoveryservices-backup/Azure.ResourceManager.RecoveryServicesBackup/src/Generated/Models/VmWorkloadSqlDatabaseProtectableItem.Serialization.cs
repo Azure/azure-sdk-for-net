@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class VmWorkloadSqlDatabaseProtectableItem : IUtf8JsonSerializable, IJsonModel<VmWorkloadSqlDatabaseProtectableItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadSqlDatabaseProtectableItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadSqlDatabaseProtectableItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VmWorkloadSqlDatabaseProtectableItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmWorkloadSqlDatabaseProtectableItem DeserializeVmWorkloadSqlDatabaseProtectableItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

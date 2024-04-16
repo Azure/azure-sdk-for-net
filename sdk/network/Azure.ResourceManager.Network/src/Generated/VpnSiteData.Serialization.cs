@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VpnSiteData : IUtf8JsonSerializable, IJsonModel<VpnSiteData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnSiteData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnSiteData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VpnSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VpnSiteData DeserializeVpnSiteData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

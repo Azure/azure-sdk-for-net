@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     public partial class AdvancedThreatProtectionData : IUtf8JsonSerializable, IJsonModel<AdvancedThreatProtectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdvancedThreatProtectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdvancedThreatProtectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AdvancedThreatProtectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         internal static AdvancedThreatProtectionData DeserializeAdvancedThreatProtectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

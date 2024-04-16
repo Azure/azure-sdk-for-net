@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class ExpressionEvaluationOptions : IUtf8JsonSerializable, IJsonModel<ExpressionEvaluationOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressionEvaluationOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressionEvaluationOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExpressionEvaluationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ExpressionEvaluationOptions DeserializeExpressionEvaluationOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

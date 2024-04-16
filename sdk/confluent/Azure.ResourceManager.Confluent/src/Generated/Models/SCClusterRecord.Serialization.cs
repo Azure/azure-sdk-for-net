@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Confluent.Models
 {
     public partial class SCClusterRecord : IUtf8JsonSerializable, IJsonModel<SCClusterRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SCClusterRecord>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SCClusterRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SCClusterRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static SCClusterRecord DeserializeSCClusterRecord(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class FunctionEnvelopeData : IUtf8JsonSerializable, IJsonModel<FunctionEnvelopeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionEnvelopeData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionEnvelopeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FunctionEnvelopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static FunctionEnvelopeData DeserializeFunctionEnvelopeData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingSubscriptionAliasData : IUtf8JsonSerializable, IJsonModel<BillingSubscriptionAliasData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingSubscriptionAliasData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingSubscriptionAliasData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BillingSubscriptionAliasData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Billing
 
         internal static BillingSubscriptionAliasData DeserializeBillingSubscriptionAliasData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

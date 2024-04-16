@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class TenantAccessInfoSecretsDetails : IUtf8JsonSerializable, IJsonModel<TenantAccessInfoSecretsDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TenantAccessInfoSecretsDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TenantAccessInfoSecretsDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TenantAccessInfoSecretsDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static TenantAccessInfoSecretsDetails DeserializeTenantAccessInfoSecretsDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

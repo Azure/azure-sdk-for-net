@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class CheckOciDriverTaskProperties : IUtf8JsonSerializable, IJsonModel<CheckOciDriverTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckOciDriverTaskProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckOciDriverTaskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CheckOciDriverTaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static CheckOciDriverTaskProperties DeserializeCheckOciDriverTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class TriggeredJobHistoryData : IUtf8JsonSerializable, IJsonModel<TriggeredJobHistoryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggeredJobHistoryData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggeredJobHistoryData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TriggeredJobHistoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static TriggeredJobHistoryData DeserializeTriggeredJobHistoryData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

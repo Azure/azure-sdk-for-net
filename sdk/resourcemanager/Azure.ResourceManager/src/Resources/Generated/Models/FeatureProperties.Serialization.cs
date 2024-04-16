@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class FeatureProperties : IUtf8JsonSerializable, IJsonModel<FeatureProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeatureProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeatureProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FeatureProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static FeatureProperties DeserializeFeatureProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Elastic.Models
 {
     internal partial class ElasticMonitorResourceListResponse : IUtf8JsonSerializable, IJsonModel<ElasticMonitorResourceListResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticMonitorResourceListResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticMonitorResourceListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ElasticMonitorResourceListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static ElasticMonitorResourceListResponse DeserializeElasticMonitorResourceListResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

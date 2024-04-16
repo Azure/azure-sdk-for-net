@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2ACreateProtectionIntentContent : IUtf8JsonSerializable, IJsonModel<A2ACreateProtectionIntentContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2ACreateProtectionIntentContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2ACreateProtectionIntentContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<A2ACreateProtectionIntentContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static A2ACreateProtectionIntentContent DeserializeA2ACreateProtectionIntentContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

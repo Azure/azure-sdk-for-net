@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Elastic.Models
 {
     public partial class VmResources : IUtf8JsonSerializable, IJsonModel<VmResources>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmResources>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmResources>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VmResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static VmResources DeserializeVmResources(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

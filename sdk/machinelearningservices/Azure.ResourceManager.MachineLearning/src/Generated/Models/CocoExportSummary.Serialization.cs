@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class CocoExportSummary : IUtf8JsonSerializable, IJsonModel<CocoExportSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CocoExportSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CocoExportSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CocoExportSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CocoExportSummary DeserializeCocoExportSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

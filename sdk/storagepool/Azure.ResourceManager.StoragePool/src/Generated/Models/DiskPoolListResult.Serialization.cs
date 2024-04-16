@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 {
     internal partial class DiskPoolListResult : IUtf8JsonSerializable, IJsonModel<DiskPoolListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskPoolListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskPoolListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiskPoolListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         internal static DiskPoolListResult DeserializeDiskPoolListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

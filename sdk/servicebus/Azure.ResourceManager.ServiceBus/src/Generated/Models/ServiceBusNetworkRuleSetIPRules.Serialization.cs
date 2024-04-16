@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     public partial class ServiceBusNetworkRuleSetIPRules : IUtf8JsonSerializable, IJsonModel<ServiceBusNetworkRuleSetIPRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNetworkRuleSetIPRules>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNetworkRuleSetIPRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceBusNetworkRuleSetIPRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusNetworkRuleSetIPRules DeserializeServiceBusNetworkRuleSetIPRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

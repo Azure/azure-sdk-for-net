@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class WebAppRuntimeSettings : IUtf8JsonSerializable, IJsonModel<WebAppRuntimeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppRuntimeSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppRuntimeSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebAppRuntimeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppRuntimeSettings DeserializeWebAppRuntimeSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

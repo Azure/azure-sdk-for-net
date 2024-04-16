@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal partial class ListP2SVpnGatewaysResult : IUtf8JsonSerializable, IJsonModel<ListP2SVpnGatewaysResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListP2SVpnGatewaysResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListP2SVpnGatewaysResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ListP2SVpnGatewaysResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ListP2SVpnGatewaysResult DeserializeListP2SVpnGatewaysResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

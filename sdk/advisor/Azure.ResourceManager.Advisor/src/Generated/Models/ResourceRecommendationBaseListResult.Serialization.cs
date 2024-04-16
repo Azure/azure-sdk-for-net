@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Advisor.Models
 {
     internal partial class ResourceRecommendationBaseListResult : IUtf8JsonSerializable, IJsonModel<ResourceRecommendationBaseListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceRecommendationBaseListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceRecommendationBaseListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceRecommendationBaseListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Advisor.Models
 
         internal static ResourceRecommendationBaseListResult DeserializeResourceRecommendationBaseListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

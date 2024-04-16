@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class MachineRunCommandData : IUtf8JsonSerializable, IJsonModel<MachineRunCommandData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineRunCommandData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineRunCommandData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineRunCommandData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         internal static MachineRunCommandData DeserializeMachineRunCommandData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

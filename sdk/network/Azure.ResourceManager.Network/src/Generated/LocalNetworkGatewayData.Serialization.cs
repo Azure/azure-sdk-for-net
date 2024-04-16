@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class LocalNetworkGatewayData : IUtf8JsonSerializable, IJsonModel<LocalNetworkGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LocalNetworkGatewayData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LocalNetworkGatewayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LocalNetworkGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network
 
         internal static LocalNetworkGatewayData DeserializeLocalNetworkGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

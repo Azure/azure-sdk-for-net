@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class FrontDoorRouteData : IUtf8JsonSerializable, IJsonModel<FrontDoorRouteData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorRouteData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorRouteData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorRouteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Cdn
 
         internal static FrontDoorRouteData DeserializeFrontDoorRouteData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

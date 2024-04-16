@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI.Assistants
 {
     internal partial class InternalAssistantDeletionStatus : IUtf8JsonSerializable, IJsonModel<InternalAssistantDeletionStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalAssistantDeletionStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalAssistantDeletionStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InternalAssistantDeletionStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         internal static InternalAssistantDeletionStatus DeserializeInternalAssistantDeletionStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -144,7 +144,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

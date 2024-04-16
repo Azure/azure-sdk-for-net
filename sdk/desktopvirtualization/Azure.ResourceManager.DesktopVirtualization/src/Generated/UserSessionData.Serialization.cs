@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     public partial class UserSessionData : IUtf8JsonSerializable, IJsonModel<UserSessionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserSessionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserSessionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserSessionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static UserSessionData DeserializeUserSessionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

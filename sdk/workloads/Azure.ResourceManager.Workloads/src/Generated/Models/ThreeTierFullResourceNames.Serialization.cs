@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class ThreeTierFullResourceNames : IUtf8JsonSerializable, IJsonModel<ThreeTierFullResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierFullResourceNames>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierFullResourceNames>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ThreeTierFullResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static ThreeTierFullResourceNames DeserializeThreeTierFullResourceNames(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

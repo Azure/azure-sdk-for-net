@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Redis.Models
 {
     internal partial class RedisCacheAccessPolicyList : IUtf8JsonSerializable, IJsonModel<RedisCacheAccessPolicyList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisCacheAccessPolicyList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisCacheAccessPolicyList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisCacheAccessPolicyList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisCacheAccessPolicyList DeserializeRedisCacheAccessPolicyList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 {
     public partial class SqlVmGroupData : IUtf8JsonSerializable, IJsonModel<SqlVmGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlVmGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         internal static SqlVmGroupData DeserializeSqlVmGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     public partial class JavaScriptFunctionBinding : IUtf8JsonSerializable, IJsonModel<JavaScriptFunctionBinding>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JavaScriptFunctionBinding>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JavaScriptFunctionBinding>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JavaScriptFunctionBinding>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static JavaScriptFunctionBinding DeserializeJavaScriptFunctionBinding(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

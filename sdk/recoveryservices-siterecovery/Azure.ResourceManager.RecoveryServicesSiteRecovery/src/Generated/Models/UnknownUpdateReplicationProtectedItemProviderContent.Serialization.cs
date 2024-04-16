@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     internal partial class UnknownUpdateReplicationProtectedItemProviderContent : IUtf8JsonSerializable, IJsonModel<UpdateReplicationProtectedItemProviderContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateReplicationProtectedItemProviderContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateReplicationProtectedItemProviderContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UpdateReplicationProtectedItemProviderContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static UnknownUpdateReplicationProtectedItemProviderContent DeserializeUnknownUpdateReplicationProtectedItemProviderContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

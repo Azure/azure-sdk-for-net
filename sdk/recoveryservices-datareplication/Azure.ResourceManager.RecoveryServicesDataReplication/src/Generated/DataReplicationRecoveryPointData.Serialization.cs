@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     public partial class DataReplicationRecoveryPointData : IUtf8JsonSerializable, IJsonModel<DataReplicationRecoveryPointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationRecoveryPointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationRecoveryPointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataReplicationRecoveryPointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 
         internal static DataReplicationRecoveryPointData DeserializeDataReplicationRecoveryPointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 {
     public partial class EmergingIssueImpactedRegion : IUtf8JsonSerializable, IJsonModel<EmergingIssueImpactedRegion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmergingIssueImpactedRegion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmergingIssueImpactedRegion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EmergingIssueImpactedRegion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         internal static EmergingIssueImpactedRegion DeserializeEmergingIssueImpactedRegion(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

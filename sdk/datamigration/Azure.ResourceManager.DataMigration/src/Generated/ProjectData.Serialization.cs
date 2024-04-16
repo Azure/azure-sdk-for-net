@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration
 {
     public partial class ProjectData : IUtf8JsonSerializable, IJsonModel<ProjectData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProjectData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProjectData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataMigration
 
         internal static ProjectData DeserializeProjectData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

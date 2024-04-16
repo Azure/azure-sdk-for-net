@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaAssetData : IUtf8JsonSerializable, IJsonModel<MediaAssetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaAssetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaAssetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaAssetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Media
 
         internal static MediaAssetData DeserializeMediaAssetData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 {
     public partial class NotificationHubNamespaceCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<NotificationHubNamespaceCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubNamespaceCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubNamespaceCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationHubNamespaceCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubNamespaceCreateOrUpdateContent DeserializeNotificationHubNamespaceCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class WebAppMSDeployLog : IUtf8JsonSerializable, IJsonModel<WebAppMSDeployLog>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppMSDeployLog>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppMSDeployLog>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebAppMSDeployLog>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppMSDeployLog DeserializeWebAppMSDeployLog(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class QueueServiceData : IUtf8JsonSerializable, IJsonModel<QueueServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueueServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueueServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QueueServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Storage
 
         internal static QueueServiceData DeserializeQueueServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

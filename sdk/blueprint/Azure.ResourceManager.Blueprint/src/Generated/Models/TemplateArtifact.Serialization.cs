@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Blueprint.Models
 {
     public partial class TemplateArtifact : IUtf8JsonSerializable, IJsonModel<TemplateArtifact>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TemplateArtifact>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TemplateArtifact>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TemplateArtifact>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static TemplateArtifact DeserializeTemplateArtifact(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     public partial class RedisEnterpriseOperationStatus : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseOperationStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseOperationStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseOperationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisEnterpriseOperationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static RedisEnterpriseOperationStatus DeserializeRedisEnterpriseOperationStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

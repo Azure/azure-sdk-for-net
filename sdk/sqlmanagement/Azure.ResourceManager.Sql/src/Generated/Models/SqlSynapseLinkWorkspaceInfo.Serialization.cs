@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SqlSynapseLinkWorkspaceInfo : IUtf8JsonSerializable, IJsonModel<SqlSynapseLinkWorkspaceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlSynapseLinkWorkspaceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlSynapseLinkWorkspaceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlSynapseLinkWorkspaceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlSynapseLinkWorkspaceInfo DeserializeSqlSynapseLinkWorkspaceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

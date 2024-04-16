@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     public partial class AcsClusterProperties : IUtf8JsonSerializable, IJsonModel<AcsClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsClusterProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AcsClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static AcsClusterProperties DeserializeAcsClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

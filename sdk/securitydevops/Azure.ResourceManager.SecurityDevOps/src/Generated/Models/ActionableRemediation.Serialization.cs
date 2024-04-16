@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     public partial class ActionableRemediation : IUtf8JsonSerializable, IJsonModel<ActionableRemediation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActionableRemediation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActionableRemediation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ActionableRemediation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static ActionableRemediation DeserializeActionableRemediation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

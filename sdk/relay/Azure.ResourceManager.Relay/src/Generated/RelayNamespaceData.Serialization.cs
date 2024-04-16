@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Relay
 {
     public partial class RelayNamespaceData : IUtf8JsonSerializable, IJsonModel<RelayNamespaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelayNamespaceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelayNamespaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RelayNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Relay
 
         internal static RelayNamespaceData DeserializeRelayNamespaceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

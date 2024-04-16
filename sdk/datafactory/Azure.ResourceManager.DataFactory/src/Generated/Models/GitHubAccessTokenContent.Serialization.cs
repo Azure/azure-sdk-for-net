@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class GitHubAccessTokenContent : IUtf8JsonSerializable, IJsonModel<GitHubAccessTokenContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitHubAccessTokenContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitHubAccessTokenContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GitHubAccessTokenContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static GitHubAccessTokenContent DeserializeGitHubAccessTokenContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

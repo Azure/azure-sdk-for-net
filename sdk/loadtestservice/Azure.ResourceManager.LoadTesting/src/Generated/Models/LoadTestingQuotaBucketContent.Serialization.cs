@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
 {
     public partial class LoadTestingQuotaBucketContent : IUtf8JsonSerializable, IJsonModel<LoadTestingQuotaBucketContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestingQuotaBucketContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestingQuotaBucketContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LoadTestingQuotaBucketContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
 
         internal static LoadTestingQuotaBucketContent DeserializeLoadTestingQuotaBucketContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

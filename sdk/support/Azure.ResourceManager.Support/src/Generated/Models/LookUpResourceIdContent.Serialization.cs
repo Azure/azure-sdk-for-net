@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Support.Models
 {
     public partial class LookUpResourceIdContent : IUtf8JsonSerializable, IJsonModel<LookUpResourceIdContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LookUpResourceIdContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LookUpResourceIdContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LookUpResourceIdContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static LookUpResourceIdContent DeserializeLookUpResourceIdContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

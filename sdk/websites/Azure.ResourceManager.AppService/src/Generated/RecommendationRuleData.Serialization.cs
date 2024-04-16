@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class RecommendationRuleData : IUtf8JsonSerializable, IJsonModel<RecommendationRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendationRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendationRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RecommendationRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static RecommendationRuleData DeserializeRecommendationRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

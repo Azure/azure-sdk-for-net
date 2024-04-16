@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class UpdateDownloadProgress : IUtf8JsonSerializable, IJsonModel<UpdateDownloadProgress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateDownloadProgress>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateDownloadProgress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UpdateDownloadProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static UpdateDownloadProgress DeserializeUpdateDownloadProgress(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 {
     public partial class StandbyContainerGroupPatchProperties : IUtf8JsonSerializable, IJsonModel<StandbyContainerGroupPatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyContainerGroupPatchProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyContainerGroupPatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StandbyContainerGroupPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         internal static StandbyContainerGroupPatchProperties DeserializeStandbyContainerGroupPatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

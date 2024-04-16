@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class InstancePoolData : IUtf8JsonSerializable, IJsonModel<InstancePoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstancePoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstancePoolData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InstancePoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static InstancePoolData DeserializeInstancePoolData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

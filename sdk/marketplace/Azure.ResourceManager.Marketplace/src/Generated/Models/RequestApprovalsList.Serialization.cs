@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 {
     internal partial class RequestApprovalsList : IUtf8JsonSerializable, IJsonModel<RequestApprovalsList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestApprovalsList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestApprovalsList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RequestApprovalsList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static RequestApprovalsList DeserializeRequestApprovalsList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

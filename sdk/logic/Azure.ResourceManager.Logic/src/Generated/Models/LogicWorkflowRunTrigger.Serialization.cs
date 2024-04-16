@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicWorkflowRunTrigger : IUtf8JsonSerializable, IJsonModel<LogicWorkflowRunTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRunTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRunTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicWorkflowRunTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowRunTrigger DeserializeLogicWorkflowRunTrigger(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

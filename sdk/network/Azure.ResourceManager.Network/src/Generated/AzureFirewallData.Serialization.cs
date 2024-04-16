@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class AzureFirewallData : IUtf8JsonSerializable, IJsonModel<AzureFirewallData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFirewallData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFirewallData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureFirewallData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network
 
         internal static AzureFirewallData DeserializeAzureFirewallData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

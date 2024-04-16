@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     internal partial class DomainsListResult : IUtf8JsonSerializable, IJsonModel<DomainsListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainsListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DomainsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static DomainsListResult DeserializeDomainsListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class MobileNetworkDiagnosticsPackageData : IUtf8JsonSerializable, IJsonModel<MobileNetworkDiagnosticsPackageData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkDiagnosticsPackageData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkDiagnosticsPackageData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MobileNetworkDiagnosticsPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal static MobileNetworkDiagnosticsPackageData DeserializeMobileNetworkDiagnosticsPackageData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

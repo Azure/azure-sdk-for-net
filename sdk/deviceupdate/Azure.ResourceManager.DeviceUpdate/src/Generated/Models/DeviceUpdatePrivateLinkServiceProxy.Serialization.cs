@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     public partial class DeviceUpdatePrivateLinkServiceProxy : IUtf8JsonSerializable, IJsonModel<DeviceUpdatePrivateLinkServiceProxy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdatePrivateLinkServiceProxy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdatePrivateLinkServiceProxy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeviceUpdatePrivateLinkServiceProxy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static DeviceUpdatePrivateLinkServiceProxy DeserializeDeviceUpdatePrivateLinkServiceProxy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

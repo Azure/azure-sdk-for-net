@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class CaptureDescription : IUtf8JsonSerializable, IJsonModel<CaptureDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CaptureDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CaptureDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CaptureDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static CaptureDescription DeserializeCaptureDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter
 {
     public partial class RouterWorker : IUtf8JsonSerializable, IJsonModel<RouterWorker>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouterWorker>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouterWorker>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RouterWorker>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -179,7 +179,7 @@ namespace Azure.Communication.JobRouter
 
         internal static RouterWorker DeserializeRouterWorker(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

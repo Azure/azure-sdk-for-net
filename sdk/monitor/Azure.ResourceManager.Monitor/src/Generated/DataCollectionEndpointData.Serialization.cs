@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class DataCollectionEndpointData : IUtf8JsonSerializable, IJsonModel<DataCollectionEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataCollectionEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static DataCollectionEndpointData DeserializeDataCollectionEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
