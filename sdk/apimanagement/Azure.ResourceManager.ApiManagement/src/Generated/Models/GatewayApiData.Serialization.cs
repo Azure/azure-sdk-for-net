@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class GatewayApiData : IUtf8JsonSerializable, IJsonModel<GatewayApiData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayApiData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayApiData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GatewayApiData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
-                writer.WriteObjectValue<AuthenticationSettingsContract>(AuthenticationSettings, options);
+                writer.WriteObjectValue(AuthenticationSettings, options);
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
-                writer.WriteObjectValue<SubscriptionKeyParameterNamesContract>(SubscriptionKeyParameterNames, options);
+                writer.WriteObjectValue(SubscriptionKeyParameterNames, options);
             }
             if (Optional.IsDefined(ApiType))
             {
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue<ApiContactInformation>(Contact, options);
+                writer.WriteObjectValue(Contact, options);
             }
             if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue<ApiLicenseInformation>(License, options);
+                writer.WriteObjectValue(License, options);
             }
             if (Optional.IsDefined(SourceApiId))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ApiVersionSet))
             {
                 writer.WritePropertyName("apiVersionSet"u8);
-                writer.WriteObjectValue<ApiVersionSetContractDetails>(ApiVersionSet, options);
+                writer.WriteObjectValue(ApiVersionSet, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static GatewayApiData DeserializeGatewayApiData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

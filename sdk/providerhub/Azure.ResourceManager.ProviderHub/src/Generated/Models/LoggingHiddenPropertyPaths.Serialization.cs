@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class LoggingHiddenPropertyPaths : IUtf8JsonSerializable, IJsonModel<LoggingHiddenPropertyPaths>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoggingHiddenPropertyPaths>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoggingHiddenPropertyPaths>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LoggingHiddenPropertyPaths>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static LoggingHiddenPropertyPaths DeserializeLoggingHiddenPropertyPaths(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

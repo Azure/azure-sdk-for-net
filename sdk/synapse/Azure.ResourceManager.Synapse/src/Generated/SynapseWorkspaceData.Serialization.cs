@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseWorkspaceData : IUtf8JsonSerializable, IJsonModel<SynapseWorkspaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseWorkspaceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseWorkspaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(DefaultDataLakeStorage))
             {
                 writer.WritePropertyName("defaultDataLakeStorage"u8);
-                writer.WriteObjectValue<SynapseDataLakeStorageAccountDetails>(DefaultDataLakeStorage, options);
+                writer.WriteObjectValue(DefaultDataLakeStorage, options);
             }
             if (Optional.IsDefined(SqlAdministratorLoginPassword))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(VirtualNetworkProfile))
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
-                writer.WriteObjectValue<VirtualNetworkProfile>(VirtualNetworkProfile, options);
+                writer.WriteObjectValue(VirtualNetworkProfile, options);
             }
             if (Optional.IsCollectionDefined(ConnectivityEndpoints))
             {
@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<SynapsePrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<SynapseEncryptionDetails>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WorkspaceUid))
             {
@@ -161,17 +161,17 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(ManagedVirtualNetworkSettings))
             {
                 writer.WritePropertyName("managedVirtualNetworkSettings"u8);
-                writer.WriteObjectValue<SynapseManagedVirtualNetworkSettings>(ManagedVirtualNetworkSettings, options);
+                writer.WriteObjectValue(ManagedVirtualNetworkSettings, options);
             }
             if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
             {
                 writer.WritePropertyName("workspaceRepositoryConfiguration"u8);
-                writer.WriteObjectValue<SynapseWorkspaceRepositoryConfiguration>(WorkspaceRepositoryConfiguration, options);
+                writer.WriteObjectValue(WorkspaceRepositoryConfiguration, options);
             }
             if (Optional.IsDefined(PurviewConfiguration))
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
-                writer.WriteObjectValue<PurviewConfiguration>(PurviewConfiguration, options);
+                writer.WriteObjectValue(PurviewConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AdlaResourceId))
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(CspWorkspaceAdminProperties))
             {
                 writer.WritePropertyName("cspWorkspaceAdminProperties"u8);
-                writer.WriteObjectValue<CspWorkspaceAdminProperties>(CspWorkspaceAdminProperties, options);
+                writer.WriteObjectValue(CspWorkspaceAdminProperties, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Settings))
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseWorkspaceData DeserializeSynapseWorkspaceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

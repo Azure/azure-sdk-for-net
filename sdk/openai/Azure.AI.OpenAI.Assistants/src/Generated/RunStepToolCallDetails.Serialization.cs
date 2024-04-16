@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI.Assistants
 {
     public partial class RunStepToolCallDetails : IUtf8JsonSerializable, IJsonModel<RunStepToolCallDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepToolCallDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepToolCallDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RunStepToolCallDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in ToolCalls)
             {
-                writer.WriteObjectValue<RunStepToolCall>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);
@@ -67,7 +67,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         internal static RunStepToolCallDetails DeserializeRunStepToolCallDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,11 +142,11 @@ namespace Azure.AI.OpenAI.Assistants
             return DeserializeRunStepToolCallDetails(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RunStepToolCallDetails>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

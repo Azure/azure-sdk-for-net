@@ -74,7 +74,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndexerSkillset>(skillset);
+            content.JsonWriter.WriteObjectValue(skillset);
             request.Content = content;
             return message;
         }
@@ -370,7 +370,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndexerSkillset>(skillset);
+            content.JsonWriter.WriteObjectValue(skillset);
             request.Content = content;
             return message;
         }
@@ -444,7 +444,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ResetSkillsOptions>(skillNames);
+            content.JsonWriter.WriteObjectValue(skillNames);
             request.Content = content;
             return message;
         }

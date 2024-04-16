@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class AS2ProtocolSettings : IUtf8JsonSerializable, IJsonModel<AS2ProtocolSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AS2ProtocolSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AS2ProtocolSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AS2ProtocolSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("messageConnectionSettings"u8);
-            writer.WriteObjectValue<AS2MessageConnectionSettings>(MessageConnectionSettings, options);
+            writer.WriteObjectValue(MessageConnectionSettings, options);
             writer.WritePropertyName("acknowledgementConnectionSettings"u8);
-            writer.WriteObjectValue<AS2AcknowledgementConnectionSettings>(AcknowledgementConnectionSettings, options);
+            writer.WriteObjectValue(AcknowledgementConnectionSettings, options);
             writer.WritePropertyName("mdnSettings"u8);
-            writer.WriteObjectValue<AS2MdnSettings>(MdnSettings, options);
+            writer.WriteObjectValue(MdnSettings, options);
             writer.WritePropertyName("securitySettings"u8);
-            writer.WriteObjectValue<AS2SecuritySettings>(SecuritySettings, options);
+            writer.WriteObjectValue(SecuritySettings, options);
             writer.WritePropertyName("validationSettings"u8);
-            writer.WriteObjectValue<AS2ValidationSettings>(ValidationSettings, options);
+            writer.WriteObjectValue(ValidationSettings, options);
             writer.WritePropertyName("envelopeSettings"u8);
-            writer.WriteObjectValue<AS2EnvelopeSettings>(EnvelopeSettings, options);
+            writer.WriteObjectValue(EnvelopeSettings, options);
             writer.WritePropertyName("errorSettings"u8);
-            writer.WriteObjectValue<AS2ErrorSettings>(ErrorSettings, options);
+            writer.WriteObjectValue(ErrorSettings, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static AS2ProtocolSettings DeserializeAS2ProtocolSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

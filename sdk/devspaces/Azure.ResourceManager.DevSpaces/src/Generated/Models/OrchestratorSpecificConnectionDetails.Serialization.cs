@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
     [PersistableModelProxy(typeof(UnknownOrchestratorSpecificConnectionDetails))]
     public partial class OrchestratorSpecificConnectionDetails : IUtf8JsonSerializable, IJsonModel<OrchestratorSpecificConnectionDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrchestratorSpecificConnectionDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrchestratorSpecificConnectionDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OrchestratorSpecificConnectionDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
 
         internal static OrchestratorSpecificConnectionDetails DeserializeOrchestratorSpecificConnectionDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -32,12 +32,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new ContainerServiceNodePoolRollingFailedEventData(nodePoolName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ContainerServiceNodePoolRollingFailedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeContainerServiceNodePoolRollingFailedEventData(document.RootElement);
+        }
+
         internal partial class ContainerServiceNodePoolRollingFailedEventDataConverter : JsonConverter<ContainerServiceNodePoolRollingFailedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerServiceNodePoolRollingFailedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override ContainerServiceNodePoolRollingFailedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

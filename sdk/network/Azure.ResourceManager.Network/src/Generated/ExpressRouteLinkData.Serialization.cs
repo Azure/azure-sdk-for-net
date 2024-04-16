@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRouteLinkData : IUtf8JsonSerializable, IJsonModel<ExpressRouteLinkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteLinkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteLinkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExpressRouteLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(MacSecConfig))
             {
                 writer.WritePropertyName("macSecConfig"u8);
-                writer.WriteObjectValue<ExpressRouteLinkMacSecConfig>(MacSecConfig, options);
+                writer.WriteObjectValue(MacSecConfig, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteLinkData DeserializeExpressRouteLinkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

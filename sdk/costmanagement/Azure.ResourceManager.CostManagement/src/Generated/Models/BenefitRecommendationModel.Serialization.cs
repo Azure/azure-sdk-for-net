@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class BenefitRecommendationModel : IUtf8JsonSerializable, IJsonModel<BenefitRecommendationModel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BenefitRecommendationModel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BenefitRecommendationModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BenefitRecommendationModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<BenefitRecommendationProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static BenefitRecommendationModel DeserializeBenefitRecommendationModel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

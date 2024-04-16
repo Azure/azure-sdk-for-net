@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class InboundNatRuleData : IUtf8JsonSerializable, IJsonModel<InboundNatRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundNatRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundNatRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InboundNatRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(BackendIPConfiguration))
             {
                 writer.WritePropertyName("backendIPConfiguration"u8);
-                writer.WriteObjectValue<NetworkInterfaceIPConfigurationData>(BackendIPConfiguration, options);
+                writer.WriteObjectValue(BackendIPConfiguration, options);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network
 
         internal static InboundNatRuleData DeserializeInboundNatRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
 {
     public partial class HealthMonitorData : IUtf8JsonSerializable, IJsonModel<HealthMonitorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthMonitorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthMonitorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HealthMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         internal static HealthMonitorData DeserializeHealthMonitorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

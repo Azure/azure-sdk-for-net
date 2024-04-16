@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppSubscriptionQuotaItem : IUtf8JsonSerializable, IJsonModel<NetAppSubscriptionQuotaItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppSubscriptionQuotaItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppSubscriptionQuotaItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppSubscriptionQuotaItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppSubscriptionQuotaItem DeserializeNetAppSubscriptionQuotaItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

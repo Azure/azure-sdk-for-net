@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Communication.Models
 {
     public partial class DomainVerificationStatusRecord : IUtf8JsonSerializable, IJsonModel<DomainVerificationStatusRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainVerificationStatusRecord>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainVerificationStatusRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DomainVerificationStatusRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         internal static DomainVerificationStatusRecord DeserializeDomainVerificationStatusRecord(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

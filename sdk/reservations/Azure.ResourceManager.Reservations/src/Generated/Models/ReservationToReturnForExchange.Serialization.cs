@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationToReturnForExchange : IUtf8JsonSerializable, IJsonModel<ReservationToReturnForExchange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationToReturnForExchange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationToReturnForExchange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationToReturnForExchange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(BillingRefundAmount))
             {
                 writer.WritePropertyName("billingRefundAmount"u8);
-                writer.WriteObjectValue<PurchasePrice>(BillingRefundAmount, options);
+                writer.WriteObjectValue(BillingRefundAmount, options);
             }
             if (Optional.IsDefined(BillingInformation))
             {
                 writer.WritePropertyName("billingInformation"u8);
-                writer.WriteObjectValue<BillingInformation>(BillingInformation, options);
+                writer.WriteObjectValue(BillingInformation, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ReservationToReturnForExchange DeserializeReservationToReturnForExchange(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

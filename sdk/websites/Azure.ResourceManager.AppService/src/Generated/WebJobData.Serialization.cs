@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WebJobData : IUtf8JsonSerializable, IJsonModel<WebJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebJobData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static WebJobData DeserializeWebJobData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService
 {
     public partial class OSOptionProfileData : IUtf8JsonSerializable, IJsonModel<OSOptionProfileData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSOptionProfileData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSOptionProfileData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OSOptionProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteStartArray();
             foreach (var item in OSOptionPropertyList)
             {
-                writer.WriteObjectValue<ContainerServiceOSOptionProperty>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService
 
         internal static OSOptionProfileData DeserializeOSOptionProfileData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
