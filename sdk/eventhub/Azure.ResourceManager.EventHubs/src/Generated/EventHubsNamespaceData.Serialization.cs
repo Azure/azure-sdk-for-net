@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventHubs
 {
     public partial class EventHubsNamespaceData : IUtf8JsonSerializable, IJsonModel<EventHubsNamespaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNamespaceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNamespaceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubsNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static EventHubsNamespaceData DeserializeEventHubsNamespaceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

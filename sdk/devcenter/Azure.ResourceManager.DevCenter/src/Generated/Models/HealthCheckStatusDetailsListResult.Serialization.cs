@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 {
     internal partial class HealthCheckStatusDetailsListResult : IUtf8JsonSerializable, IJsonModel<HealthCheckStatusDetailsListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthCheckStatusDetailsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthCheckStatusDetailsListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HealthCheckStatusDetailsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static HealthCheckStatusDetailsListResult DeserializeHealthCheckStatusDetailsListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

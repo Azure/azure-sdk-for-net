@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Elastic.Models
 {
     public partial class DeploymentInfoResponse : IUtf8JsonSerializable, IJsonModel<DeploymentInfoResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentInfoResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentInfoResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeploymentInfoResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static DeploymentInfoResponse DeserializeDeploymentInfoResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class EventGridNamespacePatch : IUtf8JsonSerializable, IJsonModel<EventGridNamespacePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridNamespacePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridNamespacePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventGridNamespacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventGridNamespacePatch DeserializeEventGridNamespacePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

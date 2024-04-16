@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class NumberLessThanAdvancedFilter : IUtf8JsonSerializable, IJsonModel<NumberLessThanAdvancedFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NumberLessThanAdvancedFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NumberLessThanAdvancedFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NumberLessThanAdvancedFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static NumberLessThanAdvancedFilter DeserializeNumberLessThanAdvancedFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
