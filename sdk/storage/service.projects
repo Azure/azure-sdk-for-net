@@ -14,7 +14,7 @@
 -->
 
 <Project>
-  <ItemGroup Condition="'$(SDKType)' == 'dataplane'">
+  <ItemGroup Condition="'$(SDKType)' == 'client'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Storage.*\**\*.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(SDKType)' == 'mgmt'">
